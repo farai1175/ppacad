@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics - PassProof Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4CAF50;
+            --secondary: #2196F3;
+            --accent: #FF9800;
+            --dark: #333;
+            --light: #f8f9fa;
+            --text: #444;
+            --text-light: #666;
+            --physics-color: #9C27B0;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 0 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--dark);
+        }
+
+        .logo-text span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            height: 100%;
+        }
+
+        .nav-links li {
+            position: relative;
+            height: 100%;
+        }
+
+        .nav-links a, .nav-links button {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding: 0 18px;
+            text-decoration: none;
+            color: var(--dark);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            gap: 5px;
+        }
+
+        .nav-links a:hover, .nav-links button:hover {
+            background-color: var(--light);
+            color: var(--primary);
+        }
+
+        .nav-links a.active, .nav-links button.active {
+            color: var(--primary);
+            background-color: var(--light);
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #fff;
+            min-width: 220px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 1001;
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .dropdown.active .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 18px;
+            text-decoration: none;
+            color: var(--dark);
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: var(--light);
+            padding-left: 22px;
+            color: var(--primary);
+        }
+
+        /* Submenu Styles */
+        .has-submenu {
+            position: relative;
+        }
+
+        .submenu {
+            display: none;
+            position: absolute;
+            left: 100%;
+            top: 0;
+            background-color: #fff;
+            min-width: 180px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 1002;
+            border-radius: 0 8px 8px 8px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .has-submenu.active .submenu {
+            display: block;
+        }
+
+        .has-submenu::after {
+            content: "›";
+            font-size: 1.2rem;
+            margin-left: auto;
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 120px 20px 60px;
+            text-align: center;
+            color: white;
+            background: rgba(0, 0, 0, 0.3);
+            margin-top: 70px;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Main Content Styles */
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--dark);
+            font-size: 2.2rem;
+        }
+
+        .section-title span {
+            color: var(--physics-color);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 50px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1.1rem;
+        }
+
+        /* Grade Selection */
+        .grade-selection {
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .grade-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .grade-btn {
+            padding: 12px 25px;
+            background: white;
+            border: 2px solid var(--physics-color);
+            border-radius: 8px;
+            color: var(--physics-color);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .grade-btn:hover, .grade-btn.active {
+            background: var(--physics-color);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(156, 39, 176, 0.3);
+        }
+
+        /* Subject Content */
+        .subject-content {
+            display: none;
+            margin-top: 40px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .subject-content.active {
+            display: block;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            border-top: 4px solid var(--physics-color);
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            padding: 20px;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .card-header i {
+            font-size: 1.8rem;
+            color: var(--physics-color);
+        }
+
+        .card-header h3 {
+            color: var(--dark);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-body p {
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .card-footer {
+            padding: 15px 20px;
+            background: var(--light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background: var(--physics-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background: #7B1FA2;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(156, 39, 176, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--physics-color);
+            color: var(--physics-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--physics-color);
+            color: white;
+        }
+
+        /* Assessment Section */
+        .assessment-section {
+            margin: 60px 0;
+            padding: 40px;
+            background: var(--light);
+            border-radius: 12px;
+        }
+
+        .assessment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .assessment-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            border-left: 4px solid var(--accent);
+        }
+
+        .assessment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .assessment-card h3 {
+            color: var(--dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .assessment-card h3 i {
+            color: var(--accent);
+        }
+
+        .assessment-card p {
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .assessment-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            margin: 60px 0;
+        }
+
+        .progress-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .progress-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            border-top: 4px solid var(--secondary);
+        }
+
+        .progress-card i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .progress-card h3 {
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .progress-card p {
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+
+        .progress-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            animation: slideUp 0.3s ease;
+        }
+
+        .modal-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            color: var(--dark);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--dark);
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .question {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .question:last-child {
+            border-bottom: none;
+        }
+
+        .question-text {
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 6px;
+            transition: background 0.3s;
+            cursor: pointer;
+        }
+
+        .option:hover {
+            background: #f5f5f5;
+        }
+
+        .option input {
+            margin: 0;
+        }
+
+        .modal-footer {
+            padding: 20px 25px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 20px 30px;
+            margin-top: 60px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .footer-col p, .footer-col a {
+            color: #ccc;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                height: auto;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                display: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                width: 100%;
+                height: auto;
+            }
+
+            .nav-links a, .nav-links button {
+                padding: 15px 20px;
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .dropdown-content {
+                position: static;
+                width: 100%;
+                box-shadow: none;
+                border-radius: 0;
+                display: none;
+            }
+
+            .dropdown.active .dropdown-content {
+                display: block;
+            }
+
+            .submenu {
+                position: static;
+                width: 100%;
+                box-shadow: none;
+                border-radius: 0;
+            }
+
+            .has-submenu::after {
+                content: "›";
+                transform: rotate(90deg);
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .grade-buttons {
+                gap: 10px;
+            }
+
+            .grade-btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <div class="logo-text">Pass<span>Proof</span> Academy</div>
+            </div>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+                <li class="dropdown">
+                    <button class="dropdown-btn active"><i class="fas fa-book"></i> Courses <i class="fas fa-chevron-down"></i></button>
+                    <div class="dropdown-content">
+                        <!-- Physics -->
+                        <a href="physics.html" class="has-submenu">
+                            <span><i class="fas fa-atom"></i> Physics</span>
+                        </a>
+                        <div class="submenu">
+                            <a href="#" data-grade="8"><i class="fas fa-graduation-cap"></i> Grade 8</a>
+                            <a href="#" data-grade="9"><i class="fas fa-graduation-cap"></i> Grade 9</a>
+                            <a href="#" data-grade="10"><i class="fas fa-graduation-cap"></i> Grade 10</a>
+                            <a href="#" data-grade="11"><i class="fas fa-graduation-cap"></i> Grade 11</a>
+                            <a href="#" data-grade="12"><i class="fas fa-graduation-cap"></i> Grade 12</a>
+                        </div>
+                        
+                        <!-- Maths -->
+                        <a href="maths.html" class="has-submenu">
+                            <span><i class="fas fa-calculator"></i> Maths</span>
+                        </a>
+                        <div class="submenu">
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 8</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 9</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 10</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 11</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 12</a>
+                        </div>
+                        
+                        <!-- Chemistry -->
+                        <a href="chemistry.html" class="has-submenu">
+                            <span><i class="fas fa-flask"></i> Chemistry</span>
+                        </a>
+                        <div class="submenu">
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 8</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 9</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 10</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 11</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 12</a>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact Us</a></li>
+                <li><a href="#" class="cta-button" style="padding: 10px 20px; margin-left: 10px;">Get Started</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1><i class="fas fa-atom"></i> Physics</h1>
+        <p>Explore the fundamental principles that govern the universe through our comprehensive Physics curriculum</p>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Grade Selection -->
+        <section class="grade-selection">
+            <h2 class="section-title">Select Your <span>Grade Level</span></h2>
+            <p class="section-subtitle">Choose your grade to access appropriate learning materials and assessments</p>
+            
+            <div class="grade-buttons">
+                <button class="grade-btn" data-grade="8">Grade 8</button>
+                <button class="grade-btn" data-grade="9">Grade 9</button>
+                <button class="grade-btn active" data-grade="10">Grade 10</button>
+                <button class="grade-btn" data-grade="11">Grade 11</button>
+                <button class="grade-btn" data-grade="12">Grade 12</button>
+            </div>
+        </section>
+
+        <!-- Grade 10 Content (Default) -->
+        <section id="grade-10" class="subject-content active">
+            <h2 class="section-title">Physics <span>Grade 10</span></h2>
+            <p class="section-subtitle">Master the fundamental concepts of mechanics, energy, and waves with our comprehensive Grade 10 Physics curriculum</p>
+            
+            <div class="content-grid">
+                <div class="content-card">
+                    <div class="card-header">
+                        <i class="fas fa-book"></i>
+                        <h3>Learning Materials</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Access textbooks, video lessons, interactive simulations, and study guides for all Grade 10 Physics topics.</p>
+                        <ul style="margin-left: 20px; color: var(--text-light); margin-bottom: 20px;">
+                            <li>Motion and Forces</li>
+                            <li>Energy and Work</li>
+                            <li>Waves and Sound</li>
+                            <li>Light and Optics</li>
+                            <li>Electricity and Magnetism</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <span>Last updated: 2 days ago</span>
+                        <button class="btn"><i class="fas fa-download"></i> Access Materials</button>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <div class="card-header">
+                        <i class="fas fa-video"></i>
+                        <h3>Video Lessons</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Watch expert explanations of complex Physics concepts with visual demonstrations and real-world examples.</p>
+                        <div style="display: flex; gap: 10px; margin-top: 15px;">
+                            <span style="background: #e3f2fd; color: var(--secondary); padding: 5px 10px; border-radius: 20px; font-size: 0.8rem;">45 Videos</span>
+                            <span style="background: #f3e5f5; color: var(--physics-color); padding: 5px 10px; border-radius: 20px; font-size: 0.8rem;">12 Hours</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span>Completion: 65%</span>
+                        <button class="btn"><i class="fas fa-play-circle"></i> Watch Now</button>
+                    </div>
+                </div>
+                
+                <div class="content-card">
+                    <div class="card-header">
+                        <i class="fas fa-flask"></i>
+                        <h3>Virtual Labs</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Conduct experiments in our virtual laboratory to apply Physics concepts and develop practical skills.</p>
+                        <ul style="margin-left: 20px; color: var(--text-light); margin-bottom: 20px;">
+                            <li>Motion Simulation</li>
+                            <li>Wave Interference</li>
+                            <li>Circuit Builder</li>
+                            <li>Optics Bench</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <span>5 Labs Available</span>
+                        <button class="btn"><i class="fas fa-vial"></i> Start Lab</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Assessments Section -->
+            <section class="assessment-section">
+                <h2 class="section-title">Knowledge <span>Assessments</span></h2>
+                <p class="section-subtitle">Test your understanding of Physics concepts with our comprehensive assessment tools</p>
+                
+                <div class="assessment-grid">
+                    <div class="assessment-card">
+                        <h3><i class="fas fa-clipboard-check"></i> Chapter 1 Quiz</h3>
+                        <p>Test your knowledge of motion, forces, and Newton's laws with this 15-question quiz.</p>
+                        <div class="assessment-meta">
+                            <span><i class="fas fa-question-circle"></i> 15 Questions</span>
+                            <span><i class="fas fa-clock"></i> 20 Minutes</span>
+                        </div>
+                        <button class="btn start-assessment" data-assessment="quiz-1"><i class="fas fa-play"></i> Start Quiz</button>
+                    </div>
+                    
+                    <div class="assessment-card">
+                        <h3><i class="fas fa-tasks"></i> Mid-Term Test</h3>
+                        <p>Comprehensive assessment covering chapters 1-4 with multiple choice and problem-solving questions.</p>
+                        <div class="assessment-meta">
+                            <span><i class="fas fa-question-circle"></i> 25 Questions</span>
+                            <span><i class="fas fa-clock"></i> 45 Minutes</span>
+                        </div>
+                        <button class="btn start-assessment" data-assessment="midterm"><i class="fas fa-play"></i> Start Test</button>
+                    </div>
+                    
+                    <div class="assessment-card">
+                        <h3><i class="fas fa-chart-line"></i> Practice Problems</h3>
+                        <p>Work through targeted practice problems with step-by-step solutions to strengthen your skills.</p>
+                        <div class="assessment-meta">
+                            <span><i class="fas fa-question-circle"></i> 50+ Problems</span>
+                            <span><i class="fas fa-infinity"></i> No Time Limit</span>
+                        </div>
+                        <button class="btn"><i class="fas fa-pencil-alt"></i> Start Practicing</button>
+                    </div>
+                    
+                    <div class="assessment-card">
+                        <h3><i class="fas fa-award"></i> Final Exam</h3>
+                        <p>Comprehensive final exam covering all Grade 10 Physics topics with various question types.</p>
+                        <div class="assessment-meta">
+                            <span><i class="fas fa-question-circle"></i> 40 Questions</span>
+                            <span><i class="fas fa-clock"></i> 90 Minutes</span>
+                        </div>
+                        <button class="btn start-assessment" data-assessment="final"><i class="fas fa-play"></i> Start Exam</button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Progress Section -->
+            <section class="progress-section">
+                <h2 class="section-title">Your Learning <span>Progress</span></h2>
+                <p class="section-subtitle">Track your performance and identify areas for improvement</p>
+                
+                <div class="progress-grid">
+                    <div class="progress-card">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>Completion Rate</h3>
+                        <p>Overall course progress</p>
+                        <div class="progress-value">65%</div>
+                    </div>
+                    
+                    <div class="progress-card">
+                        <i class="fas fa-star"></i>
+                        <h3>Average Score</h3>
+                        <p>On assessments and quizzes</p>
+                        <div class="progress-value">78%</div>
+                    </div>
+                    
+                    <div class="progress-card">
+                        <i class="fas fa-clock"></i>
+                        <h3>Time Spent</h3>
+                        <p>Learning Physics this month</p>
+                        <div class="progress-value">12h 45m</div>
+                    </div>
+                    
+                    <div class="progress-card">
+                        <i class="fas fa-trophy"></i>
+                        <h3>Achievements</h3>
+                        <p>Badges and certificates earned</p>
+                        <div class="progress-value">8/15</div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- Other Grade Contents (Hidden by default) -->
+        <section id="grade-8" class="subject-content">
+            <!-- Grade 8 content would go here -->
+        </section>
+        
+        <section id="grade-9" class="subject-content">
+            <!-- Grade 9 content would go here -->
+        </section>
+        
+        <section id="grade-11" class="subject-content">
+            <!-- Grade 11 content would go here -->
+        </section>
+        
+        <section id="grade-12" class="subject-content">
+            <!-- Grade 12 content would go here -->
+        </section>
+    </div>
+
+    <!-- Assessment Modal -->
+    <div class="modal" id="assessmentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Physics Assessment</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="question">
+                    <div class="question-text">1. Which of the following best describes Newton's First Law of Motion?</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q1" value="a">
+                            <span>An object at rest stays at rest and an object in motion stays in motion unless acted upon by an unbalanced force</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="b">
+                            <span>Force equals mass times acceleration</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="c">
+                            <span>For every action, there is an equal and opposite reaction</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="d">
+                            <span>Energy cannot be created or destroyed, only transformed</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">2. A car accelerates from 0 to 60 km/h in 5 seconds. What is its acceleration in m/s²?</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q2" value="a">
+                            <span>3.33 m/s²</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="b">
+                            <span>12 m/s²</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="c">
+                            <span>8 m/s²</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="d">
+                            <span>5 m/s²</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">3. Which of the following is an example of potential energy?</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q3" value="a">
+                            <span>A rolling ball</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="b">
+                            <span>A compressed spring</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="c">
+                            <span>A flowing river</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="d">
+                            <span>A burning candle</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="prevQuestion">Previous</button>
+                <button class="btn" id="nextQuestion">Next Question</button>
+                <button class="btn" id="submitAssessment" style="display: none;">Submit Assessment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>PassProof Academy</h3>
+                <p>Where success is guaranteed! We provide comprehensive learning resources for students from Grade 8 to 12.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <a href="index.html">Home</a>
+                <a href="about.html">About Us</a>
+                <a href="#">Courses</a>
+                <a href="#">Testimonials</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <div class="footer-col">
+                <h3>Subjects</h3>
+                <a href="physics.html">Physics</a>
+                <a href="maths.html">Mathematics</a>
+                <a href="chemistry.html">Chemistry</a>
+                <a href="#">Life Science</a>
+                <a href="#">Geography</a>
+            </div>
+            <div class="footer-col">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Education Street, Learning City</p>
+                <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                <p><i class="fas fa-envelope"></i> info@passproofacademy.com</p>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 PassProof Academy. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                const icon = this.querySelector('i');
+                if (navLinks.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+            
+            // Dropdown functionality
+            const dropdownBtns = document.querySelectorAll('.dropdown-btn');
+            
+            dropdownBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const dropdown = this.closest('.dropdown');
+                    dropdown.classList.toggle('active');
+                    
+                    // Close other dropdowns
+                    document.querySelectorAll('.dropdown').forEach(otherDropdown => {
+                        if (otherDropdown !== dropdown) {
+                            otherDropdown.classList.remove('active');
+                        }
+                    });
+                });
+            });
+            
+            // Submenu functionality
+            const hasSubmenuItems = document.querySelectorAll('.has-submenu');
+            
+            hasSubmenuItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                    
+                    // Close other submenus at the same level
+                    const parent = this.parentElement;
+                    parent.querySelectorAll('.has-submenu').forEach(otherItem => {
+                        if (otherItem !== this) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                });
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function() {
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+                
+                document.querySelectorAll('.has-submenu').forEach(item => {
+                    item.classList.remove('active');
+                });
+            });
+            
+            // Prevent dropdown close when clicking inside dropdown
+            document.querySelectorAll('.dropdown-content, .submenu').forEach(menu => {
+                menu.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            });
+            
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                    navbar.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
+                } else {
+                    navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                    navbar.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.1)';
+                }
+            });
+
+            // Grade Selection
+            const gradeButtons = document.querySelectorAll('.grade-btn');
+            const subjectContents = document.querySelectorAll('.subject-content');
+            
+            gradeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons and contents
+                    gradeButtons.forEach(btn => btn.classList.remove('active'));
+                    subjectContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Show corresponding content
+                    const grade = this.getAttribute('data-grade');
+                    document.getElementById(`grade-${grade}`).classList.add('active');
+                });
+            });
+
+            // Assessment Modal
+            const assessmentModal = document.getElementById('assessmentModal');
+            const startAssessmentButtons = document.querySelectorAll('.start-assessment');
+            const closeModalButton = document.querySelector('.close-modal');
+            const modalTitle = document.getElementById('modalTitle');
+            
+            startAssessmentButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const assessment = this.getAttribute('data-assessment');
+                    
+                    // Set modal title based on assessment type
+                    if (assessment === 'quiz-1') {
+                        modalTitle.textContent = 'Chapter 1 Quiz - Motion and Forces';
+                    } else if (assessment === 'midterm') {
+                        modalTitle.textContent = 'Mid-Term Test - Chapters 1-4';
+                    } else if (assessment === 'final') {
+                        modalTitle.textContent = 'Final Exam - Grade 10 Physics';
+                    }
+                    
+                    assessmentModal.classList.add('active');
+                });
+            });
+            
+            closeModalButton.addEventListener('click', function() {
+                assessmentModal.classList.remove('active');
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(e) {
+                if (e.target === assessmentModal) {
+                    assessmentModal.classList.remove('active');
+                }
+            });
+            
+            // Assessment Navigation
+            const questions = document.querySelectorAll('.question');
+            const prevButton = document.getElementById('prevQuestion');
+            const nextButton = document.getElementById('nextQuestion');
+            const submitButton = document.getElementById('submitAssessment');
+            let currentQuestion = 0;
+            
+            function showQuestion(index) {
+                questions.forEach((question, i) => {
+                    question.style.display = i === index ? 'block' : 'none';
+                });
+                
+                prevButton.style.display = index === 0 ? 'none' : 'inline-block';
+                nextButton.style.display = index === questions.length - 1 ? 'none' : 'inline-block';
+                submitButton.style.display = index === questions.length - 1 ? 'inline-block' : 'none';
+            }
+            
+            prevButton.addEventListener('click', function() {
+                if (currentQuestion > 0) {
+                    currentQuestion--;
+                    showQuestion(currentQuestion);
+                }
+            });
+            
+            nextButton.addEventListener('click', function() {
+                if (currentQuestion < questions.length - 1) {
+                    currentQuestion++;
+                    showQuestion(currentQuestion);
+                }
+            });
+            
+            submitButton.addEventListener('click', function() {
+                alert('Assessment submitted! Your results will be available shortly.');
+                assessmentModal.classList.remove('active');
+                currentQuestion = 0;
+                showQuestion(currentQuestion);
+            });
+            
+            // Initialize first question
+            showQuestion(currentQuestion);
+        });
+    </script>
+</body>
+</html>

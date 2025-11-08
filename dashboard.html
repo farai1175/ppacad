@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - PassProof Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4CAF50;
+            --secondary: #2196F3;
+            --accent: #FF9800;
+            --dark: #333;
+            --light: #f8f9fa;
+            --text: #444;
+            --text-light: #666;
+            --error: #f44336;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --info: #17a2b8;
+        }
+
+        body {
+            background: #f5f7fa;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 0 20px;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--dark);
+        }
+
+        .logo-text span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            height: 100%;
+        }
+
+        .nav-links li {
+            position: relative;
+            height: 100%;
+        }
+
+        .nav-links a, .nav-links button {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding: 0 18px;
+            text-decoration: none;
+            color: var(--dark);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            gap: 5px;
+        }
+
+        .nav-links a:hover, .nav-links button:hover {
+            background-color: var(--light);
+            color: var(--primary);
+        }
+
+        .nav-links a.active, .nav-links button.active {
+            color: var(--primary);
+            background-color: var(--light);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 250px;
+            height: calc(100vh - 70px);
+            background: white;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+            padding: 20px 0;
+            overflow-y: auto;
+            z-index: 999;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-item {
+            margin-bottom: 5px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s;
+            gap: 12px;
+        }
+
+        .sidebar-link:hover, .sidebar-link.active {
+            background: var(--light);
+            color: var(--primary);
+            border-right: 3px solid var(--primary);
+        }
+
+        .sidebar-link i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            margin-top: 70px;
+            padding: 30px;
+            min-height: calc(100vh - 70px);
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .welcome-section {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .welcome-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .welcome-text h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .welcome-text p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .user-profile-card {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 200px;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0 auto 15px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title i {
+            color: var(--primary);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .card-action {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .card-action:hover {
+            color: var(--primary);
+        }
+
+        /* Progress Bars */
+        .progress-item {
+            margin-bottom: 20px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .progress-label {
+            font-weight: 500;
+        }
+
+        .progress-value {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* Activity List */
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            margin-right: 15px;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .activity-meta {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Notification List */
+        .notification-list {
+            list-style: none;
+        }
+
+        .notification-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #fff2cc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--warning);
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .notification-meta {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Calendar */
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .calendar-header {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .calendar-day:hover {
+            background: var(--light);
+        }
+
+        .calendar-day.current {
+            background: var(--primary);
+            color: white;
+        }
+
+        .calendar-day.event {
+            position: relative;
+        }
+
+        .calendar-day.event::after {
+            content: "";
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        /* Course Grid */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .course-header {
+            height: 120px;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .course-icon {
+            font-size: 3rem;
+        }
+
+        .course-body {
+            padding: 20px;
+        }
+
+        .course-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 1.5rem;
+        }
+
+        .stat-icon.primary {
+            background: #e8f5e9;
+            color: var(--success);
+        }
+
+        .stat-icon.secondary {
+            background: #e3f2fd;
+            color: var(--secondary);
+        }
+
+        .stat-icon.accent {
+            background: #fff3e0;
+            color: var(--accent);
+        }
+
+        .stat-icon.info {
+            background: #e0f2f1;
+            color: var(--info);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* User Type Specific Sections */
+        .user-type-section {
+            display: none;
+        }
+
+        .user-type-section.active {
+            display: block;
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <div class="logo-text">Pass<span>Proof</span> Academy</div>
+            </div>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-links">
+                <li><a href="index.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
+                <li><a href="assignments.html"><i class="fas fa-tasks"></i> Assignments</a></li>
+                <li><a href="messages.html"><i class="fas fa-envelope"></i> Messages</a></li>
+            </ul>
+            
+            <div class="user-menu">
+                <div class="user-avatar" id="userAvatar">FU</div>
+                <div>
+                    <div id="userName">Farai User</div>
+                    <div id="userRole" style="font-size: 0.8rem; color: var(--text-light);">Grade 8 Learner</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <ul class="sidebar-menu">
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link active" data-section="overview">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard Overview</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link" data-section="courses">
+                    <i class="fas fa-book"></i>
+                    <span>My Courses</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link" data-section="progress">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Progress Tracking</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link" data-section="assignments">
+                    <i class="fas fa-tasks"></i>
+                    <span>Assignments & Tests</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link" data-section="calendar">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Calendar</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link" data-section="messages">
+                    <i class="fas fa-envelope"></i>
+                    <span>Messages</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link" data-section="resources">
+                    <i class="fas fa-file-download"></i>
+                    <span>Resources</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link" data-section="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <div class="welcome-content">
+                <div class="welcome-text">
+                    <h1 id="welcomeMessage">Welcome, Farai!</h1>
+                    <p id="welcomeDescription">Grade 8 Learner at PassProof Academy</p>
+                </div>
+                <div class="user-profile-card">
+                    <div class="profile-avatar" id="profileAvatar">FU</div>
+                    <h3 id="profileName">Farai User</h3>
+                    <p id="profileRole">Grade 8 Learner</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- User Type Selector (for demo purposes) -->
+        <div class="dashboard-header">
+            <h2>Dashboard Overview</h2>
+            <div>
+                <select id="userTypeSelector" style="padding: 8px 15px; border-radius: 8px; border: 1px solid #ddd;">
+                    <option value="learner">Learner View</option>
+                    <option value="teacher">Teacher View</option>
+                    <option value="admin">Administrator View</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon primary">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <div class="stat-value" id="statCourses">5</div>
+                <div class="stat-label">Enrolled Courses</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon secondary">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <div class="stat-value" id="statAssignments">3</div>
+                <div class="stat-label">Pending Assignments</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon accent">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="stat-value" id="statProgress">72%</div>
+                <div class="stat-label">Overall Progress</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon info">
+                    <i class="fas fa-award"></i>
+                </div>
+                <div class="stat-value" id="statAchievements">8</div>
+                <div class="stat-label">Achievements</div>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- My Courses Card -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-book"></i>
+                        My Courses
+                    </h3>
+                    <div class="card-actions">
+                        <button class="card-action">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="course-grid">
+                    <div class="course-card">
+                        <div class="course-header">
+                            <i class="fas fa-atom course-icon"></i>
+                        </div>
+                        <div class="course-body">
+                            <h4 class="course-title">Physics</h4>
+                            <div class="course-meta">
+                                <span>Grade 8</span>
+                                <span>65% Complete</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-header">
+                            <i class="fas fa-calculator course-icon"></i>
+                        </div>
+                        <div class="course-body">
+                            <h4 class="course-title">Mathematics</h4>
+                            <div class="course-meta">
+                                <span>Grade 8</span>
+                                <span>80% Complete</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Overview Card -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-chart-line"></i>
+                        Progress Overview
+                    </h3>
+                    <div class="card-actions">
+                        <button class="card-action">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-header">
+                        <span class="progress-label">Physics</span>
+                        <span class="progress-value">65%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 65%"></div>
+                    </div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-header">
+                        <span class="progress-label">Mathematics</span>
+                        <span class="progress-value">80%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 80%"></div>
+                    </div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-header">
+                        <span class="progress-label">Chemistry</span>
+                        <span class="progress-value">45%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 45%"></div>
+                    </div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-header">
+                        <span class="progress-label">Life Sciences</span>
+                        <span class="progress-value">70%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 70%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity Card -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-history"></i>
+                        Recent Activity
+                    </h3>
+                    <div class="card-actions">
+                        <button class="card-action">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                </div>
+                <ul class="activity-list">
+                    <li class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Completed Physics Chapter 3</div>
+                            <div class="activity-meta">2 hours ago</div>
+                        </div>
+                    </li>
+                    <li class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Submitted Math Assignment</div>
+                            <div class="activity-meta">Yesterday</div>
+                        </div>
+                    </li>
+                    <li class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-vial"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Completed Chemistry Lab</div>
+                            <div class="activity-meta">2 days ago</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Notifications Card -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-bell"></i>
+                        Notifications
+                    </h3>
+                    <div class="card-actions">
+                        <button class="card-action">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                </div>
+                <ul class="notification-list">
+                    <li class="notification-item">
+                        <div class="notification-icon">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <div class="notification-content">
+                            <div class="notification-title">Physics Test Tomorrow</div>
+                            <div class="notification-meta">Due: Tomorrow, 10:00 AM</div>
+                        </div>
+                    </li>
+                    <li class="notification-item">
+                        <div class="notification-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="notification-content">
+                            <div class="notification-title">New Math Chapter Available</div>
+                            <div class="notification-meta">Chapter 5: Algebra</div>
+                        </div>
+                    </li>
+                    <li class="notification-item">
+                        <div class="notification-icon">
+                            <i class="fas fa-comment"></i>
+                        </div>
+                        <div class="notification-content">
+                            <div class="notification-title">New Message from Teacher</div>
+                            <div class="notification-meta">Mr. Johnson: "Great work on the assignment!"</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Calendar Card -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-calendar-alt"></i>
+                        Calendar
+                    </h3>
+                    <div class="card-actions">
+                        <button class="card-action">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="calendar">
+                    <div class="calendar-header">
+                        <div>Sun</div>
+                        <div>Mon</div>
+                        <div>Tue</div>
+                        <div>Wed</div>
+                        <div>Thu</div>
+                        <div>Fri</div>
+                        <div>Sat</div>
+                    </div>
+                    <div class="calendar-day">25</div>
+                    <div class="calendar-day">26</div>
+                    <div class="calendar-day">27</div>
+                    <div class="calendar-day">28</div>
+                    <div class="calendar-day">29</div>
+                    <div class="calendar-day">30</div>
+                    <div class="calendar-day">1</div>
+                    <div class="calendar-day">2</div>
+                    <div class="calendar-day">3</div>
+                    <div class="calendar-day">4</div>
+                    <div class="calendar-day event">5</div>
+                    <div class="calendar-day">6</div>
+                    <div class="calendar-day">7</div>
+                    <div class="calendar-day">8</div>
+                    <div class="calendar-day">9</div>
+                    <div class="calendar-day current">10</div>
+                    <div class="calendar-day event">11</div>
+                    <div class="calendar-day">12</div>
+                    <div class="calendar-day">13</div>
+                    <div class="calendar-day">14</div>
+                    <div class="calendar-day">15</div>
+                    <div class="calendar-day">16</div>
+                    <div class="calendar-day">17</div>
+                    <div class="calendar-day">18</div>
+                    <div class="calendar-day">19</div>
+                    <div class="calendar-day">20</div>
+                    <div class="calendar-day">21</div>
+                    <div class="calendar-day">22</div>
+                    <div class="calendar-day">23</div>
+                    <div class="calendar-day">24</div>
+                    <div class="calendar-day">25</div>
+                    <div class="calendar-day">26</div>
+                    <div class="calendar-day">27</div>
+                    <div class="calendar-day">28</div>
+                    <div class="calendar-day">29</div>
+                    <div class="calendar-day">30</div>
+                    <div class="calendar-day">31</div>
+                </div>
+            </div>
+
+            <!-- Assignments Card -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-tasks"></i>
+                        Upcoming Assignments
+                    </h3>
+                    <div class="card-actions">
+                        <button class="card-action">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                </div>
+                <ul class="activity-list">
+                    <li class="activity-item">
+                        <div class="activity-icon" style="background: #ffebee; color: var(--error);">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Chemistry Lab Report</div>
+                            <div class="activity-meta">Due: Tomorrow, 3:00 PM</div>
+                        </div>
+                    </li>
+                    <li class="activity-item">
+                        <div class="activity-icon" style="background: #e3f2fd; color: var(--secondary);">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Math Problem Set</div>
+                            <div class="activity-meta">Due: Feb 15, 9:00 AM</div>
+                        </div>
+                    </li>
+                    <li class="activity-item">
+                        <div class="activity-icon" style="background: #e8f5e9; color: var(--success);">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Physics Chapter Review</div>
+                            <div class="activity-meta">Due: Feb 18, 11:00 AM</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- User Type Specific Sections -->
+        <!-- Learner Section -->
+        <section id="learner-section" class="user-type-section active">
+            <div class="dashboard-grid">
+                <!-- My Learning Path Card -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-graduation-cap"></i>
+                            My Learning Path
+                        </h3>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-label">Mathematics Pathway</span>
+                            <span class="progress-value">60%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 60%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-label">Science Pathway</span>
+                            <span class="progress-value">45%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 45%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grades Card -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-bar"></i>
+                            Grades & Performance
+                        </h3>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-label">Mathematics</span>
+                            <span class="progress-value">85%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-label">Physics</span>
+                            <span class="progress-value">78%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 78%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Teacher Section -->
+        <section id="teacher-section" class="user-type-section">
+            <div class="dashboard-grid">
+                <!-- Class Overview Card -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-users"></i>
+                            Class Overview
+                        </h3>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-label">Grade 8 Mathematics</span>
+                            <span class="progress-value">24 Students</span>
+                        </div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-label">Grade 9 Physics</span>
+                            <span class="progress-value">18 Students</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grading Center Card -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-check-circle"></i>
+                            Grading Center
+                        </h3>
+                    </div>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <div class="activity-content">
+                                <div class="activity-title">15 assignments to grade</div>
+                                <div class="activity-meta">Mathematics - Problem Set 4</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-content">
+                                <div class="activity-title">8 lab reports pending</div>
+                                <div class="activity-meta">Physics - Experiment 2</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Section -->
+        <section id="admin-section" class="user-type-section">
+            <div class="dashboard-grid">
+                <!-- User Management Card -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-user-cog"></i>
+                            User Management
+                        </h3>
+                    </div>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <div class="activity-content">
+                                <div class="activity-title">245 Total Users</div>
+                                <div class="activity-meta">185 Students, 45 Teachers, 15 Admins</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-content">
+                                <div class="activity-title">5 New Registrations</div>
+                                <div class="activity-meta">Pending approval</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- System Analytics Card -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-pie"></i>
+                            System Analytics
+                        </h3>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-label">Active Users Today</span>
+                            <span class="progress-value">142</span>
+                        </div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-label">Course Completion Rate</span>
+                            <span class="progress-value">68%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get current user from localStorage or set default
+            const currentUser = JSON.parse(localStorage.getItem('passproofCurrentUser')) || {
+                name: 'Farai User',
+                email: 'farai@passproof.com',
+                role: 'learner',
+                grade: '8'
+            };
+
+            // DOM Elements
+            const userTypeSelector = document.getElementById('userTypeSelector');
+            const userAvatar = document.getElementById('userAvatar');
+            const userName = document.getElementById('userName');
+            const userRole = document.getElementById('userRole');
+            const profileAvatar = document.getElementById('profileAvatar');
+            const profileName = document.getElementById('profileName');
+            const profileRole = document.getElementById('profileRole');
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            const welcomeDescription = document.getElementById('welcomeDescription');
+            const userTypeSections = document.querySelectorAll('.user-type-section');
+            
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const sidebar = document.querySelector('.sidebar');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+            });
+
+            // Sidebar navigation
+            const sidebarLinks = document.querySelectorAll('.sidebar-link');
+            
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Update active link
+                    sidebarLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // In a real app, this would load the appropriate section
+                    const section = this.getAttribute('data-section');
+                    console.log(`Navigating to: ${section}`);
+                });
+            });
+
+            // User type selector
+            userTypeSelector.addEventListener('change', function() {
+                const userType = this.value;
+                updateUserType(userType);
+            });
+
+            // Initialize dashboard based on current user
+            function initializeDashboard() {
+                updateUserDisplay(currentUser);
+                updateUserType(currentUser.role);
+                userTypeSelector.value = currentUser.role;
+            }
+
+            // Update user display information
+            function updateUserDisplay(user) {
+                const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                
+                userAvatar.textContent = initials;
+                profileAvatar.textContent = initials;
+                userName.textContent = user.name;
+                profileName.textContent = user.name;
+                
+                // Set role-specific information
+                if (user.role === 'learner') {
+                    userRole.textContent = `Grade ${user.grade} Learner`;
+                    profileRole.textContent = `Grade ${user.grade} Learner`;
+                    welcomeMessage.textContent = `Welcome, ${user.name.split(' ')[0]}!`;
+                    welcomeDescription.textContent = `Grade ${user.grade} Learner at PassProof Academy`;
+                } else if (user.role === 'teacher') {
+                    userRole.textContent = 'Teacher';
+                    profileRole.textContent = 'Teacher';
+                    welcomeMessage.textContent = `Welcome, ${user.name.split(' ')[0]}!`;
+                    welcomeDescription.textContent = 'Teacher at PassProof Academy';
+                } else if (user.role === 'admin') {
+                    userRole.textContent = 'Administrator';
+                    profileRole.textContent = 'Administrator';
+                    welcomeMessage.textContent = `Welcome, ${user.name.split(' ')[0]}!`;
+                    welcomeDescription.textContent = 'Administrator at PassProof Academy';
+                }
+            }
+
+            // Update dashboard based on user type
+            function updateUserType(userType) {
+                // Hide all user type sections
+                userTypeSections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show the appropriate section
+                document.getElementById(`${userType}-section`).classList.add('active');
+                
+                // Update stats based on user type
+                updateStats(userType);
+            }
+
+            // Update statistics based on user type
+            function updateStats(userType) {
+                const statCourses = document.getElementById('statCourses');
+                const statAssignments = document.getElementById('statAssignments');
+                const statProgress = document.getElementById('statProgress');
+                const statAchievements = document.getElementById('statAchievements');
+                
+                if (userType === 'learner') {
+                    statCourses.textContent = '5';
+                    statAssignments.textContent = '3';
+                    statProgress.textContent = '72%';
+                    statAchievements.textContent = '8';
+                } else if (userType === 'teacher') {
+                    statCourses.textContent = '4';
+                    statAssignments.textContent = '23';
+                    statProgress.textContent = '85%';
+                    statAchievements.textContent = '12';
+                } else if (userType === 'admin') {
+                    statCourses.textContent = '15';
+                    statAssignments.textContent = '142';
+                    statProgress.textContent = '68%';
+                    statAchievements.textContent = '245';
+                }
+            }
+
+            // Initialize the dashboard
+            initializeDashboard();
+        });
+    </script>
+</body>
+</html>

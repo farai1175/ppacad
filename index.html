@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - PassProof Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4CAF50;
+            --secondary: #2196F3;
+            --accent: #FF9800;
+            --dark: #333;
+            --light: #f8f9fa;
+            --text: #444;
+            --text-light: #666;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 0 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--dark);
+        }
+
+        .logo-text span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            height: 100%;
+        }
+
+        .nav-links li {
+            position: relative;
+            height: 100%;
+        }
+
+        .nav-links a, .nav-links button {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding: 0 18px;
+            text-decoration: none;
+            color: var(--dark);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            gap: 5px;
+        }
+
+        .nav-links a:hover, .nav-links button:hover {
+            background-color: var(--light);
+            color: var(--primary);
+        }
+
+        .nav-links a.active, .nav-links button.active {
+            color: var(--primary);
+            background-color: var(--light);
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #fff;
+            min-width: 220px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 1001;
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .dropdown.active .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 18px;
+            text-decoration: none;
+            color: var(--dark);
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: var(--light);
+            padding-left: 22px;
+            color: var(--primary);
+        }
+
+        /* Submenu Styles */
+        .has-submenu {
+            position: relative;
+        }
+
+        .submenu {
+            display: none;
+            position: absolute;
+            left: 100%;
+            top: 0;
+            background-color: #fff;
+            min-width: 180px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 1002;
+            border-radius: 0 8px 8px 8px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .has-submenu.active .submenu {
+            display: block;
+        }
+
+        .has-submenu::after {
+            content: "›";
+            font-size: 1.2rem;
+            margin-left: auto;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 150px 20px 100px;
+            text-align: center;
+            color: white;
+            background: rgba(0, 0, 0, 0.3);
+            margin-top: 70px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            background: #45a049;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Main Content Styles */
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--dark);
+            font-size: 2.2rem;
+        }
+
+        .section-title span {
+            color: var(--primary);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 50px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1.1rem;
+        }
+
+        /* Features Section */
+        .features {
+            margin: 60px 0;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-item {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            border-top: 4px solid var(--primary);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-item i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .feature-item h3 {
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .feature-item p {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        /* Subjects Section */
+        .subjects {
+            margin: 60px 0;
+            padding: 40px 0;
+            background: var(--light);
+            border-radius: 12px;
+        }
+
+        .subject-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .subject-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .subject-card i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .subject-card h3 {
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .subject-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .subject-link {
+            display: inline-block;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .subject-link:hover {
+            color: var(--primary);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            margin: 60px 0;
+        }
+
+        .testimonial-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .testimonial {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--accent);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .author-info h4 {
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 60px 20px;
+            margin: 60px 0;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .stat-text {
+            font-size: 1.1rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--light);
+            padding: 60px 20px;
+            margin: 60px 0;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 20px 30px;
+            margin-top: 60px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .footer-col p, .footer-col a {
+            color: #ccc;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                height: auto;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                display: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                width: 100%;
+                height: auto;
+            }
+
+            .nav-links a, .nav-links button {
+                padding: 15px 20px;
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .dropdown-content {
+                position: static;
+                width: 100%;
+                box-shadow: none;
+                border-radius: 0;
+                display: none;
+            }
+
+            .dropdown.active .dropdown-content {
+                display: block;
+            }
+
+            .submenu {
+                position: static;
+                width: 100%;
+                box-shadow: none;
+                border-radius: 0;
+            }
+
+            .has-submenu::after {
+                content: "›";
+                transform: rotate(90deg);
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <div class="logo-text">Pass<span>Proof</span> Academy</div>
+            </div>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-links">
+                <li><a href="#" class="active"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+                <li class="dropdown">
+                    <button class="dropdown-btn"><i class="fas fa-book"></i> Courses <i class="fas fa-chevron-down"></i></button>
+                    <div class="dropdown-content">
+                        <!-- Physics -->
+                        <a href="#" class="has-submenu">
+                            <span><i class="fas fa-atom"></i> Physics</span>
+                        </a>
+                        <div class="submenu">
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 8</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 9</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 10</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 11</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 12</a>
+                        </div>
+                        
+                        <!-- Maths -->
+                        <a href="#" class="has-submenu">
+                            <span><i class="fas fa-calculator"></i> Maths</span>
+                        </a>
+                        <div class="submenu">
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 8</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 9</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 10</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 11</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 12</a>
+                        </div>
+                        
+                        <!-- Chemistry -->
+                        <a href="#" class="has-submenu">
+                            <span><i class="fas fa-flask"></i> Chemistry</span>
+                        </a>
+                        <div class="submenu">
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 8</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 9</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 10</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 11</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 12</a>
+                        </div>
+                        
+                        <!-- Life Science -->
+                        <a href="#" class="has-submenu">
+                            <span><i class="fas fa-dna"></i> Life Science</span>
+                        </a>
+                        <div class="submenu">
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 8</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 9</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 10</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 11</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 12</a>
+                        </div>
+                        
+                        <!-- Geography -->
+                        <a href="#" class="has-submenu">
+                            <span><i class="fas fa-globe-americas"></i> Geography</span>
+                        </a>
+                        <div class="submenu">
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 8</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 9</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 10</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 11</a>
+                            <a href="#"><i class="fas fa-graduation-cap"></i> Grade 12</a>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="#"><i class="fas fa-envelope"></i> Contact Us</a></li>
+                <li><a href="#" class="cta-button" style="padding: 10px 20px; margin-left: 10px;">Get Started</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Unlock Your Academic Potential</h1>
+        <p>PassProof Academy provides comprehensive learning resources for students from Grade 8 to 12, helping them achieve excellence in all major subjects.</p>
+        <a href="#" class="cta-button">Start Learning Today <i class="fas fa-arrow-right"></i></a>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Features Section -->
+        <section class="features">
+            <h2 class="section-title">Why Choose <span>PassProof Academy</span>?</h2>
+            <p class="section-subtitle">We combine innovative teaching methods with comprehensive curriculum to deliver exceptional learning experiences for students.</p>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <h3>Expert Instructors</h3>
+                    <p>Our teachers are subject matter experts with years of experience and proven track records of student success.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-book-open"></i>
+                    <h3>Comprehensive Curriculum</h3>
+                    <p>We cover all topics needed for academic success with materials updated regularly to match current standards.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-laptop-code"></i>
+                    <h3>Interactive Learning</h3>
+                    <p>Engage with interactive content, simulations, and quizzes that make complex concepts easier to understand.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Proven Results</h3>
+                    <p>Our students consistently achieve higher grades and develop deeper understanding of subjects.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-user-clock"></i>
+                    <h3>Flexible Schedule</h3>
+                    <p>Learn at your own pace with 24/7 access to all course materials and recorded sessions.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-headset"></i>
+                    <h3>Dedicated Support</h3>
+                    <p>Get help whenever you need it with our responsive support team and peer discussion forums.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Subjects Section -->
+        <section class="subjects">
+            <h2 class="section-title">Our <span>Subjects</span></h2>
+            <p class="section-subtitle">We offer comprehensive courses in all major subjects for students from Grade 8 to 12.</p>
+            
+            <div class="subject-list">
+                <div class="subject-card">
+                    <i class="fas fa-atom"></i>
+                    <h3>Physics</h3>
+                    <p>Master fundamental concepts and complex theories with our interactive physics curriculum.</p>
+                    <a href="#" class="subject-link">Explore Physics <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="subject-card">
+                    <i class="fas fa-calculator"></i>
+                    <h3>Mathematics</h3>
+                    <p>Build strong mathematical foundations and problem-solving skills for all levels.</p>
+                    <a href="#" class="subject-link">Explore Maths <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="subject-card">
+                    <i class="fas fa-flask"></i>
+                    <h3>Chemistry</h3>
+                    <p>Understand chemical reactions, equations, and laboratory techniques with ease.</p>
+                    <a href="#" class="subject-link">Explore Chemistry <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="subject-card">
+                    <i class="fas fa-dna"></i>
+                    <h3>Life Science</h3>
+                    <p>Explore the wonders of biology, from cellular structures to complex ecosystems.</p>
+                    <a href="#" class="subject-link">Explore Life Science <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="subject-card">
+                    <i class="fas fa-globe-americas"></i>
+                    <h3>Geography</h3>
+                    <p>Discover Earth's physical features, climates, and human-environment interactions.</p>
+                    <a href="#" class="subject-link">Explore Geography <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats">
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-number">5,000+</div>
+                    <div class="stat-text">Students Enrolled</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-text">Pass Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-text">Expert Instructors</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5</div>
+                    <div class="stat-text">Core Subjects</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials">
+            <h2 class="section-title">What Our <span>Students Say</span></h2>
+            <p class="section-subtitle">Hear from students who have transformed their academic performance with PassProof Academy.</p>
+            
+            <div class="testimonial-container">
+                <div class="testimonial">
+                    <div class="testimonial-text">
+                        "PassProof Academy helped me improve my Physics grade from a C to an A. The interactive lessons made complex concepts so much easier to understand!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JS</div>
+                        <div class="author-info">
+                            <h4>Jessica Smith</h4>
+                            <p>Grade 11 Student</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-text">
+                        "The Mathematics courses are fantastic! I finally understand algebra and calculus thanks to the step-by-step explanations and practice problems."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MR</div>
+                        <div class="author-info">
+                            <h4>Michael Rodriguez</h4>
+                            <p>Grade 10 Student</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-text">
+                        "As a visual learner, the interactive diagrams and simulations in the Life Science course made all the difference. Highly recommended!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SP</div>
+                        <div class="author-info">
+                            <h4>Sarah Patel</h4>
+                            <p>Grade 12 Student</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2>Ready to Transform Your Learning Experience?</h2>
+            <p>Join thousands of students who have already discovered the PassProof Academy advantage. Start your journey to academic excellence today.</p>
+            <a href="#" class="cta-button">Enroll Now <i class="fas fa-arrow-right"></i></a>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>PassProof Academy</h3>
+                <p>Where success is guaranteed! We provide comprehensive learning resources for students from Grade 8 to 12.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <a href="#">Home</a>
+                <a href="#">About Us</a>
+                <a href="#">Courses</a>
+                <a href="#">Testimonials</a>
+                <a href="#">Contact Us</a>
+            </div>
+            <div class="footer-col">
+                <h3>Subjects</h3>
+                <a href="#">Physics</a>
+                <a href="#">Mathematics</a>
+                <a href="#">Chemistry</a>
+                <a href="#">Life Science</a>
+                <a href="#">Geography</a>
+            </div>
+            <div class="footer-col">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Education Street, Learning City</p>
+                <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                <p><i class="fas fa-envelope"></i> info@passproofacademy.com</p>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 PassProof Academy. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                const icon = this.querySelector('i');
+                if (navLinks.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+            
+            // Dropdown functionality
+            const dropdownBtns = document.querySelectorAll('.dropdown-btn');
+            
+            dropdownBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const dropdown = this.closest('.dropdown');
+                    dropdown.classList.toggle('active');
+                    
+                    // Close other dropdowns
+                    document.querySelectorAll('.dropdown').forEach(otherDropdown => {
+                        if (otherDropdown !== dropdown) {
+                            otherDropdown.classList.remove('active');
+                        }
+                    });
+                });
+            });
+            
+            // Submenu functionality
+            const hasSubmenuItems = document.querySelectorAll('.has-submenu');
+            
+            hasSubmenuItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                    
+                    // Close other submenus at the same level
+                    const parent = this.parentElement;
+                    parent.querySelectorAll('.has-submenu').forEach(otherItem => {
+                        if (otherItem !== this) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                });
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function() {
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+                
+                document.querySelectorAll('.has-submenu').forEach(item => {
+                    item.classList.remove('active');
+                });
+            });
+            
+            // Prevent dropdown close when clicking inside dropdown
+            document.querySelectorAll('.dropdown-content, .submenu').forEach(menu => {
+                menu.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            });
+            
+            // Set active nav link
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const navLinksItems = document.querySelectorAll('.nav-links a');
+            
+            navLinksItems.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+                
+                link.addEventListener('click', function() {
+                    navLinksItems.forEach(item => item.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Close mobile menu after selection
+                    if (window.innerWidth <= 992) {
+                        navLinks.classList.remove('active');
+                        mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                        mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+                    }
+                });
+            });
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                    navbar.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
+                } else {
+                    navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                    navbar.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.1)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
