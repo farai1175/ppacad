@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gay-Lussac's Law - Interactive Lesson</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #7c3aed;
+            --secondary-color: #8b5cf6;
+            --accent-color: #a78bfa;
+            --light-color: #ede9fe;
+            --dark-color: #4c1d95;
+            --text-color: #374151;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f9fafb;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .subject-grade {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            opacity: 0.9;
+        }
+
+        .topic {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .sub-topic {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .lesson-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .header-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,.1) 10px, rgba(255,255,255,.1) 20px);
+            z-index: 1;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: #eee;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .progress-indicator {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        main {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            background-color: #f9fafb;
+            border-left: 4px solid var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .section:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            font-size: 1.2rem;
+        }
+
+        .objectives-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .objectives-list li {
+            margin-bottom: 10px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .objectives-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background-color: #f1f1f1;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+            font-weight: bold;
+        }
+
+        .tab-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .tab-button.active {
+            background-color: white;
+            border-bottom: 3px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            border: 1px solid #ddd;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .definition-box {
+            background-color: var(--light-color);
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+        }
+
+        .definition-term {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .principle-box {
+            background-color: #f3e8ff;
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+        }
+
+        .principle-title {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+
+        .interactive-demo {
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin: 20px 0;
+            background-color: white;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .demo-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .demo-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .demo-btn.active {
+            background-color: var(--accent-color);
+        }
+
+        .demo-output {
+            border: 1px solid #eee;
+            padding: 15px;
+            min-height: 100px;
+            border-radius: var(--border-radius);
+            background-color: #f9f9f9;
+        }
+
+        .questions-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .question-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            border-left: 3px solid var(--accent-color);
+            transition: var(--transition);
+        }
+
+        .question-item:hover {
+            transform: translateX(5px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .question-options {
+            margin-left: 20px;
+        }
+
+        .option {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .option input {
+            margin-right: 5px;
+        }
+
+        .check-answer-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: var(--transition);
+        }
+
+        .check-answer-btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            display: none;
+        }
+
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .collapsible {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: var(--transition);
+            border-radius: var(--border-radius);
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .collapsible:hover {
+            background-color: #ddd6fe;
+        }
+
+        .collapsible.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .collapsible i {
+            transition: var(--transition);
+        }
+
+        .collapsible.active i {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            padding: 0 15px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: white;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+        }
+
+        .collapsible-content.active {
+            padding: 15px;
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in;
+        }
+
+        .formula-box {
+            background-color: #f8fafc;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-style: italic;
+            font-size: 1.2rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .nav-btn:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .gassac-simulation {
+            position: relative;
+            height: 300px;
+            background-color: #f3e8ff;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gas-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gas-particles {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .gas-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .pressure-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 5px 10px;
+            border-radius: var(--border-radius);
+            font-weight: bold;
+        }
+
+        .slider-container {
+            margin: 20px 0;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .slider {
+            width: 100%;
+            height: 5px;
+            border-radius: 5px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .slider:hover {
+            opacity: 1;
+        }
+
+        .value-display {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+        }
+
+        .value-item {
+            text-align: center;
+            padding: 10px;
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+            min-width: 100px;
+        }
+
+        .value-label {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .value-number {
+            font-size: 1.2rem;
+            margin-top: 5px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+        }
+
+        .temp-converter {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .temp-input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .temp-input {
+            width: 120px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .temp-label {
+            margin-top: 5px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .conversion-arrow {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+        }
+
+        .stp-box {
+            background-color: #f0f9ff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .stp-item {
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .stp-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .stp-value {
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 0;
+            }
+            
+            body {
+                padding: 0;
+            }
+            
+            main {
+                padding: 15px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+            }
+            
+            .demo-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar">
+        <div class="progress-indicator" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="header-pattern"></div>
+            <div class="header-content">
+                <div class="subject-grade">PHYSICAL SCIENCES</div>
+                <h1 class="topic">IDEAL GASES AND THERMAL PROPERTIES</h1>
+                <div class="sub-topic">UNIT 4: GAY-LUSSAC'S LAW</div>
+                <div class="lesson-title">COMPREHENSIVE LESSON PLAN: GAY-LUSSAC'S LAW</div>
+            </div>
+        </header>
+
+        <main>
+            <section class="section" id="objectives">
+                <h2 class="section-title"><i class="fas fa-bullseye"></i> Learning Objectives</h2>
+                <p>The following results will be the outcomes of this lesson. The learners must be able to:</p>
+                <ul class="objectives-list">
+                    <li>Describe the relationship between pressure and temperature in Kelvins for a fixed amount of gas at constant volume</li>
+                    <li>State Gay-Lussac's Law</li>
+                    <li>Describe Dependent Variables, Independent Variables and controlled variables</li>
+                    <li>Take readings of temperature and pressure using Gay-Lussac's Law apparatus</li>
+                    <li>Plot a graph of pressure versus temperature using the results obtained from the investigation</li>
+                    <li>Use the derived formula of p₁/T₁ = p₂/T₂ to do the calculations</li>
+                    <li>Define Standard Temperature and Pressure (STP)</li>
+                </ul>
+            </section>
+
+            <section class="section" id="definitions">
+                <h2 class="section-title"><i class="fas fa-book"></i> Definitions and Scientific Principles</h2>
+                
+                <div class="tabs">
+                    <button class="tab-button active" onclick="openTab(event, 'definitions-tab')">Definitions</button>
+                    <button class="tab-button" onclick="openTab(event, 'principles-tab')">Scientific Principles</button>
+                </div>
+                
+                <div id="definitions-tab" class="tab-content active">
+                    <div class="definition-box">
+                        <div class="definition-term">Gay-Lussac's Law:</div>
+                        <p>States that the pressure (p) of a fixed amount of gas is directly proportional to its absolute temperature (T) at constant volume.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Pressure (p):</div>
+                        <p>The pressure exerted by a gas is due to the collision of molecules with the walls of the container.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Absolute Temperature (T):</div>
+                        <p>Temperature measured in kelvin (K), where 0 K represents the absolute zero of temperature.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Standard Temperature and Pressure (STP):</div>
+                        <p>Agreed-upon conditions used by scientists globally to compare results of experiments involving gases.</p>
+                    </div>
+                </div>
+                
+                <div id="principles-tab" class="tab-content">
+                    <div class="principle-box">
+                        <div class="principle-title">Kinetic Theory:</div>
+                        <p>The temperature (T) of a gas is a measure of the average kinetic energy of molecules. If temperature increases, the kinetic energy of particles also increases, causing them to move faster.</p>
+                    </div>
+                    
+                    <div class="principle-box">
+                        <div class="principle-title">Direct Proportionality:</div>
+                        <p>When a relationship is directly proportional (p ∝ T), plotting the two variables yields a straight line passing through the origin.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="overview">
+                <h2 class="section-title"><i class="fas fa-eye"></i> Introduction</h2>
+                <p>Gay-Lussac's Law describes the relationship between pressure and temperature for a gas, provided the volume and amount of gas remain constant. The relationship was noted by scientists around the end of the 17th century and is named after Joseph Gay-Lussac. This law is rooted in the kinetic theory: as molecules speed up (increased temperature), they hit the container walls harder and more often, resulting in an increased pressure, provided the container size is fixed.</p>
+                
+                <div class="interactive-demo">
+                    <h4>Interactive Temperature Converter</h4>
+                    <p>Use this tool to convert between Celsius and Kelvin temperatures:</p>
+                    
+                    <div class="temp-converter">
+                        <div class="temp-input-group">
+                            <input type="number" class="temp-input" id="celsiusInput" placeholder="Enter °C" onchange="convertTemp('c')">
+                            <div class="temp-label">Degrees Celsius (°C)</div>
+                        </div>
+                        
+                        <div class="conversion-arrow">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        
+                        <div class="temp-input-group">
+                            <input type="number" class="temp-input" id="kelvinInput" placeholder="Enter K" onchange="convertTemp('k')">
+                            <div class="temp-label">Kelvin (K)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="formula-box">
+                        T (K) = t (°C) + 273
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="main-body">
+                <h2 class="section-title"><i class="fas fa-atom"></i> Main Body: Gay-Lussac's Law and its Application</h2>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    I. Stating the Law and Describing Relationship (LO 1 & LO 2)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p><strong>Gay-Lussac's law states that the pressure of a fixed amount of gas at constant volume is directly proportional to its absolute temperature</strong>.</p>
+                    
+                    <ul>
+                        <li><strong>Relationship (LO 1):</strong> The relationship between pressure (p) and absolute temperature (T) is <strong>directly proportional</strong>.</li>
+                        <li><strong>Symbols (LO 2):</strong> This relationship is expressed in symbols as <strong>p ∝ T</strong>.</li>
+                        <li><strong>Equation (LO 2):</strong> Using a proportionality constant (k), the law is written as an equation: <strong>p/T = k</strong>.</li>
+                    </ul>
+                    
+                    <div class="formula-box">
+                        p ∝ T
+                    </div>
+                    
+                    <div class="formula-box">
+                        p/T = k
+                    </div>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    II. Experimental Investigation and Readings (LO 3 & LO 5)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>A Gay-Lussac's law investigation involves heating an enclosed sample of air and measuring the resulting pressure changes.</p>
+                    
+                    <h4>1. Variables in the Investigation (LO 3):</h4>
+                    <ul>
+                        <li><strong>Independent Variable:</strong> <strong>Temperature (T)</strong>. This variable is changed by increasing the heat applied, often using a water bath.</li>
+                        <li><strong>Dependent Variable:</strong> <strong>Pressure (P)</strong>. This variable is measured using a pressure gauge or a meter.</li>
+                        <li><strong>Controlled Variables (Constants):</strong> The <strong>volume</strong> (V) and the <strong>amount of gas</strong> (fixed mass or number of moles, n) must be kept constant. This is typically achieved by using a sealed, rigid container.</li>
+                    </ul>
+                    
+                    <h4>2. Taking Readings (LO 5):</h4>
+                    <p>In a typical investigation, learners take readings of the <strong>temperature</strong> (using a thermometer) and the corresponding <strong>pressure</strong> (reading on a gauge) at regular intervals as the gas is heated.</p>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    III. Temperature Conversion (LO 4)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>Gay-Lussac's Law, like Charles' Law, must use the <strong>absolute temperature scale (Kelvin)</strong> in calculations and graphs.</p>
+                    
+                    <ul>
+                        <li>The relationship between the Celsius scale (t) and the Kelvin scale (T) is defined by the formula:</li>
+                    </ul>
+                    
+                    <div class="formula-box">
+                        T (K) = t (°C) + 273
+                    </div>
+                    
+                    <p>The lowest possible theoretical temperature, -273°C, is called <strong>absolute zero</strong> or 0 K.</p>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    IV. Plotting Graph (LO 6)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <h4>1. Pressure vs. Absolute Temperature (P vs T):</h4>
+                    <p>Plotting pressure against temperature in <strong>Kelvin</strong> yields a <strong>straight line graph that passes through the origin</strong> (0,0). This confirms the direct proportionality.</p>
+                    
+                    <h4>2. Pressure vs. Celsius Temperature (P vs t):</h4>
+                    <p>Plotting pressure against temperature in °C also yields a straight line, but it <strong>does not go through the origin</strong>. If this line is extrapolated (extended backwards) until it cuts the x-axis (temperature axis), it determines the value of <strong>-273°C</strong>.</p>
+                    
+                    <p><strong>Deviation of Real Gases:</strong> At very low temperatures, the forces of attraction between real gas particles become significant, causing them to move slower and exert less pressure than predicted by the law. Consequently, the graph of a real gas deviates from the straight line of an ideal gas at low temperatures.</p>
+                    
+                    <div class="chart-container">
+                        <canvas id="kelvinChart"></canvas>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <canvas id="celsiusChart"></canvas>
+                    </div>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    V. Calculations and Standard Temperature and Pressure (LO 7)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <h4>1. Calculation using the Derived Formula:</h4>
+                    <p>Because the ratio of pressure to absolute temperature is constant (p/T = k), the formula used for calculations involving changing conditions is:</p>
+                    
+                    <div class="formula-box">
+                        p₁/T₁ = p₂/T₂
+                    </div>
+                    
+                    <ul>
+                        <li>It is critical that temperature values T₁ and T₂ are <strong>always in kelvin</strong>.</li>
+                        <li>Pressure units (p₁ and p₂) must be the same throughout the calculation (e.g., Pa or atm or kPa).</li>
+                    </ul>
+                    
+                    <h4>2. Standard Temperature and Pressure (STP) Application:</h4>
+                    <p>Scientists agree to report results after converting the gas volume to what it would be at STP. STP values are used in calculations, often involving the combined or ideal gas laws, to compare experimental results globally.</p>
+                    
+                    <div class="stp-box">
+                        <div class="stp-item">
+                            <div class="stp-title">Standard Temperature</div>
+                            <div class="stp-value">273 K (0°C)</div>
+                        </div>
+                        <div class="stp-item">
+                            <div class="stp-title">Standard Pressure</div>
+                            <div class="stp-value">101.3 kPa (1.013 × 10⁵ Pa)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-demo">
+                        <h4>Gay-Lussac's Law Calculator</h4>
+                        <p>Use this calculator to solve Gay-Lussac's Law problems:</p>
+                        
+                        <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;">
+                            <div style="flex: 1; min-width: 200px;">
+                                <label for="p1Input" style="display: block; margin-bottom: 5px; font-weight: bold;">Initial Pressure (p₁):</label>
+                                <input type="number" id="p1Input" class="temp-input" style="width: 100%;" placeholder="Enter p₁">
+                            </div>
+                            
+                            <div style="flex: 1; min-width: 200px;">
+                                <label for="t1Input" style="display: block; margin-bottom: 5px; font-weight: bold;">Initial Temperature (T₁):</label>
+                                <input type="number" id="t1Input" class="temp-input" style="width: 100%;" placeholder="Enter T₁ (K)">
+                            </div>
+                            
+                            <div style="flex: 1; min-width: 200px;">
+                                <label for="t2Input" style="display: block; margin-bottom: 5px; font-weight: bold;">Final Temperature (T₂):</label>
+                                <input type="number" id="t2Input" class="temp-input" style="width: 100%;" placeholder="Enter T₂ (K)">
+                            </div>
+                        </div>
+                        
+                        <button class="demo-btn" style="margin: 15px auto; display: block;" onclick="calculateGayLussacLaw()">Calculate Final Pressure (p₂)</button>
+                        
+                        <div id="calculationResult" style="text-align: center; font-size: 1.2rem; font-weight: bold; color: var(--primary-color); margin-top: 15px;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="conclusion">
+                <h2 class="section-title"><i class="fas fa-check-circle"></i> Conclusion</h2>
+                <p>Gay-Lussac's Law establishes the <strong>direct proportionality</strong> between the pressure and the absolute temperature of a fixed amount of gas held at constant volume. This law is explained by the kinetic theory: increased temperature increases molecular kinetic energy, leading to more frequent and harder collisions with the container walls, thus increasing pressure. Successfully applying this law, either graphically or mathematically (p₁/T₁ = p₂/T₂), demands the use of the <strong>Kelvin temperature scale</strong> and knowledge of the agreed-upon conditions for <strong>Standard Temperature and Pressure (STP)</strong>.</p>
+            </section>
+
+            <section class="section" id="questions">
+                <h2 class="section-title"><i class="fas fa-question-circle"></i> End-of-Lesson Questions</h2>
+                
+                <ul class="questions-list">
+                    <li class="question-item">
+                        <div class="question-text">1. Describe Relationship (LO 1): Describe the mathematical relationship between the pressure and temperature of a fixed amount of gas at constant volume.</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q1" value="a" id="q1a">
+                                <label for="q1a">Pressure and temperature are directly proportional</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="b" id="q1b">
+                                <label for="q1b">Pressure and temperature are inversely proportional</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="c" id="q1c">
+                                <label for="q1c">Pressure and temperature are unrelated</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q1', 'a')">Check Answer</button>
+                        <div class="feedback" id="q1-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">2. State Law (LO 2): State Gay-Lussac's Law in words. Write the relationship using symbols.</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q2" value="a" id="q2a">
+                                <label for="q2a">The pressure of a fixed amount of gas at constant volume is directly proportional to its absolute temperature: p ∝ T or p/T = k</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="b" id="q2b">
+                                <label for="q2b">The pressure of a fixed amount of gas at constant volume is inversely proportional to its absolute temperature: p ∝ 1/T</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="c" id="q2c">
+                                <label for="q2c">The volume of a fixed amount of gas at constant pressure is directly proportional to its absolute temperature: V ∝ T</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q2', 'a')">Check Answer</button>
+                        <div class="feedback" id="q2-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">3. Identify Variables (LO 3): Identify the independent variable for a Gay-Lussac's Law investigation.</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q3" value="a" id="q3a">
+                                <label for="q3a">Pressure (P)</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="b" id="q3b">
+                                <label for="q3b">Temperature (T)</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="c" id="q3c">
+                                <label for="q3c">Volume (V)</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q3', 'b')">Check Answer</button>
+                        <div class="feedback" id="q3-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">4. Temperature Conversion (LO 4): Convert 19°C to the absolute temperature scale.</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q4" value="a" id="q4a">
+                                <label for="q4a">292 K</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="b" id="q4b">
+                                <label for="q4b">254 K</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="c" id="q4c">
+                                <label for="q4c">19 K</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q4', 'a')">Check Answer</button>
+                        <div class="feedback" id="q4-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">5. Taking Readings (LO 5): If you are performing Gay-Lussac's Law experiment using a sealed flask in a water bath, what two variables must you measure simultaneously as the water is heated?</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q5" value="a" id="q5a">
+                                <label for="q5a">Temperature and pressure</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="b" id="q5b">
+                                <label for="q5b">Volume and pressure</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="c" id="q5c">
+                                <label for="q5c">Volume and temperature</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q5', 'a')">Check Answer</button>
+                        <div class="feedback" id="q5-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">6. Graphing (LO 6): Describe the shape of the graph obtained when plotting pressure versus absolute temperature (P vs T).</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q6" value="a" id="q6a">
+                                <label for="q6a">A straight line that passes through the origin</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q6" value="b" id="q6b">
+                                <label for="q6b">A straight line that does not pass through the origin</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q6" value="c" id="q6c">
+                                <label for="q6c">A curved hyperbolic graph</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q6', 'a')">Check Answer</button>
+                        <div class="feedback" id="q6-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">7. Calculation and STP (LO 7): A gas exerts a pressure of 50 kPa at a temperature of 25°C. If the volume is kept constant, calculate the pressure it exerts at 50°C.</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q7" value="a" id="q7a">
+                                <label for="q7a">54.6 kPa</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q7" value="b" id="q7b">
+                                <label for="q7b">100 kPa</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q7" value="c" id="q7c">
+                                <label for="q7c">50 kPa</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q7', 'a')">Check Answer</button>
+                        <div class="feedback" id="q7-feedback"></div>
+                    </li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <div class="navigation">
+                <button class="nav-btn" id="prevBtn" onclick="navigateSection(-1)" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="nav-btn" id="nextBtn" onclick="navigateSection(1)">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            <p>&copy; 2023 Physical Sciences Interactive Learning Platform. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Track current section for navigation
+        const sections = ['objectives', 'definitions', 'overview', 'main-body', 'conclusion', 'questions'];
+        let currentSectionIndex = 0;
+        let kelvinChart, celsiusChart;
+
+        // Update progress bar based on scroll position
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabButtons = document.getElementsByClassName("tab-button");
+            const tabContents = document.getElementsByClassName("tab-content");
+            
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Collapsible content functionality
+        function toggleCollapsible(element) {
+            element.classList.toggle("active");
+            const content = element.nextElementSibling;
+            content.classList.toggle("active");
+            
+            // Initialize charts when the graph section is opened
+            if (element.textContent.includes("Plotting Graph") && content.classList.contains("active")) {
+                if (!kelvinChart) {
+                    initCharts();
+                }
+            }
+        }
+
+        // Check answer function
+        function checkAnswer(questionId, correctAnswer) {
+            const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
+            const feedbackElement = document.getElementById(`${questionId}-feedback`);
+            
+            if (!selectedOption) {
+                feedbackElement.textContent = 'Please select an answer.';
+                feedbackElement.className = 'feedback incorrect';
+                feedbackElement.style.display = 'block';
+                return;
+            }
+            
+            if (selectedOption.value === correctAnswer) {
+                feedbackElement.textContent = 'Correct! Well done.';
+                feedbackElement.className = 'feedback correct';
+            } else {
+                feedbackElement.textContent = 'Incorrect. Please review the lesson material and try again.';
+                feedbackElement.className = 'feedback incorrect';
+            }
+            
+            feedbackElement.style.display = 'block';
+        }
+
+        // Navigation between sections
+        function navigateSection(direction) {
+            currentSectionIndex += direction;
+            
+            // Ensure we stay within bounds
+            if (currentSectionIndex < 0) currentSectionIndex = 0;
+            if (currentSectionIndex >= sections.length) currentSectionIndex = sections.length - 1;
+            
+            // Scroll to the current section
+            const currentSection = document.getElementById(sections[currentSectionIndex]);
+            currentSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentSectionIndex === 0;
+            document.getElementById('nextBtn').disabled = currentSectionIndex === sections.length - 1;
+        }
+
+        // Temperature conversion
+        function convertTemp(from) {
+            const celsiusInput = document.getElementById('celsiusInput');
+            const kelvinInput = document.getElementById('kelvinInput');
+            
+            if (from === 'c') {
+                const celsius = parseFloat(celsiusInput.value);
+                if (!isNaN(celsius)) {
+                    kelvinInput.value = celsius + 273;
+                }
+            } else {
+                const kelvin = parseFloat(kelvinInput.value);
+                if (!isNaN(kelvin)) {
+                    celsiusInput.value = kelvin - 273;
+                }
+            }
+        }
+
+        // Initialize charts
+        function initCharts() {
+            // Kelvin chart (P vs T)
+            const kelvinCtx = document.getElementById('kelvinChart').getContext('2d');
+            kelvinChart = new Chart(kelvinCtx, {
+                type: 'line',
+                data: {
+                    labels: [200, 250, 300, 350, 400, 450, 500],
+                    datasets: [{
+                        label: 'Pressure vs Kelvin Temperature',
+                        data: [80, 100, 120, 140, 160, 180, 200],
+                        borderColor: 'rgb(124, 58, 237)',
+                        backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                        tension: 0.1,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Pressure vs Kelvin Temperature (Straight Line Through Origin)'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Temperature (K)'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Pressure (kPa)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Celsius chart (P vs °C)
+            const celsiusCtx = document.getElementById('celsiusChart').getContext('2d');
+            celsiusChart = new Chart(celsiusCtx, {
+                type: 'line',
+                data: {
+                    labels: [-273, -200, -100, 0, 100, 200],
+                    datasets: [{
+                        label: 'Pressure vs Celsius Temperature',
+                        data: [0, 73, 146, 219, 292, 365],
+                        borderColor: 'rgb(124, 58, 237)',
+                        backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                        tension: 0.1,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Pressure vs Celsius Temperature (Straight Line Not Through Origin)'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Temperature (°C)'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Pressure (kPa)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Gay-Lussac's Law calculator
+        function calculateGayLussacLaw() {
+            const p1 = parseFloat(document.getElementById('p1Input').value);
+            const t1 = parseFloat(document.getElementById('t1Input').value);
+            const t2 = parseFloat(document.getElementById('t2Input').value);
+            const resultDiv = document.getElementById('calculationResult');
+            
+            if (isNaN(p1) || isNaN(t1) || isNaN(t2)) {
+                resultDiv.textContent = 'Please enter valid numbers for all fields.';
+                resultDiv.style.color = 'red';
+                return;
+            }
+            
+            // Calculate p2 using Gay-Lussac's Law: p1/T1 = p2/T2
+            const p2 = (p1 * t2) / t1;
+            
+            resultDiv.textContent = `p₂ = ${p2.toFixed(2)} kPa`;
+            resultDiv.style.color = 'var(--primary-color)';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set initial navigation state
+            document.getElementById('prevBtn').disabled = true;
+            
+            // Add smooth scrolling to all internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

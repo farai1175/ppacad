@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stoichiometry and Limiting Reagents - Interactive Lesson</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #0f766e;
+            --secondary-color: #1e40af;
+            --accent-color: #34d399;
+            --light-color: #e0f2fe;
+            --dark-color: #1e3a8a;
+            --text-color: #334155;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f8fafc;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .subject-grade {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            opacity: 0.9;
+        }
+
+        .topic {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .sub-topic {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .lesson-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .header-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,.1) 10px, rgba(255,255,255,.1) 20px);
+            z-index: 1;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: #eee;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .progress-indicator {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        main {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            background-color: #f9fafb;
+            border-left: 4px solid var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .section:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            font-size: 1.2rem;
+        }
+
+        .objectives-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .objectives-list li {
+            margin-bottom: 10px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .objectives-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background-color: #f1f1f1;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+            font-weight: bold;
+        }
+
+        .tab-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .tab-button.active {
+            background-color: white;
+            border-bottom: 3px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            border: 1px solid #ddd;
+        }
+
+        .definition-box {
+            background-color: var(--light-color);
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+        }
+
+        .definition-term {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .principle-box {
+            background-color: #f0f9ff;
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+        }
+
+        .principle-title {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+
+        .interactive-demo {
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin: 20px 0;
+            background-color: white;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .demo-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .demo-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .demo-btn.active {
+            background-color: var(--accent-color);
+        }
+
+        .demo-output {
+            border: 1px solid #eee;
+            padding: 15px;
+            min-height: 100px;
+            border-radius: var(--border-radius);
+            background-color: #f9f9f9;
+        }
+
+        .questions-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .question-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            border-left: 3px solid var(--accent-color);
+            transition: var(--transition);
+        }
+
+        .question-item:hover {
+            transform: translateX(5px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .question-options {
+            margin-left: 20px;
+        }
+
+        .option {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .option input {
+            margin-right: 5px;
+        }
+
+        .check-answer-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: var(--transition);
+        }
+
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            display: none;
+        }
+
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .collapsible {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: var(--transition);
+            border-radius: var(--border-radius);
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .collapsible:hover {
+            background-color: #d1fae5;
+        }
+
+        .collapsible.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .collapsible i {
+            transition: var(--transition);
+        }
+
+        .collapsible.active i {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            padding: 0 15px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: white;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+        }
+
+        .collapsible-content.active {
+            padding: 15px;
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in;
+        }
+
+        .formula-box {
+            background-color: #f8fafc;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-style: italic;
+            font-size: 1.2rem;
+        }
+
+        .reaction-visualizer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .reactant-container {
+            flex: 1;
+            min-width: 200px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 10px;
+        }
+
+        .reactant-name {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .molecule-display {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .atom {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .atom-count {
+            font-size: 1.2rem;
+            margin-top: 5px;
+        }
+
+        .arrow-container {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .arrow {
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-top: 15px solid transparent;
+            border-right: 15px solid transparent;
+        }
+
+        .arrow:after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-left: 15px solid var(--primary-color);
+            border-top: 15px solid transparent;
+            transform: rotate(90deg);
+        }
+
+        .product-container {
+            flex: 1;
+            min-width: 200px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 10px;
+        }
+
+        .calculation-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .input-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .calculation-result {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 15px;
+            padding: 10px;
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .nav-btn:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 0;
+            }
+            
+            body {
+                padding: 0;
+            }
+            
+            main {
+                padding: 15px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+            }
+            
+            .demo-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar">
+        <div class="progress-indicator" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="header-pattern"></div>
+            <div class="header-content">
+                <div class="subject-grade">PHYSICAL SCIENCES / CHEMISTRY</div>
+                <h1 class="topic">QUANTITATIVE ASPECTS OF CHEMICAL CHANGE: STOICHIOMETRY AND LIMITING REAGENTS</h1>
+                <div class="sub-topic">STOICHIOMETRIC CALCULATIONS, UNIT CONVERSION, AND LIMITING REAGENTS</div>
+                <div class="lesson-title">COMPREHENSIVE STRUCTURED LESSON: STOICHIOMETRY AND LIMITING REAGENTS</div>
+            </div>
+        </header>
+
+        <main>
+            <section class="section" id="objectives">
+                <h2 class="section-title"><i class="fas fa-bullseye"></i> Learning Objectives</h2>
+                <p>The learners must be able to:</p>
+                <ul class="objectives-list">
+                    <li>Perform stoichiometric calculations using balanced equations</li>
+                    <li>Convert any given units to required units</li>
+                    <li>Determine a limiting reagent in a chemical reaction</li>
+                </ul>
+            </section>
+
+            <section class="section" id="definitions">
+                <h2 class="section-title"><i class="fas fa-book"></i> Definitions and Scientific Principles</h2>
+                
+                <div class="tabs">
+                    <button class="tab-button active" onclick="openTab(event, 'definitions-tab')">Definitions</button>
+                    <button class="tab-button" onclick="openTab(event, 'principles-tab')">Scientific Principles</button>
+                </div>
+                
+                <div id="definitions-tab" class="tab-content active">
+                    <div class="definition-box">
+                        <div class="definition-term">Stoichiometry:</div>
+                        <p>The branch of chemistry that deals with the quantitative relationship between reactants and products in a chemical reaction. It is often described as the mathematics behind chemistry.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Balanced Equation (LO 1):</div>
+                        <p>A chemical reaction representation where coefficients show the mole ratio of reactants and products. The number of particles on the left must equal the number of particles on the right.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Mole ($n$):</div>
+                        <p>The SI unit for amount of substance. Defined as the amount of substance having the same number of particles as there are atoms in 12 g of carbon-12.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Molar Mass ($M$):</div>
+                        <p>The mass of one mole of a substance, measured in g·mol⁻¹. Formula: n = m/M.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Molar Volume ($V_m$):</div>
+                        <p>The volume occupied by one mole of any gas at Standard Temperature and Pressure (STP). The value at STP is 22.4 dm³·mol⁻¹. Formula for gases at STP: V = n × V_m.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Limiting Reagent (LO 2):</div>
+                        <p>The reactant that is completely consumed during a chemical reaction. It determines the maximum amount of product that can be possibly formed. The other reactant(s) are in excess. Some will be left over at the end. This substance dictates the reaction's maximum yield—this is the limiting reagent, LO 2).</p>
+                    </div>
+                </div>
+                
+                <div id="principles-tab" class="tab-content">
+                    <div class="principle-box">
+                        <div class="principle-title">Stoichiometric Calculations:</div>
+                        <p>All calculations must pass through the 'mole bridge' by converting given quantities into moles, often requiring unit conversions, particularly to dm³ for volume. This is because molar concentration is defined as moles per cubic decimetre (mol·dm⁻³).</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="overview">
+                <h2 class="section-title"><i class="fas fa-eye"></i> Introduction</h2>
+                <p>Stoichiometry is quantitative aspect of chemical change, enabling chemists to calculate precisely how much product will be made from specific amounts of reactants in reactions carried out in the laboratory or on a large scale in industry. This relationship is governed by the mole ratio, which is extracted directly from a balanced chemical equation. The core skill in stoichiometry involves converting known quantities into moles, using mole ratios to find the moles of an unknown substance, and then converting back to required unit.</p>
+                
+                <div class="reaction-visualizer">
+                    <div class="reactant-container">
+                        <div class="reactant-name">Reactant A</div>
+                        <div class="molecule-display">
+                            <div class="atom">A</div>
+                            <div class="atom-count">2</div>
+                        </div>
+                        <div class="atom">B</div>
+                            <div class="atom-count">1</div>
+                        </div>
+                    </div>
+                    
+                    <div class="arrow-container">
+                        <div class="arrow"></div>
+                    </div>
+                    
+                    <div class="reactant-container">
+                        <div class="reactant-name">Reactant B</div>
+                        <div class="molecule-display">
+                            <div class="atom">C</div>
+                            <div class="atom-count">1</div>
+                        </div>
+                        <div class="atom">O</div>
+                            <div class="atom-count">2</div>
+                        </div>
+                    </div>
+                    
+                    <div class="arrow-container">
+                        <div class="arrow"></div>
+                    </div>
+                    
+                    <div class="product-container">
+                        <div class="reactant-name">Product</div>
+                        <div class="molecule-display">
+                            <div class="atom">A</div>
+                            <div class="atom-count">2</div>
+                        </div>
+                        <div class="atom">B</div>
+                            <div class="atom-count">1</div>
+                        </div>
+                        <div class="atom">O</div>
+                            <div class="atom-count">2</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="main-body">
+                <h2 class="section-title"><i class="fas fa-atom"></i> Main Body</h2>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    1. Unit Conversion (LO 3)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>Stoichiometric calculations require amounts of substances to be expressed in <strong>moles ($n$)</strong> to compare quantities using mole ratios from a balanced equation. Therefore, the first step in almost any calculation is converting the given quantity into moles.</p>
+                    
+                    <p>Conversion factors include:</p>
+                    <ul>
+                        <li><strong>Mass to Moles:</strong> Use the molar mass ($M$).
+                            <div class="formula-box">n = m/M</div>
+                        </li>
+                        <li><strong>Volume of Gas (at STP) to Moles:</strong> Use the molar volume ($V_m = 22.4 \text{ dm}^3\cdot\text{mol}^{-1}$).
+                            <div class="formula-box">n = V/V_m</div>
+                        </li>
+                        <li><strong>Volume Consistency:</strong> If volume is used, it must be in <strong>cubic decimetres ($\text{dm}^3$)</strong>. For example, convert $\text{cm}^3$ to $\text{dm}^3$ by dividing by 1000.</li>
+                    </ul>
+                    
+                    <div class="interactive-demo">
+                        <h4>Unit Converter</h4>
+                        <p>Convert between different units of volume:</p>
+                        
+                        <div class="calculation-container">
+                            <div class="input-group">
+                                <div class="input-label">Cubic Centimetre (cm³)</div>
+                                <input type="number" id="cm3Input" class="input-field" placeholder="Enter cm³" onchange="convertVolume('cm3')">
+                            </div>
+                            
+                            <div class="input-group">
+                                <div class="input-label">Cubic Decimetre (dm³)</div>
+                                <input type="number" id="dm3Input" class="input-field" placeholder="Enter dm³" onchange="convertVolume('dm3')">
+                            </div>
+                            
+                            <div class="input-group">
+                                <div class="input-label">Litres (L)</div>
+                                <input type="number" id="lInput" class="input-field" placeholder="Enter L" onchange="convertVolume('l')">
+                            </div>
+                            
+                            <div class="input-group">
+                                <div class="input-label">Millilitres (ml)</div>
+                                <input type="number" id="mlInput" class="input-field" placeholder="Enter ml" onchange="convertVolume('ml')">
+                            </div>
+                        </div>
+                        
+                        <div id="conversionResult" class="calculation-result"></div>
+                    </div>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    2. Performing Stoichiometric Calculations (LO 1)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>A balanced chemical reaction is often compared to a recipe because it shows precisely how much of each ingredient (reactant) is needed and how much product is made. The number of particles on the left must equal the number of particles on the right. This step establishes the mole ratio, which is extracted directly from a balanced chemical equation.</p>
+                    
+                    <p><strong>Steps for Stoichiometric Calculations:</strong></p>
+                    <ol>
+                        <li><strong>Write a Balanced Chemical Equation:</strong> Ensure that the number of atoms of each element is equal on the reactant and product sides. This step establishes the mole ratio.</li>
+                        <li><strong>Convert Given Quantity to Moles:</strong> Calculate the initial number of moles for all reactants provided.
+                            <div class="formula-box">n = m/M</div>
+                        </li>
+                        <li><strong>Use Mole Ratio to Determine Moles of Unknown:</strong> Use the stoichiometric coefficients from the balanced equation to calculate the moles of the required (unknown) substance. This step bridges the relationship between the known and unknown substances.</li>
+                        <li><strong>Convert Moles of Unknown to Required Unit:</strong> Convert the calculated moles of the unknown substance back to mass, volume (at STP), concentration, or number of particles, as requested.</li>
+                    </ol>
+                    
+                    <div class="interactive-demo">
+                        <h4>Stoichiometry Calculator</h4>
+                        <p>Calculate the amount of product that can be formed from given reactants:</p>
+                        
+                        <div class="calculation-container">
+                            <div class="input-group">
+                                <div class="input-label">Reactant A (g)</div>
+                                <input type="number" id="reactantA" class="input-field" placeholder="Enter mass">
+                            </div>
+                            
+                            <div class="input-group">
+                                <div class="input-label">Molar Mass of A (g/mol)</div>
+                                <input type="number" id="molarMassA" class="input-field" placeholder="Enter molar mass">
+                            </div>
+                            
+                            <div class="input-group">
+                                <div class="input-label">Reactant B (g)</div>
+                                <input type="number" id="reactantB" class="input-field" placeholder="Enter mass">
+                            </div>
+                            
+                            <div class="input-group">
+                                <div class="input-label">Molar Mass of B (g/mol)</div>
+                                <input type="number" id="molarMassB" class="input-field" placeholder="Enter molar mass">
+                            </div>
+                        </div>
+                        
+                        <button class="demo-btn" style="margin: 15px auto; display: block;" onclick="calculateProduct()">Calculate Product</button>
+                        
+                        <div id="productResult" class="calculation-result"></div>
+                    </div>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    3. Determining Limiting Reagent (LO 2)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>When two or more reactants are provided, we must first determine which one is the **limiting reagent** because this substance dictates the maximum amount of product that can be possibly formed. The other reactant(s) are in excess. There are two primary methods:</p>
+                    
+                    <div class="reaction-visualizer">
+                        <div class="reactant-container">
+                            <div class="reactant-name">Limiting Reagent Scenario</div>
+                            <div class="molecule-display">
+                                <div class="atom">A</div>
+                                    <div class="atom-count">2</div>
+                                </div>
+                                <div class="atom">B</div>
+                                    <div class="atom-count">1</div>
+                                </div>
+                            </div>
+                            
+                            <div class="arrow-container">
+                                <div class="arrow"></div>
+                            </div>
+                            
+                            <div class="reactant-container">
+                                <div class="reactant-name">Excess Reagent</div>
+                                <div class="molecule-display">
+                                    <div class="atom">C</div>
+                                        <div class="atom-count">1</div>
+                                    </div>
+                                        <div class="atom">O</div>
+                                            <div class="atom-count">2</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <p><strong>Procedure for Determining Limiting Reagent:</strong></p>
+                    <ol>
+                        <li><strong>Method A (Product Comparison):</strong> Calculate the moles of a chosen product that could be formed by *each* reactant separately. The reactant that yields the **smallest amount of product** is the limiting reagent, LO 2).</li>
+                        <li><strong>Method B (Required Amount Comparison):</strong> Pick one reactant (A). Calculate the amount of other reactant (B) that would be *required* to react completely with the available amount of A, based on stoichiometric ratio. Compare the required amount of B to the amount actually available. If less B is available than required, B is the limiting reagent, and vice versa.</li>
+                        <li><strong>Calculate Product Yield/Excess:</strong> All subsequent calculations, such as determining the maximum mass of product (theoretical yield) or mass of leftover excess reactant, **must** be based on the moles of the **limiting reagent** (LO 2).</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section class="section" id="conclusion">
+                <h2 class="section-title"><i class="fas fa-check-circle"></i> Conclusion</h2>
+                <p>Stoichiometry provides a quantitative framework for chemical reactions, relying fundamentally on the **mole ratio** derived from a **balanced equation** (LO 1). All calculations must pass through the 'mole bridge' by converting given quantities (mass, volume, concentration) into moles, often requiring unit conversions, particularly to dm³ for volume. This quantitative skill is foundational for advanced concepts like titration, which utilizes standard solutions (solutions of known concentration) to find unknown concentrations.</p>
+                
+                <p>Stoichiometry is like a construction project: balanced equation is the architectural blueprint detailing the required ratios. Before starting, you must convert all measurements (LO 3) into the universal language of chemistry (moles). If you have two piles of materials, you must determine which material you will run out of first (the limiting reagent, LO 2), because that pile determines the final size of the structure (the product yield, LO 1).</p>
+            </section>
+
+            <section class="section" id="questions">
+                <h2 class="section-title"><i class="fas fa-question-circle"></i> End-of-Lesson Questions</h2>
+                
+                <ul class="questions-list">
+                    <li class="question-item">
+                        <div class="question-text">1. Define stoichiometry. (LO 1)</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q1" value="a" id="q1a">
+                                <label for="q1a">The branch of chemistry that deals with the quantitative relationship between reactants and products in a chemical reaction</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="b" id="q1b">
+                                <label for="q1b">The mathematical calculation of reactants and products in a chemical reaction</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="c" id="q1c">
+                                <label for="q1c">The branch of chemistry that determines the physical properties of substances</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q1', 'a')">Check Answer</button>
+                        <div class="feedback" id="q1-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">2. A compound has a molar mass of 32.0 g·mol⁻¹. Calculate the mass of 2.5 moles of the compound. (LO 3)</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q2" value="a" id="q2a">
+                                <label for="q2a">80.0 g</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="b" id="q2b">
+                                <label for="q2b">64.0 g</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="c" id="q2c">
+                                <label for="q2c">96.0 g</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q2', 'a')">Check Answer</button>
+                        <div class="feedback" id="q2-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">3. In the reaction 2S + 3O₂ → 2SO₃, which reactant is the limiting reagent? (LO 2)</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q3" value="a" id="q3a">
+                                <label for="q3a">Sulfur (S)</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="b" id="q3b">
+                                <label for="q3b">Oxygen (O)</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="c" id="q3c">
+                                <label for="q3c">Sulfur dioxide (SO₂)</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q3', 'a')">Check Answer</button>
+                        <div class="feedback" id="q3-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">4. In the reaction 2S + 3O₂ → 2SO₃, which reactant is the limiting reagent? (LO 2)</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q4" value="a" id="q4a">
+                                <label for="q4a">Sulfur (S)</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="b" id="q4b">
+                                <label for="q4b">Oxygen (O)</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="c" id="q4c">
+                                <label for="q4c">Sulfur dioxide (SO₂)</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q4', 'a')">Check Answer</button>
+                        <div class="feedback" id="q4-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">5. A compound has a molar mass of 32.0 g·mol⁻¹. Calculate the mass of 2.5 moles of the compound. (LO 3)</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q5" value="a" id="q5a">
+                                <label for="q5a">80.0 g</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="b" id="q5b">
+                                <label for="q5b">64.0 g</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="c" id="q5c">
+                                <label for="q5c">96.0 g</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q5', 'a')">Check Answer</button>
+                        <div class="feedback" id="q5-feedback"></div>
+                    </li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <div class="navigation">
+                <button class="nav-btn" id="prevBtn" onclick="navigateSection(-1)" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="nav-btn" id="nextBtn" onclick="navigateSection(1)">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            <p>&copy; 2023 Physical Sciences Interactive Learning Platform. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Track current section for navigation
+        const sections = ['objectives', 'definitions', 'overview', 'main-body', 'conclusion', 'questions'];
+        let currentSectionIndex = 0;
+
+        // Update progress bar based on scroll position
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabButtons = document.getElementsByClassName("tab-button");
+            const tabContents = document.getElementsByClassName("tab-content");
+            
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Collapsible content functionality
+        function toggleCollapsible(element) {
+            element.classList.toggle("active");
+            const content = element.nextElementSibling;
+            content.classList.toggle("active");
+        }
+
+        // Check answer function
+        function checkAnswer(questionId, correctAnswer) {
+            const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
+            const feedbackElement = document.getElementById(`${questionId}-feedback`);
+            
+            if (!selectedOption) {
+                feedbackElement.textContent = 'Please select an answer.';
+                feedbackElement.className = 'feedback incorrect';
+                feedbackElement.style.display = 'block';
+                return;
+            }
+            
+            if (selectedOption.value === correctAnswer) {
+                feedbackElement.textContent = 'Correct! Well done.';
+                feedbackElement.className = 'feedback correct';
+            } else {
+                feedbackElement.textContent = 'Incorrect. Please review the lesson material and try again.';
+                feedbackElement.className = 'feedback incorrect';
+            }
+            
+            feedbackElement.style.display = 'block';
+        }
+
+        // Navigation between sections
+        function navigateSection(direction) {
+            currentSectionIndex += direction;
+            
+            // Ensure we stay within bounds
+            if (currentSectionIndex < 0) currentSectionIndex = 0;
+            if (currentSectionIndex >= sections.length) currentSectionIndex = sections.length - 1;
+            
+            // Scroll to the current section
+            const currentSection = document.getElementById(sections[currentSectionIndex]);
+            currentSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentSectionIndex === 0;
+            document.getElementById('nextBtn').disabled = currentSectionIndex === sections.length - 1;
+        }
+
+        // Convert volume units
+        function convertVolume(unit) {
+            const cm3Input = document.getElementById('cm3Input');
+            const dm3Input = document.getElementById('dm3Input');
+            const lInput = document.getElementById('lInput');
+            const mlInput = document.getElementById('mlInput');
+            const resultDiv = document.getElementById('conversionResult');
+            
+            const cm3 = parseFloat(cm3Input.value);
+            const dm3 = parseFloat(dm3Input.value);
+            const l = parseFloat(lInput.value);
+            const ml = parseFloat(mlInput.value);
+            
+            if (unit === 'cm3') {
+                resultDiv.textContent = `${cm3} cm³ = ${dm3.toFixed(2)} dm³`;
+            } else if (unit === 'dm3') {
+                resultDiv.textContent = `${dm3} dm³ = ${(cm3/1000).toFixed(2)} dm³`;
+            } else if (unit === 'l') {
+                resultDiv.textContent = `${l} L = ${(cm3/1000).toFixed(2)} L`;
+            } else if (unit === 'ml') {
+                resultDiv.textContent = `${ml} mL = ${(cm3/10).toFixed(2)} mL`;
+            }
+            
+            resultDiv.style.color = 'var(--primary-color)';
+        }
+
+        // Calculate product
+        function calculateProduct() {
+            const reactantA = parseFloat(document.getElementById('reactantA').value);
+            const molarMassA = parseFloat(document.getElementById('molarMassA').value);
+            const reactantB = parseFloat(document.getElementById('reactantB').value);
+            const molarMassB = parseFloat(document.getElementById('molarMassB').value);
+            const resultDiv = document.getElementById('productResult');
+            
+            if (isNaN(reactantA) || isNaN(molarMassA) || isNaN(reactantB) || isNaN(molarMassB)) {
+                resultDiv.textContent = 'Please enter valid numbers for all fields.';
+                resultDiv.style.color = 'red';
+                return;
+            }
+            
+            // Calculate moles of each reactant
+            const molesA = reactantA / molarMassA;
+            const molesB = reactantB / molarMassB;
+            
+            // Determine limiting reagent by comparing required vs available moles
+            const requiredMolesA = molesA;
+            const availableMolesA = molesA;
+            const requiredMolesB = molesB;
+            
+            if (molesA < availableMolesA) {
+                // Reactant A is limiting
+                document.getElementById('productResult').textContent = `Reactant A is the limiting reagent. Maximum moles of product: ${(molesA * 1).toFixed(2)} mol`;
+                document.getElementById('productResult').style.color = 'var(--primary-color)';
+            } else if (molesB < availableMolesA) {
+                // Reactant B is limiting
+                document.getElementById('productResult').textContent = `Reactant B is the limiting reagent. Maximum moles of product: ${(molesB * 1).toFixed(2)} mol`;
+                document.getElementById('productResult').style.color = 'var(--primary-color)';
+            } else {
+                // Both are in excess
+                const limitingMoles = Math.min(molesA, molesB);
+                document.getElementById('productResult').textContent = `Both reactants are in excess. Maximum moles of product: ${(limitingMoles * 1).toFixed(2)} mol`;
+                document.getElementById('productResult').style.color = 'var(--primary-color)';
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set initial navigation state
+            document.getElementById('prevBtn').disabled = true;
+            
+            // Add smooth scrolling to all internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

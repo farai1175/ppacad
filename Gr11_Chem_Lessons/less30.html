@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acid-Base Reactions</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .lesson-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .main-content {
+            flex: 3;
+            min-width: 300px;
+        }
+        
+        .sidebar {
+            flex: 1;
+            min-width: 250px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .section-header:hover {
+            background-color: #34495e;
+        }
+        
+        .section-header h2 {
+            font-size: 1.4rem;
+            margin: 0;
+        }
+        
+        .section-content {
+            padding: 20px;
+            display: none;
+        }
+        
+        .section.active .section-content {
+            display: block;
+        }
+        
+        .section.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .toggle-icon {
+            transition: transform 0.3s;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--light-color);
+            font-weight: 600;
+        }
+        
+        .definition-table th:first-child {
+            width: 30%;
+        }
+        
+        .theory-comparison {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .theory-card {
+            flex: 1;
+            min-width: 250px;
+            background-color: var(--light-color);
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .theory-card.arrhenius {
+            border-left-color: var(--secondary-color);
+        }
+        
+        .theory-card.bronsted {
+            border-left-color: var(--accent-color);
+        }
+        
+        .interactive-diagram {
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .diagram-container {
+            position: relative;
+            height: 300px;
+            margin: 20px auto;
+            max-width: 600px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        
+        .proton-transfer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            position: relative;
+        }
+        
+        .molecule {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+        
+        .acid {
+            background-color: rgba(231, 76, 60, 0.1);
+            border: 2px solid var(--accent-color);
+        }
+        
+        .base {
+            background-color: rgba(52, 152, 219, 0.1);
+            border: 2px solid var(--secondary-color);
+        }
+        
+        .conjugate-acid {
+            background-color: rgba(231, 76, 60, 0.2);
+            border: 2px dashed var(--accent-color);
+        }
+        
+        .conjugate-base {
+            background-color: rgba(52, 152, 219, 0.2);
+            border: 2px dashed var(--secondary-color);
+        }
+        
+        .molecule-formula {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-family: "Times New Roman", serif;
+        }
+        
+        .molecule-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .proton-arrow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            color: var(--warning-color);
+            z-index: 10;
+        }
+        
+        .reaction-arrow {
+            font-size: 2rem;
+            margin: 0 20px;
+            color: #666;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .active-btn {
+            background-color: var(--primary-color);
+        }
+        
+        .quiz-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .quiz-question {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .quiz-question:last-child {
+            border-bottom: none;
+        }
+        
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .option.selected {
+            background-color: var(--light-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .option.correct {
+            background-color: rgba(46, 204, 113, 0.2);
+            border-color: var(--success-color);
+        }
+        
+        .option.incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            border-color: var(--danger-color);
+        }
+        
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            display: block;
+        }
+        
+        .feedback.incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            color: #c0392b;
+            display: block;
+        }
+        
+        .submit-btn {
+            background-color: var(--primary-color);
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+        
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .results.success {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            display: block;
+        }
+        
+        .results.warning {
+            background-color: rgba(243, 156, 18, 0.2);
+            color: #d35400;
+            display: block;
+        }
+        
+        .key-point {
+            background-color: var(--light-color);
+            padding: 15px;
+            border-left: 4px solid var(--secondary-color);
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .math {
+            font-family: "Times New Roman", serif;
+            font-style: italic;
+        }
+        
+        .chemical-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .chemical-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        
+        .chemical-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .chemical-card.acid {
+            border-top: 4px solid var(--accent-color);
+        }
+        
+        .chemical-card.base {
+            border-top: 4px solid var(--secondary-color);
+        }
+        
+        .chemical-formula {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin: 10px 0;
+            font-family: "Times New Roman", serif;
+        }
+        
+        .chemical-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .chemical-use {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .equation-box {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .equation {
+            font-size: 1.3rem;
+            font-family: "Times New Roman", serif;
+            margin: 10px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .lesson-content {
+                flex-direction: column;
+            }
+            
+            .theory-comparison {
+                flex-direction: column;
+            }
+            
+            .diagram-container {
+                height: 400px;
+            }
+            
+            .proton-transfer {
+                flex-direction: column;
+                justify-content: space-around;
+            }
+            
+            .reaction-arrow {
+                transform: rotate(90deg);
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Acid-Base Reactions</h1>
+            <div class="subtitle">Chemical Change (Part 2) - Physical Sciences (Chemistry Focus)</div>
+        </header>
+        
+        <div class="lesson-content">
+            <div class="main-content">
+                <div class="section" id="objectives">
+                    <div class="section-header">
+                        <h2>Learning Objectives</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>Upon completion of this lesson, students should be able to:</p>
+                        <ol>
+                            <li><strong>Define acids and bases</strong> according to Arrhenius and Lowry-Brønsted theories.</li>
+                            <li><strong>Identify conjugate acid-base pairs</strong> for given compounds.</li>
+                            <li><strong>Describe amphiprotic substances</strong> and provide examples with equations.</li>
+                            <li>Write names and formulae of <strong>common acids and bases</strong>.</li>
+                            <li>Write reaction equations for the <strong>dissolution of acids and bases in water</strong>.</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="section" id="definitions">
+                    <div class="section-header">
+                        <h2>Definitions and Scientific Principles</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <table class="definition-table">
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Definition/Principle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Arrhenius Acid</strong></td>
+                                    <td>A compound that <strong>produces hydrogen ions (H⁺)/hydronium ions (H₃O⁺)</strong> in an aqueous solution.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Arrhenius Base</strong></td>
+                                    <td>A compound that <strong>produces hydroxide ions (OH⁻)</strong> in an aqueous solution.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Lowry-Brønsted Acid</strong></td>
+                                    <td>A substance that is a <strong>proton (H⁺) donor</strong>.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Lowry-Brønsted Base</strong></td>
+                                    <td>A substance that is a <strong>proton (H⁺) acceptor</strong>.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Conjugate Acid-Base Pair</strong></td>
+                                    <td>An acid and a base that are related by the <strong>transfer of one proton</strong>.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Ampholyte/Amphiprotic</strong></td>
+                                    <td>A substance that can act as <strong>either an acid or a base</strong>. An amphiprotic substance is one that can react as either a proton donor or a proton acceptor.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Aqueous Solution</strong></td>
+                                    <td>A solution where <strong>water is the solvent</strong>.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="section" id="introduction">
+                    <div class="section-header">
+                        <h2>Introduction</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>
+                            Acids and bases are critical chemical compounds, found in everyday life (such as vinegar and baking soda). 
+                            The reaction between an acid and a base is known as a <strong>neutralisation reaction</strong>, typically forming a salt and water. 
+                            To consistently classify these substances, chemists rely on formal definitions, primarily the Arrhenius theory and the broader Brønsted-Lowry theory.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="section" id="main-body">
+                    <div class="section-header">
+                        <h2>Main Body</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <h3>1. Defining Acids and Bases</h3>
+                        
+                        <div class="theory-comparison">
+                            <div class="theory-card arrhenius">
+                                <h4>Arrhenius Theory (1884)</h4>
+                                <p>The Arrhenius theory was the first formal theory defining acids and bases based on their behavior in water (aqueous solutions).</p>
+                                <ul>
+                                    <li>An <strong>Arrhenius acid</strong> produces <strong>H⁺ or H₃O⁺ ions</strong> in water.</li>
+                                    <li>An <strong>Arrhenius base</strong> produces <strong>OH⁻ ions</strong> in water.</li>
+                                </ul>
+                                <p><strong>Limitation:</strong> Cannot explain reactions in non-aqueous solvents or how substances like ammonia act as bases without containing OH⁻ ions.</p>
+                            </div>
+                            
+                            <div class="theory-card bronsted">
+                                <h4>Lowry-Brønsted Theory (1923)</h4>
+                                <p>This theory expands the definitions beyond aqueous solutions, focusing on proton transfer.</p>
+                                <ul>
+                                    <li>A <strong>Lowry-Brønsted acid</strong> is a <strong>proton (H⁺) donor</strong>.</li>
+                                    <li>A <strong>Lowry-Brønsted base</strong> is a <strong>proton (H⁺) acceptor</strong>.</li>
+                                </ul>
+                                <p>A hydrogen ion (H⁺) is simply a proton. Therefore, a Lowry-Brønsted acid-base reaction is understood as a proton transfer reaction.</p>
+                            </div>
+                        </div>
+                        
+                        <h3>2. Conjugate Acid-Base Pairs</h3>
+                        <p>
+                            In a Lowry-Brønsted reaction, the acid and base react to form new substances that can participate in the reverse reaction. 
+                            These pairs are related by the transfer of a single proton.
+                        </p>
+                        <ul>
+                            <li>When an acid (Acid 1) loses a proton (H⁺), it forms its <strong>conjugate base</strong> (Base 1).</li>
+                            <li>When a base (Base 2) accepts a proton (H⁺), it forms its <strong>conjugate acid</strong> (Acid 2).</li>
+                        </ul>
+                        
+                        <div class="equation-box">
+                            <div class="equation">
+                                Acid₁ + Base₂ ⇌ Base₁ + Acid₂
+                            </div>
+                        </div>
+                        
+                        <div class="interactive-diagram">
+                            <h4>Interactive Proton Transfer</h4>
+                            <div class="diagram-container">
+                                <div class="proton-transfer">
+                                    <div class="molecule acid" id="acid1">
+                                        <div class="molecule-formula">HCl</div>
+                                        <div class="molecule-label">Acid (proton donor)</div>
+                                    </div>
+                                    
+                                    <div class="reaction-arrow">+</div>
+                                    
+                                    <div class="molecule base" id="base2">
+                                        <div class="molecule-formula">H₂O</div>
+                                        <div class="molecule-label">Base (proton acceptor)</div>
+                                    </div>
+                                    
+                                    <div class="reaction-arrow">⇌</div>
+                                    
+                                    <div class="molecule conjugate-base" id="conjugate-base1">
+                                        <div class="molecule-formula">Cl⁻</div>
+                                        <div class="molecule-label">Conjugate Base</div>
+                                    </div>
+                                    
+                                    <div class="reaction-arrow">+</div>
+                                    
+                                    <div class="molecule conjugate-acid" id="conjugate-acid2">
+                                        <div class="molecule-formula">H₃O⁺</div>
+                                        <div class="molecule-label">Conjugate Acid</div>
+                                    </div>
+                                </div>
+                                <div class="proton-arrow">→ H⁺ ←</div>
+                            </div>
+                            <div class="controls">
+                                <button id="show-hcl">HCl in Water</button>
+                                <button id="show-nh3">NH₃ in Water</button>
+                                <button id="show-custom">Custom Reaction</button>
+                            </div>
+                        </div>
+                        
+                        <h3>3. Amphiprotic Substances (Ampholytes)</h3>
+                        <p>
+                            An <strong>ampholyte</strong> (or <strong>amphiprotic substance</strong>) is a compound capable of acting as 
+                            <strong>either an acid (proton donor) or a base (proton acceptor)</strong>, depending on the chemical it is reacting with.
+                        </p>
+                        
+                        <div class="key-point">
+                            <strong>Water (H₂O) as an Ampholyte</strong>
+                        </div>
+                        
+                        <div class="theory-comparison">
+                            <div class="theory-card">
+                                <h4>Water as a Base</h4>
+                                <div class="equation">HCl(aq) + H₂O(l) → H₃O⁺(aq) + Cl⁻(aq)</div>
+                                <p>Water accepts a proton (H⁺) from HCl.</p>
+                            </div>
+                            
+                            <div class="theory-card">
+                                <h4>Water as an Acid</h4>
+                                <div class="equation">NH₃(aq) + H₂O(l) → NH₄⁺(aq) + OH⁻(aq)</div>
+                                <p>Water donates a proton (H⁺) to NH₃.</p>
+                            </div>
+                        </div>
+                        
+                        <h3>4. Common Acids and Bases</h3>
+                        
+                        <h4>Common Acids</h4>
+                        <div class="chemical-grid">
+                            <div class="chemical-card acid">
+                                <div class="chemical-name">Hydrochloric acid</div>
+                                <div class="chemical-formula">HCl(aq)</div>
+                                <div class="chemical-use">Stomach acid, swimming pool acid</div>
+                            </div>
+                            <div class="chemical-card acid">
+                                <div class="chemical-name">Nitric acid</div>
+                                <div class="chemical-formula">HNO₃(aq)</div>
+                                <div class="chemical-use">Fertilizers, explosives</div>
+                            </div>
+                            <div class="chemical-card acid">
+                                <div class="chemical-name">Sulphuric acid</div>
+                                <div class="chemical-formula">H₂SO₄(aq)</div>
+                                <div class="chemical-use">Battery acid, fertilizers</div>
+                            </div>
+                            <div class="chemical-card acid">
+                                <div class="chemical-name">Ethanoic acid</div>
+                                <div class="chemical-formula">CH₃COOH(aq)</div>
+                                <div class="chemical-use">Vinegar</div>
+                            </div>
+                        </div>
+                        
+                        <h4>Common Bases</h4>
+                        <div class="chemical-grid">
+                            <div class="chemical-card base">
+                                <div class="chemical-name">Ammonia</div>
+                                <div class="chemical-formula">NH₃(aq)</div>
+                                <div class="chemical-use">Household cleaners</div>
+                            </div>
+                            <div class="chemical-card base">
+                                <div class="chemical-name">Sodium hydroxide</div>
+                                <div class="chemical-formula">NaOH</div>
+                                <div class="chemical-use">Drain cleaner</div>
+                            </div>
+                            <div class="chemical-card base">
+                                <div class="chemical-name">Potassium hydroxide</div>
+                                <div class="chemical-formula">KOH</div>
+                                <div class="chemical-use">Caustic potash</div>
+                            </div>
+                            <div class="chemical-card base">
+                                <div class="chemical-name">Sodium carbonate</div>
+                                <div class="chemical-formula">Na₂CO₃</div>
+                                <div class="chemical-use">Washing soda</div>
+                            </div>
+                            <div class="chemical-card base">
+                                <div class="chemical-name">Sodium hydrogen carbonate</div>
+                                <div class="chemical-formula">NaHCO₃</div>
+                                <div class="chemical-use">Baking soda</div>
+                            </div>
+                        </div>
+                        
+                        <h3>5. Dissolution Equations in Water</h3>
+                        
+                        <h4>Acids (Ionization)</h4>
+                        <div class="equation-box">
+                            <div class="equation">HCl(g) + H₂O(l) → H₃O⁺(aq) + Cl⁻(aq)</div>
+                            <p><em>Hydrochloric acid (monoprotic)</em></p>
+                        </div>
+                        
+                        <div class="equation-box">
+                            <div class="equation">H₂SO₄(aq) + 2H₂O(l) → 2H₃O⁺(aq) + SO₄²⁻(aq)</div>
+                            <p><em>Sulphuric acid (diprotic)</em></p>
+                        </div>
+                        
+                        <h4>Bases (Ionization/Dissociation)</h4>
+                        <div class="equation-box">
+                            <div class="equation">NH₃(g) + H₂O(l) → NH₄⁺(aq) + OH⁻(aq)</div>
+                            <p><em>Ammonia (ionizes water)</em></p>
+                        </div>
+                        
+                        <div class="equation-box">
+                            <div class="equation">NaOH(s) → Na⁺(aq) + OH⁻(aq)</div>
+                            <p><em>Sodium hydroxide (dissociation)</em></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section" id="conclusion">
+                    <div class="section-header">
+                        <h2>Conclusion</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>
+                            The evolution of acid-base definitions, from Arrhenius's focus on aqueous solutions to the Brønsted-Lowry concept of proton transfer, 
+                            provides robust models for classifying chemical behaviour. The concept of <strong>conjugate acid-base pairs</strong> allows us to track proton movement, 
+                            while the existence of <strong>amphiprotic</strong> substances highlights that classification depends on the reaction context. 
+                            Understanding these foundational definitions and the dissolution equations for common acids and bases is essential for predicting and interpreting chemical reactions.
+                        </p>
+                        
+                        <div class="key-point">
+                            <strong>Key Takeaway:</strong> Remember that acids donate protons (H⁺) and bases accept protons. 
+                            Water is amphiprotic - it can act as either an acid or a base depending on the reaction partner.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quiz-container" id="quiz">
+                    <h2>End-of-Lesson Questions</h2>
+                    <p>Test your understanding of acid-base reactions. Select the correct answer for each question.</p>
+                    
+                    <div class="quiz-question" id="q1">
+                        <div class="question-text">1. Define an acid according to both the Arrhenius theory and the Lowry-Brønsted theory.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">Arrhenius: Produces OH⁻ ions; Brønsted-Lowry: Proton acceptor</div>
+                            <div class="option" data-correct="true">Arrhenius: Produces H⁺/H₃O⁺ ions; Brønsted-Lowry: Proton donor</div>
+                            <div class="option" data-correct="false">Arrhenius: Proton donor; Brønsted-Lowry: Produces OH⁻ ions</div>
+                            <div class="option" data-correct="false">Both theories define acids the same way</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q2">
+                        <div class="question-text">2. Define an amphiprotic substance and provide an example of one.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">A substance that can only act as an acid; Example: HCl</div>
+                            <div class="option" data-correct="false">A substance that can only act as a base; Example: NaOH</div>
+                            <div class="option" data-correct="true">A substance that can act as either an acid or base; Example: H₂O</div>
+                            <div class="option" data-correct="false">A substance that neutralizes acids and bases; Example: NaCl</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q3">
+                        <div class="question-text">3. Write the chemical name corresponding to each formula:</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">H₂SO₄: Hydrochloric acid; NH₃: Nitric acid; CH₃COOH: Sulphuric acid; NaHCO₃: Sodium carbonate</div>
+                            <div class="option" data-correct="false">H₂SO₄: Nitric acid; NH₃: Ammonia; CH₃COOH: Acetic acid; NaHCO₃: Sodium hydroxide</div>
+                            <div class="option" data-correct="true">H₂SO₄: Sulphuric acid; NH₃: Ammonia; CH₃COOH: Acetic acid; NaHCO₃: Sodium hydrogen carbonate</div>
+                            <div class="option" data-correct="false">H₂SO₄: Sulphuric acid; NH₃: Nitric acid; CH₃COOH: Methanoic acid; NaHCO₃: Sodium carbonate</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q4">
+                        <div class="question-text">4. Write the formula for each common chemical:</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">Potassium hydroxide: KOH; Nitric acid: HCl; Sodium carbonate: Na₂CO₃</div>
+                            <div class="option" data-correct="false">Potassium hydroxide: KOH; Nitric acid: H₂SO₄; Sodium carbonate: NaHCO₃</div>
+                            <div class="option" data-correct="true">Potassium hydroxide: KOH; Nitric acid: HNO₃; Sodium carbonate: Na₂CO₃</div>
+                            <div class="option" data-correct="false">Potassium hydroxide: KOH; Nitric acid: CH₃COOH; Sodium carbonate: Na₂CO₃</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q5">
+                        <div class="question-text">5. Consider the dissolution of ammonia (NH₃) in water: NH₃(g) + H₂O(l) → NH₄⁺(aq) + OH⁻(aq)</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">Acid: NH₃; Base: H₂O; Conjugate pairs: NH₃/NH₄⁺ and H₂O/OH⁻; Water is amphiprotic because it contains both H and O</div>
+                            <div class="option" data-correct="true">Acid: H₂O; Base: NH₃; Conjugate pairs: H₂O/OH⁻ and NH₃/NH₄⁺; Water is amphiprotic because it acts as an acid here but can also act as a base</div>
+                            <div class="option" data-correct="false">Acid: NH₄⁺; Base: OH⁻; Conjugate pairs: NH₄⁺/NH₃ and OH⁻/H₂O; Water is amphiprotic because it's a liquid</div>
+                            <div class="option" data-correct="false">Acid: H₂O; Base: NH₃; Conjugate pairs: H₂O/OH⁻ and NH₄⁺/NH₃; Water is amphiprotic because it dissolves both acids and bases</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q6">
+                        <div class="question-text">6. Write a balanced equation for the dissolution of hydrochloric acid (HCl) gas in water.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">HCl(g) → H⁺(aq) + Cl⁻(aq)</div>
+                            <div class="option" data-correct="false">HCl(g) + H₂O(l) → H₂(g) + ClO⁻(aq)</div>
+                            <div class="option" data-correct="true">HCl(g) + H₂O(l) → H₃O⁺(aq) + Cl⁻(aq)</div>
+                            <div class="option" data-correct="false">2HCl(g) + H₂O(l) → H₃O⁺(aq) + Cl₂(g)</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <button class="submit-btn" id="submit-quiz">Submit Answers</button>
+                    <div class="results" id="quiz-results"></div>
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <h3>Lesson Navigation</h3>
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <li style="margin-bottom: 10px;"><a href="#objectives" class="nav-link">Learning Objectives</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#definitions" class="nav-link">Definitions</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#introduction" class="nav-link">Introduction</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#main-body" class="nav-link">Main Body</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#conclusion" class="nav-link">Conclusion</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#quiz" class="nav-link">Quiz</a></li>
+                </ul>
+                
+                <div style="margin-top: 30px;">
+                    <h3>Quick Reference</h3>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Arrhenius Acid:</strong> Produces H⁺/H₃O⁺ in water
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Arrhenius Base:</strong> Produces OH⁻ in water
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Brønsted-Lowry Acid:</strong> Proton donor
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Brønsted-Lowry Base:</strong> Proton acceptor
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Amphiprotic:</strong> Can act as both acid and base (e.g., H₂O)
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <h3>Common Formulas</h3>
+                    <div style="font-size: 0.9rem;">
+                        <div><strong>Acids:</strong> HCl, HNO₃, H₂SO₄, CH₃COOH</div>
+                        <div><strong>Bases:</strong> NH₃, NaOH, KOH, Na₂CO₃, NaHCO₃</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Collapsible sections functionality
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const section = header.parentElement;
+                section.classList.toggle('active');
+            });
+        });
+        
+        // Navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                // Expand the target section if it's collapsed
+                if (!targetSection.classList.contains('active')) {
+                    targetSection.classList.add('active');
+                }
+                
+                // Scroll to the target section
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        // Interactive proton transfer diagram
+        const acid1 = document.getElementById('acid1');
+        const base2 = document.getElementById('base2');
+        const conjugateBase1 = document.getElementById('conjugate-base1');
+        const conjugateAcid2 = document.getElementById('conjugate-acid2');
+        
+        function updateReaction(acid, base, conjugateBase, conjugateAcid) {
+            acid1.querySelector('.molecule-formula').textContent = acid;
+            base2.querySelector('.molecule-formula').textContent = base;
+            conjugateBase1.querySelector('.molecule-formula').textContent = conjugateBase;
+            conjugateAcid2.querySelector('.molecule-formula').textContent = conjugateAcid;
+        }
+        
+        document.getElementById('show-hcl').addEventListener('click', () => {
+            updateReaction('HCl', 'H₂O', 'Cl⁻', 'H₃O⁺');
+            document.getElementById('show-hcl').classList.add('active-btn');
+            document.getElementById('show-nh3').classList.remove('active-btn');
+            document.getElementById('show-custom').classList.remove('active-btn');
+        });
+        
+        document.getElementById('show-nh3').addEventListener('click', () => {
+            updateReaction('H₂O', 'NH₃', 'OH⁻', 'NH₄⁺');
+            document.getElementById('show-nh3').classList.add('active-btn');
+            document.getElementById('show-hcl').classList.remove('active-btn');
+            document.getElementById('show-custom').classList.remove('active-btn');
+        });
+        
+        document.getElementById('show-custom').addEventListener('click', () => {
+            updateReaction('CH₃COOH', 'H₂O', 'CH₃COO⁻', 'H₃O⁺');
+            document.getElementById('show-custom').classList.add('active-btn');
+            document.getElementById('show-hcl').classList.remove('active-btn');
+            document.getElementById('show-nh3').classList.remove('active-btn');
+        });
+        
+        // Initialize with HCl reaction
+        document.getElementById('show-hcl').classList.add('active-btn');
+        
+        // Quiz functionality
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options in this question
+                const question = this.closest('.quiz-question');
+                question.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // Remove any existing feedback
+                const feedback = question.querySelector('.feedback');
+                feedback.className = 'feedback';
+                feedback.textContent = '';
+            });
+        });
+        
+        document.getElementById('submit-quiz').addEventListener('click', () => {
+            let score = 0;
+            const totalQuestions = 6;
+            
+            // Check each question
+            document.querySelectorAll('.quiz-question').forEach(question => {
+                const selectedOption = question.querySelector('.option.selected');
+                const feedback = question.querySelector('.feedback');
+                
+                if (selectedOption) {
+                    const isCorrect = selectedOption.getAttribute('data-correct') === 'true';
+                    
+                    if (isCorrect) {
+                        score++;
+                        feedback.className = 'feedback correct';
+                        feedback.textContent = 'Correct! Well done.';
+                        selectedOption.classList.add('correct');
+                    } else {
+                        feedback.className = 'feedback incorrect';
+                        feedback.textContent = 'Incorrect. Try again.';
+                        selectedOption.classList.add('incorrect');
+                        
+                        // Highlight the correct answer
+                        const correctOption = question.querySelector('.option[data-correct="true"]');
+                        correctOption.classList.add('correct');
+                    }
+                } else {
+                    // No option selected
+                    const correctOption = question.querySelector('.option[data-correct="true"]');
+                    correctOption.classList.add('correct');
+                    
+                    feedback.className = 'feedback incorrect';
+                    feedback.textContent = 'Please select an answer.';
+                }
+            });
+            
+            // Display results
+            const results = document.getElementById('quiz-results');
+            const percentage = (score / totalQuestions) * 100;
+            
+            if (percentage >= 80) {
+                results.className = 'results success';
+                results.textContent = `Excellent! You scored ${score}/${totalQuestions} (${percentage}%). You have a strong understanding of acid-base reactions.`;
+            } else if (percentage >= 60) {
+                results.className = 'results warning';
+                results.textContent = `Good effort! You scored ${score}/${totalQuestions} (${percentage}%). Review the material and try again to improve your score.`;
+            } else {
+                results.className = 'results warning';
+                results.textContent = `You scored ${score}/${totalQuestions} (${percentage}%). We recommend reviewing the lesson material and trying the quiz again.`;
+            }
+        });
+        
+        // Expand the first section by default
+        document.querySelector('.section').classList.add('active');
+    </script>
+</body>
+</html>

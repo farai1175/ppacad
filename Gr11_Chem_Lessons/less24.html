@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Determining Percentage Purity of Calcium Carbonate in Seashells</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #e74c3c;
+            --light-color: #f8f9fa;
+            --dark-color: #2c3e50;
+            --warning-color: #f39c12;
+            --success-color: #27ae60;
+            --danger-color: #e74c3c;
+            --ocean-blue: #0077be;
+            --sand-color: #f2d4a0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+            background-image: linear-gradient(to bottom, rgba(240, 249, 255, 0.5), rgba(255, 255, 255, 0.9));
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--ocean-blue), var(--primary-color));
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://picsum.photos/seed/seashells/1200/200.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+            z-index: -1;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .header-title h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header-title p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .progress-container {
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            margin-top: 1rem;
+            width: 100%;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: rgba(255,255,255,0.3);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: white;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        main {
+            padding: 2rem 0;
+        }
+        
+        .collapsible-container {
+            margin-bottom: 1rem;
+        }
+        
+        .collapsible {
+            background-color: white;
+            color: var(--dark-color);
+            cursor: pointer;
+            padding: 1rem 1.5rem;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .collapsible:hover {
+            background-color: #f0f7ff;
+        }
+        
+        .collapsible.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .collapsible.completed {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .collapsible-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .collapsible.active .collapsible-icon {
+            transform: rotate(180deg);
+        }
+        
+        .content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+            background-color: white;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .content.show {
+            padding: 2rem;
+            max-height: 2000px;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .learning-objectives {
+            background-color: #f0f7ff;
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .learning-objectives h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .learning-objectives ul {
+            padding-left: 1.5rem;
+        }
+        
+        .learning-objectives li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .definition-card {
+            background-color: var(--light-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .definition-card h4 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .formula {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        
+        .interactive-box {
+            background-color: #f0f7ff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .interactive-box h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .calculator {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .input-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .btn {
+            padding: 0.7rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #27ae60;
+        }
+        
+        .result-box {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            border: 1px solid #e9ecef;
+            display: none;
+        }
+        
+        .result-box.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .experiment-steps {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .experiment-steps h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .step {
+            display: flex;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-number {
+            background-color: var(--primary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-content h5 {
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .chemical-equation {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            font-size: 1.3rem;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .equation-balancer {
+            background-color: #f0f7ff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .equation-input {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .equation-input input {
+            width: 80px;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+        }
+        
+        .equation-arrow {
+            font-size: 1.5rem;
+            color: var(--dark-color);
+        }
+        
+        .limewater-test {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+        
+        .test-tube {
+            width: 100px;
+            height: 200px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.2), rgba(255,255,255,0.8));
+            border: 2px solid #ddd;
+            border-radius: 0 0 50px 50px;
+            position: relative;
+            margin: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            overflow: hidden;
+        }
+        
+        .test-tube::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .liquid {
+            width: 100%;
+            height: 60%;
+            background-color: rgba(173, 216, 230, 0.7);
+            transition: background-color 1s ease;
+        }
+        
+        .liquid.milky {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .test-label {
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .quiz-container {
+            background-color: #f0f7ff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .quiz-question {
+            margin-bottom: 1.5rem;
+        }
+        
+        .quiz-question h4 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .quiz-option {
+            padding: 0.7rem;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .quiz-option:hover {
+            background-color: #e9ecef;
+        }
+        
+        .quiz-option.selected {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .quiz-option.correct {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .quiz-option.incorrect {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .quiz-feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .quiz-feedback.show {
+            display: block;
+        }
+        
+        .quiz-feedback.correct {
+            background-color: rgba(39, 174, 96, 0.1);
+            border: 1px solid var(--success-color);
+            color: var(--success-color);
+        }
+        
+        .quiz-feedback.incorrect {
+            background-color: rgba(231, 76, 60, 0.1);
+            border: 1px solid var(--danger-color);
+            color: var(--danger-color);
+        }
+        
+        .footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 5px;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            z-index: 1001;
+            display: none;
+            animation: notificationSlideIn 0.3s ease;
+        }
+        
+        @keyframes notificationSlideIn {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .notification.show {
+            display: block;
+        }
+        
+        .notification.success {
+            background-color: var(--success-color);
+        }
+        
+        .notification.error {
+            background-color: var(--danger-color);
+        }
+        
+        .notification.warning {
+            background-color: var(--warning-color);
+        }
+        
+        .lo-badge {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+        
+        .seashell-image {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 8px;
+            margin: 1rem 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+        
+        th, td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--light-color);
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+        
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        /* Chemical formatting */
+        .chemical {
+            font-family: 'Courier New', monospace;
+        }
+        
+        .subscript {
+            font-size: 0.8em;
+            vertical-align: sub;
+        }
+        
+        .superscript {
+            font-size: 0.8em;
+            vertical-align: super;
+        }
+        
+        .state {
+            font-style: italic;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .header-title h1 {
+                font-size: 1.8rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            .calculator {
+                flex-direction: column;
+            }
+            
+            .equation-input {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .equation-arrow {
+                transform: rotate(90deg);
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="header-title">
+                    <h1>Determining Percentage Purity of Calcium Carbonate in Seashells</h1>
+                    <p>Physical Sciences / Chemistry - Quantitative Aspects of Chemical Change</p>
+                </div>
+            </div>
+            <div class="progress-container">
+                <div class="progress-text">Lesson Progress: <span id="progress-text">0%</span></div>
+                <div class="progress-bar">
+                    <div class="progress" id="progress-bar"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <div class="container">
+            <!-- Introduction Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>Introduction</span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">Introduction</h2>
+                    <p>Quantitative analysis is often required to determine the actual composition of materials found in nature, such as minerals or seashells. These natural samples are rarely 100% pure; they contain <strong>impurities</strong>. The process of calculating the percentage of the desired substance in an impure sample is known as determining <strong>percentage purity</strong> or <strong>percentage composition</strong>.</p>
+                    
+                    <p>In this lesson, we will focus on the quantitative analysis of seashells, which primarily consist of calcium carbonate (<span class="chemical">CaCO<span class="subscript">3</span></span>).</p>
+                    
+                    <div style="display: flex; align-items: center; justify-content: space-around; flex-wrap: wrap; margin: 2rem 0;">
+                        <div>
+                            <img src="https://picsum.photos/seed/seashells/300/200.jpg" alt="Seashells" class="seashell-image">
+                        </div>
+                        <div style="max-width: 500px;">
+                            <h3>Why Study Seashell Purity?</h3>
+                            <p>Seashells are natural sources of calcium carbonate, which has many industrial applications:</p>
+                            <ul>
+                                <li>Building materials (cement, limestone)</li>
+                                <li>Calcium supplements</li>
+                                <li>Environmental indicators</li>
+                                <li>Acid neutralization</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Definitions and Scientific Principles Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>Definitions and Scientific Principles</span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">Definitions and Scientific Principles</h2>
+                    
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Term/Principle</th>
+                                    <th>Definition/Formula</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Percentage Purity</strong></td>
+                                    <td>The amount of pure chemical divided by the total mass of the sample, expressed as a percentage. Only the pure component of the substance will react.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Formula</strong></td>
+                                    <td><span class="chemical">Percentage purity = (Mass of pure chemical/Total mass of sample) × 100</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Calcium Carbonate (<span class="chemical">CaCO<span class="subscript">3</span></span>)</strong></td>
+                                    <td>A compound found in nature, giving hardness and strength to seashells and rocks.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Acid-Carbonate Reaction</strong></td>
+                                    <td>A reaction between an acid and a metal carbonate that produces a salt, water, and carbon dioxide gas (<span class="chemical">CO<span class="subscript">2</span></span>).</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Limewater Test</strong></td>
+                                    <td>Limewater is clear calcium hydroxide solution (<span class="chemical">Ca(OH)<span class="subscript">2</span></span>), used to test for the presence of <span class="chemical">CO<span class="subscript">2</span></span> gas. If <span class="chemical">CO<span class="subscript">2</span></span> is present, the limewater turns milky.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Learning Objectives Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>Learning Objectives</span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">Learning Objectives</h2>
+                    <div class="learning-objectives">
+                        <h3>By the end of this lesson, you should be able to:</h3>
+                        <ul>
+                            <li>Determine the percentage <span class="chemical">CaCO<span class="subscript">3</span></span> in an impure sample of sea shells (purity or percentage composition) <span class="lo-badge">LO 1</span><span class="lo-badge">LO 5</span></li>
+                            <li>Balance the chemical equation for the reaction calcium carbonate and hydrochloric acid (<span class="chemical">HCl</span>) <span class="lo-badge">LO 2</span></li>
+                            <li>Determine the amount soluble salt formed <span class="lo-badge">LO 3</span></li>
+                            <li>Carbon dioxide formed can be tested using limewater <span class="lo-badge">LO 4</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Balancing the Chemical Equation Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>Balancing Chemical Equation <span class="lo-badge">LO 2</span></span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">Balancing Chemical Equation (LO 2)</h2>
+                    
+                    <p>Calcium carbonate (<span class="chemical">CaCO<span class="subscript">3</span></span>) reacts readily with hydrochloric acid (<span class="chemical">HCl</span>). This reaction is an example of an acid reacting with a metal carbonate, which forms a salt, water, and carbon dioxide.</p>
+                    
+                    <p>The balanced chemical equation for the reaction between calcium carbonate and hydrochloric acid is:</p>
+                    
+                    <div class="chemical-equation">
+                        <span class="chemical">CaCO<span class="subscript">3</span>(s) + 2HCl(aq) → CaCl<span class="subscript">2</span>(aq) + CO<span class="subscript">2</span>(g) + H<span class="subscript">2</span>O(l)</span>
+                    </div>
+                    
+                    <div class="equation-balancer">
+                        <h4>Interactive Equation Balancer</h4>
+                        <p>Try to balance the equation by adjusting the coefficients:</p>
+                        
+                        <div class="equation-input">
+                            <input type="number" id="coef-caco3" value="1" min="0" max="10" step="1">
+                            <span class="chemical">CaCO<span class="subscript">3</span>(s) +</span>
+                            <input type="number" id="coef-hcl" value="1" min="0" max="10" step="1">
+                            <span class="chemical">HCl(aq) →</span>
+                            <input type="number" id="coef-cacl2" value="1" min="0" max="10" step="1">
+                            <span class="chemical">CaCl<span class="subscript">2</span>(aq) +</span>
+                            <input type="number" id="coef-co2" value="1" min="0" max="10" step="1">
+                            <span class="chemical">CO<span class="subscript">2</span>(g) +</span>
+                            <input type="number" id="coef-h2o" value="1" min="0" max="10" step="1">
+                            <span class="chemical">H<span class="subscript">2</span>O(l)</span>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 1rem;">
+                            <button class="btn" id="check-equation">Check Balance</button>
+                            <button class="btn btn-secondary" id="show-solution">Show Solution</button>
+                        </div>
+                        
+                        <div class="result-box" id="equation-result">
+                            <h4>Result:</h4>
+                            <p id="equation-feedback"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Products of the Reaction Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>Products of the Reaction <span class="lo-badge">LO 3</span><span class="lo-badge">LO 4</span></span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">Products of the Reaction (LO 3, LO 4)</h2>
+                    
+                    <p>In this reaction, two main products are formed:</p>
+                    
+                    <div class="definition-card">
+                        <h4>The Soluble Salt (LO 3)</h4>
+                        <p>The salt formed is <strong>calcium chloride</strong> (<span class="chemical">CaCl<span class="subscript">2</span></span>). This <span class="chemical">CaCl<span class="subscript">2</span></span> product is <strong>soluble</strong> in water.</p>
+                    </div>
+                    
+                    <div class="definition-card">
+                        <h4>The Gas Formed (LO 4)</h4>
+                        <p>The gas product is <strong>carbon dioxide</strong> (<span class="chemical">CO<span class="subscript">2</span></span>).</p>
+                    </div>
+                    
+                    <p>The presence of <span class="chemical">CO<span class="subscript">2</span></span> gas can be confirmed using the <strong>limewater test</strong>. By bubbling the gas coming off through clear limewater (<span class="chemical">Ca(OH)<span class="subscript">2</span></span>), if the solution becomes <strong>milky</strong> (due to the formation of solid <span class="chemical">CaCO<span class="subscript">3</span></span>), the presence of <span class="chemical">CO<span class="subscript">2</span></span> is confirmed.</p>
+                    
+                    <div class="interactive-box">
+                        <h4>Interactive Limewater Test</h4>
+                        <p>Click the button below to simulate the limewater test for <span class="chemical">CO<span class="subscript">2</span></span>:</p>
+                        
+                        <div class="limewater-test">
+                            <div>
+                                <div class="test-tube">
+                                    <div class="liquid" id="limewater-before"></div>
+                                </div>
+                                <div class="test-label">Before <span class="chemical">CO<span class="subscript">2</span></span></div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button class="btn" id="add-co2">Add <span class="chemical">CO<span class="subscript">2</span></span> Gas</button>
+                            </div>
+                            <div>
+                                <div class="test-tube">
+                                    <div class="liquid" id="limewater-after"></div>
+                                </div>
+                                <div class="test-label">After <span class="chemical">CO<span class="subscript">2</span></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Determining Percentage Purity Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>Determining Percentage Purity <span class="lo-badge">LO 1</span><span class="lo-badge">LO 5</span></span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">Determining Percentage Purity (LO 1, LO 5)</h2>
+                    
+                    <p>The objective is to calculate the percentage <span class="chemical">CaCO<span class="subscript">3</span></span> in the impure sample of seashells. This can be done experimentally by reacting the sample with excess acid and measuring the remaining unreacted substance (impurities).</p>
+                    
+                    <div class="experiment-steps">
+                        <h4>Procedure Outline for Experiment (LO 1, LO 5):</h4>
+                        
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h5>Mass Measurement</h5>
+                                <p>Measure the initial mass of the sea shell sample.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h5>Reaction</h5>
+                                <p>Add hydrochloric acid (<span class="chemical">HCl</span>) (which must cover the shell) to the crushed sample and stir. The acid used is often 3 mol·dm<span class="superscript">-3</span> <span class="chemical">HCl</span>. The reaction is allowed to proceed until bubbling stops.</p>
+                                <p><em>Safety Note: <span class="chemical">HCl</span> is a strong, concentrated acid and is corrosive; safety goggles must be used.</em></p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h5>Separation</h5>
+                                <p>Filter the mixture to separate the unreacted substance (the impurities) from the solution containing the soluble salt (<span class="chemical">CaCl<span class="subscript">2</span></span>), water, and any excess <span class="chemical">HCl</span>.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h5>Final Mass</h5>
+                                <p>Determine the mass of the dry unreacted substance (impurities) remaining on the filter paper.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h5>Calculate Mass of Pure <span class="chemical">CaCO<span class="subscript">3</span></span></h5>
+                                <p>The <span class="chemical">CaCO<span class="subscript">3</span></span> portion reacted fully, while the impurities did not. Therefore, the <strong>mass of pure calcium carbonate</strong> in the sample is the difference between the mass of the initial sea shell and the mass of the leftover (unreacted) substance.</p>
+                                <div class="formula"><span class="chemical">m(pure CaCO<span class="subscript">3</span>) = m(Sea Shell Sample) - m(Unreacted Substance)</span></div>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">6</div>
+                            <div class="step-content">
+                                <h5>Calculate Percentage Purity</h5>
+                                <p>Apply the percentage purity formula using the calculated mass of pure <span class="chemical">CaCO<span class="subscript">3</span></span> and the original mass of the seashell sample:</p>
+                                <div class="formula"><span class="chemical">Percentage CaCO<span class="subscript">3</span> (%) = (Mass of pure CaCO<span class="subscript">3</span>/Mass of sea shell sample) × 100</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-box">
+                        <h4>Percentage Purity Calculator</h4>
+                        <p>Use this calculator to determine the percentage purity of calcium carbonate in a seashell sample:</p>
+                        
+                        <div class="calculator">
+                            <div class="input-group">
+                                <label for="sample-mass">Mass of Seashell Sample (g)</label>
+                                <input type="number" id="sample-mass" placeholder="Enter mass" step="any">
+                            </div>
+                            <div class="input-group">
+                                <label for="unreacted-mass">Mass of Unreacted Substance (g)</label>
+                                <input type="number" id="unreacted-mass" placeholder="Enter mass" step="any">
+                            </div>
+                            <div class="input-group">
+                                <label>&nbsp;</label>
+                                <button class="btn" id="calculate-purity">Calculate Purity</button>
+                            </div>
+                        </div>
+                        
+                        <div class="result-box" id="purity-result">
+                            <h4>Calculation Steps:</h4>
+                            <div id="purity-steps"></div>
+                            <h4>Result:</h4>
+                            <p id="purity-value"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Conclusion Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>Conclusion</span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">Conclusion</h2>
+                    
+                    <p>The percentage purity of a substance, such as calcium carbonate in a seashell, is a critical quantitative measurement (LO 1, LO 5). This calculation relies on stoichiometric principles rooted in the balanced chemical equation, <span class="chemical">CaCO<span class="subscript">3</span>(s) + 2HCl(aq) → CaCl<span class="subscript">2</span>(aq) + CO<span class="subscript">2</span>(g) + H<span class="subscript">2</span>O(l)</span> (LO 2). The reaction produces a soluble salt, <span class="chemical">CaCl<span class="subscript">2</span></span> (LO 3), and carbon dioxide gas, which can be identified using the limewater test (LO 4). By measuring the mass difference before and after reacting of the pure component, percentage purity can be accurately determined.</p>
+                    
+                    <div class="interactive-box">
+                        <h4>The Gold Ore Analogy</h4>
+                        <p>Calculating percentage purity is like grading gold ore: you measure the total weight of the rock (impure sample), dissolve away the unwanted dirt (impurities) using acid, and then weigh the remaining, unreacted valuable material (or calculate the amount of desired product formed) to determine what percentage of the original rock was pure gold (<span class="chemical">CaCO<span class="subscript">3</span></span>).</p>
+                        
+                        <div style="display: flex; align-items: center; justify-content: space-around; flex-wrap: wrap; margin: 2rem 0;">
+                            <div style="max-width: 300px; text-align: center;">
+                                <img src="https://picsum.photos/seed/gold-ore/250/200.jpg" alt="Gold Ore" style="width: 100%; border-radius: 8px; margin-bottom: 1rem;">
+                                <h5>Gold Ore (Impure Sample)</h5>
+                            </div>
+                            <div style="max-width: 300px; text-align: center;">
+                                <img src="https://picsum.photos/seed/pure-gold/250/200.jpg" alt="Pure Gold" style="width: 100%; border-radius: 8px; margin-bottom: 1rem;">
+                                <h5>Pure Gold (Pure Component)</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- End-of-Lesson Questions Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>End-of-Lesson Questions</span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">End-of-Lesson Questions</h2>
+                    
+                    <div class="quiz-container">
+                        <div class="quiz-question">
+                            <h4>Question 1: Write down the balanced chemical equation for the reaction between calcium carbonate and hydrochloric acid (LO 2).</h4>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-question="1" data-option="A">A. <span class="chemical">CaCO<span class="subscript">3</span>(s) + HCl(aq) → CaCl<span class="subscript">2</span>(aq) + CO<span class="subscript">2</span>(g) + H<span class="subscript">2</span>O(l)</span></div>
+                                <div class="quiz-option" data-question="1" data-option="B">B. <span class="chemical">CaCO<span class="subscript">3</span>(s) + 2HCl(aq) → CaCl<span class="subscript">2</span>(aq) + CO<span class="subscript">2</span>(g) + H<span class="subscript">2</span>O(l)</span></div>
+                                <div class="quiz-option" data-question="1" data-option="C">C. <span class="chemical">CaCO<span class="subscript">3</span>(s) + 3HCl(aq) → CaCl<span class="subscript">3</span>(aq) + CO<span class="subscript">2</span>(g) + H<span class="subscript">2</span>O(l)</span></div>
+                                <div class="quiz-option" data-question="1" data-option="D">D. <span class="chemical">CaCO<span class="subscript">3</span>(s) + HCl(aq) → CaCl(aq) + CO<span class="subscript">2</span>(g) + H<span class="subscript">2</span>O(l)</span></div>
+                            </div>
+                            <div class="quiz-feedback" id="feedback-1"></div>
+                        </div>
+                        
+                        <div class="quiz-question">
+                            <h4>Question 2: In the reaction between <span class="chemical">CaCO<span class="subscript">3</span></span> and <span class="chemical">HCl</span>, name and give the formula of the soluble salt that is formed (LO 3).</h4>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-question="2" data-option="A">A. Calcium chloride, <span class="chemical">CaCl<span class="subscript">2</span></span></div>
+                                <div class="quiz-option" data-question="2" data-option="B">B. Calcium carbonate, <span class="chemical">CaCO<span class="subscript">3</span></span></div>
+                                <div class="quiz-option" data-question="2" data-option="C">C. Calcium hydroxide, <span class="chemical">Ca(OH)<span class="subscript">2</span></span></div>
+                                <div class="quiz-option" data-question="2" data-option="D">D. Calcium oxide, <span class="chemical">CaO</span></div>
+                            </div>
+                            <div class="quiz-feedback" id="feedback-2"></div>
+                        </div>
+                        
+                        <div class="quiz-question">
+                            <h4>Question 3: Describe the laboratory test used to confirm the presence of carbon dioxide gas formed during the acid-carbonate reaction (LO 4).</h4>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-question="3" data-option="A">A. Bubble gas through limewater; if <span class="chemical">CO<span class="subscript">2</span></span> is present, the limewater turns milky.</div>
+                                <div class="quiz-option" data-question="3" data-option="B">B. Bubble gas through water; if <span class="chemical">CO<span class="subscript">2</span></span> is present, the water turns blue.</div>
+                                <div class="quiz-option" data-question="3" data-option="C">C. Test gas with a lit splint; if <span class="chemical">CO<span class="subscript">2</span></span> is present, the splint reignites.</div>
+                                <div class="quiz-option" data-question="3" data-option="D">D. Test gas with moist blue litmus paper; if <span class="chemical">CO<span class="subscript">2</span></span> is present, the paper turns red.</div>
+                            </div>
+                            <div class="quiz-feedback" id="feedback-3"></div>
+                        </div>
+                        
+                        <div class="quiz-question">
+                            <h4>Question 4: A student carries out an experiment using a 3.00 g sample of crushed seashell. After reaction with excess <span class="chemical">HCl</span> and drying, the mass of the unreacted substance is found to be 0.75 g. Calculate the percentage purity of <span class="chemical">CaCO<span class="subscript">3</span></span> in the seashell (LO 1, LO 5).</h4>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-question="4" data-option="A">A. 25.0%</div>
+                                <div class="quiz-option" data-question="4" data-option="B">B. 75.0%</div>
+                                <div class="quiz-option" data-question="4" data-option="C">C. 80.0%</div>
+                                <div class="quiz-option" data-question="4" data-option="D">D. 85.0%</div>
+                            </div>
+                            <div class="quiz-feedback" id="feedback-4"></div>
+                        </div>
+                        
+                        <div class="quiz-question">
+                            <h4>Question 5: Explain why the mass of the unreacted substance must be subtracted from the original mass of the seashell sample when calculating the mass of pure <span class="chemical">CaCO<span class="subscript">3</span></span> that reacted (LO 1, LO 5).</h4>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-question="5" data-option="A">A. The unreacted substance represents the impurities that did not react with the acid, so the mass difference gives the mass of pure <span class="chemical">CaCO<span class="subscript">3</span></span> that did react.</div>
+                                <div class="quiz-option" data-question="5" data-option="B">B. The unreacted substance is the acid that was not used in the reaction, so it must be subtracted.</div>
+                                <div class="quiz-option" data-question="5" data-option="C">C. The unreacted substance is the water formed during the reaction, so it must be subtracted.</div>
+                                <div class="quiz-option" data-question="5" data-option="D">D. The unreacted substance is the <span class="chemical">CO<span class="subscript">2</span></span> gas that escaped, so it must be subtracted.</div>
+                            </div>
+                            <div class="quiz-feedback" id="feedback-5"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-box">
+                        <h4>Quiz Results</h4>
+                        <p>Your score: <span id="quiz-score">0/5</span></p>
+                        <button class="btn btn-secondary" id="reset-quiz">Reset Quiz</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Periodic Table</a></li>
+                        <li><a href="#">Chemical Equations</a></li>
+                        <li><a href="#">Practice Problems</a></li>
+                        <li><a href="#">Video Tutorials</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Related Topics</h4>
+                    <ul>
+                        <li><a href="#">Stoichiometry</li>
+                        <li><a href="#">Acid-Base Reactions</a></li>
+                        <li><a href="#">Quantitative Analysis</a></li>
+                        <li><a href="#">Purity Determination</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Help</h4>
+                    <ul>
+                        <li><a href="#">Contact Teacher</a></li>
+                        <li><a href="#">Study Tips</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Report Issue</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Chemistry Education Portal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <div class="notification" id="notification"></div>
+    
+    <script>
+        // DOM Elements
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const notification = document.getElementById('notification');
+        
+        // Progress Tracking
+        let completedSections = new Set();
+        let quizScore = 0;
+        let answeredQuestions = new Set();
+        
+        // Toggle Collapsible Sections
+        function toggleCollapsible(button) {
+            button.classList.toggle("active");
+            const content = button.nextElementSibling;
+            content.classList.toggle("show");
+            
+            // Get section identifier from button text
+            const buttonText = button.textContent.trim();
+            let sectionId = '';
+            
+            if (buttonText.includes("Introduction")) {
+                sectionId = 'introduction';
+            } else if (buttonText.includes("Definitions and Scientific Principles")) {
+                sectionId = 'definitions';
+            } else if (buttonText.includes("Learning Objectives")) {
+                sectionId = 'objectives';
+            } else if (buttonText.includes("Balancing Chemical Equation")) {
+                sectionId = 'balancing';
+            } else if (buttonText.includes("Products of the Reaction")) {
+                sectionId = 'products';
+            } else if (buttonText.includes("Determining Percentage Purity")) {
+                sectionId = 'purity';
+            } else if (buttonText.includes("Conclusion")) {
+                sectionId = 'conclusion';
+            } else if (buttonText.includes("End-of-Lesson Questions")) {
+                sectionId = 'questions';
+            }
+            
+            // Mark section as viewed if opened
+            if (content.classList.contains("show") && sectionId) {
+                if (!completedSections.has(sectionId)) {
+                    completedSections.add(sectionId);
+                    updateProgress();
+                }
+                
+                // Mark as completed
+                button.classList.add("completed");
+            }
+        }
+        
+        // Update Progress
+        function updateProgress() {
+            const totalSections = 8; // Total number of collapsible sections
+            const completedCount = completedSections.size;
+            const progressPercentage = Math.round((completedCount / totalSections) * 100);
+            
+            progressBar.style.width = `${progressPercentage}%`;
+            progressText.textContent = `${progressPercentage}%`;
+        }
+        
+        // Show Notification
+        function showNotification(message, type = 'success') {
+            notification.textContent = message;
+            notification.className = `notification ${type} show`;
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Equation Balancer
+        document.getElementById('check-equation').addEventListener('click', () => {
+            const coefCaco3 = parseInt(document.getElementById('coef-caco3').value);
+            const coefHcl = parseInt(document.getElementById('coef-hcl').value);
+            const coefCacl2 = parseInt(document.getElementById('coef-cacl2').value);
+            const coefCo2 = parseInt(document.getElementById('coef-co2').value);
+            const coefH2o = parseInt(document.getElementById('coef-h2o').value);
+            
+            const resultBox = document.getElementById('equation-result');
+            const feedback = document.getElementById('equation-feedback');
+            
+            // Check if equation is balanced
+            // Reactants: Ca:1, C:1, O:3, H:2, Cl:2
+            // Products: Ca:1, C:1, O:3, H:2, Cl:2
+            
+            const isBalanced = (
+                coefCaco3 === coefCacl2 && 
+                coefCaco3 === coefCo2 && 
+                coefHcl === 2 * coefCacl2 && 
+                coefHcl === 2 * coefH2o
+            );
+            
+            if (isBalanced) {
+                feedback.textContent = "Correct! The equation is balanced.";
+                resultBox.classList.add('show');
+                showNotification('Equation is balanced correctly!', 'success');
+            } else {
+                feedback.textContent = "Not quite balanced. Try adjusting the coefficients.";
+                resultBox.classList.add('show');
+                showNotification('Equation is not balanced. Try again.', 'error');
+            }
+        });
+        
+        document.getElementById('show-solution').addEventListener('click', () => {
+            document.getElementById('coef-caco3').value = 1;
+            document.getElementById('coef-hcl').value = 2;
+            document.getElementById('coef-cacl2').value = 1;
+            document.getElementById('coef-co2').value = 1;
+            document.getElementById('coef-h2o').value = 1;
+            
+            const resultBox = document.getElementById('equation-result');
+            const feedback = document.getElementById('equation-feedback');
+            
+            feedback.textContent = "Solution: CaCO₃(s) + 2HCl(aq) → CaCl₂(aq) + CO₂(g) + H₂O(l)";
+            resultBox.classList.add('show');
+            
+            showNotification('Solution displayed', 'success');
+        });
+        
+        // Limewater Test
+        document.getElementById('add-co2').addEventListener('click', () => {
+            const limewaterAfter = document.getElementById('limewater-after');
+            limewaterAfter.classList.add('milky');
+            
+            showNotification('Limewater turns milky when CO₂ is added', 'success');
+        });
+        
+        // Percentage Purity Calculator
+        document.getElementById('calculate-purity').addEventListener('click', () => {
+            const sampleMass = parseFloat(document.getElementById('sample-mass').value);
+            const unreactedMass = parseFloat(document.getElementById('unreacted-mass').value);
+            
+            if (isNaN(sampleMass) || isNaN(unreactedMass)) {
+                showNotification('Please enter valid values', 'error');
+                return;
+            }
+            
+            const pureCaCO3 = sampleMass - unreactedMass;
+            const percentagePurity = (pureCaCO3 / sampleMass) * 100;
+            
+            const resultBox = document.getElementById('purity-result');
+            const steps = document.getElementById('purity-steps');
+            const value = document.getElementById('purity-value');
+            
+            steps.innerHTML = `
+                <p>1. Calculate mass of pure CaCO₃:</p>
+                <p>m(pure CaCO₃) = m(Sea Shell Sample) - m(Unreacted Substance)</p>
+                <p>m(pure CaCO₃) = ${sampleMass} g - ${unreactedMass} g = ${pureCaCO3.toFixed(2)} g</p>
+                <p>2. Calculate percentage purity:</p>
+                <p>Percentage CaCO₃ = (m(pure CaCO₃) / m(Sea Shell Sample)) × 100</p>
+                <p>Percentage CaCO₃ = (${pureCaCO3.toFixed(2)} g / ${sampleMass} g) × 100 = ${percentagePurity.toFixed(2)}%</p>
+            `;
+            
+            value.textContent = `The percentage purity of CaCO₃ in the seashell is ${percentagePurity.toFixed(2)}%`;
+            
+            resultBox.classList.add('show');
+            showNotification('Purity calculated successfully!', 'success');
+        });
+        
+        // Quiz Functionality
+        const quizAnswers = {
+            1: 'B',
+            2: 'A',
+            3: 'A',
+            4: 'B',
+            5: 'A'
+        };
+        
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const question = option.getAttribute('data-question');
+                const selectedOption = option.getAttribute('data-option');
+                
+                // Skip if already answered
+                if (answeredQuestions.has(question)) {
+                    return;
+                }
+                
+                // Mark as answered
+                answeredQuestions.add(question);
+                
+                // Mark selected option
+                option.classList.add('selected');
+                
+                // Check if correct
+                const isCorrect = selectedOption === quizAnswers[question];
+                
+                // Show feedback
+                const feedback = document.getElementById(`feedback-${question}`);
+                feedback.classList.add('show');
+                
+                if (isCorrect) {
+                    option.classList.add('correct');
+                    feedback.classList.add('correct');
+                    feedback.innerHTML = '<i class="fas fa-check-circle"></i> Correct! Well done.';
+                    quizScore++;
+                } else {
+                    option.classList.add('incorrect');
+                    feedback.classList.add('incorrect');
+                    feedback.innerHTML = `<i class="fas fa-times-circle"></i> Incorrect. The correct answer is ${quizAnswers[question]}.`;
+                    
+                    // Highlight correct answer
+                    document.querySelectorAll(`.quiz-option[data-question="${question}"][data-option="${quizAnswers[question]}"]`).forEach(correctOption => {
+                        correctOption.classList.add('correct');
+                    });
+                }
+                
+                // Update score
+                document.getElementById('quiz-score').textContent = `${quizScore}/5`;
+                
+                // Show notification
+                if (isCorrect) {
+                    showNotification('Correct answer!', 'success');
+                } else {
+                    showNotification('Incorrect answer. Review the material and try again.', 'error');
+                }
+            });
+        });
+        
+        // Reset Quiz
+        document.getElementById('reset-quiz').addEventListener('click', () => {
+            quizScore = 0;
+            answeredQuestions.clear();
+            
+            document.getElementById('quiz-score').textContent = '0/5';
+            
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.classList.remove('selected', 'correct', 'incorrect');
+            });
+            
+            document.querySelectorAll('.quiz-feedback').forEach(feedback => {
+                feedback.classList.remove('show', 'correct', 'incorrect');
+            });
+            
+            showNotification('Quiz reset successfully', 'success');
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // No sections are initially marked as viewed
+            updateProgress();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The pH Scale and Water Ionisation</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .lesson-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .main-content {
+            flex: 3;
+            min-width: 300px;
+        }
+        
+        .sidebar {
+            flex: 1;
+            min-width: 250px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .section-header:hover {
+            background-color: #34495e;
+        }
+        
+        .section-header h2 {
+            font-size: 1.4rem;
+            margin: 0;
+        }
+        
+        .section-content {
+            padding: 20px;
+            display: none;
+        }
+        
+        .section.active .section-content {
+            display: block;
+        }
+        
+        .section.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .toggle-icon {
+            transition: transform 0.3s;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--light-color);
+            font-weight: 600;
+        }
+        
+        .definition-table th:first-child {
+            width: 30%;
+        }
+        
+        .ph-scale {
+            margin: 30px 0;
+            background: linear-gradient(90deg, #e74c3c, #f39c12, #f1c40f, #2ecc71, #3498db);
+            height: 60px;
+            border-radius: 30px;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .ph-markers {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        
+        .ph-marker {
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .neutral-line {
+            position: absolute;
+            left: 50%;
+            top: -10px;
+            bottom: -10px;
+            width: 2px;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .neutral-label {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: -25px;
+            font-weight: bold;
+            background-color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+        }
+        
+        .calculation-box {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .formula {
+            font-size: 1.8rem;
+            text-align: center;
+            margin: 15px 0;
+            font-family: "Times New Roman", serif;
+        }
+        
+        .calculation-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .input-group label {
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .input-group input, .input-group select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .calculation-result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+        }
+        
+        .step-by-step {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .step {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .step:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .water-ionization {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .molecule-diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .molecule {
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            min-width: 120px;
+        }
+        
+        .molecule-formula {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-family: "Times New Roman", serif;
+        }
+        
+        .molecule-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .reaction-arrow {
+            font-size: 2rem;
+            color: #666;
+        }
+        
+        .quiz-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .quiz-question {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .quiz-question:last-child {
+            border-bottom: none;
+        }
+        
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .option.selected {
+            background-color: var(--light-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .option.correct {
+            background-color: rgba(46, 204, 113, 0.2);
+            border-color: var(--success-color);
+        }
+        
+        .option.incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            border-color: var(--danger-color);
+        }
+        
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            display: block;
+        }
+        
+        .feedback.incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            color: #c0392b;
+            display: block;
+        }
+        
+        .submit-btn {
+            background-color: var(--primary-color);
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+        
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .results.success {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            display: block;
+        }
+        
+        .results.warning {
+            background-color: rgba(243, 156, 18, 0.2);
+            color: #d35400;
+            display: block;
+        }
+        
+        .key-point {
+            background-color: var(--light-color);
+            padding: 15px;
+            border-left: 4px solid var(--secondary-color);
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .math {
+            font-family: "Times New Roman", serif;
+            font-style: italic;
+        }
+        
+        .equation-box {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .equation {
+            font-size: 1.3rem;
+            font-family: "Times New Roman", serif;
+            margin: 10px 0;
+        }
+        
+        .concentration-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1px;
+            margin: 20px 0;
+            background-color: #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .table-header, .table-cell {
+            padding: 10px;
+            background-color: white;
+            text-align: center;
+        }
+        
+        .table-header {
+            font-weight: bold;
+            background-color: var(--light-color);
+        }
+        
+        @media (max-width: 768px) {
+            .lesson-content {
+                flex-direction: column;
+            }
+            
+            .calculation-inputs {
+                grid-template-columns: 1fr;
+            }
+            
+            .molecule-diagram {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .concentration-table {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>The pH Scale and Water Ionisation</h1>
+            <div class="subtitle">Chemical Change (Part 2) - Physical Sciences (Chemistry Focus)</div>
+        </header>
+        
+        <div class="lesson-content">
+            <div class="main-content">
+                <div class="section" id="objectives">
+                    <div class="section-header">
+                        <h2>Learning Objectives</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>Upon completion of this lesson, students should be able to:</p>
+                        <ol>
+                            <li><strong>Explain the pH scale</strong> as a scale from 0 to 14 used to express acidity or alkalinity.</li>
+                            <li><strong>Calculate pH values</strong> of strong acids and bases using pH = -log[H₃O⁺].</li>
+                            <li><strong>Define K<sub>w</sub></strong> as the ion product of water and state its value.</li>
+                            <li><strong>Explain auto-ionisation of water</strong> and the ions formed.</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="section" id="definitions">
+                    <div class="section-header">
+                        <h2>Definitions and Scientific Principles</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <table class="definition-table">
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Definition/Principle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>pH Scale</strong></td>
+                                    <td>
+                                        A scale of numbers, typically ranging from <strong>0 to 14</strong>, used to express the 
+                                        <strong>acidity or alkalinity</strong> of a solution.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Acidic Solution</strong></td>
+                                    <td>
+                                        A solution with <strong>pH &lt; 7</strong>. The lower the pH, the stronger the acid. 
+                                        This corresponds to a high concentration of H⁺ ions.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Alkaline/Basic Solution</strong></td>
+                                    <td>
+                                        A solution with <strong>pH &gt; 7</strong>. The higher the pH, the stronger the base.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Neutral Solution</strong></td>
+                                    <td>
+                                        A solution with <strong>pH = 7</strong>.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Auto-ionisation of Water</strong></td>
+                                    <td>
+                                        The reaction where <strong>water reacts with itself</strong> (H₂O) to form hydronium ions (H₃O⁺) 
+                                        and hydroxide ions (OH⁻).
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Ion Product of Water (K<sub>w</sub>)</strong></td>
+                                    <td>
+                                        The equilibrium constant for the ionisation of water, defined as 
+                                        <strong>K<sub>w</sub> = [H₃O⁺][OH⁻]</strong>. At 298 K, <strong>K<sub>w</sub> = 1 × 10<sup>-14</sup></strong>.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="section" id="introduction">
+                    <div class="section-header">
+                        <h2>Introduction</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>
+                            In the previous lessons, we defined acids and bases based on their ability to produce H₃O⁺ ions or OH⁻ ions 
+                            in water (Arrhenius theory) or to donate or accept protons (Lowry-Brønsted theory). To quantify the strength 
+                            of these solutions—that is, how acidic or alkaline they are—we use a standardized system called the 
+                            <strong>pH scale</strong>. This scale is fundamentally linked to the unique way water molecules interact 
+                            with each other through a process known as auto-ionisation.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="section" id="main-body">
+                    <div class="section-header">
+                        <h2>Main Body</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <h3>1. The pH Scale: Expressing Acidity and Alkalinity</h3>
+                        <p>
+                            The strength of acids and bases in an aqueous solution is measured on the <strong>pH scale</strong>, 
+                            which typically ranges from <strong>0 to 14</strong>. The pH measures the concentration of 
+                            <strong>hydronium ions (H₃O⁺)</strong> in the solution.
+                        </p>
+                        
+                        <div class="ph-scale">
+                            <div class="neutral-line"></div>
+                            <div class="neutral-label">Neutral pH = 7</div>
+                        </div>
+                        <div class="ph-markers">
+                            <div class="ph-marker">0<br>Strong Acid</div>
+                            <div class="ph-marker">3</div>
+                            <div class="ph-marker">6</div>
+                            <div class="ph-marker">9</div>
+                            <div class="ph-marker">12</div>
+                            <div class="ph-marker">14<br>Strong Base</div>
+                        </div>
+                        
+                        <div class="concentration-table">
+                            <div class="table-header">Solution Type</div>
+                            <div class="table-header">pH Range</div>
+                            <div class="table-header">[H₃O⁺] vs [OH⁻]</div>
+                            
+                            <div class="table-cell">Acidic</div>
+                            <div class="table-cell">pH &lt; 7</div>
+                            <div class="table-cell">[H₃O⁺] &gt; [OH⁻]</div>
+                            
+                            <div class="table-cell">Neutral</div>
+                            <div class="table-cell">pH = 7</div>
+                            <div class="table-cell">[H₃O⁺] = [OH⁻]</div>
+                            
+                            <div class="table-cell">Basic</div>
+                            <div class="table-cell">pH &gt; 7</div>
+                            <div class="table-cell">[H₃O⁺] &lt; [OH⁻]</div>
+                        </div>
+                        
+                        <h3>2. Auto-ionisation of Water and the Ion Product (K<sub>w</sub>)</h3>
+                        <p>
+                            Pure water is not just a solvent; it participates in a reversible reaction with itself called 
+                            <strong>auto-ionisation</strong>. In this process, one water molecule acts as an acid (proton donor) 
+                            and another acts as a base (proton acceptor), forming hydronium and hydroxide ions.
+                        </p>
+                        
+                        <div class="water-ionization">
+                            <div class="equation">2H₂O(l) ⇌ H₃O⁺(aq) + OH⁻(aq)</div>
+                            
+                            <div class="molecule-diagram">
+                                <div class="molecule">
+                                    <div class="molecule-formula">H₂O</div>
+                                    <div class="molecule-label">Water Molecule</div>
+                                </div>
+                                
+                                <div class="reaction-arrow">+</div>
+                                
+                                <div class="molecule">
+                                    <div class="molecule-formula">H₂O</div>
+                                    <div class="molecule-label">Water Molecule</div>
+                                </div>
+                                
+                                <div class="reaction-arrow">⇌</div>
+                                
+                                <div class="molecule">
+                                    <div class="molecule-formula">H₃O⁺</div>
+                                    <div class="molecule-label">Hydronium Ion</div>
+                                </div>
+                                
+                                <div class="reaction-arrow">+</div>
+                                
+                                <div class="molecule">
+                                    <div class="molecule-formula">OH⁻</div>
+                                    <div class="molecule-label">Hydroxide Ion</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p>
+                            The equilibrium constant for this process is designated <strong>K<sub>w</sub></strong>, and it is known as the 
+                            <strong>ion product of water</strong> or the <strong>ionisation constant of water</strong>.
+                        </p>
+                        
+                        <div class="formula">
+                            K<sub>w</sub> = [H₃O⁺][OH⁻]
+                        </div>
+                        
+                        <p>At 298 K (which is approximately 25°C), the value of this constant is fixed:</p>
+                        
+                        <div class="formula">
+                            K<sub>w</sub> = 1 × 10<sup>-14</sup>
+                        </div>
+                        
+                        <p>
+                            In neutral water, the concentrations of hydronium and hydroxide ions are equal, meaning:
+                        </p>
+                        
+                        <div class="equation">
+                            [H₃O⁺] = [OH⁻] = √(1 × 10<sup>-14</sup>) = 1 × 10<sup>-7</sup> mol·dm<sup>-3</sup>
+                        </div>
+                        
+                        <h3>3. Calculating pH</h3>
+                        <p>
+                            The pH of a solution is calculated directly from the concentration of the hydronium ion [H₃O⁺]. 
+                            It uses a logarithmic scale to handle the typically very small concentrations encountered in aqueous solutions.
+                        </p>
+                        
+                        <div class="formula">
+                            pH = -log[H₃O⁺]
+                        </div>
+                        
+                        <div class="step-by-step">
+                            <div class="step">
+                                <span class="step-number">1</span>
+                                For <strong>strong acids</strong> (like HCl or HNO₃), we assume they ionise completely, so the concentration 
+                                of the acid is equal to the concentration of [H₃O⁺] in solution.
+                            </div>
+                            <div class="step">
+                                <span class="step-number">2</span>
+                                For <strong>strong bases</strong> (like NaOH or KOH), we first find the concentration of [OH⁻] ions, 
+                                which equals the concentration of the base (assuming complete dissociation). We then use K<sub>w</sub> 
+                                to find [H₃O⁺] before calculating the pH.
+                            </div>
+                            <div class="step">
+                                <span class="step-number">3</span>
+                                Use the formula: [H₃O⁺] = K<sub>w</sub> / [OH⁻] = 1 × 10<sup>-14</sup> / [OH⁻]
+                            </div>
+                        </div>
+                        
+                        <div class="calculation-box">
+                            <h4>pH Calculator</h4>
+                            <div class="calculation-inputs">
+                                <div class="input-group">
+                                    <label for="solution-type">Solution Type</label>
+                                    <select id="solution-type">
+                                        <option value="acid">Strong Acid</option>
+                                        <option value="base">Strong Base</option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <label for="concentration">Concentration (mol/dm³)</label>
+                                    <input type="number" id="concentration" step="0.001" value="0.01">
+                                </div>
+                            </div>
+                            <button id="calculate-ph">Calculate pH</button>
+                            <div class="calculation-result" id="ph-result"></div>
+                        </div>
+                        
+                        <div class="calculation-box">
+                            <h4>K<sub>w</sub> Calculator</h4>
+                            <p>Calculate the missing ion concentration using K<sub>w</sub> = 1 × 10<sup>-14</sup></p>
+                            <div class="calculation-inputs">
+                                <div class="input-group">
+                                    <label for="h3o-conc">[H₃O⁺] (mol/dm³)</label>
+                                    <input type="text" id="h3o-conc" placeholder="e.g., 1e-7">
+                                </div>
+                                <div class="input-group">
+                                    <label for="oh-conc">[OH⁻] (mol/dm³)</label>
+                                    <input type="text" id="oh-conc" placeholder="e.g., 1e-10">
+                                </div>
+                            </div>
+                            <button id="calculate-kw">Calculate Missing Concentration</button>
+                            <div class="calculation-result" id="kw-result"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section" id="conclusion">
+                    <div class="section-header">
+                        <h2>Conclusion</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>
+                            The pH scale provides a simple, logarithmic measure of a solution's acidity or alkalinity, ranging from 0 to 14. 
+                            This scale is dependent on the auto-ionisation of water into H₃O⁺ and OH⁻ ions, quantified by the ion product 
+                            constant, K<sub>w</sub> = 1 × 10<sup>-14</sup> at 298 K. The formula pH = -log[H₃O⁺] allows for the precise 
+                            calculation of pH for strong acid and base solutions.
+                        </p>
+                        
+                        <div class="key-point">
+                            <strong>Key Takeaway:</strong> The pH scale is logarithmic, meaning each whole number change represents a 
+                            10-fold change in [H₃O⁺] concentration. At 25°C, pure water has pH = 7 because [H₃O⁺] = [OH⁻] = 1 × 10<sup>-7</sup> M.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quiz-container" id="quiz">
+                    <h2>End-of-Lesson Questions</h2>
+                    <p>Test your understanding of the pH scale and water ionisation. Select the correct answer for each question.</p>
+                    
+                    <div class="quiz-question" id="q1">
+                        <div class="question-text">1. Define the ion product of water, K<sub>w</sub>, and state its numerical value at 298 K.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">K<sub>w</sub> = [H₃O⁺] + [OH⁻] = 1 × 10<sup>-7</sup></div>
+                            <div class="option" data-correct="false">K<sub>w</sub> = [H₃O⁺] / [OH⁻] = 1 × 10<sup>-14</sup></div>
+                            <div class="option" data-correct="true">K<sub>w</sub> = [H₃O⁺][OH⁻] = 1 × 10<sup>-14</sup></div>
+                            <div class="option" data-correct="false">K<sub>w</sub> = -log[H₃O⁺] = 7</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q2">
+                        <div class="question-text">2. Explain what the pH scale is used for and state the range of numbers it typically covers.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">Measures temperature of solutions; ranges from -10 to 10</div>
+                            <div class="option" data-correct="false">Measures concentration of all ions; ranges from 1 to 100</div>
+                            <div class="option" data-correct="true">Expresses acidity or alkalinity; ranges from 0 to 14</div>
+                            <div class="option" data-correct="false">Measures electrical conductivity; ranges from 0 to 7</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q3">
+                        <div class="question-text">3. State the equation used to calculate the pH of a solution from the hydronium ion concentration.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">pH = [H₃O⁺]</div>
+                            <div class="option" data-correct="false">pH = log[H₃O⁺]</div>
+                            <div class="option" data-correct="true">pH = -log[H₃O⁺]</div>
+                            <div class="option" data-correct="false">pH = 1 / [H₃O⁺]</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q4">
+                        <div class="question-text">4. Explain the process of auto-ionisation of water, including the formulae of the two ions formed.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">H₂O → H⁺ + O²⁻; forms hydrogen and oxide ions</div>
+                            <div class="option" data-correct="false">H₂O → H₂ + ½O₂; forms hydrogen and oxygen gases</div>
+                            <div class="option" data-correct="true">2H₂O ⇌ H₃O⁺ + OH⁻; forms hydronium and hydroxide ions</div>
+                            <div class="option" data-correct="false">H₂O → H⁺ + OH⁻; forms hydrogen and hydroxide ions</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q5">
+                        <div class="question-text">5. A solution has pH = 1. Classify this solution and explain your reasoning.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">Basic; pH > 7 indicates basic solution</div>
+                            <div class="option" data-correct="false">Neutral; pH = 7 is neutral</div>
+                            <div class="option" data-correct="true">Acidic; pH < 7 indicates acidic solution</div>
+                            <div class="option" data-correct="false">Cannot determine; need more information</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q6">
+                        <div class="question-text">6. If [OH⁻] = 1 × 10<sup>-10</sup> M at 298 K, calculate [H₃O⁺].</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">1 × 10<sup>-4</sup> M</div>
+                            <div class="option" data-correct="false">1 × 10<sup>-10</sup> M</div>
+                            <div class="option" data-correct="true">1 × 10<sup>-4</sup> M (using K<sub>w</sub> = [H₃O⁺][OH⁻])</div>
+                            <div class="option" data-correct="false">1 × 10<sup>-24</sup> M</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q7">
+                        <div class="question-text">7. A strong acid has [H₃O⁺] = 5.0 × 10<sup>-4</sup> M. Calculate the pH.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">pH = 4.0</div>
+                            <div class="option" data-correct="false">pH = 3.3</div>
+                            <div class="option" data-correct="true">pH = 3.3 (using pH = -log[5.0 × 10<sup>-4</sup>])</div>
+                            <div class="option" data-correct="false">pH = 4.3</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q8">
+                        <div class="question-text">8. A strong base has [OH⁻] = 0.005 M at 298 K. Calculate the pH.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">pH = 2.3</div>
+                            <div class="option" data-correct="false">pH = 11.0</div>
+                            <div class="option" data-correct="true">pH = 11.7 (first find [H₃O⁺] = K<sub>w</sub>/[OH⁻], then pH)</div>
+                            <div class="option" data-correct="false">pH = 5.0</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <button class="submit-btn" id="submit-quiz">Submit Answers</button>
+                    <div class="results" id="quiz-results"></div>
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <h3>Lesson Navigation</h3>
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <li style="margin-bottom: 10px;"><a href="#objectives" class="nav-link">Learning Objectives</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#definitions" class="nav-link">Definitions</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#introduction" class="nav-link">Introduction</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#main-body" class="nav-link">Main Body</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#conclusion" class="nav-link">Conclusion</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#quiz" class="nav-link">Quiz</a></li>
+                </ul>
+                
+                <div style="margin-top: 30px;">
+                    <h3>Key Formulas</h3>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>pH:</strong> pH = -log[H₃O⁺]
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>K<sub>w</sub>:</strong> K<sub>w</sub> = [H₃O⁺][OH⁻] = 1×10<sup>-14</sup>
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>[H₃O⁺] from [OH⁻]:</strong> [H₃O⁺] = K<sub>w</sub> / [OH⁻]
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <h3>pH Classification</h3>
+                    <div style="font-size: 0.9rem;">
+                        <div><strong>Acidic:</strong> pH &lt; 7</div>
+                        <div><strong>Neutral:</strong> pH = 7</div>
+                        <div><strong>Basic:</strong> pH &gt; 7</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <h3>Water Auto-ionisation</h3>
+                    <div style="font-size: 0.9rem;">
+                        <div>2H₂O ⇌ H₃O⁺ + OH⁻</div>
+                        <div>At 25°C: [H₃O⁺] = [OH⁻] = 1×10<sup>-7</sup> M</div>
+                        <div>pH of pure water = 7</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Collapsible sections functionality
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const section = header.parentElement;
+                section.classList.toggle('active');
+            });
+        });
+        
+        // Navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                // Expand the target section if it's collapsed
+                if (!targetSection.classList.contains('active')) {
+                    targetSection.classList.add('active');
+                }
+                
+                // Scroll to the target section
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        // pH Calculator
+        document.getElementById('calculate-ph').addEventListener('click', () => {
+            const solutionType = document.getElementById('solution-type').value;
+            const concentration = parseFloat(document.getElementById('concentration').value);
+            
+            if (isNaN(concentration) || concentration <= 0) {
+                alert('Please enter a valid concentration greater than 0.');
+                return;
+            }
+            
+            let pH, explanation;
+            
+            if (solutionType === 'acid') {
+                // For strong acids: pH = -log[H₃O⁺]
+                pH = -Math.log10(concentration);
+                explanation = `For a strong acid: pH = -log(${concentration}) = ${pH.toFixed(2)}`;
+            } else {
+                // For strong bases: [H₃O⁺] = K_w / [OH⁻], then pH = -log[H₃O⁺]
+                const h3oConcentration = 1e-14 / concentration;
+                pH = -Math.log10(h3oConcentration);
+                explanation = `For a strong base: [H₃O⁺] = K<sub>w</sub> / [OH⁻] = 1×10<sup>-14</sup> / ${concentration} = ${h3oConcentration.toExponential(2)} M<br>Then pH = -log(${h3oConcentration.toExponential(2)}) = ${pH.toFixed(2)}`;
+            }
+            
+            const resultElement = document.getElementById('ph-result');
+            resultElement.innerHTML = `<strong>pH = ${pH.toFixed(2)}</strong><br>${explanation}`;
+            resultElement.style.display = 'block';
+        });
+        
+        // K_w Calculator
+        document.getElementById('calculate-kw').addEventListener('click', () => {
+            const h3oInput = document.getElementById('h3o-conc').value;
+            const ohInput = document.getElementById('oh-conc').value;
+            
+            // Parse scientific notation or decimal
+            function parseConcentration(input) {
+                if (!input) return null;
+                if (input.includes('e') || input.includes('E')) {
+                    const parts = input.split(/[eE]/);
+                    return parseFloat(parts[0]) * Math.pow(10, parseFloat(parts[1]));
+                }
+                return parseFloat(input);
+            }
+            
+            const h3oConc = parseConcentration(h3oInput);
+            const ohConc = parseConcentration(ohInput);
+            
+            if (h3oConc !== null && ohConc !== null) {
+                // Both provided, verify K_w
+                const product = h3oConc * ohConc;
+                const resultElement = document.getElementById('kw-result');
+                resultElement.innerHTML = `
+                    [H₃O⁺] × [OH⁻] = ${h3oConc.toExponential(2)} × ${ohConc.toExponential(2)} = ${product.toExponential(2)}<br>
+                    This ${Math.abs(product - 1e-14) < 1e-15 ? 'matches' : 'does not match'} K<sub>w</sub> = 1×10<sup>-14</sup>
+                `;
+                resultElement.style.display = 'block';
+            } else if (h3oConc !== null) {
+                // Calculate [OH⁻] from [H₃O⁺]
+                const ohCalculated = 1e-14 / h3oConc;
+                const resultElement = document.getElementById('kw-result');
+                resultElement.innerHTML = `
+                    Using K<sub>w</sub> = [H₃O⁺][OH⁻] = 1×10<sup>-14</sup><br>
+                    [OH⁻] = K<sub>w</sub> / [H₃O⁺] = 1×10<sup>-14</sup> / ${h3oConc.toExponential(2)} = ${ohCalculated.toExponential(2)} M
+                `;
+                resultElement.style.display = 'block';
+                document.getElementById('oh-conc').value = ohCalculated.toExponential(2);
+            } else if (ohConc !== null) {
+                // Calculate [H₃O⁺] from [OH⁻]
+                const h3oCalculated = 1e-14 / ohConc;
+                const resultElement = document.getElementById('kw-result');
+                resultElement.innerHTML = `
+                    Using K<sub>w</sub> = [H₃O⁺][OH⁻] = 1×10<sup>-14</sup><br>
+                    [H₃O⁺] = K<sub>w</sub> / [OH⁻] = 1×10<sup>-14</sup> / ${ohConc.toExponential(2)} = ${h3oCalculated.toExponential(2)} M
+                `;
+                resultElement.style.display = 'block';
+                document.getElementById('h3o-conc').value = h3oCalculated.toExponential(2);
+            } else {
+                alert('Please enter at least one concentration value.');
+            }
+        });
+        
+        // Quiz functionality
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options in this question
+                const question = this.closest('.quiz-question');
+                question.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // Remove any existing feedback
+                const feedback = question.querySelector('.feedback');
+                feedback.className = 'feedback';
+                feedback.textContent = '';
+            });
+        });
+        
+        document.getElementById('submit-quiz').addEventListener('click', () => {
+            let score = 0;
+            const totalQuestions = 8;
+            
+            // Check each question
+            document.querySelectorAll('.quiz-question').forEach(question => {
+                const selectedOption = question.querySelector('.option.selected');
+                const feedback = question.querySelector('.feedback');
+                
+                if (selectedOption) {
+                    const isCorrect = selectedOption.getAttribute('data-correct') === 'true';
+                    
+                    if (isCorrect) {
+                        score++;
+                        feedback.className = 'feedback correct';
+                        feedback.textContent = 'Correct! Well done.';
+                        selectedOption.classList.add('correct');
+                    } else {
+                        feedback.className = 'feedback incorrect';
+                        feedback.textContent = 'Incorrect. Try again.';
+                        selectedOption.classList.add('incorrect');
+                        
+                        // Highlight the correct answer
+                        const correctOption = question.querySelector('.option[data-correct="true"]');
+                        correctOption.classList.add('correct');
+                    }
+                } else {
+                    // No option selected
+                    const correctOption = question.querySelector('.option[data-correct="true"]');
+                    correctOption.classList.add('correct');
+                    
+                    feedback.className = 'feedback incorrect';
+                    feedback.textContent = 'Please select an answer.';
+                }
+            });
+            
+            // Display results
+            const results = document.getElementById('quiz-results');
+            const percentage = (score / totalQuestions) * 100;
+            
+            if (percentage >= 80) {
+                results.className = 'results success';
+                results.textContent = `Excellent! You scored ${score}/${totalQuestions} (${percentage}%). You have a strong understanding of the pH scale and water ionisation.`;
+            } else if (percentage >= 60) {
+                results.className = 'results warning';
+                results.textContent = `Good effort! You scored ${score}/${totalQuestions} (${percentage}%). Review the material and try again to improve your score.`;
+            } else {
+                results.className = 'results warning';
+                results.textContent = `You scored ${score}/${totalQuestions} (${percentage}%). We recommend reviewing the lesson material and trying the quiz again.`;
+            }
+        });
+        
+        // Expand the first section by default
+        document.querySelector('.section').classList.add('active');
+        
+        // Pre-fill examples
+        document.getElementById('concentration').value = '0.01';
+        document.getElementById('h3o-conc').value = '1e-7';
+        document.getElementById('oh-conc').value = '1e-10';
+    </script>
+</body>
+</html>

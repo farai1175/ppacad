@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acid-Base Neutralisation and Volumetric Analysis</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .lesson-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .main-content {
+            flex: 3;
+            min-width: 300px;
+        }
+        
+        .sidebar {
+            flex: 1;
+            min-width: 250px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .section-header:hover {
+            background-color: #34495e;
+        }
+        
+        .section-header h2 {
+            font-size: 1.4rem;
+            margin: 0;
+        }
+        
+        .section-content {
+            padding: 20px;
+            display: none;
+        }
+        
+        .section.active .section-content {
+            display: block;
+        }
+        
+        .section.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .toggle-icon {
+            transition: transform 0.3s;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--light-color);
+            font-weight: 600;
+        }
+        
+        .definition-table th:first-child {
+            width: 30%;
+        }
+        
+        .reaction-types {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .reaction-card {
+            flex: 1;
+            min-width: 250px;
+            background-color: var(--light-color);
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .interactive-titration {
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .titration-setup {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 40px;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .burette {
+            width: 80px;
+            height: 200px;
+            background-color: white;
+            border: 2px solid #333;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .burette-liquid {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: rgba(231, 76, 60, 0.7);
+            transition: height 2s ease;
+        }
+        
+        .burette-scale {
+            position: absolute;
+            left: -25px;
+            top: 0;
+            bottom: 0;
+            width: 20px;
+            border-right: 1px solid #333;
+        }
+        
+        .scale-mark {
+            position: absolute;
+            right: 0;
+            width: 10px;
+            border-top: 1px solid #333;
+            font-size: 0.7rem;
+            text-align: right;
+            padding-right: 12px;
+        }
+        
+        .conical-flask {
+            width: 120px;
+            height: 150px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 2px solid #333;
+            border-radius: 0 0 60px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .flask-liquid {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: rgba(52, 152, 219, 0.7);
+            transition: all 2s ease;
+        }
+        
+        .flask-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+            color: #333;
+            transition: color 1s ease;
+        }
+        
+        .titration-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .active-btn {
+            background-color: var(--primary-color);
+        }
+        
+        .calculation-box {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .formula {
+            font-size: 1.8rem;
+            text-align: center;
+            margin: 15px 0;
+            font-family: "Times New Roman", serif;
+        }
+        
+        .calculation-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .input-group label {
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .input-group input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .calculation-result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+        }
+        
+        .quiz-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .quiz-question {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .quiz-question:last-child {
+            border-bottom: none;
+        }
+        
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .option.selected {
+            background-color: var(--light-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .option.correct {
+            background-color: rgba(46, 204, 113, 0.2);
+            border-color: var(--success-color);
+        }
+        
+        .option.incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            border-color: var(--danger-color);
+        }
+        
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            display: block;
+        }
+        
+        .feedback.incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            color: #c0392b;
+            display: block;
+        }
+        
+        .submit-btn {
+            background-color: var(--primary-color);
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+        
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .results.success {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            display: block;
+        }
+        
+        .results.warning {
+            background-color: rgba(243, 156, 18, 0.2);
+            color: #d35400;
+            display: block;
+        }
+        
+        .key-point {
+            background-color: var(--light-color);
+            padding: 15px;
+            border-left: 4px solid var(--secondary-color);
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .math {
+            font-family: "Times New Roman", serif;
+            font-style: italic;
+        }
+        
+        .equation-box {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .equation {
+            font-size: 1.3rem;
+            font-family: "Times New Roman", serif;
+            margin: 10px 0;
+        }
+        
+        .indicator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .indicator-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        
+        .indicator-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .indicator-name {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .color-display {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+        
+        .acid-color, .base-color {
+            flex: 1;
+            padding: 8px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+        }
+        
+        .litmus-acid { background-color: #e74c3c; }
+        .litmus-base { background-color: #3498db; }
+        .methyl-orange-acid { background-color: #e74c3c; }
+        .methyl-orange-base { background-color: #f39c12; }
+        .phenolphthalein-acid { background-color: #ecf0f1; color: #333; text-shadow: none; }
+        .phenolphthalein-base { background-color: #e84393; }
+        .bromothymol-acid { background-color: #f1c40f; color: #333; text-shadow: none; }
+        .bromothymol-base { background-color: #3498db; }
+        
+        .salt-preparation {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .salt-example {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 15px 0;
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            border-left: 4px solid var(--success-color);
+        }
+        
+        @media (max-width: 768px) {
+            .lesson-content {
+                flex-direction: column;
+            }
+            
+            .reaction-types {
+                flex-direction: column;
+            }
+            
+            .titration-setup {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+            
+            .salt-example {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .calculation-inputs {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Acid-Base Neutralisation and Volumetric Analysis</h1>
+            <div class="subtitle">Chemical Change (Part 2) - Physical Sciences (Chemistry Focus)</div>
+        </header>
+        
+        <div class="lesson-content">
+            <div class="main-content">
+                <div class="section" id="objectives">
+                    <div class="section-header">
+                        <h2>Learning Objectives</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>Upon completion of this lesson, students should be able to:</p>
+                        <ol>
+                            <li><strong>Describe acid-base indicators</strong> and how they work.</li>
+                            <li><strong>Know indicator colors</strong> for common indicators.</li>
+                            <li><strong>Identify acids and bases</strong> needed to prepare specific salts.</li>
+                            <li><strong>Write neutralisation reactions</strong> of common acids and bases.</li>
+                            <li>Understand <strong>Titration experiments</strong> and use the formula: c₁V₁/c₂V₂ = n₁/n₂</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="section" id="definitions">
+                    <div class="section-header">
+                        <h2>Definitions and Scientific Principles</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <table class="definition-table">
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Definition/Principle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Acid-Base Indicator</strong></td>
+                                    <td>
+                                        A <strong>weak acid, or a weak base</strong>, that changes colour as the 
+                                        <strong>H⁺ ion concentration or the OH⁻ ion concentration in a solution changes</strong>. 
+                                        They are coloured dyes.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Neutralisation Reaction</strong></td>
+                                    <td>
+                                        The reaction between an acid and a base, typically producing a 
+                                        <strong>salt and water</strong>. These reactions are usually <strong>exothermic</strong>.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Salt</strong></td>
+                                    <td>
+                                        The product formed in an acid-base reaction, made up of the 
+                                        <strong>cation from the base</strong> and the <strong>anion from the acid</strong>. 
+                                        All salts are <strong>ionic substances</strong>.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Titration/Volumetric Analysis</strong></td>
+                                    <td>
+                                        A quantitative method used to <strong>determine the concentration of an unknown solution</strong> 
+                                        by measuring the volumes that react with a standard solution.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Standard Solution</strong></td>
+                                    <td>
+                                        A solution in which the <strong>concentration is known to a high degree of precision</strong>.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Equivalence Point</strong></td>
+                                    <td>
+                                        The point in a titration where the <strong>acid/base has completely reacted</strong> 
+                                        with the base/acid according to the molar ratio.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="section" id="introduction">
+                    <div class="section-header">
+                        <h2>Introduction</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>
+                            Acid-base reactions are categorized as neutralisation reactions, which are proton transfer reactions 
+                            that often result in the formation of a salt and water. Since reactants and products in these reactions 
+                            are often clear solutions, we rely on special chemical compounds called <strong>indicators</strong> to track the reaction progress. 
+                            Precise quantitative analysis of these solutions, particularly finding unknown concentrations, is performed 
+                            using a technique known as <strong>titration (volumetric analysis)</strong>.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="section" id="main-body">
+                    <div class="section-header">
+                        <h2>Main Body</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <h3>1. Acid-Base Indicators and Colour Changes</h3>
+                        <p>
+                            Indicators are essential in chemistry as they visually display the acidity or alkalinity (pH) of a solution. 
+                            They are typically <strong>weak acids or weak bases</strong> whose molecular structure changes in response to 
+                            the concentration of H⁺ or OH⁻ ions present, resulting in a distinct colour change.
+                        </p>
+                        
+                        <div class="indicator-grid">
+                            <div class="indicator-card">
+                                <div class="indicator-name">Litmus</div>
+                                <div class="color-display">
+                                    <div class="acid-color litmus-acid">Red in Acid</div>
+                                    <div class="base-color litmus-base">Blue in Base</div>
+                                </div>
+                            </div>
+                            
+                            <div class="indicator-card">
+                                <div class="indicator-name">Methyl Orange</div>
+                                <div class="color-display">
+                                    <div class="acid-color methyl-orange-acid">Red in Acid</div>
+                                    <div class="base-color methyl-orange-base">Orange in Base</div>
+                                </div>
+                            </div>
+                            
+                            <div class="indicator-card">
+                                <div class="indicator-name">Phenolphthalein</div>
+                                <div class="color-display">
+                                    <div class="acid-color phenolphthalein-acid">Colorless in Acid</div>
+                                    <div class="base-color phenolphthalein-base">Pink in Base</div>
+                                </div>
+                            </div>
+                            
+                            <div class="indicator-card">
+                                <div class="indicator-name">Bromothymol Blue</div>
+                                <div class="color-display">
+                                    <div class="acid-color bromothymol-acid">Yellow in Acid</div>
+                                    <div class="base-color bromothymol-base">Blue in Base</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3>2. Neutralisation Reactions</h3>
+                        <p>
+                            Neutralisation occurs when the properties of an acid and a base cancel each other out, 
+                            often producing an ionic <strong>salt and water</strong>. The reaction is generally <strong>exothermic</strong>, meaning energy is released.
+                        </p>
+                        
+                        <div class="reaction-types">
+                            <div class="reaction-card">
+                                <h4>Acid + Metal Hydroxide</h4>
+                                <p><strong>→ Salt + Water</strong></p>
+                                <div class="equation">HCl(aq) + NaOH(aq) → NaCl(aq) + H₂O(l)</div>
+                            </div>
+                            
+                            <div class="reaction-card">
+                                <h4>Acid + Metal Oxide</h4>
+                                <p><strong>→ Salt + Water</strong></p>
+                                <div class="equation">2HCl(aq) + MgO(s) → MgCl₂(aq) + H₂O(l)</div>
+                            </div>
+                            
+                            <div class="reaction-card">
+                                <h4>Acid + Metal Carbonate</h4>
+                                <p><strong>→ Salt + Water + CO₂</strong></p>
+                                <div class="equation">2HCl(aq) + Na₂CO₃(aq) → 2NaCl(aq) + H₂O(l) + CO₂(g)</div>
+                            </div>
+                        </div>
+                        
+                        <h3>3. Identifying Reactants for Salt Preparation</h3>
+                        <p>
+                            The composition of a salt is determined by the reactants used. To prepare a specific salt:
+                        </p>
+                        <ol>
+                            <li>Identify the <strong>metal cation</strong> of the target salt; this determines the <strong>base</strong> required.</li>
+                            <li>Identify the <strong>non-metal anion</strong> of the target salt; this determines the <strong>acid</strong> required.</li>
+                        </ol>
+                        
+                        <div class="salt-preparation">
+                            <h4>Salt Preparation Examples</h4>
+                            
+                            <div class="salt-example">
+                                <div>
+                                    <strong>Target Salt:</strong> Potassium chloride (KCl)
+                                </div>
+                                <div>
+                                    <strong>Required Acid:</strong> HCl (provides Cl⁻)
+                                </div>
+                                <div>
+                                    <strong>Required Base:</strong> KOH (provides K⁺)
+                                </div>
+                                <div class="equation">HCl(aq) + KOH(aq) → KCl(aq) + H₂O(l)</div>
+                            </div>
+                            
+                            <div class="salt-example">
+                                <div>
+                                    <strong>Target Salt:</strong> Sodium nitrate (NaNO₃)
+                                </div>
+                                <div>
+                                    <strong>Required Acid:</strong> HNO₃ (provides NO₃⁻)
+                                </div>
+                                <div>
+                                    <strong>Required Base:</strong> NaOH (provides Na⁺)
+                                </div>
+                                <div class="equation">HNO₃(aq) + NaOH(aq) → NaNO₃(aq) + H₂O(l)</div>
+                            </div>
+                        </div>
+                        
+                        <h3>4. Titration and Volumetric Analysis</h3>
+                        <p>
+                            <strong>Titration</strong> is a laboratory procedure, also called <strong>volumetric analysis</strong>, 
+                            used to accurately measure the volume of a solution of known concentration (<strong>standard solution</strong>) 
+                            required to completely react with a fixed volume of an unknown solution.
+                        </p>
+                        
+                        <div class="interactive-titration">
+                            <h4>Interactive Titration Simulation</h4>
+                            <div class="titration-setup">
+                                <div class="burette">
+                                    <div class="burette-liquid" id="burette-liquid" style="height: 80%;"></div>
+                                    <div class="burette-scale">
+                                        <div class="scale-mark" style="top: 0%;">0</div>
+                                        <div class="scale-mark" style="top: 20%;">5</div>
+                                        <div class="scale-mark" style="top: 40%;">10</div>
+                                        <div class="scale-mark" style="top: 60%;">15</div>
+                                        <div class="scale-mark" style="top: 80%;">20</div>
+                                        <div class="scale-mark" style="top: 100%;">25</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="conical-flask">
+                                    <div class="flask-liquid" id="flask-liquid" style="height: 30%;"></div>
+                                    <div class="flask-indicator" id="flask-indicator">Phenolphthalein</div>
+                                </div>
+                            </div>
+                            
+                            <div class="titration-controls">
+                                <button id="start-titration">Start Titration</button>
+                                <button id="reset-titration">Reset</button>
+                                <button id="change-indicator">Change Indicator</button>
+                            </div>
+                            
+                            <div id="titration-status" style="margin-top: 15px; font-weight: bold;">
+                                Ready to start titration
+                            </div>
+                        </div>
+                        
+                        <div class="key-point">
+                            The goal of titration is to reach the <strong>equivalence point</strong>. An indicator is added to signal 
+                            this endpoint by changing colour.
+                        </div>
+                        
+                        <h4>Titration Formula</h4>
+                        <p>
+                            The relationship between the concentration (c) and volume (V) of the acid (A) and the base (B) 
+                            is related by their stoichiometric coefficients (nₐ and nբ) from the balanced equation.
+                        </p>
+                        
+                        <div class="formula">
+                            cₐVₐ / cբVբ = nₐ / nբ
+                        </div>
+                        
+                        <p>Where:</p>
+                        <ul>
+                            <li>cₐ and Vₐ are the concentration and volume of the acid</li>
+                            <li>cբ and Vբ are the concentration and volume of the base</li>
+                            <li>nₐ and nբ are the stoichiometric coefficients from the balanced equation</li>
+                        </ul>
+                        
+                        <div class="calculation-box">
+                            <h4>Titration Calculator</h4>
+                            <div class="calculation-inputs">
+                                <div class="input-group">
+                                    <label for="acid-conc">Acid Concentration (mol/dm³)</label>
+                                    <input type="number" id="acid-conc" step="0.01" value="0.1">
+                                </div>
+                                <div class="input-group">
+                                    <label for="acid-vol">Acid Volume (cm³)</label>
+                                    <input type="number" id="acid-vol" value="20">
+                                </div>
+                                <div class="input-group">
+                                    <label for="base-conc">Base Concentration (mol/dm³)</label>
+                                    <input type="number" id="base-conc" step="0.01">
+                                </div>
+                                <div class="input-group">
+                                    <label for="base-vol">Base Volume (cm³)</label>
+                                    <input type="number" id="base-vol" value="25">
+                                </div>
+                                <div class="input-group">
+                                    <label for="acid-coeff">Acid Coefficient (nₐ)</label>
+                                    <input type="number" id="acid-coeff" value="1">
+                                </div>
+                                <div class="input-group">
+                                    <label for="base-coeff">Base Coefficient (nբ)</label>
+                                    <input type="number" id="base-coeff" value="2">
+                                </div>
+                            </div>
+                            <button id="calculate-concentration">Calculate Unknown Concentration</button>
+                            <div class="calculation-result" id="calculation-result"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section" id="conclusion">
+                    <div class="section-header">
+                        <h2>Conclusion</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>
+                            Acid-base chemistry involves predictable neutralisation reactions that form salts and water. 
+                            Indicators, which are weak acids or bases sensitive to H⁺ and OH⁻ concentration, allow us to monitor these reactions. 
+                            <strong>Titration (volumetric analysis)</strong> is the quantitative method based on the principle of neutralisation, 
+                            allowing chemists to accurately determine unknown concentrations using a standard solution and the relationship 
+                            <strong>cₐVₐ / cբVբ = nₐ / nբ</strong>, effectively linking stoichiometry with solution chemistry.
+                        </p>
+                        
+                        <div class="key-point">
+                            <strong>Key Takeaway:</strong> Titration allows precise determination of unknown concentrations using 
+                            the formula cₐVₐ / cբVբ = nₐ / nբ, where nₐ and nբ come from the balanced chemical equation.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quiz-container" id="quiz">
+                    <h2>End-of-Lesson Questions</h2>
+                    <p>Test your understanding of acid-base neutralisation and volumetric analysis. Select the correct answer for each question.</p>
+                    
+                    <div class="quiz-question" id="q1">
+                        <div class="question-text">1. Describe the function of an acid-base indicator and explain what type of chemical substance it must be to fulfill this function.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">A strong acid that changes color when mixed with any base; it must be highly reactive</div>
+                            <div class="option" data-correct="true">A weak acid or base that changes color as H⁺ or OH⁻ concentration changes; it must be sensitive to pH changes</div>
+                            <div class="option" data-correct="false">A salt that dissolves to create color; it must be highly soluble in water</div>
+                            <div class="option" data-correct="false">A metal oxide that indicates acidity; it must be amphoteric</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q2">
+                        <div class="question-text">2. State the expected colour change when phenolphthalein is added to an acid solution and then titrated with a base until neutralisation.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">Colorless → Red → Colorless</div>
+                            <div class="option" data-correct="false">Pink → Colorless → Pink</div>
+                            <div class="option" data-correct="true">Colorless → Pink (at endpoint)</div>
+                            <div class="option" data-correct="false">Red → Orange → Yellow</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q3">
+                        <div class="question-text">3. A neutralisation reaction produced Sodium nitrate (NaNO₃). Identify the acid and base, and write the balanced equation.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">Acid: HCl; Base: NaOH; Equation: HCl + NaOH → NaNO₃ + H₂O</div>
+                            <div class="option" data-correct="false">Acid: HNO₃; Base: KOH; Equation: HNO₃ + KOH → NaNO₃ + H₂O</div>
+                            <div class="option" data-correct="true">Acid: HNO₃; Base: NaOH; Equation: HNO₃ + NaOH → NaNO₃ + H₂O</div>
+                            <div class="option" data-correct="false">Acid: H₂SO₄; Base: NaOH; Equation: H₂SO₄ + 2NaOH → NaNO₃ + 2H₂O</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q4">
+                        <div class="question-text">4. Write the balanced neutralisation reaction between Ethanoic acid (CH₃COOH) and Sodium hydroxide (NaOH).</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">CH₃COOH + 2NaOH → CH₃COONa + 2H₂O</div>
+                            <div class="option" data-correct="true">CH₃COOH + NaOH → CH₃COONa + H₂O</div>
+                            <div class="option" data-correct="false">2CH₃COOH + NaOH → (CH₃COO)₂Na + H₂O</div>
+                            <div class="option" data-correct="false">CH₃COOH + NaOH → CH₃COONa + H₂</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q5">
+                        <div class="question-text">5. In a titration, 20 cm³ of 0.1 mol/dm³ H₂SO₄ reacted with 25 cm³ of NaOH. The equation is: H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">nₐ = 2, nբ = 1, cբ = 0.08 mol/dm³</div>
+                            <div class="option" data-correct="false">nₐ = 1, nբ = 2, cբ = 0.16 mol/dm³</div>
+                            <div class="option" data-correct="true">nₐ = 1, nբ = 2, cբ = 0.16 mol/dm³</div>
+                            <div class="option" data-correct="false">nₐ = 2, nբ = 1, cբ = 0.16 mol/dm³</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <button class="submit-btn" id="submit-quiz">Submit Answers</button>
+                    <div class="results" id="quiz-results"></div>
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <h3>Lesson Navigation</h3>
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <li style="margin-bottom: 10px;"><a href="#objectives" class="nav-link">Learning Objectives</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#definitions" class="nav-link">Definitions</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#introduction" class="nav-link">Introduction</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#main-body" class="nav-link">Main Body</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#conclusion" class="nav-link">Conclusion</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#quiz" class="nav-link">Quiz</a></li>
+                </ul>
+                
+                <div style="margin-top: 30px;">
+                    <h3>Quick Reference</h3>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Titration Formula:</strong> cₐVₐ / cբVբ = nₐ / nբ
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Equivalence Point:</strong> When acid and base completely react
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Standard Solution:</strong> Known concentration solution
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <h3>Indicator Colors</h3>
+                    <div style="font-size: 0.9rem;">
+                        <div><strong>Phenolphthalein:</strong> Acid: Colorless, Base: Pink</div>
+                        <div><strong>Methyl Orange:</strong> Acid: Red, Base: Orange</div>
+                        <div><strong>Litmus:</strong> Acid: Red, Base: Blue</div>
+                        <div><strong>Bromothymol Blue:</strong> Acid: Yellow, Base: Blue</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <h3>Common Reactions</h3>
+                    <div style="font-size: 0.9rem;">
+                        <div>Acid + Hydroxide → Salt + Water</div>
+                        <div>Acid + Oxide → Salt + Water</div>
+                        <div>Acid + Carbonate → Salt + Water + CO₂</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Collapsible sections functionality
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const section = header.parentElement;
+                section.classList.toggle('active');
+            });
+        });
+        
+        // Navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                // Expand the target section if it's collapsed
+                if (!targetSection.classList.contains('active')) {
+                    targetSection.classList.add('active');
+                }
+                
+                // Scroll to the target section
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        // Interactive titration simulation
+        const buretteLiquid = document.getElementById('burette-liquid');
+        const flaskLiquid = document.getElementById('flask-liquid');
+        const flaskIndicator = document.getElementById('flask-indicator');
+        const titrationStatus = document.getElementById('titration-status');
+        
+        let currentIndicator = 'phenolphthalein';
+        let titrationInProgress = false;
+        
+        function updateIndicatorColor(pH) {
+            // pH range: 0-14, with 7 being neutral
+            if (currentIndicator === 'phenolphthalein') {
+                // Changes around pH 8.2-10
+                if (pH > 8.2) {
+                    flaskIndicator.textContent = 'Pink';
+                    flaskIndicator.style.color = '#e84393';
+                } else {
+                    flaskIndicator.textContent = 'Colorless';
+                    flaskIndicator.style.color = '#333';
+                }
+            } else if (currentIndicator === 'methyl-orange') {
+                // Changes around pH 3.1-4.4
+                if (pH < 3.1) {
+                    flaskIndicator.textContent = 'Red';
+                    flaskIndicator.style.color = '#e74c3c';
+                } else if (pH > 4.4) {
+                    flaskIndicator.textContent = 'Orange';
+                    flaskIndicator.style.color = '#f39c12';
+                } else {
+                    flaskIndicator.textContent = 'Transition';
+                    flaskIndicator.style.color = '#e67e22';
+                }
+            }
+        }
+        
+        document.getElementById('start-titration').addEventListener('click', () => {
+            if (titrationInProgress) return;
+            
+            titrationInProgress = true;
+            titrationStatus.textContent = 'Titration in progress...';
+            
+            // Simulate titration process
+            let buretteHeight = 80;
+            let flaskHeight = 30;
+            let pH = 1; // Starting with acidic solution
+            
+            const titrationInterval = setInterval(() => {
+                buretteHeight -= 2;
+                flaskHeight += 1;
+                pH += 0.15; // Gradually increase pH
+                
+                buretteLiquid.style.height = buretteHeight + '%';
+                flaskLiquid.style.height = flaskHeight + '%';
+                
+                updateIndicatorColor(pH);
+                
+                // Check for endpoint
+                if (currentIndicator === 'phenolphthalein' && pH > 8.2) {
+                    clearInterval(titrationInterval);
+                    titrationStatus.textContent = 'Endpoint reached! Solution turned pink.';
+                    titrationInProgress = false;
+                } else if (currentIndicator === 'methyl-orange' && pH > 4.4) {
+                    clearInterval(titrationInterval);
+                    titrationStatus.textContent = 'Endpoint reached! Solution turned orange.';
+                    titrationInProgress = false;
+                } else if (buretteHeight <= 0) {
+                    clearInterval(titrationInterval);
+                    titrationStatus.textContent = 'Titration complete. Endpoint may have been missed.';
+                    titrationInProgress = false;
+                }
+            }, 200);
+        });
+        
+        document.getElementById('reset-titration').addEventListener('click', () => {
+            buretteLiquid.style.height = '80%';
+            flaskLiquid.style.height = '30%';
+            flaskIndicator.textContent = currentIndicator.charAt(0).toUpperCase() + currentIndicator.slice(1);
+            flaskIndicator.style.color = '#333';
+            titrationStatus.textContent = 'Ready to start titration';
+            titrationInProgress = false;
+        });
+        
+        document.getElementById('change-indicator').addEventListener('click', () => {
+            if (currentIndicator === 'phenolphthalein') {
+                currentIndicator = 'methyl-orange';
+                flaskIndicator.textContent = 'Methyl Orange';
+            } else {
+                currentIndicator = 'phenolphthalein';
+                flaskIndicator.textContent = 'Phenolphthalein';
+            }
+            flaskIndicator.style.color = '#333';
+        });
+        
+        // Titration calculator
+        document.getElementById('calculate-concentration').addEventListener('click', () => {
+            const cA = parseFloat(document.getElementById('acid-conc').value);
+            const vA = parseFloat(document.getElementById('acid-vol').value);
+            const vB = parseFloat(document.getElementById('base-vol').value);
+            const nA = parseFloat(document.getElementById('acid-coeff').value);
+            const nB = parseFloat(document.getElementById('base-coeff').value);
+            
+            if (isNaN(cA) || isNaN(vA) || isNaN(vB) || isNaN(nA) || isNaN(nB)) {
+                alert('Please enter valid numbers for all fields.');
+                return;
+            }
+            
+            // Calculate base concentration using the formula: cA * vA / cB * vB = nA / nB
+            // Rearranged: cB = (cA * vA * nB) / (vB * nA)
+            const cB = (cA * vA * nB) / (vB * nA);
+            
+            const resultElement = document.getElementById('calculation-result');
+            resultElement.textContent = `Base concentration = ${cB.toFixed(3)} mol/dm³`;
+            resultElement.style.display = 'block';
+            
+            // Update the base concentration input field
+            document.getElementById('base-conc').value = cB.toFixed(3);
+        });
+        
+        // Quiz functionality
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options in this question
+                const question = this.closest('.quiz-question');
+                question.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // Remove any existing feedback
+                const feedback = question.querySelector('.feedback');
+                feedback.className = 'feedback';
+                feedback.textContent = '';
+            });
+        });
+        
+        document.getElementById('submit-quiz').addEventListener('click', () => {
+            let score = 0;
+            const totalQuestions = 5;
+            
+            // Check each question
+            document.querySelectorAll('.quiz-question').forEach(question => {
+                const selectedOption = question.querySelector('.option.selected');
+                const feedback = question.querySelector('.feedback');
+                
+                if (selectedOption) {
+                    const isCorrect = selectedOption.getAttribute('data-correct') === 'true';
+                    
+                    if (isCorrect) {
+                        score++;
+                        feedback.className = 'feedback correct';
+                        feedback.textContent = 'Correct! Well done.';
+                        selectedOption.classList.add('correct');
+                    } else {
+                        feedback.className = 'feedback incorrect';
+                        feedback.textContent = 'Incorrect. Try again.';
+                        selectedOption.classList.add('incorrect');
+                        
+                        // Highlight the correct answer
+                        const correctOption = question.querySelector('.option[data-correct="true"]');
+                        correctOption.classList.add('correct');
+                    }
+                } else {
+                    // No option selected
+                    const correctOption = question.querySelector('.option[data-correct="true"]');
+                    correctOption.classList.add('correct');
+                    
+                    feedback.className = 'feedback incorrect';
+                    feedback.textContent = 'Please select an answer.';
+                }
+            });
+            
+            // Display results
+            const results = document.getElementById('quiz-results');
+            const percentage = (score / totalQuestions) * 100;
+            
+            if (percentage >= 80) {
+                results.className = 'results success';
+                results.textContent = `Excellent! You scored ${score}/${totalQuestions} (${percentage}%). You have a strong understanding of acid-base neutralisation and titration.`;
+            } else if (percentage >= 60) {
+                results.className = 'results warning';
+                results.textContent = `Good effort! You scored ${score}/${totalQuestions} (${percentage}%). Review the material and try again to improve your score.`;
+            } else {
+                results.className = 'results warning';
+                results.textContent = `You scored ${score}/${totalQuestions} (${percentage}%). We recommend reviewing the lesson material and trying the quiz again.`;
+            }
+        });
+        
+        // Expand the first section by default
+        document.querySelector('.section').classList.add('active');
+        
+        // Pre-fill the calculation with the example from the lesson
+        document.getElementById('acid-conc').value = '0.1';
+        document.getElementById('acid-vol').value = '20';
+        document.getElementById('base-vol').value = '25';
+        document.getElementById('acid-coeff').value = '1';
+        document.getElementById('base-coeff').value = '2';
+    </script>
+</body>
+</html>

@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acid-Base Neutralisation and Indicators</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .lesson-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .main-content {
+            flex: 3;
+            min-width: 300px;
+        }
+        
+        .sidebar {
+            flex: 1;
+            min-width: 250px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .section-header:hover {
+            background-color: #34495e;
+        }
+        
+        .section-header h2 {
+            font-size: 1.4rem;
+            margin: 0;
+        }
+        
+        .section-content {
+            padding: 20px;
+            display: none;
+        }
+        
+        .section.active .section-content {
+            display: block;
+        }
+        
+        .section.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .toggle-icon {
+            transition: transform 0.3s;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--light-color);
+            font-weight: 600;
+        }
+        
+        .definition-table th:first-child {
+            width: 30%;
+        }
+        
+        .reaction-types {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .reaction-card {
+            flex: 1;
+            min-width: 250px;
+            background-color: var(--light-color);
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .reaction-card.hydroxide {
+            border-left-color: var(--secondary-color);
+        }
+        
+        .reaction-card.oxide {
+            border-left-color: var(--accent-color);
+        }
+        
+        .reaction-card.carbonate {
+            border-left-color: var(--success-color);
+        }
+        
+        .interactive-reaction {
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .reaction-container {
+            position: relative;
+            height: 200px;
+            margin: 20px auto;
+            max-width: 700px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .reactant, .product {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+        
+        .acid {
+            background-color: rgba(231, 76, 60, 0.1);
+            border: 2px solid var(--accent-color);
+        }
+        
+        .base {
+            background-color: rgba(52, 152, 219, 0.1);
+            border: 2px solid var(--secondary-color);
+        }
+        
+        .salt {
+            background-color: rgba(46, 204, 113, 0.1);
+            border: 2px solid var(--success-color);
+        }
+        
+        .water {
+            background-color: rgba(52, 152, 219, 0.2);
+            border: 2px dashed var(--secondary-color);
+        }
+        
+        .co2 {
+            background-color: rgba(149, 165, 166, 0.2);
+            border: 2px dashed #95a5a6;
+        }
+        
+        .chemical-formula {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-family: "Times New Roman", serif;
+        }
+        
+        .chemical-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .reaction-arrow {
+            font-size: 2rem;
+            margin: 0 20px;
+            color: #666;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .active-btn {
+            background-color: var(--primary-color);
+        }
+        
+        .quiz-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .quiz-question {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .quiz-question:last-child {
+            border-bottom: none;
+        }
+        
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .option.selected {
+            background-color: var(--light-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .option.correct {
+            background-color: rgba(46, 204, 113, 0.2);
+            border-color: var(--success-color);
+        }
+        
+        .option.incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            border-color: var(--danger-color);
+        }
+        
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            display: block;
+        }
+        
+        .feedback.incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            color: #c0392b;
+            display: block;
+        }
+        
+        .submit-btn {
+            background-color: var(--primary-color);
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+        
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .results.success {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            display: block;
+        }
+        
+        .results.warning {
+            background-color: rgba(243, 156, 18, 0.2);
+            color: #d35400;
+            display: block;
+        }
+        
+        .key-point {
+            background-color: var(--light-color);
+            padding: 15px;
+            border-left: 4px solid var(--secondary-color);
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .math {
+            font-family: "Times New Roman", serif;
+            font-style: italic;
+        }
+        
+        .equation-box {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .equation {
+            font-size: 1.3rem;
+            font-family: "Times New Roman", serif;
+            margin: 10px 0;
+        }
+        
+        .indicator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .indicator-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        
+        .indicator-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .indicator-name {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .color-display {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+        
+        .acid-color, .base-color {
+            flex: 1;
+            padding: 8px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+        }
+        
+        .litmus-acid { background-color: #e74c3c; }
+        .litmus-base { background-color: #3498db; }
+        .methyl-orange-acid { background-color: #e74c3c; }
+        .methyl-orange-base { background-color: #f39c12; }
+        .phenolphthalein-acid { background-color: #ecf0f1; color: #333; text-shadow: none; }
+        .phenolphthalein-base { background-color: #e84393; }
+        .bromothymol-acid { background-color: #f1c40f; color: #333; text-shadow: none; }
+        .bromothymol-base { background-color: #3498db; }
+        
+        .salt-preparation {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .salt-example {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 15px 0;
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            border-left: 4px solid var(--success-color);
+        }
+        
+        @media (max-width: 768px) {
+            .lesson-content {
+                flex-direction: column;
+            }
+            
+            .reaction-types {
+                flex-direction: column;
+            }
+            
+            .reaction-container {
+                height: 300px;
+                flex-direction: column;
+            }
+            
+            .reaction-arrow {
+                transform: rotate(90deg);
+                margin: 10px 0;
+            }
+            
+            .salt-example {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Acid-Base Neutralisation and Indicators</h1>
+            <div class="subtitle">Chemical Change (Part 2) - Physical Sciences (Chemistry Focus)</div>
+        </header>
+        
+        <div class="lesson-content">
+            <div class="main-content">
+                <div class="section" id="objectives">
+                    <div class="section-header">
+                        <h2>Learning Objectives</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>Upon completion of this lesson, students should be able to:</p>
+                        <ol>
+                            <li><strong>Write equations for acid reactions</strong> with metal hydroxides, oxides and carbonates.</li>
+                            <li><strong>Describe acid-base indicators</strong> and how they work.</li>
+                            <li><strong>Know indicator colors</strong> for litmus, methyl orange, phenolphthalein, and bromothymol blue.</li>
+                            <li><strong>Identify acids and bases</strong> needed to prepare specific salts.</li>
+                            <li><strong>Write neutralisation reactions</strong> of common acids and bases.</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="section" id="definitions">
+                    <div class="section-header">
+                        <h2>Definitions and Scientific Principles</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <table class="definition-table">
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Definition/Principle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Neutralisation Reaction</strong></td>
+                                    <td>
+                                        The reaction between an acid and a base. When an acid and a base react, a 
+                                        <strong>salt and water</strong> are typically produced. During the reaction, 
+                                        energy is released, meaning it is <strong>exothermic</strong>.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Salt</strong></td>
+                                    <td>
+                                        A product formed in an acid-base reaction that results when the 
+                                        <strong>metal ion from the base</strong> replaces the hydrogen ion in the acid. 
+                                        A salt is made up of the <strong>cation from the base</strong> and the 
+                                        <strong>anion from the acid</strong>. All salts are <strong>ionic substances</strong>.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Acid-Base Indicator</strong></td>
+                                    <td>
+                                        A <strong>weak acid, or a weak base</strong>, which colour changes as the 
+                                        H⁺ ion concentration or the OH⁻ ion concentration in a solution changes. 
+                                        They are coloured dyes that show if a solution is acid or alkaline.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="section" id="introduction">
+                    <div class="section-header">
+                        <h2>Introduction</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>
+                            Acid-base reactions are fundamental chemical processes, the most common type being neutralisation, 
+                            where the acidic and basic properties are cancelled out. This process is highly important, used 
+                            everywhere from industrial processes (like neutralizing acidic SO₂ gas) to biology (like antacids relieving heartburn).
+                        </p>
+                        <p>
+                            Neutralisation reactions are characterized by the transfer of protons (H⁺ ions) between the acid and base, 
+                            which results in the formation of an ionic compound, called a salt, and usually water. 
+                            These reactions are always <strong>exothermic</strong>, releasing heat to the surroundings.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="section" id="main-body">
+                    <div class="section-header">
+                        <h2>Main Body</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <h3>1. Overall Equations for Acid-Base Reactions</h3>
+                        <p>
+                            Acids react with several types of bases, including metal hydroxides, metal oxides, 
+                            and metal carbonates/hydrogen carbonates.
+                        </p>
+                        
+                        <div class="reaction-types">
+                            <div class="reaction-card hydroxide">
+                                <h4>With Metal Hydroxides</h4>
+                                <p><strong>Acid + Metal Hydroxide → Salt + Water</strong></p>
+                                <div class="equation">HCl(aq) + NaOH(aq) → NaCl(aq) + H₂O(l)</div>
+                                <div class="equation">H₂SO₄(aq) + 2KOH(aq) → K₂SO₄(aq) + 2H₂O(l)</div>
+                                <p>The essential net reaction is H⁺(aq) + OH⁻(aq) → H₂O(l)</p>
+                            </div>
+                            
+                            <div class="reaction-card oxide">
+                                <h4>With Metal Oxides</h4>
+                                <p><strong>Acid + Metal Oxide → Salt + Water</strong></p>
+                                <div class="equation">2HCl(aq) + CaO(aq) → CaCl₂(aq) + H₂O(l)</div>
+                                <div class="equation">2HCl(aq) + CuO(aq) → CuCl₂(aq) + H₂O(l)</div>
+                            </div>
+                            
+                            <div class="reaction-card carbonate">
+                                <h4>With Metal Carbonates</h4>
+                                <p><strong>Acid + Metal Carbonate → Salt + Water + CO₂</strong></p>
+                                <div class="equation">2HCl(aq) + Na₂CO₃(aq) → 2NaCl(aq) + H₂O(l) + CO₂(g)</div>
+                                <div class="equation">2HCl(aq) + CaCO₃(aq) → CaCl₂(aq) + H₂O(l) + CO₂(g)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="interactive-reaction">
+                            <h4>Interactive Neutralisation Reaction</h4>
+                            <div class="reaction-container">
+                                <div class="reactant acid" id="acid-reactant">
+                                    <div class="chemical-formula">HCl</div>
+                                    <div class="chemical-label">Acid</div>
+                                </div>
+                                
+                                <div class="reaction-arrow">+</div>
+                                
+                                <div class="reactant base" id="base-reactant">
+                                    <div class="chemical-formula">NaOH</div>
+                                    <div class="chemical-label">Base</div>
+                                </div>
+                                
+                                <div class="reaction-arrow">→</div>
+                                
+                                <div class="product salt" id="salt-product">
+                                    <div class="chemical-formula">NaCl</div>
+                                    <div class="chemical-label">Salt</div>
+                                </div>
+                                
+                                <div class="reaction-arrow">+</div>
+                                
+                                <div class="product water" id="water-product">
+                                    <div class="chemical-formula">H₂O</div>
+                                    <div class="chemical-label">Water</div>
+                                </div>
+                                
+                                <div class="product co2" id="co2-product" style="display: none;">
+                                    <div class="chemical-formula">CO₂</div>
+                                    <div class="chemical-label">Carbon Dioxide</div>
+                                </div>
+                            </div>
+                            <div class="controls">
+                                <button id="show-hydroxide">Metal Hydroxide</button>
+                                <button id="show-oxide">Metal Oxide</button>
+                                <button id="show-carbonate">Metal Carbonate</button>
+                            </div>
+                        </div>
+                        
+                        <h3>2. Preparing a Given Salt</h3>
+                        <p>
+                            To prepare a specific salt, you must identify its components. The <strong>positive ion</strong> 
+                            (metal cation) of the salt comes from the <strong>base</strong>, and the <strong>negative ion</strong> 
+                            (anion) comes from the <strong>acid</strong>.
+                        </p>
+                        
+                        <div class="salt-preparation">
+                            <h4>Salt Preparation Examples</h4>
+                            
+                            <div class="salt-example">
+                                <div>
+                                    <strong>Target Salt:</strong> Copper(II) sulfate (CuSO₄)
+                                </div>
+                                <div>
+                                    <strong>Required Acid:</strong> H₂SO₄ (provides SO₄²⁻)
+                                </div>
+                                <div>
+                                    <strong>Required Base:</strong> CuO (provides Cu²⁺)
+                                </div>
+                                <div class="equation">H₂SO₄(aq) + CuO(aq) → CuSO₄(aq) + H₂O(l)</div>
+                            </div>
+                            
+                            <div class="salt-example">
+                                <div>
+                                    <strong>Target Salt:</strong> Sodium chloride (NaCl)
+                                </div>
+                                <div>
+                                    <strong>Required Acid:</strong> HCl (provides Cl⁻)
+                                </div>
+                                <div>
+                                    <strong>Required Base:</strong> NaOH (provides Na⁺)
+                                </div>
+                                <div class="equation">HCl(aq) + NaOH(aq) → NaCl(aq) + H₂O(l)</div>
+                            </div>
+                            
+                            <div class="salt-example">
+                                <div>
+                                    <strong>Target Salt:</strong> Potassium nitrate (KNO₃)
+                                </div>
+                                <div>
+                                    <strong>Required Acid:</strong> HNO₃ (provides NO₃⁻)
+                                </div>
+                                <div>
+                                    <strong>Required Base:</strong> KOH (provides K⁺)
+                                </div>
+                                <div class="equation">HNO₃(aq) + KOH(aq) → KNO₃(aq) + H₂O(l)</div>
+                            </div>
+                        </div>
+                        
+                        <h3>3. Acid-Base Indicators</h3>
+                        <p>
+                            Acid-base indicators are weak acids or weak bases that are coloured dyes. They change color when 
+                            the concentration of H⁺ or OH⁻ ions in the solution changes, which allows them to indicate whether 
+                            a solution is acidic or basic. They are crucial in practical work like titration to signal the 
+                            <strong>equivalence point</strong> (when the acid and base have reacted completely according to the molar ratio).
+                        </p>
+                        
+                        <div class="indicator-grid">
+                            <div class="indicator-card">
+                                <div class="indicator-name">Litmus</div>
+                                <div class="color-display">
+                                    <div class="acid-color litmus-acid">Red in Acid</div>
+                                    <div class="base-color litmus-base">Blue in Base</div>
+                                </div>
+                            </div>
+                            
+                            <div class="indicator-card">
+                                <div class="indicator-name">Methyl Orange</div>
+                                <div class="color-display">
+                                    <div class="acid-color methyl-orange-acid">Red in Acid</div>
+                                    <div class="base-color methyl-orange-base">Orange/Yellow in Base</div>
+                                </div>
+                            </div>
+                            
+                            <div class="indicator-card">
+                                <div class="indicator-name">Phenolphthalein</div>
+                                <div class="color-display">
+                                    <div class="acid-color phenolphthalein-acid">Colorless in Acid</div>
+                                    <div class="base-color phenolphthalein-base">Pink in Base</div>
+                                </div>
+                            </div>
+                            
+                            <div class="indicator-card">
+                                <div class="indicator-name">Bromothymol Blue</div>
+                                <div class="color-display">
+                                    <div class="acid-color bromothymol-acid">Yellow in Acid</div>
+                                    <div class="base-color bromothymol-base">Blue in Base</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="key-point">
+                            <strong>Remember:</strong> Indicators are weak acids or bases that change color depending on 
+                            whether H⁺ or OH⁻ ions are dominant in the solution.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section" id="conclusion">
+                    <div class="section-header">
+                        <h2>Conclusion</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>
+                            Neutralisation reactions follow predictable patterns based on the type of base reacting with the acid, 
+                            consistently producing salts and often water (and carbon dioxide if a carbonate is involved). 
+                            The ability to write these equations and identify the required reactants is fundamental chemical knowledge. 
+                            Furthermore, acid-base indicators, defined as weak acids or bases whose color is sensitive to H⁺ or OH⁻ concentration, 
+                            provide an essential tool for monitoring and characterizing these chemical changes in the laboratory.
+                        </p>
+                        
+                        <div class="key-point">
+                            <strong>Key Takeaway:</strong> Neutralisation reactions always produce a salt and usually water. 
+                            With carbonates, carbon dioxide is also produced. Indicators help us detect when these reactions are complete.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quiz-container" id="quiz">
+                    <h2>End-of-Lesson Questions</h2>
+                    <p>Test your understanding of acid-base neutralisation and indicators. Select the correct answer for each question.</p>
+                    
+                    <div class="quiz-question" id="q1">
+                        <div class="question-text">1. Write the overall balanced chemical equations for the reaction between:</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">
+                                H₂SO₄ + KOH → KHSO₄ + H₂O<br>
+                                2HCl + Na₂CO₃ → 2NaCl + H₂O<br>
+                                2HNO₃ + CaO → Ca(NO₃)₂ + H₂O
+                            </div>
+                            <div class="option" data-correct="true">
+                                H₂SO₄ + 2KOH → K₂SO₄ + 2H₂O<br>
+                                2HCl + Na₂CO₃ → 2NaCl + H₂O + CO₂<br>
+                                2HNO₃ + CaO → Ca(NO₃)₂ + H₂O
+                            </div>
+                            <div class="option" data-correct="false">
+                                H₂SO₄ + KOH → K₂SO₄ + H₂O<br>
+                                HCl + Na₂CO₃ → NaCl + H₂O + CO₂<br>
+                                HNO₃ + CaO → CaNO₃ + H₂O
+                            </div>
+                            <div class="option" data-correct="false">
+                                H₂SO₄ + 2KOH → K₂SO₄ + 2H₂O<br>
+                                2HCl + Na₂CO₃ → 2NaCl + H₂O<br>
+                                2HNO₃ + CaO → Ca(NO₃)₂ + H₂O + CO₂
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q2">
+                        <div class="question-text">2. Define an acid-base indicator, noting the type of substance it is and what causes its colour change.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">A strong acid that changes color when mixed with bases; color change occurs due to temperature changes</div>
+                            <div class="option" data-correct="true">A weak acid or base that changes color as H⁺ or OH⁻ ion concentration changes in solution</div>
+                            <div class="option" data-correct="false">A salt that changes color when dissolved in water; color change occurs due to dilution</div>
+                            <div class="option" data-correct="false">A metal oxide that indicates pH; color change occurs due to oxidation state changes</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q3">
+                        <div class="question-text">3. A student mixes an unknown solution with methyl orange (turns red) and phenolphthalein (remains colorless).</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">The solution is basic; litmus would turn blue</div>
+                            <div class="option" data-correct="false">The solution is neutral; litmus would be purple</div>
+                            <div class="option" data-correct="true">The solution is acidic; litmus would turn red</div>
+                            <div class="option" data-correct="false">The solution is basic; litmus would turn red</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q4">
+                        <div class="question-text">4. Identify the acid and the base required to produce the salt K₂SO₄ and water.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">Acid: HCl; Base: KOH; Equation: 2HCl + KOH → K₂SO₄ + H₂O</div>
+                            <div class="option" data-correct="false">Acid: H₂SO₄; Base: KOH; Equation: H₂SO₄ + KOH → K₂SO₄ + H₂O</div>
+                            <div class="option" data-correct="true">Acid: H₂SO₄; Base: KOH; Equation: H₂SO₄ + 2KOH → K₂SO₄ + 2H₂O</div>
+                            <div class="option" data-correct="false">Acid: H₂SO₄; Base: K₂O; Equation: H₂SO₄ + K₂O → K₂SO₄ + H₂O</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q5">
+                        <div class="question-text">5. State the colour of Bromothymol blue in a solution where the OH⁻ ion concentration is high.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">Yellow</div>
+                            <div class="option" data-correct="false">Red</div>
+                            <div class="option" data-correct="false">Colorless</div>
+                            <div class="option" data-correct="true">Blue</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <button class="submit-btn" id="submit-quiz">Submit Answers</button>
+                    <div class="results" id="quiz-results"></div>
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <h3>Lesson Navigation</h3>
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <li style="margin-bottom: 10px;"><a href="#objectives" class="nav-link">Learning Objectives</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#definitions" class="nav-link">Definitions</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#introduction" class="nav-link">Introduction</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#main-body" class="nav-link">Main Body</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#conclusion" class="nav-link">Conclusion</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#quiz" class="nav-link">Quiz</a></li>
+                </ul>
+                
+                <div style="margin-top: 30px;">
+                    <h3>Quick Reference</h3>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Metal Hydroxide:</strong> Acid + Base → Salt + Water
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Metal Oxide:</strong> Acid + Base → Salt + Water
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Metal Carbonate:</strong> Acid + Base → Salt + Water + CO₂
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Salt Preparation:</strong> Cation from base, anion from acid
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <h3>Indicator Colors</h3>
+                    <div style="font-size: 0.9rem;">
+                        <div><strong>Litmus:</strong> Acid: Red, Base: Blue</div>
+                        <div><strong>Methyl Orange:</strong> Acid: Red, Base: Orange</div>
+                        <div><strong>Phenolphthalein:</strong> Acid: Colorless, Base: Pink</div>
+                        <div><strong>Bromothymol Blue:</strong> Acid: Yellow, Base: Blue</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Collapsible sections functionality
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const section = header.parentElement;
+                section.classList.toggle('active');
+            });
+        });
+        
+        // Navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                // Expand the target section if it's collapsed
+                if (!targetSection.classList.contains('active')) {
+                    targetSection.classList.add('active');
+                }
+                
+                // Scroll to the target section
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        // Interactive reaction diagram
+        const acidReactant = document.getElementById('acid-reactant');
+        const baseReactant = document.getElementById('base-reactant');
+        const saltProduct = document.getElementById('salt-product');
+        const waterProduct = document.getElementById('water-product');
+        const co2Product = document.getElementById('co2-product');
+        
+        function updateReaction(acid, base, salt, showCO2 = false) {
+            acidReactant.querySelector('.chemical-formula').textContent = acid;
+            baseReactant.querySelector('.chemical-formula').textContent = base;
+            saltProduct.querySelector('.chemical-formula').textContent = salt;
+            
+            if (showCO2) {
+                co2Product.style.display = 'block';
+            } else {
+                co2Product.style.display = 'none';
+            }
+        }
+        
+        document.getElementById('show-hydroxide').addEventListener('click', () => {
+            updateReaction('HCl', 'NaOH', 'NaCl', false);
+            document.getElementById('show-hydroxide').classList.add('active-btn');
+            document.getElementById('show-oxide').classList.remove('active-btn');
+            document.getElementById('show-carbonate').classList.remove('active-btn');
+        });
+        
+        document.getElementById('show-oxide').addEventListener('click', () => {
+            updateReaction('2HCl', 'CuO', 'CuCl₂', false);
+            document.getElementById('show-oxide').classList.add('active-btn');
+            document.getElementById('show-hydroxide').classList.remove('active-btn');
+            document.getElementById('show-carbonate').classList.remove('active-btn');
+        });
+        
+        document.getElementById('show-carbonate').addEventListener('click', () => {
+            updateReaction('2HCl', 'Na₂CO₃', '2NaCl', true);
+            document.getElementById('show-carbonate').classList.add('active-btn');
+            document.getElementById('show-hydroxide').classList.remove('active-btn');
+            document.getElementById('show-oxide').classList.remove('active-btn');
+        });
+        
+        // Initialize with hydroxide reaction
+        document.getElementById('show-hydroxide').classList.add('active-btn');
+        
+        // Quiz functionality
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options in this question
+                const question = this.closest('.quiz-question');
+                question.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // Remove any existing feedback
+                const feedback = question.querySelector('.feedback');
+                feedback.className = 'feedback';
+                feedback.textContent = '';
+            });
+        });
+        
+        document.getElementById('submit-quiz').addEventListener('click', () => {
+            let score = 0;
+            const totalQuestions = 5;
+            
+            // Check each question
+            document.querySelectorAll('.quiz-question').forEach(question => {
+                const selectedOption = question.querySelector('.option.selected');
+                const feedback = question.querySelector('.feedback');
+                
+                if (selectedOption) {
+                    const isCorrect = selectedOption.getAttribute('data-correct') === 'true';
+                    
+                    if (isCorrect) {
+                        score++;
+                        feedback.className = 'feedback correct';
+                        feedback.textContent = 'Correct! Well done.';
+                        selectedOption.classList.add('correct');
+                    } else {
+                        feedback.className = 'feedback incorrect';
+                        feedback.textContent = 'Incorrect. Try again.';
+                        selectedOption.classList.add('incorrect');
+                        
+                        // Highlight the correct answer
+                        const correctOption = question.querySelector('.option[data-correct="true"]');
+                        correctOption.classList.add('correct');
+                    }
+                } else {
+                    // No option selected
+                    const correctOption = question.querySelector('.option[data-correct="true"]');
+                    correctOption.classList.add('correct');
+                    
+                    feedback.className = 'feedback incorrect';
+                    feedback.textContent = 'Please select an answer.';
+                }
+            });
+            
+            // Display results
+            const results = document.getElementById('quiz-results');
+            const percentage = (score / totalQuestions) * 100;
+            
+            if (percentage >= 80) {
+                results.className = 'results success';
+                results.textContent = `Excellent! You scored ${score}/${totalQuestions} (${percentage}%). You have a strong understanding of acid-base neutralisation and indicators.`;
+            } else if (percentage >= 60) {
+                results.className = 'results warning';
+                results.textContent = `Good effort! You scored ${score}/${totalQuestions} (${percentage}%). Review the material and try again to improve your score.`;
+            } else {
+                results.className = 'results warning';
+                results.textContent = `You scored ${score}/${totalQuestions} (${percentage}%). We recommend reviewing the lesson material and trying the quiz again.`;
+            }
+        });
+        
+        // Expand the first section by default
+        document.querySelector('.section').classList.add('active');
+    </script>
+</body>
+</html>

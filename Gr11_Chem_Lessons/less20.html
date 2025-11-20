@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concentration of Solutions - Interactive Lesson</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #0891b2;
+            --secondary-color: #2c5282;
+            --accent-color: #4caf50;
+            --light-color: #e8f5e9;
+            --dark-color: #1b5e20;
+            --text-color: #37474f;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f8fafc;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .subject-grade {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            opacity: 0.9;
+        }
+
+        .topic {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .sub-topic {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .lesson-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .header-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,.1) 10px, rgba(255,255,255,.1) 20px);
+            z-index: 1;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: #eee;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .progress-indicator {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        main {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            background-color: #f9fafb;
+            border-left: 4px solid var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .section:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            font-size: 1.2rem;
+        }
+
+        .objectives-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .objectives-list li {
+            margin-bottom: 10px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .objectives-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background-color: #f1f1f1;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+            font-weight: bold;
+        }
+
+        .tab-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .tab-button.active {
+            background-color: white;
+            border-bottom: 3px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            border: 1px solid #ddd;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .definition-box {
+            background-color: var(--light-color);
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+        }
+
+        .definition-term {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .principle-box {
+            background-color: #f0f9ff;
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+        }
+
+        .principle-title {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+
+        .interactive-demo {
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin: 20px 0;
+            background-color: white;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .demo-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .demo-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .demo-btn.active {
+            background-color: var(--accent-color);
+        }
+
+        .demo-output {
+            border: 1px solid #eee;
+            padding: 15px;
+            min-height: 100px;
+            border-radius: var(--border-radius);
+            background-color: #f9f9f9;
+        }
+
+        .questions-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .question-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            border-left: 3px solid var(--accent-color);
+            transition: var(--transition);
+        }
+
+        .question-item:hover {
+            transform: translateX(5px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .question-options {
+            margin-left: 20px;
+        }
+
+        .option {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .option input {
+            margin-right: 5px;
+        }
+
+        .check-answer-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: var(--transition);
+        }
+
+        .check-answer-btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            display: none;
+        }
+
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .collapsible {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: var(--transition);
+            border-radius: var(--border-radius);
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .collapsible:hover {
+            background-color: #d1fae5;
+        }
+
+        .collapsible.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .collapsible i {
+            transition: var(--transition);
+        }
+
+        .collapsible.active i {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            padding: 0 15px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: white;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+        }
+
+        .collapsible-content.active {
+            padding: 15px;
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in;
+        }
+
+        .formula-box {
+            background-color: #f8fafc;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-style: italic;
+            font-size: 1.2rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .nav-btn:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .solution-visualizer {
+            position: relative;
+            height: 300px;
+            background-color: #f0f9ff;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .solution-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .solvent {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(76, 175, 80, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .solute-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .solute-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .calculation-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .input-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .calculation-result {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 15px;
+            padding: 10px;
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+        }
+
+        .volume-conversion-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+        }
+
+        .volume-conversion-table th, .volume-conversion-table td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        .volume-conversion-table th {
+            background-color: var(--light-color);
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 0;
+            }
+            
+            body {
+                padding: 0;
+            }
+            
+            main {
+                padding: 15px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+            }
+            
+            .demo-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar">
+        <div class="progress-indicator" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="header-pattern"></div>
+            <div class="header-content">
+                <div class="subject-grade">PHYSICAL SCIENCES / CHEMISTRY</div>
+                <h1 class="topic">QUANTITATIVE ASPECTS OF CHEMICAL CHANGE: SOLUTIONS AND CONCENTRATION</h1>
+                <div class="sub-topic">CONCENTRATION OF SOLUTIONS</div>
+                <div class="lesson-title">COMPREHENSIVE STRUCTURED LESSON: CONCENTRATION OF SOLUTIONS</div>
+            </div>
+        </header>
+
+        <main>
+            <section class="section" id="objectives">
+                <h2 class="section-title"><i class="fas fa-bullseye"></i> Learning Objectives</h2>
+                <p>The learners must be able to:</p>
+                <ul class="objectives-list">
+                    <li>Distinguish between a solute, solvent and solution</li>
+                    <li>Calculate molar concentration of a substance using the formula C = n/V</li>
+                    <li>Convert any given units of volume to dm³</li>
+                </ul>
+            </section>
+
+            <section class="section" id="definitions">
+                <h2 class="section-title"><i class="fas fa-book"></i> Definitions and Scientific Principles</h2>
+                
+                <div class="tabs">
+                    <button class="tab-button active" onclick="openTab(event, 'definitions-tab')">Definitions</button>
+                    <button class="tab-button" onclick="openTab(event, 'principles-tab')">Scientific Principles</button>
+                </div>
+                
+                <div id="definitions-tab" class="tab-content active">
+                    <div class="definition-box">
+                        <div class="definition-term">Solution (LO 1):</div>
+                        <p>A <strong>homogeneous (uniform) mixture</strong> of solute and solvent. A solution forms when a solute dissolves in a solvent.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Solvent (LO 1):</div>
+                        <p>The <strong>substance that dissolves a solute</strong> to form a solution. The most common solvent is liquid water, which results in an <strong>aqueous solution</strong>.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Solute (LO 1):</div>
+                        <p>The <strong>substance that is dissolved</strong> in the solvent.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Concentration (LO 2):</div>
+                        <p>The amount of solute per litre/cubic decimetre (dm³) of solution. Molar concentration (c) is <strong>number of moles of solute per volume of solution in litres</strong>.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Molar Concentration Formula (LO 2):</div>
+                        <p><strong>C = n/V</strong>. Alternatively, <strong>c = m/(MV)</strong>.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Units (LO 2):</div>
+                        <p>Concentration (c): <strong>mol·dm⁻³</strong>. Volume (V): <strong>dm³</strong>. Moles (n): <strong>mol</strong>.</p>
+                    </div>
+                </div>
+                
+                <div id="principles-tab" class="tab-content">
+                    <div class="principle-box">
+                        <div class="principle-title">Concentration Principles:</div>
+                        <p>The concentration of a solution determines how "strong" or "weak" the solution is. In titration, a solution of known concentration (the titrant) is used to determine the concentration of an unknown solution (the analyte).</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="overview">
+                <h2 class="section-title"><i class="fas fa-eye"></i> Introduction</h2>
+                <p>Quantitative chemistry requires understanding of precise amounts of substances involved in reactions. When reactions take place in solutions, we must describe the relationship between the amount of dissolved material and the volume of the mixture. This relationship is quantified by <strong>concentration</strong>. Concentrations are discussed in Module 5, Chemical Change (Part 1). The concentration of reacting solutions is a key topic in stoichiometry.</p>
+                
+                <p>Molar concentration is a common measurement in chemistry, often represented by symbol c, or by square brackets around the solute formula, e.g., [NaCl]. To work effectively with concentration calculations, learners must first be able to identify the components of a solution and utilize the correct SI units for volume.</p>
+                
+                <div class="solution-visualizer">
+                    <div class="solution-container">
+                        <div class="solvent">
+                            <div class="solute-particles" id="soluteParticles">
+                                <!-- Solute particles will be generated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="main-body">
+                <h2 class="section-title"><i class="fas fa-atom"></i> Main Body</h2>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    1. Distinguishing Components of a Solution (LO 1)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>A <strong>solution</strong> is defined as a <strong>homogeneous mixture</strong> formed when one substance dissolves into another. The components are differentiated based on their role:</p>
+                    
+                    <ul>
+                        <li><strong>Solvent:</strong> This is the substance that does the dissolving. Water is the most common solvent, resulting in an <strong>aqueous solution</strong>.</li>
+                        <li><strong>Solute:</strong> This is the substance that gets dissolved in the solvent.</li>
+                    </ul>
+                    
+                    <p>Both solute and solvent can be gases, liquids, or solids.</p>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    2. Converting Volume Units (LO 3)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>The volume (V) used in molar concentration calculations must be in <strong>cubic decimetres (dm³)</strong>. This is because molar concentration is defined as moles per cubic decimetre (mol·dm⁻³).</p>
+                    
+                    <table class="volume-conversion-table">
+                        <tr>
+                            <th>Unit</th>
+                            <th>Conversion Factor</th>
+                            <th>Example</th>
+                        </tr>
+                        <tr>
+                            <td>Litre (L)</td>
+                            <td>1 dm³</td>
+                            <td>1000 cm³</td>
+                        </tr>
+                        <tr>
+                            <td>Millilitre (ml)</td>
+                            <td>0.001 dm³</td>
+                            <td>1 cm³</td>
+                        </tr>
+                        <tr>
+                            <td>Cubic Centimetre (cm³)</td>
+                            <td>0.001 dm³</td>
+                            <td>1 ml</td>
+                        </tr>
+                    </table>
+                    
+                    <p><strong>Conversion Steps (Example):</strong></p>
+                    <ol>
+                        <li>To convert a volume given in cm³ to dm³, you must divide by 1000.</li>
+                        <li>E.g., 500 cm³ is converted to dm³: V = 500/1000 = 0.5 dm³.</li>
+                    </ol>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    3. Calculating Molar Concentration (LO 2)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p><strong>Molar concentration (c)</strong> is the amount of solute (n) dissolved in every 1 dm³ of solution.</p>
+                    
+                    <p>The relationship is expressed by the formula:</p>
+                    <div class="formula-box">
+                        C = n/V
+                    </div>
+                    
+                    <p>Where:</p>
+                    <ul>
+                        <li>C is concentration, measured in <strong>mol·dm⁻³</strong>.</li>
+                        <li>n is the amount of solute in <strong>moles</strong>.</li>
+                        <li>V is the volume of solution in <strong>dm³</strong>.</li>
+                    </ul>
+                    
+                    <p>This formula can be rearranged to find the number of moles (n = cV) or the volume (V = n/c).</p>
+                    
+                    <p>If mass (m) and molar mass (M) are known instead of moles (n), we use n = m/M to derive an alternative concentration formula:</p>
+                    <div class="formula-box">
+                        c = m/(MV)
+                    </div>
+                    
+                    <p><strong>Steps for Calculation (Based on Worked Examples):</strong></p>
+                    <ol>
+                        <li><strong>Convert Volume:</strong> Ensure the volume (V) is converted to dm³ (if given in cm³ or ml).</li>
+                        <li><strong>Calculate Moles (n):</strong> If mass is given, calculate moles using n = m/M.</li>
+                        <li><strong>Substitute:</strong> Substitute the moles (n) and volume (V) into the formula C = n/V.</li>
+                        <li><strong>Solve:</strong> Calculate the concentration in mol·dm⁻³.</li>
+                    </ol>
+                    
+                    <div class="interactive-demo">
+                        <h4>Molar Concentration Calculator</h4>
+                        <p>Calculate the molar concentration of a solution:</p>
+                        
+                        <div class="calculation-container">
+                            <div class="input-group">
+                                <div class="input-label">Mass of Solute (g)</div>
+                                <input type="number" id="massInput" class="input-field" placeholder="Enter mass">
+                            </div>
+                            
+                            <div class="input-group">
+                                <div class="input-label">Molar Mass (g/mol)</div>
+                                <input type="number" id="molarMassInput" class="input-field" placeholder="Enter molar mass">
+                            </div>
+                            
+                            <div class="input-group">
+                                <div class="input-label">Volume of Solution (dm³)</div>
+                                <input type="number" id="volumeInput" class="input-field" placeholder="Enter volume">
+                            </div>
+                        </div>
+                        
+                        <button class="demo-btn" style="margin: 15px auto; display: block;" onclick="calculateConcentration()">Calculate Concentration</button>
+                        
+                        <div id="concentrationResult" class="calculation-result"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="conclusion">
+                <h2 class="section-title"><i class="fas fa-check-circle"></i> Conclusion</h2>
+                <p>Concentration is a fundamental concept used to describe solutions, which are uniform mixtures of a solute dissolved in a solvent. The <strong>molar concentration</strong> (c) quantifies this by expressing the amount of solute (in moles, n) per unit volume (in dm³, V), using the equation <strong>C = n/V</strong>. Absolute consistency in units is vital; thus, volume units must always be converted to dm³ for accurate calculation. This quantitative skill is foundational for advanced concepts like titration, which utilizes standard solutions (solutions of known concentration) to find unknown concentrations.</p>
+                
+                <p>Understanding concentration is like measuring the strength of your coffee: solute (coffee grounds) dissolves in the solvent (water) to form a solution. Knowing the concentration (molar strength) requires knowing exactly how much coffee (moles) is dissolved in a specific amount of liquid (volume in dm³) so you can consistently replicate the desired strength.</p>
+            </section>
+
+            <section class="section" id="questions">
+                <h2 class="section-title"><i class="fas fa-question-circle"></i> End-of-Lesson Questions</h2>
+                
+                <ul class="questions-list">
+                    <li class="question-item">
+                        <div class="question-text">1. Distinguish between the terms solute, solvent, and solution (LO 1).</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q1" value="a" id="q1a">
+                                <label for="q1a">Solvent: The substance that does the dissolving</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="b" id="q1b">
+                                <label for="q1b">Solute: The substance that gets dissolved</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="c" id="q1c">
+                                <label for="q1c">Solution: A homogeneous mixture of solute and solvent</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q1', 'a')">Check Answer</button>
+                        <div class="feedback" id="q1-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">2. State the unit required for volume (V) when calculating molar concentration (LO 3).</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q2" value="a" id="q2a">
+                                <label for="q2a">cm³</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="b" id="q2b">
+                                <label for="q2b">L</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="c" id="q2c">
+                                <label for="q2c">dm³</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q2', 'c')">Check Answer</button>
+                        <div class="feedback" id="q2-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">3. Convert the following volumes to cubic decimetres (dm³) (LO 3):<br>a) 750 cm³<br>b) 2.5 L<br>c) 50 ml</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q3" value="a" id="q3a">
+                                <label for="q3a">a) 0.75 dm³, 2.5 L, 0.05 dm³</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="b" id="q3b">
+                                <label for="q3b">b) 0.0025 dm³, 0.0025 L, 0.05 dm³</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="c" id="q3c">
+                                <label for="q3c">c) 0.00005 dm³, 0.00005 L, 0.05 dm³</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q3', 'a')">Check Answer</button>
+                        <div class="feedback" id="q3-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">4. A solution is prepared by dissolving 5.85 g of sodium chloride (NaCl) in enough water to make 500 cm³ of solution. Calculate the molar concentration of the solution. (Molar mass of NaCl ≈ 58.5 g·mol⁻¹) (LO 2)</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q4" value="a" id="q4a">
+                                <label for="q4a">0.20 mol·dm⁻³</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="b" id="q4b">
+                                <label for="q4b">0.25 mol·dm⁻³</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="c" id="q4c">
+                                <label for="q4c">0.15 mol·dm⁻³</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q4', 'a')">Check Answer</button>
+                        <div class="feedback" id="q4-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">5. Explain why the volume must be expressed in dm³ for the formula C = n/V (LO 2, LO 3).</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q5" value="a" id="q5a">
+                                <label for="q5a">Because molar concentration is defined as moles per cubic decimetre</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="b" id="q5b">
+                                <label for="q5b">Because the volume unit in the denominator must match the volume unit in the definition</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="c" id="q5c">
+                                <label for="q5c">To ensure the units are consistent throughout the calculation</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q5', 'a')">Check Answer</button>
+                        <div class="feedback" id="q5-feedback"></div>
+                    </li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <div class="navigation">
+                <button class="nav-btn" id="prevBtn" onclick="navigateSection(-1)" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="nav-btn" id="nextBtn" onclick="navigateSection(1)">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            <p>&copy; 2023 Physical Sciences Interactive Learning Platform. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Track current section for navigation
+        const sections = ['objectives', 'definitions', 'overview', 'main-body', 'conclusion', 'questions'];
+        let currentSectionIndex = 0;
+
+        // Update progress bar based on scroll position
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabButtons = document.getElementsByClassName("tab-button");
+            const tabContents = document.getElementsByClassName("tab-content");
+            
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Collapsible content functionality
+        function toggleCollapsible(element) {
+            element.classList.toggle("active");
+            const content = element.nextElementSibling;
+            content.classList.toggle("active");
+        }
+
+        // Check answer function
+        function checkAnswer(questionId, correctAnswer) {
+            const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
+            const feedbackElement = document.getElementById(`${questionId}-feedback`);
+            
+            if (!selectedOption) {
+                feedbackElement.textContent = 'Please select an answer.';
+                feedbackElement.className = 'feedback incorrect';
+                feedbackElement.style.display = 'block';
+                return;
+            }
+            
+            if (selectedOption.value === correctAnswer) {
+                feedbackElement.textContent = 'Correct! Well done.';
+                feedbackElement.className = 'feedback correct';
+            } else {
+                feedbackElement.textContent = 'Incorrect. Please review the lesson material and try again.';
+                feedbackElement.className = 'feedback incorrect';
+            }
+            
+            feedbackElement.style.display = 'block';
+        }
+
+        // Navigation between sections
+        function navigateSection(direction) {
+            currentSectionIndex += direction;
+            
+            // Ensure we stay within bounds
+            if (currentSectionIndex < 0) currentSectionIndex = 0;
+            if (currentSectionIndex >= sections.length) currentSectionIndex = sections.length - 1;
+            
+            // Scroll to the current section
+            const currentSection = document.getElementById(sections[currentSectionIndex]);
+            currentSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentSectionIndex === 0;
+            document.getElementById('nextBtn').disabled = currentSectionIndex === sections.length - 1;
+        }
+
+        // Calculate concentration
+        function calculateConcentration() {
+            const mass = parseFloat(document.getElementById('massInput').value);
+            const molarMass = parseFloat(document.getElementById('molarMassInput').value);
+            const volume = parseFloat(document.getElementById('volumeInput').value);
+            const resultDiv = document.getElementById('concentrationResult');
+            
+            if (isNaN(mass) || isNaN(molarMass) || isNaN(volume)) {
+                resultDiv.textContent = 'Please enter valid numbers for all fields.';
+                resultDiv.style.color = 'red';
+                return;
+            }
+            
+            // Calculate moles
+            const moles = mass / molarMass;
+            
+            // Calculate concentration (C = n/V)
+            const concentration = moles / volume;
+            
+            resultDiv.textContent = `Molar Concentration: ${concentration.toFixed(2)} mol·dm⁻³`;
+            resultDiv.style.color = 'var(--primary-color)';
+        }
+
+        // Initialize solute particles
+        function initSoluteParticles() {
+            const container = document.getElementById('soluteParticles');
+            container.innerHTML = '';
+            
+            // Create particles
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'solute-particle';
+                
+                // Random position
+                const x = Math.random() * 180 + 10;
+                const y = Math.random() * 180 + 10;
+                
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                
+                container.appendChild(particle);
+            }
+            
+            // Animate particles
+            animateSoluteParticles();
+        }
+
+        // Animate solute particles
+        function animateSoluteParticles() {
+            const particles = document.querySelectorAll('.solute-particle');
+            
+            particles.forEach(particle => {
+                let x = parseFloat(particle.style.left);
+                let y = parseFloat(particle.style.top);
+                let vx = (Math.random() - 0.5) * 1;
+                let vy = (Math.random() - 0.5) * 1;
+                
+                // Update position
+                x += vx;
+                y += vy;
+                
+                // Bounce off walls
+                if (x <= 0 || x >= 180) {
+                    vx = -vx;
+                }
+                
+                if (y <= 0 || y >= 180) {
+                    vy = -vy;
+                }
+                
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+            });
+            
+            requestAnimationFrame(animateSoluteParticles);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set initial navigation state
+            document.getElementById('prevBtn').disabled = true;
+            
+            // Initialize solute particles
+            initSoluteParticles();
+            
+            // Add smooth scrolling to all internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

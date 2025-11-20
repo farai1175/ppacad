@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stoichiometric Calculations with Gaseous Reactions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #e74c3c;
+            --light-color: #f8f9fa;
+            --dark-color: #2c3e50;
+            --warning-color: #f39c12;
+            --success-color: #27ae60;
+            --danger-color: #e74c3c;
+            --explosive-color: #ff5722;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+            background-image: linear-gradient(to bottom, rgba(240, 249, 255, 0.5), rgba(255, 255, 255, 0.9));
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--explosive-color), var(--primary-color));
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://picsum.photos/seed/octane/1200/200.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+            z-index: -1;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .header-title h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header-title p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .progress-container {
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            margin-top: 1rem;
+            width: 100%;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: rgba(255,255,255,0.3);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: white;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        main {
+            padding: 2rem 0;
+        }
+        
+        .collapsible-container {
+            margin-bottom: 1rem;
+        }
+        
+        .collapsible {
+            background-color: white;
+            color: var(--dark-color);
+            cursor: pointer;
+            padding: 1rem 1.5rem;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .collapsible:hover {
+            background-color: #f0f7ff;
+        }
+        
+        .collapsible.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .collapsible.completed {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .collapsible-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .collapsible.active .collapsible-icon {
+            transform: rotate(180deg);
+        }
+        
+        .content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+            background-color: white;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .content.show {
+            padding: 2rem;
+            max-height: 2000px;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .learning-objectives {
+            background-color: #f0f7ff;
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .learning-objectives h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .learning-objectives ul {
+            padding-left: 1.5rem;
+        }
+        
+        .learning-objectives li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .definition-card {
+            background-color: var(--light-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .definition-card h4 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .formula {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        
+        .interactive-box {
+            background-color: #f0f7ff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .interactive-box h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .calculator {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .input-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .btn {
+            padding: 0.7rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #27ae60;
+        }
+        
+        .result-box {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            border: 1px solid #e9ecef;
+            display: none;
+        }
+        
+        .result-box.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .experiment-steps {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .experiment-steps h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .step {
+            display: flex;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-number {
+            background-color: var(--primary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-content h5 {
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .chemical-equation {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            font-size: 1.3rem;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .equation-balancer {
+            background-color: #f0f7ff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .equation-input {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .equation-input input {
+            width: 80px;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+        }
+        
+        .equation-arrow {
+            font-size: 1.5rem;
+            color: var(--dark-color);
+        }
+        
+        .limewater-test {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+        
+        .test-tube {
+            width: 100px;
+            height: 200px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.2), rgba(255,255,255,0.8));
+            border: 2px solid #ddd;
+            border-radius: 0 0 50px 50px;
+            position: relative;
+            margin: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            overflow: hidden;
+        }
+        
+        .test-tube::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .liquid {
+            width: 100%;
+            height: 60%;
+            background-color: rgba(173, 216, 230, 0.7);
+            transition: background-color 1s ease;
+        }
+        
+        .liquid.milky {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .test-label {
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .quiz-container {
+            background-color: #f0f7ff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .quiz-question {
+            margin-bottom: 1.5rem;
+        }
+        
+        .quiz-question h4 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .quiz-option {
+            padding: 0.7rem;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .quiz-option:hover {
+            background-color: #e9ecef;
+        }
+        
+        .quiz-option.selected {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .quiz-option.correct {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .quiz-option.incorrect {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .quiz-feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .quiz-feedback.show {
+            display: block;
+        }
+        
+        .quiz-feedback.correct {
+            background-color: rgba(39, 174, 96, 0.1);
+            border: 1px solid var(--success-color);
+            color: var(--success-color);
+        }
+        
+        .quiz-feedback.incorrect {
+            background-color: rgba(231, 76, 60, 0.1);
+            border: 1px solid var(--danger-color);
+            color: var(--danger-color);
+        }
+        
+        .footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 5px;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            z-index: 1001;
+            display: none;
+            animation: notificationSlideIn 0.3s ease;
+        }
+        
+        @keyframes notificationSlideIn {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .notification.show {
+            display: block;
+        }
+        
+        .notification.success {
+            background-color: var(--success-color);
+        }
+        
+        .notification.error {
+            background-color: var(--danger-color);
+        }
+        
+        .notification.warning {
+            background-color: var(--warning-color);
+        }
+        
+        .lo-badge {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+        
+        .seashell-image {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 8px;
+            margin: 1rem 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+        
+        th, td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--light-color);
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+        
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        /* Chemical formatting */
+        .chemical {
+            font-family: 'Courier New', monospace;
+        }
+        
+        .subscript {
+            font-size: 0.8em;
+            vertical-align: sub;
+        }
+        
+        .superscript {
+            font-size: 0.8em;
+            vertical-align: super;
+        }
+        
+        .state {
+            font-style: italic;
+            font-size: 0.9em;
+        }
+        
+        .explosion-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .explosion-container {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: #333;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .explosion-particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--warning-color);
+            opacity: 0;
+        }
+        
+        @keyframes explode {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(0, 0) scale(1.5);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx, var(--ty)) scale(0.5);
+                opacity: 0;
+            }
+        }
+        
+        .explosion-active .explosion-particle {
+            animation: explode 1s ease-out forwards;
+        }
+        
+        @media (max-width: 768px) {
+            .header-title h1 {
+                font-size: 1.8rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            .calculator {
+                flex-direction: column;
+            }
+            
+            .equation-input {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .equation-arrow {
+                transform: rotate(90deg);
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="header-title">
+                    <h1>Stoichiometric Calculations with Gaseous Reactions</h1>
+                    <p>Physical Sciences / Chemistry - Explosions and Gas Volume</p>
+                </div>
+            </div>
+            <div class="progress-container">
+                <div class="progress-text">Lesson Progress: <span id="progress-text">0%</span></div>
+                <div class="progress-bar">
+                    <div class="progress" id="progress-bar"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <div class="container">
+            <!-- Introduction Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>Introduction</span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">Introduction</h2>
+                    <p>Chemical reactions that occur rapidly and release large amounts of energy are vital0, 88]. An explosion is characterized as a reaction where a great many molecules are produced in the gas phase, resulting in a **massive increase in volume** [LO query, 325].</p>
+                    
+                    <p>Today, we will focus on the combustion of **octane**, a key component of **petrol** or **gasoline**, which powers these engines [LO query, 182, 325]. We must use stoichiometry to quantify the energy released and the gaseous products formed in this critical reaction.</p>
+                    
+                    <div style="display: flex; align-items: center; justify-content: space-around; flex-wrap: wrap; margin: 2rem 0;">
+                        <div>
+                            <img src="https://picsum.photos/seed/octane/300/200.jpg" alt="Octane" class="seashell-image">
+                        </div>
+                        <div style="max-width: 500px;">
+                            <h3>Why Study Explosive Reactions?</h3>
+                            <ul>
+                                <li>Industrial applications in mining</li>
+                                <li>Understanding gas expansion principles</li>
+                                <li>Safety considerations in chemical handling</li>
+                                <li>Real-world stoichiometry applications</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Learning Objectives Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>Learning Objectives</span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">Learning Objectives</h2>
+                    <div class="learning-objectives">
+                        <h3>At the end of this lesson, you should be able to:</h3>
+                        <ul>
+                            <li>Perform stoichiometric calculations involving reactions that produce large amounts of gas, leading to massive increases in volume (explosion concept). <span class="lo-badge">LO 1</span></li>
+                            <li>Apply <strong>Avogadro's Hypothesis</strong> to gaseous reactions: <span class="lo-badge">LO 2</span></li>
+                            <li>Describe the chemical properties, uses, and dangers of <strong>octane (C<sub>8</sub>H<sub>18</sub>)</strong>. <span class="lo-badge">LO 3</span></li>
+                            <li>Explain why octane is used in fuels such as <strong>petrol</strong>. <span class="lo-badge">LO 4</span></li>
+                            <li>Calculate the <strong>volume of gases produced</strong> during the combustion of octane. <span class="lo-badge">LO 5</span></li>
+                            <li>Determine the <strong>mass of water produced</strong> in the combustion reaction given a mass of octane. <span class="lo-badge">LO 6</span></li>
+                            <li>Identify <strong>two major uses</strong> of octane. <span class="lo-badge">LO 7</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Key Definitions Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>Key Definitions and Scientific Principles</span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">Key Definitions and Scientific Principles</h2>
+                    
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Term/Principle</th>
+                                    <th>Definition/Formula</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Mole (mol)</strong></td>
+                                    <td>The amount of substance that contains the same number of elementary units as there are carbon-12 atoms in exactly 12 g of carbon-12</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Explosion</strong></td>
+                                    <td>A reaction during which a great many molecules are produced in the gas phase, leading to a massive increase in volume [LO query, 325]</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Stoichiometry</strong></td>
+                                    <td>The quantitative study of reactants and products in a chemical reaction based on mole ratios</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Avogadro's Hypothesis</strong></td>
+                                    <td>At the same temperature and pressure, equal volumes of gases contain equal numbers of moles of gas. <strong>V ∝ n</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Octane (C<sub>8</sub>H<sub>18</sub>)</strong></td>
+                                    <td>A family of hydrocarbons that are naturally colourless liquids that boil around 125°C (260°F) [LO query, 182]</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Combustion Reaction</strong></td>
+                                    <td>C<sub>8</sub>H<sub>18</sub>(ℓ) + 25O<sub>2</sub>(g) → 16CO<sub>2</sub>(g) + 18H<sub>2</sub>O(g), a product of this reaction, contributes to greenhouse effect [LO query, 218]</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Octane Properties Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>Properties and Uses of Octane <span class="lo-badge">LO 3</span><span class="lo-badge">LO 4</span></span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">Properties and Uses of Octane (LO 3, LO 4)</h2>
+                    
+                    <div class="definition-card">
+                        <h4>Chemical Features</h4>
+                        <div class="formula">Formula: C<sub>8</sub>H<sub>18</sub></div>
+                        <ul>
+                            <li>Colourless liquid at room temperature</li>
+                            <li>Boils around 125°C (260°F) [LO query, 182]</li>
+                            <li>Component of petrol/gasoline</li>
+                            <li>Highly flammable</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="definition-card">
+                        <h4>Main Uses</h4>
+                        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                            <div style="flex: 1; min-width: 200px;">
+                                <h5>1. Fuel Component</h5>
+                                <p>Primary component of petrol/gasoline</p>
+                            </div>
+                            <div style="flex: 1; min-width: 200px;">
+                                <h5>2. Octane Rating</h5>
+                                <p>Reference standard for fuel quality (anti-knock properties)</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="definition-card">
+                        <h4>Why It Is Important</h4>
+                        <ul>
+                            <li>High energy content when burned</li>
+                            <li>Standardized fuel quality for engines</li>
+                            <li>Anti-knock properties improve engine performance</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Combustion Reaction Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>Octane Combustion Reaction <span class="lo-badge">LO 5</span></span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">Octane Combustion Reaction (LO 5)</h2>
+                    
+                    <p>The combustion reaction representing the complete burning of octane is:</p>
+                    
+                    <div class="chemical-equation">
+                        2C<sub>8</sub>H<sub>18</sub>(ℓ) + 25O<sub>2</sub>(g) → 16CO<sub>2</sub>(g) + 18H<sub>2</sub>O(g) + energy
+                    </div>
+                    
+                    <p>This reaction is highly <strong>exothermic</strong>, meaning it releases a great amount of energy (heat) [LO query, 218]. This energy release and the subsequent creation of gaseous products (CO<sub>2</sub>(g) and H<sub>2</sub>O(g)) drive mechanical processes, like pushing a piston in a car cylinder.</p>
+                    
+                    <div class="interactive-box">
+                        <h4>Interactive Equation Balancer</h4>
+                        <p>Try to balance the combustion equation by adjusting the coefficients:</p>
+                        
+                        <div class="equation-input">
+                            <input type="number" id="coef-octane" value="2" min="0" max="10" step="1">
+                            <span class="chemical">C<sub>8</sub>H<sub>18</sub>(ℓ) +</span>
+                            <input type="number" id="coef-oxygen" value="25" min="0" max="50" step="1">
+                            <span class="chemical">O<sub>2</sub>(g) →</span>
+                            <input type="number" id="coef-co2" value="16" min="0" max="50" step="1">
+                            <span class="chemical">CO<sub>2</sub>(g) +</span>
+                            <input type="number" id="coef-h2o" value="18" min="0" max="50" step="1">
+                            <span class="chemical">H<sub>2</sub>O(g) + energy</span>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 1rem;">
+                            <button class="btn" id="check-equation">Check Balance</button>
+                            <button class="btn btn-secondary" id="show-solution">Show Solution</button>
+                        </div>
+                        
+                        <div class="result-box" id="equation-result">
+                            <h4>Result:</h4>
+                            <p id="equation-feedback"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stoichiometric Relationships Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>Stoichiometric Relationships <span class="lo-badge">LO 1</span><span class="lo-badge">LO 2</span></span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">Stoichiometric Relationships (LO 1, LO 2)</h2>
+                    
+                    <p>The <strong>balanced chemical equation</strong> provides the <strong>mole ratio</strong> between reactants and products. In this combustion:</p>
+                    <ul>
+                        <li>2 moles of liquid octane react with 25 moles of gaseous oxygen</li>
+                        <li>16 moles of gaseous carbon dioxide and 18 moles of gaseous water are produced</li>
+                        <li>Total gas produced per mole = 34 moles of gas</li>
+                    </ul>
+                    
+                    <p>This increase from 25 moles of gas reacting to 34 moles of gas produced (plus the heat from the exothermic reaction) is what generates the <strong>massive increase in volume</strong> needed for an explosion or to power an engine [LO query, 94].</p>
+                    
+                    <div class="interactive-box">
+                        <h4>Gas Volume Calculator</h4>
+                        <p>Calculate the volume of gas produced from a given amount of octane at STP:</p>
+                        
+                        <div class="calculator">
+                            <div class="input-group">
+                                <label for="octane-moles">Moles of Octane</label>
+                                <input type="number" id="octane-moles" placeholder="Enter moles" step="any">
+                            </div>
+                            <div class="input-group">
+                                <label>&nbsp;</label>
+                                <button class="btn" id="calculate-gas-volume">Calculate Gas Volume</button>
+                            </div>
+                        </div>
+                        
+                        <div class="result-box" id="gas-volume-result">
+                            <h4>Calculation Steps:</h4>
+                            <div id="gas-volume-steps"></div>
+                            <h4>Result:</h4>
+                            <p id="gas-volume-value"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stoichiometric Calculations Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>Stoichiometric Calculations <span class="lo-badge">LO 1</span><span class="lo-badge">LO 5</span><span class="lo-badge">LO 6</span></span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">Stoichiometric Calculations (LO 1, LO 5, LO 6)</h2>
+                    
+                    <div class="experiment-steps">
+                        <h4>Example 1: Calculate the volume of each gas produced during combustion of 0.75 kg of octane at STP.</h4>
+                        
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h5>Convert mass to moles</h5>
+                                <div class="formula">Molar mass of C<sub>8</sub>H<sub>18</sub> = 114 g/mol</div>
+                                <div class="formula">Mass = 0.75 kg = 750 g</div>
+                                <div class="formula">n = 750/114 = 6.58 mol</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h5>Use mole ratios</h5>
+                                <div class="formula">From equation:</div>
+                                <div class="formula">2 mol C<sub>8</sub>H<sub>18</sub> → 16 mol CO<sub>2</sub></div>
+                                <div class="formula">2 mol C<sub>8</sub>H<sub>18</sub> → 18 mol H<sub>2</sub>O</div>
+                                <p>So for 6.58 mol C<sub>8</sub>H<sub>18</sub>:</p>
+                                <div class="formula">Moles of CO<sub>2</sub> = 6.58 × 16 = 105.3 mol</div>
+                                <div class="formula">Moles of H<sub>2</sub>O = 6.58 × 18 = 118.4 mol</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h5>Convert moles to volumes at STP</h5>
+                                <div class="formula">At STP, 1 mol of gas occupies 22.4 dm³</div>
+                                <div class="formula">V(CO<sub>2</sub>) = 105.3 × 22.4 = 2358.7 dm³</div>
+                                <div class="formula">V(H<sub>2</sub>O) = 118.4 × 22.4 = 2652.2 dm³</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h5>Total Gas Volume</h5>
+                                <div class="formula">Total = 2358.7 + 2652.2 = 5010.9 dm³</div>
+                                <p>→ Massive expansion → explosive force.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="experiment-steps">
+                        <h4>Example 2: Determine the mass of water produced from combustion of 25.0 g of octane.</h4>
+                        
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h5>Convert mass to moles</h5>
+                                <div class="formula">n = 25.0/114 = 0.219 mol</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h5>Mol ratio</h5>
+                                <div class="formula">1 mol C<sub>8</sub>H<sub>18</sub> → 18 mol H<sub>2</sub>O</div>
+                                <div class="formula">n(H<sub>2</sub>O) = 0.219 × 18 = 3.94 mol</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h5>Convert moles to mass</h5>
+                                <div class="formula">Molar mass of H<sub>2</sub>O = 18 g/mol</div>
+                                <div class="formula">m = nM = 3.94 × 18 = 70.9 g</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-box">
+                        <h4>Interactive Calculator</h4>
+                        <p>Calculate the mass of water produced from a given mass of octane:</p>
+                        
+                        <div class="calculator">
+                            <div class="input-group">
+                                <label for="octane-mass-water">Mass of Octane (g)</label>
+                                <input type="number" id="octane-mass-water" placeholder="Enter mass" step="any">
+                            </div>
+                            <div class="input-group">
+                                <label>&nbsp;</label>
+                                <button class="btn" id="calculate-water-mass">Calculate Water Mass</button>
+                            </div>
+                        </div>
+                        
+                        <div class="result-box" id="water-mass-result">
+                            <h4>Calculation Steps:</h4>
+                            <div id="water-mass-steps"></div>
+                            <h4>Result:</h4>
+                            <p id="water-mass-value"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Environmental Impact Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>Environmental and Energy Impact <span class="lo-badge">LO 7</span></span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">Environmental and Energy Impact (LO 7)</h2>
+                    
+                    <p>Combustion reactions are fundamentally necessary for power generation, relying on the immense energy released (exothermic nature). However, the product, <strong>CO<sub>2</sub>(g)</strong>, contributes negatively to the environment by exacerbating the <strong>greenhouse effect</strong> [LO query, 218].</p>
+                    
+                    <div class="definition-card">
+                        <h4>Energy Release</h4>
+                        <p>The combustion of octane releases approximately 5,500 kJ of energy per mole. This energy is what powers engines and generates the mechanical work needed to move vehicles.</p>
+                    </div>
+                    
+                    <div class="definition-card">
+                        <h4>Greenhouse Effect</h4>
+                        <p>Carbon dioxide is a greenhouse gas that traps heat in the atmosphere. Each mole of CO<sub>2</sub> produced during combustion contributes to global warming. The massive volume increase during explosions represents a rapid release of this greenhouse gas.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Conclusion Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>Conclusion</span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">Conclusion</h2>
+                    
+                    <p>Stoichiometric calculations are essential for quantifying the inputs and outputs of explosive and combustion reactions, such as the burning of petrol in a car engine. This process confirms that the combustion of octane yields a large increase in the volume of gaseous products, which is the driving force behind the engine's operation [LO query, 325]. Although these reactions are critical energy sources, their unavoidable production of carbon dioxide necessitates careful consideration of their environmental consequences [LO query, 218].</p>
+                    
+                    <div class="interactive-box">
+                        <h4>Key Takeaways</h4>
+                        <ul>
+                            <li>Stoichiometry allows us to predict amounts of products in chemical reactions</li>
+                            <li>Avogadro's hypothesis connects gas volume to number of particles</li>
+                            <li>Octane's properties make it an ideal fuel for internal combustion engines</li>
+                            <li>Real-world applications rely on theoretical chemistry principles</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- End-of-Lesson Questions Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>End-of-Lesson Questions</span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">End-of-Lesson Questions</h2>
+                    
+                    <div class="quiz-container">
+                        <div class="quiz-question">
+                            <h4>Question 1: Define stoichiometry in the context of chemical reactions. (Level 1: Recall)</h4>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-question="1" data-option="A">A. The quantitative study of reactants and products based on mole ratios</div>
+                                <div class="quiz-option" data-question="1" data-option="B">The qualitative study of reactants and products based on color changes</div>
+                                <div class="quiz-option" data-question="1" data-option="C">The study of energy changes in chemical reactions</div>
+                                <div class="quiz-option" data-question="1" data-option="D">The study of atomic structures in chemical reactions</div>
+                            </div>
+                            <div class="quiz-feedback" id="feedback-1"></div>
+                        </div>
+                        
+                        <div class="quiz-question">
+                            <h4>Question 2: Write down the balanced chemical equation for the complete combustion of octane. (Level 1: Recall)</h4>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-question="2" data-option="A">C<sub>8</sub>H<sub>18</sub>(ℓ) + 25O<sub>2</sub>(g) → 16CO<sub>2</sub>(g) + 18H<sub>2</sub>O(g)</div>
+                                <div class="quiz-option" data-question="2" data-option="B">C<sub>8</sub>H<sub>18</sub>(ℓ) + 12.5O<sub>2</sub>(g) → 8CO<sub>2</sub>(g) + 9H<sub>2</sub>O(g)</div>
+                                <div class="quiz-option" data-question="2" data-option="C">C<sub>8</sub>H<sub>18</sub>(ℓ) + 25O<sub>2</sub>(g) → 16CO<sub>2</sub>(g) + 9H<sub>2</sub>O(g)</div>
+                                <div class="quiz-option" data-question="2" data-option="D">C<sub>8</sub>H<sub>18</sub>(ℓ) + 25O<sub>2</sub>(g) → 16CO<sub>2</sub>(g) + 18H<sub>2</sub>O(g)</div>
+                            </div>
+                            <div class="quiz-feedback" id="feedback-2"></div>
+                        </div>
+                        
+                        <div class="quiz-question">
+                            <h4>Question 3: Based on the equation, calculate the total volume of gaseous products (in dm³) produced at STP if 4 moles of liquid octane (C<sub>8</sub>H<sub>18</sub>) react completely. (Level 3: Application/Calculation)</h4>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-question="3" data-option="A">672 dm³</div>
+                                <div class="quiz-option" data-question="3" data-option="B">896 dm³</div>
+                                <div class="quiz-option" data-question="3" data-option="C">1120 dm³</div>
+                                <div class="quiz-option" data-question="3" data-option="D">1344 dm³</div>
+                            </div>
+                            <div class="quiz-feedback" id="feedback-3"></div>
+                        </div>
+                        
+                        <div class="quiz-question">
+                            <h4>Question 4: Explain why the combustion of petrol in a car cylinder is considered an example of an "explosion" reaction, referring specifically to the states and amounts of reactants and products. (Level 2: Comprehension/Explanation)</h4>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-question="4" data-option="A">Because it produces a large amount of energy in a short time</div>
+                                <div class="quiz-option" data-question="4" data-option="B">Because it produces a loud noise</div>
+                                <div class="quiz-option" data-question="4" data-option="C">Because it changes the color of the reactants</div>
+                                <div class="quiz-option" data-question="4" data-option="D">Because it produces a massive increase in the volume of gaseous products</div>
+                            </div>
+                            <div class="quiz-feedback" id="feedback-4"></div>
+                        </div>
+                        
+                        <div class="quiz-question">
+                            <h4>Question 5: State two consequences (one beneficial, one detrimental) associated with the complete combustion of octane. (Level 1: Recall)</h4>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-question="5" data-option="A">Energy release and power generation; air pollution</div>
+                                <div class="quiz-option" data-question="5" data-option="B">Heat generation and water production; engine cooling</div>
+                                <div class="quiz-option" data-question="5" data-option="C">Carbon dioxide formation; greenhouse effect</div>
+                                <div class="quiz-option" data-question="5" data-option="D">Oxygen consumption; nitrogen oxide formation</div>
+                            </div>
+                            <div class="quiz-feedback" id="feedback-5"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-box">
+                        <h4>Quiz Results</h4>
+                        <p>Your score: <span id="quiz-score">0/5</span></p>
+                        <button class="btn btn-secondary" id="reset-quiz">Reset Quiz</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Periodic Table</a></li>
+                        <li><a href="#">Chemical Equations</a></li>
+                        <li><a href="#">Stoichiometry Calculator</a></li>
+                        <li><a href="#">Video Tutorials</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Related Topics</h4>
+                    <ul>
+                        <li><a href="#">Gas Laws</a></li>
+                        <li><a href="#">Explosives Chemistry</a></li>
+                        <li><a href="#">Thermal Decomposition</a></li>
+                        <li><a href="#">Mining Applications</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Help</h4>
+                    <ul>
+                        <li><a href="#">Contact Teacher</a></li>
+                        <li><a href="#">Study Tips</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Report Issue</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Chemistry Education Portal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <div class="notification" id="notification"></div>
+    
+    <script>
+        // DOM Elements
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const notification = document.getElementById('notification');
+        
+        // Progress Tracking
+        let completedSections = new Set();
+        let quizScore = 0;
+        let answeredQuestions = new Set();
+        
+        // Toggle Collapsible Sections
+        function toggleCollapsible(button) {
+            button.classList.toggle("active");
+            const content = button.nextElementSibling;
+            content.classList.toggle("show");
+            
+            // Get section identifier from button text
+            const buttonText = button.textContent.trim();
+            let sectionId = '';
+            
+            if (buttonText.includes("Introduction")) {
+                sectionId = 'introduction';
+            } else if (buttonText.includes("Learning Objectives")) {
+                sectionId = 'objectives';
+            } else if (buttonText.includes("Key Definitions")) {
+                sectionId = 'definitions';
+            } else if (buttonText.includes("Properties and Uses")) {
+                sectionId = 'properties';
+            } else if (buttonText.includes("Octane Combustion")) {
+                sectionId = 'combustion';
+            } else if (buttonText.includes("Stoichiometric Relationships")) {
+                sectionId = 'relationships';
+            } else if (buttonText.includes("Stoichiometric Calculations")) {
+                sectionId = 'calculations';
+            } else if (buttonText.includes("Environmental and Energy")) {
+                sectionId = 'environmental';
+            } else if (buttonText.includes("Conclusion")) {
+                sectionId = 'conclusion';
+            } else if (buttonText.includes("End-of-Lesson Questions")) {
+                sectionId = 'questions';
+            }
+            
+            // Mark section as viewed if opened
+            if (content.classList.contains("show") && sectionId) {
+                if (!completedSections.has(sectionId)) {
+                    completedSections.add(sectionId);
+                    updateProgress();
+                }
+                
+                // Mark as completed
+                button.classList.add("completed");
+            }
+        }
+        
+        // Update Progress
+        function updateProgress() {
+            const totalSections = 9; // Total number of collapsible sections
+            const completedCount = completedSections.size;
+            const progressPercentage = Math.round((completedCount / totalSections) * 100);
+            
+            progressBar.style.width = `${progressPercentage}%`;
+            progressText.textContent = `${progressPercentage}%`;
+        }
+        
+        // Show Notification
+        function showNotification(message, type = 'success') {
+            notification.textContent = message;
+            notification.className = `notification ${type} show`;
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Equation Balancer
+        document.getElementById('check-equation').addEventListener('click', () => {
+            const coefOctane = parseInt(document.getElementById('coef-octane').value);
+            const coefOxygen = parseInt(document.getElementById('coef-oxygen').value);
+            const coefCo2 = parseInt(document.getElementById('coef-co2').value);
+            const coefH2o = parseInt(document.getElementById('coef-h2o').value);
+            
+            const resultBox = document.getElementById('equation-result');
+            const feedback = document.getElementById('equation-feedback');
+            
+            // Check if equation is balanced
+            // Reactants: C: 2*8 = 16, H: 2*18 = 36
+            // Products: C: 16*1 = 16, H: 18*1 = 18
+            // O: 25*2 = 50, O: 18*1 = 18
+            
+            const isBalanced = (
+                coefOctane * 8 === coefCo2 * 1 && 
+                coefOctane * 18 === coefH2o * 1 && 
+                coefOxygen * 2 === coefCo2 * 1 + coefH2o * 1
+            );
+            
+            if (isBalanced) {
+                feedback.textContent = "Correct! The equation is balanced.";
+                resultBox.classList.add('show');
+                showNotification('Equation is balanced correctly!', 'success');
+            } else {
+                feedback.textContent = "Not quite balanced. Try adjusting the coefficients.";
+                resultBox.classList.add('show');
+                showNotification('Equation is not balanced. Try again.', 'error');
+            }
+        });
+        
+        document.getElementById('show-solution').addEventListener('click', () => {
+            document.getElementById('coef-octane').value = 2;
+            document.getElementById('coef-oxygen').value = 25;
+            document.getElementById('coef-co2').value = 16;
+            document.getElementById('coef-h2o').value = 18;
+            
+            const resultBox = document.getElementById('equation-result');
+            const feedback = document.getElementById('equation-feedback');
+            
+            feedback.textContent = "Solution: 2C₈H₁₈(ℓ) + 25O₂(g) → 16CO₂(g) + 18H₂O(g) + energy";
+            resultBox.classList.add('show');
+            
+            showNotification('Solution displayed', 'success');
+        });
+        
+        // Gas Volume Calculator
+        document.getElementById('calculate-gas-volume').addEventListener('click', () => {
+            const moles = parseFloat(document.getElementById('octane-moles').value);
+            
+            if (isNaN(moles)) {
+                showNotification('Please enter a valid number of moles', 'error');
+                return;
+            }
+            
+            // 1 mole C8H18 produces 16 moles CO2 and 18 moles H2O
+            const totalMoles = moles * 34; // Total gas moles
+            const volume = totalMoles * 22.4; // dm³ at STP
+            
+            const resultBox = document.getElementById('gas-volume-result');
+            const steps = document.getElementById('gas-volume-steps');
+            const value = document.getElementById('gas-volume-value');
+            
+            steps.innerHTML = `
+                <p>1. From the equation: 2C₈H₁₈(ℓ) + 25O₂(g) → 16CO₂(g) + 18H₂O(g)</p>
+                <p>2. 1 mole of C₈H₁₈ produces 34 moles of gas</p>
+                <p>3. ${moles} mol of C₈H₁₈ produces ${totalMoles} mol of gas</p>
+                <p>4. At STP, 1 mol of gas occupies 22.4 dm³</p>
+                <p>5. Total volume = ${totalMoles} × 22.4 = ${volume.toFixed(1)} dm³</p>
+            `;
+            
+            value.textContent = `Total gas volume produced: ${volume.toFixed(1)} dm³`;
+            
+            resultBox.classList.add('show');
+            showNotification('Gas volume calculated successfully!', 'success');
+        });
+        
+        // Water Mass Calculator
+        document.getElementById('calculate-water-mass').addEventListener('click', () => {
+            const mass = parseFloat(document.getElementById('octane-mass-water').value);
+            
+            if (isNaN(mass)) {
+                showNotification('Please enter a valid mass', 'error');
+                return;
+            }
+            
+            // Molar mass of C8H18 = 114 g/mol
+            const moles = mass / 114;
+            // 1 mole C8H18 produces 18 moles H2O
+            const waterMoles = moles * 18;
+            // Molar mass of H2O = 18 g/mol
+            const waterMass = waterMoles * 18;
+            
+            const resultBox = document.getElementById('water-mass-result');
+            const steps = document.getElementById('water-mass-steps');
+            const value = document.getElementById('water-mass-value');
+            
+            steps.innerHTML = `
+                <p>1. Convert mass to moles: ${mass} g ÷ 114 g/mol = ${moles.toFixed(4)} mol C₈H₁₈</p>
+                <p>2. From the equation: 1 mol C₈H₁₈ → 18 mol H₂O</p>
+                <p>3. ${moles.toFixed(4)} mol C₈H₁₈ produces ${waterMoles.toFixed(4)} mol H₂O</p>
+                <p>4. Convert moles to mass: ${waterMoles.toFixed(4)} mol × 18 g/mol = ${waterMass.toFixed(2)} g H₂O</p>
+            `;
+            
+            value.textContent = `Mass of water produced: ${waterMass.toFixed(2)} g`;
+            
+            resultBox.classList.add('show');
+            showNotification('Water mass calculated successfully!', 'success');
+        });
+        
+        // Quiz Functionality
+        const quizAnswers = {
+            1: 'A',
+            2: 'A',
+            3: 'C',
+            4: 'D',
+            5: 'A'
+        };
+        
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const question = option.getAttribute('data-question');
+                const selectedOption = option.getAttribute('data-option');
+                
+                // Skip if already answered
+                if (answeredQuestions.has(question)) {
+                    return;
+                }
+                
+                // Mark as answered
+                answeredQuestions.add(question);
+                
+                // Mark selected option
+                option.classList.add('selected');
+                
+                // Check if correct
+                let isCorrect = false;
+                
+                if (question === '1') {
+                    isCorrect = selectedOption === quizAnswers[1];
+                } else if (question === '2') {
+                    isCorrect = selectedOption === quizAnswers[2];
+                } else if (question === '3') {
+                    isCorrect = selectedOption === quizAnswers[3];
+                } else if (question === '4') {
+                    isCorrect = selectedOption === quizAnswers[4];
+                } else if (question === '5') {
+                    // For question 5, multiple options are correct
+                    isCorrect = ['A', 'B', 'C', 'D'].includes(selectedOption);
+                }
+                
+                // Show feedback
+                const feedback = document.getElementById(`feedback-${question}`);
+                feedback.classList.add('show');
+                
+                if (isCorrect) {
+                    option.classList.add('correct');
+                    feedback.classList.add('correct');
+                    feedback.innerHTML = '<i class="fas fa-check-circle"></i> Correct! Well done.';
+                    quizScore++;
+                } else {
+                    option.classList.add('incorrect');
+                    feedback.classList.add('incorrect');
+                    feedback.innerHTML = `<i class="fas fa-times-circle"></i> Incorrect. The correct answer is ${quizAnswers[question]}.`;
+                    
+                    // Highlight correct answer
+                    if (question === '1') {
+                        document.querySelectorAll(`.quiz-option[data-question="1"][data-option="${quizAnswers[1]}"]`).forEach(correctOption => {
+                            correctOption.classList.add('correct');
+                        });
+                    } else if (question === '2') {
+                        document.querySelectorAll(`.quiz-option[data-question="2"][data-option="${quizAnswers[2]}"]`).forEach(correctOption => {
+                            correctOption.classList.add('correct');
+                        });
+                    } else if (question === '3') {
+                        document.querySelectorAll(`.quiz-option[data-question="3"][data-option="${quizAnswers[3]}"]`).forEach(correctOption => {
+                            correctOption.classList.add('correct');
+                        });
+                    } else if (question === '4') {
+                        document.querySelectorAll(`.quiz-option[data-question="4"][data-option="${quizAnswers[4]}"]`).forEach(correctOption => {
+                            correctOption.classList.add('correct');
+                        });
+                    } else if (question === '5') {
+                        document.querySelectorAll(`.quiz-option[data-question="5"][data-option="${quizAnswers[5]}"]`).forEach(correctOption => {
+                            correctOption.classList.add('correct');
+                        });
+                    }
+                }
+                
+                // Update score
+                document.getElementById('quiz-score').textContent = `${quizScore}/5`;
+                
+                // Show notification
+                if (isCorrect) {
+                    showNotification('Correct answer!', 'success');
+                } else {
+                    showNotification('Incorrect answer. Review the material and try again.', 'error');
+                }
+            });
+        });
+        
+        // Reset Quiz
+        document.getElementById('reset-quiz').addEventListener('click', () => {
+            quizScore = 0;
+            answeredQuestions.clear();
+            
+            document.getElementById('quiz-score').textContent = '0/5';
+            
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.classList.remove('selected', 'correct', 'incorrect');
+            });
+            
+            document.querySelectorAll('.quiz-feedback').forEach(feedback => {
+                feedback.classList.remove('show', 'correct', 'incorrect');
+            });
+            
+            showNotification('Quiz reset successfully', 'success');
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // No sections are initially marked as viewed
+            updateProgress();
+        });
+    </script>
+</body>
+</html>

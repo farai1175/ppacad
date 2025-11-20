@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oxidation-Reduction (Redox) Reactions</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .lesson-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .main-content {
+            flex: 3;
+            min-width: 300px;
+        }
+        
+        .sidebar {
+            flex: 1;
+            min-width: 250px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .section-header:hover {
+            background-color: #34495e;
+        }
+        
+        .section-header h2 {
+            font-size: 1.4rem;
+            margin: 0;
+        }
+        
+        .section-content {
+            padding: 20px;
+            display: none;
+        }
+        
+        .section.active .section-content {
+            display: block;
+        }
+        
+        .section.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .toggle-icon {
+            transition: transform 0.3s;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--light-color);
+            font-weight: 600;
+        }
+        
+        .definition-table th:first-child {
+            width: 30%;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            margin: 20px 0;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .comparison-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+        
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .comparison-cell {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .comparison-cell:not(:last-child) {
+            border-right: 1px solid #eee;
+        }
+        
+        .redox-simulation {
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .reaction-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            margin: 30px 0;
+            padding: 30px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .reactant, .product {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            transition: all 0.5s ease;
+            min-width: 150px;
+            position: relative;
+        }
+        
+        .oxidized {
+            background-color: rgba(231, 76, 60, 0.1);
+            border: 2px solid var(--accent-color);
+        }
+        
+        .reduced {
+            background-color: rgba(52, 152, 219, 0.1);
+            border: 2px solid var(--secondary-color);
+        }
+        
+        .chemical-formula {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-family: "Times New Roman", serif;
+        }
+        
+        .chemical-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .oxidation-change {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .increase {
+            background-color: var(--accent-color);
+        }
+        
+        .decrease {
+            background-color: var(--secondary-color);
+        }
+        
+        .electron-flow {
+            position: relative;
+            width: 100px;
+            height: 4px;
+            background-color: #333;
+            margin: 0 20px;
+        }
+        
+        .electron {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: var(--warning-color);
+            border-radius: 50%;
+            top: -4px;
+            left: 0;
+            animation: moveElectron 2s linear infinite;
+        }
+        
+        @keyframes moveElectron {
+            0% { left: 0; }
+            100% { left: 88px; }
+        }
+        
+        .reaction-arrow {
+            font-size: 2rem;
+            margin: 0 20px;
+            color: #666;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .active-btn {
+            background-color: var(--primary-color);
+        }
+        
+        .balancing-steps {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .step {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .step:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .half-reaction-box {
+            background-color: white;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: "Times New Roman", serif;
+        }
+        
+        .oxidation-half {
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .reduction-half {
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .quiz-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .quiz-question {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .quiz-question:last-child {
+            border-bottom: none;
+        }
+        
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .option.selected {
+            background-color: var(--light-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .option.correct {
+            background-color: rgba(46, 204, 113, 0.2);
+            border-color: var(--success-color);
+        }
+        
+        .option.incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            border-color: var(--danger-color);
+        }
+        
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            display: block;
+        }
+        
+        .feedback.incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            color: #c0392b;
+            display: block;
+        }
+        
+        .submit-btn {
+            background-color: var(--primary-color);
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+        
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .results.success {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            display: block;
+        }
+        
+        .results.warning {
+            background-color: rgba(243, 156, 18, 0.2);
+            color: #d35400;
+            display: block;
+        }
+        
+        .key-point {
+            background-color: var(--light-color);
+            padding: 15px;
+            border-left: 4px solid var(--secondary-color);
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .analogy-box {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .analogy-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .lesson-content {
+                flex-direction: column;
+            }
+            
+            .reaction-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .reaction-arrow {
+                transform: rotate(90deg);
+                margin: 10px 0;
+            }
+            
+            .comparison-header, .comparison-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Oxidation-Reduction (Redox) Reactions</h1>
+            <div class="subtitle">Chemical Change (Part 2) - Physical Sciences (Chemistry Focus)</div>
+        </header>
+        
+        <div class="lesson-content">
+            <div class="main-content">
+                <div class="section" id="objectives">
+                    <div class="section-header">
+                        <h2>Learning Objectives</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>Upon completion of this lesson, students should be able to:</p>
+                        <ol>
+                            <li><strong>Describe redox reactions</strong> as involving electron transfer.</li>
+                            <li><strong>Describe redox reactions</strong> as involving changes in oxidation numbers.</li>
+                            <li><strong>Identify redox reactions</strong> and apply correct terminology (oxidation, reduction, agents).</li>
+                            <li><strong>Balance redox reactions</strong> using half-reactions from Standard Reduction Potentials tables.</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="section" id="definitions">
+                    <div class="section-header">
+                        <h2>Definitions and Scientific Principles</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <table class="definition-table">
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Definition/Principle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Redox Reaction</strong></td>
+                                    <td>
+                                        A reaction involving the <strong>transfer of electrons</strong> and always resulting in 
+                                        <strong>changes in oxidation numbers</strong>. Oxidation and reduction take place at the same time.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Oxidation</strong></td>
+                                    <td>
+                                        The <strong>loss of electrons</strong>. This corresponds to an <strong>increase in oxidation number</strong>.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Reduction</strong></td>
+                                    <td>
+                                        The <strong>gain of electrons</strong>. This corresponds to a <strong>decrease in oxidation number</strong>.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Reducing Agent</strong></td>
+                                    <td>
+                                        The substance that <strong>donates electrons</strong> and is itself <strong>oxidised</strong>. 
+                                        Its oxidation number increases.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Oxidising Agent</strong></td>
+                                    <td>
+                                        The substance that <strong>accepts electrons</strong> and is itself <strong>reduced</strong>. 
+                                        Its oxidation number decreases.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Half-reaction</strong></td>
+                                    <td>
+                                        Either the oxidation or reduction reaction part of a redox reaction.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Ion-electron method</strong></td>
+                                    <td>
+                                        The method used to balance <strong>complex redox reactions</strong>.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="section" id="introduction">
+                    <div class="section-header">
+                        <h2>Introduction</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>
+                            In Grade 10, you were introduced to oxidation-reduction, or <strong>redox reactions</strong>, as processes involving 
+                            the transfer of electrons between two reactants. Redox reactions are incredibly common, responsible for everything 
+                            from rusting to the chemical reactions in batteries.
+                        </p>
+                        <p>
+                            However, tracking electron transfer can be difficult, especially in <strong>covalent compounds</strong> where electrons 
+                            are shared unequally rather than completely transferred. To universally track the movement of electrons, chemists use 
+                            <strong>oxidation numbers</strong>. Therefore, a redox reaction is defined by two equivalent concepts: the 
+                            <strong>transfer of electrons</strong> and the resulting <strong>change in oxidation numbers</strong> of the elements involved. 
+                            Crucially, oxidation and reduction always occur simultaneously.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="section" id="main-body">
+                    <div class="section-header">
+                        <h2>Main Body</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <h3>1. Dual Definitions of Oxidation and Reduction</h3>
+                        <p>
+                            Redox reactions involve two paired processes. One substance must <strong>lose electrons (oxidation)</strong> while another 
+                            substance <strong>gains electrons (reduction)</strong>. The sign of the change in oxidation number reflects this loss or gain:
+                        </p>
+                        
+                        <div class="comparison-table">
+                            <div class="comparison-header">
+                                <div class="comparison-cell">Process</div>
+                                <div class="comparison-cell">Electron Definition (OILRIG)</div>
+                                <div class="comparison-cell">Oxidation Number Definition</div>
+                            </div>
+                            <div class="comparison-row">
+                                <div class="comparison-cell"><strong>Oxidation</strong></div>
+                                <div class="comparison-cell">
+                                    <strong>O</strong>xidation <strong>I</strong>s <strong>L</strong>oss of electrons
+                                </div>
+                                <div class="comparison-cell">
+                                    <strong>Increase</strong> in oxidation number
+                                </div>
+                            </div>
+                            <div class="comparison-row">
+                                <div class="comparison-cell"><strong>Reduction</strong></div>
+                                <div class="comparison-cell">
+                                    <strong>R</strong>eduction <strong>I</strong>s <strong>G</strong>ain of electrons
+                                </div>
+                                <div class="comparison-cell">
+                                    <strong>Decrease</strong> in oxidation number
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="redox-simulation">
+                            <h4>Interactive Redox Reaction</h4>
+                            <div class="reaction-container">
+                                <div class="reactant oxidized" id="reactant-oxidized">
+                                    <div class="chemical-formula">Mg</div>
+                                    <div class="chemical-label">Magnesium (solid)</div>
+                                    <div class="oxidation-change increase">0 → +2</div>
+                                </div>
+                                
+                                <div class="electron-flow">
+                                    <div class="electron"></div>
+                                </div>
+                                
+                                <div class="reactant reduced" id="reactant-reduced">
+                                    <div class="chemical-formula">Br₂</div>
+                                    <div class="chemical-label">Bromine (liquid)</div>
+                                    <div class="oxidation-change decrease">0 → -1</div>
+                                </div>
+                                
+                                <div class="reaction-arrow">→</div>
+                                
+                                <div class="product" id="product-oxidized">
+                                    <div class="chemical-formula">Mg²⁺</div>
+                                    <div class="chemical-label">Magnesium ion</div>
+                                </div>
+                                
+                                <div class="reaction-arrow">+</div>
+                                
+                                <div class="product" id="product-reduced">
+                                    <div class="chemical-formula">2Br⁻</div>
+                                    <div class="chemical-label">Bromide ions</div>
+                                </div>
+                            </div>
+                            
+                            <div class="controls">
+                                <button id="show-mg-br">Mg + Br₂</button>
+                                <button id="show-zn-cu">Zn + Cu²⁺</button>
+                                <button id="show-fe-cl">Fe + Cl₂</button>
+                            </div>
+                            
+                            <div id="reaction-explanation" style="margin-top: 20px; font-weight: bold;">
+                                Magnesium is oxidized (loses 2 electrons), Bromine is reduced (gains electrons)
+                            </div>
+                        </div>
+                        
+                        <h3>2. Oxidising and Reducing Agents</h3>
+                        <p>
+                            Every redox reaction involves an <strong>oxidising agent</strong> and a <strong>reducing agent</strong>. 
+                            These terms refer to the <em>reactant</em> that causes the change in the other substance.
+                        </p>
+                        
+                        <div class="key-point">
+                            <strong>Reducing Agent:</strong> The substance that <strong>loses electrons</strong> and causes the <em>reduction</em> 
+                            of the other substance. Since it loses electrons, the reducing agent is itself <strong>oxidised</strong> and its 
+                            oxidation number increases. Metals often act as reducing agents.
+                        </div>
+                        
+                        <div class="key-point">
+                            <strong>Oxidising Agent:</strong> The substance that <strong>gains electrons</strong> and causes the <em>oxidation</em> 
+                            of the other substance. Since it gains electrons, the oxidising agent is itself <strong>reduced</strong> and its 
+                            oxidation number decreases. Non-metals (like O₂) and polyatomic ions (like MnO₄⁻) often act as oxidising agents.
+                        </div>
+                        
+                        <h3>3. Balancing Redox Reactions Using Half-Reactions</h3>
+                        <p>
+                            Complex redox reactions are typically balanced using the <strong>ion-electron method</strong>. This method separates 
+                            the overall reaction into an oxidation half-reaction and a reduction half-reaction.
+                        </p>
+                        
+                        <p>
+                            To utilize this method, chemists often use the <strong>Table of Standard Reduction Potentials (Tables 4B)</strong>, 
+                            which lists possible reduction half-reactions. The overall balanced redox equation must show the same type and number 
+                            of atoms, and the same number of charges on both sides.
+                        </p>
+                        
+                        <div class="balancing-steps">
+                            <h4>Steps for Balancing in Acidic Solution:</h4>
+                            
+                            <div class="step">
+                                <span class="step-number">1</span>
+                                <strong>Separate</strong> the reaction into two unbalanced half-reactions (oxidation and reduction).
+                            </div>
+                            <div class="step">
+                                <span class="step-number">2</span>
+                                <strong>Balance all atoms</strong> other than H and O.
+                            </div>
+                            <div class="step">
+                                <span class="step-number">3</span>
+                                <strong>Balance O atoms</strong> by adding H₂O molecules to the side needing oxygen.
+                            </div>
+                            <div class="step">
+                                <span class="step-number">4</span>
+                                <strong>Balance H atoms</strong> by adding H⁺ ions to the appropriate side (since it is an acidic medium).
+                            </div>
+                            <div class="step">
+                                <span class="step-number">5</span>
+                                <strong>Balance the charge</strong> for each half-reaction by adding electrons (e⁻) to the side with the greater positive charge.
+                            </div>
+                            <div class="step">
+                                <span class="step-number">6</span>
+                                <strong>Equalise the number of electrons</strong> gained and lost by multiplying one or both half-reactions by a suitable integer.
+                            </div>
+                            <div class="step">
+                                <span class="step-number">7</span>
+                                <strong>Add the two half-reactions</strong> together and cancel out identical species (like electrons or H⁺).
+                            </div>
+                            <div class="step">
+                                <span class="step-number">8</span>
+                                <strong>Check</strong> that the atoms and charges are balanced.
+                            </div>
+                        </div>
+                        
+                        <div class="example-box">
+                            <h4>Example: Balancing Cr₂O₇²⁻ → Cr³⁺ in Acidic Solution</h4>
+                            
+                            <div class="half-reaction-box reduction-half">
+                                <strong>Reduction Half-Reaction:</strong> Cr₂O₇²⁻ → Cr³⁺
+                            </div>
+                            
+                            <div class="step-by-step">
+                                <div class="step">
+                                    <span class="step-number">1</span>
+                                    Balance Cr atoms: Cr₂O₇²⁻ → 2Cr³⁺
+                                </div>
+                                <div class="step">
+                                    <span class="step-number">2</span>
+                                    Balance O atoms: Cr₂O₇²⁻ → 2Cr³⁺ + 7H₂O
+                                </div>
+                                <div class="step">
+                                    <span class="step-number">3</span>
+                                    Balance H atoms: 14H⁺ + Cr₂O₇²⁻ → 2Cr³⁺ + 7H₂O
+                                </div>
+                                <div class="step">
+                                    <span class="step-number">4</span>
+                                    Balance charge: 6e⁻ + 14H⁺ + Cr₂O₇²⁻ → 2Cr³⁺ + 7H₂O
+                                </div>
+                            </div>
+                            
+                            <div class="half-reaction-box reduction-half">
+                                <strong>Final Balanced Half-Reaction:</strong> 6e⁻ + 14H⁺ + Cr₂O₇²⁻ → 2Cr³⁺ + 7H₂O
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section" id="conclusion">
+                    <div class="section-header">
+                        <h2>Conclusion</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>
+                            Redox reactions are defined by the simultaneous processes of oxidation (loss of electrons, increase in oxidation number) 
+                            and reduction (gain of electrons, decrease in oxidation number). The substance that is reduced acts as the 
+                            <strong>oxidising agent</strong>, and the substance that is oxidized acts as the <strong>reducing agent</strong>. 
+                            For complex reactions, the <strong>ion-electron method</strong> is used to balance the net ionic equation, often 
+                            utilizing half-reactions found in the Table of Standard Reduction Potentials (Tables 4B).
+                        </p>
+                        
+                        <div class="analogy-box">
+                            <div class="analogy-title">Redox Analogy: Financial Transaction</div>
+                            <p>
+                                Thinking of a redox reaction is like watching a financial transaction between two people. 
+                                <strong>Oxidation</strong> is the seller <strong>losing</strong> money (electrons) but <strong>gaining</strong> 
+                                a higher positive status (increase in oxidation number) relative to their electron count. 
+                                <strong>Reduction</strong> is the buyer <strong>gaining</strong> money (electrons) but <strong>decreasing</strong> 
+                                their relative status (decrease in oxidation number). The transaction (electron transfer) must always be perfectly 
+                                balanced for the reaction to be complete.
+                            </p>
+                        </div>
+                        
+                        <div class="key-point">
+                            <strong>Key Takeaway:</strong> Remember OIL RIG - Oxidation Is Loss, Reduction Is Gain (of electrons). 
+                            The reducing agent gets oxidized, and the oxidizing agent gets reduced.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quiz-container" id="quiz">
+                    <h2>End-of-Lesson Questions</h2>
+                    <p>Test your understanding of redox reactions. Select the correct answer for each question.</p>
+                    
+                    <div class="quiz-question" id="q1">
+                        <div class="question-text">1. Describe a redox reaction in terms of electron movement.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">A reaction where atoms exchange protons</div>
+                            <div class="option" data-correct="false">A reaction where molecules change shape</div>
+                            <div class="option" data-correct="true">A reaction involving transfer of electrons between reactants</div>
+                            <div class="option" data-correct="false">A reaction that only occurs in acidic solutions</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q2">
+                        <div class="question-text">2. Define oxidation in two ways, referring to both electron transfer and oxidation number change.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">Gain of electrons and decrease in oxidation number</div>
+                            <div class="option" data-correct="true">Loss of electrons and increase in oxidation number</div>
+                            <div class="option" data-correct="false">No electron change and no oxidation number change</div>
+                            <div class="option" data-correct="false">Sharing of electrons and variable oxidation numbers</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q3">
+                        <div class="question-text">3. Define a reducing agent in terms of what happens to the agent itself.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">It gains electrons and is reduced</div>
+                            <div class="option" data-correct="false">It doesn't change oxidation state</div>
+                            <div class="option" data-correct="true">It loses electrons and is oxidized</div>
+                            <div class="option" data-correct="false">It both gains and loses electrons</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q4">
+                        <div class="question-text">4. Why is 'oxidation number' necessary for covalent redox reactions?</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">Because covalent compounds don't involve electrons</div>
+                            <div class="option" data-correct="true">Because electrons are shared, not completely transferred</div>
+                            <div class="option" data-correct="false">Because oxidation numbers are easier to calculate</div>
+                            <div class="option" data-correct="false">Because covalent compounds can't undergo redox reactions</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q5">
+                        <div class="question-text">5. State the full meaning of the mnemonic OILRIG.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">Oxidation Increases, Reduction Increases Gain</div>
+                            <div class="option" data-correct="false">Oxidation Is Lower, Reduction Is Greater</div>
+                            <div class="option" data-correct="true">Oxidation Is Loss, Reduction Is Gain (of electrons)</div>
+                            <div class="option" data-correct="false">Oxidation Involves Loss, Reduction Involves Gain</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q6">
+                        <div class="question-text">6. In Mg(s) + Br₂(l) → MgBr₂(s): Which substance is oxidized and why?</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">Br₂, because it gains electrons</div>
+                            <div class="option" data-correct="true">Mg, because it loses electrons (0 → +2)</div>
+                            <div class="option" data-correct="false">MgBr₂, because it's the product</div>
+                            <div class="option" data-correct="false">None, it's not a redox reaction</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q7">
+                        <div class="question-text">7. If sulfur changes from +6 to +4 oxidation state, has it been oxidized or reduced?</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">Oxidized, because the number increased</div>
+                            <div class="option" data-correct="true">Reduced, because oxidation number decreased</div>
+                            <div class="option" data-correct="false">Neither, it stayed positive</div>
+                            <div class="option" data-correct="false">Both oxidized and reduced</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q8">
+                        <div class="question-text">8. What species is added to balance hydrogen atoms in acidic solution?</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">OH⁻ ions</div>
+                            <div class="option" data-correct="false">H₂O molecules</div>
+                            <div class="option" data-correct="true">H⁺ ions</div>
+                            <div class="option" data-correct="false">H₂ molecules</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <button class="submit-btn" id="submit-quiz">Submit Answers</button>
+                    <div class="results" id="quiz-results"></div>
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <h3>Lesson Navigation</h3>
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <li style="margin-bottom: 10px;"><a href="#objectives" class="nav-link">Learning Objectives</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#definitions" class="nav-link">Definitions</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#introduction" class="nav-link">Introduction</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#main-body" class="nav-link">Main Body</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#conclusion" class="nav-link">Conclusion</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#quiz" class="nav-link">Quiz</a></li>
+                </ul>
+                
+                <div style="margin-top: 30px;">
+                    <h3>Key Concepts</h3>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>OIL RIG:</strong> Oxidation Is Loss, Reduction Is Gain
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Reducing Agent:</strong> Gets oxidized (loses e⁻)
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Oxidizing Agent:</strong> Gets reduced (gains e⁻)
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <h3>Balancing Steps</h3>
+                    <div style="font-size: 0.9rem;">
+                        <div>1. Separate half-reactions</div>
+                        <div>2. Balance atoms (except H,O)</div>
+                        <div>3. Balance O with H₂O</div>
+                        <div>4. Balance H with H⁺</div>
+                        <div>5. Balance charge with e⁻</div>
+                        <div>6. Equalize electrons</div>
+                        <div>7. Combine half-reactions</div>
+                        <div>8. Verify balance</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <h3>Common Agents</h3>
+                    <div style="font-size: 0.9rem;">
+                        <div><strong>Reducing Agents:</strong> Metals (Mg, Zn, Fe)</div>
+                        <div><strong>Oxidizing Agents:</strong> O₂, Cl₂, MnO₄⁻, Cr₂O₇²⁻</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Collapsible sections functionality
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const section = header.parentElement;
+                section.classList.toggle('active');
+            });
+        });
+        
+        // Navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                // Expand the target section if it's collapsed
+                if (!targetSection.classList.contains('active')) {
+                    targetSection.classList.add('active');
+                }
+                
+                // Scroll to the target section
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        // Interactive redox simulation
+        const reactantOxidized = document.getElementById('reactant-oxidized');
+        const reactantReduced = document.getElementById('reactant-reduced');
+        const productOxidized = document.getElementById('product-oxidized');
+        const productReduced = document.getElementById('product-reduced');
+        const reactionExplanation = document.getElementById('reaction-explanation');
+        
+        function updateReaction(oxidizedReactant, oxidizedProduct, reducedReactant, reducedProduct, explanation) {
+            reactantOxidized.querySelector('.chemical-formula').textContent = oxidizedReactant;
+            reactantReduced.querySelector('.chemical-formula').textContent = reducedReactant;
+            productOxidized.querySelector('.chemical-formula').textContent = oxidizedProduct;
+            productReduced.querySelector('.chemical-formula').textContent = reducedProduct;
+            reactionExplanation.textContent = explanation;
+        }
+        
+        document.getElementById('show-mg-br').addEventListener('click', () => {
+            updateReaction(
+                'Mg', 'Mg²⁺', 'Br₂', '2Br⁻',
+                'Magnesium is oxidized (loses 2 electrons, 0 → +2), Bromine is reduced (gains electrons, 0 → -1)'
+            );
+            document.getElementById('show-mg-br').classList.add('active-btn');
+            document.getElementById('show-zn-cu').classList.remove('active-btn');
+            document.getElementById('show-fe-cl').classList.remove('active-btn');
+        });
+        
+        document.getElementById('show-zn-cu').addEventListener('click', () => {
+            updateReaction(
+                'Zn', 'Zn²⁺', 'Cu²⁺', 'Cu',
+                'Zinc is oxidized (loses 2 electrons, 0 → +2), Copper is reduced (gains 2 electrons, +2 → 0)'
+            );
+            document.getElementById('show-zn-cu').classList.add('active-btn');
+            document.getElementById('show-mg-br').classList.remove('active-btn');
+            document.getElementById('show-fe-cl').classList.remove('active-btn');
+        });
+        
+        document.getElementById('show-fe-cl').addEventListener('click', () => {
+            updateReaction(
+                '2Fe', '2Fe³⁺', '3Cl₂', '6Cl⁻',
+                'Iron is oxidized (loses 3 electrons each, 0 → +3), Chlorine is reduced (gains 1 electron each, 0 → -1)'
+            );
+            document.getElementById('show-fe-cl').classList.add('active-btn');
+            document.getElementById('show-mg-br').classList.remove('active-btn');
+            document.getElementById('show-zn-cu').classList.remove('active-btn');
+        });
+        
+        // Initialize with Mg + Br₂ reaction
+        document.getElementById('show-mg-br').classList.add('active-btn');
+        
+        // Quiz functionality
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options in this question
+                const question = this.closest('.quiz-question');
+                question.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // Remove any existing feedback
+                const feedback = question.querySelector('.feedback');
+                feedback.className = 'feedback';
+                feedback.textContent = '';
+            });
+        });
+        
+        document.getElementById('submit-quiz').addEventListener('click', () => {
+            let score = 0;
+            const totalQuestions = 8;
+            
+            // Check each question
+            document.querySelectorAll('.quiz-question').forEach(question => {
+                const selectedOption = question.querySelector('.option.selected');
+                const feedback = question.querySelector('.feedback');
+                
+                if (selectedOption) {
+                    const isCorrect = selectedOption.getAttribute('data-correct') === 'true';
+                    
+                    if (isCorrect) {
+                        score++;
+                        feedback.className = 'feedback correct';
+                        feedback.textContent = 'Correct! Well done.';
+                        selectedOption.classList.add('correct');
+                    } else {
+                        feedback.className = 'feedback incorrect';
+                        feedback.textContent = 'Incorrect. Try again.';
+                        selectedOption.classList.add('incorrect');
+                        
+                        // Highlight the correct answer
+                        const correctOption = question.querySelector('.option[data-correct="true"]');
+                        correctOption.classList.add('correct');
+                    }
+                } else {
+                    // No option selected
+                    const correctOption = question.querySelector('.option[data-correct="true"]');
+                    correctOption.classList.add('correct');
+                    
+                    feedback.className = 'feedback incorrect';
+                    feedback.textContent = 'Please select an answer.';
+                }
+            });
+            
+            // Display results
+            const results = document.getElementById('quiz-results');
+            const percentage = (score / totalQuestions) * 100;
+            
+            if (percentage >= 80) {
+                results.className = 'results success';
+                results.textContent = `Excellent! You scored ${score}/${totalQuestions} (${percentage}%). You have a strong understanding of redox reactions.`;
+            } else if (percentage >= 60) {
+                results.className = 'results warning';
+                results.textContent = `Good effort! You scored ${score}/${totalQuestions} (${percentage}%). Review the material and try again to improve your score.`;
+            } else {
+                results.className = 'results warning';
+                results.textContent = `You scored ${score}/${totalQuestions} (${percentage}%). We recommend reviewing the lesson material and trying the quiz again.`;
+            }
+        });
+        
+        // Expand the first section by default
+        document.querySelector('.section').classList.add('active');
+    </script>
+</body>
+</html>

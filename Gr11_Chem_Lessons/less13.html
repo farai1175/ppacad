@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kinetic Theory of Gases - Interactive Lesson</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a5276;
+            --secondary-color: #2874a6;
+            --accent-color: #5dade2;
+            --light-color: #d6eaf8;
+            --dark-color: #17202a;
+            --text-color: #212f3d;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .subject-grade {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            opacity: 0.9;
+        }
+
+        .topic {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .sub-topic {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .lesson-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .header-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: radial-gradient(circle, white 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 1;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: #eee;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .progress-indicator {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        main {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            background-color: #f9f9f9;
+            border-left: 4px solid var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .section:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            font-size: 1.2rem;
+        }
+
+        .objectives-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .objectives-list li {
+            margin-bottom: 10px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .objectives-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background-color: #f1f1f1;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+            font-weight: bold;
+        }
+
+        .tab-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .tab-button.active {
+            background-color: white;
+            border-bottom: 3px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            border: 1px solid #ddd;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .definition-box {
+            background-color: var(--light-color);
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+        }
+
+        .definition-term {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .principle-box {
+            background-color: #f0f8ff;
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+        }
+
+        .principle-title {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+
+        .interactive-demo {
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin: 20px 0;
+            background-color: white;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .demo-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .demo-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .demo-btn.active {
+            background-color: var(--accent-color);
+        }
+
+        .demo-output {
+            border: 1px solid #eee;
+            padding: 15px;
+            min-height: 100px;
+            border-radius: var(--border-radius);
+            background-color: #f9f9f9;
+        }
+
+        .questions-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .question-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            border-left: 3px solid var(--accent-color);
+            transition: var(--transition);
+        }
+
+        .question-item:hover {
+            transform: translateX(5px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .question-options {
+            margin-left: 20px;
+        }
+
+        .option {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .option input {
+            margin-right: 5px;
+        }
+
+        .check-answer-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: var(--transition);
+        }
+
+        .check-answer-btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            display: none;
+        }
+
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .collapsible {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: var(--transition);
+            border-radius: var(--border-radius);
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .collapsible:hover {
+            background-color: #aed6f1;
+        }
+
+        .collapsible.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .collapsible i {
+            transition: var(--transition);
+        }
+
+        .collapsible.active i {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            padding: 0 15px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: white;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+        }
+
+        .collapsible-content.active {
+            padding: 15px;
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in;
+        }
+
+        .formula-box {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-style: italic;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .nav-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .molecule-container {
+            position: relative;
+            height: 200px;
+            background-color: #f0f8ff;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .molecule {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 0;
+            }
+            
+            body {
+                padding: 0;
+            }
+            
+            main {
+                padding: 15px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+            }
+            
+            .demo-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar">
+        <div class="progress-indicator" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="header-pattern"></div>
+            <div class="header-content">
+                <div class="subject-grade">PHYSICAL SCIENCES (CHEMISTRY/PHYSICS INTEGRATION)</div>
+                <h1 class="topic">MATTER AND MATERIALS (PART 2): IDEAL GASES AND THERMAL PROPERTIES</h1>
+                <div class="sub-topic">KINETIC THEORY OF GASES</div>
+                <div class="lesson-title">COMPREHENSIVE LESSON PLAN: THE KINETIC THEORY OF GASES</div>
+            </div>
+        </header>
+
+        <main>
+            <section class="section" id="objectives">
+                <h2 class="section-title"><i class="fas fa-bullseye"></i> Learning Objectives</h2>
+                <p>The following results will be the outcomes of this lesson:</p>
+                <ul class="objectives-list">
+                    <li>Describe the motion of individual molecules</li>
+                    <li>Describe and explain the collision of molecules with each other and the walls of the container</li>
+                    <li>Describe and explain the idea of average speeds in the context of gas molecules</li>
+                    <li>Explain the temperature of a gas in terms of the average kinetic energy of the molecules of the gas</li>
+                    <li>Explain the pressure exerted by a gas in terms of molecules colliding with the walls of the container</li>
+                    <li>Use the kinetic theory to explain gas laws</li>
+                    <li>Describe an ideal gas in terms of the motion of molecules</li>
+                </ul>
+            </section>
+
+            <section class="section" id="definitions">
+                <h2 class="section-title"><i class="fas fa-book"></i> Definitions and Scientific Principles</h2>
+                
+                <div class="tabs">
+                    <button class="tab-button active" onclick="openTab(event, 'definitions-tab')">Definitions</button>
+                    <button class="tab-button" onclick="openTab(event, 'principles-tab')">Scientific Principles</button>
+                </div>
+                
+                <div id="definitions-tab" class="tab-content active">
+                    <div class="definition-box">
+                        <div class="definition-term">Kinetic Molecular Theory:</div>
+                        <p>A model that explains the behaviour of gases using the motion of atoms and molecules.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Elastic Collision:</div>
+                        <p>A collision where the <strong>total kinetic energy before and after the collision is constant</strong>.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Pressure (p):</div>
+                        <p>The force that acts per unit surface area. Pressure in a gas is a result of gas molecules colliding with the walls of a container.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Temperature (T):</div>
+                        <p>A measure of the <strong>average kinetic energy</strong> of the molecules of the gas.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Ideal Gas (Perfect Gas):</div>
+                        <p>A theoretical gas which obeys the gas laws under all conditions of temperature and pressure.</p>
+                    </div>
+                </div>
+                
+                <div id="principles-tab" class="tab-content">
+                    <div class="principle-box">
+                        <div class="principle-title">Kinetic Theory Assumptions (for gases):</div>
+                        <p>Gas molecules move constantly, attract each other only weakly (except when close enough for repulsion to act), and molecules travel in straight lines except when colliding.</p>
+                    </div>
+                    
+                    <div class="principle-box">
+                        <div class="principle-title">Ideal Gas Properties:</div>
+                        <p>Ideal gas particles occupy zero volume, exert no forces on each other except during a collision, and collide with perfectly elastic collisions.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="overview">
+                <h2 class="section-title"><i class="fas fa-eye"></i> Introduction</h2>
+                <p>The Gas Laws (Boyle's law, Charles' law, etc.) describe how gases behave mathematically, but they do not explain <em>why</em>. The explanation for the macroscopic behaviour of gases—such as their pressure and temperature—comes from the <strong>Kinetic Theory of Gases</strong>. This theory is a model that describes the motion of individual molecules, their kinetic energy, and their collisions, enabling us to understand how these properties are interrelated.</p>
+                
+                <div class="interactive-demo">
+                    <h4>Interactive Visualization: Molecular Motion</h4>
+                    <div class="demo-controls">
+                        <button class="demo-btn active" onclick="changeMoleculeSpeed('normal')">Normal Speed</button>
+                        <button class="demo-btn" onclick="changeMoleculeSpeed('slow')">Slow</button>
+                        <button class="demo-btn" onclick="changeMoleculeSpeed('fast')">Fast</button>
+                    </div>
+                    <div class="molecule-container" id="moleculeContainer">
+                        <!-- Molecules will be generated by JavaScript -->
+                    </div>
+                    <p>This simulation shows how gas molecules move at different speeds. Notice how faster molecules (higher temperature) would collide with the container walls more frequently and with greater force, resulting in higher pressure.</p>
+                </div>
+            </section>
+
+            <section class="section" id="main-body">
+                <h2 class="section-title"><i class="fas fa-atom"></i> Main Body: Principles of the Kinetic Theory</h2>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    I. Motion of Individual Molecules (LO 1)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>According to the Kinetic Molecular Theory, matter is made up of particles (atoms or molecules) that <strong>move constantly</strong>.</p>
+                    <ul>
+                        <li>Gas molecules move <strong>randomly</strong>.</li>
+                        <li>They travel in <strong>straight lines</strong>, except when they collide with each other or the walls of a container.</li>
+                        <li>They move at <strong>different speeds</strong>.</li>
+                    </ul>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    II. Molecular Collisions (LO 2)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>Gas molecules are in constant motion and collide with each other and the walls of the container.</p>
+                    <ul>
+                        <li>These collisions are assumed to be <strong>perfectly elastic</strong>.</li>
+                        <li>An <strong>elastic collision</strong> means that the <strong>total kinetic energy before and after the collisions is constant</strong>. However, the kinetic energy of the individual molecules <em>can</em> change during the collision.</li>
+                        <li>In ideal gases, molecules only interact when they collide, as intermolecular forces between them are assumed to be non-existent.</li>
+                    </ul>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    III. Average Speeds (LO 3)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>In any sample of gas, the atoms or molecules <strong>all move at different speeds</strong>—some moving slowly, and some moving fast.</p>
+                    <ul>
+                        <li>To make sense of this variety of movements and describe the system as a whole, it is necessary to work with the <strong>average speed</strong> of the particles.</li>
+                        <li>For an <strong>ideal gas</strong>, it is simplified: the theory assumes the atoms or molecules move at the <strong>same speed</strong>. For a <strong>real gas</strong>, however, the particles truly move at different speeds.</li>
+                    </ul>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    IV. Temperature and Kinetic Energy (LO 4)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p><strong>The temperature (T) of a gas is a measure of the average kinetic energy (E<sub>k</sub>) of the molecules</strong>.</p>
+                    <ul>
+                        <li>If the gas is heated, the average kinetic energy of the gas particles will <strong>increase</strong>.</li>
+                        <li>The higher the temperature, the faster the molecules move, and the greater the average kinetic energy.</li>
+                        <li>When temperature is measured in Kelvin (K), this number is <strong>directly proportional</strong> to the average kinetic energy of the particles.</li>
+                    </ul>
+                    
+                    <div class="formula-box">
+                        T ∝ Average E<sub>k</sub>
+                    </div>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    V. Pressure Exerted by a Gas (LO 5)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p><strong>Pressure</strong> in a gas is a result of the <strong>gas molecules colliding with the walls of a container</strong>.</p>
+                    <ul>
+                        <li>Pressure is defined as the <strong>force that acts per unit surface area</strong> (P = F/A).</li>
+                        <li>The magnitude of the pressure is determined by the <strong>number of collisions</strong> on a specific area and the <strong>intensity</strong> of the collisions.</li>
+                        <li>If the temperature increases, gas particles move faster, striking the walls of the container harder and more often, so pressure increases.</li>
+                        <li>If the volume decreases, particles travel shorter distances and strike the walls more often, causing pressure to increase.</li>
+                    </ul>
+                    
+                    <div class="formula-box">
+                        P = F/A
+                    </div>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    VI. Describing an Ideal Gas (LO 7)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>An <strong>ideal gas (or perfect gas)</strong> is a theoretical model that assumes the gas obeys the gas laws under all conditions of temperature and pressure.</p>
+                    
+                    <p>The properties of an ideal gas based on molecular motion are:</p>
+                    <ol>
+                        <li>The particles are <strong>identical</strong> in all ways.</li>
+                        <li>The particles <strong>occupy zero volume</strong>.</li>
+                        <li>The particles <strong>exert no forces on each other</strong> except during a collision.</li>
+                        <li>Collisions are <strong>perfectly elastic</strong> (no energy is lost or gained in total).</li>
+                        <li>In this model, the atoms or molecules move at the <strong>same speed</strong>.</li>
+                    </ol>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Note on Real Gases:</div>
+                        <p>The molecules of a real gas usually behave much like an ideal gas under normal conditions, but they deviate at <strong>very low temperatures</strong> (attractive forces become significant) and <strong>very high pressures</strong> (molecular volume becomes significant).</p>
+                    </div>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    VII. Using the Kinetic Theory to Explain Gas Laws (LO 6)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>The kinetic theory provides the reason behind the mathematical relationships defined by the gas laws:</p>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Boyle's Law (P ∝ 1/V at constant T):</div>
+                        <p>If the volume (V) decreases, the gas particles are confined to a smaller area and travel shorter distances. Since the temperature (average E<sub>k</sub>) remains constant, the particles strike the walls of the container <strong>more often</strong> (more collisions per unit area), thus increasing the pressure (P).</p>
+                        <div class="formula-box">
+                            P ∝ 1/V (at constant T)
+                        </div>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Charles' Law (V ∝ T at constant P):</div>
+                        <p>If the temperature (T) increases, the average kinetic energy and speed of the particles increase. These faster molecules collide with the container walls <strong>more often and with greater impact</strong>. To maintain constant pressure, the collisions must be spread over a larger area, forcing the volume (V) to increase.</p>
+                        <div class="formula-box">
+                            V ∝ T (at constant P)
+                        </div>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Gay-Lussac's Law (P ∝ T at constant V):</div>
+                        <p>If the temperature (T) increases, the average kinetic energy and speed of the gas molecules increase. Since the volume is fixed, the faster molecules strike the container walls <strong>harder and more frequently</strong> (more intense and frequent collisions), resulting in an increase in pressure (P).</p>
+                        <div class="formula-box">
+                            P ∝ T (at constant V)
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="conclusion">
+                <h2 class="section-title"><i class="fas fa-check-circle"></i> Conclusion</h2>
+                <p>The Kinetic Theory of Gases is a powerful model that explains gas behaviour by describing the constant, random motion of particles, their elastic collisions, and their resultant average kinetic energy. This kinetic energy directly relates to the measurable temperature of the gas, while the frequency and intensity of molecular collisions with the walls determine the gas pressure. By applying these fundamental molecular principles, we can theoretically validate and explain the empirical relationships defined by the Gas Laws.</p>
+            </section>
+
+            <section class="section" id="questions">
+                <h2 class="section-title"><i class="fas fa-question-circle"></i> End-of-Lesson Questions</h2>
+                
+                <ul class="questions-list">
+                    <li class="question-item">
+                        <div class="question-text">1. Describe Motion (LO 1): Describe the motion of individual gas molecules according to the kinetic theory.</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q1" value="a" id="q1a">
+                                <label for="q1a">Gas molecules move in circular paths at constant speed</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="b" id="q1b">
+                                <label for="q1b">Gas molecules move randomly in straight lines, except when colliding</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="c" id="q1c">
+                                <label for="q1c">Gas molecules are stationary unless heated</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q1', 'b')">Check Answer</button>
+                        <div class="feedback" id="q1-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">2. Define Collision (LO 2): In the context of the kinetic theory of gases, explain what is meant by an elastic collision.</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q2" value="a" id="q2a">
+                                <label for="q2a">A collision where molecules stick together</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="b" id="q2b">
+                                <label for="q2b">A collision where the total kinetic energy before and after the collision is constant</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="c" id="q2c">
+                                <label for="q2c">A collision where kinetic energy is completely lost</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q2', 'b')">Check Answer</button>
+                        <div class="feedback" id="q2-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">3. Average Speed (LO 3): Explain why scientists use the concept of "average speeds" when describing gas molecules in a real gas sample.</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q3" value="a" id="q3a">
+                                <label for="q3a">Because all gas molecules move at the same speed</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="b" id="q3b">
+                                <label for="q3b">Because gas molecules in a real gas move at different speeds, and averaging allows us to describe the system as a whole</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="c" id="q3c">
+                                <label for="q3c">Because it's easier to measure than individual speeds</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q3', 'b')">Check Answer</button>
+                        <div class="feedback" id="q3-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">4. Temperature (LO 4): State the definition of the temperature of a gas in terms of its molecules.</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q4" value="a" id="q4a">
+                                <label for="q4a">The total kinetic energy of all molecules in the gas</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="b" id="q4b">
+                                <label for="q4b">A measure of the average kinetic energy of the molecules of the gas</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="c" id="q4c">
+                                <label for="q4c">The speed of the fastest molecules in the gas</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q4', 'b')">Check Answer</button>
+                        <div class="feedback" id="q4-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">5. Pressure (LO 5): Explain how gas molecules exert pressure on the walls of a container.</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q5" value="a" id="q5a">
+                                <label for="q5a">Through the force of gas molecules colliding with the walls of the container</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="b" id="q5b">
+                                <label for="q5b">Through the weight of the gas molecules</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="c" id="q5c">
+                                <label for="q5c">Through chemical reactions with the container walls</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q5', 'a')">Check Answer</button>
+                        <div class="feedback" id="q5-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">6. Kinetic Theory Application (LO 6): Use the kinetic theory of gases to explain why the pressure of a fixed mass of gas increases when its volume is reduced at constant temperature (Boyle's Law).</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q6" value="a" id="q6a">
+                                <label for="q6a">When volume decreases, molecules travel shorter distances and strike the walls more often, increasing pressure</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q6" value="b" id="q6b">
+                                <label for="q6b">When volume decreases, molecules slow down and exert less force</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q6" value="c" id="q6c">
+                                <label for="q6c">When volume decreases, molecules become larger and push harder</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q6', 'a')">Check Answer</button>
+                        <div class="feedback" id="q6-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">7. Ideal Gas Properties (LO 7): Which of the following is NOT a property of an ideal gas?</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q7" value="a" id="q7a">
+                                <label for="q7a">Particles occupy zero volume</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q7" value="b" id="q7b">
+                                <label for="q7b">Particles exert strong attractive forces on each other</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q7" value="c" id="q7c">
+                                <label for="q7c">Collisions are perfectly elastic</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q7', 'b')">Check Answer</button>
+                        <div class="feedback" id="q7-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">8. Kinetic Theory Application (LO 6): Use the kinetic theory of gases to explain why a sealed container of gas will experience a higher pressure if its temperature is increased (Gay-Lussac's Law).</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q8" value="a" id="q8a">
+                                <label for="q8a">When temperature increases, molecules move faster and collide with container walls harder and more frequently</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q8" value="b" id="q8b">
+                                <label for="q8b">When temperature increases, molecules become smaller and take up less space</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q8" value="c" id="q8c">
+                                <label for="q8c">When temperature increases, molecules stick together and push harder</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q8', 'a')">Check Answer</button>
+                        <div class="feedback" id="q8-feedback"></div>
+                    </li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <div class="navigation">
+                <button class="nav-btn" id="prevBtn" onclick="navigateLesson('prev')" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous Lesson
+                </button>
+                <button class="nav-btn" id="nextBtn" onclick="navigateLesson('next')">
+                    Next Lesson <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            <p>&copy; 2023 Physical Sciences Interactive Learning Platform. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Navigate between lessons
+        function navigateLesson(direction) {
+            const currentUrl = window.location.pathname;
+            const match = currentUrl.match(/less(\d+)\.html/);
+            
+            if (match) {
+                let currentLessonNum = parseInt(match[1]);
+                let nextLessonNum;
+                
+                if (direction === 'next') {
+                    nextLessonNum = currentLessonNum + 1;
+                } else if (direction === 'prev') {
+                    nextLessonNum = currentLessonNum - 1;
+                }
+                
+                if (nextLessonNum < 1) {
+                    alert('This is the first lesson!');
+                    return;
+                } else if (nextLessonNum > 36) {
+                    alert('This is the last lesson!');
+                    return;
+                }
+                
+                const nextLessonFile = `less${nextLessonNum}.html`;
+                window.location.href = nextLessonFile;
+            }
+        }
+
+        // Track current section for navigation
+        const sections = ['objectives', 'definitions', 'overview', 'main-body', 'conclusion', 'questions'];
+        let currentSectionIndex = 0;
+        let moleculeAnimation;
+
+        // Update progress bar based on scroll position
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabButtons = document.getElementsByClassName("tab-button");
+            const tabContents = document.getElementsByClassName("tab-content");
+            
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Collapsible content functionality
+        function toggleCollapsible(element) {
+            element.classList.toggle("active");
+            const content = element.nextElementSibling;
+            content.classList.toggle("active");
+        }
+
+        // Check answer function
+        function checkAnswer(questionId, correctAnswer) {
+            const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
+            const feedbackElement = document.getElementById(`${questionId}-feedback`);
+            
+            if (!selectedOption) {
+                feedbackElement.textContent = 'Please select an answer.';
+                feedbackElement.className = 'feedback incorrect';
+                feedbackElement.style.display = 'block';
+                return;
+            }
+            
+            if (selectedOption.value === correctAnswer) {
+                feedbackElement.textContent = 'Correct! Well done.';
+                feedbackElement.className = 'feedback correct';
+            } else {
+                feedbackElement.textContent = 'Incorrect. Please review the lesson material and try again.';
+                feedbackElement.className = 'feedback incorrect';
+            }
+            
+            feedbackElement.style.display = 'block';
+        }
+
+        // Navigation between sections
+        function navigateSection(direction) {
+            currentSectionIndex += direction;
+            
+            // Ensure we stay within bounds
+            if (currentSectionIndex < 0) currentSectionIndex = 0;
+            if (currentSectionIndex >= sections.length) currentSectionIndex = sections.length - 1;
+            
+            // Scroll to the current section
+            const currentSection = document.getElementById(sections[currentSectionIndex]);
+            currentSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentSectionIndex === 0;
+            document.getElementById('nextBtn').disabled = currentSectionIndex === sections.length - 1;
+        }
+
+        // Molecule animation
+        function initMolecules() {
+            const container = document.getElementById('moleculeContainer');
+            container.innerHTML = '';
+            
+            // Create molecules
+            for (let i = 0; i < 15; i++) {
+                const molecule = document.createElement('div');
+                molecule.className = 'molecule';
+                molecule.style.left = Math.random() * (container.offsetWidth - 20) + 'px';
+                molecule.style.top = Math.random() * (container.offsetHeight - 20) + 'px';
+                
+                // Random initial velocity
+                molecule.dataset.vx = (Math.random() - 0.5) * 2;
+                molecule.dataset.vy = (Math.random() - 0.5) * 2;
+                
+                container.appendChild(molecule);
+            }
+            
+            animateMolecules('normal');
+        }
+
+        function animateMolecules(speed) {
+            clearInterval(moleculeAnimation);
+            
+            let speedMultiplier = 1;
+            if (speed === 'slow') speedMultiplier = 0.5;
+            if (speed === 'fast') speedMultiplier = 2;
+            
+            moleculeAnimation = setInterval(() => {
+                const molecules = document.querySelectorAll('.molecule');
+                const container = document.getElementById('moleculeContainer');
+                
+                molecules.forEach(molecule => {
+                    let x = parseFloat(molecule.style.left);
+                    let y = parseFloat(molecule.style.top);
+                    let vx = parseFloat(molecule.dataset.vx) * speedMultiplier;
+                    let vy = parseFloat(molecule.dataset.vy) * speedMultiplier;
+                    
+                    // Update position
+                    x += vx;
+                    y += vy;
+                    
+                    // Bounce off walls
+                    if (x <= 0 || x >= container.offsetWidth - 20) {
+                        vx = -vx;
+                        molecule.dataset.vx = vx / speedMultiplier;
+                    }
+                    
+                    if (y <= 0 || y >= container.offsetHeight - 20) {
+                        vy = -vy;
+                        molecule.dataset.vy = vy / speedMultiplier;
+                    }
+                    
+                    molecule.style.left = x + 'px';
+                    molecule.style.top = y + 'px';
+                });
+            }, 20);
+        }
+
+        function changeMoleculeSpeed(speed) {
+            // Update active button state
+            const buttons = document.querySelectorAll('.demo-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Change animation speed
+            animateMolecules(speed);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set initial navigation state based on lesson number
+            const currentUrl = window.location.pathname;
+            const match = currentUrl.match(/less(\d+)\.html/);
+            if (match) {
+                const currentLessonNum = parseInt(match[1]);
+                document.getElementById('prevBtn').disabled = currentLessonNum === 1;
+                document.getElementById('nextBtn').disabled = currentLessonNum === 36;
+            }
+            
+            // Initialize molecule animation
+            initMolecules();
+            
+            // Add smooth scrolling to all internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
