@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interactive Course Builder</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-<style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    <title>Interactive Course Builder</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
         :root {
             --primary-color: #4361ee;
             --secondary-color: #3f37c9;
@@ -16,6 +21,8 @@
             --success-color: #06ffa5;
             --warning-color: #ffbe0b;
             --danger-color: #fb5607;
+            --border-radius: 0.5rem;
+            --transition: all 0.3s ease;
         }
 
         * {
@@ -43,7 +50,7 @@
             box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
             overflow-y: auto;
             z-index: 10;
-            transition: transform 0.3s ease;
+            transition: var(--transition);
         }
 
         .sidebar-header {
@@ -82,10 +89,10 @@
         }
 
         .form-control, .form-select {
-            border-radius: 0.5rem;
+            border-radius: var(--border-radius);
             border: 1px solid #ced4da;
             padding: 0.75rem;
-            transition: all 0.3s;
+            transition: var(--transition);
         }
 
         .form-control:focus, .form-select:focus {
@@ -118,17 +125,20 @@
 
         .preview-frame {
             background-color: white;
-            border-radius: 0.5rem;
+            border-radius: var(--border-radius);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             min-height: 100%;
             padding: 2rem;
         }
 
         .btn {
-            border-radius: 0.5rem;
+            border-radius: var(--border-radius);
             padding: 0.5rem 1.5rem;
             font-weight: 500;
-            transition: all 0.3s;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .btn-primary {
@@ -175,11 +185,12 @@
         .list-item {
             display: flex;
             margin-bottom: 0.5rem;
+            gap: 0.5rem;
+            align-items: center;
         }
 
         .list-item input {
             flex: 1;
-            margin-right: 0.5rem;
         }
 
         .list-item button {
@@ -292,14 +303,14 @@
 
         .course-image img {
             max-width: 100%;
-            border-radius: 0.5rem;
+            border-radius: var(--border-radius);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .quiz-container {
             background-color: var(--light-color);
             padding: 1.5rem;
-            border-radius: 0.5rem;
+            border-radius: var(--border-radius);
             margin-top: 1.5rem;
         }
 
@@ -319,7 +330,7 @@
             background-color: white;
             border-radius: 0.25rem;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: var(--transition);
         }
 
         .quiz-option:hover {
@@ -352,17 +363,22 @@
             margin-top: 1rem;
         }
 
+        /* FIXED: Show sidebar by default on all screen sizes */
         @media (max-width: 992px) {
             .sidebar {
                 position: fixed;
                 left: 0;
                 top: 0;
                 height: 100vh;
-                transform: translateX(-100%);
+                /* REMOVED: transform: translateX(-100%); */
+                /* ADDED: Show sidebar by default */
+                transform: translateX(0);
+                width: 85%;
+                max-width: 400px;
             }
 
-            .sidebar.active {
-                transform: translateX(0);
+            .sidebar.hidden {
+                transform: translateX(-100%);
             }
 
             .toggle-sidebar {
@@ -373,6 +389,16 @@
 
             .preview-container {
                 padding: 1rem;
+            }
+            
+            .list-item {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .list-item button {
+                align-self: flex-end;
+                width: fit-content;
             }
         }
 
@@ -394,321 +420,749 @@
             height: 3rem;
             border-width: 0.3rem;
         }
-</style>
+        
+        /* Validation styles */
+        .is-invalid {
+            border-color: var(--danger-color);
+        }
+        
+        .invalid-feedback {
+            display: none;
+            width: 100%;
+            margin-top: 0.25rem;
+            font-size: 0.875em;
+            color: var(--danger-color);
+        }
+        
+        .is-invalid ~ .invalid-feedback {
+            display: block;
+        }
+        
+        /* Toast notifications */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1055;
+        }
+        
+        .toast {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            max-width: 350px;
+        }
+        
+        .toast-success {
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .toast-error {
+            border-left: 4px solid var(--danger-color);
+        }
+        
+        /* Improved quiz styling */
+        .quiz-item {
+            border: 1px solid #e9ecef;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: white;
+        }
+        
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .option-item input[type="text"] {
+            flex: 1;
+        }
+        
+        .option-item .form-check-input {
+            margin-top: 0;
+        }
+        
+        /* Form section headers */
+        .form-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        
+        .form-section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin: 0;
+        }
+
+        /* Desktop styles - ensure sidebar is always visible */
+        @media (min-width: 993px) {
+            .toggle-sidebar {
+                display: none !important;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="loading-spinner">
-<div class="spinner-border text-primary" role="status">
-<span class="visually-hidden">Loading...</span>
-</div>
-</div>
+    <div class="loading-spinner">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    
+    <div class="toast-container"></div>
 
-<div class="app-container">
-<div class="sidebar" id="sidebar">
-<div class="sidebar-header">
-<h2><i class="bi bi-book"></i> Course Builder</h2>
-<p class="mb-0">Create interactive courses with ease</p>
-</div>
-<div class="sidebar-content">
-<form id="courseForm">
-<div class="form-section">
-<label class="form-label"><i class="bi bi-bookmark"></i> Course Name</label>
-<input type="text" class="form-control" id="courseName" placeholder="e.g., Introduction to Web Development">
-</div>
+    <div class="app-container">
+        <!-- FIXED: Removed the 'hidden' class to show sidebar by default -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="bi bi-book"></i> Course Builder</h2>
+                <p class="mb-0">Create interactive courses with ease</p>
+            </div>
+            <div class="sidebar-content">
+                <form id="courseForm">
+                    <div class="form-section">
+                        <div class="form-section-header">
+                            <h3 class="form-section-title">Course Details</h3>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="courseName"><i class="bi bi-bookmark"></i> Course Name</label>
+                            <input type="text" class="form-control" id="courseName" placeholder="e.g., Introduction to Web Development" required>
+                            <div class="invalid-feedback">Please provide a course name.</div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="courseLevel"><i class="bi bi-bar-chart"></i> Level</label>
+                                <select class="form-select" id="courseLevel" required>
+                                    <option value="Beginner">Beginner</option>
+                                    <option value="Intermediate">Intermediate</option>
+                                    <option value="Advanced">Advanced</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="lessonNumber"><i class="bi bi-list-ol"></i> Lesson Number</label>
+                                <input type="number" class="form-control" id="lessonNumber" min="1" value="1" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label" for="courseTopic"><i class="bi bi-tag"></i> Topic</label>
+                            <input type="text" class="form-control" id="courseTopic" placeholder="e.g., HTML & CSS" required>
+                            <div class="invalid-feedback">Please provide a course topic.</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label" for="courseSubtopic"><i class="bi bi-tags"></i> Sub-topic</label>
+                            <input type="text" class="form-control" id="courseSubtopic" placeholder="e.g., Semantic HTML" required>
+                            <div class="invalid-feedback">Please provide a course sub-topic.</div>
+                        </div>
+                    </div>
 
-<div class="form-section">
-<label class="form-label"><i class="bi bi-bar-chart"></i> Level</label>
-<select class="form-select" id="courseLevel">
-<option value="Beginner">Beginner</option>
-<option value="Intermediate">Intermediate</option>
-<option value="Advanced">Advanced</option>
-</select>
-</div>
+                    <div class="form-section">
+                        <div class="form-section-header">
+                            <h3 class="form-section-title">Learning Objectives</h3>
+                        </div>
+                        <div id="objectivesList" class="dynamic-list">
+                            <div class="list-item">
+                                <input type="text" class="form-control" placeholder="Enter learning objective" required>
+                                <button type="button" class="btn btn-sm btn-danger remove-item"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-primary mt-2" id="addObjective"><i class="bi bi-plus-circle"></i> Add Objective</button>
+                    </div>
 
-<div class="form-section">
-<label class="form-label"><i class="bi bi-tag"></i> Topic</label>
-<input type="text" class="form-control" id="courseTopic" placeholder="e.g., HTML & CSS">
-</div>
+                    <div class="form-section">
+                        <div class="form-section-header">
+                            <h3 class="form-section-title">Introduction</h3>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="courseIntroduction"><i class="bi bi-info-circle"></i> Introduction</label>
+                            <textarea class="form-control" id="courseIntroduction" rows="3" placeholder="Provide an introduction to the lesson" required></textarea>
+                            <div class="invalid-feedback">Please provide an introduction.</div>
+                        </div>
+                    </div>
 
-<div class="form-section">
-<label class="form-label"><i class="bi bi-tags"></i> Sub-topic</label>
-<input type="text" class="form-control" id="courseSubtopic" placeholder="e.g., Semantic HTML">
-</div>
+                    <div class="form-section">
+                        <div class="form-section-header">
+                            <h3 class="form-section-title">Definitions</h3>
+                        </div>
+                        <div id="definitionsList" class="dynamic-list">
+                            <div class="list-item">
+                                <input type="text" class="form-control" placeholder="Term" required>
+                                <input type="text" class="form-control" placeholder="Definition" required>
+                                <button type="button" class="btn btn-sm btn-danger remove-item"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-primary mt-2" id="addDefinition"><i class="bi bi-plus-circle"></i> Add Definition</button>
+                    </div>
 
-<div class="form-section">
-<label class="form-label"><i class="bi bi-list-ol"></i> Lesson Number</label>
-<input type="number" class="form-control" id="lessonNumber" min="1" value="1">
-</div>
+                    <div class="form-section">
+                        <div class="form-section-header">
+                            <h3 class="form-section-title">Content</h3>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="bodyText"><i class="bi bi-file-text"></i> Body Text</label>
+                            <textarea class="form-control" id="bodyText" rows="5" placeholder="Enter the main content of the lesson" required></textarea>
+                            <div class="invalid-feedback">Please provide content for the lesson.</div>
+                        </div>
+                    </div>
 
-<div class="form-section">
-<label class="form-label"><i class="bi bi-bullseye"></i> Learning Objectives</label>
-<div id="objectivesList" class="dynamic-list">
-<div class="list-item">
-<input type="text" class="form-control" placeholder="Enter learning objective">
-<button type="button" class="btn btn-sm btn-danger remove-item"><i class="bi bi-trash"></i></button>
-</div>
-</div>
-<button type="button" class="btn btn-sm btn-outline-primary mt-2" id="addObjective"><i class="bi bi-plus-circle"></i> Add Objective</button>
-</div>
+                    <div class="form-section">
+                        <div class="form-section-header">
+                            <h3 class="form-section-title">Media</h3>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"><i class="bi bi-image"></i> Body Images</label>
+                            <div id="imagesList" class="dynamic-list">
+                                <div class="list-item">
+                                    <input type="text" class="form-control" placeholder="Image URL" required>
+                                    <input type="text" class="form-control" placeholder="Image caption">
+                                    <button type="button" class="btn btn-sm btn-danger remove-item"><i class="bi bi-trash"></i></button>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-primary mt-2" id="addImage"><i class="bi bi-plus-circle"></i> Add Image</button>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label"><i class="bi bi-play-circle"></i> Body Videos</label>
+                            <div id="videosList" class="dynamic-list">
+                                <div class="list-item">
+                                    <input type="text" class="form-control" placeholder="Video URL (YouTube embed code)" required>
+                                    <button type="button" class="btn btn-sm btn-danger remove-item"><i class="bi bi-trash"></i></button>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-primary mt-2" id="addVideo"><i class="bi bi-plus-circle"></i> Add Video</button>
+                        </div>
+                    </div>
 
-<div class="form-section">
-<label class="form-label"><i class="bi bi-info-circle"></i> Introduction</label>
-<textarea class="form-control" id="courseIntroduction" rows="3" placeholder="Provide an introduction to the lesson"></textarea>
-</div>
+                    <div class="form-section">
+                        <div class="form-section-header">
+                            <h3 class="form-section-title">Assessment</h3>
+                        </div>
+                        <div id="quizzesList" class="dynamic-list">
+                            <div class="quiz-item">
+                                <div class="mb-3">
+                                    <label class="form-label">Question</label>
+                                    <input type="text" class="form-control mb-2" placeholder="Enter question" required>
+                                    <div class="options-list">
+                                        <div class="option-item">
+                                            <input type="text" class="form-control" placeholder="Option" required>
+                                            <input type="radio" name="correct1" class="form-check-input">
+                                            <button type="button" class="btn btn-sm btn-danger remove-option"><i class="bi bi-trash"></i></button>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary add-option"><i class="bi bi-plus-circle"></i> Add Option</button>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-danger remove-quiz"><i class="bi bi-trash"></i> Remove Quiz</button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-primary mt-2" id="addQuiz"><i class="bi bi-plus-circle"></i> Add Quiz</button>
+                    </div>
 
-<div class="form-section">
-<label class="form-label"><i class="bi bi-journal-text"></i> Definitions, Terms, and Principles</label>
-<div id="definitionsList" class="dynamic-list">
-<div class="list-item">
-<input type="text" class="form-control" placeholder="Term">
-<input type="text" class="form-control" placeholder="Definition">
-<button type="button" class="btn btn-sm btn-danger remove-item"><i class="bi bi-trash"></i></button>
-</div>
-</div>
-<button type="button" class="btn btn-sm btn-outline-primary mt-2" id="addDefinition"><i class="bi bi-plus-circle"></i> Add Definition</button>
-</div>
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="button" class="btn btn-primary" id="generateBtn"><i class="bi bi-magic"></i> Generate Course</button>
+                        <button type="button" class="btn btn-success" id="downloadBtn"><i class="bi bi-download"></i> Download HTML</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-<div class="form-section">
-<label class="form-label"><i class="bi bi-file-text"></i> Body Text</label>
-<textarea class="form-control" id="bodyText" rows="5" placeholder="Enter the main content of the lesson"></textarea>
-</div>
+        <div class="main-content">
+            <div class="toolbar">
+                <h3>Course Preview</h3>
+                <div>
+                    <button class="btn btn-outline-secondary" id="resetBtn"><i class="bi bi-arrow-clockwise"></i> Reset</button>
+                </div>
+            </div>
+            <div class="preview-container">
+                <div class="preview-frame" id="previewFrame">
+                    <div class="empty-state">
+                        <i class="bi bi-file-earmark-text"></i>
+                        <h4>No Course Generated Yet</h4>
+                        <p>Fill in the form on the left and click "Generate Course" to see a preview</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<div class="form-section">
-<label class="form-label"><i class="bi bi-image"></i> Body Images</label>
-<div id="imagesList" class="dynamic-list">
-<div class="list-item">
-<input type="text" class="form-control" placeholder="Image URL">
-<input type="text" class="form-control" placeholder="Image caption">
-<button type="button" class="btn btn-sm btn-danger remove-item"><i class="bi bi-trash"></i></button>
-</div>
-</div>
-<button type="button" class="btn btn-sm btn-outline-primary mt-2" id="addImage"><i class="bi bi-plus-circle"></i> Add Image</button>
-</div>
+    <!-- FIXED: Updated toggle button to show X icon when sidebar is visible -->
+    <button class="toggle-sidebar" id="toggleSidebar">
+        <i class="bi bi-x-lg"></i>
+    </button>
 
-<div class="form-section">
-<label class="form-label"><i class="bi bi-play-circle"></i> Body Videos</label>
-<div id="videosList" class="dynamic-list">
-<div class="list-item">
-<input type="text" class="form-control" placeholder="Video URL (YouTube embed code)">
-<button type="button" class="btn btn-sm btn-danger remove-item"><i class="bi bi-trash"></i></button>
-</div>
-</div>
-<button type="button" class="btn btn-sm btn-outline-primary mt-2" id="addVideo"><i class="bi bi-plus-circle"></i> Add Video</button>
-</div>
-
-<div class="form-section">
-<label class="form-label"><i class="bi bi-question-circle"></i> Quizzes</label>
-<div id="quizzesList" class="dynamic-list">
-<div class="quiz-item border p-3 mb-3 rounded">
-<div class="mb-2">
-<input type="text" class="form-control mb-2" placeholder="Question">
-<div class="options-list">
-<div class="list-item mb-2">
-<input type="text" class="form-control" placeholder="Option">
-<input type="radio" name="correct1" class="form-check-input ms-2">
-<button type="button" class="btn btn-sm btn-danger remove-option ms-2"><i class="bi bi-trash"></i></button>
-</div>
-</div>
-<button type="button" class="btn btn-sm btn-outline-secondary add-option"><i class="bi bi-plus-circle"></i> Add Option</button>
-</div>
-<button type="button" class="btn btn-sm btn-danger remove-quiz"><i class="bi bi-trash"></i> Remove Quiz</button>
-</div>
-</div>
-<button type="button" class="btn btn-sm btn-outline-primary mt-2" id="addQuiz"><i class="bi bi-plus-circle"></i> Add Quiz</button>
-</div>
-
-<div class="d-grid gap-2 mt-4">
-<button type="button" class="btn btn-primary" id="generateBtn"><i class="bi bi-magic"></i> Generate Course</button>
-<button type="button" class="btn btn-success" id="downloadBtn"><i class="bi bi-download"></i> Download HTML</button>
-</div>
-</form>
-</div>
-</div>
-
-<div class="main-content">
-<div class="toolbar">
-<h3>Course Preview</h3>
-<div>
-<button class="btn btn-outline-secondary" id="resetBtn"><i class="bi bi-arrow-clockwise"></i> Reset</button>
-</div>
-</div>
-<div class="preview-container">
-<div class="preview-frame" id="previewFrame">
-<div class="empty-state">
-<i class="bi bi-file-earmark-text"></i>
-<h4>No Course Generated Yet</h4>
-<p>Fill in the form on the left and click "Generate Course" to see a preview</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<button class="toggle-sidebar" id="toggleSidebar">
-<i class="bi bi-list"></i>
-</button>
-
-<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Sidebar toggle for mobile
-            const toggleSidebar = document.getElementById('toggleSidebar');
-            const sidebar = document.getElementById('sidebar');
-
-            toggleSidebar.addEventListener('click', function() {
-                sidebar.classList.toggle('active');
-                if (sidebar.classList.contains('active')) {
-                    toggleSidebar.innerHTML = '<i class="bi bi-x-lg"></i>';
-                } else {
+    <script>
+        // Course Builder Application
+        const CourseBuilder = {
+            // Initialize the application
+            init: function() {
+                this.setupEventListeners();
+                this.setupValidation();
+                
+                // FIXED: On mobile, show the sidebar as open by default
+                this.updateToggleButton();
+            },
+            
+            // Setup all event listeners
+            setupEventListeners: function() {
+                // Sidebar toggle for mobile
+                const toggleSidebar = document.getElementById('toggleSidebar');
+                const sidebar = document.getElementById('sidebar');
+                
+                toggleSidebar.addEventListener('click', function() {
+                    sidebar.classList.toggle('hidden');
+                    CourseBuilder.updateToggleButton();
+                });
+                
+                // Add event listeners for dynamic list items
+                document.getElementById('addObjective').addEventListener('click', () => this.addListItem('objectivesList', this.getObjectiveTemplate()));
+                document.getElementById('addDefinition').addEventListener('click', () => this.addListItem('definitionsList', this.getDefinitionTemplate()));
+                document.getElementById('addImage').addEventListener('click', () => this.addListItem('imagesList', this.getImageTemplate()));
+                document.getElementById('addVideo').addEventListener('click', () => this.addListItem('videosList', this.getVideoTemplate()));
+                document.getElementById('addQuiz').addEventListener('click', () => this.addQuiz());
+                
+                // Generate course
+                document.getElementById('generateBtn').addEventListener('click', () => this.generateCourse());
+                
+                // Download HTML
+                document.getElementById('downloadBtn').addEventListener('click', () => this.downloadHTML());
+                
+                // Reset form
+                document.getElementById('resetBtn').addEventListener('click', () => this.resetForm());
+            },
+            
+            // FIXED: Update toggle button icon based on sidebar state
+            updateToggleButton: function() {
+                const toggleSidebar = document.getElementById('toggleSidebar');
+                const sidebar = document.getElementById('sidebar');
+                
+                if (sidebar.classList.contains('hidden')) {
                     toggleSidebar.innerHTML = '<i class="bi bi-list"></i>';
+                } else {
+                    toggleSidebar.innerHTML = '<i class="bi bi-x-lg"></i>';
                 }
-            });
-
-            // Dynamic list management
-            function addListItem(listId, itemTemplate) {
+            },
+            
+            // Setup form validation
+            setupValidation: function() {
+                const form = document.getElementById('courseForm');
+                const inputs = form.querySelectorAll('input[required], textarea[required], select[required]');
+                
+                inputs.forEach(input => {
+                    input.addEventListener('blur', () => this.validateField(input));
+                    input.addEventListener('input', () => {
+                        if (input.classList.contains('is-invalid')) {
+                            this.validateField(input);
+                        }
+                    });
+                });
+            },
+            
+            // Validate a single form field
+            validateField: function(field) {
+                if (field.value.trim() === '') {
+                    field.classList.add('is-invalid');
+                    return false;
+                } else {
+                    field.classList.remove('is-invalid');
+                    return true;
+                }
+            },
+            
+            // Validate entire form
+            validateForm: function() {
+                const form = document.getElementById('courseForm');
+                const inputs = form.querySelectorAll('input[required], textarea[required], select[required]');
+                let isValid = true;
+                
+                inputs.forEach(input => {
+                    if (!this.validateField(input)) {
+                        isValid = false;
+                    }
+                });
+                
+                return isValid;
+            },
+            
+            // Add a new list item to a dynamic list
+            addListItem: function(listId, itemTemplate) {
                 const list = document.getElementById(listId);
                 const newItem = document.createElement('div');
                 newItem.className = 'list-item';
                 newItem.innerHTML = itemTemplate;
                 list.appendChild(newItem);
-
+                
                 // Add event listener to remove button
                 newItem.querySelector('.remove-item').addEventListener('click', function() {
                     newItem.remove();
                 });
-            }
-
-            // Add objective
-            document.getElementById('addObjective').addEventListener('click', function() {
-                addListItem('objectivesList', `
-<input type="text" class="form-control" placeholder="Enter learning objective">
-<button type="button" class="btn btn-sm btn-danger remove-item"><i class="bi bi-trash"></i></button>
-                `);
-            });
-
-            // Add definition
-            document.getElementById('addDefinition').addEventListener('click', function() {
-                addListItem('definitionsList', `
-<input type="text" class="form-control" placeholder="Term">
-<input type="text" class="form-control" placeholder="Definition">
-<button type="button" class="btn btn-sm btn-danger remove-item"><i class="bi bi-trash"></i></button>
-                `);
-            });
-
-            // Add image
-            document.getElementById('addImage').addEventListener('click', function() {
-                addListItem('imagesList', `
-<input type="text" class="form-control" placeholder="Image URL">
-<input type="text" class="form-control" placeholder="Image caption">
-<button type="button" class="btn btn-sm btn-danger remove-item"><i class="bi bi-trash"></i></button>
-                `);
-            });
-
-            // Add video
-            document.getElementById('addVideo').addEventListener('click', function() {
-                addListItem('videosList', `
-<input type="text" class="form-control" placeholder="Video URL (YouTube embed code)">
-<button type="button" class="btn btn-sm btn-danger remove-item"><i class="bi bi-trash"></i></button>
-                `);
-            });
-
-            // Add quiz
-            document.getElementById('addQuiz').addEventListener('click', function() {
+                
+                // Add validation to new inputs
+                const inputs = newItem.querySelectorAll('input[required]');
+                inputs.forEach(input => {
+                    input.addEventListener('blur', () => this.validateField(input));
+                });
+            },
+            
+            // Add a new quiz
+            addQuiz: function() {
                 const quizzesList = document.getElementById('quizzesList');
                 const quizCount = quizzesList.children.length + 1;
-
+                
                 const newQuiz = document.createElement('div');
-                newQuiz.className = 'quiz-item border p-3 mb-3 rounded';
-                newQuiz.innerHTML = `
-<div class="mb-2">
-<input type="text" class="form-control mb-2" placeholder="Question">
-<div class="options-list">
-<div class="list-item mb-2">
-<input type="text" class="form-control" placeholder="Option">
-<input type="radio" name="correct${quizCount}" class="form-check-input ms-2">
-<button type="button" class="btn btn-sm btn-danger remove-option ms-2"><i class="bi bi-trash"></i></button>
-</div>
-</div>
-<button type="button" class="btn btn-sm btn-outline-secondary add-option"><i class="bi bi-plus-circle"></i> Add Option</button>
-</div>
-<button type="button" class="btn btn-sm btn-danger remove-quiz"><i class="bi bi-trash"></i> Remove Quiz</button>
-                `;
-
+                newQuiz.className = 'quiz-item';
+                newQuiz.innerHTML = this.getQuizTemplate(quizCount);
+                
                 quizzesList.appendChild(newQuiz);
-
+                
                 // Add event listeners
-                newQuiz.querySelector('.add-option').addEventListener('click', function() {
-                    const optionsList = newQuiz.querySelector('.options-list');
-                    const newOption = document.createElement('div');
-                    newOption.className = 'list-item mb-2';
-                    newOption.innerHTML = `
-<input type="text" class="form-control" placeholder="Option">
-<input type="radio" name="correct${quizCount}" class="form-check-input ms-2">
-<button type="button" class="btn btn-sm btn-danger remove-option ms-2"><i class="bi bi-trash"></i></button>
-                    `;
-                    optionsList.appendChild(newOption);
-
-                    newOption.querySelector('.remove-option').addEventListener('click', function() {
-                        newOption.remove();
-                    });
-                });
-
+                newQuiz.querySelector('.add-option').addEventListener('click', () => this.addQuizOption(newQuiz, quizCount));
                 newQuiz.querySelector('.remove-quiz').addEventListener('click', function() {
                     newQuiz.remove();
                 });
-
-                newQuiz.querySelector('.remove-option').addEventListener('click', function() {
-                    this.parentElement.remove();
+                
+                // Add event listener to existing remove option buttons
+                newQuiz.querySelectorAll('.remove-option').forEach(button => {
+                    button.addEventListener('click', function() {
+                        this.closest('.option-item').remove();
+                    });
                 });
-            });
-
-            // Initial quiz option event listener
-            document.querySelector('.add-option').addEventListener('click', function() {
-                const optionsList = this.parentElement.querySelector('.options-list');
+            },
+            
+            // Add a new option to a quiz
+            addQuizOption: function(quizElement, quizCount) {
+                const optionsList = quizElement.querySelector('.options-list');
                 const newOption = document.createElement('div');
-                newOption.className = 'list-item mb-2';
-                newOption.innerHTML = `
-<input type="text" class="form-control" placeholder="Option">
-<input type="radio" name="correct1" class="form-check-input ms-2">
-<button type="button" class="btn btn-sm btn-danger remove-option ms-2"><i class="bi bi-trash"></i></button>
-                `;
+                newOption.className = 'option-item';
+                newOption.innerHTML = this.getQuizOptionTemplate(quizCount);
                 optionsList.appendChild(newOption);
-
+                
+                // Add event listener to remove button
                 newOption.querySelector('.remove-option').addEventListener('click', function() {
                     newOption.remove();
                 });
-            });
-
-            document.querySelector('.remove-option').addEventListener('click', function() {
-                this.parentElement.remove();
-            });
-
-            document.querySelector('.remove-quiz').addEventListener('click', function() {
-                this.parentElement.remove();
-            });
-
-            // Generate course
-            document.getElementById('generateBtn').addEventListener('click', function() {
-                showLoadingSpinner();
-
+            },
+            
+            // Generate course preview
+            generateCourse: function() {
+                if (!this.validateForm()) {
+                    this.showToast('Please fill in all required fields.', 'error');
+                    return;
+                }
+                
+                this.showLoadingSpinner();
+                
                 setTimeout(() => {
-                    generateCourse();
-                    hideLoadingSpinner();
+                    const courseData = this.collectFormData();
+                    const courseHTML = this.generateCourseHTML(courseData);
+                    
+                    document.getElementById('previewFrame').innerHTML = courseHTML;
+                    this.setupQuizInteractivity();
+                    
+                    this.hideLoadingSpinner();
+                    this.showToast('Course generated successfully!', 'success');
                 }, 500);
-            });
-
-            // Download HTML
-            document.getElementById('downloadBtn').addEventListener('click', function() {
+            },
+            
+            // Collect data from form
+            collectFormData: function() {
+                return {
+                    courseName: document.getElementById('courseName').value || 'Untitled Course',
+                    courseLevel: document.getElementById('courseLevel').value,
+                    courseTopic: document.getElementById('courseTopic').value || 'General',
+                    courseSubtopic: document.getElementById('courseSubtopic').value || 'Introduction',
+                    lessonNumber: document.getElementById('lessonNumber').value || '1',
+                    courseIntroduction: document.getElementById('courseIntroduction').value || 'No introduction provided.',
+                    bodyText: document.getElementById('bodyText').value || 'No content provided.',
+                    
+                    // Get objectives
+                    objectives: Array.from(document.querySelectorAll('#objectivesList .list-item input'))
+                        .map(input => input.value.trim())
+                        .filter(value => value),
+                    
+                    // Get definitions
+                    definitions: Array.from(document.querySelectorAll('#definitionsList .list-item'))
+                        .map(item => {
+                            const term = item.querySelectorAll('input')[0].value.trim();
+                            const definition = item.querySelectorAll('input')[1].value.trim();
+                            return { term, definition };
+                        })
+                        .filter(def => def.term && def.definition),
+                    
+                    // Get images
+                    images: Array.from(document.querySelectorAll('#imagesList .list-item'))
+                        .map(item => {
+                            const url = item.querySelectorAll('input')[0].value.trim();
+                            const caption = item.querySelectorAll('input')[1].value.trim();
+                            return { url, caption };
+                        })
+                        .filter(img => img.url),
+                    
+                    // Get videos
+                    videos: Array.from(document.querySelectorAll('#videosList .list-item input'))
+                        .map(input => input.value.trim())
+                        .filter(value => value),
+                    
+                    // Get quizzes
+                    quizzes: Array.from(document.querySelectorAll('.quiz-item'))
+                        .map((item, index) => {
+                            const question = item.querySelector('input[type="text"]').value.trim();
+                            if (!question) return null;
+                            
+                            const options = [];
+                            let correctAnswer = '';
+                            
+                            item.querySelectorAll('.options-list .option-item').forEach(optionItem => {
+                                const optionText = optionItem.querySelector('input[type="text"]').value.trim();
+                                const isCorrect = optionItem.querySelector('input[type="radio"]').checked;
+                                
+                                if (optionText) {
+                                    options.push(optionText);
+                                    if (isCorrect) {
+                                        correctAnswer = optionText;
+                                    }
+                                }
+                            });
+                            
+                            if (options.length > 0 && correctAnswer) {
+                                return { question, options, correctAnswer };
+                            }
+                            
+                            return null;
+                        })
+                        .filter(quiz => quiz !== null)
+                };
+            },
+            
+            // Generate HTML for the course
+            generateCourseHTML: function(data) {
+                let courseHTML = `
+                    <div class="course-page">
+                        <div class="course-header">
+                            <h1 class="course-title">${data.courseName}</h1>
+                            <div class="course-meta">
+                                <div class="meta-item">
+                                    <i class="bi bi-bar-chart"></i> ${data.courseLevel}
+                                </div>
+                                <div class="meta-item">
+                                    <i class="bi bi-tag"></i> ${data.courseTopic}
+                                </div>
+                                <div class="meta-item">
+                                    <i class="bi bi-tags"></i> ${data.courseSubtopic}
+                                </div>
+                                <div class="meta-item">
+                                    <i class="bi bi-list-ol"></i> Lesson ${data.lessonNumber}
+                                </div>
+                            </div>
+                        </div>
+                `;
+                
+                // Learning Objectives
+                if (data.objectives.length > 0) {
+                    courseHTML += `
+                        <div class="section">
+                            <h2 class="section-title">Learning Objectives</h2>
+                            <ul class="objectives-list">
+                    `;
+                    
+                    data.objectives.forEach(objective => {
+                        courseHTML += `<li>${objective}</li>`;
+                    });
+                    
+                    courseHTML += `
+                            </ul>
+                        </div>
+                    `;
+                }
+                
+                // Introduction
+                courseHTML += `
+                    <div class="section">
+                        <h2 class="section-title">Introduction</h2>
+                        <p>${data.courseIntroduction}</p>
+                    </div>
+                `;
+                
+                // Definitions
+                if (data.definitions.length > 0) {
+                    courseHTML += `
+                        <div class="section">
+                            <h2 class="section-title">Definitions, Terms, and Principles</h2>
+                    `;
+                    
+                    data.definitions.forEach(def => {
+                        courseHTML += `
+                            <div class="definition-card">
+                                <span class="definition-term">${def.term}:</span> ${def.definition}
+                            </div>
+                        `;
+                    });
+                    
+                    courseHTML += `
+                        </div>
+                    `;
+                }
+                
+                // Body Text
+                courseHTML += `
+                    <div class="section">
+                        <h2 class="section-title">Content</h2>
+                        <p>${data.bodyText.replace(/\n/g, '</p><p>')}</p>
+                    </div>
+                `;
+                
+                // Images
+                if (data.images.length > 0) {
+                    courseHTML += `
+                        <div class="section">
+                            <h2 class="section-title">Images</h2>
+                    `;
+                    
+                    data.images.forEach(img => {
+                        courseHTML += `
+                            <div class="course-image">
+                                <img src="${img.url}" alt="${img.caption || 'Course image'}">
+                                ${img.caption ? `<p class="mt-2">${img.caption}</p>` : ''}
+                            </div>
+                        `;
+                    });
+                    
+                    courseHTML += `
+                        </div>
+                    `;
+                }
+                
+                // Videos
+                if (data.videos.length > 0) {
+                    courseHTML += `
+                        <div class="section">
+                            <h2 class="section-title">Videos</h2>
+                    `;
+                    
+                    data.videos.forEach(video => {
+                        // Check if it's a YouTube URL
+                        let embedCode = video;
+                        if (video.includes('youtube.com/watch?v=')) {
+                            const videoId = video.split('v=')[1].split('&')[0];
+                            embedCode = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                        } else if (video.includes('youtu.be/')) {
+                            const videoId = video.split('youtu.be/')[1].split('?')[0];
+                            embedCode = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                        }
+                        
+                        courseHTML += `
+                            <div class="course-video">
+                                ${embedCode}
+                            </div>
+                        `;
+                    });
+                    
+                    courseHTML += `
+                        </div>
+                    `;
+                }
+                
+                // Quizzes
+                if (data.quizzes.length > 0) {
+                    courseHTML += `
+                        <div class="section">
+                            <h2 class="section-title">Quiz</h2>
+                    `;
+                    
+                    data.quizzes.forEach((quiz, index) => {
+                        courseHTML += `
+                            <div class="quiz-container" data-correct="${quiz.correctAnswer}">
+                                <div class="quiz-question">${quiz.question}</div>
+                                <ul class="quiz-options">
+                        `;
+                        
+                        quiz.options.forEach(option => {
+                            courseHTML += `
+                                <li class="quiz-option" data-option="${option}">${option}</li>
+                            `;
+                        });
+                        
+                        courseHTML += `
+                                </ul>
+                                <div class="quiz-feedback"></div>
+                                <button class="btn btn-primary quiz-submit">Submit Answer</button>
+                            </div>
+                        `;
+                    });
+                    
+                    courseHTML += `
+                        </div>
+                    `;
+                }
+                
+                courseHTML += `
+                    </div>
+                `;
+                
+                return courseHTML;
+            },
+            
+            // Setup quiz interactivity in preview
+            setupQuizInteractivity: function() {
+                document.querySelectorAll('.quiz-container').forEach(container => {
+                    const options = container.querySelectorAll('.quiz-option');
+                    const submitBtn = container.querySelector('.quiz-submit');
+                    const feedback = container.querySelector('.quiz-feedback');
+                    const correctAnswer = container.dataset.correct;
+                    
+                    options.forEach(option => {
+                        option.addEventListener('click', function() {
+                            options.forEach(opt => opt.classList.remove('selected'));
+                            this.classList.add('selected');
+                        });
+                    });
+                    
+                    if (submitBtn) {
+                        submitBtn.addEventListener('click', function() {
+                            const selected = container.querySelector('.quiz-option.selected');
+                            if (!selected) {
+                                CourseBuilder.showToast('Please select an answer.', 'error');
+                                return;
+                            }
+                            
+                            if (selected.dataset.option === correctAnswer) {
+                                feedback.textContent = 'Correct! Well done.';
+                                feedback.className = 'quiz-feedback correct';
+                            } else {
+                                feedback.textContent = 'Incorrect. Please try again.';
+                                feedback.className = 'quiz-feedback incorrect';
+                            }
+                            
+                            feedback.style.display = 'block';
+                        });
+                    }
+                });
+            },
+            
+            // Download course as HTML file
+            downloadHTML: function() {
                 const previewContent = document.getElementById('previewFrame').innerHTML;
                 const courseName = document.getElementById('courseName').value || 'Course';
-
+                
+                if (previewContent.includes('empty-state')) {
+                    this.showToast('Please generate a course first.', 'error');
+                    return;
+                }
+                
                 const htmlContent = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${courseName}</title>
-<style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${courseName}</title>
+    <style>
         body {
             font-family: 'Georgia', serif;
             line-height: 1.6;
@@ -858,12 +1312,12 @@
         .quiz-submit {
             margin-top: 1rem;
         }
-</style>
+    </style>
 </head>
 <body>
     ${previewContent}
 
-<script>
+    <script>
         // Quiz functionality
         document.querySelectorAll('.quiz-container').forEach(container => {
             const options = container.querySelectorAll('.quiz-option');
@@ -895,11 +1349,11 @@
                 });
             }
         });
-<\/script>
+    </script>
 </body>
 </html>
                 `;
-
+                
                 const blob = new Blob([htmlContent], { type: 'text/html' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -909,304 +1363,135 @@
                 a.click();
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
-            });
-
+                
+                this.showToast('Course downloaded successfully!', 'success');
+            },
+            
             // Reset form
-            document.getElementById('resetBtn').addEventListener('click', function() {
-                if (confirm('Are you sure you want to reset the form?')) {
+            resetForm: function() {
+                if (confirm('Are you sure you want to reset the form? All your data will be lost.')) {
                     document.getElementById('courseForm').reset();
                     document.getElementById('previewFrame').innerHTML = `
-<div class="empty-state">
-<i class="bi bi-file-earmark-text"></i>
-<h4>No Course Generated Yet</h4>
-<p>Fill in the form on the left and click "Generate Course" to see a preview</p>
-</div>
+                        <div class="empty-state">
+                            <i class="bi bi-file-earmark-text"></i>
+                            <h4>No Course Generated Yet</h4>
+                            <p>Fill in the form on the left and click "Generate Course" to see a preview</p>
+                        </div>
                     `;
+                    
+                    // Reset dynamic lists to one item each
+                    document.getElementById('objectivesList').innerHTML = this.getObjectiveTemplate();
+                    document.getElementById('definitionsList').innerHTML = this.getDefinitionTemplate();
+                    document.getElementById('imagesList').innerHTML = this.getImageTemplate();
+                    document.getElementById('videosList').innerHTML = this.getVideoTemplate();
+                    document.getElementById('quizzesList').innerHTML = this.getQuizTemplate(1);
+                    
+                    // Reattach event listeners
+                    this.setupEventListeners();
+                    
+                    this.showToast('Form reset successfully.', 'success');
                 }
-            });
-
-            // Generate course function
-            function generateCourse() {
-                const courseName = document.getElementById('courseName').value || 'Untitled Course';
-                const courseLevel = document.getElementById('courseLevel').value;
-                const courseTopic = document.getElementById('courseTopic').value || 'General';
-                const courseSubtopic = document.getElementById('courseSubtopic').value || 'Introduction';
-                const lessonNumber = document.getElementById('lessonNumber').value || '1';
-                const courseIntroduction = document.getElementById('courseIntroduction').value || 'No introduction provided.';
-                const bodyText = document.getElementById('bodyText').value || 'No content provided.';
-
-                // Get objectives
-                const objectives = [];
-                document.querySelectorAll('#objectivesList .list-item input').forEach(input => {
-                    if (input.value.trim()) {
-                        objectives.push(input.value.trim());
-                    }
-                });
-
-                // Get definitions
-                const definitions = [];
-                document.querySelectorAll('#definitionsList .list-item').forEach(item => {
-                    const term = item.querySelectorAll('input')[0].value.trim();
-                    const definition = item.querySelectorAll('input')[1].value.trim();
-                    if (term && definition) {
-                        definitions.push({ term, definition });
-                    }
-                });
-
-                // Get images
-                const images = [];
-                document.querySelectorAll('#imagesList .list-item').forEach(item => {
-                    const url = item.querySelectorAll('input')[0].value.trim();
-                    const caption = item.querySelectorAll('input')[1].value.trim();
-                    if (url) {
-                        images.push({ url, caption });
-                    }
-                });
-
-                // Get videos
-                const videos = [];
-                document.querySelectorAll('#videosList .list-item input').forEach(input => {
-                    if (input.value.trim()) {
-                        videos.push(input.value.trim());
-                    }
-                });
-
-                // Get quizzes
-                const quizzes = [];
-                document.querySelectorAll('.quiz-item').forEach((item, index) => {
-                    const question = item.querySelector('input[type="text"]').value.trim();
-                    if (question) {
-                        const options = [];
-                        let correctAnswer = '';
-
-                        item.querySelectorAll('.options-list .list-item').forEach(optionItem => {
-                            const optionText = optionItem.querySelector('input[type="text"]').value.trim();
-                            const isCorrect = optionItem.querySelector('input[type="radio"]').checked;
-
-                            if (optionText) {
-                                options.push(optionText);
-                                if (isCorrect) {
-                                    correctAnswer = optionText;
-                                }
-                            }
-                        });
-
-                        if (options.length > 0 && correctAnswer) {
-                            quizzes.push({ question, options, correctAnswer });
-                        }
-                    }
-                });
-
-                // Generate HTML
-                let courseHTML = `
-<div class="course-page">
-<div class="course-header">
-<h1 class="course-title">${courseName}</h1>
-<div class="course-meta">
-<div class="meta-item">
-<i class="bi bi-bar-chart"></i> ${courseLevel}
-</div>
-<div class="meta-item">
-<i class="bi bi-tag"></i> ${courseTopic}
-</div>
-<div class="meta-item">
-<i class="bi bi-tags"></i> ${courseSubtopic}
-</div>
-<div class="meta-item">
-<i class="bi bi-list-ol"></i> Lesson ${lessonNumber}
-</div>
-</div>
-</div>
+            },
+            
+            // Show toast notification
+            showToast: function(message, type) {
+                const toastContainer = document.querySelector('.toast-container');
+                const toastId = 'toast-' + Date.now();
+                
+                const toast = document.createElement('div');
+                toast.className = `toast ${type === 'success' ? 'toast-success' : 'toast-error'}`;
+                toast.id = toastId;
+                toast.innerHTML = `
+                    <div class="toast-body d-flex justify-content-between align-items-center">
+                        <span>${message}</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+                    </div>
                 `;
-
-                // Learning Objectives
-                if (objectives.length > 0) {
-                    courseHTML += `
-<div class="section">
-<h2 class="section-title">Learning Objectives</h2>
-<ul class="objectives-list">
-                    `;
-
-                    objectives.forEach(objective => {
-                        courseHTML += `<li>${objective}</li>`;
-                    });
-
-                    courseHTML += `
-</ul>
-</div>
-                    `;
-                }
-
-                // Introduction
-                courseHTML += `
-<div class="section">
-<h2 class="section-title">Introduction</h2>
-<p>${courseIntroduction}</p>
-</div>
-                `;
-
-                // Definitions
-                if (definitions.length > 0) {
-                    courseHTML += `
-<div class="section">
-<h2 class="section-title">Definitions, Terms, and Principles</h2>
-                    `;
-
-                    definitions.forEach(def => {
-                        courseHTML += `
-<div class="definition-card">
-<span class="definition-term">${def.term}:</span> ${def.definition}
-</div>
-                        `;
-                    });
-
-                    courseHTML += `
-</div>
-                    `;
-                }
-
-                // Body Text
-                courseHTML += `
-<div class="section">
-<h2 class="section-title">Content</h2>
-<p>${bodyText.replace(/\n/g, '</p><p>')}</p>
-</div>
-                `;
-
-                // Images
-                if (images.length > 0) {
-                    courseHTML += `
-<div class="section">
-<h2 class="section-title">Images</h2>
-                    `;
-
-                    images.forEach(img => {
-                        courseHTML += `
-<div class="course-image">
-<img src="${img.url}" alt="${img.caption || 'Course image'}">
-                                ${img.caption ? `<p class="mt-2">${img.caption}</p>` : ''}
-</div>
-                        `;
-                    });
-
-                    courseHTML += `
-</div>
-                    `;
-                }
-
-                // Videos
-                if (videos.length > 0) {
-                    courseHTML += `
-<div class="section">
-<h2 class="section-title">Videos</h2>
-                    `;
-
-                    videos.forEach(video => {
-                        // Check if it's a YouTube URL
-                        let embedCode = video;
-                        if (video.includes('youtube.com/watch?v=')) {
-                            const videoId = video.split('v=')[1].split('&')[0];
-                            embedCode = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-                        } else if (video.includes('youtu.be/')) {
-                            const videoId = video.split('youtu.be/')[1].split('?')[0];
-                            embedCode = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-                        }
-
-                        courseHTML += `
-<div class="course-video">
-                                ${embedCode}
-</div>
-                        `;
-                    });
-
-                    courseHTML += `
-</div>
-                    `;
-                }
-
-                // Quizzes
-                if (quizzes.length > 0) {
-                    courseHTML += `
-<div class="section">
-<h2 class="section-title">Quiz</h2>
-                    `;
-
-                    quizzes.forEach((quiz, index) => {
-                        courseHTML += `
-<div class="quiz-container" data-correct="${quiz.correctAnswer}">
-<div class="quiz-question">${quiz.question}</div>
-<ul class="quiz-options">
-                        `;
-
-                        quiz.options.forEach(option => {
-                            courseHTML += `
-<li class="quiz-option" data-option="${option}">${option}</li>
-                            `;
-                        });
-
-                        courseHTML += `
-</ul>
-<div class="quiz-feedback"></div>
-<button class="btn btn-primary quiz-submit">Submit Answer</button>
-</div>
-                        `;
-                    });
-
-                    courseHTML += `
-</div>
-                    `;
-                }
-
-                courseHTML += `
-</div>
-                `;
-
-                // Update preview
-                document.getElementById('previewFrame').innerHTML = courseHTML;
-
-                // Add quiz functionality to preview
-                document.querySelectorAll('.quiz-container').forEach(container => {
-                    const options = container.querySelectorAll('.quiz-option');
-                    const submitBtn = container.querySelector('.quiz-submit');
-                    const feedback = container.querySelector('.quiz-feedback');
-                    const correctAnswer = container.dataset.correct;
-
-                    options.forEach(option => {
-                        option.addEventListener('click', function() {
-                            options.forEach(opt => opt.classList.remove('selected'));
-                            this.classList.add('selected');
-                        });
-                    });
-
-                    if (submitBtn) {
-                        submitBtn.addEventListener('click', function() {
-                            const selected = container.querySelector('.quiz-option.selected');
-                            if (!selected) return;
-
-                            if (selected.dataset.option === correctAnswer) {
-                                feedback.textContent = 'Correct! Well done.';
-                                feedback.className = 'quiz-feedback correct';
-                            } else {
-                                feedback.textContent = 'Incorrect. Please try again.';
-                                feedback.className = 'quiz-feedback incorrect';
-                            }
-
-                            feedback.style.display = 'block';
-                        });
-                    }
+                
+                toastContainer.appendChild(toast);
+                
+                // Initialize and show the toast
+                const bsToast = new bootstrap.Toast(toast, { delay: 3000 });
+                bsToast.show();
+                
+                // Remove toast from DOM after it's hidden
+                toast.addEventListener('hidden.bs.toast', function() {
+                    toast.remove();
                 });
-            }
-
-            // Loading spinner functions
-            function showLoadingSpinner() {
+            },
+            
+            // Show loading spinner
+            showLoadingSpinner: function() {
                 document.querySelector('.loading-spinner').style.display = 'flex';
-            }
-
-            function hideLoadingSpinner() {
+            },
+            
+            // Hide loading spinner
+            hideLoadingSpinner: function() {
                 document.querySelector('.loading-spinner').style.display = 'none';
+            },
+            
+            // Template functions
+            getObjectiveTemplate: function() {
+                return `
+                    <input type="text" class="form-control" placeholder="Enter learning objective" required>
+                    <button type="button" class="btn btn-sm btn-danger remove-item"><i class="bi bi-trash"></i></button>
+                `;
+            },
+            
+            getDefinitionTemplate: function() {
+                return `
+                    <input type="text" class="form-control" placeholder="Term" required>
+                    <input type="text" class="form-control" placeholder="Definition" required>
+                    <button type="button" class="btn btn-sm btn-danger remove-item"><i class="bi bi-trash"></i></button>
+                `;
+            },
+            
+            getImageTemplate: function() {
+                return `
+                    <input type="text" class="form-control" placeholder="Image URL" required>
+                    <input type="text" class="form-control" placeholder="Image caption">
+                    <button type="button" class="btn btn-sm btn-danger remove-item"><i class="bi bi-trash"></i></button>
+                `;
+            },
+            
+            getVideoTemplate: function() {
+                return `
+                    <input type="text" class="form-control" placeholder="Video URL (YouTube embed code)" required>
+                    <button type="button" class="btn btn-sm btn-danger remove-item"><i class="bi bi-trash"></i></button>
+                `;
+            },
+            
+            getQuizTemplate: function(quizCount) {
+                return `
+                    <div class="mb-3">
+                        <label class="form-label">Question</label>
+                        <input type="text" class="form-control mb-2" placeholder="Enter question" required>
+                        <div class="options-list">
+                            <div class="option-item">
+                                <input type="text" class="form-control" placeholder="Option" required>
+                                <input type="radio" name="correct${quizCount}" class="form-check-input">
+                                <button type="button" class="btn btn-sm btn-danger remove-option"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-secondary add-option"><i class="bi bi-plus-circle"></i> Add Option</button>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-danger remove-quiz"><i class="bi bi-trash"></i> Remove Quiz</button>
+                `;
+            },
+            
+            getQuizOptionTemplate: function(quizCount) {
+                return `
+                    <input type="text" class="form-control" placeholder="Option" required>
+                    <input type="radio" name="correct${quizCount}" class="form-check-input">
+                    <button type="button" class="btn btn-sm btn-danger remove-option"><i class="bi bi-trash"></i></button>
+                `;
             }
+        };
+        
+        // Initialize the application when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            CourseBuilder.init();
         });
-</script>
+    </script>
 </body>
 </html>
-

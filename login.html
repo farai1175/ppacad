@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+        <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
     <title>Login - PassProof Academy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -498,6 +503,13 @@
     </div>
 
     <script>
+        // Global authentication variables
+        window.authState = {
+            loggedIn: false,
+            activeUser: null,
+            loginTime: null
+        };
+
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize user storage if not exists
             if (!localStorage.getItem('passproofUsers')) {
@@ -512,6 +524,19 @@
                     }
                 };
                 localStorage.setItem('passproofUsers', JSON.stringify(demoUsers));
+            }
+            
+            // Check if user is already logged in
+            const currentUser = localStorage.getItem('passproofCurrentUser');
+            if (currentUser) {
+                const userData = JSON.parse(currentUser);
+                window.authState.loggedIn = true;
+                window.authState.activeUser = userData;
+                window.authState.loginTime = userData.loggedInAt;
+                
+                console.log('User is already logged in:', userData);
+                // Uncomment the line below to enable auto-redirect for logged-in users
+                // window.location.href = 'dashboard.html';
             }
             
             // Tab functionality
@@ -625,7 +650,7 @@
                 }, 2000);
             });
             
-            // Login form submission - FIXED VERSION
+            // Login form submission
             document.getElementById('loginForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 
@@ -657,7 +682,7 @@
                     return;
                 }
                 
-                // Login successful - store user session
+                // Login successful - update global auth state
                 const userSession = {
                     email: email,
                     name: users[email].name,
@@ -665,14 +690,20 @@
                     loggedInAt: new Date().toISOString()
                 };
                 
+                // Update global authentication state
+                window.authState.loggedIn = true;
+                window.authState.activeUser = userSession;
+                window.authState.loginTime = userSession.loggedInAt;
+                
+                // Store user session in localStorage
                 localStorage.setItem('passproofCurrentUser', JSON.stringify(userSession));
                 
                 // Show success message
                 showAlert(successAlert, 'Login successful! Redirecting to dashboard...');
                 
-                // Redirect to index.html after a short delay
+                // Redirect to dashboard.html after a short delay
                 setTimeout(() => {
-                    window.location.href = 'index.html';
+                    window.location.href = 'dashboard.html';
                 }, 1500);
             });
             
@@ -704,15 +735,6 @@
                 document.querySelectorAll('.alert').forEach(alert => {
                     alert.style.display = 'none';
                 });
-            }
-            
-            // Check if user is already logged in
-            const currentUser = localStorage.getItem('passproofCurrentUser');
-            if (currentUser) {
-                // User is already logged in, redirect to home page
-                console.log('User is already logged in:', JSON.parse(currentUser));
-                // Uncomment the line below to enable auto-redirect for logged-in users
-                // window.location.href = 'index.html';
             }
             
             // Demo credentials display for testing
