@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Combined Gas Law - Interactive Lesson</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #4338ca;
+            --secondary-color: #5b21b6;
+            --accent-color: #7c3aed;
+            --light-color: #ede9fe;
+            --dark-color: #312e81;
+            --text-color: #374151;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f9fafb;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .subject-grade {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            opacity: 0.9;
+        }
+
+        .topic {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .sub-topic {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .lesson-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .header-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,.1) 10px, rgba(255,255,255,.1) 20px);
+            z-index: 1;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: #eee;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .progress-indicator {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        main {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            background-color: #f9fafb;
+            border-left: 4px solid var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .section:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            font-size: 1.2rem;
+        }
+
+        .objectives-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .objectives-list li {
+            margin-bottom: 10px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .objectives-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background-color: #f1f1f1;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+            font-weight: bold;
+        }
+
+        .tab-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .tab-button.active {
+            background-color: white;
+            border-bottom: 3px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            border: 1px solid #ddd;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .definition-box {
+            background-color: var(--light-color);
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+        }
+
+        .definition-term {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .principle-box {
+            background-color: #f3e8ff;
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+        }
+
+        .principle-title {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+
+        .interactive-demo {
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin: 20px 0;
+            background-color: white;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .demo-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .demo-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .demo-btn.active {
+            background-color: var(--accent-color);
+        }
+
+        .demo-output {
+            border: 1px solid #eee;
+            padding: 15px;
+            min-height: 100px;
+            border-radius: var(--border-radius);
+            background-color: #f9f9f9;
+        }
+
+        .questions-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .question-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            border-left: 3px solid var(--accent-color);
+            transition: var(--transition);
+        }
+
+        .question-item:hover {
+            transform: translateX(5px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .question-options {
+            margin-left: 20px;
+        }
+
+        .option {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .option input {
+            margin-right: 5px;
+        }
+
+        .check-answer-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: var(--transition);
+        }
+
+        .check-answer-btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            display: none;
+        }
+
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .collapsible {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: var(--transition);
+            border-radius: var(--border-radius);
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .collapsible:hover {
+            background-color: #ddd6fe;
+        }
+
+        .collapsible.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .collapsible i {
+            transition: var(--transition);
+        }
+
+        .collapsible.active i {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            padding: 0 15px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: white;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+        }
+
+        .collapsible-content.active {
+            padding: 15px;
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in;
+        }
+
+        .formula-box {
+            background-color: #f8fafc;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-style: italic;
+            font-size: 1.2rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .nav-btn:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .gas-simulation {
+            position: relative;
+            height: 300px;
+            background-color: #f3e8ff;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gas-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gas-particles {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .gas-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .pressure-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 5px 10px;
+            border-radius: var(--border-radius);
+            font-weight: bold;
+        }
+
+        .slider-container {
+            margin: 20px 0;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .slider {
+            width: 100%;
+            height: 5px;
+            border-radius: 5px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .slider:hover {
+            opacity: 1;
+        }
+
+        .value-display {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+        }
+
+        .value-item {
+            text-align: center;
+            padding: 10px;
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+            min-width: 100px;
+        }
+
+        .value-label {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .value-number {
+            font-size: 1.2rem;
+            margin-top: 5px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+        }
+
+        .temp-converter {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .temp-input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .temp-input {
+            width: 120px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .temp-label {
+            margin-top: 5px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .conversion-arrow {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+        }
+
+        .calculator-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .input-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .calculation-result {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 15px;
+            padding: 10px;
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+        }
+
+        .law-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .law-card {
+            flex: 1;
+            min-width: 250px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .law-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .law-formula {
+            text-align: center;
+            font-style: italic;
+            margin: 10px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 0;
+            }
+            
+            body {
+                padding: 0;
+            }
+            
+            main {
+                padding: 15px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+            }
+            
+            .demo-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar">
+        <div class="progress-indicator" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="header-pattern"></div>
+            <div class="header-content">
+                <div class="subject-grade">PHYSICAL SCIENCES</div>
+                <h1 class="topic">IDEAL GASES AND THERMAL PROPERTIES</h1>
+                <div class="sub-topic">THE COMBINED GAS LAW</div>
+                <div class="lesson-title">COMPREHENSIVE STRUCTURED LESSON: THE COMBINED GAS LAW</div>
+            </div>
+        </header>
+
+        <main>
+            <section class="section" id="objectives">
+                <h2 class="section-title"><i class="fas fa-bullseye"></i> Learning Objectives</h2>
+                <p>The following results will be the outcomes of this lesson. The learners must be able to:</p>
+                <ul class="objectives-list">
+                    <li>Use the derived formula of p₁V₁/T₁ = p₂V₂/T₂ to do calculations</li>
+                </ul>
+            </section>
+
+            <section class="section" id="definitions">
+                <h2 class="section-title"><i class="fas fa-book"></i> Definitions and Scientific Principles</h2>
+                
+                <div class="tabs">
+                    <button class="tab-button active" onclick="openTab(event, 'definitions-tab')">Definitions</button>
+                    <button class="tab-button" onclick="openTab(event, 'principles-tab')">Scientific Principles</button>
+                </div>
+                
+                <div id="definitions-tab" class="tab-content active">
+                    <div class="definition-box">
+                        <div class="definition-term">Kelvin Temperature Scale:</div>
+                        <p>A temperature scale that begins at absolute zero [0 K] on the Kelvin scale, which is equivalent to -273°C on the Celsius scale.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Boyle's Law:</div>
+                        <p>States that the <strong>volume of a fixed amount of gas is inversely proportional to its pressure</strong> at <strong>constant temperature</strong>. Mathematically expressed as: V ∝ 1/p or pV = k.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Charles' Law:</div>
+                        <p>States that the <strong>volume of a fixed amount of gas is directly proportional to absolute temperature</strong> (in Kelvin) of the gas, provided the pressure remains constant. Mathematically expressed as: V ∝ T or V/T = k.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Gay-Lussac's Law:</div>
+                        <p>States that the <strong>pressure of a fixed mass and fixed volume of gas is directly proportional to the absolute temperature</strong> of the gas. Mathematically expressed as: p ∝ T or p/T = k.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Combined Gas Law:</div>
+                        <p>A single mathematical relationship combining Boyle's law and Charles' law for a <strong>fixed amount of gas</strong>. Mathematically expressed as: p₁V₁/T₁ = p₂V₂/T₂.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Temperature Conversion:</div>
+                        <p><strong>Kelvin temperature (T) = Celsius temperature (t) + 273</strong></p>
+                    </div>
+                </div>
+                
+                <div id="principles-tab" class="tab-content">
+                    <div class="principle-box">
+                        <div class="principle-title">Kinetic Theory:</div>
+                        <p>The temperature (T) of a gas is a measure of the <strong>average kinetic energy</strong> of molecules. Temperature is directly proportional to the average kinetic energy of the molecules.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="overview">
+                <h2 class="section-title"><i class="fas fa-eye"></i> Introduction</h2>
+                <p>The pressure (p), volume (V), and temperature (T) of a gas are <strong>all interrelated</strong>, meaning that changing one property affects the others. The behaviour of gases is described by individual gas laws—Boyle's law, Charles' law, and Gay-Lussac's law. When the amount of gas is fixed, these relationships can be <strong>combined into a single combined gas law</strong> (or general gas equation). This law is essential for relating two sets of conditions (p₁, V₁, T₁ and p₂, V₂, T₂) for a fixed amount of gas.</p>
+                
+                <div class="law-cards">
+                    <div class="law-card">
+                        <div class="law-title">Boyle's Law</div>
+                        <div class="law-formula">V ∝ 1/p</div>
+                        <p>At constant temperature, volume is inversely proportional to pressure</p>
+                    </div>
+                    
+                    <div class="law-card">
+                        <div class="law-title">Charles' Law</div>
+                        <div class="law-formula">V ∝ T</div>
+                        <p>At constant pressure, volume is directly proportional to absolute temperature</p>
+                    </div>
+                    
+                    <div class="law-card">
+                        <div class="law-title">Gay-Lussac's Law</div>
+                        <div class="law-formula">p ∝ T</div>
+                        <p>At constant volume, pressure is directly proportional to absolute temperature</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="main-body">
+                <h2 class="section-title"><i class="fas fa-atom"></i> Main Body</h2>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    1. Temperature Conversion (LO 2)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>All calculations involving gas laws must use temperature values in <strong>kelvin (K)</strong>, not degrees Celsius. The Kelvin scale is also known as absolute thermodynamic temperature scale, where 0 K represents absolute zero.</p>
+                    
+                    <p>To convert temperature readings between the Celsius temperature scale (t) and the Kelvin temperature scale (T):</p>
+                    
+                    <div class="formula-box">
+                        Kelvin temperature (T) = Celsius temperature (t) + 273
+                    </div>
+                    
+                    <div class="formula-box">
+                        Celsius temperature (t) = Kelvin temperature (T) – 273
+                    </div>
+                    
+                    <p>This conversion is crucial because Charles' law states that volume is directly proportional to the <strong>absolute temperature</strong> (Kelvin). The change from degrees Celsius to Kelvin involves addition (not multiplication by a fixed ratio), meaning the conversion must be done explicitly before calculations.</p>
+                    
+                    <div class="interactive-demo">
+                        <h4>Interactive Temperature Converter</h4>
+                        <p>Use this tool to convert between Celsius and Kelvin temperatures:</p>
+                        
+                        <div class="temp-converter">
+                            <div class="temp-input-group">
+                                <input type="number" class="temp-input" id="celsiusInput" placeholder="Enter °C" onchange="convertTemp('c')">
+                                <div class="temp-label">Degrees Celsius (°C)</div>
+                            </div>
+                            
+                            <div class="conversion-arrow">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                            
+                            <div class="temp-input-group">
+                                <input type="number" class="temp-input" id="kelvinInput" placeholder="Enter K" onchange="convertTemp('k')">
+                                <div class="temp-label">Kelvin (K)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    2. Relationship between Pressure, Volume, and Temperature (LO 1)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>For a fixed amount of gas, the combined gas law describes how pressure, volume, and temperature are related.</p>
+                    
+                    <ol>
+                        <li><strong>Pressure and Volume (Constant Temperature):</strong> According to Boyle's law, the volume (V) is <strong>inversely proportional</strong> to the pressure (p). This means that if pressure doubles, volume will halve (at constant temperature).</li>
+                        <li><strong>Volume and Absolute Temperature (Constant Pressure):</strong> According to Charles' law, the volume (V) is <strong>directly proportional</strong> to the absolute temperature (T). If the temperature increases, the average speed of the molecules increases, leading to more frequent and forceful collisions, which increases the volume.</li>
+                        <li><strong>Pressure and Absolute Temperature (Constant Volume):</strong> According to Gay-Lussac's law, the pressure (p) is <strong>directly proportional</strong> to the absolute temperature (T). If the temperature of a fixed volume of gas increases, the particles move faster, collide more forcefully, and more often per unit time, causing the pressure to increase.</li>
+                    </ol>
+                    
+                    <p>These relationships lead to the formulation of the <strong>Combined Gas Law</strong> (General Gas Equation):</p>
+                    
+                    <div class="formula-box">
+                        V ∝ T/p or pV ∝ T or pV/T = k
+                    </div>
+                    
+                    <div class="chart-container">
+                        <canvas id="combinedChart"></canvas>
+                    </div>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    3. Calculations using the Combined Gas Law (LO 3)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>The combined gas law allows us to calculate unknown quantities for a fixed amount of gas under changing conditions.</p>
+                    
+                    <p>The derived formula is:</p>
+                    
+                    <div class="formula-box">
+                        p₁V₁/T₁ = p₂V₂/T₂
+                    </div>
+                    
+                    <p><strong>Conditions for using the Combined Gas Law:</strong></p>
+                    <ul>
+                        <li>The <strong>amount of gas</strong> in the container must be <strong>fixed</strong> (cannot change).</li>
+                        <li>The units for p₁ and p₂ must be the <strong>same</strong>.</li>
+                        <li>The units for V₁ and V₂ must be the <strong>same</strong>.</li>
+                        <li>The units for T₁ and T₂ <strong>must be in kelvin (K)</strong>.</li>
+                    </ul>
+                    
+                    <p><strong>Steps for Calculation:</strong></p>
+                    <ol>
+                        <li><strong>List the variables</strong> (p₁, V₁, T₁, p₂, V₂, T₂).</li>
+                        <li><strong>Convert temperature</strong> values from Celsius to <strong>Kelvin</strong> (if necessary).</li>
+                        <li><strong>Select the equation:</strong> p₁V₁/T₁ = p₂V₂/T₂.</li>
+                        <li><strong>Rearrange the equation</strong> to isolate the unknown variable.</li>
+                        <li><strong>Substitute the known variables</strong> into the formula and solve.</li>
+                    </ol>
+                    
+                    <div class="interactive-demo">
+                        <h4>Combined Gas Law Calculator</h4>
+                        <p>Use this calculator to solve Combined Gas Law problems:</p>
+                        
+                        <div class="calculator-container">
+                            <div class="input-group">
+                                <div class="input-label">Initial Pressure (p₁)</div>
+                                <input type="number" id="p1Input" class="input-field" placeholder="Enter p₁">
+                            </div>
+                            
+                            <div class="input-group">
+                                <div class="input-label">Initial Volume (V₁)</div>
+                                <input type="number" id="v1Input" class="input-field" placeholder="Enter V₁">
+                            </div>
+                            
+                            <div class="input-group">
+                                <div class="input-label">Initial Temperature (T₁)</div>
+                                <input type="number" id="t1Input" class="input-field" placeholder="Enter T₁ (K)">
+                            </div>
+                            
+                            <div class="input-group">
+                                <div class="input-label">Final Pressure (p₂)</div>
+                                <input type="number" id="p2Input" class="input-field" placeholder="Enter p₂">
+                            </div>
+                            
+                            <div class="input-group">
+                                <div class="input-label">Final Volume (V₂)</div>
+                                <input type="number" id="v2Input" class="input-field" placeholder="Enter V₂">
+                            </div>
+                            
+                            <div class="input-group">
+                                <div class="input-label">Final Temperature (T₂)</div>
+                                <input type="number" id="t2Input" class="input-field" placeholder="Enter T₂ (K)">
+                            </div>
+                        </div>
+                        
+                        <button class="demo-btn" style="margin: 15px auto; display: block;" onclick="calculateCombinedGasLaw()">Calculate Unknown Variable</button>
+                        
+                        <div id="calculationResult" class="calculation-result"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="conclusion">
+                <h2 class="section-title"><i class="fas fa-check-circle"></i> Conclusion</h2>
+                <p>The Combined Gas Law, p₁V₁/T₁ = p₂V₂/T₂, describes the essential relationship between pressure, volume, and temperature of a <strong>fixed quantity of an ideal gas</strong>. Successful calculations using this formula depend entirely on accurately converting all temperatures from Degrees Celsius to <strong>Kelvin</strong> using the relation T = t + 273. This comprehensive formula allows us to solve problems where all three variables change simultaneously, demonstrating the interdependence of P, V, and T.</p>
+            </section>
+
+            <section class="section" id="questions">
+                <h2 class="section-title"><i class="fas fa-question-circle"></i> End-of-Lesson Questions</h2>
+                
+                <ul class="questions-list">
+                    <li class="question-item">
+                        <div class="question-text">1. State the formula for converting temperature in Degrees Celsius (°C) to Kelvin (K). (LO 2)</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q1" value="a" id="q1a">
+                                <label for="q1a">Kelvin temperature (T) = Celsius temperature (t) + 273</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="b" id="q1b">
+                                <label for="q1b">Kelvin temperature (T) = Celsius temperature (t) - 273</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="c" id="q1c">
+                                <label for="q1c">Kelvin temperature (T) = Celsius temperature (t) × 273</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q1', 'a')">Check Answer</button>
+                        <div class="feedback" id="q1-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">2. Convert a temperature of 52°C to Kelvin. (LO 2)</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q2" value="a" id="q2a">
+                                <label for="q2a">325 K</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="b" id="q2b">
+                                <label for="q2b">221 K</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="c" id="q2c">
+                                <label for="q2c">52 K</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q2', 'a')">Check Answer</button>
+                        <div class="feedback" id="q2-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">3. Describe the relationship between pressure (p), volume (V), and temperature (T) for a fixed amount of gas, referring to Kelvin temperature in your answer. (LO 1)</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q3" value="a" id="q3a">
+                                <label for="q3a">The relationship is described by the equation p₁V₁/T₁ = p₂V₂/T₂</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="b" id="q3b">
+                                <label for="q3b">The relationship is described by the equation p₁V₁ = p₂V₂</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="c" id="q3c">
+                                <label for="q3c">The relationship is described by the equation V₁/T₁ = V₂/T₂</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q3', 'a')">Check Answer</button>
+                        <div class="feedback" id="q3-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">4. Explain why temperature measurements in gas law calculations must always be in Kelvin. (LO 1, LO 2)</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q4" value="a" id="q4a">
+                                <label for="q4a">Because Kelvin is the standard unit for temperature in the International System of Units</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="b" id="q4b">
+                                <label for="q4b">Because gas laws describe relationships with absolute temperature, which is measured on the Kelvin scale</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="c" id="q4c">
+                                <label for="q4c">Because Kelvin values are always larger than Celsius values</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q4', 'b')">Check Answer</button>
+                        <div class="feedback" id="q4-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">5. A fixed amount of gas occupies a volume of 300 cm³ at a pressure of 104 kPa and a temperature of 23°C. Calculate the volume of the gas at Standard Temperature and Pressure (STP). (LO 3)</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q5" value="a" id="q5a">
+                                <label for="q5a">292 cm³</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="b" id="q5b">
+                                <label for="q5b">311 cm³</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="c" id="q5c">
+                                <label for="q5c">300 cm³</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q5', 'a')">Check Answer</button>
+                        <div class="feedback" id="q5-feedback"></div>
+                    </li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <div class="navigation">
+                <button class="nav-btn" id="prevBtn" onclick="navigateSection(-1)" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="nav-btn" id="nextBtn" onclick="navigateSection(1)">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            <p>&copy; 2023 Physical Sciences Interactive Learning Platform. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Track current section for navigation
+        const sections = ['objectives', 'definitions', 'overview', 'main-body', 'conclusion', 'questions'];
+        let currentSectionIndex = 0;
+        let combinedChart;
+
+        // Update progress bar based on scroll position
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabButtons = document.getElementsByClassName("tab-button");
+            const tabContents = document.getElementsByClassName("tab-content");
+            
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Collapsible content functionality
+        function toggleCollapsible(element) {
+            element.classList.toggle("active");
+            const content = element.nextElementSibling;
+            content.classList.toggle("active");
+            
+            // Initialize charts when the relationship section is opened
+            if (element.textContent.includes("Relationship between Pressure, Volume, and Temperature") && content.classList.contains("active")) {
+                if (!combinedChart) {
+                    initCharts();
+                }
+            }
+        }
+
+        // Check answer function
+        function checkAnswer(questionId, correctAnswer) {
+            const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
+            const feedbackElement = document.getElementById(`${questionId}-feedback`);
+            
+            if (!selectedOption) {
+                feedbackElement.textContent = 'Please select an answer.';
+                feedbackElement.className = 'feedback incorrect';
+                feedbackElement.style.display = 'block';
+                return;
+            }
+            
+            if (selectedOption.value === correctAnswer) {
+                feedbackElement.textContent = 'Correct! Well done.';
+                feedbackElement.className = 'feedback correct';
+            } else {
+                feedbackElement.textContent = 'Incorrect. Please review the lesson material and try again.';
+                feedbackElement.className = 'feedback incorrect';
+            }
+            
+            feedbackElement.style.display = 'block';
+        }
+
+        // Navigation between sections
+        function navigateSection(direction) {
+            currentSectionIndex += direction;
+            
+            // Ensure we stay within bounds
+            if (currentSectionIndex < 0) currentSectionIndex = 0;
+            if (currentSectionIndex >= sections.length) currentSectionIndex = sections.length - 1;
+            
+            // Scroll to the current section
+            const currentSection = document.getElementById(sections[currentSectionIndex]);
+            currentSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentSectionIndex === 0;
+            document.getElementById('nextBtn').disabled = currentSectionIndex === sections.length - 1;
+        }
+
+        // Temperature conversion
+        function convertTemp(from) {
+            const celsiusInput = document.getElementById('celsiusInput');
+            const kelvinInput = document.getElementById('kelvinInput');
+            
+            if (from === 'c') {
+                const celsius = parseFloat(celsiusInput.value);
+                if (!isNaN(celsius)) {
+                    kelvinInput.value = celsius + 273;
+                }
+            } else {
+                const kelvin = parseFloat(kelvinInput.value);
+                if (!isNaN(kelvin)) {
+                    celsiusInput.value = kelvin - 273;
+                }
+            }
+        }
+
+        // Initialize charts
+        function initCharts() {
+            // Combined Gas Law chart
+            const combinedCtx = document.getElementById('combinedChart').getContext('2d');
+            combinedChart = new Chart(combinedCtx, {
+                type: 'line',
+                data: {
+                    labels: [100, 150, 200, 250, 300, 350, 400],
+                    datasets: [
+                        {
+                            label: 'Pressure (kPa)',
+                            data: [100, 75, 56, 45, 38, 32, 28],
+                            borderColor: 'rgb(67, 56, 202)',
+                            backgroundColor: 'rgba(67, 56, 202, 0.1)',
+                            tension: 0.1,
+                            fill: false
+                        },
+                        {
+                            label: 'Volume (cm³)',
+                            data: [200, 267, 333, 400, 467, 533, 600],
+                            borderColor: 'rgb(34, 197, 94)',
+                            backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                            tension: 0.1,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Relationship Between Pressure, Volume, and Temperature'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Temperature (K)'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Relative Values'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Combined Gas Law calculator
+        function calculateCombinedGasLaw() {
+            const p1 = parseFloat(document.getElementById('p1Input').value);
+            const v1 = parseFloat(document.getElementById('v1Input').value);
+            const t1 = parseFloat(document.getElementById('t1Input').value);
+            const p2 = parseFloat(document.getElementById('p2Input').value);
+            const v2 = parseFloat(document.getElementById('v2Input').value);
+            const t2 = parseFloat(document.getElementById('t2Input').value);
+            const resultDiv = document.getElementById('calculationResult');
+            
+            // Count how many values are provided
+            let providedValues = 0;
+            if (!isNaN(p1)) providedValues++;
+            if (!isNaN(v1)) providedValues++;
+            if (!isNaN(t1)) providedValues++;
+            if (!isNaN(p2)) providedValues++;
+            if (!isNaN(v2)) providedValues++;
+            if (!isNaN(t2)) providedValues++;
+            
+            if (providedValues < 5) {
+                resultDiv.textContent = 'Please enter at least 5 values to calculate the unknown variable.';
+                resultDiv.style.color = 'red';
+                return;
+            }
+            
+            // Calculate the unknown value
+            let result = '';
+            if (isNaN(p1)) {
+                // Calculate p1: p1 = p2V1T2 / V2T1
+                const p1Value = (p2 * v1 * t2) / (v2 * t1);
+                result = `p₁ = ${p1Value.toFixed(2)} kPa`;
+            } else if (isNaN(v1)) {
+                // Calculate V1: V1 = p2V1T1 / p2T2
+                const v1Value = (p2 * v1 * t1) / (p1 * t2);
+                result = `V₁ = ${v1Value.toFixed(2)} cm³`;
+            } else if (isNaN(t1)) {
+                // Calculate T1: T1 = p2V1T2 / p2V2
+                const t1Value = (p2 * v1 * t2) / (p1 * v2);
+                result = `T₁ = ${t1Value.toFixed(2)} K`;
+            } else if (isNaN(p2)) {
+                // Calculate p2: p2 = p1V2T1 / V1T2
+                const p2Value = (p1 * v2 * t2) / (v1 * t1);
+                result = `p₂ = ${p2Value.toFixed(2)} kPa`;
+            } else if (isNaN(v2)) {
+                // Calculate V2: V2 = p2V1T2 / p1T1
+                const v2Value = (p2 * v1 * t2) / (p1 * t1);
+                result = `V₂ = ${v2Value.toFixed(2)} cm³`;
+            } else if (isNaN(t2)) {
+                // Calculate T2: T2 = p2V1T2 / p1V2
+                const t2Value = (p2 * v1 * t2) / (p1 * v2);
+                result = `T₂ = ${t2Value.toFixed(2)} K`;
+            }
+            
+            resultDiv.textContent = result;
+            resultDiv.style.color = 'var(--primary-color)';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set initial navigation state
+            document.getElementById('prevBtn').disabled = true;
+            
+            // Add smooth scrolling to all internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

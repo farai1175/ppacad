@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Molecular and Formula Masses - Interactive Lesson</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #059669;
+            --secondary-color: #0d9488;
+            --accent-color: #4ade80;
+            --light-color: #e6f7ff;
+            --dark-color: #1e3a8a;
+            --text-color: #334155;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f8fafc;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .subject-grade {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            opacity: 0.9;
+        }
+
+        .topic {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .sub-topic {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .lesson-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .header-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,.1) 10px, rgba(255,255,255,.1) 20px);
+            z-index: 1;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: #eee;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .progress-indicator {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        main {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            background-color: #f9fafb;
+            border-left: 4px solid var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .section:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            font-size: 1.2rem;
+        }
+
+        .objectives-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .objectives-list li {
+            margin-bottom: 10px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .objectives-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background-color: #f1f1f1;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+            font-weight: bold;
+        }
+
+        .tab-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .tab-button.active {
+            background-color: white;
+            border-bottom: 3px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            border: 1px solid #ddd;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .definition-box {
+            background-color: var(--light-color);
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+        }
+
+        .definition-term {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .principle-box {
+            background-color: #f0f9ff;
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+        }
+
+        .principle-title {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+
+        .interactive-demo {
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin: 20px 0;
+            background-color: white;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .demo-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .demo-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .demo-btn.active {
+            background-color: var(--accent-color);
+        }
+
+        .demo-output {
+            border: 1px solid #eee;
+            padding: 15px;
+            min-height: 100px;
+            border-radius: var(--border-radius);
+            background-color: #f9f9f9;
+        }
+
+        .questions-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .question-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            border-left: 3px solid var(--accent-color);
+            transition: var(--transition);
+        }
+
+        .question-item:hover {
+            transform: translateX(5px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .question-options {
+            margin-left: 20px;
+        }
+
+        .option {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .option input {
+            margin-right: 5px;
+        }
+
+        .check-answer-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: var(--transition);
+        }
+
+        .check-answer-btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            display: none;
+        }
+
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .collapsible {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: var(--transition);
+            border-radius: var(--border-radius);
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .collapsible:hover {
+            background-color: #d1fae5;
+        }
+
+        .collapsible.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .collapsible i {
+            transition: var(--transition);
+        }
+
+        .collapsible.active i {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            padding: 0 15px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: white;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+        }
+
+        .collapsible-content.active {
+            padding: 15px;
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in;
+        }
+
+        .formula-box {
+            background-color: #f8fafc;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-style: italic;
+            font-size: 1.2rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .nav-btn:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .compound-visualizer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .compound-display {
+            flex: 1;
+            min-width: 250px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .compound-name {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .compound-formula {
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+        }
+
+        .element-display {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .element-symbol {
+            font-size: 1.5rem;
+            font-weight: bold;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .element-count {
+            font-size: 1.2rem;
+            margin-top: 5px;
+        }
+
+        .percentage-bar {
+            height: 20px;
+            background-color: #e0e7ff;
+            border-radius: var(--border-radius);
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .percentage-fill {
+            height: 100%;
+            background-color: var(--accent-color);
+            transition: width 0.5s ease;
+        }
+
+        .calculation-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .input-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .calculation-result {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 15px;
+            padding: 10px;
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 0;
+            }
+            
+            body {
+                padding: 0;
+            }
+            
+            main {
+                padding: 15px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+            }
+            
+            .demo-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar">
+        <div class="progress-indicator" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="header-pattern"></div>
+            <div class="header-content">
+                <div class="subject-grade">PHYSICAL SCIENCES / CHEMISTRY</div>
+                <h1 class="topic">QUANTITATIVE ASPECTS OF CHEMICAL CHANGE: MOLECULAR AND FORMULAE</h1>
+                <div class="sub-topic">MOLECULAR AND FORMULA MASSES</div>
+                <div class="lesson-title">COMPREHENSIVE STRUCTURED LESSON: MOLECULAR AND FORMULA MASSES</div>
+            </div>
+        </header>
+
+        <main>
+            <section class="section" id="objectives">
+                <h2 class="section-title"><i class="fas fa-bullseye"></i> Learning Objectives</h2>
+                <p>The learners must be able to:</p>
+                <ul class="objectives-list">
+                    <li>Determine the empirical formula for a given substance from percentage composition</li>
+                    <li>Determine the number of moles of water of crystallization in salts</li>
+                </ul>
+            </section>
+
+            <section class="section" id="definitions">
+                <h2 class="section-title"><i class="fas fa-book"></i> Definitions and Scientific Principles</h2>
+                
+                <div class="tabs">
+                    <button class="tab-button active" onclick="openTab(event, 'definitions-tab')">Definitions</button>
+                    <button class="tab-button" onclick="openTab(event, 'principles-tab')">Scientific Principles</button>
+                </div>
+                
+                <div id="definitions-tab" class="tab-content active">
+                    <div class="definition-box">
+                        <div class="definition-term">Stoichiometry:</div>
+                        <p>The branch of chemistry that deals with the quantitative relationship between reactants and products in a chemical reaction.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Molar Mass (M):</div>
+                        <p>The mass of one mole of a substance measured in g·mol⁻¹.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Mole (n):</div>
+                        <p>The SI unit for amount of substance, having the same number of particles as there are atoms in 12 g of carbon-12.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Percentage Composition:</div>
+                        <p>If chemical formula is known, this method determines what percentage of a substance is made up by each element.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Empirical Formula:</div>
+                        <p>The simplest chemical formula that shows the simplest positive whole number ratio between atoms in a compound.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Molecular Formula:</div>
+                        <p>The true or actual formula of a compound, which is a multiple of the simplest ratio (the empirical formula).</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Water of Crystallization:</div>
+                        <p>Water contained in crystals of certain salts. These water molecules are trapped between ions as the crystals are forming.</p>
+                    </div>
+                </div>
+                
+                <div id="principles-tab" class="tab-content">
+                    <div class="principle-box">
+                        <div class="principle-title">Molar Mass Determination:</div>
+                        <p>The mass of one mole of a substance is numerically equal to its atomic or molecular mass expressed in grams per mole (g·mol⁻¹). It is calculated by summing the atomic masses of all atoms in the molecule.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="overview">
+                <h2 class="section-title"><i class="fas fa-eye"></i> Introduction</h2>
+                <p>Quantitative aspects of chemical change involve stoichiometry, which is essentially the mathematics behind chemistry. Chemists use stoichiometric relationships to determine how much product will be made from specific amounts of reactant in reactions carried out in the laboratory or on a large scale in industry.</p>
+                
+                <p>Before we can use a chemical in a reaction, we must accurately know its composition. Two key concepts that help establish the composition of a substance from analytical data are the empirical formula and the presence of water of crystallization. The molecular formula is often determined directly from the empirical formula and the molar mass.</p>
+                
+                <div class="compound-visualizer">
+                    <div class="compound-display">
+                        <div class="compound-name">Example: Water (H₂O)</div>
+                        <div class="compound-formula">H₂O</div>
+                        <div class="element-display">
+                            <div class="element-symbol">H</div>
+                            <div class="element-count">2</div>
+                        </div>
+                        <div class="element-display">
+                            <div class="element-symbol">O</div>
+                            <div class="element-count">1</div>
+                        </div>
+                    </div>
+                    
+                    <div class="compound-display">
+                        <div class="compound-name">Example: Carbon Dioxide (CO₂)</div>
+                        <div class="compound-formula">CO₂</div>
+                        <div class="element-display">
+                            <div class="element-symbol">C</div>
+                            <div class="element-count">1</div>
+                        </div>
+                        <div class="element-display">
+                            <div class="element-symbol">O</div>
+                            <div class="element-count">2</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="main-body">
+                <h2 class="section-title"><i class="fas fa-atom"></i> Main Body</h2>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    1. Determining the Empirical Formula from Percentage Composition (LO 1)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>The empirical formula provides the simplest whole number ratio of atoms in a molecule. This is different from the molecular formula, which shows the actual number and types of atoms. Calculating the empirical formula is necessary when the composition of a compound is known, often derived from analytical data given as percentage composition.</p>
+                    
+                    <p><strong>Procedure for Calculating the Empirical Formula:</strong></p>
+                    <ol>
+                        <li><strong>Assume 100 g Sample:</strong> If the composition is given as a percentage, assume that the sample mass is 100 g. Determine the mass in grams of each element present in this 100 g sample.</li>
+                        <li><strong>Calculate the Number of Moles (n):</strong> Use the mass of each element and its molar mass (M) to calculate the number of moles, using the formula n = m/M.</li>
+                        <li><strong>Determine the Mole Ratio:</strong> Divide the number of moles of each element by the smallest number of moles calculated in the previous step.</li>
+                        <li><strong>Convert to Whole Numbers:</strong> If the ratios are not whole numbers, multiply all ratios by the smallest whole number that converts them into integers to find the final simplest whole number ratio.</li>
+                        <li><strong>Determine the Empirical Formula:</strong> Write the formula using these simplified whole number ratios as subscripts.</li>
+                    </ol>
+                    
+                    <p>If the molecular mass is also known, the molecular formula can be determined by finding the ratio between the molar mass of the compound and the molar mass of the empirical formula, and then multiplying the empirical formula subscripts by this ratio.</p>
+                    
+                    <div class="interactive-demo">
+                        <h4>Empirical Formula Calculator</h4>
+                        <p>Enter the percentage composition of a compound to determine its empirical formula:</p>
+                        
+                        <div class="calculation-container">
+                            <div class="input-group">
+                                <div class="input-label">Element 1 (%)</div>
+                                <input type="number" id="element1Percent" class="input-field" placeholder="Enter %">
+                            </div>
+                            
+                            <div class="input-group">
+                                <div class="input-label">Element 2 (%)</div>
+                                <input type="number" id="element2Percent" class="input-field" placeholder="Enter %">
+                            </div>
+                            
+                            <div class="input-group">
+                                <div class="input-label">Element 3 (%)</div>
+                                <input type="number" id="element3Percent" class="input-field" placeholder="Enter %">
+                            </div>
+                        </div>
+                        
+                        <button class="demo-btn" style="margin: 15px auto; display: block;" onclick="calculateEmpiricalFormula()">Calculate Empirical Formula</button>
+                        
+                        <div id="empiricalResult" class="calculation-result"></div>
+                    </div>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    2. Determining the Moles of Water of Crystallization (LO 2)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>Some ionic crystals trap a specific, fixed number of water molecules within their structure when they form. These are called <strong>hydrated salts</strong>, and the water molecules are <strong>water of crystallization</strong>. A formula like CuSO₄·5H₂O indicates that there are five water molecules trapped for every CuSO₄ formula unit. The dot (·) in the formula denotes a light bond and is *not* a multiplication sign.</p>
+                    
+                    <p>The objective is typically to find 'x' (the number of moles of water) in a hydrated salt formula, Salt·xH₂O. This is commonly achieved through heating, which causes the water to evaporate, leaving an anhydrous (dry) salt behind.</p>
+                    
+                    <p><strong>Procedure for Calculating the Moles of Water of Crystallization (x):</strong></p>
+                    <ol>
+                        <li><strong>Calculate the Mass of Water Evaporated:</strong> Determine the difference between the initial mass of the hydrated salt and the final mass of the anhydrous salt remaining after heating.
+                            <div class="formula-box">m(H₂O) = m(Hydrated Salt) - m(Anhydrous Salt)</div>
+                        </li>
+                        <li><strong>Calculate the Moles of Water:</strong> Use the mass of water lost to calculate the number of moles of water (n(H₂O)).
+                            <div class="formula-box">n(H₂O) = m(H₂O)/M(H₂O)</div>
+                        </li>
+                        <li><strong>Calculate the Moles of Anhydrous Salt:</strong> Use the mass of the anhydrous salt remaining and its molar mass to calculate the moles of anhydrous salt (n(Salt)).
+                            <div class="formula-box">n(Salt) = m(Anhydrous Salt)/M(Salt)</div>
+                        </li>
+                        <li><strong>Determine the Mole Ratio (x):</strong> The number of moles of water of crystallization (x) is the whole number ratio of moles of water to the moles of anhydrous salt.
+                            <div class="formula-box">x = n(H₂O)/n(Salt)</div>
+                        </li>
+                    </ol>
+                    
+                    <div class="interactive-demo">
+                        <h4>Water of Crystallization Calculator</h4>
+                        <p>Calculate the number of moles of water of crystallization in a hydrated salt:</p>
+                        
+                        <div class="calculation-container">
+                            <div class="input-group">
+                                <div class="input-label">Initial Mass (g)</div>
+                                <input type="number" id="initialMass" class="input-field" placeholder="Enter initial mass">
+                            </div>
+                            
+                            <div class="input-group">
+                                <div class="input-label">Final Mass (g)</div>
+                                <input type="number" id="finalMass" class="input-field" placeholder="Enter final mass">
+                            </div>
+                            
+                            <div class="input-group">
+                                <div class="input-label">Molar Mass of Anhydrous Salt (g/mol)</div>
+                                <input type="number" id="molarMass" class="input-field" placeholder="Enter molar mass">
+                            </div>
+                        </div>
+                        
+                        <button class="demo-btn" style="margin: 15px auto; display: block;" onclick="calculateWaterOfCrystallization()">Calculate Moles of Water (x)</button>
+                        
+                        <div id="waterResult" class="calculation-result"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="conclusion">
+                <h2 class="section-title"><i class="fas fa-check-circle"></i> Conclusion</h2>
+                <p>Mastering the determination of empirical formulae and water of crystallization is crucial for understanding the quantitative composition of substances. The empirical formula provides the fundamental simplest ratio, allowing calculation of the true molecular formula if the molar mass is known. Similarly, knowing the number of moles of water of crystallization is essential for correctly characterizing hydrated compounds, which impacts their relative mass and purity.</p>
+                
+                <p>This work ensures that a chemist, having analyzed an unknown substance, can precisely translate mass percentages of elements into a concrete, usable chemical blueprint (the formula).</p>
+            </section>
+
+            <section class="section" id="questions">
+                <h2 class="section-title"><i class="fas fa-question-circle"></i> End-of-Lesson Questions</h2>
+                
+                <ul class="questions-list">
+                    <li class="question-item">
+                        <div class="question-text">1. Define the following terms:<br>a) Empirical formula (LO 1)<br>b) Water of crystallization (LO 2)</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q1" value="a" id="q1a">
+                                <label for="q1a">Empirical formula: The simplest chemical formula showing the simplest whole number ratio between atoms</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="b" id="q1b">
+                                <label for="q1b">Molecular formula: The true formula showing the actual number and types of atoms</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="c" id="q1c">
+                                <label for="q1c">Molar mass: The mass of one mole of a substance</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q1', 'a')">Check Answer</button>
+                        <div class="feedback" id="q1-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">2. A compound is found to contain 40.0% carbon, 6.7% hydrogen, and 53.3% oxygen. Determine the empirical formula of the compound. (LO 1)</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q2" value="a" id="q2a">
+                                <label for="q2a">CH₂O</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="b" id="q2b">
+                                <label for="q2b">C₂H₄O</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="c" id="q2c">
+                                <label for="q2c">CHO</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q2', 'a')">Check Answer</button>
+                        <div class="feedback" id="q2-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">3. A sample of hydrated zinc sulphate, ZnSO₄·xH₂O, weighed 13.2 g. After heating it strongly, 7.4 g of anhydrous ZnSO₄ remained. Calculate the number of moles of water of crystallization (x) in the salt. (Molar mass of ZnSO₄ = 161.5 g·mol⁻¹) (LO 2)</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q3" value="a" id="q3a">
+                                <label for="q3a">0.25 mol</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="b" id="q3b">
+                                <label for="q3b">0.41 mol</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="c" id="q3c">
+                                <label for="q3c">0.50 mol</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q3', 'b')">Check Answer</button>
+                        <div class="feedback" id="q3-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">4. Explain the purpose of calculating the mole ratio in Step 4 of the empirical formula determination process. (LO 1)</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q4" value="a" id="q4a">
+                                <label for="q4a">To ensure the formula shows the simplest whole number ratio of atoms</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="b" id="q4b">
+                                <label for="q4b">To convert fractional ratios to whole numbers</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="c" id="q4c">
+                                <label for="q4c">To determine the correct subscripts for the empirical formula</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q4', 'a')">Check Answer</button>
+                        <div class="feedback" id="q4-feedback"></div>
+                    </li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <div class="navigation">
+                <button class="nav-btn" id="prevBtn" onclick="navigateSection(-1)" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="nav-btn" id="nextBtn" onclick="navigateSection(1)">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            <p>&copy; 2023 Physical Sciences Interactive Learning Platform. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Track current section for navigation
+        const sections = ['objectives', 'definitions', 'overview', 'main-body', 'conclusion', 'questions'];
+        let currentSectionIndex = 0;
+
+        // Update progress bar based on scroll position
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabButtons = document.getElementsByClassName("tab-button");
+            const tabContents = document.getElementsByClassName("tab-content");
+            
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Collapsible content functionality
+        function toggleCollapsible(element) {
+            element.classList.toggle("active");
+            const content = element.nextElementSibling;
+            content.classList.toggle("active");
+        }
+
+        // Check answer function
+        function checkAnswer(questionId, correctAnswer) {
+            const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
+            const feedbackElement = document.getElementById(`${questionId}-feedback`);
+            
+            if (!selectedOption) {
+                feedbackElement.textContent = 'Please select an answer.';
+                feedbackElement.className = 'feedback incorrect';
+                feedbackElement.style.display = 'block';
+                return;
+            }
+            
+            if (selectedOption.value === correctAnswer) {
+                feedbackElement.textContent = 'Correct! Well done.';
+                feedbackElement.className = 'feedback correct';
+            } else {
+                feedbackElement.textContent = 'Incorrect. Please review the lesson material and try again.';
+                feedbackElement.className = 'feedback incorrect';
+            }
+            
+            feedbackElement.style.display = 'block';
+        }
+
+        // Navigation between sections
+        function navigateSection(direction) {
+            currentSectionIndex += direction;
+            
+            // Ensure we stay within bounds
+            if (currentSectionIndex < 0) currentSectionIndex = 0;
+            if (currentSectionIndex >= sections.length) currentSectionIndex = sections.length - 1;
+            
+            // Scroll to the current section
+            const currentSection = document.getElementById(sections[currentSectionIndex]);
+            currentSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentSectionIndex === 0;
+            document.getElementById('nextBtn').disabled = currentSectionIndex === sections.length - 1;
+        }
+
+        // Calculate empirical formula
+        function calculateEmpiricalFormula() {
+            const element1Percent = parseFloat(document.getElementById('element1Percent').value);
+            const element2Percent = parseFloat(document.getElementById('element2Percent').value);
+            const element3Percent = parseFloat(document.getElementById('element3Percent').value);
+            const resultDiv = document.getElementById('empiricalResult');
+            
+            if (isNaN(element1Percent) || isNaN(element2Percent) || isNaN(element3Percent)) {
+                resultDiv.textContent = 'Please enter valid percentage values for all elements.';
+                resultDiv.style.color = 'red';
+                return;
+            }
+            
+            // Calculate the total percentage
+            const totalPercent = element1Percent + element2Percent + element3Percent;
+            
+            // Check if percentages add up to approximately 100%
+            if (Math.abs(totalPercent - 100) > 1) {
+                resultDiv.textContent = 'Warning: Percentages do not add up to 100%. Please check your values.';
+                resultDiv.style.color = 'orange';
+                return;
+            }
+            
+            // Normalize to 100% for calculation
+            const normFactor = 100 / totalPercent;
+            const normElement1 = element1Percent * normFactor;
+            const normElement2 = element2Percent * normFactor;
+            const normElement3 = element3Percent * normFactor;
+            
+            // Find the smallest ratio
+            const gcd = (a, b) => {
+                return b === 0 ? a : gcd(b, a % b);
+            };
+            
+            const gcd12 = gcd(normElement1, normElement2);
+            const gcd123 = gcd(gcd12, normElement3);
+            
+            // Calculate the empirical formula
+            const ratio1 = normElement1 / gcd123;
+            const ratio2 = normElement2 / gcd123;
+            const ratio3 = normElement3 / gcd123;
+            
+            // Generate the empirical formula
+            let empiricalFormula = '';
+            
+            if (ratio1 >= 1) empiricalFormula += `Element1${ratio1}`;
+            if (ratio2 >= 1) empiricalFormula += `Element2${ratio2}`;
+            if (ratio3 >= 1) empiricalFormula += `Element3${ratio3}`;
+            
+            resultDiv.textContent = `Empirical Formula: ${empiricalFormula}`;
+            resultDiv.style.color = 'var(--primary-color)';
+        }
+
+        // Calculate water of crystallization
+        function calculateWaterOfCrystallization() {
+            const initialMass = parseFloat(document.getElementById('initialMass').value);
+            const finalMass = parseFloat(document.getElementById('finalMass').value);
+            const molarMass = parseFloat(document.getElementById('molarMass').value);
+            const resultDiv = document.getElementById('waterResult');
+            
+            if (isNaN(initialMass) || isNaN(finalMass) || isNaN(molarMass)) {
+                resultDiv.textContent = 'Please enter valid numbers for all fields.';
+                resultDiv.style.color = 'red';
+                return;
+            }
+            
+            // Calculate the mass of water evaporated
+            const waterMass = initialMass - finalMass;
+            
+            // Calculate the moles of water
+            const waterMolarMass = 18.015; // Molar mass of H2O
+            const waterMoles = waterMass / waterMolarMass;
+            
+            // Calculate the moles of anhydrous salt
+            const saltMass = finalMass;
+            const saltMoles = saltMass / molarMass;
+            
+            // Calculate the mole ratio (x)
+            const moleRatio = waterMoles / saltMoles;
+            
+            resultDiv.textContent = `Moles of Water of Crystallization (x): ${moleRatio.toFixed(2)}`;
+            resultDiv.style.color = 'var(--primary-color)';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set initial navigation state
+            document.getElementById('prevBtn').disabled = true;
+            
+            // Add smooth scrolling to all internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

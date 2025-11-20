@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drawing Lewis Diagrams - Physical Sciences</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Slab:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1565C0;
+            --secondary-color: #42A5F5;
+            --accent-color: #90CAF9;
+            --light-accent: #E3F2FD;
+            --text-color: #263238;
+            --light-text: #546E7A;
+            --background: #F5F7FA;
+            --card-bg: #FFFFFF;
+            --success-color: #43A047;
+            --warning-color: #FB8C00;
+            --error-color: #E53935;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .lesson-title {
+            font-family: 'Roboto Slab', serif;
+            font-size: 1.8rem;
+            font-weight: 500;
+        }
+
+        .lesson-subtitle {
+            font-size: 1.1rem;
+            font-weight: 300;
+            margin-top: 0.3rem;
+            opacity: 0.9;
+        }
+
+        .progress-container {
+            width: 200px;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background-color: var(--light-accent);
+            padding: 0.8rem 0;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb span {
+            margin: 0 0.5rem;
+            color: var(--light-text);
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 0;
+        }
+
+        .content-section {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-family: 'Roboto Slab', serif;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 0.5rem;
+        }
+
+        /* Learning Objectives */
+        .objectives-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .objectives-list li {
+            padding: 0.8rem 0;
+            padding-left: 2.5rem;
+            position: relative;
+            border-bottom: 1px solid var(--background);
+        }
+
+        .objectives-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Table Styles */
+        .lesson-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .lesson-table th, .lesson-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--background);
+        }
+
+        .lesson-table th {
+            background-color: var(--light-accent);
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        /* Definition Cards */
+        .definition-card {
+            background-color: var(--light-accent);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .definition-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Chemical Formula */
+        .chemical-formula {
+            font-family: 'Roboto Slab', serif;
+            background-color: var(--light-accent);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .subscript {
+            font-size: 0.8em;
+            vertical-align: sub;
+        }
+
+        /* Lewis Diagram Container */
+        .diagram-container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--light-accent);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .diagram {
+            min-height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 1rem 0;
+        }
+
+        /* Questions Section */
+        .question {
+            background-color: var(--card-bg);
+            border: 1px solid var(--light-accent);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .question-number {
+            font-weight: 500;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Interactive Elements */
+        .accordion {
+            background-color: var(--light-accent);
+            color: var(--text-color);
+            cursor: pointer;
+            padding: 1rem;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1rem;
+            transition: 0.3s;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion:hover {
+            background-color: var(--accent-color);
+        }
+
+        .accordion.active {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .accordion-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .accordion-content.show {
+            padding: 1rem;
+            max-height: 1000px;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-secondary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        /* Highlight */
+        .highlight {
+            background-color: var(--light-accent);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--light-accent);
+            margin-bottom: 1rem;
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--light-text);
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab:hover {
+            color: var(--primary-color);
+        }
+
+        .tab.active {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .progress-container {
+                margin-top: 1rem;
+                width: 100%;
+            }
+
+            .lesson-table {
+                font-size: 0.9rem;
+            }
+
+            .lesson-table th, .lesson-table td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div>
+                    <h1 class="lesson-title">Drawing Lewis Diagrams</h1>
+                    <p class="lesson-subtitle">Physical Sciences (Chemistry Focus) - Atomic Combinations: Molecular Structure</p>
+                </div>
+                <div>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem;">Lesson Progress</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="breadcrumb">
+        <div class="container">
+            <a href="#">Physical Sciences</a>
+            <span>></span>
+            <a href="#">Atomic Combinations</a>
+            <span>></span>
+            <a href="#">Molecular Structure</a>
+            <span>></span>
+            <a href="#">Representing Covalent Bonds using Lewis Diagrams</a>
+        </div>
+    </div>
+
+    <main class="container">
+        <!-- Lesson Overview Table -->
+        <section class="content-section fade-in">
+            <h2 class="section-title"><i class="fas fa-table"></i> Lesson Overview</h2>
+            <table class="lesson-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Detail</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Subject</strong></td>
+                        <td>Physical Sciences (Chemistry Focus)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Topic</strong></td>
+                        <td>Atomic Combinations: Molecular Structure</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Subtopic</strong></td>
+                        <td>Representing Covalent Bonds using Lewis Diagrams (Simple and Multiple)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Learning Objectives -->
+        <section class="content-section fade-in">
+            <h2 class="section-title"><i class="fas fa-bullseye"></i> Learning Objectives</h2>
+            <p>The following results will be the outcome of the lessons: The learners will be able to:</p>
+            <ul class="objectives-list">
+                <li><strong>Draw Lewis diagrams for simple molecules</strong> (e.g., <span class="chemical-formula">H<sub>2</sub></span>, <span class="chemical-formula">F<sub>2</sub></span>, <span class="chemical-formula">H<sub>2</sub>O</span>, <span class="chemical-formula">NH<sub>3</sub></span>, <span class="chemical-formula">CH<sub>4</sub></span>, <span class="chemical-formula">HF</span>, <span class="chemical-formula">OF<sub>2</sub></span>, <span class="chemical-formula">HOCl</span>).</li>
+                <li><strong>Draw Lewis diagrams for molecules with multiple bonds</strong> (e.g., <span class="chemical-formula">N<sub>2</sub></span>, <span class="chemical-formula">O<sub>2</sub></span>, <span class="chemical-formula">CO<sub>2</sub></span>, <span class="chemical-formula">HCN</span>).</li>
+            </ul>
+        </section>
+
+        <!-- Definitions and Scientific Principles -->
+        <section class="content-section fade-in">
+            <h2 class="section-title"><i class="fas fa-book"></i> Definitions and Scientific Principles</h2>
+            
+            <div class="tabs">
+                <div class="tab active" onclick="openTab(event, 'definitions')">Definitions</div>
+                <div class="tab" onclick="openTab(event, 'principles')">Scientific Principles</div>
+            </div>
+            
+            <div id="definitions" class="tab-content active">
+                <div class="definition-card">
+                    <h4>Valence Electrons</h4>
+                    <p>The electrons in the outermost energy level of an atom. These electrons are represented by dots or crosses in Lewis diagrams.</p>
+                </div>
+                
+                <div class="definition-card">
+                    <h4>Chemical Bond</h4>
+                    <p>The net electrostatic force that two atoms sharing electrons exert on each other.</p>
+                </div>
+                
+                <div class="definition-card">
+                    <h4>Covalent Bond</h4>
+                    <p>The sharing of electrons between atoms to form a molecule.</p>
+                </div>
+                
+                <div class="definition-card">
+                    <h4>Lewis Diagram (or Electron Dot Diagram)</h4>
+                    <p>A model used to predict the arrangement of valence electrons of an atom to predict and explain chemical bonding.</p>
+                </div>
+                
+                <div class="definition-card">
+                    <h4>Bonding Pair</h4>
+                    <p>A pair of electrons that is shared between two atoms in a covalent bond.</p>
+                </div>
+                
+                <div class="definition-card">
+                    <h4>Lone Pair</h4>
+                    <p>A pair of valence electrons in the outer shell of an atom that is not shared with another atom.</p>
+                </div>
+                
+                <div class="definition-card">
+                    <h4>Double Covalent Bond</h4>
+                    <p>A bond formed when two atoms share two pairs (four electrons).</p>
+                </div>
+                
+                <div class="definition-card">
+                    <h4>Triple Covalent Bond</h4>
+                    <p>A bond formed when two atoms share three pairs (six electrons).</p>
+                </div>
+            </div>
+            
+            <div id="principles" class="tab-content">
+                <div class="definition-card">
+                    <h4>The Octet Rule</h4>
+                    <p>Atoms usually require <span class="highlight">eight electrons</span> in their outer energy level to achieve a stable noble gas electron structure (except Hydrogen, which needs two).</p>
+                </div>
+                
+                <div class="definition-card">
+                    <h4>Lewis Diagram Components</h4>
+                    <p>The chemical symbol represents the atom and its core electrons. Valence electrons are represented by dots arranged around the core.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Introduction -->
+        <section class="content-section fade-in">
+            <h2 class="section-title"><i class="fas fa-info-circle"></i> Introduction</h2>
+            <p>Lewis diagrams are simplified visual models that help us understand how atoms combine to form molecules. They focus specifically on the <span class="highlight">valence electrons</span>, as these are the electrons involved in bonding. By drawing these diagrams, we can predict the arrangement of bonding and non-bonding electrons to ensure that each atom achieves maximum stability, usually by satisfying the octet rule. The process involves strict steps to account for all valence electrons and distribute them appropriately.</p>
+        </section>
+
+        <!-- Main Body: Drawing Lewis Diagrams -->
+        <section class="content-section fade-in">
+            <h2 class="section-title"><i class="fas fa-pencil-ruler"></i> Main Body: Drawing Lewis Diagrams</h2>
+            <p>Drawing a Lewis diagram requires following a structured, multi-step method.</p>
+            
+            <div class="definition-card">
+                <h3>General Guidelines for Drawing Lewis Diagrams of Molecules:</h3>
+                <ol>
+                    <li><strong>Determine Valence Electrons:</strong> Determine the number of valence electrons for each atom (often found from its electron configuration or group number).</li>
+                    <li><strong>Calculate Total Valence Electrons:</strong> Sum the valence electrons from all atoms in the molecule to find the total number of electrons that must be placed in the structure.</li>
+                    <li><strong>Determine Structural Arrangement:</strong> Draw the structural formula. The <span class="highlight">central atom</span> is typically the least electronegative element, and <span class="highlight">Hydrogen (H) atoms are always terminal</span> (bonded to just one atom).</li>
+                    <li><strong>Form Single Bonds:</strong> Join the central atom and terminal atoms using single covalent bonds (one pair of shared electrons).</li>
+                    <li><strong>Complete Octets (Terminal Atoms):</strong> Place remaining electrons as lone pairs on the terminal atoms until they achieve an octet (or duplet for H).</li>
+                    <li><strong>Complete Octets (Central Atom) and Form Multiple Bonds:</strong> If the central atom does not have a complete octet, move lone pairs from the terminal atoms to create <span class="highlight">double or triple bonds</span> between the central atom and the terminal atom(s) until the octet is satisfied.</li>
+                </ol>
+            </div>
+            
+            <!-- Section A: Simple Molecules -->
+            <button class="accordion"><span>Section A: Lewis Diagrams for Simple Molecules (LO 1)</span><i class="fas fa-chevron-down"></i></button>
+            <div class="accordion-content">
+                <div class="definition-card">
+                    <p>Simple molecules primarily involve <span class="highlight">single covalent bonds</span>, where one pair of electrons is shared. Lewis diagrams for these molecules clearly show the shared bonding pairs and the unshared lone pairs.</p>
+                </div>
+                
+                <div class="tabs">
+                    <div class="tab active" onclick="openMoleculeTab(event, 'hcl')">Hydrogen Chloride (HCl)</div>
+                    <div class="tab" onclick="openMoleculeTab(event, 'ch4')">Methane (CH<sub>4</sub>)</div>
+                    <div class="tab" onclick="openMoleculeTab(event, 'h2o')">Water (H<sub>2</sub>O)</div>
+                </div>
+                
+                <div id="hcl" class="tab-content active">
+                    <div class="diagram-container">
+                        <h3>Hydrogen Chloride (HCl)</h3>
+                        <div class="diagram">
+                            <canvas id="hclDiagram" width="400" height="150"></canvas>
+                        </div>
+                        <p>H contributes 1 valence electron, Cl contributes 7. Total = 8. A single bond forms between the unpaired electron on H and the unpaired electron on Cl. Cl requires three lone pairs (6 electrons) to complete its octet, while H achieves a duplet.</p>
+                    </div>
+                </div>
+                
+                <div id="ch4" class="tab-content">
+                    <div class="diagram-container">
+                        <h3>Methane (CH<sub>4</sub>)</h3>
+                        <div class="diagram">
+                            <canvas id="ch4Diagram" width="400" height="150"></canvas>
+                        </div>
+                        <p>Carbon (C) contributes 4 valence electrons, and each H contributes 1. Total = 8. C is the central atom, forming four single bonds with the four H atoms. The carbon octet is satisfied (4 bonding pairs, 8 electrons), and all H atoms have a duplet.</p>
+                    </div>
+                </div>
+                
+                <div id="h2o" class="tab-content">
+                    <div class="diagram-container">
+                        <h3>Water (H<sub>2</sub>O)</h3>
+                        <div class="diagram">
+                            <canvas id="h2oDiagram" width="400" height="150"></canvas>
+                        </div>
+                        <p>Oxygen (O) contributes 6 valence electrons, and H contributes 1 each. Total = 8. O is the central atom, forming two single bonds with the two H atoms. The O atom retains <span class="highlight">two lone pairs</span> (4 electrons) to complete its octet.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section B: Multiple Bonds -->
+            <button class="accordion"><span>Section B: Lewis Diagrams for Molecules with Multiple Bonds (LO 2)</span><i class="fas fa-chevron-down"></i></button>
+            <div class="accordion-content">
+                <div class="definition-card">
+                    <p>When single bonds do not allow atoms (especially C, N, O, S) to achieve their stable octet, they share <span class="highlight">more than one pair of electrons</span>, resulting in double or triple bonds.</p>
+                </div>
+                
+                <div class="tabs">
+                    <div class="tab active" onclick="openBondTab(event, 'o2')">Oxygen (O<sub>2</sub>)</div>
+                    <div class="tab" onclick="openBondTab(event, 'n2')">Nitrogen (N<sub>2</sub>)</div>
+                    <div class="tab" onclick="openBondTab(event, 'co2')">Carbon Dioxide (CO<sub>2</sub>)</div>
+                    <div class="tab" onclick="openBondTab(event, 'hcn')">Hydrogen Cyanide (HCN)</div>
+                    <div class="tab" onclick="openBondTab(event, 'c2h4')">Ethene (C<sub>2</sub>H<sub>4</sub>)</div>
+                </div>
+                
+                <div id="o2" class="tab-content active">
+                    <div class="diagram-container">
+                        <h3>Oxygen (O<sub>2</sub>)</h3>
+                        <div class="diagram">
+                            <canvas id="o2Diagram" width="400" height="150"></canvas>
+                        </div>
+                        <p>Each oxygen atom needs two electrons to complete its octet (6 valence electrons available). They share <span class="highlight">two pairs</span> of electrons, forming a <span class="highlight">double covalent bond (O=O)</span>. Each oxygen atom retains two lone pairs.</p>
+                    </div>
+                </div>
+                
+                <div id="n2" class="tab-content">
+                    <div class="diagram-container">
+                        <h3>Nitrogen (N<sub>2</sub>)</h3>
+                        <div class="diagram">
+                            <canvas id="n2Diagram" width="400" height="150"></canvas>
+                        </div>
+                        <p>Each nitrogen atom needs three electrons to complete its octet (5 valence electrons available). They share <span class="highlight">three pairs</span> of electrons, forming a <span class="highlight">triple covalent bond (N≡N)</span>. Each nitrogen atom retains one lone pair.</p>
+                    </div>
+                </div>
+                
+                <div id="co2" class="tab-content">
+                    <div class="diagram-container">
+                        <h3>Carbon Dioxide (CO<sub>2</sub>)</h3>
+                        <div class="diagram">
+                            <canvas id="co2Diagram" width="400" height="150"></canvas>
+                        </div>
+                        <p>Carbon is the central atom (4 valence electrons needed). Each oxygen needs 2. C forms <span class="highlight">two double bonds</span> with the two O atoms (O=C=O). Both the carbon and both oxygen atoms achieve a stable octet.</p>
+                    </div>
+                </div>
+                
+                <div id="hcn" class="tab-content">
+                    <div class="diagram-container">
+                        <h3>Hydrogen Cyanide (HCN)</h3>
+                        <div class="diagram">
+                            <canvas id="hcnDiagram" width="400" height="150"></canvas>
+                        </div>
+                        <p>Carbon is the central atom. H forms a single bond with C, and N needs three electrons from C. This results in H-C≡N. The carbon-nitrogen bond is a <span class="highlight">triple covalent bond</span>, ensuring both C and N achieve octets.</p>
+                    </div>
+                </div>
+                
+                <div id="c2h4" class="tab-content">
+                    <div class="diagram-container">
+                        <h3>Ethene (C<sub>2</sub>H<sub>4</sub>)</h3>
+                        <div class="diagram">
+                            <canvas id="c2h4Diagram" width="400" height="150"></canvas>
+                        </div>
+                        <p>This molecule involves a <span class="highlight">double bond</span> between the two carbon atoms (C=C). Each carbon is also bonded to two hydrogen atoms, satisfying the valence requirement of four bonds for each carbon atom.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conclusion -->
+        <section class="content-section fade-in">
+            <h2 class="section-title"><i class="fas fa-check-circle"></i> Conclusion</h2>
+            <p>Lewis theory provides a systematic approach for representing the valence electrons in atoms and molecules. By strictly following the counting steps and rules, learners can successfully construct Lewis diagrams for both simple molecules involving single bonds and complex molecules involving <span class="highlight">multiple bonds</span> (double or triple bonds) to satisfy the <span class="highlight">octet rule</span>. These diagrams are crucial for predicting the shape and polarity of molecules.</p>
+        </section>
+
+        <!-- End-of-Lesson Questions -->
+        <section class="content-section fade-in">
+            <h2 class="section-title"><i class="fas fa-question-circle"></i> End-of-Lesson Questions</h2>
+            
+            <div class="question">
+                <div class="question-number">1. Recall and Draw (Simple Molecules)</div>
+                <p>a) Determine the total number of valence electrons for the molecule <span class="chemical-formula">OF<sub>2</sub></span>.</p>
+                <p>b) Draw the Lewis diagram for <span class="chemical-formula">OF<sub>2</sub></span>. Indicate the number of bonding pairs and lone pairs in the final structure.</p>
+                <div class="diagram-container">
+                    <div class="diagram">
+                        <canvas id="of2Diagram" width="400" height="150"></canvas>
+                    </div>
+                </div>
+                <p>c) Draw the Lewis diagram for the simple molecule <span class="chemical-formula">HF</span>.</p>
+                <div class="diagram-container">
+                    <div class="diagram">
+                        <canvas id="hfDiagram" width="400" height="150"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">2. Application and Deduction (Multiple Bonds)</div>
+                <p>a) Determine the total number of valence electrons for the molecule <span class="chemical-formula">CS<sub>2</sub></span>.</p>
+                <p>b) Draw the Lewis diagram for <span class="chemical-formula">CS<sub>2</sub></span>. Explain why single bonds are insufficient for this molecule.</p>
+                <div class="diagram-container">
+                    <div class="diagram">
+                        <canvas id="cs2Diagram" width="400" height="150"></canvas>
+                    </div>
+                </div>
+                <p>c) Draw the Lewis diagram for the diatomic nitrogen molecule (<span class="chemical-formula">N<sub>2</sub></span>). What type of covalent bond exists between the two atoms?</p>
+                <div class="diagram-container">
+                    <div class="diagram">
+                        <canvas id="n2QuestionDiagram" width="400" height="150"></canvas>
+                    </div>
+                </div>
+                <p>d) Draw the Lewis diagram for <span class="chemical-formula">C<sub>2</sub>H<sub>4</sub></span> (ethene).</p>
+                <div class="diagram-container">
+                    <div class="diagram">
+                        <canvas id="c2h4QuestionDiagram" width="400" height="150"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">3. Terminology</div>
+                <p>Define the term 'lone pair' and 'bonding pair' using electron diagrams.</p>
+                <div class="diagram-container">
+                    <div class="diagram">
+                        <canvas id="pairsDiagram" width="400" height="150"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">4. Rules Comparison</div>
+                <p>Explain the key difference, in terms of shared electron pairs, between a double covalent bond and a triple covalent bond.</p>
+                <div class="diagram-container">
+                    <div class="diagram">
+                        <canvas id="bondsComparisonDiagram" width="400" height="150"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <div class="nav-buttons">
+            <button class="btn btn-secondary" id="prevBtn">
+                <i class="fas fa-arrow-left"></i> Previous Lesson
+            </button>
+            <button class="btn btn-primary" id="nextBtn">
+                Next Lesson <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </main>
+
+    <script>
+        // Accordion functionality
+        const accordions = document.querySelectorAll('.accordion');
+        
+        accordions.forEach(accordion => {
+            accordion.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const content = this.nextElementSibling;
+                content.classList.toggle('show');
+                
+                // Update progress bar
+                updateProgressBar();
+            });
+        });
+
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabContents = document.querySelectorAll('.tab-content');
+            const tabs = document.querySelectorAll('.tab');
+            
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        // Molecule tab functionality
+        function openMoleculeTab(evt, tabName) {
+            const tabContents = document.querySelectorAll('.tab-content');
+            const tabs = document.querySelectorAll('.tab');
+            
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        // Bond tab functionality
+        function openBondTab(evt, tabName) {
+            const tabContents = document.querySelectorAll('.tab-content');
+            const tabs = document.querySelectorAll('.tab');
+            
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        // Progress bar functionality
+        function updateProgressBar() {
+            const totalAccordions = accordions.length;
+            const openAccordions = document.querySelectorAll('.accordion.active').length;
+            const progress = (openAccordions / totalAccordions) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        // Initialize progress bar
+        updateProgressBar();
+
+        // Navigation buttons
+        document.getElementById('prevBtn').addEventListener('click', function() {
+            navigateLesson('prev');
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', function() {
+            navigateLesson('next');
+        });
+
+        // Function to navigate to previous or next lesson
+        function navigateLesson(direction) {
+            // Get current lesson number from URL
+            const currentUrl = window.location.pathname;
+            const match = currentUrl.match(/less(\d+)\.html/);
+            
+            if (match) {
+                let currentLessonNum = parseInt(match[1]);
+                let nextLessonNum;
+                
+                if (direction === 'next') {
+                    nextLessonNum = currentLessonNum + 1;
+                } else if (direction === 'prev') {
+                    nextLessonNum = currentLessonNum - 1;
+                }
+                
+                // Ensure lesson number is within valid range (1-36)
+                if (nextLessonNum < 1) {
+                    alert('This is the first lesson!');
+                    return;
+                } else if (nextLessonNum > 36) {
+                    alert('This is the last lesson!');
+                    return;
+                }
+                
+                // Navigate to the next lesson
+                const nextLessonFile = `less${nextLessonNum}.html`;
+                window.location.href = nextLessonFile;
+            }
+        }
+
+        // Draw Lewis diagrams using Canvas
+        function drawLewisDiagram(canvasId, molecule) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.font = '16px Roboto Slab, serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            switch(molecule) {
+                case 'HCl':
+                    // Draw H-Cl bond
+                    ctx.fillText('H', 100, 75);
+                    ctx.fillText('Cl', 300, 75);
+                    
+                    // Draw single bond
+                    ctx.beginPath();
+                    ctx.moveTo(120, 75);
+                    ctx.lineTo(280, 75);
+                    ctx.stroke();
+                    
+                    // Draw valence electrons for Cl (6 remaining after bonding)
+                    const clPositions = [
+                        {x: 320, y: 55}, {x: 320, y: 75}, {x: 320, y: 95},
+                        {x: 300, y: 45}, {x: 280, y: 45}, {x: 260, y: 45}
+                    ];
+                    
+                    clPositions.forEach(pos => {
+                        ctx.beginPath();
+                        ctx.arc(pos.x, pos.y, 3, 0, 2 * Math.PI);
+                        ctx.fill();
+                    });
+                    break;
+                    
+                case 'CH4':
+                    // Draw CH4 molecule
+                    ctx.fillText('C', 200, 75);
+                    ctx.fillText('H', 100, 50);
+                    ctx.fillText('H', 100, 100);
+                    ctx.fillText('H', 300, 50);
+                    ctx.fillText('H', 300, 100);
+                    
+                    // Draw bonds
+                    ctx.beginPath();
+                    ctx.moveTo(120, 55);
+                    ctx.lineTo(180, 70);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(120, 95);
+                    ctx.lineTo(180, 80);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(280, 55);
+                    ctx.lineTo(220, 70);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(280, 95);
+                    ctx.lineTo(220, 80);
+                    ctx.stroke();
+                    break;
+                    
+                case 'H2O':
+                    // Draw H2O molecule
+                    ctx.fillText('H', 100, 50);
+                    ctx.fillText('O', 200, 75);
+                    ctx.fillText('H', 100, 100);
+                    
+                    // Draw bonds
+                    ctx.beginPath();
+                    ctx.moveTo(120, 55);
+                    ctx.lineTo(180, 70);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(120, 95);
+                    ctx.lineTo(180, 80);
+                    ctx.stroke();
+                    
+                    // Draw lone pairs on O
+                    ctx.beginPath();
+                    ctx.arc(220, 55, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(230, 55, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    
+                    ctx.beginPath();
+                    ctx.arc(220, 95, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(230, 95, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    
+                    // Draw remaining valence electrons
+                    ctx.beginPath();
+                    ctx.arc(240, 65, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(240, 85, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    break;
+                    
+                case 'O2':
+                    // Draw O2 molecule with double bond
+                    ctx.fillText('O', 150, 75);
+                    ctx.fillText('O', 250, 75);
+                    
+                    // Draw double bond
+                    ctx.beginPath();
+                    ctx.moveTo(170, 70);
+                    ctx.lineTo(230, 70);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(170, 80);
+                    ctx.lineTo(230, 80);
+                    ctx.stroke();
+                    
+                    // Draw lone pairs
+                    const o2LonePairs = [
+                        {x: 130, y: 55}, {x: 120, y: 55},
+                        {x: 130, y: 95}, {x: 120, y: 95},
+                        {x: 270, y: 55}, {x: 280, y: 55},
+                        {x: 270, y: 95}, {x: 280, y: 95}
+                    ];
+                    
+                    o2LonePairs.forEach(pos => {
+                        ctx.beginPath();
+                        ctx.arc(pos.x, pos.y, 3, 0, 2 * Math.PI);
+                        ctx.fill();
+                    });
+                    break;
+                    
+                case 'N2':
+                    // Draw N2 molecule with triple bond
+                    ctx.fillText('N', 150, 75);
+                    ctx.fillText('N', 250, 75);
+                    
+                    // Draw triple bond
+                    ctx.beginPath();
+                    ctx.moveTo(170, 65);
+                    ctx.lineTo(230, 65);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(170, 75);
+                    ctx.lineTo(230, 75);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(170, 85);
+                    ctx.lineTo(230, 85);
+                    ctx.stroke();
+                    
+                    // Draw lone pairs
+                    ctx.beginPath();
+                    ctx.arc(130, 55, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(120, 55, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    
+                    ctx.beginPath();
+                    ctx.arc(270, 55, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(280, 55, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    break;
+                    
+                case 'CO2':
+                    // Draw CO2 molecule with double bonds
+                    ctx.fillText('O', 50, 75);
+                    ctx.fillText('C', 200, 75);
+                    ctx.fillText('O', 350, 75);
+                    
+                    // Draw double bonds
+                    ctx.beginPath();
+                    ctx.moveTo(70, 70);
+                    ctx.lineTo(180, 70);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(70, 80);
+                    ctx.lineTo(180, 80);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(220, 70);
+                    ctx.lineTo(330, 70);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(220, 80);
+                    ctx.lineTo(330, 80);
+                    ctx.stroke();
+                    
+                    // Draw lone pairs
+                    const co2LonePairs = [
+                        {x: 30, y: 55}, {x: 20, y: 55},
+                        {x: 30, y: 95}, {x: 20, y: 95},
+                        {x: 370, y: 55}, {x: 380, y: 55},
+                        {x: 370, y: 95}, {x: 380, y: 95}
+                    ];
+                    
+                    co2LonePairs.forEach(pos => {
+                        ctx.beginPath();
+                        ctx.arc(pos.x, pos.y, 3, 0, 2 * Math.PI);
+                        ctx.fill();
+                    });
+                    break;
+                    
+                case 'HCN':
+                    // Draw HCN molecule with triple bond
+                    ctx.fillText('H', 50, 75);
+                    ctx.fillText('C', 150, 75);
+                    ctx.fillText('N', 250, 75);
+                    
+                    // Draw single bond between H and C
+                    ctx.beginPath();
+                    ctx.moveTo(70, 75);
+                    ctx.lineTo(130, 75);
+                    ctx.stroke();
+                    
+                    // Draw triple bond between C and N
+                    ctx.beginPath();
+                    ctx.moveTo(170, 65);
+                    ctx.lineTo(230, 65);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(170, 75);
+                    ctx.lineTo(230, 75);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(170, 85);
+                    ctx.lineTo(230, 85);
+                    ctx.stroke();
+                    
+                    // Draw lone pair on N
+                    ctx.beginPath();
+                    ctx.arc(270, 55, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(280, 55, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    break;
+                    
+                case 'C2H4':
+                    // Draw C2H4 molecule with double bond
+                    ctx.fillText('H', 50, 50);
+                    ctx.fillText('H', 50, 100);
+                    ctx.fillText('C', 150, 75);
+                    ctx.fillText('C', 250, 75);
+                    ctx.fillText('H', 350, 50);
+                    ctx.fillText('H', 350, 100);
+                    
+                    // Draw double bond between C atoms
+                    ctx.beginPath();
+                    ctx.moveTo(170, 70);
+                    ctx.lineTo(230, 70);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(170, 80);
+                    ctx.lineTo(230, 80);
+                    ctx.stroke();
+                    
+                    // Draw single bonds to H atoms
+                    ctx.beginPath();
+                    ctx.moveTo(70, 55);
+                    ctx.lineTo(130, 70);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(70, 95);
+                    ctx.lineTo(130, 80);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(330, 55);
+                    ctx.lineTo(270, 70);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(330, 95);
+                    ctx.lineTo(270, 80);
+                    ctx.stroke();
+                    break;
+                    
+                case 'OF2':
+                    // Draw OF2 molecule
+                    ctx.fillText('O', 200, 75);
+                    ctx.fillText('F', 100, 50);
+                    ctx.fillText('F', 100, 100);
+                    
+                    // Draw bonds
+                    ctx.beginPath();
+                    ctx.moveTo(120, 55);
+                    ctx.lineTo(180, 70);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(120, 95);
+                    ctx.lineTo(180, 80);
+                    ctx.stroke();
+                    
+                    // Draw lone pairs on O
+                    ctx.beginPath();
+                    ctx.arc(220, 55, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(230, 55, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    
+                    ctx.beginPath();
+                    ctx.arc(220, 95, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(230, 95, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    
+                    // Draw lone pairs on F atoms
+                    ctx.beginPath();
+                    ctx.arc(80, 45, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(70, 45, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(80, 55, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(70, 55, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(80, 65, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    
+                    ctx.beginPath();
+                    ctx.arc(80, 95, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(70, 95, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(80, 105, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(70, 105, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(80, 115, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    break;
+                    
+                case 'HF':
+                    // Draw HF molecule
+                    ctx.fillText('H', 100, 75);
+                    ctx.fillText('F', 300, 75);
+                    
+                    // Draw single bond
+                    ctx.beginPath();
+                    ctx.moveTo(120, 75);
+                    ctx.lineTo(280, 75);
+                    ctx.stroke();
+                    
+                    // Draw valence electrons for F (6 remaining after bonding)
+                    const hfPositions = [
+                        {x: 320, y: 55}, {x: 320, y: 75}, {x: 320, y: 95},
+                        {x: 300, y: 45}, {x: 280, y: 45}, {x: 260, y: 45}
+                    ];
+                    
+                    hfPositions.forEach(pos => {
+                        ctx.beginPath();
+                        ctx.arc(pos.x, pos.y, 3, 0, 2 * Math.PI);
+                        ctx.fill();
+                    });
+                    break;
+                    
+                case 'CS2':
+                    // Draw CS2 molecule with double bonds
+                    ctx.fillText('S', 50, 75);
+                    ctx.fillText('C', 200, 75);
+                    ctx.fillText('S', 350, 75);
+                    
+                    // Draw double bonds
+                    ctx.beginPath();
+                    ctx.moveTo(70, 70);
+                    ctx.lineTo(180, 70);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(70, 80);
+                    ctx.lineTo(180, 80);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(220, 70);
+                    ctx.lineTo(330, 70);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(220, 80);
+                    ctx.lineTo(330, 80);
+                    ctx.stroke();
+                    
+                    // Draw lone pairs
+                    const cs2LonePairs = [
+                        {x: 30, y: 55}, {x: 20, y: 55},
+                        {x: 30, y: 95}, {x: 20, y: 95},
+                        {x: 370, y: 55}, {x: 380, y: 55},
+                        {x: 370, y: 95}, {x: 380, y: 95}
+                    ];
+                    
+                    cs2LonePairs.forEach(pos => {
+                        ctx.beginPath();
+                        ctx.arc(pos.x, pos.y, 3, 0, 2 * Math.PI);
+                        ctx.fill();
+                    });
+                    break;
+                    
+                case 'Pairs':
+                    // Draw example of bonding pair and lone pair
+                    ctx.fillText('Bonding Pair', 100, 50);
+                    ctx.fillText('Lone Pair', 300, 50);
+                    
+                    // Draw bonding pair
+                    ctx.fillText('A', 50, 100);
+                    ctx.fillText('B', 150, 100);
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(70, 100);
+                    ctx.lineTo(130, 100);
+                    ctx.stroke();
+                    
+                    // Draw lone pair
+                    ctx.fillText('C', 300, 100);
+                    
+                    ctx.beginPath();
+                    ctx.arc(320, 90, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(330, 90, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    break;
+                    
+                case 'BondsComparison':
+                    // Draw comparison between double and triple bonds
+                    ctx.fillText('Double Bond', 100, 50);
+                    ctx.fillText('Triple Bond', 300, 50);
+                    
+                    // Draw double bond
+                    ctx.fillText('A', 50, 100);
+                    ctx.fillText('B', 150, 100);
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(70, 95);
+                    ctx.lineTo(130, 95);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(70, 105);
+                    ctx.lineTo(130, 105);
+                    ctx.stroke();
+                    
+                    // Draw triple bond
+                    ctx.fillText('C', 250, 100);
+                    ctx.fillText('D', 350, 100);
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(270, 90);
+                    ctx.lineTo(330, 90);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(270, 100);
+                    ctx.lineTo(330, 100);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(270, 110);
+                    ctx.lineTo(330, 110);
+                    ctx.stroke();
+                    break;
+            }
+        }
+
+        // Initialize all diagrams
+        document.addEventListener('DOMContentLoaded', function() {
+            drawLewisDiagram('hclDiagram', 'HCl');
+            drawLewisDiagram('ch4Diagram', 'CH4');
+            drawLewisDiagram('h2oDiagram', 'H2O');
+            drawLewisDiagram('o2Diagram', 'O2');
+            drawLewisDiagram('n2Diagram', 'N2');
+            drawLewisDiagram('co2Diagram', 'CO2');
+            drawLewisDiagram('hcnDiagram', 'HCN');
+            drawLewisDiagram('c2h4Diagram', 'C2H4');
+            drawLewisDiagram('of2Diagram', 'OF2');
+            drawLewisDiagram('hfDiagram', 'HF');
+            drawLewisDiagram('cs2Diagram', 'CS2');
+            drawLewisDiagram('n2QuestionDiagram', 'N2');
+            drawLewisDiagram('c2h4QuestionDiagram', 'C2H4');
+            drawLewisDiagram('pairsDiagram', 'Pairs');
+            drawLewisDiagram('bondsComparisonDiagram', 'BondsComparison');
+        });
+
+        // Add fade-in animation to sections when they come into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

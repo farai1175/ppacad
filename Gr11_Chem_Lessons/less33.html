@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acid-Base Stoichiometry and Titration Analysis</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .lesson-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .main-content {
+            flex: 3;
+            min-width: 300px;
+        }
+        
+        .sidebar {
+            flex: 1;
+            min-width: 250px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .section-header:hover {
+            background-color: #34495e;
+        }
+        
+        .section-header h2 {
+            font-size: 1.4rem;
+            margin: 0;
+        }
+        
+        .section-content {
+            padding: 20px;
+            display: none;
+        }
+        
+        .section.active .section-content {
+            display: block;
+        }
+        
+        .section.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .toggle-icon {
+            transition: transform 0.3s;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--light-color);
+            font-weight: 600;
+        }
+        
+        .definition-table th:first-child {
+            width: 30%;
+        }
+        
+        .calculation-box {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .formula {
+            font-size: 1.8rem;
+            text-align: center;
+            margin: 15px 0;
+            font-family: "Times New Roman", serif;
+        }
+        
+        .calculation-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .input-group label {
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .input-group input, .input-group select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .calculation-result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+        }
+        
+        .step-by-step {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .step {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .step:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .indicator-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .indicator-option {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .indicator-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .indicator-option.selected {
+            border-color: var(--success-color);
+            background-color: rgba(46, 204, 113, 0.1);
+        }
+        
+        .indicator-name {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .indicator-range {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .color-display {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+        
+        .acid-color, .base-color {
+            flex: 1;
+            padding: 8px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+            font-size: 0.8rem;
+        }
+        
+        .litmus-acid { background-color: #e74c3c; }
+        .litmus-base { background-color: #3498db; }
+        .methyl-orange-acid { background-color: #e74c3c; }
+        .methyl-orange-base { background-color: #f39c12; }
+        .phenolphthalein-acid { background-color: #ecf0f1; color: #333; text-shadow: none; }
+        .phenolphthalein-base { background-color: #e84393; }
+        .bromothymol-acid { background-color: #f1c40f; color: #333; text-shadow: none; }
+        .bromothymol-base { background-color: #3498db; }
+        
+        .quiz-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .quiz-question {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .quiz-question:last-child {
+            border-bottom: none;
+        }
+        
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .option.selected {
+            background-color: var(--light-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .option.correct {
+            background-color: rgba(46, 204, 113, 0.2);
+            border-color: var(--success-color);
+        }
+        
+        .option.incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            border-color: var(--danger-color);
+        }
+        
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            display: block;
+        }
+        
+        .feedback.incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            color: #c0392b;
+            display: block;
+        }
+        
+        .submit-btn {
+            background-color: var(--primary-color);
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+        
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .results.success {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            display: block;
+        }
+        
+        .results.warning {
+            background-color: rgba(243, 156, 18, 0.2);
+            color: #d35400;
+            display: block;
+        }
+        
+        .key-point {
+            background-color: var(--light-color);
+            padding: 15px;
+            border-left: 4px solid var(--secondary-color);
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .math {
+            font-family: "Times New Roman", serif;
+            font-style: italic;
+        }
+        
+        .equation-box {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .equation {
+            font-size: 1.3rem;
+            font-family: "Times New Roman", serif;
+            margin: 10px 0;
+        }
+        
+        .advanced-problem {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid var(--warning-color);
+        }
+        
+        @media (max-width: 768px) {
+            .lesson-content {
+                flex-direction: column;
+            }
+            
+            .calculation-inputs {
+                grid-template-columns: 1fr;
+            }
+            
+            .indicator-selector {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Acid-Base Stoichiometry and Titration Analysis</h1>
+            <div class="subtitle">Chemical Change (Quantitative Aspects) - Physical Sciences (Chemistry Focus)</div>
+        </header>
+        
+        <div class="lesson-content">
+            <div class="main-content">
+                <div class="section" id="objectives">
+                    <div class="section-header">
+                        <h2>Learning Objectives</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>Upon completion of this lesson, students should be able to:</p>
+                        <ol>
+                            <li><strong>Solve intermediate stoichiometric questions</strong> on acid-base reactions, dilution processes, and titration reactions.</li>
+                            <li><strong>Choose appropriate indicators</strong> for titration reactions.</li>
+                            <li><strong>Solve advanced stoichiometric questions</strong> involving multiple dilution and neutralisation reactions.</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="section" id="definitions">
+                    <div class="section-header">
+                        <h2>Definitions and Scientific Principles</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <table class="definition-table">
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Definition/Principle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Stoichiometry</strong></td>
+                                    <td>
+                                        The branch of chemistry that deals with the <strong>quantitative relationship</strong> 
+                                        between reactants and products in a chemical reaction.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Concentration (c)</strong></td>
+                                    <td>
+                                        The <strong>amount of solute per litre of solution</strong>. It is the number of moles 
+                                        of solute per volume of solution, typically measured in mol·dm⁻³.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Standard Solution</strong></td>
+                                    <td>
+                                        A solution in which the <strong>concentration is known to a high degree of precision</strong>.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Titration/Volumetric Analysis</strong></td>
+                                    <td>
+                                        A quantitative method used to <strong>determine the concentration of an unknown solution</strong> 
+                                        by measuring the volumes that react with a standard solution.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Equivalence Point</strong></td>
+                                    <td>
+                                        The point in a titration where the acid/base has <strong>completely reacted</strong> 
+                                        with the base/acid according to the molar ratio.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Acid-Base Indicator</strong></td>
+                                    <td>
+                                        A <strong>weak acid or a weak base</strong> whose colour changes as the H⁺ ion concentration 
+                                        or the OH⁻ ion concentration in a solution changes.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Percentage Purity</strong></td>
+                                    <td>
+                                        The ratio of the <strong>mass of pure chemical</strong> to the <strong>total mass of the sample</strong>, 
+                                        multiplied by 100.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="section" id="introduction">
+                    <div class="section-header">
+                        <h2>Introduction</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>
+                            Stoichiometry provides the mathematical framework for chemical change. In practical chemistry, 
+                            particularly when dealing with solutions, calculating concentrations, performing dilutions, 
+                            and determining unknown concentrations via titration (volumetric analysis) are core skills. 
+                            This lesson focuses on mastering the specific calculations involved in acid-base chemistry, 
+                            moving from routine calculations to complex, multi-step problems often encountered in formal assessments.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="section" id="main-body">
+                    <div class="section-header">
+                        <h2>Main Body</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <h3>1. Fundamental Stoichiometric Calculations (The "Recipe")</h3>
+                        <p>
+                            All quantitative calculations rely on the balanced chemical equation, which acts as the 'recipe' 
+                            providing the <strong>mole ratio</strong> of products and reactants.
+                        </p>
+                        
+                        <div class="step-by-step">
+                            <div class="step">
+                                <span class="step-number">1</span>
+                                <strong>Write a balanced chemical equation</strong>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">2</span>
+                                <strong>Convert all known quantities</strong> (mass, volume, particles) <strong>to moles (n)</strong>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">3</span>
+                                <strong>Use the stoichiometric ratio</strong> (mole ratio) from the balanced equation to find the number of moles of the unknown substance
+                            </div>
+                            <div class="step">
+                                <span class="step-number">4</span>
+                                <strong>Convert the moles of the unknown</strong> substance to the required quantity (mass, volume, or concentration)
+                            </div>
+                        </div>
+                        
+                        <h3>2. Intermediate Stoichiometry: Dilution and Acid-Base Reactions</h3>
+                        
+                        <h4>A. Dilution Processes</h4>
+                        <p>
+                            When a solution is diluted, the amount of solute (n) remains constant, but the volume (V) increases, 
+                            causing the concentration (c) to decrease.
+                        </p>
+                        
+                        <div class="formula">
+                            c₁V₁ = c₂V₂
+                        </div>
+                        
+                        <div class="calculation-box">
+                            <h4>Dilution Calculator</h4>
+                            <div class="calculation-inputs">
+                                <div class="input-group">
+                                    <label for="initial-conc">Initial Concentration (mol/dm³)</label>
+                                    <input type="number" id="initial-conc" step="0.01" value="0.5">
+                                </div>
+                                <div class="input-group">
+                                    <label for="initial-vol">Initial Volume (cm³)</label>
+                                    <input type="number" id="initial-vol" value="30">
+                                </div>
+                                <div class="input-group">
+                                    <label for="final-vol">Final Volume (cm³)</label>
+                                    <input type="number" id="final-vol" value="130">
+                                </div>
+                            </div>
+                            <button id="calculate-dilution">Calculate Final Concentration</button>
+                            <div class="calculation-result" id="dilution-result"></div>
+                        </div>
+                        
+                        <h4>B. Titration Reactions (Volumetric Analysis)</h4>
+                        <p>
+                            Titration is used to determine an unknown concentration (cₐ or cբ) by mixing a precisely known volume 
+                            (Vₐ or Vբ) of the unknown solution with a standard solution.
+                        </p>
+                        
+                        <div class="formula">
+                            cₐVₐ / cբVբ = nₐ / nբ
+                        </div>
+                        
+                        <div class="calculation-box">
+                            <h4>Titration Calculator</h4>
+                            <div class="calculation-inputs">
+                                <div class="input-group">
+                                    <label for="acid-conc">Acid Concentration (mol/dm³)</label>
+                                    <input type="number" id="acid-conc" step="0.01" value="0.12">
+                                </div>
+                                <div class="input-group">
+                                    <label for="acid-vol">Acid Volume (cm³)</label>
+                                    <input type="number" id="acid-vol" value="25">
+                                </div>
+                                <div class="input-group">
+                                    <label for="base-conc">Base Concentration (mol/dm³)</label>
+                                    <input type="number" id="base-conc" step="0.01">
+                                </div>
+                                <div class="input-group">
+                                    <label for="base-vol">Base Volume (cm³)</label>
+                                    <input type="number" id="base-vol" value="28.4">
+                                </div>
+                                <div class="input-group">
+                                    <label for="acid-coeff">Acid Coefficient (nₐ)</label>
+                                    <input type="number" id="acid-coeff" value="1">
+                                </div>
+                                <div class="input-group">
+                                    <label for="base-coeff">Base Coefficient (nբ)</label>
+                                    <input type="number" id="base-coeff" value="1">
+                                </div>
+                            </div>
+                            <button id="calculate-titration">Calculate Unknown Concentration</button>
+                            <div class="calculation-result" id="titration-result"></div>
+                        </div>
+                        
+                        <h3>3. Choosing Appropriate Indicators</h3>
+                        <p>
+                            Indicators are weak acids or bases that change colour based on the solution's H⁺ or OH⁻ ion concentration. 
+                            They are used in titration to mark the <strong>equivalence point</strong>.
+                        </p>
+                        
+                        <p>
+                            The appropriate indicator is chosen based on the <strong>pH of the salt solution</strong> formed during neutralisation (hydrolysis). 
+                            The indicator's colour change range must match the pH at the equivalence point.
+                        </p>
+                        
+                        <div class="indicator-selector">
+                            <div class="indicator-option" data-ph-range="3.1-4.4">
+                                <div class="indicator-name">Methyl Orange</div>
+                                <div class="indicator-range">pH 3.1 - 4.4</div>
+                                <div class="color-display">
+                                    <div class="acid-color methyl-orange-acid">Red in Acid</div>
+                                    <div class="base-color methyl-orange-base">Yellow in Base</div>
+                                </div>
+                            </div>
+                            
+                            <div class="indicator-option" data-ph-range="6.0-7.6">
+                                <div class="indicator-name">Bromothymol Blue</div>
+                                <div class="indicator-range">pH 6.0 - 7.6</div>
+                                <div class="color-display">
+                                    <div class="acid-color bromothymol-acid">Yellow in Acid</div>
+                                    <div class="base-color bromothymol-base">Blue in Base</div>
+                                </div>
+                            </div>
+                            
+                            <div class="indicator-option" data-ph-range="4.5-8.3">
+                                <div class="indicator-name">Litmus</div>
+                                <div class="indicator-range">pH 4.5 - 8.3</div>
+                                <div class="color-display">
+                                    <div class="acid-color litmus-acid">Red in Acid</div>
+                                    <div class="base-color litmus-base">Blue in Base</div>
+                                </div>
+                            </div>
+                            
+                            <div class="indicator-option" data-ph-range="8.3-10.0">
+                                <div class="indicator-name">Phenolphthalein</div>
+                                <div class="indicator-range">pH 8.3 - 10.0</div>
+                                <div class="color-display">
+                                    <div class="acid-color phenolphthalein-acid">Colorless in Acid</div>
+                                    <div class="base-color phenolphthalein-base">Pink in Base</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="calculation-box">
+                            <h4>Indicator Selection Tool</h4>
+                            <div class="calculation-inputs">
+                                <div class="input-group">
+                                    <label for="acid-type">Acid Type</label>
+                                    <select id="acid-type">
+                                        <option value="strong">Strong Acid (HCl, HNO₃, H₂SO₄)</option>
+                                        <option value="weak">Weak Acid (CH₃COOH, H₂CO₃)</option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <label for="base-type">Base Type</label>
+                                    <select id="base-type">
+                                        <option value="strong">Strong Base (NaOH, KOH)</option>
+                                        <option value="weak">Weak Base (NH₃)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button id="suggest-indicator">Suggest Appropriate Indicator</button>
+                            <div class="calculation-result" id="indicator-result"></div>
+                        </div>
+                        
+                        <h3>4. Advanced Stoichiometric Questions</h3>
+                        
+                        <h4>A. Multi-Step Titration (Titration of Excess Reactant)</h4>
+                        <p>
+                            When one reactant is added in <strong>excess</strong> to react with a known mass of an impure sample, 
+                            the following multi-step process is required:
+                        </p>
+                        
+                        <div class="step-by-step">
+                            <div class="step">
+                                <span class="step-number">1</span>
+                                Calculate the <strong>total moles of the reactant in excess</strong> initially added
+                            </div>
+                            <div class="step">
+                                <span class="step-number">2</span>
+                                Determine the <strong>moles of excess reactant that remained unreacted</strong> by titrating it against a standard base
+                            </div>
+                            <div class="step">
+                                <span class="step-number">3</span>
+                                Calculate the <strong>moles of excess reactant that reacted</strong> with the original sample
+                            </div>
+                            <div class="step">
+                                <span class="step-number">4</span>
+                                Use this reacted moles and the stoichiometric ratio to find the mass of the <strong>pure original sample</strong>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">5</span>
+                                Calculate the <strong>percentage purity</strong> of the original sample
+                            </div>
+                        </div>
+                        
+                        <h4>B. Percentage Purity Calculation</h4>
+                        <div class="formula">
+                            Percentage Purity (%) = (mass of pure chemical / total mass of sample) × 100
+                        </div>
+                        
+                        <div class="advanced-problem">
+                            <h4>Advanced Problem Calculator</h4>
+                            <p>Calculate percentage purity for an impure sample:</p>
+                            <div class="calculation-inputs">
+                                <div class="input-group">
+                                    <label for="sample-mass">Sample Mass (g)</label>
+                                    <input type="number" id="sample-mass" step="0.01" value="10">
+                                </div>
+                                <div class="input-group">
+                                    <label for="excess-acid-conc">Excess Acid Concentration (mol/dm³)</label>
+                                    <input type="number" id="excess-acid-conc" step="0.01" value="0.2">
+                                </div>
+                                <div class="input-group">
+                                    <label for="excess-acid-vol">Excess Acid Volume (cm³)</label>
+                                    <input type="number" id="excess-acid-vol" value="100">
+                                </div>
+                                <div class="input-group">
+                                    <label for="back-titration-conc">Back Titration Base Concentration (mol/dm³)</label>
+                                    <input type="number" id="back-titration-conc" step="0.01" value="0.1">
+                                </div>
+                                <div class="input-group">
+                                    <label for="back-titration-vol">Back Titration Base Volume (cm³)</label>
+                                    <input type="number" id="back-titration-vol" value="20">
+                                </div>
+                                <div class="input-group">
+                                    <label for="molar-mass">Molar Mass of Pure Compound (g/mol)</label>
+                                    <input type="number" id="molar-mass" value="106">
+                                </div>
+                            </div>
+                            <button id="calculate-purity">Calculate Percentage Purity</button>
+                            <div class="calculation-result" id="purity-result"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section" id="conclusion">
+                    <div class="section-header">
+                        <h2>Conclusion</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>
+                            Solving stoichiometric questions, whether intermediate or advanced, relies on the consistent application 
+                            of the mole concept and the mole ratio derived from the balanced equation. Titration calculations offer 
+                            a streamlined method using the formula <strong>cₐVₐ / cբVբ = nₐ / nբ</strong>. Advanced problems combine these concepts 
+                            with dilution and purity calculations, testing the ability to structure multi-step solutions. Effective use 
+                            of indicators, chosen based on the pH of the equivalence point, is essential for successful volumetric analysis.
+                        </p>
+                        
+                        <div class="key-point">
+                            <strong>Key Takeaway:</strong> Master the four-step stoichiometric method and the titration formula. 
+                            Choose indicators based on the expected pH at the equivalence point. For advanced problems, break them 
+                            down into manageable steps.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quiz-container" id="quiz">
+                    <h2>End-of-Lesson Questions</h2>
+                    <p>Test your understanding of acid-base stoichiometry and titration analysis. Select the correct answer for each question.</p>
+                    
+                    <div class="quiz-question" id="q1">
+                        <div class="question-text">1. Titration Calculation: 25 cm³ of 0.12 mol·dm⁻³ HCl reacts with 28.4 cm³ of NaOH solution. Calculate the concentration of the NaOH solution.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">0.1056 mol·dm⁻³</div>
+                            <div class="option" data-correct="true">0.1056 mol·dm⁻³ (rounded to 0.106 mol·dm⁻³)</div>
+                            <div class="option" data-correct="false">0.1363 mol·dm⁻³</div>
+                            <div class="option" data-correct="false">0.0944 mol·dm⁻³</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q2">
+                        <div class="question-text">2. Dilution Calculation: 30 cm³ of 0.5 mol·dm⁻³ HCl is diluted with 100 cm³ of water. Calculate the concentration of the diluted solution.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">0.15 mol·dm⁻³</div>
+                            <div class="option" data-correct="false">0.115 mol·dm⁻³</div>
+                            <div class="option" data-correct="true">0.115 mol·dm⁻³ (exactly 0.1154 mol·dm⁻³)</div>
+                            <div class="option" data-correct="false">0.13 mol·dm⁻³</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q3">
+                        <div class="question-text">3. Indicator Selection: In a titration between strong acid (HCl) and strong base (NaOH), which indicator would be most appropriate?</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">Methyl Orange (pH 3.1-4.4) because it changes color in acidic range</div>
+                            <div class="option" data-correct="true">Bromothymol Blue (pH 6.0-7.6) because its range includes pH 7</div>
+                            <div class="option" data-correct="false">Phenolphthalein (pH 8.3-10.0) because it gives a clear color change</div>
+                            <div class="option" data-correct="false">Litmus (pH 4.5-8.3) because it's the most common indicator</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q4">
+                        <div class="question-text">4. Advanced Stoichiometry: For the percentage purity problem, what is the correct approach?</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">Calculate moles from back titration only and multiply by molar mass</div>
+                            <div class="option" data-correct="false">Use the initial acid concentration directly with the sample mass</div>
+                            <div class="option" data-correct="true">Calculate total acid added, subtract excess acid from back titration, then find pure mass</div>
+                            <div class="option" data-correct="false">Average the results from initial and back titration calculations</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q5">
+                        <div class="question-text">5. Which formula is used for titration calculations?</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">c₁V₁ = c₂V₂</div>
+                            <div class="option" data-correct="true">cₐVₐ / cբVբ = nₐ / nբ</div>
+                            <div class="option" data-correct="false">n = m/M</div>
+                            <div class="option" data-correct="false">pH = -log[H⁺]</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <button class="submit-btn" id="submit-quiz">Submit Answers</button>
+                    <div class="results" id="quiz-results"></div>
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <h3>Lesson Navigation</h3>
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <li style="margin-bottom: 10px;"><a href="#objectives" class="nav-link">Learning Objectives</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#definitions" class="nav-link">Definitions</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#introduction" class="nav-link">Introduction</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#main-body" class="nav-link">Main Body</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#conclusion" class="nav-link">Conclusion</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#quiz" class="nav-link">Quiz</a></li>
+                </ul>
+                
+                <div style="margin-top: 30px;">
+                    <h3>Key Formulas</h3>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Dilution:</strong> c₁V₁ = c₂V₂
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Titration:</strong> cₐVₐ / cբVբ = nₐ / nբ
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Moles:</strong> n = cV
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Purity:</strong> (pure mass / total mass) × 100
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <h3>Indicator pH Ranges</h3>
+                    <div style="font-size: 0.9rem;">
+                        <div><strong>Methyl Orange:</strong> 3.1-4.4</div>
+                        <div><strong>Bromothymol Blue:</strong> 6.0-7.6</div>
+                        <div><strong>Litmus:</strong> 4.5-8.3</div>
+                        <div><strong>Phenolphthalein:</strong> 8.3-10.0</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <h3>Problem Solving Steps</h3>
+                    <div style="font-size: 0.9rem;">
+                        <div>1. Balanced equation</div>
+                        <div>2. Convert to moles</div>
+                        <div>3. Use mole ratio</div>
+                        <div>4. Convert to required units</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Collapsible sections functionality
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const section = header.parentElement;
+                section.classList.toggle('active');
+            });
+        });
+        
+        // Navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                // Expand the target section if it's collapsed
+                if (!targetSection.classList.contains('active')) {
+                    targetSection.classList.add('active');
+                }
+                
+                // Scroll to the target section
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        // Dilution calculator
+        document.getElementById('calculate-dilution').addEventListener('click', () => {
+            const c1 = parseFloat(document.getElementById('initial-conc').value);
+            const v1 = parseFloat(document.getElementById('initial-vol').value);
+            const v2 = parseFloat(document.getElementById('final-vol').value);
+            
+            if (isNaN(c1) || isNaN(v1) || isNaN(v2)) {
+                alert('Please enter valid numbers for all fields.');
+                return;
+            }
+            
+            // c1V1 = c2V2 => c2 = (c1V1)/V2
+            const c2 = (c1 * v1) / v2;
+            
+            const resultElement = document.getElementById('dilution-result');
+            resultElement.textContent = `Final concentration = ${c2.toFixed(4)} mol/dm³`;
+            resultElement.style.display = 'block';
+        });
+        
+        // Titration calculator
+        document.getElementById('calculate-titration').addEventListener('click', () => {
+            const cA = parseFloat(document.getElementById('acid-conc').value);
+            const vA = parseFloat(document.getElementById('acid-vol').value);
+            const vB = parseFloat(document.getElementById('base-vol').value);
+            const nA = parseFloat(document.getElementById('acid-coeff').value);
+            const nB = parseFloat(document.getElementById('base-coeff').value);
+            
+            if (isNaN(cA) || isNaN(vA) || isNaN(vB) || isNaN(nA) || isNaN(nB)) {
+                alert('Please enter valid numbers for all fields.');
+                return;
+            }
+            
+            // cA * vA / cB * vB = nA / nB => cB = (cA * vA * nB) / (vB * nA)
+            const cB = (cA * vA * nB) / (vB * nA);
+            
+            const resultElement = document.getElementById('titration-result');
+            resultElement.textContent = `Base concentration = ${cB.toFixed(4)} mol/dm³`;
+            resultElement.style.display = 'block';
+            
+            // Update the base concentration input field
+            document.getElementById('base-conc').value = cB.toFixed(4);
+        });
+        
+        // Indicator selection
+        document.querySelectorAll('.indicator-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.indicator-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+            });
+        });
+        
+        // Indicator suggestion tool
+        document.getElementById('suggest-indicator').addEventListener('click', () => {
+            const acidType = document.getElementById('acid-type').value;
+            const baseType = document.getElementById('base-type').value;
+            
+            let suggestedIndicator = '';
+            let reason = '';
+            
+            if (acidType === 'strong' && baseType === 'strong') {
+                suggestedIndicator = 'Bromothymol Blue or Litmus';
+                reason = 'Strong acid-strong base titrations have equivalence point at pH 7, which falls within the range of these indicators.';
+            } else if (acidType === 'strong' && baseType === 'weak') {
+                suggestedIndicator = 'Methyl Orange';
+                reason = 'Strong acid-weak base titrations have equivalence point in acidic range (pH < 7), suitable for Methyl Orange.';
+            } else if (acidType === 'weak' && baseType === 'strong') {
+                suggestedIndicator = 'Phenolphthalein';
+                reason = 'Weak acid-strong base titrations have equivalence point in basic range (pH > 7), suitable for Phenolphthalein.';
+            } else {
+                suggestedIndicator = 'Consult specific pH data';
+                reason = 'Weak acid-weak base titrations have gradual pH changes and may require specific indicator selection.';
+            }
+            
+            const resultElement = document.getElementById('indicator-result');
+            resultElement.innerHTML = `<strong>Suggested Indicator:</strong> ${suggestedIndicator}<br><strong>Reason:</strong> ${reason}`;
+            resultElement.style.display = 'block';
+        });
+        
+        // Percentage purity calculator
+        document.getElementById('calculate-purity').addEventListener('click', () => {
+            const sampleMass = parseFloat(document.getElementById('sample-mass').value);
+            const excessAcidConc = parseFloat(document.getElementById('excess-acid-conc').value);
+            const excessAcidVol = parseFloat(document.getElementById('excess-acid-vol').value);
+            const backTitrationConc = parseFloat(document.getElementById('back-titration-conc').value);
+            const backTitrationVol = parseFloat(document.getElementById('back-titration-vol').value);
+            const molarMass = parseFloat(document.getElementById('molar-mass').value);
+            
+            if (isNaN(sampleMass) || isNaN(excessAcidConc) || isNaN(excessAcidVol) || 
+                isNaN(backTitrationConc) || isNaN(backTitrationVol) || isNaN(molarMass)) {
+                alert('Please enter valid numbers for all fields.');
+                return;
+            }
+            
+            // Step 1: Total moles of acid initially added
+            const totalAcidMoles = (excessAcidConc * excessAcidVol) / 1000;
+            
+            // Step 2: Moles of excess acid (from back titration)
+            // Assuming 1:1 ratio for back titration for simplicity
+            const excessAcidMoles = (backTitrationConc * backTitrationVol) / 1000;
+            
+            // Step 3: Moles of acid that reacted with the sample
+            const reactedAcidMoles = totalAcidMoles - excessAcidMoles;
+            
+            // Step 4: Mass of pure compound (assuming 1:1 ratio for simplicity)
+            const pureMass = (reactedAcidMoles * molarMass);
+            
+            // Step 5: Percentage purity
+            const percentagePurity = (pureMass / sampleMass) * 100;
+            
+            const resultElement = document.getElementById('purity-result');
+            resultElement.innerHTML = `
+                <strong>Calculation Steps:</strong><br>
+                1. Total acid moles: ${totalAcidMoles.toFixed(4)} mol<br>
+                2. Excess acid moles: ${excessAcidMoles.toFixed(4)} mol<br>
+                3. Reacted acid moles: ${reactedAcidMoles.toFixed(4)} mol<br>
+                4. Pure mass: ${pureMass.toFixed(4)} g<br>
+                5. <strong>Percentage Purity: ${percentagePurity.toFixed(2)}%</strong>
+            `;
+            resultElement.style.display = 'block';
+        });
+        
+        // Quiz functionality
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options in this question
+                const question = this.closest('.quiz-question');
+                question.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // Remove any existing feedback
+                const feedback = question.querySelector('.feedback');
+                feedback.className = 'feedback';
+                feedback.textContent = '';
+            });
+        });
+        
+        document.getElementById('submit-quiz').addEventListener('click', () => {
+            let score = 0;
+            const totalQuestions = 5;
+            
+            // Check each question
+            document.querySelectorAll('.quiz-question').forEach(question => {
+                const selectedOption = question.querySelector('.option.selected');
+                const feedback = question.querySelector('.feedback');
+                
+                if (selectedOption) {
+                    const isCorrect = selectedOption.getAttribute('data-correct') === 'true';
+                    
+                    if (isCorrect) {
+                        score++;
+                        feedback.className = 'feedback correct';
+                        feedback.textContent = 'Correct! Well done.';
+                        selectedOption.classList.add('correct');
+                    } else {
+                        feedback.className = 'feedback incorrect';
+                        feedback.textContent = 'Incorrect. Try again.';
+                        selectedOption.classList.add('incorrect');
+                        
+                        // Highlight the correct answer
+                        const correctOption = question.querySelector('.option[data-correct="true"]');
+                        correctOption.classList.add('correct');
+                    }
+                } else {
+                    // No option selected
+                    const correctOption = question.querySelector('.option[data-correct="true"]');
+                    correctOption.classList.add('correct');
+                    
+                    feedback.className = 'feedback incorrect';
+                    feedback.textContent = 'Please select an answer.';
+                }
+            });
+            
+            // Display results
+            const results = document.getElementById('quiz-results');
+            const percentage = (score / totalQuestions) * 100;
+            
+            if (percentage >= 80) {
+                results.className = 'results success';
+                results.textContent = `Excellent! You scored ${score}/${totalQuestions} (${percentage}%). You have mastered acid-base stoichiometry and titration analysis.`;
+            } else if (percentage >= 60) {
+                results.className = 'results warning';
+                results.textContent = `Good effort! You scored ${score}/${totalQuestions} (${percentage}%). Review the material and try again to improve your score.`;
+            } else {
+                results.className = 'results warning';
+                results.textContent = `You scored ${score}/${totalQuestions} (${percentage}%). We recommend reviewing the lesson material and trying the quiz again.`;
+            }
+        });
+        
+        // Expand the first section by default
+        document.querySelector('.section').classList.add('active');
+        
+        // Pre-fill the calculations with the examples from the lesson
+        // Dilution: 30 cm³ of 0.5 mol/dm³ HCl diluted with 100 cm³ water
+        document.getElementById('initial-conc').value = '0.5';
+        document.getElementById('initial-vol').value = '30';
+        document.getElementById('final-vol').value = '130';
+        
+        // Titration: 25 cm³ of 0.12 mol/dm³ HCl with 28.4 cm³ NaOH
+        document.getElementById('acid-conc').value = '0.12';
+        document.getElementById('acid-vol').value = '25';
+        document.getElementById('base-vol').value = '28.4';
+        
+        // Advanced problem: 10g sample, 100 cm³ of 0.2 mol/dm³ HCl, back titration with 20 cm³ of 0.1 mol/dm³ base
+        document.getElementById('sample-mass').value = '10';
+        document.getElementById('excess-acid-conc').value = '0.2';
+        document.getElementById('excess-acid-vol').value = '100';
+        document.getElementById('back-titration-conc').value = '0.1';
+        document.getElementById('back-titration-vol').value = '20';
+        document.getElementById('molar-mass').value = '106';
+    </script>
+</body>
+</html>

@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boyle's Law - Interactive Lesson</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #3b82f6;
+            --accent-color: #60a5fa;
+            --light-color: #dbeafe;
+            --dark-color: #1e293b;
+            --text-color: #334155;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f8fafc;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .subject-grade {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            opacity: 0.9;
+        }
+
+        .topic {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .sub-topic {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .lesson-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .header-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,.1) 10px, rgba(255,255,255,.1) 20px);
+            z-index: 1;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: #eee;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .progress-indicator {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        main {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            background-color: #f9fafb;
+            border-left: 4px solid var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .section:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            font-size: 1.2rem;
+        }
+
+        .objectives-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .objectives-list li {
+            margin-bottom: 10px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .objectives-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background-color: #f1f1f1;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+            font-weight: bold;
+        }
+
+        .tab-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .tab-button.active {
+            background-color: white;
+            border-bottom: 3px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            border: 1px solid #ddd;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .definition-box {
+            background-color: var(--light-color);
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+        }
+
+        .definition-term {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .principle-box {
+            background-color: #f0f9ff;
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+        }
+
+        .principle-title {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+
+        .interactive-demo {
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin: 20px 0;
+            background-color: white;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .demo-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .demo-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .demo-btn.active {
+            background-color: var(--accent-color);
+        }
+
+        .demo-output {
+            border: 1px solid #eee;
+            padding: 15px;
+            min-height: 100px;
+            border-radius: var(--border-radius);
+            background-color: #f9f9f9;
+        }
+
+        .questions-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .question-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            border-left: 3px solid var(--accent-color);
+            transition: var(--transition);
+        }
+
+        .question-item:hover {
+            transform: translateX(5px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .question-options {
+            margin-left: 20px;
+        }
+
+        .option {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .option input {
+            margin-right: 5px;
+        }
+
+        .check-answer-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: var(--transition);
+        }
+
+        .check-answer-btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            display: none;
+        }
+
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .collapsible {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: var(--transition);
+            border-radius: var(--border-radius);
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .collapsible:hover {
+            background-color: #bfdbfe;
+        }
+
+        .collapsible.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .collapsible i {
+            transition: var(--transition);
+        }
+
+        .collapsible.active i {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            padding: 0 15px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: white;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+        }
+
+        .collapsible-content.active {
+            padding: 15px;
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in;
+        }
+
+        .formula-box {
+            background-color: #f8fafc;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-style: italic;
+            font-size: 1.2rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .nav-btn:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .boyle-simulation {
+            position: relative;
+            height: 300px;
+            background-color: #f0f9ff;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gas-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .gas-particles {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .gas-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .slider-container {
+            margin: 20px 0;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .slider {
+            width: 100%;
+            height: 5px;
+            border-radius: 5px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .slider:hover {
+            opacity: 1;
+        }
+
+        .value-display {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+        }
+
+        .value-item {
+            text-align: center;
+            padding: 10px;
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+            min-width: 100px;
+        }
+
+        .value-label {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .value-number {
+            font-size: 1.2rem;
+            margin-top: 5px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 0;
+            }
+            
+            body {
+                padding: 0;
+            }
+            
+            main {
+                padding: 15px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+            }
+            
+            .demo-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar">
+        <div class="progress-indicator" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="header-pattern"></div>
+            <div class="header-content">
+                <div class="subject-grade">PHYSICAL SCIENCES</div>
+                <h1 class="topic">MATTER AND MATERIALS (PART 2): IDEAL GASES AND THERMAL PROPERTIES</h1>
+                <div class="sub-topic">UNIT 2: BOYLE'S LAW</div>
+                <div class="lesson-title">COMPREHENSIVE LESSON PLAN: BOYLE'S LAW</div>
+            </div>
+        </header>
+
+        <main>
+            <section class="section" id="objectives">
+                <h2 class="section-title"><i class="fas fa-bullseye"></i> Learning Objectives</h2>
+                <p>The following results will be the outcomes of this lesson. The learners must be able to:</p>
+                <ul class="objectives-list">
+                    <li>State Boyle's Law</li>
+                    <li>Determine and describe the relationship between volume and pressure for a fixed amount of gas at constant temperature</li>
+                    <li>Identify the dependent, independent, and controlled variables in the Boyle's law investigation</li>
+                    <li>Plot the graph of Volume versus Pressure as well as the graph of Volume versus 1/P</li>
+                </ul>
+            </section>
+
+            <section class="section" id="definitions">
+                <h2 class="section-title"><i class="fas fa-book"></i> Definitions and Scientific Principles</h2>
+                
+                <div class="tabs">
+                    <button class="tab-button active" onclick="openTab(event, 'definitions-tab')">Definitions</button>
+                    <button class="tab-button" onclick="openTab(event, 'principles-tab')">Scientific Principles</button>
+                </div>
+                
+                <div id="definitions-tab" class="tab-content active">
+                    <div class="definition-box">
+                        <div class="definition-term">Boyle's Law:</div>
+                        <p>States that the volume (V) of a <strong>fixed amount of gas</strong> is <strong>inversely proportional to its pressure (P) at constant temperature</strong>.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Inverse Proportionality:</div>
+                        <p>A relationship where one variable decreases proportionally as the other increases.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Proportionality Constant (k):</div>
+                        <p>A fixed number used to change the proportional relationship into an equation. For Boyle's Law, pV = k.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Pressure (P):</div>
+                        <p>The pressure in a gas is caused by the gas molecules colliding with the walls of a container.</p>
+                    </div>
+                </div>
+                
+                <div id="principles-tab" class="tab-content">
+                    <div class="principle-box">
+                        <div class="principle-title">Fixed Amount of Gas:</div>
+                        <p>Boyle's Law requires that the amount (mass or number of moles, n) of the gas remains constant.</p>
+                    </div>
+                    
+                    <div class="principle-box">
+                        <div class="principle-title">Constant Temperature:</div>
+                        <p>If the temperature is not kept constant, the proportionality is broken, as cooling or heating generally causes the gas to contract or expand, or the pressure to decrease or increase.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="overview">
+                <h2 class="section-title"><i class="fas fa-eye"></i> Introduction</h2>
+                <p>Boyle's Law, named after Robert Boyle, is one of the foundational gas laws that describe the behaviour of gases. This law focuses on the quantifiable relationship between the volume and the pressure of a gas when the temperature and amount of gas are held constant. Understanding this relationship is crucial for explaining everyday phenomena, such as how breathing works.</p>
+                
+                <div class="interactive-demo">
+                    <h4>Interactive Visualization: Boyle's Law</h4>
+                    <p>Adjust the pressure slider to see how the volume of gas changes according to Boyle's Law.</p>
+                    
+                    <div class="boyle-simulation">
+                        <div class="gas-container" id="gasContainer">
+                            <div class="gas-particles" id="gasParticles">
+                                <!-- Gas particles will be generated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <div class="slider-label">
+                            <span>Low Pressure</span>
+                            <span>High Pressure</span>
+                        </div>
+                        <input type="range" min="50" max="200" value="100" class="slider" id="pressureSlider">
+                    </div>
+                    
+                    <div class="value-display">
+                        <div class="value-item">
+                            <div class="value-label">Pressure</div>
+                            <div class="value-number" id="pressureValue">100 kPa</div>
+                        </div>
+                        <div class="value-item">
+                            <div class="value-label">Volume</div>
+                            <div class="value-number" id="volumeValue">200 cm³</div>
+                        </div>
+                        <div class="value-item">
+                            <div class="value-label">P × V</div>
+                            <div class="value-number" id="productValue">20000</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="main-body">
+                <h2 class="section-title"><i class="fas fa-atom"></i> Main Body: Investigation and Description of Boyle's Law</h2>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    I. Stating Boyle's Law and Describing the Relationship (LO 1 & LO 2)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p><strong>Boyle's Law states that the volume of a fixed amount of gas is inversely proportional to its pressure at constant temperature</strong>.</p>
+                    
+                    <p>The relationship between volume (V) and pressure (P) is described as <strong>inversely proportional</strong>.</p>
+                    
+                    <ul>
+                        <li>In symbols, this relationship is written as: <strong>V ∝ 1/P</strong>.</li>
+                        <li>When this is written as an equation using a proportionality constant (k), it becomes <strong>pV = k</strong>.</li>
+                        <li>This relationship implies that if the pressure on an enclosed gas <strong>doubles, its volume will halve</strong> (at constant temperature). If the pressure increases three times, its volume will be divided by three.</li>
+                    </ul>
+                    
+                    <div class="formula-box">
+                        V ∝ 1/P
+                    </div>
+                    
+                    <div class="formula-box">
+                        pV = k
+                    </div>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    II. Variables in the Boyle's Law Investigation (LO 3)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>In an experiment designed to verify Boyle's law (such as using a syringe attached to a pressure gauge), it is essential to identify and control variables.</p>
+                    
+                    <p>The variables in a typical Boyle's Law investigation are:</p>
+                    
+                    <ul>
+                        <li><strong>Independent Variable:</strong> <strong>Volume (V)</strong>. The independent variable is the quantity that the investigator changes or allows to change. In the experiment described in the sources, the volume is intentionally changed by pressing the syringe plunger down. Volume is typically plotted on the x-axis.</li>
+                        <li><strong>Dependent Variable:</strong> <strong>Pressure (P)</strong>. The dependent variable is the quantity that the independent variable causes to change. Pressure is measured as a result of the volume change. Pressure is typically plotted on the y-axis.</li>
+                        <li><strong>Controlled Variables:</strong> <strong>Temperature</strong> and the <strong>amount of gas</strong> (fixed mass or number of moles). These variables must be kept constant to ensure a fair test. Maintaining constant temperature is particularly important, as increasing the temperature would break the proportionality.</li>
+                    </ul>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    III. Plotting and Interpreting Graphs (LO 4)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>Plotting the experimental results visually helps to describe the mathematical relationship between the variables.</p>
+                    
+                    <h4>1. Graph of Volume versus Pressure (V vs P):</h4>
+                    <ul>
+                        <li>Plotting Volume (independent variable, x-axis) against Pressure (dependent variable, y-axis) produces a <strong>curved graph</strong> known as a <strong>hyperbola</strong>.</li>
+                        <li>The hyperbolic shape visually represents the <strong>inverse relationship</strong>: as pressure increases, volume decreases.</li>
+                    </ul>
+                    
+                    <div class="chart-container">
+                        <canvas id="hyperbolaChart"></canvas>
+                    </div>
+                    
+                    <h4>2. Graph of Volume versus Inverse Pressure (V vs 1/P):</h4>
+                    <ul>
+                        <li>To be certain that a curved graph is a hyperbola and to verify the inverse proportionality, one must draw a graph where the volume (V) is plotted against the inverse of the pressure (1/P).</li>
+                        <li>Plotting V versus 1/P yields a <strong>straight line</strong>.</li>
+                        <li>If this straight line passes <strong>through the origin</strong>, it confirms that volume is <strong>inversely proportional</strong> to pressure. The product pV is a constant value at a specific temperature.</li>
+                    </ul>
+                    
+                    <div class="chart-container">
+                        <canvas id="linearChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="conclusion">
+                <h2 class="section-title"><i class="fas fa-check-circle"></i> Conclusion</h2>
+                <p>Boyle's Law is fundamental to gas dynamics, defining the inverse relationship between the volume and pressure of a fixed mass of gas at constant temperature, summarized mathematically as pV = k. This relationship is confirmed experimentally by observing the variables in the Boyle's Law investigation. Crucially, while a graph of V vs P is a hyperbola, plotting V vs 1/P produces a straight line through the origin, offering definitive visual proof of this inverse proportionality.</p>
+            </section>
+
+            <section class="section" id="questions">
+                <h2 class="section-title"><i class="fas fa-question-circle"></i> End-of-Lesson Questions</h2>
+                
+                <ul class="questions-list">
+                    <li class="question-item">
+                        <div class="question-text">1. State Boyle's Law (LO 1): State Boyle's Law in words and express the law mathematically using symbols, assuming k is the proportionality constant.</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q1" value="a" id="q1a">
+                                <label for="q1a">The volume of a gas is directly proportional to its pressure at constant temperature: V = kP</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="b" id="q1b">
+                                <label for="q1b">The volume of a fixed amount of gas is inversely proportional to its pressure at constant temperature: V ∝ 1/P or pV = k</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="c" id="q1c">
+                                <label for="q1c">The pressure of a gas is directly proportional to its temperature at constant volume: P ∝ T</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q1', 'b')">Check Answer</button>
+                        <div class="feedback" id="q1-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">2. Determine Relationship (LO 2): Describe the mathematical relationship between the volume and pressure of a fixed amount of gas if the temperature is kept constant. If the volume of the gas is reduced to one-quarter of its initial volume, how must the pressure change to maintain the validity of Boyle's Law?</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q2" value="a" id="q2a">
+                                <label for="q2a">Volume and pressure are directly proportional. If volume is reduced to one-quarter, pressure must also reduce to one-quarter.</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="b" id="q2b">
+                                <label for="q2b">Volume and pressure are inversely proportional. If volume is reduced to one-quarter, pressure must increase by a factor of four.</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="c" id="q2c">
+                                <label for="q2c">Volume and pressure are unrelated. Changing volume has no effect on pressure.</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q2', 'b')">Check Answer</button>
+                        <div class="feedback" id="q2-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">3. Identify Variables (LO 3): Identify the independent variable, the dependent variable, and the controlled variables required for a laboratory investigation of Boyle's Law.</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q3" value="a" id="q3a">
+                                <label for="q3a">Independent variable: Pressure; Dependent variable: Volume; Controlled variables: Temperature and amount of gas</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="b" id="q3b">
+                                <label for="q3b">Independent variable: Volume; Dependent variable: Pressure; Controlled variables: Temperature and amount of gas</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="c" id="q3c">
+                                <label for="q3c">Independent variable: Temperature; Dependent variable: Pressure; Controlled variables: Volume and amount of gas</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q3', 'b')">Check Answer</button>
+                        <div class="feedback" id="q3-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">4. Graphing and Interpretation (LO 4): Describe the shape of the graph obtained when plotting Volume (V) versus Pressure (P). What is the mathematical name for this shape?</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q4" value="a" id="q4a">
+                                <label for="q4a">A straight line passing through the origin</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="b" id="q4b">
+                                <label for="q4b">A curved graph known as a hyperbola</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="c" id="q4c">
+                                <label for="q4c">A parabolic curve</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q4', 'b')">Check Answer</button>
+                        <div class="feedback" id="q4-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">5. Application: In an experiment, the volume of a gas changes from 12 dm³ to 16 dm³. If the initial pressure was 400 kPa, what is the final pressure, assuming constant temperature?</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q5" value="a" id="q5a">
+                                <label for="q5a">300 kPa</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="b" id="q5b">
+                                <label for="q5b">533 kPa</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="c" id="q5c">
+                                <label for="q5c">400 kPa</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q5', 'a')">Check Answer</button>
+                        <div class="feedback" id="q5-feedback"></div>
+                    </li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <div class="navigation">
+                <button class="nav-btn" id="prevBtn" onclick="navigateSection(-1)" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="nav-btn" id="nextBtn" onclick="navigateSection(1)">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            <p>&copy; 2023 Physical Sciences Interactive Learning Platform. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Track current section for navigation
+        const sections = ['objectives', 'definitions', 'overview', 'main-body', 'conclusion', 'questions'];
+        let currentSectionIndex = 0;
+        let hyperbolaChart, linearChart;
+
+        // Update progress bar based on scroll position
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabButtons = document.getElementsByClassName("tab-button");
+            const tabContents = document.getElementsByClassName("tab-content");
+            
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Collapsible content functionality
+        function toggleCollapsible(element) {
+            element.classList.toggle("active");
+            const content = element.nextElementSibling;
+            content.classList.toggle("active");
+            
+            // Initialize charts when the graph section is opened
+            if (element.textContent.includes("Plotting and Interpreting Graphs") && content.classList.contains("active")) {
+                if (!hyperbolaChart) {
+                    initCharts();
+                }
+            }
+        }
+
+        // Check answer function
+        function checkAnswer(questionId, correctAnswer) {
+            const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
+            const feedbackElement = document.getElementById(`${questionId}-feedback`);
+            
+            if (!selectedOption) {
+                feedbackElement.textContent = 'Please select an answer.';
+                feedbackElement.className = 'feedback incorrect';
+                feedbackElement.style.display = 'block';
+                return;
+            }
+            
+            if (selectedOption.value === correctAnswer) {
+                feedbackElement.textContent = 'Correct! Well done.';
+                feedbackElement.className = 'feedback correct';
+            } else {
+                feedbackElement.textContent = 'Incorrect. Please review the lesson material and try again.';
+                feedbackElement.className = 'feedback incorrect';
+            }
+            
+            feedbackElement.style.display = 'block';
+        }
+
+        // Navigation between sections
+        function navigateSection(direction) {
+            currentSectionIndex += direction;
+            
+            // Ensure we stay within bounds
+            if (currentSectionIndex < 0) currentSectionIndex = 0;
+            if (currentSectionIndex >= sections.length) currentSectionIndex = sections.length - 1;
+            
+            // Scroll to the current section
+            const currentSection = document.getElementById(sections[currentSectionIndex]);
+            currentSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentSectionIndex === 0;
+            document.getElementById('nextBtn').disabled = currentSectionIndex === sections.length - 1;
+        }
+
+        // Initialize gas particles
+        function initGasParticles() {
+            const container = document.getElementById('gasParticles');
+            container.innerHTML = '';
+            
+            // Create particles
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'gas-particle';
+                particle.style.left = Math.random() * 180 + 10 + 'px';
+                particle.style.top = Math.random() * 180 + 10 + 'px';
+                
+                // Random initial velocity
+                particle.dataset.vx = (Math.random() - 0.5) * 2;
+                particle.dataset.vy = (Math.random() - 0.5) * 2;
+                
+                container.appendChild(particle);
+            }
+            
+            animateParticles();
+        }
+
+        // Animate gas particles
+        function animateParticles() {
+            const particles = document.querySelectorAll('.gas-particle');
+            const container = document.getElementById('gasContainer');
+            
+            particles.forEach(particle => {
+                let x = parseFloat(particle.style.left);
+                let y = parseFloat(particle.style.top);
+                let vx = parseFloat(particle.dataset.vx);
+                let vy = parseFloat(particle.dataset.vy);
+                
+                // Update position
+                x += vx;
+                y += vy;
+                
+                // Bounce off walls
+                if (x <= 0 || x >= container.offsetWidth - 8) {
+                    vx = -vx;
+                    particle.dataset.vx = vx;
+                }
+                
+                if (y <= 0 || y >= container.offsetHeight - 8) {
+                    vy = -vy;
+                    particle.dataset.vy = vy;
+                }
+                
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+            });
+            
+            requestAnimationFrame(animateParticles);
+        }
+
+        // Initialize charts
+        function initCharts() {
+            // Hyperbola chart (V vs P)
+            const hyperbolaCtx = document.getElementById('hyperbolaChart').getContext('2d');
+            hyperbolaChart = new Chart(hyperbolaCtx, {
+                type: 'line',
+                data: {
+                    labels: [50, 75, 100, 125, 150, 175, 200],
+                    datasets: [{
+                        label: 'Volume vs Pressure',
+                        data: [400, 267, 200, 160, 133, 114, 100],
+                        borderColor: 'rgb(59, 130, 246)',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Volume vs Pressure (Hyperbola)'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Pressure (kPa)'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Volume (cm³)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Linear chart (V vs 1/P)
+            const linearCtx = document.getElementById('linearChart').getContext('2d');
+            linearChart = new Chart(linearCtx, {
+                type: 'line',
+                data: {
+                    labels: [0.005, 0.0075, 0.01, 0.0125, 0.015, 0.0175, 0.02],
+                    datasets: [{
+                        label: 'Volume vs 1/Pressure',
+                        data: [0, 67, 100, 133, 167, 200, 233],
+                        borderColor: 'rgb(59, 130, 246)',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.1,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Volume vs 1/Pressure (Straight Line)'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: '1/Pressure (1/kPa)'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Volume (cm³)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize pressure slider
+        function initPressureSlider() {
+            const slider = document.getElementById('pressureSlider');
+            const pressureValue = document.getElementById('pressureValue');
+            const volumeValue = document.getElementById('volumeValue');
+            const productValue = document.getElementById('productValue');
+            const gasContainer = document.getElementById('gasContainer');
+            
+            // Initial values
+            const initialPressure = 100;
+            const initialVolume = 200;
+            const product = initialPressure * initialVolume;
+            
+            slider.addEventListener('input', function() {
+                const pressure = parseInt(this.value);
+                const volume = Math.round(product / pressure);
+                
+                pressureValue.textContent = pressure + ' kPa';
+                volumeValue.textContent = volume + ' cm³';
+                productValue.textContent = product;
+                
+                // Adjust container size based on volume
+                const containerSize = Math.max(100, Math.min(250, volume));
+                gasContainer.style.width = containerSize + 'px';
+                gasContainer.style.height = containerSize + 'px';
+            });
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set initial navigation state
+            document.getElementById('prevBtn').disabled = true;
+            
+            // Initialize gas particles
+            initGasParticles();
+            
+            // Initialize pressure slider
+            initPressureSlider();
+            
+            // Add smooth scrolling to all internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

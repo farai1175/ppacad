@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charles' Law - Interactive Lesson</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #1e40af;
+            --secondary-color: #3b82f6;
+            --accent-color: #60a5fa;
+            --light-color: #dbeafe;
+            --dark-color: #1e293b;
+            --text-color: #334155;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f8fafc;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .subject-grade {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            opacity: 0.9;
+        }
+
+        .topic {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .sub-topic {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .lesson-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .header-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: radial-gradient(circle, white 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 1;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: #eee;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .progress-indicator {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        main {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            background-color: #f9fafb;
+            border-left: 4px solid var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .section:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            font-size: 1.2rem;
+        }
+
+        .objectives-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .objectives-list li {
+            margin-bottom: 10px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .objectives-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background-color: #f1f1f1;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+            font-weight: bold;
+        }
+
+        .tab-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .tab-button.active {
+            background-color: white;
+            border-bottom: 3px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            border: 1px solid #ddd;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .definition-box {
+            background-color: var(--light-color);
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+        }
+
+        .definition-term {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .principle-box {
+            background-color: #f0f9ff;
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+        }
+
+        .principle-title {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+
+        .interactive-demo {
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin: 20px 0;
+            background-color: white;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .demo-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .demo-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .demo-btn.active {
+            background-color: var(--accent-color);
+        }
+
+        .demo-output {
+            border: 1px solid #eee;
+            padding: 15px;
+            min-height: 100px;
+            border-radius: var(--border-radius);
+            background-color: #f9f9f9;
+        }
+
+        .questions-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .question-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            border-left: 3px solid var(--accent-color);
+            transition: var(--transition);
+        }
+
+        .question-item:hover {
+            transform: translateX(5px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .question-options {
+            margin-left: 20px;
+        }
+
+        .option {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .option input {
+            margin-right: 5px;
+        }
+
+        .check-answer-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: var(--transition);
+        }
+
+        .check-answer-btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            display: none;
+        }
+
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .collapsible {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: var(--transition);
+            border-radius: var(--border-radius);
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .collapsible:hover {
+            background-color: #bfdbfe;
+        }
+
+        .collapsible.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .collapsible i {
+            transition: var(--transition);
+        }
+
+        .collapsible.active i {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            padding: 0 15px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: white;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+        }
+
+        .collapsible-content.active {
+            padding: 15px;
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in;
+        }
+
+        .formula-box {
+            background-color: #f8fafc;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-style: italic;
+            font-size: 1.2rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .nav-btn:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .charles-simulation {
+            position: relative;
+            height: 300px;
+            background-color: #f0f9ff;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gas-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .gas-particles {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .gas-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .slider-container {
+            margin: 20px 0;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .slider {
+            width: 100%;
+            height: 5px;
+            border-radius: 5px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .slider:hover {
+            opacity: 1;
+        }
+
+        .value-display {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+        }
+
+        .value-item {
+            text-align: center;
+            padding: 10px;
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+            min-width: 100px;
+        }
+
+        .value-label {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .value-number {
+            font-size: 1.2rem;
+            margin-top: 5px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+        }
+
+        .temp-converter {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .temp-input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .temp-input {
+            width: 120px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .temp-label {
+            margin-top: 5px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .conversion-arrow {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 0;
+            }
+            
+            body {
+                padding: 0;
+            }
+            
+            main {
+                padding: 15px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+            }
+            
+            .demo-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar">
+        <div class="progress-indicator" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="header-pattern"></div>
+            <div class="header-content">
+                <div class="subject-grade">PHYSICAL SCIENCES</div>
+                <h1 class="topic">IDEAL GASES AND THERMAL PROPERTIES</h1>
+                <div class="sub-topic">CHARLES' LAW</div>
+                <div class="lesson-title">COMPREHENSIVE LESSON PLAN: CHARLES' LAW</div>
+            </div>
+        </header>
+
+        <main>
+            <section class="section" id="objectives">
+                <h2 class="section-title"><i class="fas fa-bullseye"></i> Learning Objectives</h2>
+                <p>The following results will be the outcomes of this lesson. The learners must be able to:</p>
+                <ul class="objectives-list">
+                    <li>Describe the relationship between volume and temperature in Kelvins for a fixed amount of gas at constant pressure</li>
+                    <li>State Charles' Law</li>
+                    <li>Convert temperature in Degrees Celsius (°C) to Kelvin (K)</li>
+                    <li>Take readings of temperature and volume on Charles' Law apparatus</li>
+                    <li>Plot a graph of volume versus temperature using the results obtained from the investigation</li>
+                    <li>Use the derived formula of V₁/T₁ = V₂/T₂ to do the calculations</li>
+                </ul>
+            </section>
+
+            <section class="section" id="definitions">
+                <h2 class="section-title"><i class="fas fa-book"></i> Definitions and Scientific Principles</h2>
+                
+                <div class="tabs">
+                    <button class="tab-button active" onclick="openTab(event, 'definitions-tab')">Definitions</button>
+                    <button class="tab-button" onclick="openTab(event, 'principles-tab')">Scientific Principles</button>
+                </div>
+                
+                <div id="definitions-tab" class="tab-content active">
+                    <div class="definition-box">
+                        <div class="definition-term">Charles' Law:</div>
+                        <p>States that the volume (V) of a <strong>fixed amount of gas</strong> is <strong>directly proportional to the absolute temperature</strong> (T) of the gas at <strong>constant pressure</strong>.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Direct Proportionality:</div>
+                        <p>A relationship where one variable increases proportionally as the other increases.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Kelvin Temperature Scale (K):</div>
+                        <p>The temperature scale that begins at <strong>absolute zero</strong> (0 K). Temperatures measured in kelvin are called <strong>absolute temperatures</strong>.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Absolute Zero:</div>
+                        <p>The lowest possible theoretical temperature (-273°C) where the molecules of a gas would have no kinetic energy and stop moving.</p>
+                    </div>
+                </div>
+                
+                <div id="principles-tab" class="tab-content">
+                    <div class="principle-box">
+                        <div class="principle-title">Constant Conditions:</div>
+                        <p>Charles' Law is valid only when the <strong>amount of gas (moles, n)</strong> and the <strong>pressure (P)</strong> are kept constant.</p>
+                    </div>
+                    
+                    <div class="principle-box">
+                        <div class="principle-title">Kinetic Theory and Temperature:</div>
+                        <p>The temperature (T) of a gas is a measure of the <strong>average kinetic energy</strong> of its molecules. If temperature increases, the average speed of the molecules increases, leading to more frequent and stronger collisions.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="overview">
+                <h2 class="section-title"><i class="fas fa-eye"></i> Introduction</h2>
+                <p>The behavior of gases is defined by three fundamental relationships: Boyle's law, Charles' law, and Gay-Lussac's law. Charles' Law describes how the volume of a gas changes when its temperature changes, provided the pressure remains fixed. This relationship explains everyday phenomena, such as why balloons shrink in cold water and expand when heated. The key to correctly stating and using Charles' Law is recognizing that temperature must be measured on the absolute (Kelvin) scale.</p>
+                
+                <div class="interactive-demo">
+                    <h4>Interactive Temperature Converter</h4>
+                    <p>Use this tool to convert between Celsius and Kelvin temperatures:</p>
+                    
+                    <div class="temp-converter">
+                        <div class="temp-input-group">
+                            <input type="number" class="temp-input" id="celsiusInput" placeholder="Enter °C" onchange="convertTemp('c')">
+                            <div class="temp-label">Degrees Celsius (°C)</div>
+                        </div>
+                        
+                        <div class="conversion-arrow">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        
+                        <div class="temp-input-group">
+                            <input type="number" class="temp-input" id="kelvinInput" placeholder="Enter K" onchange="convertTemp('k')">
+                            <div class="temp-label">Kelvin (K)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="formula-box">
+                        T (K) = t (°C) + 273
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="main-body">
+                <h2 class="section-title"><i class="fas fa-atom"></i> Main Body: Principles of Charles' Law</h2>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    I. Relationship between Volume and Temperature (LO 1)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>Charles' Law established that the volume (V) and the absolute temperature (T) of a fixed amount of gas at constant pressure are <strong>directly proportional</strong>.</p>
+                    
+                    <ul>
+                        <li>This means that if you <strong>double the absolute temperature</strong> of a gas, the <strong>volume also doubles</strong> (at constant pressure).</li>
+                        <li>Similarly, if you decrease the temperature to one quarter of its value, the volume also decreases to one quarter.</li>
+                        <li>In symbols: <strong>V ∝ T</strong>.</li>
+                    </ul>
+                    
+                    <div class="charles-simulation">
+                        <div class="gas-container" id="gasContainer">
+                            <div class="gas-particles" id="gasParticles">
+                                <!-- Gas particles will be generated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <div class="slider-label">
+                            <span>Low Temperature</span>
+                            <span>High Temperature</span>
+                        </div>
+                        <input type="range" min="200" max="500" value="300" class="slider" id="temperatureSlider">
+                    </div>
+                    
+                    <div class="value-display">
+                        <div class="value-item">
+                            <div class="value-label">Temperature</div>
+                            <div class="value-number" id="tempValue">300 K</div>
+                        </div>
+                        <div class="value-item">
+                            <div class="value-label">Volume</div>
+                            <div class="value-number" id="volumeValue">150 cm³</div>
+                        </div>
+                        <div class="value-item">
+                            <div class="value-label">V/T</div>
+                            <div class="value-number" id="ratioValue">0.5</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    II. Stating the Law (LO 2)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p><strong>Charles' law states that the volume of a fixed amount of gas is directly proportional to the absolute temperature of the gas at constant pressure</strong>.</p>
+                    
+                    <p>Mathematically, this proportionality can be converted into an equation: <strong>V/T = k</strong>, where k is a constant.</p>
+                    
+                    <div class="formula-box">
+                        V ∝ T
+                    </div>
+                    
+                    <div class="formula-box">
+                        V/T = k
+                    </div>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    III. Temperature Scales and Conversion (LO 3)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>In gas law calculations, temperature <strong>must always be measured in kelvin (K)</strong>.</p>
+                    
+                    <ul>
+                        <li>The Celsius temperature scale is problematic because 0°C (the freezing point of water) is not true zero temperature.</li>
+                        <li>The <strong>absolute zero</strong> of temperature is defined as -273°C or 0 K.</li>
+                        <li>The formula for converting between Celsius temperature (t) and Kelvin temperature (T) is:</li>
+                    </ul>
+                    
+                    <div class="formula-box">
+                        T (K) = t (°C) + 273
+                    </div>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    IV. Investigation and Plotting Graphs (LO 4 & LO 5)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>An experiment to verify Charles' Law involves measuring the volume of a gas sample at different temperatures while ensuring the amount of gas and the pressure remain constant.</p>
+                    
+                    <h4>1. Taking Readings and Variables (LO 4):</h4>
+                    <ul>
+                        <li><strong>Apparatus</strong> often includes a syringe with a stopper placed in a glass beaker filled with water and a thermometer.</li>
+                        <li>The apparatus is initially placed in ice water, and then heated slowly.</li>
+                        <li>Readings of the <strong>temperature (t or T)</strong> and the corresponding <strong>volume (V)</strong> are taken at regular intervals.</li>
+                    </ul>
+                    
+                    <p>The variables are:</p>
+                    <ul>
+                        <li><strong>Independent Variable:</strong> Temperature (T or t), which is intentionally changed by heating the water.</li>
+                        <li><strong>Dependent Variable:</strong> Volume (V), which changes as a result of the temperature change.</li>
+                        <li><strong>Controlled Variables (Constants):</strong> Pressure and the amount of gas.</li>
+                    </ul>
+                    
+                    <h4>2. Plotting Graphs (LO 5):</h4>
+                    <ul>
+                        <li><strong>Volume versus Kelvin Temperature (V vs T):</strong> Plotting volume against absolute temperature yields a <strong>straight line graph that passes through the origin</strong>. This straight line confirms that volume is <strong>directly proportional</strong> to the absolute temperature.</li>
+                        <li><strong>Volume versus Celsius Temperature (V vs t):</strong> Plotting volume against temperature in °C results in a straight line that <strong>does not pass through the origin</strong>. By extrapolating (extending) the line backwards until it cuts the x-axis (the temperature axis), the value of <strong>-273°C (absolute zero)</strong> is found.</li>
+                    </ul>
+                    
+                    <div class="chart-container">
+                        <canvas id="kelvinChart"></canvas>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <canvas id="celsiusChart"></canvas>
+                    </div>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    V. Calculations using Charles' Law (LO 6)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>Since the ratio of volume to absolute temperature is constant (V/T = k), Charles' Law is written mathematically for calculations involving changing conditions:</p>
+                    
+                    <div class="formula-box">
+                        V₁/T₁ = V₂/T₂
+                    </div>
+                    
+                    <p>When performing calculations:</p>
+                    <ol>
+                        <li>All temperatures given in degrees Celsius must first be <strong>converted to Kelvin</strong> by adding 273.</li>
+                        <li>The volume units (V₁ and V₂) must be the same, but they do not need to be SI units.</li>
+                    </ol>
+                    
+                    <div class="interactive-demo">
+                        <h4>Charles' Law Calculator</h4>
+                        <p>Use this calculator to solve Charles' Law problems:</p>
+                        
+                        <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;">
+                            <div style="flex: 1; min-width: 200px;">
+                                <label for="v1Input" style="display: block; margin-bottom: 5px; font-weight: bold;">Initial Volume (V₁):</label>
+                                <input type="number" id="v1Input" class="temp-input" style="width: 100%;" placeholder="Enter V₁">
+                            </div>
+                            
+                            <div style="flex: 1; min-width: 200px;">
+                                <label for="t1Input" style="display: block; margin-bottom: 5px; font-weight: bold;">Initial Temperature (T₁):</label>
+                                <input type="number" id="t1Input" class="temp-input" style="width: 100%;" placeholder="Enter T₁ (K)">
+                            </div>
+                            
+                            <div style="flex: 1; min-width: 200px;">
+                                <label for="t2Input" style="display: block; margin-bottom: 5px; font-weight: bold;">Final Temperature (T₂):</label>
+                                <input type="number" id="t2Input" class="temp-input" style="width: 100%;" placeholder="Enter T₂ (K)">
+                            </div>
+                        </div>
+                        
+                        <button class="demo-btn" style="margin: 15px auto; display: block;" onclick="calculateCharlesLaw()">Calculate Final Volume (V₂)</button>
+                        
+                        <div id="calculationResult" style="text-align: center; font-size: 1.2rem; font-weight: bold; color: var(--primary-color); margin-top: 15px;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="conclusion">
+                <h2 class="section-title"><i class="fas fa-check-circle"></i> Conclusion</h2>
+                <p>Charles' Law demonstrates the <strong>direct proportionality</strong> between the volume and the absolute temperature of a gas when pressure and amount are constant. This relationship is verifiable through experimentation, yielding a straight line when volume is plotted against temperature in Kelvin, which passes through the origin. Mastery of Charles' Law relies on the strict adherence to the <strong>Kelvin temperature scale</strong> in all calculations, as defined by the relationship K = °C + 273.</p>
+            </section>
+
+            <section class="section" id="questions">
+                <h2 class="section-title"><i class="fas fa-question-circle"></i> End-of-Lesson Questions</h2>
+                
+                <ul class="questions-list">
+                    <li class="question-item">
+                        <div class="question-text">1. State Charles' Law (LO 2): State Charles' Law in words and in symbols, including the proportionality constant k.</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q1" value="a" id="q1a">
+                                <label for="q1a">The volume of a fixed amount of gas is inversely proportional to its absolute temperature at constant pressure: V ∝ 1/T</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="b" id="q1b">
+                                <label for="q1b">The volume of a fixed amount of gas is directly proportional to its absolute temperature at constant pressure: V ∝ T or V/T = k</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="c" id="q1c">
+                                <label for="q1c">The pressure of a fixed amount of gas is directly proportional to its absolute temperature at constant volume: P ∝ T</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q1', 'b')">Check Answer</button>
+                        <div class="feedback" id="q1-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">2. Describe Relationship (LO 1): Describe the relationship between the volume and the temperature of a gas as defined by Charles' Law. What happens to the volume of a gas if its absolute temperature is tripled while pressure is kept constant?</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q2" value="a" id="q2a">
+                                <label for="q2a">Volume and temperature are directly proportional. If the absolute temperature is tripled, the volume also triples.</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="b" id="q2b">
+                                <label for="q2b">Volume and temperature are inversely proportional. If the absolute temperature is tripled, the volume becomes one-third.</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="c" id="q2c">
+                                <label for="q2c">Volume and temperature are unrelated. Changing temperature has no effect on volume.</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q2', 'a')">Check Answer</button>
+                        <div class="feedback" id="q2-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">3. Temperature Conversion (LO 3): Convert 52°C to Kelvin (K).</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q3" value="a" id="q3a">
+                                <label for="q3a">325 K</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="b" id="q3b">
+                                <label for="q3b">221 K</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="c" id="q3c">
+                                <label for="q3c">52 K</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q3', 'a')">Check Answer</button>
+                        <div class="feedback" id="q3-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">4. Identify Variables (LO 4): For an investigation to verify Charles' Law, identify the independent variable.</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q4" value="a" id="q4a">
+                                <label for="q4a">Volume (V)</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="b" id="q4b">
+                                <label for="q4b">Temperature (T)</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="c" id="q4c">
+                                <label for="q4c">Pressure (P)</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q4', 'b')">Check Answer</button>
+                        <div class="feedback" id="q4-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">5. Graphing (LO 5): Describe the shape of the graph obtained when plotting volume versus temperature in degrees Celsius (V vs °C).</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q5" value="a" id="q5a">
+                                <label for="q5a">A straight line that passes through the origin</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="b" id="q5b">
+                                <label for="q5b">A straight line that does not pass through the origin</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="c" id="q5c">
+                                <label for="q5c">A curved hyperbolic graph</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q5', 'b')">Check Answer</button>
+                        <div class="feedback" id="q5-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">6. Calculation (LO 6): A quantity of gas with a volume of 9 dm³ has a temperature of 27°C. If the pressure is kept constant and the gas is heated to 52°C, calculate the new volume of the gas.</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q6" value="a" id="q6a">
+                                <label for="q6a">9.75 dm³</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q6" value="b" id="q6b">
+                                <label for="q6b">8.31 dm³</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q6" value="c" id="q6c">
+                                <label for="q6c">9 dm³</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q6', 'a')">Check Answer</button>
+                        <div class="feedback" id="q6-feedback"></div>
+                    </li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <div class="navigation">
+                <button class="nav-btn" id="prevBtn" onclick="navigateSection(-1)" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="nav-btn" id="nextBtn" onclick="navigateSection(1)">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            <p>&copy; 2023 Physical Sciences Interactive Learning Platform. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Track current section for navigation
+        const sections = ['objectives', 'definitions', 'overview', 'main-body', 'conclusion', 'questions'];
+        let currentSectionIndex = 0;
+        let kelvinChart, celsiusChart;
+
+        // Update progress bar based on scroll position
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabButtons = document.getElementsByClassName("tab-button");
+            const tabContents = document.getElementsByClassName("tab-content");
+            
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Collapsible content functionality
+        function toggleCollapsible(element) {
+            element.classList.toggle("active");
+            const content = element.nextElementSibling;
+            content.classList.toggle("active");
+            
+            // Initialize charts when the graph section is opened
+            if (element.textContent.includes("Investigation and Plotting Graphs") && content.classList.contains("active")) {
+                if (!kelvinChart) {
+                    initCharts();
+                }
+            }
+        }
+
+        // Check answer function
+        function checkAnswer(questionId, correctAnswer) {
+            const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
+            const feedbackElement = document.getElementById(`${questionId}-feedback`);
+            
+            if (!selectedOption) {
+                feedbackElement.textContent = 'Please select an answer.';
+                feedbackElement.className = 'feedback incorrect';
+                feedbackElement.style.display = 'block';
+                return;
+            }
+            
+            if (selectedOption.value === correctAnswer) {
+                feedbackElement.textContent = 'Correct! Well done.';
+                feedbackElement.className = 'feedback correct';
+            } else {
+                feedbackElement.textContent = 'Incorrect. Please review the lesson material and try again.';
+                feedbackElement.className = 'feedback incorrect';
+            }
+            
+            feedbackElement.style.display = 'block';
+        }
+
+        // Navigation between sections
+        function navigateSection(direction) {
+            currentSectionIndex += direction;
+            
+            // Ensure we stay within bounds
+            if (currentSectionIndex < 0) currentSectionIndex = 0;
+            if (currentSectionIndex >= sections.length) currentSectionIndex = sections.length - 1;
+            
+            // Scroll to the current section
+            const currentSection = document.getElementById(sections[currentSectionIndex]);
+            currentSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentSectionIndex === 0;
+            document.getElementById('nextBtn').disabled = currentSectionIndex === sections.length - 1;
+        }
+
+        // Temperature conversion
+        function convertTemp(from) {
+            const celsiusInput = document.getElementById('celsiusInput');
+            const kelvinInput = document.getElementById('kelvinInput');
+            
+            if (from === 'c') {
+                const celsius = parseFloat(celsiusInput.value);
+                if (!isNaN(celsius)) {
+                    kelvinInput.value = celsius + 273;
+                }
+            } else {
+                const kelvin = parseFloat(kelvinInput.value);
+                if (!isNaN(kelvin)) {
+                    celsiusInput.value = kelvin - 273;
+                }
+            }
+        }
+
+        // Initialize gas particles
+        function initGasParticles() {
+            const container = document.getElementById('gasParticles');
+            container.innerHTML = '';
+            
+            // Create particles
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'gas-particle';
+                particle.style.left = Math.random() * 140 + 5 + 'px';
+                particle.style.top = Math.random() * 140 + 5 + 'px';
+                
+                // Random initial velocity
+                particle.dataset.vx = (Math.random() - 0.5) * 2;
+                particle.dataset.vy = (Math.random() - 0.5) * 2;
+                
+                container.appendChild(particle);
+            }
+            
+            animateParticles();
+        }
+
+        // Animate gas particles
+        function animateParticles() {
+            const particles = document.querySelectorAll('.gas-particle');
+            const container = document.getElementById('gasContainer');
+            
+            particles.forEach(particle => {
+                let x = parseFloat(particle.style.left);
+                let y = parseFloat(particle.style.top);
+                let vx = parseFloat(particle.dataset.vx);
+                let vy = parseFloat(particle.dataset.vy);
+                
+                // Update position
+                x += vx;
+                y += vy;
+                
+                // Bounce off walls
+                if (x <= 0 || x >= container.offsetWidth - 8) {
+                    vx = -vx;
+                    particle.dataset.vx = vx;
+                }
+                
+                if (y <= 0 || y >= container.offsetHeight - 8) {
+                    vy = -vy;
+                    particle.dataset.vy = vy;
+                }
+                
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+            });
+            
+            requestAnimationFrame(animateParticles);
+        }
+
+        // Initialize temperature slider
+        function initTemperatureSlider() {
+            const slider = document.getElementById('temperatureSlider');
+            const tempValue = document.getElementById('tempValue');
+            const volumeValue = document.getElementById('volumeValue');
+            const ratioValue = document.getElementById('ratioValue');
+            const gasContainer = document.getElementById('gasContainer');
+            
+            // Initial values
+            const initialTemp = 300;
+            const initialVolume = 150;
+            const ratio = initialVolume / initialTemp;
+            
+            slider.addEventListener('input', function() {
+                const temperature = parseInt(this.value);
+                const volume = Math.round(ratio * temperature);
+                
+                tempValue.textContent = temperature + ' K';
+                volumeValue.textContent = volume + ' cm³';
+                ratioValue.textContent = ratio.toFixed(2);
+                
+                // Adjust container size based on volume
+                const containerSize = Math.max(100, Math.min(250, volume));
+                gasContainer.style.width = containerSize + 'px';
+                gasContainer.style.height = containerSize + 'px';
+                
+                // Adjust particle speed based on temperature
+                const particles = document.querySelectorAll('.gas-particle');
+                const speedMultiplier = temperature / 300; // Relative to initial temperature
+                
+                particles.forEach(particle => {
+                    const baseVx = parseFloat(particle.dataset.vx);
+                    const baseVy = parseFloat(particle.dataset.vy);
+                    
+                    particle.dataset.vx = baseVx * speedMultiplier;
+                    particle.dataset.vy = baseVy * speedMultiplier;
+                });
+            });
+        }
+
+        // Initialize charts
+        function initCharts() {
+            // Kelvin chart (V vs T)
+            const kelvinCtx = document.getElementById('kelvinChart').getContext('2d');
+            kelvinChart = new Chart(kelvinCtx, {
+                type: 'line',
+                data: {
+                    labels: [200, 250, 300, 350, 400, 450, 500],
+                    datasets: [{
+                        label: 'Volume vs Kelvin Temperature',
+                        data: [100, 125, 150, 175, 200, 225, 250],
+                        borderColor: 'rgb(59, 130, 246)',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.1,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Volume vs Kelvin Temperature (Straight Line Through Origin)'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Temperature (K)'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Volume (cm³)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Celsius chart (V vs °C)
+            const celsiusCtx = document.getElementById('celsiusChart').getContext('2d');
+            celsiusChart = new Chart(celsiusCtx, {
+                type: 'line',
+                data: {
+                    labels: [-273, -200, -100, 0, 100, 200],
+                    datasets: [{
+                        label: 'Volume vs Celsius Temperature',
+                        data: [0, 73, 146, 219, 292, 365],
+                        borderColor: 'rgb(59, 130, 246)',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.1,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Volume vs Celsius Temperature (Straight Line Not Through Origin)'
+                        },
+                        annotation: {
+                            annotations: {
+                                point1: {
+                                    type: 'point',
+                                    xValue: -273,
+                                    yValue: 0,
+                                    backgroundColor: 'rgba(255, 99, 132, 0.8)',
+                                    borderColor: 'rgb(255, 99, 132)',
+                                    borderWidth: 2,
+                                    radius: 6
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Temperature (°C)'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Volume (cm³)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Charles' Law calculator
+        function calculateCharlesLaw() {
+            const v1 = parseFloat(document.getElementById('v1Input').value);
+            const t1 = parseFloat(document.getElementById('t1Input').value);
+            const t2 = parseFloat(document.getElementById('t2Input').value);
+            const resultDiv = document.getElementById('calculationResult');
+            
+            if (isNaN(v1) || isNaN(t1) || isNaN(t2)) {
+                resultDiv.textContent = 'Please enter valid numbers for all fields.';
+                resultDiv.style.color = 'red';
+                return;
+            }
+            
+            // Calculate V2 using Charles' Law: V1/T1 = V2/T2
+            const v2 = (v1 * t2) / t1;
+            
+            resultDiv.textContent = `V₂ = ${v2.toFixed(2)} cm³`;
+            resultDiv.style.color = 'var(--primary-color)';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set initial navigation state
+            document.getElementById('prevBtn').disabled = true;
+            
+            // Initialize gas particles
+            initGasParticles();
+            
+            // Initialize temperature slider
+            initTemperatureSlider();
+            
+            // Add smooth scrolling to all internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

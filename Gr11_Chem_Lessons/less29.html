@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activation Energy and the Activated Complex</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .lesson-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .main-content {
+            flex: 3;
+            min-width: 300px;
+        }
+        
+        .sidebar {
+            flex: 1;
+            min-width: 250px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .section-header:hover {
+            background-color: #34495e;
+        }
+        
+        .section-header h2 {
+            font-size: 1.4rem;
+            margin: 0;
+        }
+        
+        .section-content {
+            padding: 20px;
+            display: none;
+        }
+        
+        .section.active .section-content {
+            display: block;
+        }
+        
+        .section.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .toggle-icon {
+            transition: transform 0.3s;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--light-color);
+            font-weight: 600;
+        }
+        
+        .definition-table th:first-child {
+            width: 30%;
+        }
+        
+        .energy-diagram {
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .diagram-container {
+            position: relative;
+            height: 350px;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+        
+        .energy-axis {
+            position: absolute;
+            left: 50px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #333;
+        }
+        
+        .axis-label {
+            position: absolute;
+            left: 20px;
+            font-weight: bold;
+        }
+        
+        .reaction-path {
+            position: absolute;
+            left: 100px;
+            width: 400px;
+            height: 2px;
+            background-color: #333;
+        }
+        
+        .energy-level {
+            position: absolute;
+            width: 80px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: all 0.5s ease;
+        }
+        
+        .reactants {
+            background-color: var(--secondary-color);
+            top: 250px;
+            left: 100px;
+        }
+        
+        .products {
+            background-color: var(--accent-color);
+            top: 150px;
+            left: 420px;
+        }
+        
+        .activated-complex {
+            position: absolute;
+            width: 100px;
+            height: 40px;
+            background-color: var(--warning-color);
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            top: 50px;
+            left: 250px;
+        }
+        
+        .energy-label {
+            position: absolute;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .ea-label {
+            color: var(--warning-color);
+        }
+        
+        .delta-h-label {
+            color: var(--accent-color);
+        }
+        
+        .catalyst-path {
+            position: absolute;
+            left: 100px;
+            width: 400px;
+            height: 2px;
+            background-color: #333;
+            display: none;
+        }
+        
+        .catalyst-complex {
+            position: absolute;
+            width: 100px;
+            height: 40px;
+            background-color: var(--success-color);
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            top: 120px;
+            left: 250px;
+            display: none;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .active-btn {
+            background-color: var(--primary-color);
+        }
+        
+        .quiz-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .quiz-question {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .quiz-question:last-child {
+            border-bottom: none;
+        }
+        
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .option.selected {
+            background-color: var(--light-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .option.correct {
+            background-color: rgba(46, 204, 113, 0.2);
+            border-color: var(--success-color);
+        }
+        
+        .option.incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            border-color: var(--danger-color);
+        }
+        
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            display: block;
+        }
+        
+        .feedback.incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            color: #c0392b;
+            display: block;
+        }
+        
+        .submit-btn {
+            background-color: var(--primary-color);
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+        
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .results.success {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            display: block;
+        }
+        
+        .results.warning {
+            background-color: rgba(243, 156, 18, 0.2);
+            color: #d35400;
+            display: block;
+        }
+        
+        .key-point {
+            background-color: var(--light-color);
+            padding: 15px;
+            border-left: 4px solid var(--secondary-color);
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .math {
+            font-family: "Times New Roman", serif;
+            font-style: italic;
+        }
+        
+        .calculation-box {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .calculation-formula {
+            font-size: 1.2rem;
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        .calculation-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+        
+        .calculation-input input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 120px;
+        }
+        
+        .calculation-result {
+            font-weight: bold;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .lesson-content {
+                flex-direction: column;
+            }
+            
+            .diagram-container {
+                height: 300px;
+            }
+            
+            .reaction-path {
+                width: 300px;
+            }
+            
+            .reactants {
+                left: 50px;
+            }
+            
+            .products {
+                left: 350px;
+            }
+            
+            .activated-complex {
+                left: 175px;
+            }
+            
+            .catalyst-complex {
+                left: 175px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Activation Energy and the Activated Complex</h1>
+            <div class="subtitle">Chemical Change - Physical Sciences (Chemistry Focus)</div>
+        </header>
+        
+        <div class="lesson-content">
+            <div class="main-content">
+                <div class="section" id="objectives">
+                    <div class="section-header">
+                        <h2>Learning Objectives</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>Upon completion of this lesson, students should be able to:</p>
+                        <ol>
+                            <li><strong>Define activation energy</strong> and explain its role in chemical reactions.</li>
+                            <li><strong>Describe the activated complex</strong> as a transition state from reactants to products.</li>
+                            <li><strong>Draw or interpret fully labelled sketch graphs</strong> (potential energy versus course of reaction graphs) of catalysed and uncatalysed endothermic and exothermic reactions.</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="section" id="definitions">
+                    <div class="section-header">
+                        <h2>Definitions and Scientific Principles</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <table class="definition-table">
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Definition/Principle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Activation Energy (E<sub>A</sub>)</strong></td>
+                                    <td>
+                                        The <strong>minimum energy required to start a chemical reaction</strong>. 
+                                        It is the energy needed to break the bonds in the reactants so that new bonds can form in the products. 
+                                        It is the minimum energy needed for a reaction to take place.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Activated Complex</strong></td>
+                                    <td>
+                                        It is an <strong>intermediate state</strong> in a chemical reaction that is formed while bonds are breaking and new bonds are forming. 
+                                        It is highly unstable and represents the point of <strong>maximum potential energy</strong> during the reaction pathway.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Catalyst</strong></td>
+                                    <td>
+                                        A substance that <strong>increases the rate of a chemical reaction</strong> without itself undergoing a permanent change. 
+                                        It increases the reaction rate by providing an alternative path of <strong>lower activation energy</strong>.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="section" id="introduction">
+                    <div class="section-header">
+                        <h2>Introduction</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>
+                            We learned that chemical reactions involve breaking bonds (which absorbs energy) and forming new bonds (which releases energy). 
+                            However, simply mixing reactants is often not enough to start a reaction; most reactions require an initial energy input.
+                        </p>
+                        <p>
+                            This required energy links to the <strong>Collision Theory</strong>, which states that for a reaction to take place (an effective collision), 
+                            reacting molecules must collide with the <strong>correct orientation</strong> and possess <strong>enough kinetic energy</strong> to overcome repulsive forces and break initial bonds. 
+                            If particles collide with less energy than the minimum requirement, no reaction occurs. This minimum energy required to initiate the reaction is the <strong>Activation Energy</strong>.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="section" id="main-body">
+                    <div class="section-header">
+                        <h2>Main Body</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <h3>1. Activation Energy (E<sub>A</sub>)</h3>
+                        <p>
+                            Activation energy (E<sub>A</sub>) is the <strong>minimum energy required to start a chemical reaction</strong>. 
+                            It is the energy required to break the bonds in the reactants. Since energy must be absorbed to break bonds, 
+                            the activation energy value is <strong>always positive</strong>.
+                        </p>
+                        
+                        <h3>2. The Activated Complex</h3>
+                        <p>
+                            As reactants absorb the activation energy, they reach an intermediate state called the activated complex.
+                        </p>
+                        <ul>
+                            <li>The activated complex is a <strong>temporary transition state</strong> between the reactants and the products.</li>
+                            <li>It is formed while the existing reactant bonds are breaking and the new product bonds are forming simultaneously.</li>
+                            <li>The system's potential energy is at its <strong>maximum</strong> when the activated complex forms. Because it is highly unstable, it exists for only a very short period of time before converting either back to the original reactants or proceeding forward to form the stable products.</li>
+                        </ul>
+                        
+                        <h3>3. Energy Graphs (Potential Energy vs. Course of Reaction)</h3>
+                        <p>
+                            Potential energy diagrams illustrate the energy changes during a reaction, showing the pathway from reactants to products.
+                        </p>
+                        
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Component Labelled</th>
+                                    <th>Calculation/Definition</th>
+                                    <th>Exothermic Reaction</th>
+                                    <th>Endothermic Reaction</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Reactants</strong></td>
+                                    <td>Starting potential energy level.</td>
+                                    <td>E<sub>reactants</sub> > E<sub>products</sub></td>
+                                    <td>E<sub>reactants</sub> < E<sub>products</sub></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Products</strong></td>
+                                    <td>Final potential energy level.</td>
+                                    <td>E<sub>products</sub> < E<sub>reactants</sub></td>
+                                    <td>E<sub>products</sub> > E<sub>reactants</sub></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Activated Complex</strong></td>
+                                    <td>Maximum peak energy point (E<sub>peak</sub>).</td>
+                                    <td>Highly unstable transition state.</td>
+                                    <td>Highly unstable transition state.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Activation Energy (E<sub>A</sub>)</strong></td>
+                                    <td>E<sub>A</sub> = E<sub>peak</sub> - E<sub>reactants</sub></td>
+                                    <td>Energy absorbed to reach transition state.</td>
+                                    <td>Energy absorbed to reach transition state.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Heat of Reaction (ΔH)</strong></td>
+                                    <td>ΔH = E<sub>products</sub> - E<sub>reactants</sub></td>
+                                    <td>Negative (ΔH < 0)</td>
+                                    <td>Positive (ΔH > 0)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <div class="key-point">
+                            <strong>Note:</strong> The activation energy (E<sub>A</sub>) for endothermic reactions is typically greater than that for exothermic reactions.
+                        </div>
+                        
+                        <div class="energy-diagram">
+                            <h3>Interactive Energy Diagram</h3>
+                            <div class="diagram-container">
+                                <div class="energy-axis"></div>
+                                <div class="axis-label" style="top: 10px;">Potential Energy</div>
+                                <div class="axis-label" style="bottom: 10px; left: 250px;">Course of Reaction</div>
+                                
+                                <!-- Uncatalysed reaction path -->
+                                <div class="reaction-path" id="uncatalysed-path" style="top: 270px; height: 2px;"></div>
+                                
+                                <!-- Catalysed reaction path -->
+                                <div class="catalyst-path" id="catalysed-path" style="top: 270px; height: 2px;"></div>
+                                
+                                <!-- Energy levels -->
+                                <div class="energy-level reactants">Reactants</div>
+                                <div class="energy-level products">Products</div>
+                                <div class="activated-complex" id="uncatalysed-complex">Activated Complex</div>
+                                <div class="catalyst-complex" id="catalysed-complex">Catalysed Complex</div>
+                                
+                                <!-- Labels -->
+                                <div class="energy-label ea-label" id="ea-label" style="top: 150px; left: 200px;">E<sub>A</sub></div>
+                                <div class="energy-label delta-h-label" id="delta-h-label" style="top: 200px; left: 350px;">ΔH</div>
+                                <div class="energy-label" id="catalyst-ea-label" style="top: 180px; left: 200px; color: var(--success-color); display: none;">E<sub>A</sub> (catalysed)</div>
+                            </div>
+                            <div class="controls">
+                                <button id="show-exothermic">Exothermic Reaction</button>
+                                <button id="show-endothermic">Endothermic Reaction</button>
+                                <button id="toggle-catalyst">Add/Remove Catalyst</button>
+                                <button id="reset-diagram">Reset Diagram</button>
+                            </div>
+                        </div>
+                        
+                        <h3>4. The Effect of a Catalyst</h3>
+                        <p>
+                            A catalyst is a chemical substance that increases the rate of reaction but remains unchanged at the end of the reaction. 
+                            Catalysts function by <strong>lowering the total activation energy (E<sub>A</sub>)</strong> required for the reaction.
+                        </p>
+                        <p>When drawing or interpreting graphs showing the effect of a catalyst:</p>
+                        <ol>
+                            <li>The catalyst provides an <strong>alternative reaction pathway</strong>.</li>
+                            <li>This new pathway has a <strong>lower peak energy</strong> (lower E<sub>A</sub>) than the uncatalysed pathway.</li>
+                            <li>The effect of the catalyst is shown by drawing a second curve (often dashed or dotted) with a <strong>lower maximum peak</strong>.</li>
+                            <li>Crucially, the catalyst <strong>does not affect the energy of the reactants or products</strong>, meaning the heat of reaction (ΔH) remains unchanged.</li>
+                        </ol>
+                        
+                        <div class="calculation-box">
+                            <h3>Activation Energy Calculation</h3>
+                            <p>Use the formula to calculate the energy of the activated complex:</p>
+                            <div class="calculation-formula">
+                                E<sub>activated complex</sub> = E<sub>reactants</sub> + E<sub>A</sub>
+                            </div>
+                            <div class="calculation-input">
+                                <label for="reactants-energy">Energy of reactants (kJ/mol):</label>
+                                <input type="number" id="reactants-energy" placeholder="e.g., 50">
+                            </div>
+                            <div class="calculation-input">
+                                <label for="activation-energy">Activation energy (kJ/mol):</label>
+                                <input type="number" id="activation-energy" placeholder="e.g., 150">
+                            </div>
+                            <button id="calculate-energy">Calculate Energy of Activated Complex</button>
+                            <div class="calculation-result" id="calculation-result"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section" id="conclusion">
+                    <div class="section-header">
+                        <h2>Conclusion</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>
+                            Activation energy (E<sub>A</sub>) represents the energy barrier that must be overcome for reactants to transform into products, 
+                            necessitating an initial minimum energy input. Once this energy is reached, the highly unstable, short-lived activated complex forms. 
+                            Potential energy diagrams visually map this process, showing the energy required (E<sub>A</sub>) and the net energy change (ΔH). 
+                            Catalysts speed up reactions by reducing this energy barrier, lowering E<sub>A</sub> without altering the final energy difference (ΔH).
+                        </p>
+                        
+                        <div class="key-point">
+                            <strong>Key Takeaway:</strong> Remember that E<sub>A</sub> = E<sub>activated complex</sub> - E<sub>reactants</sub> and 
+                            ΔH = E<sub>products</sub> - E<sub>reactants</sub>. A catalyst lowers E<sub>A</sub> but does not change ΔH.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quiz-container" id="quiz">
+                    <h2>End-of-Lesson Questions</h2>
+                    <p>Test your understanding of activation energy and the activated complex. Select the correct answer for each question.</p>
+                    
+                    <div class="quiz-question" id="q1">
+                        <div class="question-text">1. Define activation energy (E<sub>A</sub>).</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">The total energy released in a chemical reaction</div>
+                            <div class="option" data-correct="true">The minimum energy required to start a chemical reaction</div>
+                            <div class="option" data-correct="false">The energy difference between products and reactants</div>
+                            <div class="option" data-correct="false">The energy stored in chemical bonds</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q2">
+                        <div class="question-text">2. Define the activated complex.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">The final stable products of a chemical reaction</div>
+                            <div class="option" data-correct="false">The initial reactants before a chemical reaction</div>
+                            <div class="option" data-correct="true">An intermediate state with maximum potential energy during a reaction</div>
+                            <div class="option" data-correct="false">A substance that lowers the activation energy of a reaction</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q3">
+                        <div class="question-text">3. Explain the relationship between the activation energy and the activated complex in terms of potential energy.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">The activated complex has lower potential energy than the reactants</div>
+                            <div class="option" data-correct="true">The activated complex represents the point of maximum potential energy, reached by overcoming the activation energy barrier</div>
+                            <div class="option" data-correct="false">Activation energy is the energy released when the activated complex forms</div>
+                            <div class="option" data-correct="false">The activated complex and activation energy are unrelated concepts</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q4">
+                        <div class="question-text">4. If a reaction has an activation energy of 150 kJ·mol⁻¹ and the reactants have an energy content of 50 kJ·mol⁻¹, what is the energy of the activated complex?</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">100 kJ·mol⁻¹</div>
+                            <div class="option" data-correct="false">50 kJ·mol⁻¹</div>
+                            <div class="option" data-correct="true">200 kJ·mol⁻¹</div>
+                            <div class="option" data-correct="false">150 kJ·mol⁻¹</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q5">
+                        <div class="question-text">5. Study the potential energy diagram of an exothermic reaction. If a catalyst is added to this reaction, describe the resulting change to the graph and explain why the catalyst does not affect the heat of reaction (ΔH).</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">The catalyst lowers both the activation energy and the energy of the products, changing ΔH</div>
+                            <div class="option" data-correct="true">The catalyst provides an alternative pathway with lower activation energy, but the energies of reactants and products remain unchanged, so ΔH stays the same</div>
+                            <div class="option" data-correct="false">The catalyst increases the activation energy but decreases the energy of the products</div>
+                            <div class="option" data-correct="false">The catalyst changes the reaction from exothermic to endothermic</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q6">
+                        <div class="question-text">6. Explain, in terms of collision theory, why activation energy is necessary for a reaction to occur.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">Activation energy ensures that all collisions between particles result in a reaction</div>
+                            <div class="option" data-correct="true">Particles must collide with sufficient energy to overcome repulsive forces and break existing bonds, which requires the activation energy</div>
+                            <div class="option" data-correct="false">Activation energy determines the orientation of colliding particles</div>
+                            <div class="option" data-correct="false">Activation energy is needed to form the products, but not to break the reactant bonds</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <button class="submit-btn" id="submit-quiz">Submit Answers</button>
+                    <div class="results" id="quiz-results"></div>
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <h3>Lesson Navigation</h3>
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <li style="margin-bottom: 10px;"><a href="#objectives" class="nav-link">Learning Objectives</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#definitions" class="nav-link">Definitions</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#introduction" class="nav-link">Introduction</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#main-body" class="nav-link">Main Body</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#conclusion" class="nav-link">Conclusion</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#quiz" class="nav-link">Quiz</a></li>
+                </ul>
+                
+                <div style="margin-top: 30px;">
+                    <h3>Quick Reference</h3>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Activation Energy (E<sub>A</sub>):</strong> Minimum energy to start a reaction
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Activated Complex:</strong> Transition state with maximum potential energy
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Catalyst:</strong> Lowers E<sub>A</sub> without changing ΔH
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Formulas:</strong><br>
+                        E<sub>A</sub> = E<sub>peak</sub> - E<sub>reactants</sub><br>
+                        ΔH = E<sub>products</sub> - E<sub>reactants</sub>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Collapsible sections functionality
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const section = header.parentElement;
+                section.classList.toggle('active');
+            });
+        });
+        
+        // Navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                // Expand the target section if it's collapsed
+                if (!targetSection.classList.contains('active')) {
+                    targetSection.classList.add('active');
+                }
+                
+                // Scroll to the target section
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        // Interactive energy diagram
+        const reactants = document.querySelector('.reactants');
+        const products = document.querySelector('.products');
+        const uncatalysedComplex = document.getElementById('uncatalysed-complex');
+        const catalysedComplex = document.getElementById('catalysed-complex');
+        const uncatalysedPath = document.getElementById('uncatalysed-path');
+        const catalysedPath = document.getElementById('catalysed-path');
+        const eaLabel = document.getElementById('ea-label');
+        const deltaHLabel = document.getElementById('delta-h-label');
+        const catalystEaLabel = document.getElementById('catalyst-ea-label');
+        
+        let currentReactionType = 'exothermic';
+        let catalystActive = false;
+        
+        function updateDiagram() {
+            // Reset all elements first
+            reactants.style.top = '250px';
+            products.style.top = '150px';
+            uncatalysedComplex.style.top = '50px';
+            catalysedComplex.style.top = '120px';
+            uncatalysedPath.style.top = '270px';
+            catalysedPath.style.top = '270px';
+            eaLabel.style.top = '150px';
+            deltaHLabel.style.top = '200px';
+            catalystEaLabel.style.top = '180px';
+            
+            if (currentReactionType === 'exothermic') {
+                // Exothermic reaction: products lower than reactants
+                reactants.style.top = '250px';
+                products.style.top = '150px';
+                uncatalysedComplex.style.top = '50px';
+                catalysedComplex.style.top = '120px';
+                deltaHLabel.textContent = 'ΔH < 0';
+                deltaHLabel.style.color = 'var(--accent-color)';
+            } else {
+                // Endothermic reaction: products higher than reactants
+                reactants.style.top = '150px';
+                products.style.top = '250px';
+                uncatalysedComplex.style.top = '50px';
+                catalysedComplex.style.top = '120px';
+                deltaHLabel.textContent = 'ΔH > 0';
+                deltaHLabel.style.color = 'var(--secondary-color)';
+            }
+            
+            // Show/hide catalyst elements
+            if (catalystActive) {
+                catalysedPath.style.display = 'block';
+                catalysedComplex.style.display = 'flex';
+                catalystEaLabel.style.display = 'block';
+            } else {
+                catalysedPath.style.display = 'none';
+                catalysedComplex.style.display = 'none';
+                catalystEaLabel.style.display = 'none';
+            }
+        }
+        
+        document.getElementById('show-exothermic').addEventListener('click', () => {
+            currentReactionType = 'exothermic';
+            updateDiagram();
+            document.getElementById('show-exothermic').classList.add('active-btn');
+            document.getElementById('show-endothermic').classList.remove('active-btn');
+        });
+        
+        document.getElementById('show-endothermic').addEventListener('click', () => {
+            currentReactionType = 'endothermic';
+            updateDiagram();
+            document.getElementById('show-endothermic').classList.add('active-btn');
+            document.getElementById('show-exothermic').classList.remove('active-btn');
+        });
+        
+        document.getElementById('toggle-catalyst').addEventListener('click', () => {
+            catalystActive = !catalystActive;
+            updateDiagram();
+        });
+        
+        document.getElementById('reset-diagram').addEventListener('click', () => {
+            currentReactionType = 'exothermic';
+            catalystActive = false;
+            updateDiagram();
+            document.getElementById('show-exothermic').classList.add('active-btn');
+            document.getElementById('show-endothermic').classList.remove('active-btn');
+        });
+        
+        // Initialize the diagram
+        updateDiagram();
+        document.getElementById('show-exothermic').classList.add('active-btn');
+        
+        // Calculation functionality
+        document.getElementById('calculate-energy').addEventListener('click', () => {
+            const reactantsEnergy = parseFloat(document.getElementById('reactants-energy').value);
+            const activationEnergy = parseFloat(document.getElementById('activation-energy').value);
+            
+            if (isNaN(reactantsEnergy) || isNaN(activationEnergy)) {
+                alert('Please enter valid numbers for both energy values.');
+                return;
+            }
+            
+            const activatedComplexEnergy = reactantsEnergy + activationEnergy;
+            const resultElement = document.getElementById('calculation-result');
+            resultElement.textContent = `Energy of activated complex = ${activatedComplexEnergy} kJ/mol`;
+            resultElement.style.display = 'block';
+        });
+        
+        // Quiz functionality
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options in this question
+                const question = this.closest('.quiz-question');
+                question.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // Remove any existing feedback
+                const feedback = question.querySelector('.feedback');
+                feedback.className = 'feedback';
+                feedback.textContent = '';
+            });
+        });
+        
+        document.getElementById('submit-quiz').addEventListener('click', () => {
+            let score = 0;
+            const totalQuestions = 6;
+            
+            // Check each question
+            document.querySelectorAll('.quiz-question').forEach(question => {
+                const selectedOption = question.querySelector('.option.selected');
+                const feedback = question.querySelector('.feedback');
+                
+                if (selectedOption) {
+                    const isCorrect = selectedOption.getAttribute('data-correct') === 'true';
+                    
+                    if (isCorrect) {
+                        score++;
+                        feedback.className = 'feedback correct';
+                        feedback.textContent = 'Correct! Well done.';
+                        selectedOption.classList.add('correct');
+                    } else {
+                        feedback.className = 'feedback incorrect';
+                        feedback.textContent = 'Incorrect. Try again.';
+                        selectedOption.classList.add('incorrect');
+                        
+                        // Highlight the correct answer
+                        const correctOption = question.querySelector('.option[data-correct="true"]');
+                        correctOption.classList.add('correct');
+                    }
+                } else {
+                    // No option selected
+                    const correctOption = question.querySelector('.option[data-correct="true"]');
+                    correctOption.classList.add('correct');
+                    
+                    feedback.className = 'feedback incorrect';
+                    feedback.textContent = 'Please select an answer.';
+                }
+            });
+            
+            // Display results
+            const results = document.getElementById('quiz-results');
+            const percentage = (score / totalQuestions) * 100;
+            
+            if (percentage >= 80) {
+                results.className = 'results success';
+                results.textContent = `Excellent! You scored ${score}/${totalQuestions} (${percentage}%). You have a strong understanding of activation energy and the activated complex.`;
+            } else if (percentage >= 60) {
+                results.className = 'results warning';
+                results.textContent = `Good effort! You scored ${score}/${totalQuestions} (${percentage}%). Review the material and try again to improve your score.`;
+            } else {
+                results.className = 'results warning';
+                results.textContent = `You scored ${score}/${totalQuestions} (${percentage}%). We recommend reviewing the lesson material and trying the quiz again.`;
+            }
+        });
+        
+        // Expand the first section by default
+        document.querySelector('.section').classList.add('active');
+    </script>
+</body>
+</html>

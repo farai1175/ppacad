@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy Changes in Chemical Reactions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #e74c3c;
+            --light-color: #f8f9fa;
+            --dark-color: #2c3e50;
+            --warning-color: #f39c12;
+            --success-color: #27ae60;
+            --danger-color: #e74c3c;
+            --exothermic-color: #3498db;
+            --endothermic-color: #e74c3c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+            background-image: linear-gradient(to bottom, rgba(240, 249, 255, 0.5), rgba(255, 255, 255, 0.9));
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://picsum.photos/seed/chemistry-energy/1200/200.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+            z-index: -1;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .header-title h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header-title p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .progress-container {
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            margin-top: 1rem;
+            width: 100%;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: rgba(255,255,255,0.3);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: white;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        main {
+            padding: 2rem 0;
+        }
+        
+        .collapsible-container {
+            margin-bottom: 1rem;
+        }
+        
+        .collapsible {
+            background-color: white;
+            color: var(--dark-color);
+            cursor: pointer;
+            padding: 1rem 1.5rem;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .collapsible:hover {
+            background-color: #f0f7ff;
+        }
+        
+        .collapsible.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .collapsible.completed {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .collapsible-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .collapsible.active .collapsible-icon {
+            transform: rotate(180deg);
+        }
+        
+        .content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+            background-color: white;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .content.show {
+            padding: 2rem;
+            max-height: 2000px;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .learning-objectives {
+            background-color: #f0f7ff;
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .learning-objectives h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .learning-objectives ul {
+            padding-left: 1.5rem;
+        }
+        
+        .learning-objectives li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .definition-card {
+            background-color: var(--light-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .definition-card h4 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .formula {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        
+        .interactive-box {
+            background-color: #f0f7ff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .interactive-box h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .calculator {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .input-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .btn {
+            padding: 0.7rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #27ae60;
+        }
+        
+        .result-box {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            border: 1px solid #e9ecef;
+            display: none;
+        }
+        
+        .result-box.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .experiment-steps {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .experiment-steps h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .step {
+            display: flex;
+            margin-bottom: 1.5rem;
+        }
+        
+        .step-number {
+            background-color: var(--primary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-content h5 {
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .chemical-equation {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: 1.3rem;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .equation-balancer {
+            background-color: #f0f7ff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .equation-input {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .equation-input input {
+            width: 80px;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+        }
+        
+        .equation-arrow {
+            font-size: 1.5rem;
+            color: var(--dark-color);
+        }
+        
+        .energy-graph {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 2rem 0;
+        }
+        
+        .graph-container {
+            width: 100%;
+            height: 300px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            position: relative;
+            margin: 1rem 0;
+            background-color: white;
+            overflow: hidden;
+        }
+        
+        .graph-title {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+        
+        .graph-y-axis {
+            position: absolute;
+            left: 50px;
+            bottom: 30px;
+            width: 1px;
+            height: 240px;
+            background-color: #ddd;
+        }
+        
+        .graph-x-axis {
+            position: absolute;
+            left: 50px;
+            bottom: 30px;
+            width: 1px;
+            height: 240px;
+            background-color: #ddd;
+        }
+        
+        .graph-line {
+            position: absolute;
+            background-color: var(--dark-color);
+        }
+        
+        .graph-point {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            z-index: 10;
+        }
+        
+        .graph-label {
+            position: absolute;
+            font-size: 0.9rem;
+            color: var(--dark-color);
+        }
+        
+        .exothermic-graph {
+            background-color: var(--exothermic-color);
+            border: 1px solid var(--exothermic-color);
+        }
+        
+        .endothermic-graph {
+            background-color: var(--endothermic-color);
+            border: 1px solid var(--endothermic-color);
+        }
+        
+        .graph-legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 5px;
+        }
+        
+        .legend-text {
+            font-size: 0.9rem;
+        }
+        
+        .reaction-type-selector {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        
+        .reaction-type {
+            padding: 0.7rem 1.5rem;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .reaction-type:hover {
+            background-color: #f0f7ff;
+        }
+        
+        .reaction-type.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .reaction-type.exothermic {
+            border-color: var(--exothermic-color);
+        }
+        
+        .reaction-type.endothermic {
+            border-color: var(--endothermic-color);
+        }
+        
+        .reaction-label {
+            font-weight: 500;
+        }
+        
+        .quiz-container {
+            background-color: #f0f7ff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .quiz-question {
+            margin-bottom: 1.5rem;
+        }
+        
+        .quiz-question h4 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .quiz-option {
+            padding: 0.7rem;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .quiz-option:hover {
+            background-color: #e9ecef;
+        }
+        
+        .quiz-option.selected {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .quiz-option.correct {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .quiz-option.incorrect {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .quiz-feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .quiz-feedback.show {
+            display: block;
+        }
+        
+        .quiz-feedback.correct {
+            background-color: rgba(39, 174, 96, 0.1);
+            border: 1px solid var(--success-color);
+            color: var(--success-color);
+        }
+        
+        .quiz-feedback.incorrect {
+            background-color: rgba(231, 76, 60, 0.1);
+            border: 1px solid var(--danger-color);
+            color: var(--danger-color);
+        }
+        
+        .footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+        
+        /* Chemical formatting */
+        .chemical {
+            font-family: 'Courier New', monospace;
+        }
+        
+        .subscript {
+            font-size: 0.8em;
+            vertical-align: sub;
+        }
+        
+        .superscript {
+            font-size: 0.8em;
+            vertical-align: super;
+        }
+        
+        .state {
+            font-style: italic;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .header-title h1 {
+                font-size: 1.8rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            .calculator {
+                flex-direction: column;
+            }
+            
+            .equation-input {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .equation-arrow {
+                transform: rotate(90deg);
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="header-title">
+                    <h1>Energy Changes in Chemical Reactions</h1>
+                    <p>Physical Sciences / Chemistry - Thermodynamics</p>
+                </div>
+            </div>
+            <div class="progress-container">
+                <div class="progress-text">Lesson Progress: <span id="progress-text">0%</span></div>
+                <div class="progress-bar">
+                    <div class="progress" id="progress-bar"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <div class="container">
+            <!-- Introduction Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>Introduction</span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">Introduction</h2>
+                    <p>Chemical reactions are fundamental processes often accompanied by noticeable energy changes. You may have encountered reactions that feel warm or cold. The study of these heat or energy flows in chemical reactions is called <strong>thermodynamics</strong> or thermochemistry.</p>
+                    
+                    <p>In any chemical reaction, the atoms of the reactants are rearranged to form new substances—the products. This rearrangement involves <strong>breaking existing bonds</strong> in the reactants and <strong>forming new bonds</strong> in the products.</p>
+                    
+                    <div style="display: flex; align-items: center; justify-content: space-around; flex-wrap: wrap; margin: 2rem 0;">
+                        <div>
+                            <img src="https://picsum.photos/seed/chemical-reaction/300/200.jpg" alt="Chemical Reaction" class="seashell-image">
+                        </div>
+                        <div style="max-width: 500px;">
+                            <h3>Why Study Energy Changes?</h3>
+                            <ul>
+                                <li>Understanding energy flow in reactions</li>
+                                <li>Predicting reaction spontaneity</li>
+                                <li>Measuring energy efficiency</li>
+                                <li>Real-world applications</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Learning Objectives Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>Learning Objectives</span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">Learning Objectives</h2>
+                    <div class="learning-objectives">
+                        <h3>At the end of this lesson, you should be able to:</h3>
+                        <ul>
+                            <li>Relate <strong>energy changes in reactions</strong> to <strong>bond energy changes</strong>.</li>
+                            <li>Define <strong>heat of reaction ($H$)</strong>, where $H_{\text{products}}$ and $H_{\text{reactants}}$ are the heat content of products and reactants respectively.</li>
+                            <li>Classify reactions as <strong>exothermic or endothermic</strong> based on the sign and magnitude of $\Delta H$.</li>
+                            <li>Explain the relationship between <strong>bond energy</strong> and <strong>enthalpy change ($\Delta H$)</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Key Definitions Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>Key Definitions and Scientific Principles</span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">Key Definitions and Scientific Principles</h2>
+                    
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Term/Principle</th>
+                                    <th>Definition/Formula</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Enthalpy ($H$)</strong></td>
+                                    <td>Describes the **heat content of a system** or a measure of the total internal energy of a substance. It is defined as the **energy absorbed or released per mole** during a reaction at constant pressure.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Endothermic Reaction</strong></td>
+                                    <td>A chemical reaction during which **heat energy is taken in** from the surroundings. If heat flows from the system to the surroundings, the reaction is **endothermic** and $\Delta H > 0$.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Exothermic Reaction</strong></td>
+                                    <td>A chemical reaction during which **heat energy is transferred to** the surroundings. If heat flows from the surroundings to the system, the reaction is **exothermic** and $\Delta H < 0$.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Bond Energy</strong></td>
+                                    <td>The **energy required to break a chemical bond**. Breaking bonds always **requires energy input** and is an endothermic process.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Bond Formation (Energy Release)</strong></td>
+                                    <td>The **energy released when a chemical bond forms**. Forming bonds always **releases energy** and is an exothermic process.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Enthalpy Change ($\Delta H$)</strong></td>
+                                    <td>Describes the **net energy flow** in a chemical reaction. It is determined by measuring the difference in heat content ($H$) between the products and the reactants:
+                                    <div class="formula">$\mathbf{\Delta H = H_{\text{products}} – H_{\text{reactants}}$</div>
+                                </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Enthalpy Diagram</strong></td>
+                                    <td>Graphical representation comparing the energy levels of reactants and products to determine if a reaction is exothermic or endothermic.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Energy Changes Related to Bond Energy Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>Energy Changes Related to Bond Energy <span class="lo-badge">LO 1</span></span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">Energy Changes Related to Bond Energy (LO 1)</h2>
+                    
+                    <p>All chemical reactions are associated with energy changes that arise from breaking and formation of chemical bonds.</p>
+                    
+                    <div class="definition-card">
+                        <h4>Bond Breaking (Energy Absorption)</h4>
+                        <p>Energy is always **needed/absorbed** to break the chemical bonds of the reactants. This process is **endothermic** and the energy value is positive. The energy required to break a bond is called the **bond energy**.</p>
+                    </div>
+                    
+                    <div class="definition-card">
+                        <h4>Bond Formation (Energy Release)</h4>
+                        <p>Energy is always **released** when the chemical bonds of the new products are formed. This process is **exothermic** and the energy value is negative. The amount of energy released when a bond forms is equal in magnitude to the energy needed to break the same bond.</p>
+                    </div>
+                    
+                    <div class="interactive-box">
+                        <h4>Interactive Bond Energy Calculator</h4>
+                        <p>Calculate the net energy change for a reaction based on bond energies:</p>
+                        
+                        <div class="calculator">
+                            <div class="input-group">
+                                <label for="bonds-broken">Bonds Broken (kJ/mol)</label>
+                                <input type="number" id="bonds-broken" placeholder="Enter total energy" step="any">
+                            </div>
+                            <div class="input-group">
+                                <label for="bonds-formed">Bonds Formed (kJ/mol)</label>
+                                <input type="number" id="bonds-formed" placeholder="Enter total energy" step="any">
+                            </div>
+                            <div class="input-group">
+                                <label>&nbsp;</label>
+                                <button class="btn" id="calculate-enthalpy">Calculate Enthalpy Change</button>
+                            </div>
+                        </div>
+                        
+                        <div class="result-box" id="enthalpy-result">
+                            <h4>Result:</h4>
+                            <p id="enthalpy-calculation"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Classifying Reactions Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>Classifying Reactions based on Enthalpy Change <span class="lo-badge">LO 2</span></span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">Classifying Reactions based on Enthalpy Change (LO 2)</h2>
+                    
+                    <p>To classify a reaction, you compare the total energy involved in breaking bonds to the total energy released when forming bonds.</p>
+                    
+                    <div class="interactive-box">
+                        <h4>Interactive Reaction Classifier</h4>
+                        <p>Based on the net energy change, classify the reaction as exothermic or endothermic:</p>
+                        
+                        <div class="reaction-type-selector">
+                            <div class="reaction-type exothermic" onclick="selectReactionType('exothermic')">
+                                <span class="reaction-label">Exothermic Reaction</span>
+                                <span class="reaction-type active exothermic"></span>
+                            </div>
+                            <div class="reaction-type endothermic" onclick="selectReactionType('endothermic')">
+                                <span class="reaction-label">Endothermic Reaction</span>
+                            </div>
+                        </div>
+                        
+                        <div class="energy-graph">
+                            <div class="graph-container" id="energy-graph">
+                                <div class="graph-title">Reactants</div>
+                                <div class="graph-y-axis"></div>
+                                <div class="graph-point" style="left: 100px; bottom: 120px;"></div>
+                            </div>
+                            
+                            <div class="graph-title">Products</div>
+                            <div class="graph-y-axis"></div>
+                            <div class="graph-point" style="left: 100px; bottom: 120px;"></div>
+                            <div class="graph-line" style="width: 0; height: 0; top: 50%; left: 50%;"></div>
+                        </div>
+                        
+                        <div class="graph-legend">
+                            <div class="legend-item">
+                                <div class="legend-color exothermic"></div>
+                                <span class="legend-text">Exothermic (Energy Released)</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color endothermic"></div>
+                                <span class="legend-text">Endothermic (Energy Absorbed)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Visual Representation Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>Visual Representation: Energy Graphs <span class="lo-badge">LO 3</span></span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">Visual Representation: Energy Graphs (LO 3)</h2>
+                    
+                    <p>Enthalpy diagrams compare the energy stored in the reactants to the energy stored in the products.</p>
+                    
+                    <div class="energy-graph">
+                        <div class="graph-container">
+                            <div class="graph-title">Exothermic Graph</div>
+                            <div class="graph-y-axis"></div>
+                            <div class="graph-point" style="left: 50px; bottom: 180px;"></div>
+                            <div class="graph-point" style="left: 100px; bottom: 120px;"></div>
+                            <div class="graph-line" style="width: 0; height: 0; top: 50%; left: 50%; transform: rotate(-45deg);"></div>
+                        </div>
+                        
+                        <div class="graph-container">
+                            <div class="graph-title">Endothermic Graph</div>
+                            <div class="graph-y-axis"></div>
+                            <div class="graph-point" style="left: 50px; bottom: 120px;"></div>
+                            <div class="graph-point" style="left: 100px; bottom: 120px;"></div>
+                            <div class="graph-line" style="width: 0; height: 0; top: 50%; left: 50%; transform: rotate(-45deg);"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Calculating Enthalpy Change Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>Calculating Enthalpy Change <span class="lo-badge">LO 4</span></span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">Calculating Enthalpy Change (LO 4)</h2>
+                    
+                    <div class="experiment-steps">
+                        <h4>Example 1: Magnesium and Hydrochloric Acid Reaction</h4>
+                        
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h5>Write the balanced equation</h5>
+                                <div class="chemical-equation">Mg(s) + 2HCl(aq) → MgCl₂(aq) + H₂(g)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h5>Identify bond energies</h5>
+                                <div class="formula">Mg-Cl bond energy: 243 kJ/mol</div>
+                                <div class="formula">H-Cl bond energy: 432 kJ/mol</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h5>Calculate enthalpy change</h5>
+                                <div class="formula">ΔH = Σ(Energy of bonds formed) - Σ(Energy of bonds broken)</div>
+                                <div class="formula">ΔH = (2 × 243) - (1 × 432) = 54 kJ/mol</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h5>Classify the reaction</h5>
+                                <p>Since ΔH is positive (54 kJ/mol), the reaction is **endothermic**.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="experiment-steps">
+                        <h4>Example 2: Methane Combustion</h4>
+                        
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h5>Write the balanced equation</h5>
+                                <div class="chemical-equation">CH₄(g) + 2O₂(g) → CO₂(g) + 2H₂O(g)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h5>Identify bond energies</h5>
+                                <div class="formula">C-H bond energy: 413 kJ/mol</div>
+                                <div class="formula">O=O bond energy: 498 kJ/mol</div>
+                                <div class="formula">C=O bond energy: 805 kJ/mol</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h5>Calculate enthalpy change</h5>
+                                <div class="formula">ΔH = Σ(Energy of bonds formed) - Σ(Energy of bonds broken)</div>
+                                <div class="formula">ΔH = (2 × 805 + 4 × 498) - (4 × 413 + 2 × 498) = -802 kJ/mol</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h5>Classify the reaction</h5>
+                                <p>Since ΔH is negative (-802 kJ/mol), the reaction is **exothermic**.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Conclusion Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>Conclusion</span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">Conclusion</h2>
+                    
+                    <p>Understanding energy changes in chemical reactions is fundamental to chemistry. By analyzing the enthalpy change ($\Delta H$), we can determine whether a reaction is exothermic or endothermic, predict reaction spontaneity, and calculate the energy efficiency of processes.</p>
+                    
+                    <div class="interactive-box">
+                        <h4>Key Takeaways</h4>
+                        <ul>
+                            <li>Enthalpy diagrams provide a visual comparison of energy levels in reactants and products</li>
+                            <li>Bond energies help quantify the energy required to break or released when forming bonds</li>
+                            <li>Exothermic reactions release energy and are often used in heating applications</li>
+                            <li>Endothermic reactions absorb energy and are common in cooling applications</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- End-of-Lesson Questions Section -->
+            <div class="collapsible-container">
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    <span>End-of-Lesson Questions</span>
+                    <i class="fas fa-chevron-down collapsible-icon"></i>
+                </button>
+                <div class="content">
+                    <h2 class="section-title">End-of-Lesson Questions</h2>
+                    
+                    <div class="quiz-container">
+                        <div class="quiz-question">
+                            <h4>Question 1: Define the following terms accurately:</h4>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-question="1" data-option="A">Enthalpy ($H$)</div>
+                                <div class="quiz-option" data-question="1" data-option="B">Heat of reaction ($Q$)</div>
+                                <div class="quiz-option" data-question="1" data-option="C">Internal energy ($U$)</div>
+                                <div class="quiz-option" data-question="1" data-option="D">Kinetic energy ($K$)</div>
+                            </div>
+                            <div class="quiz-feedback" id="feedback-1"></div>
+                        </div>
+                        
+                        <div class="quiz-question">
+                            <h4>Question 2: Write down the balanced chemical equation for the reaction between magnesium and hydrochloric acid. (Level 1: Recall)</h4>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-question="2" data-option="A">Mg(s) + HCl(aq) → MgCl₂(aq) + H₂(g)</div>
+                                <div class="quiz-option" data-question="2" data-option="B">Mg(s) + 2HCl(aq) → MgCl₂(aq) + H(g)</div>
+                                <div class="quiz-option" data-question="2" data-option="C">Mg(s) + HCl(aq) → MgCl₂(aq) + 2H(g)</div>
+                                <div class="quiz-option" data-question="2" data-option="D">Mg(s) + HCl(aq) → MgCl₂(aq) + H₂(g)</div>
+                            </div>
+                            <div class="quiz-feedback" id="feedback-2"></div>
+                        </div>
+                        
+                        <div class="quiz-question">
+                            <h4>Question 3: Calculate the enthalpy change for the reaction in Question 2, given the following bond energies: Mg-Cl bond energy = 243 kJ/mol, H-Cl bond energy = 432 kJ/mol. (Level 3: Application/Calculation)</h4>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-question="3" data-option="A">-189 kJ/mol</div>
+                                <div class="quiz-option" data-question="3" data-option="B">-189 kJ/mol</div>
+                                <div class="quiz-option" data-question="3" data-option="C">-54 kJ/mol</div>
+                                <div class="quiz-option" data-question="3" data-option="D">-54 kJ/mol</div>
+                            </div>
+                            <div class="quiz-feedback" id="feedback-3"></div>
+                        </div>
+                        
+                        <div class="quiz-question">
+                            <h4>Question 4: Classify the reaction in Question 2 as exothermic or endothermic. (Level 2: Comprehension/Explanation)</h4>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-question="4" data-option="A">Exothermic, because heat is released to the surroundings</div>
+                                <div class="quiz-option" data-question="4" data-option="B">Endothermic, because heat is absorbed from the surroundings</div>
+                                <div class="quiz-option" data-question="4" data-option="C">Exothermic, because the products have lower energy than the reactants</div>
+                                <div class="quiz-option" data-question="4" data-option="D">Endothermic, because the temperature of the surroundings decreases</div>
+                            </div>
+                            <div class="quiz-feedback" id="feedback-4"></div>
+                        </div>
+                        
+                        <div class="quiz-question">
+                            <h4>Question 5: Write down the balanced chemical equation for the combustion of methane. (Level 1: Recall)</h4>
+                            <div class="quiz-options">
+                                <div class="quiz-option" data-question="5" data-option="A">CH₄(g) + 2O₂(g) → CO₂(g) + 2H₂O(g)</div>
+                                <div class="quiz-option" data-question="5" data-option="B">CH₄(g) + O₂(g) → CO₂(g) + H₂O(g)</div>
+                                <div class="quiz-option" data-question="5" data-option="C">CH₄(g) + 2O₂(g) → CO₂(g) + H₂O(g)</div>
+                                <div class="quiz-option" data-question="5" data-option="D">CH₄(g) + 2O₂(g) → CO₂(g) + H₂O(g)</div>
+                            </div>
+                            <div class="quiz-feedback" id="feedback-5"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-box">
+                        <h4>Quiz Results</h4>
+                        <p>Your score: <span id="quiz-score">0/5</span></p>
+                        <button class="btn btn-secondary" id="reset-quiz">Reset Quiz</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Periodic Table</a></li>
+                        <li><a href="#">Bond Energy Calculator</a></li>
+                        <li><a href="#">Video Tutorials</a></li>
+                        <li><a href="#">Practice Problems</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Related Topics</h4>
+                    <ul>
+                        <li><a href="#">Thermodynamics</a></li>
+                        <li><a href="#">Chemical Kinetics</a></li>
+                        <li><a href="#">Energy Diagrams</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Help</h4>
+                    <ul>
+                        <li><a href="#">Contact Teacher</a></li>
+                        <li><a href="#">Study Tips</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Chemistry Education Portal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <div class="notification" id="notification"></div>
+    
+    <script>
+        // DOM Elements
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const notification = document.getElementById('notification');
+        
+        // Progress Tracking
+        let completedSections = new Set();
+        let quizScore = 0;
+        let answeredQuestions = new Set();
+        
+        // Toggle Collapsible Sections
+        function toggleCollapsible(button) {
+            button.classList.toggle("active");
+            const content = button.nextElementSibling;
+            content.classList.toggle("show");
+            
+            // Get section identifier from button text
+            const buttonText = button.textContent.trim();
+            let sectionId = '';
+            
+            if (buttonText.includes("Introduction")) {
+                sectionId = 'introduction';
+            } else if (buttonText.includes("Learning Objectives")) {
+                sectionId = 'objectives';
+            } else if (buttonText.includes("Key Definitions")) {
+                sectionId = 'definitions';
+            } else if (buttonText.includes("Energy Changes Related to Bond Energy")) {
+                sectionId = 'bond-energy';
+            } else if (buttonText.includes("Classifying Reactions")) {
+                sectionId = 'classification';
+            } else if (buttonText.includes("Visual Representation")) {
+                sectionId = 'visuals';
+            } else if (buttonText.includes("Calculating Enthalpy Change")) {
+                sectionId = 'calculations';
+            } else if (buttonText.includes("Conclusion")) {
+                sectionId = 'conclusion';
+            } else if (buttonText.includes("End-of-Lesson Questions")) {
+                sectionId = 'questions';
+            }
+            
+            // Mark section as viewed if opened
+            if (content.classList.contains("show") && sectionId) {
+                if (!completedSections.has(sectionId)) {
+                    completedSections.add(sectionId);
+                    updateProgress();
+                }
+                
+                // Mark as completed
+                button.classList.add("completed");
+            }
+        }
+        
+        // Update Progress
+        function updateProgress() {
+            const totalSections = 7; // Total number of collapsible sections
+            const completedCount = completedSections.size;
+            const progressPercentage = Math.round((completedCount / totalSections) * 100);
+            
+            progressBar.style.width = `${progressPercentage}%`;
+            progressText.textContent = `${progressPercentage}%`;
+        }
+        
+        // Show Notification
+        function showNotification(message, type = 'success') {
+            notification.textContent = message;
+            notification.className = `notification ${type} show`;
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Bond Energy Calculator
+        document.getElementById('calculate-enthalpy').addEventListener('click', () => {
+            const bondsBroken = parseFloat(document.getElementById('bonds-broken').value);
+            const bondsFormed = parseFloat(document.getElementById('bonds-formed').value);
+            
+            if (isNaN(bondsBroken) || isNaN(bondsFormed)) {
+                showNotification('Please enter valid values for bond energies', 'error');
+                return;
+            }
+            
+            const enthalpyChange = bondsFormed - bondsBroken;
+            
+            const resultBox = document.getElementById('enthalpy-result');
+            const calculation = document.getElementById('enthalpy-calculation');
+            
+            let reactionType = '';
+            if (enthalpyChange > 0) {
+                reactionType = 'endothermic';
+            } else if (enthalpyChange < 0) {
+                reactionType = 'exothermic';
+            }
+            
+            calculation.innerHTML = `
+                <p><strong>Calculation:</strong></p>
+                <p>ΔH = Σ(Energy of bonds formed) - Σ(Energy of bonds broken)</p>
+                <p>ΔH = ${bondsFormed} - ${bondsBroken} = ${enthalpyChange.toFixed(2)} kJ/mol</p>
+                <p><strong>Classification:</strong> Since ΔH is ${enthalpyChange > 0 ? 'positive' : 'negative'}, the reaction is <strong>${reactionType}</strong>.</p>
+            `;
+            
+            resultBox.classList.add('show');
+            showNotification(`Reaction classified as ${reactionType}`, 'success');
+        });
+        
+        // Reaction Type Selector
+        function selectReactionType(type) {
+            // Remove active class from all reaction types
+            document.querySelectorAll('.reaction-type').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Add active class to selected reaction type
+            document.querySelector(`.reaction-type.${type}`).classList.add('active');
+        }
+        
+        // Quiz Functionality
+        const quizAnswers = {
+            1: 'A',
+            2: 'A',
+            3: 'A',
+            4: 'A',
+            5: 'A'
+        };
+        
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const question = option.getAttribute('data-question');
+                const selectedOption = option.getAttribute('data-option');
+                
+                // Skip if already answered
+                if (answeredQuestions.has(question)) {
+                    return;
+                }
+                
+                // Mark as answered
+                answeredQuestions.add(question);
+                
+                // Mark selected option
+                option.classList.add('selected');
+                
+                // Check if correct
+                const isCorrect = selectedOption === quizAnswers[question];
+                
+                // Show feedback
+                const feedback = document.getElementById(`feedback-${question}`);
+                feedback.classList.add('show');
+                
+                if (isCorrect) {
+                    option.classList.add('correct');
+                    feedback.classList.add('correct');
+                    feedback.innerHTML = '<i class="fas fa-check-circle"></i> Correct! Well done.';
+                    quizScore++;
+                } else {
+                    option.classList.add('incorrect');
+                    feedback.classList.add('incorrect');
+                    feedback.innerHTML = `<i class="fas fa-times-circle"></i> Incorrect. The correct answer is ${quizAnswers[question]}.`;
+                    
+                    // Highlight correct answer
+                    document.querySelectorAll(`.quiz-option[data-question="${question}"][data-option="${quizAnswers[question]}"]`).forEach(correctOption => {
+                        correctOption.classList.add('correct');
+                    });
+                }
+                
+                // Update score
+                document.getElementById('quiz-score').textContent = `${quizScore}/5`;
+                
+                // Show notification
+                if (isCorrect) {
+                    showNotification('Correct answer!', 'success');
+                } else {
+                    showNotification('Incorrect answer. Review the material and try again.', 'error');
+                }
+            });
+        });
+        
+        // Reset Quiz
+        document.getElementById('reset-quiz').addEventListener('click', () => {
+            quizScore = 0;
+            answeredQuestions.clear();
+            
+            document.getElementById('quiz-score').textContent = '0/5';
+            
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.classList.remove('selected', 'correct', 'incorrect');
+            });
+            
+            document.querySelectorAll('.quiz-feedback').forEach(feedback => {
+                feedback.classList.remove('show', 'correct', 'incorrect');
+            });
+            
+            showNotification('Quiz reset successfully', 'success');
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // No sections are initially marked as viewed
+            updateProgress();
+        });
+    </script>
+</body>
+</html>

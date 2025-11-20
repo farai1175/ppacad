@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ideal Gas Law - Interactive Lesson</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #1e40af;
+            --secondary-color: #3b82f6;
+            --accent-color: #60a5fa;
+            --light-color: #dbeafe;
+            --dark-color: #1e293b;
+            --text-color: #334155;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f8fafc;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .subject-grade {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            opacity: 0.9;
+        }
+
+        .topic {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .sub-topic {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .lesson-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .header-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: radial-gradient(circle, white 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 1;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: #eee;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .progress-indicator {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        main {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            background-color: #f9fafb;
+            border-left: 4px solid var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .section:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            font-size: 1.2rem;
+        }
+
+        .objectives-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .objectives-list li {
+            margin-bottom: 10px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .objectives-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background-color: #f1f1f1;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+            font-weight: bold;
+        }
+
+        .tab-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .tab-button.active {
+            background-color: white;
+            border-bottom: 3px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            border: 1px solid #ddd;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .definition-box {
+            background-color: var(--light-color);
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+        }
+
+        .definition-term {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .principle-box {
+            background-color: #f0f9ff;
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+        }
+
+        .principle-title {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+
+        .interactive-demo {
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin: 20px 0;
+            background-color: white;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .demo-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .demo-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .demo-btn.active {
+            background-color: var(--accent-color);
+        }
+
+        .demo-output {
+            border: 1px solid #eee;
+            padding: 15px;
+            min-height: 100px;
+            border-radius: var(--border-radius);
+            background-color: #f9f9f9;
+        }
+
+        .questions-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .question-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            border-left: 3px solid var(--accent-color);
+            transition: var(--transition);
+        }
+
+        .question-item:hover {
+            transform: translateX(5px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .question-options {
+            margin-left: 20px;
+        }
+
+        .option {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .option input {
+            margin-right: 5px;
+        }
+
+        .check-answer-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: var(--transition);
+        }
+
+        .check-answer-btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            display: none;
+        }
+
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .collapsible {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: var(--transition);
+            border-radius: var(--border-radius);
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .collapsible:hover {
+            background-color: #bfdbfe;
+        }
+
+        .collapsible.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .collapsible i {
+            transition: var(--transition);
+        }
+
+        .collapsible.active i {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            padding: 0 15px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: white;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+        }
+
+        .collapsible-content.active {
+            padding: 15px;
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in;
+        }
+
+        .formula-box {
+            background-color: #f8fafc;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-style: italic;
+            font-size: 1.2rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .nav-btn:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .conversion-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+        }
+
+        .conversion-table th, .conversion-table td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        .conversion-table th {
+            background-color: var(--light-color);
+            font-weight: bold;
+        }
+
+        .calculator-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .input-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .calculation-result {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 15px;
+            padding: 10px;
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+        }
+
+        .gas-visualization {
+            position: relative;
+            height: 300px;
+            background-color: #f0f9ff;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gas-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gas-particles {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .gas-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+        }
+
+        .molar-mass-calculator {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .behavior-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .behavior-card {
+            flex: 1;
+            min-width: 250px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .behavior-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .behavior-conditions {
+            margin-top: 10px;
+        }
+
+        .behavior-conditions ul {
+            padding-left: 20px;
+        }
+
+        .behavior-conditions li {
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 0;
+            }
+            
+            body {
+                padding: 0;
+            }
+            
+            main {
+                padding: 15px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+            }
+            
+            .demo-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar">
+        <div class="progress-indicator" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="header-pattern"></div>
+            <div class="header-content">
+                <div class="subject-grade">PHYSICAL SCIENCES / CHEMISTRY</div>
+                <h1 class="topic">MATTER AND MATERIALS: IDEAL GASES AND THERMAL PROPERTIES</h1>
+                <div class="sub-topic">THE IDEAL GAS LAW AND REAL GAS BEHAVIOUR</div>
+                <div class="lesson-title">COMPREHENSIVE STRUCTURED LESSON: THE IDEAL GAS LAW</div>
+            </div>
+        </header>
+
+        <main>
+            <section class="section" id="objectives">
+                <h2 class="section-title"><i class="fas fa-bullseye"></i> Learning Objectives</h2>
+                <p>The following results will be the outcomes of this lesson. The learners must be able to:</p>
+                <ul class="objectives-list">
+                    <li>Convert any given unit of each quantity into SI unit required for the equation pV = nRT. E.g. Convert dm³ to m³, cm³ to m³, kPa to Pa and 0°C to Kelvin</li>
+                    <li>Calculate the number of moles or mass using the formula: n = m/M</li>
+                    <li>Use a calculator when dealing with values in scientific notation</li>
+                    <li>Define an ideal gas</li>
+                    <li>Explain and describe the conditions when real gases behave as ideal gases</li>
+                    <li>Explain and describe the conditions when real gases behave as non-ideal gases</li>
+                </ul>
+            </section>
+
+            <section class="section" id="definitions">
+                <h2 class="section-title"><i class="fas fa-book"></i> Definitions and Scientific Principles</h2>
+                
+                <div class="tabs">
+                    <button class="tab-button active" onclick="openTab(event, 'definitions-tab')">Definitions</button>
+                    <button class="tab-button" onclick="openTab(event, 'principles-tab')">Scientific Principles</button>
+                </div>
+                
+                <div id="definitions-tab" class="tab-content active">
+                    <div class="definition-box">
+                        <div class="definition-term">Ideal Gas (LO 4):</div>
+                        <p>A <strong>theoretical gas</strong> which obeys gas laws under all conditions of temperature and pressure. The particles of an ideal gas are identical, occupy <strong>zero volume</strong>, and exert <strong>no forces</strong> on each other except during a collision.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Real Gas:</div>
+                        <p>Gases that behave more or less like ideal gases, but deviate significantly at <strong>high pressures and low temperatures</strong>.</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Ideal Gas Law:</div>
+                        <p>States that the amount of gas (n) is determined by its pressure (p), volume (V), and temperature (T).</p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Ideal Gas Equation:</div>
+                        <p><strong>pV = nRT</strong></p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">General Gas Equation:</div>
+                        <p>Used for a fixed amount of gas under changing conditions: <strong>p₁V₁/T₁ = p₂V₂/T₂</strong></p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Molar Calculation (LO 2):</div>
+                        <p>Formula for calculating the number of moles (n) using mass (m) and molar mass (M): <strong>n = m/M</strong></p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Universal Gas Constant (R):</div>
+                        <p>R is constant for all gases and is expressed in SI units as <strong>8.31 J·K⁻¹·mol⁻¹</strong> or <strong>8.31 Pa·m³·K⁻¹·mol⁻¹</strong></p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">SI Units for Ideal Gas Law (LO 1):</div>
+                        <p>Pressure (p): <strong>Pascal (Pa)</strong>; Volume (V): <strong>cubic metre (m³)</strong>; Temperature (T): <strong>Kelvin (K)</strong>; Moles (n): <strong>mole (mol)</strong></p>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-term">Temperature Conversion:</div>
+                        <p><strong>Kelvin (K) = Celsius (°C) + 273</strong></p>
+                    </div>
+                </div>
+                
+                <div id="principles-tab" class="tab-content">
+                    <div class="principle-box">
+                        <div class="principle-title">Kinetic Theory:</div>
+                        <p>The temperature (T) of a gas is a measure of the <strong>average kinetic energy</strong> of molecules. Temperature is directly proportional to the average kinetic energy of molecules.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="overview">
+                <h2 class="section-title"><i class="fas fa-eye"></i> Introduction</h2>
+                <p>In Module 4, we learn that pressure, volume, and temperature of a gas are <strong>interrelated</strong>, meaning that changing one property affects the others. The behaviour of gases is described by individual gas laws—Boyle's law, Charles' law, and Gay-Lussac's law. When the amount of gas is fixed, these relationships can be <strong>combined into a single combined gas law</strong> (or general gas equation). This law is essential for relating two sets of conditions (p₁, V₁, T₁ and p₂, V₂, T₂) for a fixed amount of gas.</p>
+                
+                <div class="gas-visualization">
+                    <div class="gas-container">
+                        <div class="gas-particles" id="gasParticles">
+                            <!-- Gas particles will be generated by JavaScript -->
+                        </div>
+                    </div>
+                    <div class="demo-controls">
+                        <button class="demo-btn active" onclick="changeGasState('ideal')">Ideal Gas</button>
+                        <button class="demo-btn" onclick="changeGasState('real')">Real Gas</button>
+                    </div>
+                    <p id="gasStateDescription">This visualization shows an ideal gas with particles that have no volume and no intermolecular forces.</p>
+                </div>
+            </section>
+
+            <section class="section" id="main-body">
+                <h2 class="section-title"><i class="fas fa-atom"></i> Main Body</h2>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    1. Unit Conversion for the Ideal Gas Equation (pV = nRT) (LO 1)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>The Universal Gas Constant, R, has a value of 8.31 J·K⁻¹·mol⁻¹. Since a joule (J) is defined as Pa·m³, <strong>all variables in the Ideal Gas Equation must be converted to their corresponding SI base units</strong> before substitution.</p>
+                    
+                    <table class="conversion-table">
+                        <tr>
+                            <th>Quantity</th>
+                            <th>Common Unit</th>
+                            <th>SI Unit</th>
+                            <th>Conversion Factor</th>
+                        </tr>
+                        <tr>
+                            <td>Temperature (T)</td>
+                            <td>Degrees Celsius (°C)</td>
+                            <td>Kelvin (K)</td>
+                            <td>T (K) = t (°C) + 273</td>
+                        </tr>
+                        <tr>
+                            <td>Pressure (p)</td>
+                            <td>Kilopascal (kPa) or atmospheres (atm)</td>
+                            <td>Pascal (Pa)</td>
+                            <td>1 kPa = 1000 Pa or 1 × 10³ Pa</td>
+                        </tr>
+                        <tr>
+                            <td>Volume (V)</td>
+                            <td>Cubic decimetre (dm³) or cubic centimetre (cm³)</td>
+                            <td>Cubic metre (m³)</td>
+                            <td>1 m³ = 1000 dm³, 1 dm³ = 0.001 m³, 1 m³ = 1,000,000 cm³</td>
+                        </tr>
+                    </table>
+                    
+                    <p><strong>Example Conversions:</strong></p>
+                    <ul>
+                        <li>To convert 27°C to Kelvin: T = 27 + 273 = 300 K</li>
+                        <li>To convert 100 kPa to Pascal: p = 100 × 10³ Pa</li>
+                        <li>To convert 500 cm³ to cubic metres: V = 500 × 10⁻⁶ m³</li>
+                    </ul>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    2. Calculating Moles or Mass (LO 2)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>The variable n in the Ideal Gas Equation represents the number of moles of gas. If the mass (m) or molar mass (M) of the gas is known, the number of moles can be calculated using the formula:</p>
+                    
+                    <div class="formula-box">
+                        n = m/M
+                    </div>
+                    
+                    <p>where M is the molar mass measured in g·mol⁻¹. This formula is crucial when the mass of a gas is given instead of the moles, or when the molar mass is needed to identify the gas.</p>
+                    
+                    <div class="molar-mass-calculator">
+                        <div class="input-group">
+                            <div class="input-label">Mass (g)</div>
+                            <input type="number" id="massInput" class="input-field" placeholder="Enter mass">
+                        </div>
+                        
+                        <div class="input-group">
+                            <div class="input-label">Molar Mass (g/mol)</div>
+                            <input type="number" id="molarMassInput" class="input-field" placeholder="Enter molar mass">
+                        </div>
+                        
+                        <button class="demo-btn" style="margin: 15px auto; display: block;" onclick="calculateMoles()">Calculate Moles</button>
+                        
+                        <div id="molesResult" class="calculation-result"></div>
+                    </div>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    3. Handling Scientific Notation (LO 3)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>Scientific notation is an easy way to write both <strong>very small numbers and very large numbers</strong>. When dealing with gas laws, especially using SI units, very small volumes (m³) or large pressures (Pa) are common. Scientific calculators are designed to handle these conversions automatically, often using a "Sci" option or "EXP" key.</p>
+                    
+                    <div class="interactive-demo">
+                        <h4>Scientific Notation Converter</h4>
+                        <p>Enter a number in standard notation and see it in scientific notation:</p>
+                        
+                        <div class="calculator-container">
+                            <div class="input-group">
+                                <div class="input-label">Standard Number</div>
+                                <input type="number" id="standardNumber" class="input-field" placeholder="Enter number" onchange="convertToScientific()">
+                            </div>
+                            
+                            <div class="input-group">
+                                <div class="input-label">Scientific Notation</div>
+                                <input type="text" id="scientificNumber" class="input-field" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    4. The Ideal Gas (LO 4)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>An <strong>ideal gas (or perfect gas)</strong> is a theoretical gas that is modelled to perfectly obey the gas laws under <strong>all conditions of temperature and pressure</strong>.</p>
+                    
+                    <p>The properties ascribed to particles of an ideal gas are:</p>
+                    <ul>
+                        <li>They are <strong>identical in all ways</strong>.</li>
+                        <li>They <strong>occupy no volume</strong>.</li>
+                        <li>They <strong>exert no forces on each other</strong> except during a collision.</li>
+                        <li>Collisions are <strong>perfectly elastic</strong>, meaning no energy is lost or gained in total.</li>
+                    </ul>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    5. Real Gases and Conditions for Ideal Behaviour (LO 5)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>Real gases—the ordinary gases we encounter—only approximate the behaviour of an ideal gas. A real gas will behave <strong>most like an ideal gas</strong> under conditions where ideal gas assumptions hold true:</p>
+                    
+                    <div class="behavior-cards">
+                        <div class="behavior-card">
+                            <div class="behavior-title">High Temperature (T)</div>
+                            <p>At high temperatures, gas molecules move quickly. The <strong>average kinetic energy is high</strong>, which allows the molecules to overcome weak attractive forces between them.</p>
+                        </div>
+                        
+                        <div class="behavior-card">
+                            <div class="behavior-title">Low Pressure (P)</div>
+                            <p>At low pressures, molecules are far apart. This large separation means the <strong>intermolecular forces are negligible</strong>, and the <strong>volume occupied by particles themselves is insignificant</strong> compared to the total container volume.</p>
+                        </div>
+                    </div>
+                    
+                    <p>Therefore, real gases approach ideal gas behaviour under <strong>high temperature and low pressure</strong>. The real gases that behave most like ideal gases under normal conditions are <strong>helium (He)</strong> and <strong>hydrogen (H₂)</strong>.</p>
+                </div>
+                
+                <button class="collapsible" onclick="toggleCollapsible(this)">
+                    6. Real Gases and Non-Ideal Behaviour (LO 6)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="collapsible-content">
+                    <p>Real gases deviate from the ideal gas law under the opposite conditions: <strong>low temperature and high pressure</strong>.</p>
+                    
+                    <div class="behavior-cards">
+                        <div class="behavior-card">
+                            <div class="behavior-title">Low Temperature (T)</div>
+                            <p>As temperature decreases, the average kinetic energy of molecules drops, and they move slower. The <strong>attractive forces between molecules</strong> (which ideal gas model ignores) become more significant, causing the gas to exert less pressure and occupy a smaller volume than expected by ideal calculations. At very low temperatures, gases eventually <strong>liquefy</strong>, and the gas laws no longer apply.</p>
+                        </div>
+                        
+                        <div class="behavior-card">
+                            <div class="behavior-title">High Pressure (P)</div>
+                            <p>When pressure is very high, gas molecules are forced close together. Under these conditions:</p>
+                            <div class="behavior-conditions">
+                                <ul>
+                                    <li>The volume occupied by particles themselves is <strong>no longer negligible</strong> compared to the total container volume.</li>
+                                    <li><strong>Repulsive forces</strong> between closely packed molecules increase.</li>
+                                    <li>The measured volume of a real gas is generally <strong>larger</strong> than what the ideal gas law predicts at extremely high pressures because the molecules themselves take up space.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="conclusion">
+                <h2 class="section-title"><i class="fas fa-check-circle"></i> Conclusion</h2>
+                <p>The Ideal Gas Law, pV = nRT, provides a powerful mathematical model for describing the state of a gas, particularly when the amount of gas (n) is variable. However, successful application relies on accurate numerical preparation, specifically converting all quantities (pressure, volume, and temperature) into SI units (Pa, m³, and K) and correctly calculating the number of moles (n = m/M). We must remember that this law is a description of an <strong>ideal gas</strong>, which assumes negligible molecular volume and intermolecular forces. Real gases only conform to this model under practical conditions of <strong>low pressure and high temperature</strong>.</p>
+                
+                <p>Understanding the deviation of real gases is like realizing that a blueprint for a perfect house (the ideal gas law) only works perfectly if building materials (gas particles) are infinitely small and never stick together. In reality, materials take up space and attract each other, so the final building (real gas) requires adjustments (high T, low P) to match the original plan.</p>
+            </section>
+
+            <section class="section" id="questions">
+                <h2 class="section-title"><i class="fas fa-question-circle"></i> End-of-Lesson Questions</h2>
+                
+                <ul class="questions-list">
+                    <li class="question-item">
+                        <div class="question-text">1. Define an ideal gas (LO 4).</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q1" value="a" id="q1a">
+                                <label for="q1a">A theoretical gas that obeys gas laws under all conditions of temperature and pressure</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="b" id="q1b">
+                                <label for="q1b">A gas that behaves ideally only at high temperatures and low pressures</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="c" id="q1c">
+                                <label for="q1c">A gas that has identical particles that occupy zero volume</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q1', 'a')">Check Answer</button>
+                        <div class="feedback" id="q1-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">2. State the relationship used to calculate the number of moles (n) if the mass (m) and molar mass (M) are known (LO 2).</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q2" value="a" id="q2a">
+                                <label for="q2a">n = m × M</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="b" id="q2b">
+                                <label for="q2b">n = m/M</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="c" id="q2c">
+                                <label for="q2c">n = M/m</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q2', 'b')">Check Answer</button>
+                        <div class="feedback" id="q2-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">3. Convert the following quantities into SI units required for the Ideal Gas Equation (LO 1):<br>a) 150 kPa<br>b) 27 dm³<br>c) 85°C</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q3" value="a" id="q3a">
+                                <label for="q3a">a) 150,000 Pa<br>b) 0.027 m³<br>c) 358 K</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="b" id="q3b">
+                                <label for="q3b">a) 150,000 Pa<br>b) 0.027 m³<br>c) 358 K</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="c" id="q3c">
+                                <label for="q3c">a) 150,000 Pa<br>b) 0.27 m³<br>c) 358 K</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q3', 'b')">Check Answer</button>
+                        <div class="feedback" id="q3-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">4. Explain why temperature must be converted from Degrees Celsius to Kelvin before calculations using pV = nRT (LO 1).</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q4" value="a" id="q4a">
+                                <label for="q4a">Because Kelvin is the standard unit for temperature in the International System of Units</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="b" id="q4b">
+                                <label for="q4b">Because gas laws describe relationships with absolute temperature, which is measured on the Kelvin scale</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="c" id="q4c">
+                                <label for="q4c">Because Kelvin values are always larger than Celsius values</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q4', 'b')">Check Answer</button>
+                        <div class="feedback" id="q4-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">5. Calculate the number of moles (n) in a 4.4 g sample of carbon dioxide (CO₂). (Molar mass of CO₂ = 44 g·mol⁻¹) (LO 2).</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q5" value="a" id="q5a">
+                                <label for="q5a">0.1 mol</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="b" id="q5b">
+                                <label for="q5b">0.01 mol</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="c" id="q5c">
+                                <label for="q5c">0.001 mol</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q5', 'a')">Check Answer</button>
+                        <div class="feedback" id="q5-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">6. State and explain the conditions under which a real gas like oxygen (O₂) will behave most like an ideal gas (LO 5).</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q6" value="a" id="q6a">
+                                <label for="q6a">High temperature and low pressure</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q6" value="b" id="q6b">
+                                <label for="q6b">Low temperature and high pressure</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q6" value="c" id="q6c">
+                                <label for="q6c">Standard temperature and pressure</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q6', 'a')">Check Answer</button>
+                        <div class="feedback" id="q6-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">7. Describe and explain the two main conditions that cause real gases to deviate from ideal gas behaviour (LO 6).</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q7" value="a" id="q7a">
+                                <label for="q7a">High temperature and high pressure</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q7" value="b" id="q7b">
+                                <label for="q7b">Low temperature and low pressure</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q7" value="c" id="q7c">
+                                <label for="q7c">Standard temperature and standard pressure</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q7', 'b')">Check Answer</button>
+                        <div class="feedback" id="q7-feedback"></div>
+                    </li>
+                    
+                    <li class="question-item">
+                        <div class="question-text">8. A gas sample is compressed to a very small volume at constant temperature. How will the measured pressure of a real gas compare to the pressure predicted by the Ideal Gas Law? Explain your answer (LO 6).</div>
+                        <div class="question-options">
+                            <div class="option">
+                                <input type="radio" name="q8" value="a" id="q8a">
+                                <label for="q8a">The measured pressure will be lower than predicted because the particles take up space</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q8" value="b" id="q8b">
+                                <label for="q8b">The measured pressure will be higher than predicted because the particles are closer together</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q8" value="c" id="q8c">
+                                <label for="q8c">The measured pressure will be exactly the same as predicted</label>
+                            </div>
+                        </div>
+                        <button class="check-answer-btn" onclick="checkAnswer('q8', 'a')">Check Answer</button>
+                        <div class="feedback" id="q8-feedback"></div>
+                    </li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <div class="navigation">
+                <button class="nav-btn" id="prevBtn" onclick="navigateSection(-1)" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="nav-btn" id="nextBtn" onclick="navigateSection(1)">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            <p>&copy; 2023 Physical Sciences Interactive Learning Platform. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Track current section for navigation
+        const sections = ['objectives', 'definitions', 'overview', 'main-body', 'conclusion', 'questions'];
+        let currentSectionIndex = 0;
+
+        // Update progress bar based on scroll position
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabButtons = document.getElementsByClassName("tab-button");
+            const tabContents = document.getElementsByClassName("tab-content");
+            
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Collapsible content functionality
+        function toggleCollapsible(element) {
+            element.classList.toggle("active");
+            const content = element.nextElementSibling;
+            content.classList.toggle("active");
+        }
+
+        // Check answer function
+        function checkAnswer(questionId, correctAnswer) {
+            const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
+            const feedbackElement = document.getElementById(`${questionId}-feedback`);
+            
+            if (!selectedOption) {
+                feedbackElement.textContent = 'Please select an answer.';
+                feedbackElement.className = 'feedback incorrect';
+                feedbackElement.style.display = 'block';
+                return;
+            }
+            
+            if (selectedOption.value === correctAnswer) {
+                feedbackElement.textContent = 'Correct! Well done.';
+                feedbackElement.className = 'feedback correct';
+            } else {
+                feedbackElement.textContent = 'Incorrect. Please review the lesson material and try again.';
+                feedbackElement.className = 'feedback incorrect';
+            }
+            
+            feedbackElement.style.display = 'block';
+        }
+
+        // Navigation between sections
+        function navigateSection(direction) {
+            currentSectionIndex += direction;
+            
+            // Ensure we stay within bounds
+            if (currentSectionIndex < 0) currentSectionIndex = 0;
+            if (currentSectionIndex >= sections.length) currentSectionIndex = sections.length - 1;
+            
+            // Scroll to the current section
+            const currentSection = document.getElementById(sections[currentSectionIndex]);
+            currentSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentSectionIndex === 0;
+            document.getElementById('nextBtn').disabled = currentSectionIndex === sections.length - 1;
+        }
+
+        // Gas state visualization
+        function changeGasState(state) {
+            const buttons = document.querySelectorAll('.demo-btn');
+            const description = document.getElementById('gasStateDescription');
+            
+            // Update active button state
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update description
+            if (state === 'ideal') {
+                description.textContent = 'This visualization shows an ideal gas with particles that have no volume and no intermolecular forces.';
+                initGasParticles('ideal');
+            } else {
+                description.textContent = 'This visualization shows a real gas with particles that have volume and experience intermolecular forces.';
+                initGasParticles('real');
+            }
+        }
+
+        // Initialize gas particles
+        function initGasParticles(type) {
+            const container = document.getElementById('gasParticles');
+            container.innerHTML = '';
+            
+            // Create particles
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'gas-particle';
+                
+                // Random position
+                const x = Math.random() * 190 + 5;
+                const y = Math.random() * 190 + 5;
+                
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                
+                // Different properties for ideal vs real gas
+                if (type === 'real') {
+                    particle.style.width = '12px';
+                    particle.style.height = '12px';
+                    particle.style.backgroundColor = '#ef4444';
+                }
+                
+                container.appendChild(particle);
+            }
+            
+            // Animate particles
+            animateGasParticles();
+        }
+
+        // Animate gas particles
+        function animateGasParticles() {
+            const particles = document.querySelectorAll('.gas-particle');
+            
+            particles.forEach(particle => {
+                let x = parseFloat(particle.style.left);
+                let y = parseFloat(particle.style.top);
+                let vx = (Math.random() - 0.5) * 2;
+                let vy = (Math.random() - 0.5) * 2;
+                
+                // Update position
+                x += vx;
+                y += vy;
+                
+                // Bounce off walls
+                if (x <= 0 || x >= 190) {
+                    vx = -vx;
+                }
+                
+                if (y <= 0 || y >= 190) {
+                    vy = -vy;
+                }
+                
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+            });
+            
+            requestAnimationFrame(animateGasParticles);
+        }
+
+        // Calculate moles
+        function calculateMoles() {
+            const mass = parseFloat(document.getElementById('massInput').value);
+            const molarMass = parseFloat(document.getElementById('molarMassInput').value);
+            const resultDiv = document.getElementById('molesResult');
+            
+            if (isNaN(mass) || isNaN(molarMass)) {
+                resultDiv.textContent = 'Please enter valid numbers for both mass and molar mass.';
+                resultDiv.style.color = 'red';
+                return;
+            }
+            
+            // Calculate moles: n = m/M
+            const moles = mass / molarMass;
+            
+            resultDiv.textContent = `n = ${moles.toFixed(4)} mol`;
+            resultDiv.style.color = 'var(--primary-color)';
+        }
+
+        // Convert to scientific notation
+        function convertToScientific() {
+            const number = parseFloat(document.getElementById('standardNumber').value);
+            const scientificField = document.getElementById('scientificNumber');
+            
+            if (isNaN(number)) {
+                scientificField.value = '';
+                return;
+            }
+            
+            // Convert to scientific notation
+            const exponent = Math.floor(Math.log10(Math.abs(number)));
+            const mantissa = (number / Math.pow(10, exponent)).toFixed(2);
+            
+            scientificField.value = `${mantissa} × 10^${exponent}`;
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set initial navigation state
+            document.getElementById('prevBtn').disabled = true;
+            
+            // Initialize gas particles
+            initGasParticles('ideal');
+            
+            // Add smooth scrolling to all internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

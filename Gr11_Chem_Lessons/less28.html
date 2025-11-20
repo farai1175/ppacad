@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exothermic and Endothermic Reactions</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .lesson-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .main-content {
+            flex: 3;
+            min-width: 300px;
+        }
+        
+        .sidebar {
+            flex: 1;
+            min-width: 250px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .section-header:hover {
+            background-color: #34495e;
+        }
+        
+        .section-header h2 {
+            font-size: 1.4rem;
+            margin: 0;
+        }
+        
+        .section-content {
+            padding: 20px;
+            display: none;
+        }
+        
+        .section.active .section-content {
+            display: block;
+        }
+        
+        .section.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .toggle-icon {
+            transition: transform 0.3s;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--light-color);
+            font-weight: 600;
+        }
+        
+        .definition-table th:first-child {
+            width: 30%;
+        }
+        
+        .energy-diagram {
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .diagram-container {
+            position: relative;
+            height: 300px;
+            margin: 20px auto;
+            max-width: 500px;
+        }
+        
+        .energy-axis {
+            position: absolute;
+            left: 50px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #333;
+        }
+        
+        .axis-label {
+            position: absolute;
+            left: 20px;
+            font-weight: bold;
+        }
+        
+        .energy-level {
+            position: absolute;
+            width: 200px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: all 0.5s ease;
+        }
+        
+        .reactants {
+            background-color: var(--secondary-color);
+            top: 50px;
+            left: 100px;
+        }
+        
+        .products {
+            background-color: var(--accent-color);
+            top: 150px;
+            left: 100px;
+        }
+        
+        .delta-h {
+            position: absolute;
+            left: 320px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .reaction-path {
+            position: absolute;
+            left: 100px;
+            width: 200px;
+            height: 2px;
+            background-color: #333;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .quiz-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .quiz-question {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .quiz-question:last-child {
+            border-bottom: none;
+        }
+        
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .option.selected {
+            background-color: var(--light-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .option.correct {
+            background-color: rgba(46, 204, 113, 0.2);
+            border-color: var(--success-color);
+        }
+        
+        .option.incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            border-color: var(--danger-color);
+        }
+        
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            display: block;
+        }
+        
+        .feedback.incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            color: #c0392b;
+            display: block;
+        }
+        
+        .submit-btn {
+            background-color: var(--primary-color);
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+        
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .results.success {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            display: block;
+        }
+        
+        .results.warning {
+            background-color: rgba(243, 156, 18, 0.2);
+            color: #d35400;
+            display: block;
+        }
+        
+        .key-point {
+            background-color: var(--light-color);
+            padding: 15px;
+            border-left: 4px solid var(--secondary-color);
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .math {
+            font-family: "Times New Roman", serif;
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            .lesson-content {
+                flex-direction: column;
+            }
+            
+            .diagram-container {
+                height: 250px;
+            }
+            
+            .energy-level {
+                width: 150px;
+            }
+            
+            .delta-h {
+                left: 270px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Exothermic and Endothermic Reactions</h1>
+            <div class="subtitle">Chemical Change (Part 2) - Physical Sciences (Chemistry Focus)</div>
+        </header>
+        
+        <div class="lesson-content">
+            <div class="main-content">
+                <div class="section" id="objectives">
+                    <div class="section-header">
+                        <h2>Learning Objectives</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>Upon completion of this lesson, students should be able to:</p>
+                        <ol>
+                            <li><strong>State that ΔH > 0 for endothermic reactions</strong>, i.e., reactions in which energy is absorbed.</li>
+                            <li><strong>State that ΔH < 0 for exothermic reactions</strong>, i.e., reactions in which energy is released.</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="section" id="definitions">
+                    <div class="section-header">
+                        <h2>Definitions and Scientific Principles</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <table class="definition-table">
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Definition/Principle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Enthalpy Change (ΔH)</strong></td>
+                                    <td>
+                                        Also called the <strong>heat of reaction</strong>. It is the <strong>energy absorbed or released per mole in a chemical reaction</strong>. 
+                                        It is defined as the heat added to a system under conditions of standard pressure. 
+                                        ΔH is calculated as the difference between the energy of the products (E<sub>prod</sub>) and the energy of the reactants (E<sub>react</sub>): 
+                                        <span class="math">ΔH = E<sub>prod</sub> - E<sub>react</sub></span>.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Exothermic Reaction</strong></td>
+                                    <td>
+                                        A chemical reaction during which <strong>heat energy is transferred to the surroundings</strong>. 
+                                        This reaction releases energy in the form of heat or light. For these reactions, the energy of the products is <strong>less than</strong> the energy of the reactants.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Endothermic Reaction</strong></td>
+                                    <td>
+                                        A chemical reaction during which <strong>heat energy is taken in from the surroundings</strong>. 
+                                        This reaction absorbs energy in the form of heat or light. For these reactions, the energy of the products is <strong>greater than</strong> the energy of the reactants.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="section" id="introduction">
+                    <div class="section-header">
+                        <h2>Introduction</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>
+                            Chemical reactions inevitably involve energy changes. When a chemical reaction occurs, energy is always transferred between the reacting system and its surroundings. 
+                            This energy transfer results from the breaking of existing chemical bonds (which absorbs energy) and the forming of new bonds (which releases energy). 
+                            The net energy change resulting from these processes determines whether the reaction is classified as exothermic or endothermic. 
+                            The measurement used to quantify this net energy transfer is the <strong>enthalpy change (ΔH)</strong>.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="section" id="main-body">
+                    <div class="section-header">
+                        <h2>Main Body: Relating ΔH to Reaction Type</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>
+                            The sign of the enthalpy change (ΔH) is the defining characteristic used to classify a reaction as exothermic or endothermic, 
+                            indicating the direction of heat flow between the system and the surroundings.
+                        </p>
+                        
+                        <h3>1. Exothermic Reactions: Energy Released (ΔH < 0)</h3>
+                        <ol>
+                            <li>
+                                <strong>Energy Flow and Definition:</strong> An exothermic reaction is characterized by the <strong>release of energy</strong> into the environment (surroundings). 
+                                Heat flows <strong>from the system to the surroundings</strong>.
+                            </li>
+                            <li>
+                                <strong>Enthalpy Sign:</strong> For an exothermic reaction, the enthalpy change (ΔH) is <strong>negative</strong> (ΔH < 0).
+                            </li>
+                            <li>
+                                <strong>Reasoning:</strong> The total energy released during the formation of new bonds in the products is <strong>greater</strong> than the total energy absorbed to break the bonds in the reactants. 
+                                Consequently, the products have <strong>less energy</strong> than the reactants.
+                                <ul>
+                                    <li>Example representation: A + B → AB + heat or A + B → AB (ΔH < 0).</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Observation:</strong> Since energy is released to the surroundings, the temperature of the reaction mixture or the surroundings will <strong>increase</strong> (it feels warmer/hotter).
+                            </li>
+                        </ol>
+                        
+                        <h3>2. Endothermic Reactions: Energy Absorbed (ΔH > 0)</h3>
+                        <ol>
+                            <li>
+                                <strong>Energy Flow and Definition:</strong> An endothermic reaction is characterized by the <strong>absorption of energy</strong> from the environment (surroundings). 
+                                Heat flows <strong>from the surroundings to the system</strong>.
+                            </li>
+                            <li>
+                                <strong>Enthalpy Sign:</strong> For an endothermic reaction, the enthalpy change (ΔH) is <strong>positive</strong> (ΔH > 0).
+                            </li>
+                            <li>
+                                <strong>Reasoning:</strong> The total energy absorbed during the breaking of bonds in the reactants is <strong>greater</strong> than the total energy released when forming the new bonds in the products. 
+                                Consequently, the products have <strong>more energy</strong> than the reactants.
+                                <ul>
+                                    <li>Example representation: Reactants + Energy → Products or A + B → AB (ΔH > 0).</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Observation:</strong> Since energy is absorbed from the surroundings, the temperature of the reaction mixture or the surroundings will <strong>decrease</strong> (it feels colder/cooler).
+                            </li>
+                        </ol>
+                        
+                        <h3>3. Summary of ΔH Signs</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Reaction Type</th>
+                                    <th>Energy Flow</th>
+                                    <th>Energy Comparison (E<sub>prod</sub> vs E<sub>react</sub>)</th>
+                                    <th>Sign of ΔH</th>
+                                    <th>Condition for ΔH</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Exothermic</strong></td>
+                                    <td>Released to surroundings</td>
+                                    <td>E<sub>products</sub> < E<sub>reactants</sub></td>
+                                    <td>Negative</td>
+                                    <td><strong>ΔH < 0</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Endothermic</strong></td>
+                                    <td>Absorbed from surroundings</td>
+                                    <td>E<sub>products</sub> > E<sub>reactants</sub></td>
+                                    <td>Positive</td>
+                                    <td><strong>ΔH > 0</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <p>This relationship is visually represented in enthalpy diagrams, where the vertical displacement between the reactant and product energy levels corresponds to ΔH.</p>
+                        
+                        <div class="energy-diagram">
+                            <h3>Interactive Energy Diagram</h3>
+                            <div class="diagram-container">
+                                <div class="energy-axis"></div>
+                                <div class="axis-label" style="top: 10px;">Energy</div>
+                                <div class="energy-level reactants">Reactants</div>
+                                <div class="energy-level products">Products</div>
+                                <div class="reaction-path" style="top: 70px;"></div>
+                                <div class="reaction-path" style="top: 170px;"></div>
+                                <div class="delta-h" style="top: 110px;">ΔH = ?</div>
+                            </div>
+                            <div class="controls">
+                                <button id="show-exothermic">Show Exothermic Reaction</button>
+                                <button id="show-endothermic">Show Endothermic Reaction</button>
+                                <button id="reset-diagram">Reset Diagram</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section" id="conclusion">
+                    <div class="section-header">
+                        <h2>Conclusion</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>
+                            The sign of the enthalpy change (ΔH) immediately classifies a reaction regarding its energy flow. 
+                            <strong>Exothermic reactions release energy</strong> into the surroundings, resulting in a <strong>negative ΔH (ΔH < 0)</strong>. 
+                            Conversely, <strong>endothermic reactions absorb energy</strong> from the surroundings, resulting in a <strong>positive ΔH (ΔH > 0)</strong>. 
+                            This fundamental concept is crucial for understanding energy transformation in chemical systems.
+                        </p>
+                        
+                        <div class="key-point">
+                            <strong>Key Takeaway:</strong> Remember that ΔH = E<sub>products</sub> - E<sub>reactants</sub>. 
+                            If products have less energy than reactants, ΔH is negative (exothermic). 
+                            If products have more energy than reactants, ΔH is positive (endothermic).
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quiz-container" id="quiz">
+                    <h2>End-of-Lesson Questions</h2>
+                    <p>Test your understanding of exothermic and endothermic reactions. Select the correct answer for each question.</p>
+                    
+                    <div class="quiz-question" id="q1">
+                        <div class="question-text">1. State the sign of the enthalpy change (ΔH) for an exothermic reaction.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">ΔH > 0</div>
+                            <div class="option" data-correct="true">ΔH < 0</div>
+                            <div class="option" data-correct="false">ΔH = 0</div>
+                            <div class="option" data-correct="false">ΔH cannot be determined</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q2">
+                        <div class="question-text">2. In words, describe what the sign of ΔH indicates about the energy flow in an endothermic reaction.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">Energy is released to the surroundings</div>
+                            <div class="option" data-correct="true">Energy is absorbed from the surroundings</div>
+                            <div class="option" data-correct="false">No energy change occurs</div>
+                            <div class="option" data-correct="false">Energy is converted to matter</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q3">
+                        <div class="question-text">3. A combustion reaction releases 891 kJ·mol⁻¹ of energy. State the sign of ΔH for this reaction and classify it as exothermic or endothermic.</div>
+                        <div class="options">
+                            <div class="option" data-correct="true">ΔH < 0, exothermic</div>
+                            <div class="option" data-correct="false">ΔH > 0, exothermic</div>
+                            <div class="option" data-correct="false">ΔH < 0, endothermic</div>
+                            <div class="option" data-correct="false">ΔH > 0, endothermic</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q4">
+                        <div class="question-text">4. If the products of a reaction have a higher potential energy than the reactants, state whether ΔH is positive or negative, and identify the reaction type.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">ΔH < 0, exothermic</div>
+                            <div class="option" data-correct="true">ΔH > 0, endothermic</div>
+                            <div class="option" data-correct="false">ΔH = 0, neutral</div>
+                            <div class="option" data-correct="false">ΔH > 0, exothermic</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q5">
+                        <div class="question-text">5. State the mathematical relationship used to calculate the enthalpy change (ΔH) in terms of product energy and reactant energy.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">ΔH = E<sub>reactants</sub> - E<sub>products</sub></div>
+                            <div class="option" data-correct="true">ΔH = E<sub>products</sub> - E<sub>reactants</sub></div>
+                            <div class="option" data-correct="false">ΔH = E<sub>products</sub> + E<sub>reactants</sub></div>
+                            <div class="option" data-correct="false">ΔH = E<sub>reactants</sub> / E<sub>products</sub></div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <button class="submit-btn" id="submit-quiz">Submit Answers</button>
+                    <div class="results" id="quiz-results"></div>
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <h3>Lesson Navigation</h3>
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <li style="margin-bottom: 10px;"><a href="#objectives" class="nav-link">Learning Objectives</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#definitions" class="nav-link">Definitions</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#introduction" class="nav-link">Introduction</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#main-body" class="nav-link">Main Body</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#conclusion" class="nav-link">Conclusion</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#quiz" class="nav-link">Quiz</a></li>
+                </ul>
+                
+                <div style="margin-top: 30px;">
+                    <h3>Quick Reference</h3>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Exothermic:</strong> ΔH < 0, energy released, temperature increases
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Endothermic:</strong> ΔH > 0, energy absorbed, temperature decreases
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Formula:</strong> ΔH = E<sub>products</sub> - E<sub>reactants</sub>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Collapsible sections functionality
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const section = header.parentElement;
+                section.classList.toggle('active');
+            });
+        });
+        
+        // Navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                // Expand the target section if it's collapsed
+                if (!targetSection.classList.contains('active')) {
+                    targetSection.classList.add('active');
+                }
+                
+                // Scroll to the target section
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        // Interactive energy diagram
+        const reactants = document.querySelector('.reactants');
+        const products = document.querySelector('.products');
+        const deltaH = document.querySelector('.delta-h');
+        const reactionPaths = document.querySelectorAll('.reaction-path');
+        
+        document.getElementById('show-exothermic').addEventListener('click', () => {
+            // Move products lower than reactants
+            reactants.style.top = '50px';
+            products.style.top = '150px';
+            products.style.backgroundColor = 'var(--accent-color)';
+            
+            // Update ΔH value
+            deltaH.textContent = 'ΔH < 0';
+            deltaH.style.top = '110px';
+            deltaH.style.color = 'var(--accent-color)';
+            
+            // Update reaction path
+            reactionPaths[0].style.top = '70px';
+            reactionPaths[1].style.top = '170px';
+        });
+        
+        document.getElementById('show-endothermic').addEventListener('click', () => {
+            // Move products higher than reactants
+            reactants.style.top = '150px';
+            products.style.top = '50px';
+            products.style.backgroundColor = 'var(--secondary-color)';
+            
+            // Update ΔH value
+            deltaH.textContent = 'ΔH > 0';
+            deltaH.style.top = '110px';
+            deltaH.style.color = 'var(--secondary-color)';
+            
+            // Update reaction path
+            reactionPaths[0].style.top = '170px';
+            reactionPaths[1].style.top = '70px';
+        });
+        
+        document.getElementById('reset-diagram').addEventListener('click', () => {
+            // Reset to initial state
+            reactants.style.top = '50px';
+            products.style.top = '150px';
+            products.style.backgroundColor = 'var(--accent-color)';
+            deltaH.textContent = 'ΔH = ?';
+            deltaH.style.color = '#333';
+            reactionPaths[0].style.top = '70px';
+            reactionPaths[1].style.top = '170px';
+        });
+        
+        // Quiz functionality
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options in this question
+                const question = this.closest('.quiz-question');
+                question.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // Remove any existing feedback
+                const feedback = question.querySelector('.feedback');
+                feedback.className = 'feedback';
+                feedback.textContent = '';
+            });
+        });
+        
+        document.getElementById('submit-quiz').addEventListener('click', () => {
+            let score = 0;
+            const totalQuestions = 5;
+            
+            // Check each question
+            document.querySelectorAll('.quiz-question').forEach(question => {
+                const selectedOption = question.querySelector('.option.selected');
+                const feedback = question.querySelector('.feedback');
+                
+                if (selectedOption) {
+                    const isCorrect = selectedOption.getAttribute('data-correct') === 'true';
+                    
+                    if (isCorrect) {
+                        score++;
+                        feedback.className = 'feedback correct';
+                        feedback.textContent = 'Correct! Well done.';
+                        selectedOption.classList.add('correct');
+                    } else {
+                        feedback.className = 'feedback incorrect';
+                        feedback.textContent = 'Incorrect. Try again.';
+                        selectedOption.classList.add('incorrect');
+                        
+                        // Highlight the correct answer
+                        const correctOption = question.querySelector('.option[data-correct="true"]');
+                        correctOption.classList.add('correct');
+                    }
+                } else {
+                    // No option selected
+                    const correctOption = question.querySelector('.option[data-correct="true"]');
+                    correctOption.classList.add('correct');
+                    
+                    feedback.className = 'feedback incorrect';
+                    feedback.textContent = 'Please select an answer.';
+                }
+            });
+            
+            // Display results
+            const results = document.getElementById('quiz-results');
+            const percentage = (score / totalQuestions) * 100;
+            
+            if (percentage >= 80) {
+                results.className = 'results success';
+                results.textContent = `Excellent! You scored ${score}/${totalQuestions} (${percentage}%). You have a strong understanding of exothermic and endothermic reactions.`;
+            } else if (percentage >= 60) {
+                results.className = 'results warning';
+                results.textContent = `Good effort! You scored ${score}/${totalQuestions} (${percentage}%). Review the material and try again to improve your score.`;
+            } else {
+                results.className = 'results warning';
+                results.textContent = `You scored ${score}/${totalQuestions} (${percentage}%). We recommend reviewing the lesson material and trying the quiz again.`;
+            }
+        });
+        
+        // Expand the first section by default
+        document.querySelector('.section').classList.add('active');
+    </script>
+</body>
+</html>
