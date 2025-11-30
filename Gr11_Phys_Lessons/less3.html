@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultant Vector Determination Methods</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px;
+            border-radius: var(--radius);
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .subject-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: var(--radius);
+        }
+        
+        .info-item {
+            flex: 1;
+            min-width: 200px;
+            margin: 5px;
+            padding: 10px;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin: 25px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 20px 0 10px;
+        }
+        
+        .lesson-section {
+            background-color: white;
+            border-radius: var(--radius);
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .section-header:hover {
+            background-color: #34495e;
+        }
+        
+        .section-header i {
+            transition: transform 0.3s;
+        }
+        
+        .section-content {
+            padding: 20px;
+            display: none;
+        }
+        
+        .section-content.active {
+            display: block;
+        }
+        
+        .objectives-list {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        
+        .objectives-list li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .objectives-list li:before {
+            content: "✓";
+            color: var(--success);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .key-concept {
+            background-color: #e8f4fc;
+            border-left: 4px solid var(--secondary);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+        
+        .formula-box {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--radius);
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .step-container {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: var(--radius);
+        }
+        
+        .step-number {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+        }
+        
+        .method-comparison {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .method {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+            border-radius: var(--radius);
+            background-color: #f8f9fa;
+        }
+        
+        .method h3 {
+            color: var(--primary);
+            margin-top: 0;
+        }
+        
+        .graphical-method {
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .calculation-method {
+            border-left: 4px solid var(--success);
+        }
+        
+        .interactive-diagram {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            margin: 20px 0;
+            background-color: white;
+            position: relative;
+        }
+        
+        .method-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .method-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            border-radius: var(--radius) var(--radius) 0 0;
+            margin-right: 5px;
+        }
+        
+        .method-tab.active {
+            background-color: white;
+            border-bottom: 1px solid white;
+            margin-bottom: -1px;
+        }
+        
+        .vector-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #f0f7ff;
+            border-radius: var(--radius);
+        }
+        
+        .control-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .control-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .control-group input, .control-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-calculate {
+            background-color: var(--success);
+        }
+        
+        .btn-calculate:hover {
+            background-color: #27ae60;
+        }
+        
+        .btn-reset {
+            background-color: var(--warning);
+        }
+        
+        .btn-reset:hover {
+            background-color: #e67e22;
+        }
+        
+        .result-display {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #e8f6ef;
+            border-radius: var(--radius);
+            border-left: 4px solid var(--success);
+        }
+        
+        .questions-container {
+            margin-top: 30px;
+        }
+        
+        .question {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .question-text {
+            margin-bottom: 15px;
+        }
+        
+        .answer-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        
+        .feedback {
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: var(--secondary);
+            width: 0%;
+            transition: width 0.5s;
+        }
+        
+        @media (max-width: 768px) {
+            .subject-info {
+                flex-direction: column;
+            }
+            
+            .info-item {
+                min-width: 100%;
+            }
+            
+            .method-comparison {
+                flex-direction: column;
+            }
+            
+            .vector-controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Determining Resultant Vectors</h1>
+            <div class="subject-info">
+                <div class="info-item">
+                    <h3><i class="fas fa-book"></i> Subject</h3>
+                    <p>Physical Sciences</p>
+                </div>
+                <div class="info-item">
+                    <h3><i class="fas fa-graduation-cap"></i> Grade</h3>
+                    <p>Grade 11</p>
+                </div>
+                <div class="info-item">
+                    <h3><i class="fas fa-tag"></i> Topic</h3>
+                    <p>Mechanics: Vectors in Two Dimensions</p>
+                </div>
+                <div class="info-item">
+                    <h3><i class="fas fa-puzzle-piece"></i> Subtopic</h3>
+                    <p>Resultant Vector Determination</p>
+                </div>
+            </div>
+        </header>
+        
+        <div class="progress-bar">
+            <div class="progress" id="lesson-progress"></div>
+        </div>
+        
+        <div class="lesson-section">
+            <div class="section-header" onclick="toggleSection('overview')">
+                <h2><i class="fas fa-info-circle"></i> Lesson Overview</h2>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="section-content" id="overview">
+                <p>This lesson focuses on determining the resultant vector using both graphical and calculation methods. You will learn how to find the single vector that represents the combined effect of multiple vectors using different approaches.</p>
+                
+                <h3>Learning Objectives</h3>
+                <ul class="objectives-list">
+                    <li>Determine the resultant of two vectors graphically using tail-to-head and tail-to-tail methods</li>
+                    <li>Determine the resultant by calculation using the component method</li>
+                    <li>Explain the meaning and significance of a closed vector diagram</li>
+                    <li>Apply appropriate methods for vectors in one and two dimensions</li>
+                    <li>Solve problems involving up to four vectors</li>
+                </ul>
+                
+                <div class="key-concept">
+                    <h3><i class="fas fa-lightbulb"></i> Key Concept</h3>
+                    <p>The <strong>resultant vector</strong> is a single vector that has the same effect as all the other vectors acting together. It can be determined graphically or through calculation, depending on the situation and required precision.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="lesson-section">
+            <div class="section-header" onclick="toggleSection('definitions')">
+                <h2><i class="fas fa-book"></i> Definitions and Scientific Principles</h2>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="section-content" id="definitions">
+                <div class="method-comparison">
+                    <div class="method">
+                        <h3>Vector Quantity</h3>
+                        <p>A physical quantity that has both magnitude (size) and direction.</p>
+                    </div>
+                    <div class="method">
+                        <h3>Resultant Vector (R)</h3>
+                        <p>The single vector quantity that has the same effect as two or more vectors together. It is found by addition.</p>
+                    </div>
+                </div>
+                
+                <div class="method-comparison">
+                    <div class="method">
+                        <h3>Co-linear Vectors</h3>
+                        <p>Vectors that act in one dimension, either in the same direction or in opposite directions. They can be added algebraically.</p>
+                    </div>
+                    <div class="method">
+                        <h3>Vector Components</h3>
+                        <p>Vectors that together have the same effect as the original vector. They are usually aligned with the x-axis (R<sub>x</sub>) and y-axis (R<sub>y</sub>).</p>
+                    </div>
+                </div>
+                
+                <div class="method-comparison">
+                    <div class="method">
+                        <h3>Closed Vector Diagram</h3>
+                        <p>A set of vectors drawn using the tail-to-head method where the resultant has a magnitude of zero. The arrowhead of the last vector ends where the tail of the first vector began.</p>
+                    </div>
+                    <div class="method">
+                        <h3>Mathematical Principles</h3>
+                        <div class="formula-box">
+                            <p>Pythagoras: \[ R = \sqrt{R_x^2 + R_y^2} \]</p>
+                            <p>Direction: \[ \theta = \tan^{-1}\left(\frac{R_y}{R_x}\right) \]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="lesson-section">
+            <div class="section-header" onclick="toggleSection('main-body')">
+                <h2><i class="fas fa-book-open"></i> Main Body</h2>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="section-content" id="main-body">
+                <h3>Introduction</h3>
+                <p>In Grade 11, the study of vectors is extended from one dimension to two dimensions. Because vectors have direction, they cannot be added simply using ordinary arithmetic; the direction of each vector must be taken into account.</p>
+                
+                <p>The resultant vector (R) is fundamental; it is the <strong>single vector that produces the same effect as all the original vectors acting together</strong>. This resultant can be determined either by drawing the vectors graphically or by calculation.</p>
+                
+                <h3>I. Graphical Methods for Determining the Resultant</h3>
+                <p>Graphical methods use diagrams drawn <strong>accurately to scale</strong> to determine the resultant of vectors. These methods are typically demonstrated using two vectors, though they can be extended.</p>
+                
+                <div class="method-comparison">
+                    <div class="method graphical-method">
+                        <h3>Tail-to-Head Method (Polygon Method)</h3>
+                        <div class="step-container">
+                            <div class="step-number">1</div>
+                            <p>Draw the first vector (F<sub>1</sub>) starting from a reference point (often the origin).</p>
+                        </div>
+                        <div class="step-container">
+                            <div class="step-number">2</div>
+                            <p>Draw the second vector (F<sub>2</sub>) so that its tail starts at the head of the first vector (F<sub>1</sub>).</p>
+                        </div>
+                        <div class="step-container">
+                            <div class="step-number">3</div>
+                            <p>For additional vectors, repeat this process.</p>
+                        </div>
+                        <div class="step-container">
+                            <div class="step-number">4</div>
+                            <p>The resultant (R) is the vector connecting the tail of the first vector to the head of the last vector.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="method graphical-method">
+                        <h3>Tail-to-Tail Method (Parallelogram Method)</h3>
+                        <div class="step-container">
+                            <div class="step-number">1</div>
+                            <p>Draw the two vectors (F<sub>1</sub> and F<sub>2</sub>) so that both tails start at the same point (the origin).</p>
+                        </div>
+                        <div class="step-container">
+                            <div class="step-number">2</div>
+                            <p>Complete the parallelogram by drawing lines parallel to F<sub>1</sub> and F<sub>2</sub>.</p>
+                        </div>
+                        <div class="step-container">
+                            <div class="step-number">3</div>
+                            <p>The resultant (R) is the diagonal of the parallelogram that originates from the common tail.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>II. Calculation Method (Component Method) for Resultant</h3>
+                
+                <div class="method-comparison">
+                    <div class="method calculation-method">
+                        <h3>Resultant in 1-Dimension</h3>
+                        <p>In one dimension, vectors are <strong>co-linear</strong> (acting along the same straight line).</p>
+                        <ul>
+                            <li>The resultant is found by <strong>algebraic addition</strong>.</li>
+                            <li>A direction is chosen as positive (e.g., right or up is +), and the opposite direction is negative (-).</li>
+                            <li>The final sign of the resultant indicates its direction.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="method calculation-method">
+                        <h3>Resultant in 2-Dimensions</h3>
+                        <p>For two dimensions, the component method is the standard calculation technique:</p>
+                        <div class="step-container">
+                            <div class="step-number">1</div>
+                            <p><strong>Resolve Vectors:</strong> Break down vectors into horizontal (F<sub>x</sub>) and vertical (F<sub>y</sub>) components.</p>
+                        </div>
+                        <div class="step-container">
+                            <div class="step-number">2</div>
+                            <p><strong>Find R<sub>x</sub>:</strong> Algebraically add all horizontal components.</p>
+                        </div>
+                        <div class="step-container">
+                            <div class="step-number">3</div>
+                            <p><strong>Find R<sub>y</sub>:</strong> Algebraically add all vertical components.</p>
+                        </div>
+                        <div class="step-container">
+                            <div class="step-number">4</div>
+                            <p><strong>Calculate Magnitude:</strong> Use Pythagoras' theorem.</p>
+                        </div>
+                        <div class="step-container">
+                            <div class="step-number">5</div>
+                            <p><strong>Calculate Direction:</strong> Use trigonometric ratios.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>III. Closed Vector Diagram</h3>
+                <div class="key-concept">
+                    <p>A <strong>closed vector diagram</strong> is specifically defined as a set of vectors drawn using the tail-to-head method that <strong>forms a closed polygon</strong>.</p>
+                    <ul>
+                        <li><strong>Meaning:</strong> When the vector diagram is closed, the <strong>resultant (R) is zero (R = 0 N)</strong>.</li>
+                        <li><strong>Physical Significance:</strong> If the resultant force on an object is zero, the forces are <strong>in equilibrium</strong> (balanced).</li>
+                        <li>An object subject to forces forming a closed vector diagram will <strong>remain at rest or move at a constant velocity</strong>.</li>
+                    </ul>
+                </div>
+                
+                <h3>Interactive Vector Methods</h3>
+                <p>Explore both graphical and calculation methods using the interactive tools below.</p>
+                
+                <div class="method-tabs">
+                    <div class="method-tab active" onclick="switchMethod('graphical')">Graphical Method</div>
+                    <div class="method-tab" onclick="switchMethod('calculation')">Calculation Method</div>
+                    <div class="method-tab" onclick="switchMethod('closed')">Closed Diagram</div>
+                </div>
+                
+                <div id="graphical-method" class="method-content">
+                    <div class="vector-controls">
+                        <div class="control-group">
+                            <label for="vector1-mag">Vector 1 Magnitude</label>
+                            <input type="number" id="vector1-mag" min="1" max="20" value="8">
+                        </div>
+                        <div class="control-group">
+                            <label for="vector1-angle">Vector 1 Angle (°)</label>
+                            <input type="number" id="vector1-angle" min="0" max="360" value="0">
+                        </div>
+                        <div class="control-group">
+                            <label for="vector2-mag">Vector 2 Magnitude</label>
+                            <input type="number" id="vector2-mag" min="1" max="20" value="6">
+                        </div>
+                        <div class="control-group">
+                            <label for="vector2-angle">Vector 2 Angle (°)</label>
+                            <input type="number" id="vector2-angle" min="0" max="360" value="90">
+                        </div>
+                        <div class="control-group">
+                            <label for="graphical-method-select">Method</label>
+                            <select id="graphical-method-select">
+                                <option value="tail-to-head">Tail-to-Head</option>
+                                <option value="tail-to-tail">Tail-to-Tail (Parallelogram)</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <button class="btn" id="update-graphical">Update Diagram</button>
+                            <button class="btn btn-reset" id="reset-graphical">Reset</button>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-diagram" id="graphical-diagram">
+                        <canvas id="graphical-canvas" width="800" height="400"></canvas>
+                    </div>
+                </div>
+                
+                <div id="calculation-method" class="method-content" style="display: none;">
+                    <div class="vector-controls">
+                        <div class="control-group">
+                            <label for="rx-input">Horizontal Component R<sub>x</sub></label>
+                            <input type="number" id="rx-input" value="5">
+                        </div>
+                        <div class="control-group">
+                            <label for="ry-input">Vertical Component R<sub>y</sub></label>
+                            <input type="number" id="ry-input" value="12">
+                        </div>
+                        <div class="control-group">
+                            <label for="vector-units">Units</label>
+                            <select id="vector-units">
+                                <option value="N">Newtons (N)</option>
+                                <option value="m">Meters (m)</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <button class="btn btn-calculate" id="calculate-resultant">Calculate Resultant</button>
+                            <button class="btn btn-reset" id="reset-calculator">Reset</button>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-diagram" id="calculation-diagram">
+                        <canvas id="calculation-canvas" width="800" height="400"></canvas>
+                    </div>
+                    
+                    <div class="result-display" id="result-display">
+                        <h3>Resultant Vector Calculation</h3>
+                        <p id="result-components"></p>
+                        <p id="result-magnitude"></p>
+                        <p id="result-direction"></p>
+                    </div>
+                </div>
+                
+                <div id="closed-diagram" class="method-content" style="display: none;">
+                    <div class="vector-controls">
+                        <div class="control-group">
+                            <label for="closed-vectors">Number of Vectors</label>
+                            <select id="closed-vectors">
+                                <option value="3">3 Vectors</option>
+                                <option value="4">4 Vectors</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <button class="btn" id="generate-closed">Generate Closed Diagram</button>
+                            <button class="btn btn-reset" id="reset-closed">Reset</button>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-diagram" id="closed-vector-diagram">
+                        <canvas id="closed-canvas" width="800" height="400"></canvas>
+                    </div>
+                    
+                    <div class="key-concept">
+                        <h3>Closed Vector Diagram Properties</h3>
+                        <p>In a closed vector diagram, the resultant vector has a magnitude of zero. This represents a state of <strong>equilibrium</strong>, where all forces balance each other.</p>
+                        <p>An object in equilibrium will either remain at rest or continue moving at a constant velocity (Newton's First Law).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="lesson-section">
+            <div class="section-header" onclick="toggleSection('questions')">
+                <h2><i class="fas fa-question-circle"></i> End of Lesson Questions</h2>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="section-content" id="questions">
+                <div class="questions-container">
+                    <div class="question" id="question-1">
+                        <div class="question-header">
+                            <h3>Question 1</h3>
+                            <span>2 marks</span>
+                        </div>
+                        <div class="question-text">
+                            <p>Define the term <strong>resultant vector</strong>.</p>
+                        </div>
+                        <textarea class="answer-input" placeholder="Type your answer here..."></textarea>
+                        <button class="btn" onclick="checkAnswer(1)">Check Answer</button>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question" id="question-2">
+                        <div class="question-header">
+                            <h3>Question 2</h3>
+                            <span>2 marks</span>
+                        </div>
+                        <div class="question-text">
+                            <p>In vector addition, explain why simply adding the magnitudes of two vectors (e.g., 10 N + 5 N = 15 N) is insufficient unless they are collinear.</p>
+                        </div>
+                        <textarea class="answer-input" placeholder="Type your answer here..."></textarea>
+                        <button class="btn" onclick="checkAnswer(2)">Check Answer</button>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question" id="question-3">
+                        <div class="question-header">
+                            <h3>Question 3</h3>
+                            <span>3 marks</span>
+                        </div>
+                        <div class="question-text">
+                            <p>Describe the key procedure for obtaining the resultant vector graphically using the <strong>tail-to-head method</strong>.</p>
+                        </div>
+                        <textarea class="answer-input" placeholder="Type your answer here..."></textarea>
+                        <button class="btn" onclick="checkAnswer(3)">Check Answer</button>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question" id="question-4">
+                        <div class="question-header">
+                            <h3>Question 4</h3>
+                            <span>3 marks</span>
+                        </div>
+                        <div class="question-text">
+                            <p>Describe the key procedure for obtaining the resultant vector graphically using the <strong>tail-to-tail method (parallelogram method)</strong>.</p>
+                        </div>
+                        <textarea class="answer-input" placeholder="Type your answer here..."></textarea>
+                        <button class="btn" onclick="checkAnswer(4)">Check Answer</button>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question" id="question-5">
+                        <div class="question-header">
+                            <h3>Question 5</h3>
+                            <span>2 marks</span>
+                        </div>
+                        <div class="question-text">
+                            <p>A force F<sub>1</sub> = 8 N acts to the left, and a force F<sub>2</sub> = 12 N acts to the left. Determine the resultant force using the calculation method in 1-dimension.</p>
+                        </div>
+                        <input type="text" class="answer-input" placeholder="Enter your answer">
+                        <button class="btn" onclick="checkAnswer(5)">Check Answer</button>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question" id="question-6">
+                        <div class="question-header">
+                            <h3>Question 6</h3>
+                            <span>3 marks</span>
+                        </div>
+                        <div class="question-text">
+                            <p>Explain the meaning of a <strong>closed vector diagram</strong> and state the magnitude of the resultant vector if a diagram is closed.</p>
+                        </div>
+                        <textarea class="answer-input" placeholder="Type your answer here..."></textarea>
+                        <button class="btn" onclick="checkAnswer(6)">Check Answer</button>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question" id="question-7">
+                        <div class="question-header">
+                            <h3>Question 7</h3>
+                            <span>2 marks</span>
+                        </div>
+                        <div class="question-text">
+                            <p>If the vector diagram for three forces acting on an object is closed, what deduction can be made about the object's motion?</p>
+                        </div>
+                        <textarea class="answer-input" placeholder="Type your answer here..."></textarea>
+                        <button class="btn" onclick="checkAnswer(7)">Check Answer</button>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question" id="question-8">
+                        <div class="question-header">
+                            <h3>Question 8</h3>
+                            <span>6 marks</span>
+                        </div>
+                        <div class="question-text">
+                            <p>A net horizontal component (R<sub>x</sub>) of 5 N and a net vertical component (R<sub>y</sub>) of 12 N are determined for four forces acting on an object.</p>
+                            <p>a. Calculate the magnitude of the final resultant vector (R).</p>
+                            <p>b. Calculate the direction (θ) of the resultant relative to the horizontal axis.</p>
+                        </div>
+                        <input type="text" class="answer-input" placeholder="Enter your answer (e.g., R=..., θ=...)">
+                        <button class="btn" onclick="checkAnswer(8)">Check Answer</button>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question" id="question-9">
+                        <div class="question-header">
+                            <h3>Question 9</h3>
+                            <span>3 marks</span>
+                        </div>
+                        <div class="question-text">
+                            <p>A learner needs to find the resultant of four non-collinear vectors. Which method—graphical (tail-to-head) or calculation (component)—is best suited for accurately finding the magnitude and direction? Justify your choice.</p>
+                        </div>
+                        <textarea class="answer-input" placeholder="Type your answer here..."></textarea>
+                        <button class="btn" onclick="checkAnswer(9)">Check Answer</button>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question" id="question-10">
+                        <div class="question-header">
+                            <h3>Question 10</h3>
+                            <span>1 mark</span>
+                        </div>
+                        <div class="question-text">
+                            <p>If three vectors are drawn tail-to-head and form a closed figure, what term is used to describe the state of the object on which these forces act?</p>
+                        </div>
+                        <input type="text" class="answer-input" placeholder="Enter your answer">
+                        <button class="btn" onclick="checkAnswer(10)">Check Answer</button>
+                        <div class="feedback"></div>
+                    </div>
+                </div>
+                
+                <div class="navigation">
+                    <button class="btn" id="prev-btn"><i class="fas fa-arrow-left"></i> Previous</button>
+                    <button class="btn" id="next-btn">Next <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Section toggle functionality
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const icon = section.previousElementSibling.querySelector('i.fa-chevron-down');
+            
+            section.classList.toggle('active');
+            icon.classList.toggle('fa-rotate-180');
+            
+            updateProgress();
+        }
+        
+        // Method switching functionality
+        function switchMethod(method) {
+            // Hide all method contents
+            document.querySelectorAll('.method-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.method-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected method and activate its tab
+            document.getElementById(`${method}-method`).style.display = 'block';
+            event.target.classList.add('active');
+            
+            // Initialize the method if needed
+            if (method === 'graphical') {
+                initGraphicalMethod();
+            } else if (method === 'calculation') {
+                initCalculationMethod();
+            } else if (method === 'closed') {
+                initClosedDiagram();
+            }
+        }
+        
+        // Initialize sections
+        document.addEventListener('DOMContentLoaded', function() {
+            // Open the first section by default
+            toggleSection('overview');
+            
+            // Initialize graphical method by default
+            initGraphicalMethod();
+            
+            // Set up navigation buttons
+            document.getElementById('prev-btn').addEventListener('click', function() {
+                alert('Previous section would be shown here in a full implementation.');
+            });
+            
+            document.getElementById('next-btn').addEventListener('click', function() {
+                alert('Next section would be shown here in a full implementation.');
+            });
+            
+            // Set up method tab events
+            document.querySelectorAll('.method-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const method = this.textContent.toLowerCase().replace(' method', '').replace(' diagram', '').replace(/\s/g, '-');
+                    switchMethod(method);
+                });
+            });
+            
+            // Update progress bar
+            updateProgress();
+        });
+        
+        // Update progress bar based on completed sections and questions
+        function updateProgress() {
+            const sections = document.querySelectorAll('.section-content');
+            let completedSections = 0;
+            
+            sections.forEach(section => {
+                if (section.classList.contains('active')) {
+                    completedSections++;
+                }
+            });
+            
+            const progress = (completedSections / sections.length) * 100;
+            document.getElementById('lesson-progress').style.width = `${progress}%`;
+        }
+        
+        // Graphical method functionality
+        function initGraphicalMethod() {
+            const canvas = document.getElementById('graphical-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas dimensions
+            function setCanvasSize() {
+                const container = document.getElementById('graphical-diagram');
+                canvas.width = container.clientWidth;
+                canvas.height = container.clientHeight;
+                drawVectors();
+            }
+            
+            // Draw vectors based on current inputs
+            function drawVectors() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw coordinate system
+                drawCoordinateSystem(ctx, canvas.width, canvas.height);
+                
+                // Get input values
+                const v1Mag = parseFloat(document.getElementById('vector1-mag').value) || 0;
+                const v1Angle = parseFloat(document.getElementById('vector1-angle').value) || 0;
+                const v2Mag = parseFloat(document.getElementById('vector2-mag').value) || 0;
+                const v2Angle = parseFloat(document.getElementById('vector2-angle').value) || 0;
+                const method = document.getElementById('graphical-method-select').value;
+                
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const scale = 15; // Pixels per unit
+                
+                // Convert angles to radians
+                const v1AngleRad = v1Angle * Math.PI / 180;
+                const v2AngleRad = v2Angle * Math.PI / 180;
+                
+                if (method === 'tail-to-head') {
+                    // Draw first vector
+                    const v1EndX = centerX + v1Mag * Math.cos(v1AngleRad) * scale;
+                    const v1EndY = centerY - v1Mag * Math.sin(v1AngleRad) * scale;
+                    
+                    drawVector(ctx, centerX, centerY, v1EndX, v1EndY, '#3498db', 'F₁');
+                    
+                    // Draw second vector from head of first
+                    const v2EndX = v1EndX + v2Mag * Math.cos(v2AngleRad) * scale;
+                    const v2EndY = v1EndY - v2Mag * Math.sin(v2AngleRad) * scale;
+                    
+                    drawVector(ctx, v1EndX, v1EndY, v2EndX, v2EndY, '#2ecc71', 'F₂');
+                    
+                    // Draw resultant
+                    drawVector(ctx, centerX, centerY, v2EndX, v2EndY, '#e74c3c', 'R');
+                    
+                } else { // tail-to-tail (parallelogram)
+                    // Draw both vectors from origin
+                    const v1EndX = centerX + v1Mag * Math.cos(v1AngleRad) * scale;
+                    const v1EndY = centerY - v1Mag * Math.sin(v1AngleRad) * scale;
+                    
+                    const v2EndX = centerX + v2Mag * Math.cos(v2AngleRad) * scale;
+                    const v2EndY = centerY - v2Mag * Math.sin(v2AngleRad) * scale;
+                    
+                    drawVector(ctx, centerX, centerY, v1EndX, v1EndY, '#3498db', 'F₁');
+                    drawVector(ctx, centerX, centerY, v2EndX, v2EndY, '#2ecc71', 'F₂');
+                    
+                    // Draw parallelogram
+                    ctx.strokeStyle = '#95a5a6';
+                    ctx.setLineDash([5, 5]);
+                    ctx.beginPath();
+                    ctx.moveTo(v1EndX, v1EndY);
+                    ctx.lineTo(v1EndX + v2Mag * Math.cos(v2AngleRad) * scale, v1EndY - v2Mag * Math.sin(v2AngleRad) * scale);
+                    ctx.moveTo(v2EndX, v2EndY);
+                    ctx.lineTo(v2EndX + v1Mag * Math.cos(v1AngleRad) * scale, v2EndY - v1Mag * Math.sin(v1AngleRad) * scale);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                    
+                    // Draw resultant
+                    const resultantX = v1EndX + v2Mag * Math.cos(v2AngleRad) * scale;
+                    const resultantY = v1EndY - v2Mag * Math.sin(v2AngleRad) * scale;
+                    
+                    drawVector(ctx, centerX, centerY, resultantX, resultantY, '#e74c3c', 'R');
+                }
+            }
+            
+            // Draw a coordinate system
+            function drawCoordinateSystem(ctx, width, height) {
+                const centerX = width / 2;
+                const centerY = height / 2;
+                
+                ctx.strokeStyle = '#ccc';
+                ctx.lineWidth = 1;
+                
+                // Draw x-axis
+                ctx.beginPath();
+                ctx.moveTo(0, centerY);
+                ctx.lineTo(width, centerY);
+                ctx.stroke();
+                
+                // Draw y-axis
+                ctx.beginPath();
+                ctx.moveTo(centerX, 0);
+                ctx.lineTo(centerX, height);
+                ctx.stroke();
+                
+                // Draw labels
+                ctx.fillStyle = '#666';
+                ctx.font = '12px Arial';
+                ctx.fillText('x', width - 10, centerY - 5);
+                ctx.fillText('y', centerX + 5, 10);
+            }
+            
+            // Draw a vector with arrowhead and label
+            function drawVector(ctx, startX, startY, endX, endY, color, label) {
+                // Draw line
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(endX, endY);
+                ctx.stroke();
+                
+                // Draw arrowhead
+                const angle = Math.atan2(endY - startY, endX - startX);
+                const headlen = 10;
+                
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.moveTo(endX, endY);
+                ctx.lineTo(endX - headlen * Math.cos(angle - Math.PI/6), endY - headlen * Math.sin(angle - Math.PI/6));
+                ctx.lineTo(endX - headlen * Math.cos(angle + Math.PI/6), endY - headlen * Math.sin(angle + Math.PI/6));
+                ctx.closePath();
+                ctx.fill();
+                
+                // Draw label
+                ctx.fillStyle = color;
+                ctx.font = 'bold 14px Arial';
+                const labelX = startX + (endX - startX) / 2;
+                const labelY = startY + (endY - startY) / 2;
+                ctx.fillText(label, labelX, labelY);
+            }
+            
+            // Set up event listeners
+            document.getElementById('update-graphical').addEventListener('click', drawVectors);
+            document.getElementById('reset-graphical').addEventListener('click', function() {
+                document.getElementById('vector1-mag').value = '8';
+                document.getElementById('vector1-angle').value = '0';
+                document.getElementById('vector2-mag').value = '6';
+                document.getElementById('vector2-angle').value = '90';
+                drawVectors();
+            });
+            
+            // Initial setup
+            setCanvasSize();
+            window.addEventListener('resize', setCanvasSize);
+        }
+        
+        // Calculation method functionality
+        function initCalculationMethod() {
+            const canvas = document.getElementById('calculation-canvas');
+            const ctx = canvas.getContext('2d');
+            let Rx = 0;
+            let Ry = 0;
+            let resultant = null;
+            
+            // Set canvas dimensions
+            function setCanvasSize() {
+                const container = document.getElementById('calculation-diagram');
+                canvas.width = container.clientWidth;
+                canvas.height = container.clientHeight;
+                drawVectors();
+            }
+            
+            // Draw vectors based on current inputs
+            function drawVectors() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw coordinate system
+                drawCoordinateSystem(ctx, canvas.width, canvas.height);
+                
+                // Draw components and resultant if calculated
+                if (Rx !== 0 || Ry !== 0) {
+                    drawComponents();
+                }
+                
+                if (resultant) {
+                    drawResultant();
+                }
+            }
+            
+            // Draw coordinate system
+            function drawCoordinateSystem(ctx, width, height) {
+                const centerX = width / 2;
+                const centerY = height / 2;
+                
+                ctx.strokeStyle = '#ccc';
+                ctx.lineWidth = 1;
+                
+                // Draw x-axis
+                ctx.beginPath();
+                ctx.moveTo(0, centerY);
+                ctx.lineTo(width, centerY);
+                ctx.stroke();
+                
+                // Draw y-axis
+                ctx.beginPath();
+                ctx.moveTo(centerX, 0);
+                ctx.lineTo(centerX, height);
+                ctx.stroke();
+                
+                // Draw labels
+                ctx.fillStyle = '#666';
+                ctx.font = '12px Arial';
+                ctx.fillText('x', width - 10, centerY - 5);
+                ctx.fillText('y', centerX + 5, 10);
+            }
+            
+            // Draw vector components
+            function drawComponents() {
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const scale = 15; // Pixels per unit
+                
+                // Draw Rx component
+                const rxEndX = centerX + Rx * scale;
+                const rxEndY = centerY;
+                
+                drawVector(ctx, centerX, centerY, rxEndX, rxEndY, '#3498db', `R_x = ${Rx}`);
+                
+                // Draw Ry component
+                const ryEndX = centerX;
+                const ryEndY = centerY - Ry * scale; // Negative because canvas y increases downward
+                
+                drawVector(ctx, centerX, centerY, ryEndX, ryEndY, '#2ecc71', `R_y = ${Ry}`);
+            }
+            
+            // Draw resultant vector
+            function drawResultant() {
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const scale = 15; // Pixels per unit
+                
+                const magnitude = resultant.magnitude;
+                const angle = resultant.angle * Math.PI / 180;
+                
+                const endX = centerX + magnitude * Math.cos(angle) * scale;
+                const endY = centerY - magnitude * Math.sin(angle) * scale; // Negative because canvas y increases downward
+                
+                // Draw resultant
+                drawVector(ctx, centerX, centerY, endX, endY, '#e74c3c', `R = ${magnitude.toFixed(2)}`);
+                
+                // Draw angle arc
+                const arcRadius = 30;
+                ctx.strokeStyle = '#f39c12';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, arcRadius, 0, -angle, angle > 0);
+                ctx.stroke();
+                
+                // Draw angle label
+                ctx.fillStyle = '#f39c12';
+                ctx.font = '14px Arial';
+                ctx.fillText(`θ = ${resultant.angle.toFixed(2)}°`, 
+                    centerX + arcRadius * Math.cos(-angle/2) - 20, 
+                    centerY - arcRadius * Math.sin(-angle/2) - 10);
+            }
+            
+            // Draw a vector with arrowhead and label
+            function drawVector(ctx, startX, startY, endX, endY, color, label) {
+                // Draw line
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(endX, endY);
+                ctx.stroke();
+                
+                // Draw arrowhead
+                const angle = Math.atan2(endY - startY, endX - startX);
+                const headlen = 10;
+                
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.moveTo(endX, endY);
+                ctx.lineTo(endX - headlen * Math.cos(angle - Math.PI/6), endY - headlen * Math.sin(angle - Math.PI/6));
+                ctx.lineTo(endX - headlen * Math.cos(angle + Math.PI/6), endY - headlen * Math.sin(angle + Math.PI/6));
+                ctx.closePath();
+                ctx.fill();
+                
+                // Draw label
+                ctx.fillStyle = color;
+                ctx.font = 'bold 14px Arial';
+                const labelX = startX + (endX - startX) / 2;
+                const labelY = startY + (endY - startY) / 2;
+                
+                // Adjust label position to avoid overlap with axes
+                let offsetX = 0, offsetY = 0;
+                if (Math.abs(endX - startX) < 10) offsetX = 30; // Vertical vector
+                if (Math.abs(endY - startY) < 10) offsetY = 20; // Horizontal vector
+                
+                ctx.fillText(label, labelX + offsetX, labelY + offsetY);
+            }
+            
+            // Calculate resultant button event
+            document.getElementById('calculate-resultant').addEventListener('click', function() {
+                Rx = parseFloat(document.getElementById('rx-input').value) || 0;
+                Ry = parseFloat(document.getElementById('ry-input').value) || 0;
+                const units = document.getElementById('vector-units').value;
+                
+                // Calculate magnitude and direction
+                const magnitude = Math.sqrt(Rx*Rx + Ry*Ry);
+                let direction = Math.atan2(Ry, Rx) * 180 / Math.PI;
+                
+                // Create resultant vector
+                resultant = {
+                    magnitude: magnitude,
+                    angle: direction
+                };
+                
+                // Display results
+                document.getElementById('result-components').textContent = 
+                    `Components: R_x = ${Rx} ${units}, R_y = ${Ry} ${units}`;
+                document.getElementById('result-magnitude').textContent = 
+                    `Magnitude: R = √(${Rx}² + ${Ry}²) = ${magnitude.toFixed(2)} ${units}`;
+                document.getElementById('result-direction').textContent = 
+                    `Direction: θ = tan⁻¹(${Ry}/${Rx}) = ${direction.toFixed(2)}°`;
+                
+                document.getElementById('result-display').style.display = 'block';
+                
+                drawVectors();
+            });
+            
+            // Reset calculator button event
+            document.getElementById('reset-calculator').addEventListener('click', function() {
+                document.getElementById('rx-input').value = '5';
+                document.getElementById('ry-input').value = '12';
+                Rx = 5;
+                Ry = 12;
+                resultant = null;
+                document.getElementById('result-display').style.display = 'none';
+                drawVectors();
+            });
+            
+            // Initial setup
+            setCanvasSize();
+            window.addEventListener('resize', setCanvasSize);
+            
+            // Calculate with initial values
+            document.getElementById('calculate-resultant').click();
+        }
+        
+        // Closed diagram functionality
+        function initClosedDiagram() {
+            const canvas = document.getElementById('closed-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas dimensions
+            function setCanvasSize() {
+                const container = document.getElementById('closed-vector-diagram');
+                canvas.width = container.clientWidth;
+                canvas.height = container.clientHeight;
+                drawClosedDiagram();
+            }
+            
+            // Draw closed vector diagram
+            function drawClosedDiagram() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw coordinate system
+                drawCoordinateSystem(ctx, canvas.width, canvas.height);
+                
+                const numVectors = parseInt(document.getElementById('closed-vectors').value);
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const scale = 15; // Pixels per unit
+                
+                // Generate random vectors that form a closed diagram
+                const vectors = generateClosedVectors(numVectors);
+                
+                // Draw vectors tail-to-head
+                let currentX = centerX;
+                let currentY = centerY;
+                const colors = ['#3498db', '#2ecc71', '#e74c3c', '#f39c12'];
+                
+                for (let i = 0; i < vectors.length; i++) {
+                    const vector = vectors[i];
+                    const nextX = currentX + vector.x * scale;
+                    const nextY = currentY + vector.y * scale;
+                    
+                    drawVector(ctx, currentX, currentY, nextX, nextY, colors[i % colors.length], `F${i+1}`);
+                    
+                    currentX = nextX;
+                    currentY = nextY;
+                }
+                
+                // The diagram should be closed (back to start)
+                ctx.strokeStyle = '#27ae60';
+                ctx.lineWidth = 3;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.moveTo(currentX, currentY);
+                ctx.lineTo(centerX, centerY);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Add label indicating closed diagram
+                ctx.fillStyle = '#27ae60';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Closed Vector Diagram - Resultant = 0', centerX - 120, centerY - 150);
+            }
+            
+            // Generate vectors that form a closed diagram
+            function generateClosedVectors(numVectors) {
+                const vectors = [];
+                let sumX = 0, sumY = 0;
+                
+                // Generate random vectors
+                for (let i = 0; i < numVectors - 1; i++) {
+                    const angle = Math.random() * 2 * Math.PI;
+                    const magnitude = 5 + Math.random() * 10;
+                    
+                    const x = Math.cos(angle) * magnitude;
+                    const y = Math.sin(angle) * magnitude;
+                    
+                    vectors.push({ x, y });
+                    sumX += x;
+                    sumY += y;
+                }
+                
+                // Add final vector to close the diagram
+                vectors.push({ x: -sumX, y: -sumY });
+                
+                return vectors;
+            }
+            
+            // Draw coordinate system
+            function drawCoordinateSystem(ctx, width, height) {
+                const centerX = width / 2;
+                const centerY = height / 2;
+                
+                ctx.strokeStyle = '#ccc';
+                ctx.lineWidth = 1;
+                
+                // Draw x-axis
+                ctx.beginPath();
+                ctx.moveTo(0, centerY);
+                ctx.lineTo(width, centerY);
+                ctx.stroke();
+                
+                // Draw y-axis
+                ctx.beginPath();
+                ctx.moveTo(centerX, 0);
+                ctx.lineTo(centerX, height);
+                ctx.stroke();
+                
+                // Draw labels
+                ctx.fillStyle = '#666';
+                ctx.font = '12px Arial';
+                ctx.fillText('x', width - 10, centerY - 5);
+                ctx.fillText('y', centerX + 5, 10);
+            }
+            
+            // Draw a vector with arrowhead and label
+            function drawVector(ctx, startX, startY, endX, endY, color, label) {
+                // Draw line
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(endX, endY);
+                ctx.stroke();
+                
+                // Draw arrowhead
+                const angle = Math.atan2(endY - startY, endX - startX);
+                const headlen = 10;
+                
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.moveTo(endX, endY);
+                ctx.lineTo(endX - headlen * Math.cos(angle - Math.PI/6), endY - headlen * Math.sin(angle - Math.PI/6));
+                ctx.lineTo(endX - headlen * Math.cos(angle + Math.PI/6), endY - headlen * Math.sin(angle + Math.PI/6));
+                ctx.closePath();
+                ctx.fill();
+                
+                // Draw label
+                ctx.fillStyle = color;
+                ctx.font = 'bold 14px Arial';
+                const labelX = startX + (endX - startX) / 2;
+                const labelY = startY + (endY - startY) / 2;
+                ctx.fillText(label, labelX, labelY);
+            }
+            
+            // Set up event listeners
+            document.getElementById('generate-closed').addEventListener('click', drawClosedDiagram);
+            document.getElementById('reset-closed').addEventListener('click', drawClosedDiagram);
+            
+            // Initial setup
+            setCanvasSize();
+            window.addEventListener('resize', setCanvasSize);
+        }
+        
+        // Answer checking functionality
+        function checkAnswer(questionNum) {
+            const question = document.getElementById(`question-${questionNum}`);
+            const answerInput = question.querySelector('.answer-input');
+            const feedback = question.querySelector('.feedback');
+            const userAnswer = answerInput.value.trim().toLowerCase();
+            
+            // Define correct answers
+            const correctAnswers = {
+                1: "the single vector that has the same effect as two or more vectors acting together",
+                2: "vectors have direction, so their directions must be considered when adding them",
+                3: "draw the first vector, then draw the second vector starting from the head of the first, the resultant is from the tail of the first to the head of the last",
+                4: "draw both vectors from the same point, complete the parallelogram, the resultant is the diagonal from the common tail",
+                5: "20 n to the left or -20 n",
+                6: "a closed vector diagram has a resultant of zero, meaning all vectors balance each other",
+                7: "the object is in equilibrium, either at rest or moving with constant velocity",
+                8: "r=13, θ=67.38",
+                9: "calculation method is more accurate for multiple vectors as it doesn't rely on measurement precision",
+                10: "equilibrium"
+            };
+            
+            // Check if answer is correct
+            let isCorrect = false;
+            
+            if (questionNum === 5) {
+                // Check for magnitude and direction
+                isCorrect = userAnswer.includes("20") && (userAnswer.includes("left") || userAnswer.includes("-"));
+            } else if (questionNum === 8) {
+                // Check for magnitude and direction
+                const rMatch = userAnswer.match(/r\s*=\s*(\d+\.?\d*)/);
+                const thetaMatch = userAnswer.match(/θ\s*=\s*(\d+\.?\d*)/);
+                
+                if (rMatch && thetaMatch) {
+                    const r = parseFloat(rMatch[1]);
+                    const theta = parseFloat(thetaMatch[1]);
+                    isCorrect = Math.abs(r - 13) < 0.5 && Math.abs(theta - 67.38) < 0.5;
+                }
+            } else if (questionNum === 10) {
+                // Check for equilibrium
+                isCorrect = userAnswer.includes("equilibrium");
+            } else {
+                // For text answers, check if the answer contains key phrases
+                const keyPhrases = correctAnswers[questionNum].split(',');
+                isCorrect = keyPhrases.some(phrase => userAnswer.includes(phrase));
+            }
+            
+            // Display feedback
+            if (isCorrect) {
+                feedback.textContent = "Correct! Well done.";
+                feedback.className = "feedback correct";
+            } else {
+                feedback.textContent = `Incorrect. The correct answer is: ${correctAnswers[questionNum]}`;
+                feedback.className = "feedback incorrect";
+            }
+            
+            feedback.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultant Vector Magnitude and Direction</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px;
+            border-radius: var(--radius);
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .subject-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: var(--radius);
+        }
+        
+        .info-item {
+            flex: 1;
+            min-width: 200px;
+            margin: 5px;
+            padding: 10px;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin: 25px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 20px 0 10px;
+        }
+        
+        .lesson-section {
+            background-color: white;
+            border-radius: var(--radius);
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .section-header:hover {
+            background-color: #34495e;
+        }
+        
+        .section-header i {
+            transition: transform 0.3s;
+        }
+        
+        .section-content {
+            padding: 20px;
+            display: none;
+        }
+        
+        .section-content.active {
+            display: block;
+        }
+        
+        .objectives-list {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        
+        .objectives-list li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .objectives-list li:before {
+            content: "✓";
+            color: var(--success);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .key-concept {
+            background-color: #e8f4fc;
+            border-left: 4px solid var(--secondary);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+        
+        .formula-box {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--radius);
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .step-container {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: var(--radius);
+        }
+        
+        .step-number {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+        }
+        
+        .interactive-diagram {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            margin: 20px 0;
+            background-color: white;
+            position: relative;
+        }
+        
+        .vector-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #f0f7ff;
+            border-radius: var(--radius);
+        }
+        
+        .control-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .control-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .control-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-calculate {
+            background-color: var(--success);
+        }
+        
+        .btn-calculate:hover {
+            background-color: #27ae60;
+        }
+        
+        .btn-reset {
+            background-color: var(--warning);
+        }
+        
+        .btn-reset:hover {
+            background-color: #e67e22;
+        }
+        
+        .result-display {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #e8f6ef;
+            border-radius: var(--radius);
+            border-left: 4px solid var(--success);
+        }
+        
+        .questions-container {
+            margin-top: 30px;
+        }
+        
+        .question {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .question-text {
+            margin-bottom: 15px;
+        }
+        
+        .answer-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        
+        .feedback {
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: var(--secondary);
+            width: 0%;
+            transition: width 0.5s;
+        }
+        
+        .quadrant-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .quadrant {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px;
+            border-radius: var(--radius);
+            background-color: #f8f9fa;
+        }
+        
+        .quadrant h4 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .quadrant-1 {
+            border-left: 4px solid var(--success);
+        }
+        
+        .quadrant-2 {
+            border-left: 4px solid var(--warning);
+        }
+        
+        .quadrant-3 {
+            border-left: 4px solid var(--danger);
+        }
+        
+        .quadrant-4 {
+            border-left: 4px solid var(--secondary);
+        }
+        
+        @media (max-width: 768px) {
+            .subject-info {
+                flex-direction: column;
+            }
+            
+            .info-item {
+                min-width: 100%;
+            }
+            
+            .vector-controls {
+                flex-direction: column;
+            }
+            
+            .quadrant-info {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Resultant Vector Magnitude and Direction</h1>
+            <div class="subject-info">
+                <div class="info-item">
+                    <h3><i class="fas fa-book"></i> Subject</h3>
+                    <p>Physical Sciences</p>
+                </div>
+                <div class="info-item">
+                    <h3><i class="fas fa-graduation-cap"></i> Grade</h3>
+                    <p>Grade 11</p>
+                </div>
+                <div class="info-item">
+                    <h3><i class="fas fa-tag"></i> Topic</h3>
+                    <p>Vectors and Scalars</p>
+                </div>
+                <div class="info-item">
+                    <h3><i class="fas fa-puzzle-piece"></i> Subtopic</h3>
+                    <p>Resultant of Perpendicular Vectors</p>
+                </div>
+            </div>
+        </header>
+        
+        <div class="progress-bar">
+            <div class="progress" id="lesson-progress"></div>
+        </div>
+        
+        <div class="lesson-section">
+            <div class="section-header" onclick="toggleSection('overview')">
+                <h2><i class="fas fa-info-circle"></i> Lesson Overview</h2>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="section-content" id="overview">
+                <p>This lesson focuses on calculating the magnitude and direction of a resultant vector from its perpendicular components. You will learn how to apply Pythagoras' theorem and trigonometric ratios to completely define a resultant vector.</p>
+                
+                <h3>Learning Objectives</h3>
+                <ul class="objectives-list">
+                    <li>Define resultant vector and explain its significance</li>
+                    <li>Calculate the magnitude of a resultant vector using Pythagoras' theorem</li>
+                    <li>Determine the direction of a resultant vector using trigonometric ratios</li>
+                    <li>Interpret vector directions in different quadrants</li>
+                    <li>Apply the component method to solve vector problems</li>
+                </ul>
+                
+                <div class="key-concept">
+                    <h3><i class="fas fa-lightbulb"></i> Key Concept</h3>
+                    <p>The <strong>resultant vector</strong> is a single vector that has the same effect as all the other vectors acting together. When we have perpendicular components R<sub>x</sub> and R<sub>y</sub>, we can find the resultant R using Pythagoras' theorem and trigonometry.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="lesson-section">
+            <div class="section-header" onclick="toggleSection('main-body')">
+                <h2><i class="fas fa-book-open"></i> Main Body</h2>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="section-content" id="main-body">
+                <h3>Introduction to Resultant Vectors</h3>
+                <p>In Physical Sciences, particularly in the Mechanics module for Grade 11, we transition from analyzing vectors in one dimension to understanding vectors in two dimensions. When dealing with multiple vectors that are not collinear or perpendicular, the <strong>component method</strong> is the most effective approach for finding the overall resultant.</p>
+                
+                <p>This method simplifies the problem by finding the net effect in the horizontal direction (R<sub>x</sub>) and the net effect in the vertical direction (R<sub>y</sub>). Once R<sub>x</sub> and R<sub>y</sub> are determined, they are perpendicular vectors, forming the two sides of a right-angled triangle where the resultant (R) is the hypotenuse.</p>
+                
+                <div class="formula-box">
+                    <p><strong>Key Formulas:</strong></p>
+                    <p>Magnitude: \[ R = \sqrt{R_x^2 + R_y^2} \]</p>
+                    <p>Direction: \[ \theta = \tan^{-1}\left(\frac{R_y}{R_x}\right) \]</p>
+                </div>
+                
+                <h3>Steps for Calculating Resultant Magnitude and Direction</h3>
+                
+                <div class="step-container">
+                    <div class="step-number">1</div>
+                    <h3>Sketch the Components (R<sub>x</sub> and R<sub>y</sub>)</h3>
+                    <p>The net vertical vector (R<sub>y</sub>) and the resultant horizontal vector (R<sub>x</sub>) must be sketched on a Cartesian plane.</p>
+                    <ul>
+                        <li><strong>Plot the components:</strong> Draw R<sub>x</sub> along the x-axis and R<sub>y</sub> along the y-axis, starting at the origin (or in the correct quadrant based on their positive/negative directions).</li>
+                        <li><strong>Form the resultant vector (R):</strong> To find the resultant R of these two perpendicular vectors, we apply vector addition using either the tail-to-head or tail-to-tail method.</li>
+                    </ul>
+                </div>
+                
+                <div class="step-container">
+                    <div class="step-number">2</div>
+                    <h3>Calculate the Magnitude of the Resultant (R)</h3>
+                    <p>Since the resultant components R<sub>x</sub> and R<sub>y</sub> are perpendicular, the <strong>magnitude</strong> of the resultant (R) is found by treating them as the two non-hypotenuse sides of a right-angled triangle and applying the <strong>Theorem of Pythagoras</strong>.</p>
+                    <div class="formula-box">
+                        <p>\[ R^2 = R_x^2 + R_y^2 \]</p>
+                        <p>\[ R = \sqrt{R_x^2 + R_y^2} \]</p>
+                    </div>
+                    <p><em>The final calculated magnitude must be stated with appropriate units, e.g., N for force.</em></p>
+                </div>
+                
+                <div class="step-container">
+                    <div class="step-number">3</div>
+                    <h3>Determine the Direction of the Resultant (θ)</h3>
+                    <p>The direction of the resultant vector (R) is typically expressed as the angle (θ) it makes with the horizontal axis (R<sub>x</sub>). This is calculated using simple trigonometric ratios, specifically the tangent function, based on the right-angled triangle formed in the sketch.</p>
+                    <div class="formula-box">
+                        <p>\[ \tan \theta = \frac{\text{opposite side}}{\text{adjacent side}} = \frac{R_y}{R_x} \]</p>
+                        <p>\[ \theta = \tan^{-1}\left(\frac{R_y}{R_x}\right) \]</p>
+                    </div>
+                    <p><strong>Important Note on Direction:</strong> When stating the final answer, the angle must be specified clearly with respect to a reference direction, such as "measured anticlockwise from the positive x-direction" or by stating the quadrant.</p>
+                </div>
+                
+                <h3>Understanding Quadrants</h3>
+                <div class="quadrant-info">
+                    <div class="quadrant quadrant-1">
+                        <h4>Quadrant I</h4>
+                        <p>R<sub>x</sub> > 0, R<sub>y</sub> > 0</p>
+                        <p>θ = tan<sup>-1</sup>(R<sub>y</sub>/R<sub>x</sub>)</p>
+                        <p>Direction: 0° to 90°</p>
+                    </div>
+                    <div class="quadrant quadrant-2">
+                        <h4>Quadrant II</h4>
+                        <p>R<sub>x</sub> < 0, R<sub>y</sub> > 0</p>
+                        <p>θ = 180° + tan<sup>-1</sup>(R<sub>y</sub>/R<sub>x</sub>)</p>
+                        <p>Direction: 90° to 180°</p>
+                    </div>
+                    <div class="quadrant quadrant-3">
+                        <h4>Quadrant III</h4>
+                        <p>R<sub>x</sub> < 0, R<sub>y</sub> < 0</p>
+                        <p>θ = 180° + tan<sup>-1</sup>(R<sub>y</sub>/R<sub>x</sub>)</p>
+                        <p>Direction: 180° to 270°</p>
+                    </div>
+                    <div class="quadrant quadrant-4">
+                        <h4>Quadrant IV</h4>
+                        <p>R<sub>x</sub> > 0, R<sub>y</sub> < 0</p>
+                        <p>θ = 360° + tan<sup>-1</sup>(R<sub>y</sub>/R<sub>x</sub>)</p>
+                        <p>Direction: 270° to 360°</p>
+                    </div>
+                </div>
+                
+                <h3>Interactive Vector Calculator</h3>
+                <p>Use the controls below to input vector components and see how the resultant is calculated.</p>
+                
+                <div class="vector-controls">
+                    <div class="control-group">
+                        <label for="rx-input">Horizontal Component R<sub>x</sub> (units)</label>
+                        <input type="number" id="rx-input" value="6">
+                    </div>
+                    <div class="control-group">
+                        <label for="ry-input">Vertical Component R<sub>y</sub> (units)</label>
+                        <input type="number" id="ry-input" value="8">
+                    </div>
+                    <div class="control-group">
+                        <label for="vector-units">Units</label>
+                        <select id="vector-units">
+                            <option value="N">Newtons (N)</option>
+                            <option value="m">Meters (m)</option>
+                            <option value="m/s">m/s</option>
+                            <option value="m/s²">m/s²</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <button class="btn btn-calculate" id="calculate-resultant">Calculate Resultant</button>
+                        <button class="btn btn-reset" id="reset-calculator">Reset</button>
+                    </div>
+                </div>
+                
+                <div class="interactive-diagram" id="vector-diagram">
+                    <canvas id="vector-canvas" width="800" height="400"></canvas>
+                </div>
+                
+                <div class="result-display" id="result-display" style="display: none;">
+                    <h3>Resultant Vector Calculation</h3>
+                    <p id="result-components"></p>
+                    <p id="result-magnitude"></p>
+                    <p id="result-direction"></p>
+                    <p id="result-quadrant"></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="lesson-section">
+            <div class="section-header" onclick="toggleSection('questions')">
+                <h2><i class="fas fa-question-circle"></i> End of Lesson Questions</h2>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="section-content" id="questions">
+                <div class="questions-container">
+                    <div class="question" id="question-1">
+                        <div class="question-header">
+                            <h3>Question 1</h3>
+                            <span>2 marks</span>
+                        </div>
+                        <div class="question-text">
+                            <p>Define the term <strong>resultant vector</strong> in the context of two or more vectors.</p>
+                        </div>
+                        <textarea class="answer-input" placeholder="Type your answer here..."></textarea>
+                        <button class="btn" onclick="checkAnswer(1)">Check Answer</button>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question" id="question-2">
+                        <div class="question-header">
+                            <h3>Question 2</h3>
+                            <span>2 marks</span>
+                        </div>
+                        <div class="question-text">
+                            <p>Explain why R<sub>x</sub> and R<sub>y</sub> must be determined before calculating the final resultant R.</p>
+                        </div>
+                        <textarea class="answer-input" placeholder="Type your answer here..."></textarea>
+                        <button class="btn" onclick="checkAnswer(2)">Check Answer</button>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question" id="question-3">
+                        <div class="question-header">
+                            <h3>Question 3</h3>
+                            <span>2 marks</span>
+                        </div>
+                        <div class="question-text">
+                            <p>State the mathematical relationship used to calculate the <strong>magnitude</strong> of the resultant (R) from its perpendicular components (R<sub>x</sub> and R<sub>y</sub>).</p>
+                        </div>
+                        <textarea class="answer-input" placeholder="Type your answer here..."></textarea>
+                        <button class="btn" onclick="checkAnswer(3)">Check Answer</button>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question" id="question-4">
+                        <div class="question-header">
+                            <h3>Question 4</h3>
+                            <span>2 marks</span>
+                        </div>
+                        <div class="question-text">
+                            <p>Write down the trigonometric equation necessary to calculate the direction (θ) of the resultant relative to the horizontal component (R<sub>x</sub>).</p>
+                        </div>
+                        <textarea class="answer-input" placeholder="Type your answer here..."></textarea>
+                        <button class="btn" onclick="checkAnswer(4)">Check Answer</button>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question" id="question-5">
+                        <div class="question-header">
+                            <h3>Question 5</h3>
+                            <span>3 marks</span>
+                        </div>
+                        <div class="question-text">
+                            <p>If a resultant horizontal component (R<sub>x</sub>) is 6 N (East) and the resultant vertical component (R<sub>y</sub>) is 8 N (North), calculate the magnitude of the resultant vector (R).</p>
+                        </div>
+                        <input type="text" class="answer-input" placeholder="Enter your answer">
+                        <button class="btn" onclick="checkAnswer(5)">Check Answer</button>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question" id="question-6">
+                        <div class="question-header">
+                            <h3>Question 6</h3>
+                            <span>3 marks</span>
+                        </div>
+                        <div class="question-text">
+                            <p>For the components given in Question 5, calculate the direction of the resultant vector, measured relative to the positive x-axis (East).</p>
+                        </div>
+                        <input type="text" class="answer-input" placeholder="Enter your answer">
+                        <button class="btn" onclick="checkAnswer(6)">Check Answer</button>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question" id="question-7">
+                        <div class="question-header">
+                            <h3>Question 7</h3>
+                            <span>4 marks</span>
+                        </div>
+                        <div class="question-text">
+                            <p>If the resultant magnitude of a displacement is 10 m and its direction is 53.13° North of East, what are the magnitudes of its horizontal (R<sub>x</sub>) and vertical (R<sub>y</sub>) components?</p>
+                        </div>
+                        <input type="text" class="answer-input" placeholder="Enter your answer (e.g., Rx=..., Ry=...)">
+                        <button class="btn" onclick="checkAnswer(7)">Check Answer</button>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question" id="question-8">
+                        <div class="question-header">
+                            <h3>Question 8</h3>
+                            <span>4 marks</span>
+                        </div>
+                        <div class="question-text">
+                            <p>Sketch the resultant vertical component (R<sub>y</sub>) and the resultant horizontal component (R<sub>x</sub>) for a scenario where R<sub>x</sub> = -5 N and R<sub>y</sub> = -3 N on a Cartesian plane. Use the tail-to-head method to show the resultant vector (R).</p>
+                            <p><em>Describe your sketch in words.</em></p>
+                        </div>
+                        <textarea class="answer-input" placeholder="Describe your sketch here..."></textarea>
+                        <button class="btn" onclick="checkAnswer(8)">Check Answer</button>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question" id="question-9">
+                        <div class="question-header">
+                            <h3>Question 9</h3>
+                            <span>2 marks</span>
+                        </div>
+                        <div class="question-text">
+                            <p>Explain why the calculation of the magnitude of the resultant (R) from R<sub>x</sub> and R<sub>y</sub> relies on the prerequisite knowledge of the properties of a right-angled triangle.</p>
+                        </div>
+                        <textarea class="answer-input" placeholder="Type your answer here..."></textarea>
+                        <button class="btn" onclick="checkAnswer(9)">Check Answer</button>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question" id="question-10">
+                        <div class="question-header">
+                            <h3>Question 10</h3>
+                            <span>2 marks</span>
+                        </div>
+                        <div class="question-text">
+                            <p>If the calculation for direction yields θ = -45°, explain what the negative sign indicates about the direction of the resultant vector relative to the positive x-axis.</p>
+                        </div>
+                        <textarea class="answer-input" placeholder="Type your answer here..."></textarea>
+                        <button class="btn" onclick="checkAnswer(10)">Check Answer</button>
+                        <div class="feedback"></div>
+                    </div>
+                </div>
+                
+                <div class="navigation">
+                    <button class="btn" id="prev-btn"><i class="fas fa-arrow-left"></i> Previous</button>
+                    <button class="btn" id="next-btn">Next <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Section toggle functionality
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const icon = section.previousElementSibling.querySelector('i.fa-chevron-down');
+            
+            section.classList.toggle('active');
+            icon.classList.toggle('fa-rotate-180');
+            
+            updateProgress();
+        }
+        
+        // Initialize sections
+        document.addEventListener('DOMContentLoaded', function() {
+            // Open the first section by default
+            toggleSection('overview');
+            
+            // Initialize vector diagram
+            initVectorDiagram();
+            
+            // Set up navigation buttons
+            document.getElementById('prev-btn').addEventListener('click', function() {
+                alert('Previous section would be shown here in a full implementation.');
+            });
+            
+            document.getElementById('next-btn').addEventListener('click', function() {
+                alert('Next section would be shown here in a full implementation.');
+            });
+            
+            // Update progress bar
+            updateProgress();
+        });
+        
+        // Update progress bar based on completed sections and questions
+        function updateProgress() {
+            const sections = document.querySelectorAll('.section-content');
+            let completedSections = 0;
+            
+            sections.forEach(section => {
+                if (section.classList.contains('active')) {
+                    completedSections++;
+                }
+            });
+            
+            const progress = (completedSections / sections.length) * 100;
+            document.getElementById('lesson-progress').style.width = `${progress}%`;
+        }
+        
+        // Vector diagram functionality
+        function initVectorDiagram() {
+            const canvas = document.getElementById('vector-canvas');
+            const ctx = canvas.getContext('2d');
+            let Rx = 0;
+            let Ry = 0;
+            let resultant = null;
+            
+            // Set canvas dimensions
+            function setCanvasSize() {
+                const container = document.getElementById('vector-diagram');
+                canvas.width = container.clientWidth;
+                canvas.height = container.clientHeight;
+                drawVectors();
+            }
+            
+            // Draw all vectors on the canvas
+            function drawVectors() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw coordinate system
+                drawCoordinateSystem();
+                
+                // Draw components and resultant if calculated
+                if (Rx !== 0 || Ry !== 0) {
+                    drawComponents();
+                }
+                
+                if (resultant) {
+                    drawResultant();
+                }
+            }
+            
+            // Draw coordinate system
+            function drawCoordinateSystem() {
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                
+                ctx.strokeStyle = '#ccc';
+                ctx.lineWidth = 1;
+                
+                // Draw x-axis
+                ctx.beginPath();
+                ctx.moveTo(0, centerY);
+                ctx.lineTo(canvas.width, centerY);
+                ctx.stroke();
+                
+                // Draw y-axis
+                ctx.beginPath();
+                ctx.moveTo(centerX, 0);
+                ctx.lineTo(centerX, canvas.height);
+                ctx.stroke();
+                
+                // Draw labels
+                ctx.fillStyle = '#666';
+                ctx.font = '12px Arial';
+                ctx.fillText('x', canvas.width - 10, centerY - 5);
+                ctx.fillText('y', centerX + 5, 10);
+                ctx.fillText('O', centerX - 10, centerY + 15);
+            }
+            
+            // Draw vector components
+            function drawComponents() {
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const scale = 20; // Pixels per unit
+                
+                // Draw Rx component
+                const rxEndX = centerX + Rx * scale;
+                const rxEndY = centerY;
+                
+                ctx.strokeStyle = '#3498db';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.lineTo(rxEndX, rxEndY);
+                ctx.stroke();
+                
+                // Draw arrowhead for Rx
+                drawArrowhead(rxEndX, rxEndY, Rx > 0 ? 0 : Math.PI, '#3498db');
+                
+                // Draw Ry component
+                const ryEndX = centerX;
+                const ryEndY = centerY - Ry * scale; // Negative because canvas y increases downward
+                
+                ctx.strokeStyle = '#2ecc71';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.lineTo(ryEndX, ryEndY);
+                ctx.stroke();
+                
+                // Draw arrowhead for Ry
+                drawArrowhead(ryEndX, ryEndY, Ry > 0 ? -Math.PI/2 : Math.PI/2, '#2ecc71');
+                
+                // Draw labels
+                ctx.fillStyle = '#3498db';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText(`R_x = ${Rx}`, centerX + (Rx * scale)/2, centerY + 20);
+                
+                ctx.fillStyle = '#2ecc71';
+                ctx.fillText(`R_y = ${Ry}`, centerX - 40, centerY - (Ry * scale)/2);
+            }
+            
+            // Draw resultant vector
+            function drawResultant() {
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const scale = 20; // Pixels per unit
+                
+                const magnitude = resultant.magnitude;
+                const angle = resultant.angle * Math.PI / 180;
+                
+                const endX = centerX + magnitude * Math.cos(angle) * scale;
+                const endY = centerY - magnitude * Math.sin(angle) * scale; // Negative because canvas y increases downward
+                
+                // Draw resultant line
+                ctx.strokeStyle = '#e74c3c';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.lineTo(endX, endY);
+                ctx.stroke();
+                
+                // Draw arrowhead
+                drawArrowhead(endX, endY, angle, '#e74c3c');
+                
+                // Draw label
+                ctx.fillStyle = '#e74c3c';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText(`R = ${magnitude.toFixed(2)}`, 
+                    centerX + (magnitude * Math.cos(angle) * scale)/2 - 20, 
+                    centerY - (magnitude * Math.sin(angle) * scale)/2 - 10);
+                
+                // Draw angle arc
+                const arcRadius = 30;
+                ctx.strokeStyle = '#f39c12';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, arcRadius, 0, -angle, angle > 0);
+                ctx.stroke();
+                
+                // Draw angle label
+                ctx.fillStyle = '#f39c12';
+                ctx.font = '14px Arial';
+                ctx.fillText(`θ = ${resultant.angle.toFixed(2)}°`, 
+                    centerX + arcRadius * Math.cos(-angle/2) - 20, 
+                    centerY - arcRadius * Math.sin(-angle/2) - 10);
+            }
+            
+            // Draw arrowhead
+            function drawArrowhead(x, y, angle, color) {
+                const headlen = 10;
+                
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(x - headlen * Math.cos(angle - Math.PI/6), y - headlen * Math.sin(angle - Math.PI/6));
+                ctx.lineTo(x - headlen * Math.cos(angle + Math.PI/6), y - headlen * Math.sin(angle + Math.PI/6));
+                ctx.closePath();
+                ctx.fill();
+            }
+            
+            // Calculate resultant button event
+            document.getElementById('calculate-resultant').addEventListener('click', function() {
+                Rx = parseFloat(document.getElementById('rx-input').value) || 0;
+                Ry = parseFloat(document.getElementById('ry-input').value) || 0;
+                const units = document.getElementById('vector-units').value;
+                
+                // Calculate magnitude and direction
+                const magnitude = Math.sqrt(Rx*Rx + Ry*Ry);
+                let direction = Math.atan2(Ry, Rx) * 180 / Math.PI;
+                
+                // Create resultant vector
+                resultant = {
+                    magnitude: magnitude,
+                    angle: direction
+                };
+                
+                // Determine quadrant
+                let quadrant = "";
+                if (Rx > 0 && Ry > 0) quadrant = "I (0° to 90°)";
+                else if (Rx < 0 && Ry > 0) quadrant = "II (90° to 180°)";
+                else if (Rx < 0 && Ry < 0) quadrant = "III (180° to 270°)";
+                else if (Rx > 0 && Ry < 0) quadrant = "IV (270° to 360°)";
+                else if (Rx === 0 && Ry !== 0) quadrant = Ry > 0 ? "Positive y-axis (90°)" : "Negative y-axis (270°)";
+                else if (Ry === 0 && Rx !== 0) quadrant = Rx > 0 ? "Positive x-axis (0°)" : "Negative x-axis (180°)";
+                else quadrant = "Origin (undefined direction)";
+                
+                // Display results
+                document.getElementById('result-components').textContent = 
+                    `Components: R_x = ${Rx} ${units}, R_y = ${Ry} ${units}`;
+                document.getElementById('result-magnitude').textContent = 
+                    `Magnitude: R = √(${Rx}² + ${Ry}²) = ${magnitude.toFixed(2)} ${units}`;
+                document.getElementById('result-direction').textContent = 
+                    `Direction: θ = tan⁻¹(${Ry}/${Rx}) = ${direction.toFixed(2)}°`;
+                document.getElementById('result-quadrant').textContent = 
+                    `Quadrant: ${quadrant}`;
+                
+                document.getElementById('result-display').style.display = 'block';
+                
+                drawVectors();
+            });
+            
+            // Reset calculator button event
+            document.getElementById('reset-calculator').addEventListener('click', function() {
+                document.getElementById('rx-input').value = '6';
+                document.getElementById('ry-input').value = '8';
+                Rx = 6;
+                Ry = 8;
+                resultant = null;
+                document.getElementById('result-display').style.display = 'none';
+                drawVectors();
+            });
+            
+            // Initial setup
+            setCanvasSize();
+            window.addEventListener('resize', setCanvasSize);
+            
+            // Calculate with initial values
+            document.getElementById('calculate-resultant').click();
+        }
+        
+        // Answer checking functionality
+        function checkAnswer(questionNum) {
+            const question = document.getElementById(`question-${questionNum}`);
+            const answerInput = question.querySelector('.answer-input');
+            const feedback = question.querySelector('.feedback');
+            const userAnswer = answerInput.value.trim().toLowerCase();
+            
+            // Define correct answers
+            const correctAnswers = {
+                1: "a single vector that has the same effect as two or more vectors acting together",
+                2: "rx and ry are the perpendicular components that simplify vector addition, allowing us to use pythagoras theorem and trigonometry",
+                3: "r = √(rx² + ry²) or r² = rx² + ry²",
+                4: "θ = tan⁻¹(ry/rx) or tan θ = ry/rx",
+                5: "10",
+                6: "53.13",
+                7: "rx=6, ry=8",
+                8: "the vector would be in quadrant iii, with rx pointing left and ry pointing down, forming a resultant in the southwest direction",
+                9: "because rx and ry are perpendicular, forming a right-angled triangle with r as the hypotenuse",
+                10: "the vector is measured clockwise from the positive x-axis, or it is in quadrant iv"
+            };
+            
+            // Check if answer is correct
+            let isCorrect = false;
+            
+            if (questionNum === 5) {
+                // Check for magnitude
+                const magnitude = parseFloat(userAnswer);
+                isCorrect = Math.abs(magnitude - 10) < 0.5;
+            } else if (questionNum === 6) {
+                // Check for direction
+                const direction = parseFloat(userAnswer);
+                isCorrect = Math.abs(direction - 53.13) < 0.5;
+            } else if (questionNum === 7) {
+                // Check for components
+                const rxMatch = userAnswer.match(/rx\s*=\s*(\d+\.?\d*)/);
+                const ryMatch = userAnswer.match(/ry\s*=\s*(\d+\.?\d*)/);
+                
+                if (rxMatch && ryMatch) {
+                    const rx = parseFloat(rxMatch[1]);
+                    const ry = parseFloat(ryMatch[1]);
+                    isCorrect = Math.abs(rx - 6) < 0.5 && Math.abs(ry - 8) < 0.5;
+                }
+            } else {
+                // For text answers, check if the answer contains key phrases
+                const keyPhrases = correctAnswers[questionNum].split(',');
+                isCorrect = keyPhrases.some(phrase => userAnswer.includes(phrase));
+            }
+            
+            // Display feedback
+            if (isCorrect) {
+                feedback.textContent = "Correct! Well done.";
+                feedback.className = "feedback correct";
+            } else {
+                feedback.textContent = `Incorrect. The correct answer is: ${correctAnswers[questionNum]}`;
+                feedback.className = "feedback incorrect";
+            }
+            
+            feedback.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

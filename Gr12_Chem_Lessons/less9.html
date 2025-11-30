@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 12 Physical Sciences: Conservation of Mechanical Energy</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+        
+        .lesson-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .lesson-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .lesson-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .lesson-meta {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        .meta-item {
+            margin: 5px 10px;
+        }
+        
+        .lesson-content {
+            padding: 20px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .section-header:hover {
+            background-color: var(--dark-color);
+        }
+        
+        .section-header h2 {
+            font-size: 1.4rem;
+            margin: 0;
+        }
+        
+        .toggle-icon {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .section-content {
+            padding: 20px;
+            display: none;
+        }
+        
+        .section.active .section-content {
+            display: block;
+        }
+        
+        .objective-list, .overview-content, .main-content {
+            margin-bottom: 20px;
+        }
+        
+        .objective-list li, .overview-content p, .main-content p {
+            margin-bottom: 10px;
+        }
+        
+        .example-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .example-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .diagram-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+        }
+        
+        .diagram {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .question-container {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+        }
+        
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .options-container {
+            margin: 10px 0;
+        }
+        
+        .option {
+            margin: 8px 0;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .option input {
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+        
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .correct {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        
+        .incorrect {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark-color);
+        }
+        
+        .btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+        
+        .results-container {
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .score {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .score-percentage {
+            color: var(--accent-color);
+            font-size: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .lesson-meta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .meta-item {
+                margin: 5px 0;
+            }
+            
+            .section-header h2 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="lesson-container">
+        <div class="lesson-header">
+            <h1 class="lesson-title">Conservation of Mechanical Energy</h1>
+            <div class="lesson-meta">
+                <div class="meta-item"><strong>Grade:</strong> 12</div>
+                <div class="meta-item"><strong>Subject:</strong> Physical Sciences</div>
+                <div class="meta-item"><strong>Week:</strong> 6</div>
+                <div class="meta-item"><strong>Topic:</strong> Conservation of Mechanical Energy</div>
+                <div class="meta-item"><strong>Lesson:</strong> 9</div>
+            </div>
+        </div>
+        
+        <div class="lesson-content">
+            <div class="section" id="objectives">
+                <div class="section-header">
+                    <h2>Learning Objectives</h2>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="section-content">
+                    <p>By the end of this lesson, learners must be able to:</p>
+                    <ul class="objective-list">
+                        <li>Describe work done by an object that has a greater capacity to do work at different heights</li>
+                        <li>Apply the principle of mechanical energy to calculate work done by an object</li>
+                        <li>Define the principle of mechanical energy</li>
+                        <li>Calculate the mechanical energy of objects in different positions</li>
+                        <li>Explain how energy transforms between potential and kinetic forms</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section" id="overview">
+                <div class="section-header">
+                    <h2>Overview</h2>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="section-content">
+                    <div class="overview-content">
+                        <p>Mechanical energy is the sum of kinetic energy and potential energy in a system. According to the principle of conservation of mechanical energy, in an isolated system (with no external forces like friction), the total mechanical energy remains constant.</p>
+                        <p>This means that energy can transform between potential and kinetic forms, but the total amount of energy stays the same.</p>
+                        <div class="diagram-container">
+                            <h3>Energy Transformation in a Pendulum</h3>
+                            <svg class="diagram" width="400" height="300" viewBox="0 0 400 300">
+                                <!-- Pendulum diagram -->
+                                <line x1="200" y1="50" x2="150" y2="150" stroke="#333" stroke-width="3" />
+                                <line x1="200" y1="50" x2="250" y2="150" stroke="#333" stroke-width="3" />
+                                <circle cx="200" cy="50" r="5" fill="#333" />
+                                <circle cx="150" cy="150" r="15" fill="#3498db" />
+                                <circle cx="250" cy="150" r="15" fill="#3498db" />
+                                <circle cx="200" cy="200" r="15" fill="#e74c3c" />
+                                <text x="140" y="140" text-anchor="middle" fill="#2c3e50">Max PE</text>
+                                <text x="140" y="180" text-anchor="middle" fill="#2c3e50">Min KE</text>
+                                <text x="260" y="140" text-anchor="middle" fill="#2c3e50">Max PE</text>
+                                <text x="260" y="180" text-anchor="middle" fill="#2c3e50">Min KE</text>
+                                <text x="200" y="240" text-anchor="middle" fill="#2c3e50">Min PE</text>
+                                <text x="200" y="260" text-anchor="middle" fill="#2c3e50">Max KE</text>
+                                <path d="M 150 150 Q 200 200 250 150" stroke="#333" stroke-width="2" fill="none" stroke-dasharray="5,5" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section" id="main-body">
+                <div class="section-header">
+                    <h2>Main Body</h2>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="section-content">
+                    <div class="main-content">
+                        <h3>Mechanical Energy Formula</h3>
+                        <p>The total mechanical energy (E<sub>m</sub>) of an object is the sum of its kinetic energy (E<sub>k</sub>) and potential energy (E<sub>p</sub>):</p>
+                        <p style="text-align: center; font-size: 1.2rem; margin: 15px 0;">E<sub>m</sub> = E<sub>k</sub> + E<sub>p</sub></p>
+                        
+                        <h3>Conservation of Mechanical Energy</h3>
+                        <p>In an isolated system (no external forces like friction), the total mechanical energy remains constant:</p>
+                        <p style="text-align: center; font-size: 1.2rem; margin: 15px 0;">E<sub>m initial</sub> = E<sub>m final</sub></p>
+                        <p style="text-align: center; font-size: 1.2rem; margin: 15px 0;">E<sub>k initial</sub> + E<sub>p initial</sub> = E<sub>k final</sub> + E<sub>p final</sub></p>
+                        
+                        <div class="example-box">
+                            <div class="example-title">Worked Example 1: Free Fall</div>
+                            <p>A 2 kg object is dropped from a height of 20 m. Calculate its speed just before it hits the ground.</p>
+                            <p><strong>Solution:</strong></p>
+                            <p>At the top: E<sub>k</sub> = 0 (object at rest), E<sub>p</sub> = mgh = 2 × 9.8 × 20 = 392 J</p>
+                            <p>At the bottom: E<sub>p</sub> = 0 (h = 0), E<sub>k</sub> = ½mv²</p>
+                            <p>Using conservation of energy: E<sub>m top</sub> = E<sub>m bottom</sub></p>
+                            <p>392 = ½ × 2 × v²</p>
+                            <p>v² = 392</p>
+                            <p>v = √392 ≈ 19.8 m/s</p>
+                        </div>
+                        
+                        <div class="example-box">
+                            <div class="example-title">Worked Example 2: Pendulum</div>
+                            <p>A pendulum with a mass of 0.5 kg is raised to a height of 0.8 m and released. Calculate its speed at the lowest point of its swing.</p>
+                            <p><strong>Solution:</strong></p>
+                            <p>At the highest point: E<sub>k</sub> = 0, E<sub>p</sub> = mgh = 0.5 × 9.8 × 0.8 = 3.92 J</p>
+                            <p>At the lowest point: E<sub>p</sub> = 0, E<sub>k</sub> = ½mv²</p>
+                            <p>Using conservation of energy: E<sub>m highest</sub> = E<sub>m lowest</sub></p>
+                            <p>3.92 = ½ × 0.5 × v²</p>
+                            <p>v² = 15.68</p>
+                            <p>v = √15.68 ≈ 3.96 m/s</p>
+                        </div>
+                        
+                        <div class="diagram-container">
+                            <h3>Energy Transformation in Free Fall</h3>
+                            <svg class="diagram" width="400" height="400" viewBox="0 0 400 400">
+                                <!-- Free fall diagram -->
+                                <rect x="180" y="0" width="40" height="400" fill="#95a5a6" />
+                                <circle cx="200" cy="50" r="20" fill="#3498db">
+                                    <animate attributeName="cy" from="50" to="350" dur="2s" repeatCount="indefinite" />
+                                </circle>
+                                <text x="250" y="50" text-anchor="start" fill="#2c3e50">Max PE, Min KE</text>
+                                <text x="250" y="200" text-anchor="start" fill="#2c3e50">PE decreasing, KE increasing</text>
+                                <text x="250" y="350" text-anchor="start" fill="#2c3e50">Min PE, Max KE</text>
+                            </svg>
+                        </div>
+                        
+                        <h3>Interactive Calculation</h3>
+                        <p>Use the calculator below to explore how mechanical energy is conserved in different scenarios:</p>
+                        
+                        <div class="calculator">
+                            <div style="margin: 15px 0;">
+                                <label for="mass">Mass (kg):</label>
+                                <input type="number" id="mass" value="2" min="0.1" step="0.1" style="margin-left: 10px; padding: 5px;">
+                            </div>
+                            <div style="margin: 15px 0;">
+                                <label for="height">Initial Height (m):</label>
+                                <input type="number" id="height" value="10" min="1" step="0.1" style="margin-left: 10px; padding: 5px;">
+                            </div>
+                            <div style="margin: 15px 0;">
+                                <label for="final-height">Final Height (m):</label>
+                                <input type="number" id="final-height" value="0" min="0" step="0.1" style="margin-left: 10px; padding: 5px;">
+                            </div>
+                            <button id="calculate-btn" class="btn" style="margin: 10px 0;">Calculate</button>
+                            <div id="calculation-result" style="margin-top: 15px; padding: 10px; background-color: #f8f9fa; border-radius: 5px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section" id="questions">
+                <div class="section-header">
+                    <h2>End of Lesson Questions</h2>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="section-content">
+                    <p>Answer the following questions to test your understanding of the lesson:</p>
+                    
+                    <div class="question-container" id="q1">
+                        <div class="question-text">1. What is the definition of mechanical energy?</div>
+                        <div class="options-container">
+                            <div class="option">
+                                <input type="radio" name="q1" value="a">
+                                <label>The energy an object has due to its motion</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="b">
+                                <label>The energy stored in an object due to its position</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="c">
+                                <label>The sum of kinetic and potential energy in a system</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="d">
+                                <label>The capacity to do work</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q2">
+                        <div class="question-text">2. According to the principle of conservation of mechanical energy, what happens to the total mechanical energy in an isolated system?</div>
+                        <div class="options-container">
+                            <div class="option">
+                                <input type="radio" name="q2" value="a">
+                                <label>It increases over time</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="b">
+                                <label>It decreases over time</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="c">
+                                <label>It remains constant</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="d">
+                                <label>It transforms into thermal energy</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q3">
+                        <div class="question-text">3. A 5 kg object is dropped from a height of 10 m. What is its kinetic energy just before it hits the ground? (Assume g = 9.8 m/s²)</div>
+                        <div class="options-container">
+                            <div class="option">
+                                <input type="radio" name="q3" value="a">
+                                <label>50 J</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="b">
+                                <label>100 J</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="c">
+                                <label>490 J</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="d">
+                                <label>980 J</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q4">
+                        <div class="question-text">4. In a pendulum swing, at which point is the kinetic energy maximum?</div>
+                        <div class="options-container">
+                            <div class="option">
+                                <input type="radio" name="q4" value="a">
+                                <label>At the highest point</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="b">
+                                <label>At the lowest point</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="c">
+                                <label>When it's halfway up</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="d">
+                                <label>When it's stationary</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q5">
+                        <div class="question-text">5. If a 2 kg object has a potential energy of 100 J at a certain height, what is its mechanical energy at that point if it's stationary?</div>
+                        <div class="options-container">
+                            <div class="option">
+                                <input type="radio" name="q5" value="a">
+                                <label>50 J</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="b">
+                                <label>100 J</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="c">
+                                <label>200 J</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="d">
+                                <label>400 J</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q6">
+                        <div class="question-text">6. A ball is thrown vertically upward. As it rises, what happens to its kinetic and potential energy?</div>
+                        <div class="options-container">
+                            <div class="option">
+                                <input type="radio" name="q6" value="a">
+                                <label>Both increase</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q6" value="b">
+                                <label>Both decrease</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q6" value="c">
+                                <label>Kinetic increases, potential decreases</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q6" value="d">
+                                <label>Kinetic decreases, potential increases</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q7">
+                        <div class="question-text">7. What is the SI unit of energy?</div>
+                        <div class="options-container">
+                            <div class="option">
+                                <input type="radio" name="q7" value="a">
+                                <label>Watt</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q7" value="b">
+                                <label>Newton</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q7" value="c">
+                                <label>Joule</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q7" value="d">
+                                <label>Pascal</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q8">
+                        <div class="question-text">8. A 0.5 kg object is moving at 4 m/s at a height of 2 m. What is its total mechanical energy? (g = 9.8 m/s²)</div>
+                        <div class="options-container">
+                            <div class="option">
+                                <input type="radio" name="q8" value="a">
+                                <label>4 J</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q8" value="b">
+                                <label>8 J</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q8" value="c">
+                                <label>12.8 J</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q8" value="d">
+                                <label>17.8 J</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q9">
+                        <div class="question-text">9. In which of the following situations is mechanical energy NOT conserved?</div>
+                        <div class="options-container">
+                            <div class="option">
+                                <input type="radio" name="q9" value="a">
+                                <label>A pendulum swinging in a vacuum</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q9" value="b">
+                                <label>An object sliding down a frictionless incline</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q9" value="c">
+                                <label>A ball falling through air with air resistance</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q9" value="d">
+                                <label>A satellite orbiting Earth in a stable orbit</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q10">
+                        <div class="question-text">10. If the potential energy of an object at height h is 50 J, what will be its kinetic energy when it falls to half that height (assuming no air resistance)?</div>
+                        <div class="options-container">
+                            <div class="option">
+                                <input type="radio" name="q10" value="a">
+                                <label>0 J</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q10" value="b">
+                                <label>25 J</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q10" value="c">
+                                <label>50 J</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q10" value="d">
+                                <label>75 J</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="navigation">
+                        <button id="prev-btn" class="btn" disabled>Previous</button>
+                        <button id="check-btn" class="btn">Check Answers</button>
+                        <button id="next-btn" class="btn">Next</button>
+                    </div>
+                    
+                    <div class="results-container" id="results">
+                        <h2>Quiz Results</h2>
+                        <div class="score">Your score: <span id="score-value" class="score-percentage">0%</span></div>
+                        <p id="result-message"></p>
+                        <button id="retry-btn" class="btn">Try Again</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Collapsible sections functionality
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const section = header.parentElement;
+                section.classList.toggle('active');
+                const icon = header.querySelector('.toggle-icon');
+                icon.textContent = section.classList.contains('active') ? '−' : '+';
+            });
+        });
+
+        // Open the first section by default
+        document.querySelector('.section').classList.add('active');
+        document.querySelector('.section .toggle-icon').textContent = '−';
+
+        // Interactive calculator
+        document.getElementById('calculate-btn').addEventListener('click', function() {
+            const mass = parseFloat(document.getElementById('mass').value);
+            const height = parseFloat(document.getElementById('height').value);
+            const finalHeight = parseFloat(document.getElementById('final-height').value);
+            const g = 9.8;
+            
+            if (isNaN(mass) || isNaN(height) || isNaN(finalHeight)) {
+                document.getElementById('calculation-result').innerHTML = '<p style="color: red;">Please enter valid numbers for all fields.</p>';
+                return;
+            }
+            
+            const initialPE = mass * g * height;
+            const finalPE = mass * g * finalHeight;
+            const velocity = Math.sqrt(2 * g * (height - finalHeight));
+            
+            let resultHTML = `
+                <p><strong>Initial Potential Energy:</strong> ${initialPE.toFixed(2)} J</p>
+                <p><strong>Final Potential Energy:</strong> ${finalPE.toFixed(2)} J</p>
+                <p><strong>Velocity at final height:</strong> ${velocity.toFixed(2)} m/s</p>
+                <p><strong>Final Kinetic Energy:</strong> ${(0.5 * mass * velocity * velocity).toFixed(2)} J</p>
+                <p><strong>Total Mechanical Energy (conserved):</strong> ${initialPE.toFixed(2)} J</p>
+            `;
+            
+            document.getElementById('calculation-result').innerHTML = resultHTML;
+        });
+
+        // Quiz functionality
+        const correctAnswers = {
+            q1: 'c',
+            q2: 'c',
+            q3: 'c',
+            q4: 'b',
+            q5: 'b',
+            q6: 'd',
+            q7: 'c',
+            q8: 'd',
+            q9: 'c',
+            q10: 'b'
+        };
+
+        const questionContainers = document.querySelectorAll('.question-container');
+        let currentQuestion = 0;
+
+        // Show first question
+        showQuestion(currentQuestion);
+
+        // Navigation buttons
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        });
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+            if (currentQuestion < questionContainers.length - 1) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+            }
+        });
+
+        // Check answers button
+        document.getElementById('check-btn').addEventListener('click', checkAllAnswers);
+
+        // Retry button
+        document.getElementById('retry-btn').addEventListener('click', () => {
+            // Reset all answers
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+            
+            // Hide all feedback
+            document.querySelectorAll('.feedback').forEach(feedback => {
+                feedback.style.display = 'none';
+                feedback.className = 'feedback';
+            });
+            
+            // Hide results
+            document.getElementById('results').style.display = 'none';
+            
+            // Reset to first question
+            currentQuestion = 0;
+            showQuestion(currentQuestion);
+        });
+
+        function showQuestion(index) {
+            // Hide all questions
+            questionContainers.forEach(container => {
+                container.style.display = 'none';
+            });
+            
+            // Show current question
+            questionContainers[index].style.display = 'block';
+            
+            // Update navigation buttons
+            document.getElementById('prev-btn').disabled = index === 0;
+            document.getElementById('next-btn').disabled = index === questionContainers.length - 1;
+            
+            // Auto-check answer when selected
+            const radios = questionContainers[index].querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    checkAnswer(this.name);
+                });
+            });
+        }
+
+        function checkAnswer(questionName) {
+            const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+            const questionId = questionName.replace('q', 'q');
+            const feedback = document.querySelector(`#${questionId} .feedback`);
+            
+            if (selectedOption) {
+                if (selectedOption.value === correctAnswers[questionId]) {
+                    feedback.textContent = 'Correct! Well done.';
+                    feedback.className = 'feedback correct';
+                } else {
+                    feedback.textContent = 'Incorrect. Try again.';
+                    feedback.className = 'feedback incorrect';
+                }
+                feedback.style.display = 'block';
+            }
+        }
+
+        function checkAllAnswers() {
+            let score = 0;
+            
+            for (let i = 1; i <= 10; i++) {
+                const questionId = `q${i}`;
+                const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
+                
+                if (selectedOption && selectedOption.value === correctAnswers[questionId]) {
+                    score++;
+                }
+            }
+            
+            const percentage = (score / 10) * 100;
+            document.getElementById('score-value').textContent = `${percentage}%`;
+            document.getElementById('result-message').textContent = 
+                `You got ${score} out of 10 questions correct. ${percentage >= 70 ? 'Great job!' : 'Keep practicing!'}`;
+            document.getElementById('results').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

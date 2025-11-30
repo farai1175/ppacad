@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 12 Physical Sciences: Doppler Effect</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+        
+        .lesson-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .lesson-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .lesson-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .lesson-meta {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        .meta-item {
+            margin: 5px 10px;
+        }
+        
+        .lesson-content {
+            padding: 20px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .section-header:hover {
+            background-color: var(--dark-color);
+        }
+        
+        .section-header h2 {
+            font-size: 1.4rem;
+            margin: 0;
+        }
+        
+        .toggle-icon {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .section-content {
+            padding: 20px;
+            display: none;
+        }
+        
+        .section.active .section-content {
+            display: block;
+        }
+        
+        .objective-list, .overview-content, .main-content {
+            margin-bottom: 20px;
+        }
+        
+        .objective-list li, .overview-content p, .main-content p {
+            margin-bottom: 10px;
+        }
+        
+        .example-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .example-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .diagram-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+        }
+        
+        .diagram {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .simulation-container {
+            position: relative;
+            height: 400px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+            background: linear-gradient(to bottom, #87CEEB, #E0F7FA);
+        }
+        
+        .car {
+            position: absolute;
+            width: 80px;
+            height: 40px;
+            background-color: var(--accent-color);
+            border-radius: 5px;
+            bottom: 50px;
+            transition: left 0.1s linear;
+        }
+        
+        .observer {
+            position: absolute;
+            width: 30px;
+            height: 60px;
+            background-color: var(--primary-color);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .sound-waves {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .wave {
+            position: absolute;
+            border: 2px solid #3498db;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: ripple 2s linear infinite;
+        }
+        
+        @keyframes ripple {
+            0% {
+                width: 0;
+                height: 0;
+                opacity: 1;
+            }
+            100% {
+                width: 200px;
+                height: 200px;
+                opacity: 0;
+            }
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+        
+        .data-display {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            text-align: center;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--dark-color);
+        }
+        
+        .btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+        }
+        
+        .btn-warning {
+            background-color: var(--warning-color);
+        }
+        
+        .question-container {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+        }
+        
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .options-container {
+            margin: 10px 0;
+        }
+        
+        .option {
+            margin: 8px 0;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .option input {
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+        
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .correct {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        
+        .incorrect {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .results-container {
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .score {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .score-percentage {
+            color: var(--accent-color);
+            font-size: 2rem;
+        }
+        
+        .application-box {
+            background-color: #e8f4f8;
+            border: 1px solid var(--secondary-color);
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .lesson-meta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .meta-item {
+                margin: 5px 0;
+            }
+            
+            .section-header h2 {
+                font-size: 1.2rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="lesson-container">
+        <div class="lesson-header">
+            <h1 class="lesson-title">The Doppler Effect</h1>
+            <div class="lesson-meta">
+                <div class="meta-item"><strong>Grade:</strong> 12</div>
+                <div class="meta-item"><strong>Subject:</strong> Physical Sciences</div>
+                <div class="meta-item"><strong>Week:</strong> 12</div>
+                <div class="meta-item"><strong>Topic:</strong> Doppler Effect</div>
+                <div class="meta-item"><strong>Lesson:</strong> 1</div>
+            </div>
+        </div>
+        
+        <div class="lesson-content">
+            <div class="section" id="objectives">
+                <div class="section-header">
+                    <h2>Learning Objectives</h2>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="section-content">
+                    <p>By the end of this lesson, learners should be able to:</p>
+                    <ul class="objective-list">
+                        <li>State what the Doppler Effect is for sound and give everyday examples</li>
+                        <li>Explain why sound increases in pitch when the source travels towards a listener</li>
+                        <li>Explain why sound decreases in pitch when the source travels away from a listener</li>
+                        <li>Describe applications of the Doppler Effect with ultrasound waves in medicine</li>
+                        <li>Understand how the Doppler Effect relates to relative motion between source and observer</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section" id="overview">
+                <div class="section-header">
+                    <h2>Overview</h2>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="section-content">
+                    <div class="overview-content">
+                        <p>The Doppler Effect is the apparent change in frequency of a wave due to relative motion between the source and observer. This phenomenon is commonly experienced with sound waves but applies to all types of waves.</p>
+                        
+                        <div class="example-box">
+                            <div class="example-title">Key Concepts</div>
+                            <p><strong>Frequency:</strong> Number of complete waves passing a point per second (Hz)</p>
+                            <p><strong>Pitch:</strong> How high or low a sound is perceived (related to frequency)</p>
+                            <p><strong>Relative Velocity:</strong> Speed of one object relative to another</p>
+                            <p><strong>Ultrasound:</strong> Sound waves with frequency above human hearing (>20 kHz)</p>
+                        </div>
+                        
+                        <div class="diagram-container">
+                            <h3>Doppler Effect Visualization</h3>
+                            <svg class="diagram" width="500" height="300" viewBox="0 0 500 300">
+                                <!-- Observer -->
+                                <circle cx="250" cy="150" r="10" fill="#3498db" />
+                                <text x="250" y="140" text-anchor="middle" fill="#2c3e50">Observer</text>
+                                
+                                <!-- Source moving right -->
+                                <circle cx="350" cy="150" r="8" fill="#e74c3c" />
+                                <text x="350" y="140" text-anchor="middle" fill="#2c3e50">Source</text>
+                                <line x1="350" y1="150" x2="370" y2="150" stroke="#e74c3c" stroke-width="2" />
+                                <polygon points="370,150 367,145 370,150 367,155" fill="#e74c3c" />
+                                
+                                <!-- Waves compressed in front -->
+                                <circle cx="320" cy="150" r="15" stroke="#3498db" stroke-width="1" fill="none" />
+                                <circle cx="305" cy="150" r="25" stroke="#3498db" stroke-width="1" fill="none" />
+                                <circle cx="285" cy="150" r="35" stroke="#3498db" stroke-width="1" fill="none" />
+                                <text x="280" y="190" text-anchor="middle" fill="#3498db">Higher Frequency</text>
+                                
+                                <!-- Waves stretched behind -->
+                                <circle cx="380" cy="150" r="20" stroke="#f39c12" stroke-width="1" fill="none" />
+                                <circle cx="400" cy="150" r="35" stroke="#f39c12" stroke-width="1" fill="none" />
+                                <circle cx="425" cy="150" r="50" stroke="#f39c12" stroke-width="1" fill="none" />
+                                <text x="420" y="210" text-anchor="middle" fill="#f39c12">Lower Frequency</text>
+                                
+                                <!-- Labels -->
+                                <text x="250" y="180" text-anchor="middle" fill="#2c3e50" font-weight="bold">Doppler Effect</text>
+                                <text x="250" y="200" text-anchor="middle" fill="#2c3e50">Waves compressed in direction of motion</text>
+                                <text x="250" y="220" text-anchor="middle" fill="#2c3e50">Waves stretched opposite direction of motion</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section" id="main-body">
+                <div class="section-header">
+                    <h2>Main Body</h2>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="section-content">
+                    <div class="main-content">
+                        <h3>Understanding the Doppler Effect</h3>
+                        <p>The Doppler Effect is the apparent change in frequency of a wave due to relative motion between the source and observer. The actual frequency produced by the source doesn't change, but the observed frequency does.</p>
+                        
+                        <div class="example-box">
+                            <div class="example-title">Everyday Examples</div>
+                            <ul>
+                                <li>A police car siren sounds higher-pitched as it approaches and lower-pitched as it moves away</li>
+                                <li>A train whistle changes pitch as it passes by</li>
+                                <li>Race cars sound different when approaching vs. moving away</li>
+                                <li>Ambulance sirens demonstrate the effect clearly</li>
+                            </ul>
+                        </div>
+                        
+                        <h3>Interactive Doppler Effect Simulation</h3>
+                        <div class="simulation-container" id="simulation">
+                            <div class="car" id="car"></div>
+                            <div class="observer" id="observer"></div>
+                            <div class="sound-waves" id="sound-waves"></div>
+                            <div class="data-display" id="simulation-data">
+                                <p>Car Position: <span id="car-position">Left</span> | Observed Pitch: <span id="observed-pitch">Normal</span> | Wave Compression: <span id="wave-compression">Equal</span></p>
+                            </div>
+                        </div>
+                        
+                        <div class="controls">
+                            <button id="start-sim" class="btn">Start Simulation</button>
+                            <button id="stop-sim" class="btn btn-warning">Stop</button>
+                            <button id="reset-sim" class="btn btn-warning">Reset</button>
+                        </div>
+                        
+                        <div class="controls">
+                            <label for="car-speed">Car Speed:</label>
+                            <input type="range" id="car-speed" min="1" max="10" value="5">
+                            <span id="speed-value">5</span>
+                        </div>
+                        
+                        <div class="example-box">
+                            <div class="example-title">Why Does Pitch Change?</div>
+                            <p><strong>Source Approaching Observer:</strong></p>
+                            <ul>
+                                <li>Sound waves get compressed in the direction of motion</li>
+                                <li>Wavelength decreases</li>
+                                <li>Frequency increases (higher pitch)</li>
+                                <li>Waves reach observer more frequently</li>
+                            </ul>
+                            
+                            <p><strong>Source Moving Away from Observer:</strong></p>
+                            <ul>
+                                <li>Sound waves get stretched behind the source</li>
+                                <li>Wavelength increases</li>
+                                <li>Frequency decreases (lower pitch)</li>
+                                <li>Waves reach observer less frequently</li>
+                            </ul>
+                        </div>
+                        
+                        <h3>Medical Applications of Doppler Effect</h3>
+                        <div class="application-box">
+                            <h4>Ultrasound in Medicine</h4>
+                            <p>Ultrasound refers to sound waves with frequency above human hearing (greater than 20 kHz). These high-frequency waves have small wavelengths that can be reflected by small objects like blood cells and fetal heartbeats.</p>
+                            
+                            <div class="diagram-container">
+                                <svg class="diagram" width="500" height="200" viewBox="0 0 500 200">
+                                    <!-- Ultrasound device -->
+                                    <rect x="50" y="80" width="60" height="40" fill="#3498db" rx="5" />
+                                    <text x="80" y="105" text-anchor="middle" fill="white">Ultrasound</text>
+                                    
+                                    <!-- Waves -->
+                                    <line x1="110" y1="100" x2="200" y2="100" stroke="#3498db" stroke-width="2" stroke-dasharray="5,5" />
+                                    <line x1="200" y1="100" x2="290" y2="100" stroke="#e74c3c" stroke-width="2" stroke-dasharray="5,5" />
+                                    <line x1="290" y1="100" x2="380" y2="100" stroke="#3498db" stroke-width="2" />
+                                    
+                                    <!-- Blood flow -->
+                                    <circle cx="350" cy="100" r="30" fill="#e74c3c" opacity="0.7" />
+                                    <text x="350" y="105" text-anchor="middle" fill="white">Blood Flow</text>
+                                    
+                                    <!-- Labels -->
+                                    <text x="155" y="85" text-anchor="middle" fill="#3498db">Outgoing Waves</text>
+                                    <text x="245" y="85" text-anchor="middle" fill="#e74c3c">Reflected Waves</text>
+                                    <text x="155" y="170" text-anchor="middle" fill="#2c3e50">Doppler Shift measures blood flow velocity</text>
+                                </svg>
+                            </div>
+                            
+                            <p><strong>How it works:</strong></p>
+                            <ol>
+                                <li>Ultrasound waves are transmitted into the body</li>
+                                <li>Waves reflect off moving blood cells or fetal heartbeat</li>
+                                <li>Reflected waves undergo Doppler shift</li>
+                                <li>Sensitive instruments detect frequency difference</li>
+                                <li>Computer calculates velocity of blood flow or heartbeat</li>
+                            </ol>
+                            
+                            <p><strong>Applications:</strong></p>
+                            <ul>
+                                <li>Measuring rate of blood flow</li>
+                                <li>Monitoring fetal heartbeat in the womb</li>
+                                <li>Detecting blocked arteries</li>
+                                <li>Assessing heart valve function</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="example-box">
+                            <div class="example-title">Other Applications</div>
+                            <p><strong>Sonar (Sound Navigation and Ranging):</strong> Uses sound waves to locate underwater objects by measuring the time delay and frequency shift of reflected waves.</p>
+                            <p><strong>Radar (Radio Detection and Ranging):</strong> Uses radio waves to detect the speed and location of objects like aircraft and weather patterns.</p>
+                            <p><strong>Astronomy:</strong> Measures the redshift or blueshift of light from stars and galaxies to determine their motion relative to Earth.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section" id="questions">
+                <div class="section-header">
+                    <h2>End of Lesson Questions</h2>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="section-content">
+                    <p>Answer the following questions to test your understanding of the Doppler Effect:</p>
+                    
+                    <div class="question-container" id="q1">
+                        <div class="question-text">1. What is the Doppler Effect?</div>
+                        <div class="options-container">
+                            <div class="option">
+                                <input type="radio" name="q1" value="a">
+                                <label>The change in amplitude of a wave due to distance</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="b">
+                                <label>The apparent change in frequency of a wave due to relative motion</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="c">
+                                <label>The change in speed of a wave in different media</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="d">
+                                <label>The reflection of sound waves from surfaces</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q2">
+                        <div class="question-text">2. When a sound source moves toward a stationary observer, what happens to the observed pitch?</div>
+                        <div class="options-container">
+                            <div class="option">
+                                <input type="radio" name="q2" value="a">
+                                <label>It decreases</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="b">
+                                <label>It increases</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="c">
+                                <label>It stays the same</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="d">
+                                <label>It becomes inaudible</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q3">
+                        <div class="question-text">3. Why does the pitch increase when a sound source approaches an observer?</div>
+                        <div class="options-container">
+                            <div class="option">
+                                <input type="radio" name="q3" value="a">
+                                <label>The source produces higher frequency sounds when moving</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="b">
+                                <label>Sound waves compress, decreasing wavelength and increasing frequency</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="c">
+                                <label>The observer's hearing becomes more sensitive</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="d">
+                                <label>Air resistance changes the sound properties</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q4">
+                        <div class="question-text">4. What is ultrasound?</div>
+                        <div class="options-container">
+                            <div class="option">
+                                <input type="radio" name="q4" value="a">
+                                <label>Sound waves with frequency below 20 Hz</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="b">
+                                <label>Sound waves with frequency above 20 kHz</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="c">
+                                <label>Extremely loud sound</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="d">
+                                <label>Sound that can travel through vacuum</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q5">
+                        <div class="question-text">5. How is the Doppler Effect used in medical ultrasound?</div>
+                        <div class="options-container">
+                            <div class="option">
+                                <input type="radio" name="q5" value="a">
+                                <label>To make images of bones</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="b">
+                                <label>To measure the velocity of blood flow</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="c">
+                                <label>To sterilize medical equipment</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="d">
+                                <label>To amplify faint heartbeats</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q6">
+                        <div class="question-text">6. Which of the following is NOT an example of the Doppler Effect?</div>
+                        <div class="options-container">
+                            <div class="option">
+                                <input type="radio" name="q6" value="a">
+                                <label>A train whistle sounding higher as it approaches</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q6" value="b">
+                                <label>An ambulance siren changing pitch as it passes</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q6" value="c">
+                                <label>Music sounding louder when you're closer to the speakers</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q6" value="d">
+                                <label>A race car engine sounding different when coming toward you vs. moving away</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q7">
+                        <div class="question-text">7. What happens to sound waves when a source moves away from an observer?</div>
+                        <div class="options-container">
+                            <div class="option">
+                                <input type="radio" name="q7" value="a">
+                                <label>They get compressed</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q7" value="b">
+                                <label>They get stretched</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q7" value="c">
+                                <label>They travel faster</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q7" value="d">
+                                <label>They become infrared waves</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q8">
+                        <div class="question-text">8. What is the relationship between frequency and pitch?</div>
+                        <div class="options-container">
+                            <div class="option">
+                                <input type="radio" name="q8" value="a">
+                                <label>Higher frequency means lower pitch</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q8" value="b">
+                                <label>Higher frequency means higher pitch</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q8" value="c">
+                                <label>Frequency and pitch are unrelated</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q8" value="d">
+                                <label>Lower frequency means higher pitch</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q9">
+                        <div class="question-text">9. In the Doppler Effect, does the source actually change the frequency it produces?</div>
+                        <div class="options-container">
+                            <div class="option">
+                                <input type="radio" name="q9" value="a">
+                                <label>Yes, it produces different frequencies when moving</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q9" value="b">
+                                <label>No, the observed frequency changes due to relative motion</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q9" value="c">
+                                <label>Only if it's accelerating</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q9" value="d">
+                                <label>Only for sound sources, not light sources</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q10">
+                        <div class="question-text">10. What medical condition can be monitored using Doppler ultrasound?</div>
+                        <div class="options-container">
+                            <div class="option">
+                                <input type="radio" name="q10" value="a">
+                                <label>Blood flow in arteries</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q10" value="b">
+                                <label>Fetal heartbeat</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q10" value="c">
+                                <label>Heart valve function</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q10" value="d">
+                                <label>All of the above</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="navigation">
+                        <button id="prev-btn" class="btn" disabled>Previous</button>
+                        <button id="check-btn" class="btn btn-success">Check Answers</button>
+                        <button id="next-btn" class="btn">Next</button>
+                    </div>
+                    
+                    <div class="results-container" id="results">
+                        <h2>Quiz Results</h2>
+                        <div class="score">Your score: <span id="score-value" class="score-percentage">0%</span></div>
+                        <p id="result-message"></p>
+                        <button id="retry-btn" class="btn btn-warning">Try Again</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Collapsible sections functionality
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const section = header.parentElement;
+                section.classList.toggle('active');
+                const icon = header.querySelector('.toggle-icon');
+                icon.textContent = section.classList.contains('active') ? '−' : '+';
+            });
+        });
+
+        // Open the first section by default
+        document.querySelector('.section').classList.add('active');
+        document.querySelector('.section .toggle-icon').textContent = '−';
+
+        // Simulation functionality
+        const car = document.getElementById('car');
+        const soundWaves = document.getElementById('sound-waves');
+        const carPosition = document.getElementById('car-position');
+        const observedPitch = document.getElementById('observed-pitch');
+        const waveCompression = document.getElementById('wave-compression');
+        const speedSlider = document.getElementById('car-speed');
+        const speedValue = document.getElementById('speed-value');
+        
+        let animationId;
+        let carX = 0;
+        let direction = 1; // 1 for right, -1 for left
+        let isRunning = false;
+        let waveInterval;
+        
+        // Update speed display
+        speedSlider.addEventListener('input', function() {
+            speedValue.textContent = this.value;
+        });
+        
+        document.getElementById('start-sim').addEventListener('click', function() {
+            if (isRunning) return;
+            
+            isRunning = true;
+            carX = 0;
+            direction = 1;
+            updateCarPosition();
+            animateCar();
+            startWaves();
+        });
+        
+        document.getElementById('stop-sim').addEventListener('click', function() {
+            isRunning = false;
+            cancelAnimationFrame(animationId);
+            clearInterval(waveInterval);
+        });
+        
+        document.getElementById('reset-sim').addEventListener('click', function() {
+            isRunning = false;
+            cancelAnimationFrame(animationId);
+            clearInterval(waveInterval);
+            carX = 0;
+            updateCarPosition();
+            updateDisplay();
+            soundWaves.innerHTML = '';
+        });
+        
+        function animateCar() {
+            if (!isRunning) return;
+            
+            const speed = parseInt(speedSlider.value);
+            carX += direction * speed;
+            
+            // Reverse direction at boundaries
+            if (carX > 400) {
+                direction = -1;
+            } else if (carX < 0) {
+                direction = 1;
+            }
+            
+            updateCarPosition();
+            updateDisplay();
+            
+            animationId = requestAnimationFrame(animateCar);
+        }
+        
+        function updateCarPosition() {
+            car.style.left = `${carX}px`;
+        }
+        
+        function startWaves() {
+            clearInterval(waveInterval);
+            waveInterval = setInterval(createWave, 500);
+        }
+        
+        function createWave() {
+            if (!isRunning) return;
+            
+            const wave = document.createElement('div');
+            wave.className = 'wave';
+            wave.style.left = `${carX + 40}px`;
+            wave.style.top = '50px';
+            soundWaves.appendChild(wave);
+            
+            // Remove wave after animation completes
+            setTimeout(() => {
+                if (wave.parentNode) {
+                    wave.parentNode.removeChild(wave);
+                }
+            }, 2000);
+        }
+        
+        function updateDisplay() {
+            const observerX = 200; // Middle of container
+            const relativePosition = carX - observerX;
+            
+            // Update position text
+            if (carX < observerX - 50) {
+                carPosition.textContent = 'Left';
+                observedPitch.textContent = 'Higher';
+                waveCompression.textContent = 'Compressed';
+            } else if (carX > observerX + 50) {
+                carPosition.textContent = 'Right';
+                observedPitch.textContent = 'Lower';
+                waveCompression.textContent = 'Stretched';
+            } else {
+                carPosition.textContent = 'Center';
+                observedPitch.textContent = 'Normal';
+                waveCompression.textContent = 'Equal';
+            }
+            
+            // Add direction indicator
+            if (direction === 1) {
+                carPosition.textContent += ' →';
+            } else {
+                carPosition.textContent += ' ←';
+            }
+        }
+
+        // Quiz functionality
+        const correctAnswers = {
+            q1: 'b',
+            q2: 'b',
+            q3: 'b',
+            q4: 'b',
+            q5: 'b',
+            q6: 'c',
+            q7: 'b',
+            q8: 'b',
+            q9: 'b',
+            q10: 'd'
+        };
+
+        const questionContainers = document.querySelectorAll('.question-container');
+        let currentQuestion = 0;
+
+        // Show first question
+        showQuestion(currentQuestion);
+
+        // Navigation buttons
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        });
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+            if (currentQuestion < questionContainers.length - 1) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+            }
+        });
+
+        // Check answers button
+        document.getElementById('check-btn').addEventListener('click', checkAllAnswers);
+
+        // Retry button
+        document.getElementById('retry-btn').addEventListener('click', () => {
+            // Reset all answers
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+            
+            // Hide all feedback
+            document.querySelectorAll('.feedback').forEach(feedback => {
+                feedback.style.display = 'none';
+                feedback.className = 'feedback';
+            });
+            
+            // Hide results
+            document.getElementById('results').style.display = 'none';
+            
+            // Reset to first question
+            currentQuestion = 0;
+            showQuestion(currentQuestion);
+        });
+
+        function showQuestion(index) {
+            // Hide all questions
+            questionContainers.forEach(container => {
+                container.style.display = 'none';
+            });
+            
+            // Show current question
+            questionContainers[index].style.display = 'block';
+            
+            // Update navigation buttons
+            document.getElementById('prev-btn').disabled = index === 0;
+            document.getElementById('next-btn').disabled = index === questionContainers.length - 1;
+            
+            // Auto-check answer when selected
+            const radios = questionContainers[index].querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    checkAnswer(this.name);
+                });
+            });
+        }
+
+        function checkAnswer(questionName) {
+            const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+            const questionId = questionName.replace('q', 'q');
+            const feedback = document.querySelector(`#${questionId} .feedback`);
+            
+            if (selectedOption) {
+                if (selectedOption.value === correctAnswers[questionId]) {
+                    feedback.textContent = 'Correct! Well done.';
+                    feedback.className = 'feedback correct';
+                } else {
+                    feedback.textContent = 'Incorrect. Try again.';
+                    feedback.className = 'feedback incorrect';
+                }
+                feedback.style.display = 'block';
+            }
+        }
+
+        function checkAllAnswers() {
+            let score = 0;
+            
+            for (let i = 1; i <= 10; i++) {
+                const questionId = `q${i}`;
+                const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
+                
+                if (selectedOption && selectedOption.value === correctAnswers[questionId]) {
+                    score++;
+                }
+            }
+            
+            const percentage = (score / 10) * 100;
+            document.getElementById('score-value').textContent = `${percentage}%`;
+            document.getElementById('result-message').textContent = 
+                `You got ${score} out of 10 questions correct. ${percentage >= 70 ? 'Great job!' : 'Keep practicing!'}`;
+            document.getElementById('results').style.display = 'block';
+        }
+    </script>
+
+    <!-- Shared lesson navigation (previous/next) -->
+    <script>
+    (function(){
+        const maxLessons = 19;
+        function navigateLesson(direction){
+            const m = window.location.pathname.match(/less(\d+)\.html$/i);
+            if(!m) return;
+            const current = parseInt(m[1],10);
+            const next = direction === 'next' ? current + 1 : current - 1;
+            if(next < 1 || next > maxLessons) return;
+            const newHref = window.location.pathname.replace(/less\d+\.html$/i, `less${next}.html`);
+            window.location.href = newHref;
+        }
+        [['prevBtn','nextBtn'], ['prev-btn','next-btn']].forEach(ids => {
+            const prev = document.getElementById(ids[0]);
+            const next = document.getElementById(ids[1]);
+            if(prev) prev.addEventListener('click', () => navigateLesson('prev'));
+            if(next) next.addEventListener('click', () => navigateLesson('next'));
+        });
+    })();
+    </script>
+</body>
+</html>

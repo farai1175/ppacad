@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 12 Physical Sciences: Impulse</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+        }
+        }
+    </script>
+
+    <!-- Shared lesson navigation (previous/next) -->
+    <script>
+    (function(){
+        const maxLessons = 19;
+        function navigateLesson(direction){
+            const m = window.location.pathname.match(/less(\d+)\.html$/i);
+            if(!m) return;
+            const current = parseInt(m[1],10);
+            const next = direction === 'next' ? current + 1 : current - 1;
+            if(next < 1 || next > maxLessons) return;
+            const newHref = window.location.pathname.replace(/less\d+\.html$/i, `less${next}.html`);
+            window.location.href = newHref;
+        }
+        [['prevBtn','nextBtn'], ['prev-btn','next-btn']].forEach(ids => {
+            const prev = document.getElementById(ids[0]);
+            const next = document.getElementById(ids[1]);
+            if(prev) prev.addEventListener('click', () => navigateLesson('prev'));
+            if(next) next.addEventListener('click', () => navigateLesson('next'));
+        });
+    })();
+    </script>
+</body>
+</html>
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .lesson-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .info-item {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .lesson-summary {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .collapsible {
+            background-color: white;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .collapsible-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .collapsible-header:hover {
+            background-color: #1a252f;
+        }
+        
+        .collapsible-header h2 {
+            font-size: 1.4rem;
+            margin: 0;
+        }
+        
+        .collapsible-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+        }
+        
+        .collapsible-content.active {
+            padding: 20px;
+            max-height: 5000px;
+        }
+        
+        .content-section {
+            margin-bottom: 25px;
+        }
+        
+        .content-section h3 {
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        ul, ol {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .formula-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .formula {
+            font-family: 'Cambria Math', serif;
+            font-size: 1.2rem;
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        .example-box {
+            background-color: #e8f4fc;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .calculator {
+            background-color: #f0f7ff;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .input-field {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .questions-container {
+            margin-top: 30px;
+        }
+        
+        .question {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .question h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .options {
+            margin: 15px 0;
+        }
+        
+        .option {
+            margin-bottom: 10px;
+        }
+        
+        .option input {
+            margin-right: 10px;
+        }
+        
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .score-container {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .score-display {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin: 10px 0;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: var(--success-color);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .diagram-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .diagram {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .collapsible-header h2 {
+                font-size: 1.2rem;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+            
+            .input-field {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="lesson-info">
+                <div class="info-item">GRADE: 12</div>
+                <div class="info-item">SUBJECT: Physical Sciences</div>
+                <div class="info-item">TOPIC: Momentum and Impulse</div>
+                <div class="info-item">LESSON: 2</div>
+            </div>
+            <h1>Impulse</h1>
+            <p class="lesson-summary">Understanding impulse and its relationship to force and momentum change</p>
+        </header>
+        
+        <div class="collapsible">
+            <div class="collapsible-header">
+                <h2>Learning Objectives</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="content-section">
+                    <p>By the end of this lesson, learners must be able to:</p>
+                    <ul>
+                        <li>Define impulse and understand its relationship to force and time</li>
+                        <li>Apply the impulse-momentum theorem: F<sub>net</sub>Δt = Δp</li>
+                        <li>Calculate impulse, force, time, and momentum changes in various scenarios</li>
+                        <li>Understand how impulse relates to safety features like airbags</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="collapsible">
+            <div class="collapsible-header">
+                <h2>Lesson Overview</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="content-section">
+                    <p>This lesson explores the concept of impulse, which is the product of force and time. We'll learn how impulse relates to changes in momentum and how this principle applies to real-world situations like car safety systems.</p>
+                    
+                    <div class="formula-box">
+                        <h3>Key Formula</h3>
+                        <div class="formula">F<sub>net</sub>Δt = Δp</div>
+                        <p>Where:</p>
+                        <ul>
+                            <li><strong>F<sub>net</sub></strong> = net force (N)</li>
+                            <li><strong>Δt</strong> = time interval (s)</li>
+                            <li><strong>Δp</strong> = change in momentum (kg•m•s⁻¹)</li>
+                        </ul>
+                        <p>Impulse has units of Newton-seconds (N•s)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="collapsible">
+            <div class="collapsible-header">
+                <h2>Main Body</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="content-section">
+                    <h3>Introduction to Impulse</h3>
+                    <p>Isaac Newton realized that the larger the change of momentum and the shorter the time that it takes place in, the larger the force that is necessary to bring it about.</p>
+                    
+                    <div class="formula-box">
+                        <p>In terms of Newton's Second Law of Motion:</p>
+                        <div class="formula">F<sub>net</sub> = Δp / Δt</div>
+                        <p>Rearranging this equation gives us:</p>
+                        <div class="formula">F<sub>net</sub>Δt = Δp</div>
+                        <p>The product F<sub>net</sub>Δt is called <strong>impulse</strong>.</p>
+                    </div>
+                    
+                    <p>Impulse has the unit N•s, which is equivalent to kg•m•s⁻¹ (the same as momentum).</p>
+                </div>
+                
+                <div class="content-section">
+                    <h3>The Impulse-Momentum Theorem</h3>
+                    <p>The impulse-momentum theorem states that the impulse on an object equals the change in its momentum.</p>
+                    
+                    <div class="formula-box">
+                        <div class="formula">Impulse = F<sub>net</sub>Δt = m(v<sub>f</sub> - v<sub>i</sub>) = Δp</div>
+                    </div>
+                    
+                    <p>This relationship explains why:</p>
+                    <ul>
+                        <li>Airbags increase collision time to reduce force</li>
+                        <li>Bending knees when landing reduces impact force</li>
+                        <li>Follow-through in sports increases impulse</li>
+                    </ul>
+                    
+                    <div class="diagram-container">
+                        <h4>Impulse and Safety</h4>
+                        <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 20px;">
+                            <div style="text-align: center;">
+                                <div style="width: 120px; height: 120px; background: #e74c3c; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin: 0 auto 10px;">Short Δt</div>
+                                <p>Large Force</p>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="width: 120px; height: 120px; background: #3498db; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin: 0 auto 10px;">Long Δt</div>
+                                <p>Small Force</p>
+                            </div>
+                        </div>
+                        <p style="margin-top: 15px; font-style: italic;">For the same change in momentum, increasing the time reduces the force</p>
+                    </div>
+                </div>
+                
+                <div class="content-section">
+                    <h3>Worked Examples</h3>
+                    
+                    <div class="example-box">
+                        <h4>Example 1: Car Braking</h4>
+                        <p>The driver of a car of mass 1200 kg traveling at 20 m•s⁻¹ along a straight road, slows down uniformly for 4s. The brakes apply a net force of 4800 N.</p>
+                        <p><strong>a) Calculate the impulse exerted by the brakes.</strong></p>
+                        <p>Impulse = F<sub>net</sub>Δt = -4800 × 4 = -19200 N•s</p>
+                        
+                        <p><strong>b) What is the change in momentum of the car?</strong></p>
+                        <p>Change in momentum = impulse = -19200 kg•m•s⁻¹</p>
+                        
+                        <p><strong>c) Calculate the velocity, v<sub>f</sub>, of the car after 4s.</strong></p>
+                        <p>F<sub>net</sub>Δt = m(v<sub>f</sub> - v<sub>i</sub>)</p>
+                        <p>-19200 = 1200(v<sub>f</sub> - 20)</p>
+                        <p>v<sub>f</sub> = 4 m•s⁻¹</p>
+                    </div>
+                    
+                    <div class="example-box">
+                        <h4>Example 2: Ball Collision</h4>
+                        <p>A rubber ball with a mass 80g, is thrown horizontally and collides perpendicularly with a wall at a velocity of 7 m•s⁻¹. The ball rebounds in the opposite direction at 6 m•s⁻¹.</p>
+                        <p><strong>a) Calculate the magnitude and state the direction of the change in momentum.</strong></p>
+                        <p>Take towards the wall as positive:</p>
+                        <p>Δp = m(v<sub>f</sub> - v<sub>i</sub>) = 0.08(-6 - 7) = -1.04 kg•m•s⁻¹</p>
+                        <p>Δp = 1.04 kg•m•s⁻¹ away from the wall</p>
+                        
+                        <p><strong>b) If the collision lasts for 0.02s, calculate the magnitude of the force.</strong></p>
+                        <p>F<sub>net</sub>Δt = Δp</p>
+                        <p>F<sub>net</sub>(0.02) = -1.04</p>
+                        <p>F<sub>net</sub> = -52 N</p>
+                        <p>F<sub>net</sub> = 52 N away from the wall</p>
+                    </div>
+                </div>
+                
+                <div class="content-section">
+                    <h3>Interactive Impulse Calculator</h3>
+                    <div class="calculator">
+                        <div class="input-group">
+                            <div class="input-field">
+                                <label for="force">Force (N)</label>
+                                <input type="number" id="force" step="0.01" placeholder="Enter force">
+                            </div>
+                            <div class="input-field">
+                                <label for="time">Time (s)</label>
+                                <input type="number" id="time" step="0.01" placeholder="Enter time">
+                            </div>
+                        </div>
+                        <button id="calculateImpulse">Calculate Impulse</button>
+                        <div id="impulseResult" class="result"></div>
+                    </div>
+                    
+                    <div class="calculator">
+                        <h4>Impulse-Momentum Calculator</h4>
+                        <div class="input-group">
+                            <div class="input-field">
+                                <label for="massImpulse">Mass (kg)</label>
+                                <input type="number" id="massImpulse" step="0.01" placeholder="Enter mass">
+                            </div>
+                            <div class="input-field">
+                                <label for="initialV">Initial Velocity (m/s)</label>
+                                <input type="number" id="initialV" step="0.01" placeholder="Enter initial velocity">
+                            </div>
+                            <div class="input-field">
+                                <label for="finalV">Final Velocity (m/s)</label>
+                                <input type="number" id="finalV" step="0.01" placeholder="Enter final velocity">
+                            </div>
+                        </div>
+                        <button id="calculateForceTime">Calculate Required Force/Time</button>
+                        <div id="forceTimeResult" class="result"></div>
+                    </div>
+                    
+                    <div class="calculator">
+                        <h4>Safety Application Calculator</h4>
+                        <p>Calculate how airbags reduce force by increasing collision time:</p>
+                        <div class="input-group">
+                            <div class="input-field">
+                                <label for="safetyMass">Mass (kg)</label>
+                                <input type="number" id="safetyMass" step="0.01" placeholder="Enter mass">
+                            </div>
+                            <div class="input-field">
+                                <label for="safetyVelocity">Velocity Change (m/s)</label>
+                                <input type="number" id="safetyVelocity" step="0.01" placeholder="Enter velocity change">
+                            </div>
+                            <div class="input-field">
+                                <label for="collisionTime">Collision Time (s)</label>
+                                <input type="number" id="collisionTime" step="0.01" placeholder="Enter time">
+                            </div>
+                        </div>
+                        <button id="calculateSafety">Calculate Impact Force</button>
+                        <div id="safetyResult" class="result"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="collapsible">
+            <div class="collapsible-header">
+                <h2>End of Lesson Questions</h2>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="questions-container">
+                    <div class="question">
+                        <h3>Question 1: What is impulse?</h3>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" name="q1" value="a"> 
+                                <label for="q1a">The product of mass and velocity</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="b"> 
+                                <label for="q1b">The product of force and time</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="c"> 
+                                <label for="q1c">The rate of change of momentum</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="d"> 
+                                <label for="q1d">The product of mass and acceleration</label>
+                            </div>
+                        </div>
+                        <div class="feedback" id="feedback1"></div>
+                    </div>
+                    
+                    <div class="question">
+                        <h3>Question 2: What is the unit of impulse?</h3>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" name="q2" value="a"> 
+                                <label for="q2a">Joule (J)</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="b"> 
+                                <label for="q2b">Newton (N)</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="c"> 
+                                <label for="q2c">Newton-second (N•s)</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="d"> 
+                                <label for="q2d">Kilogram-meter (kg•m)</label>
+                            </div>
+                        </div>
+                        <div class="feedback" id="feedback2"></div>
+                    </div>
+                    
+                    <div class="question">
+                        <h3>Question 3: According to the impulse-momentum theorem, what does impulse equal?</h3>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" name="q3" value="a"> 
+                                <label for="q3a">Force</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="b"> 
+                                <label for="q3b">Change in momentum</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="c"> 
+                                <label for="q3c">Mass times acceleration</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="d"> 
+                                <label for="q3d">Kinetic energy</label>
+                            </div>
+                        </div>
+                        <div class="feedback" id="feedback3"></div>
+                    </div>
+                    
+                    <div class="question">
+                        <h3>Question 4: A 2 kg object experiences a net force of 10 N for 5 seconds. What is its impulse?</h3>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" name="q4" value="a"> 
+                                <label for="q4a">2 N•s</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="b"> 
+                                <label for="q4b">10 N•s</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="c"> 
+                                <label for="q4c">20 N•s</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="d"> 
+                                <label for="q4d">50 N•s</label>
+                            </div>
+                        </div>
+                        <div class="feedback" id="feedback4"></div>
+                    </div>
+                    
+                    <div class="question">
+                        <h3>Question 5: How do airbags help protect passengers during a collision?</h3>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" name="q5" value="a"> 
+                                <label for="q5a">They increase the force on the passenger</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="b"> 
+                                <label for="q5b">They decrease the time of collision</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="c"> 
+                                <label for="q5c">They increase the time of collision</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="d"> 
+                                <label for="q5d">They decrease the mass of the passenger</label>
+                            </div>
+                        </div>
+                        <div class="feedback" id="feedback5"></div>
+                    </div>
+                    
+                    <div class="question">
+                        <h3>Question 6: A car of mass 1000 kg accelerates from 10 m/s to 30 m/s in 5 seconds. What is the average net force acting on the car?</h3>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" name="q6" value="a"> 
+                                <label for="q6a">2000 N</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q6" value="b"> 
+                                <label for="q6b">4000 N</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q6" value="c"> 
+                                <label for="q6c">6000 N</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q6" value="d"> 
+                                <label for="q6d">10000 N</label>
+                            </div>
+                        </div>
+                        <div class="feedback" id="feedback6"></div>
+                    </div>
+                    
+                    <div class="question">
+                        <h3>Question 7: A tennis ball of mass 60 g is hit by a racket, changing its velocity from 20 m/s to 30 m/s in the opposite direction. If the contact time is 0.01 s, what is the average force exerted by the racket?</h3>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" name="q7" value="a"> 
+                                <label for="q7a">60 N</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q7" value="b"> 
+                                <label for="q7b">120 N</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q7" value="c"> 
+                                <label for="q7c">300 N</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q7" value="d"> 
+                                <label for="q7d">600 N</label>
+                            </div>
+                        </div>
+                        <div class="feedback" id="feedback7"></div>
+                    </div>
+                    
+                    <div class="question">
+                        <h3>Question 8: Which of the following represents the impulse-momentum theorem?</h3>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" name="q8" value="a"> 
+                                <label for="q8a">F = ma</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q8" value="b"> 
+                                <label for="q8b">FΔt = mΔv</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q8" value="c"> 
+                                <label for="q8c">p = mv</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q8" value="d"> 
+                                <label for="q8d">W = Fd</label>
+                            </div>
+                        </div>
+                        <div class="feedback" id="feedback8"></div>
+                    </div>
+                    
+                    <div class="question">
+                        <h3>Question 9: A 1500 kg car decelerates from 20 m/s to 0 m/s in 2 seconds. What is the magnitude of the impulse on the car?</h3>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" name="q9" value="a"> 
+                                <label for="q9a">15000 N•s</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q9" value="b"> 
+                                <label for="q9b">30000 N•s</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q9" value="c"> 
+                                <label for="q9c">7500 N•s</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q9" value="d"> 
+                                <label for="q9d">10000 N•s</label>
+                            </div>
+                        </div>
+                        <div class="feedback" id="feedback9"></div>
+                    </div>
+                    
+                    <div class="question">
+                        <h3>Question 10: If the same impulse is applied to two different objects, which object will experience a greater change in velocity?</h3>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" name="q10" value="a"> 
+                                <label for="q10a">The object with greater mass</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q10" value="b"> 
+                                <label for="q10b">The object with smaller mass</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q10" value="c"> 
+                                <label for="q10c">Both will experience the same change</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q10" value="d"> 
+                                <label for="q10d">It depends on the shape of the objects</label>
+                            </div>
+                        </div>
+                        <div class="feedback" id="feedback10"></div>
+                    </div>
+                    
+                    <button id="checkAnswers">Check Answers</button>
+                    
+                    <div class="score-container">
+                        <h3>Your Score</h3>
+                        <div class="score-display" id="scoreDisplay">0%</div>
+                        <div class="progress-bar">
+                            <div class="progress" id="progressBar"></div>
+                        </div>
+                        <p id="scoreMessage">Answer the questions to see your score</p>
+                    </div>
+                    
+                    <div class="navigation">
+                        <button id="prevBtn" disabled>Previous</button>
+                        <button id="nextBtn">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Collapsible sections functionality
+        document.querySelectorAll('.collapsible-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const icon = header.querySelector('.toggle-icon');
+                
+                content.classList.toggle('active');
+                icon.textContent = content.classList.contains('active') ? '−' : '+';
+            });
+        });
+
+        // Impulse calculator
+        document.getElementById('calculateImpulse').addEventListener('click', () => {
+            const force = parseFloat(document.getElementById('force').value);
+            const time = parseFloat(document.getElementById('time').value);
+            
+            if (isNaN(force) || isNaN(time)) {
+                document.getElementById('impulseResult').textContent = 'Please enter valid numbers for force and time.';
+                document.getElementById('impulseResult').className = 'result error';
+                return;
+            }
+            
+            const impulse = force * time;
+            
+            document.getElementById('impulseResult').textContent = 
+                `Impulse = ${impulse.toFixed(2)} N•s`;
+            document.getElementById('impulseResult').className = 'result success';
+        });
+
+        // Force/Time calculator
+        document.getElementById('calculateForceTime').addEventListener('click', () => {
+            const mass = parseFloat(document.getElementById('massImpulse').value);
+            const initialV = parseFloat(document.getElementById('initialV').value);
+            const finalV = parseFloat(document.getElementById('finalV').value);
+            
+            if (isNaN(mass) || isNaN(initialV) || isNaN(finalV)) {
+                document.getElementById('forceTimeResult').textContent = 'Please enter valid numbers for all fields.';
+                document.getElementById('forceTimeResult').className = 'result error';
+                return;
+            }
+            
+            const changeInMomentum = mass * (finalV - initialV);
+            
+            document.getElementById('forceTimeResult').textContent = 
+                `Change in momentum = ${changeInMomentum.toFixed(2)} kg•m•s⁻¹\n` +
+                `For a given time Δt, required force F = ${Math.abs(changeInMomentum).toFixed(2)} / Δt N\n` +
+                `For a given force F, required time Δt = ${Math.abs(changeInMomentum).toFixed(2)} / F s`;
+            document.getElementById('forceTimeResult').className = 'result success';
+        });
+
+        // Safety calculator
+        document.getElementById('calculateSafety').addEventListener('click', () => {
+            const mass = parseFloat(document.getElementById('safetyMass').value);
+            const velocityChange = parseFloat(document.getElementById('safetyVelocity').value);
+            const time = parseFloat(document.getElementById('collisionTime').value);
+            
+            if (isNaN(mass) || isNaN(velocityChange) || isNaN(time)) {
+                document.getElementById('safetyResult').textContent = 'Please enter valid numbers for all fields.';
+                document.getElementById('safetyResult').className = 'result error';
+                return;
+            }
+            
+            const force = mass * velocityChange / time;
+            
+            document.getElementById('safetyResult').textContent = 
+                `Impact force = ${force.toFixed(2)} N\n` +
+                `This demonstrates how increasing collision time reduces impact force.`;
+            document.getElementById('safetyResult').className = 'result success';
+        });
+
+        // Question checking functionality
+        document.getElementById('checkAnswers').addEventListener('click', () => {
+            const correctAnswers = {
+                q1: 'b',
+                q2: 'c',
+                q3: 'b',
+                q4: 'd',
+                q5: 'c',
+                q6: 'b',
+                q7: 'c',
+                q8: 'b',
+                q9: 'b',
+                q10: 'b'
+            };
+            
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+            
+            // Check each question
+            for (let i = 1; i <= totalQuestions; i++) {
+                const questionName = `q${i}`;
+                const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+                const feedbackElement = document.getElementById(`feedback${i}`);
+                
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswers[questionName]) {
+                        feedbackElement.textContent = 'Correct!';
+                        feedbackElement.className = 'feedback correct';
+                        score++;
+                    } else {
+                        feedbackElement.textContent = 'Incorrect. Try again.';
+                        feedbackElement.className = 'feedback incorrect';
+                    }
+                    feedbackElement.style.display = 'block';
+                } else {
+                    const feedbackElement = document.getElementById(`feedback${i}`);
+                    feedbackElement.textContent = 'Please select an answer.';
+                    feedbackElement.className = 'feedback incorrect';
+                    feedbackElement.style.display = 'block';
+                }
+            }
+            
+            // Calculate and display score
+            const percentage = Math.round((score / totalQuestions) * 100);
+            document.getElementById('scoreDisplay').textContent = `${percentage}%`;
+            document.getElementById('progressBar').style.width = `${percentage}%`;
+            
+            let message = '';
+            if (percentage >= 90) {
+                message = 'Excellent work! You have a strong understanding of impulse.';
+            } else if (percentage >= 70) {
+                message = 'Good job! You understand the main concepts of impulse.';
+            } else if (percentage >= 50) {
+                message = 'Not bad, but review the material to improve your understanding.';
+            } else {
+                message = 'Keep practicing! Review the lesson and try again.';
+            }
+            
+            document.getElementById('scoreMessage').textContent = 
+                `You got ${score} out of ${totalQuestions} questions correct. ${message}`;
+        });
+
+        // Navigation between questions
+        let currentQuestion = 1;
+        const totalQuestions = 10;
+        
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (currentQuestion < totalQuestions) {
+                document.querySelectorAll('.question')[currentQuestion - 1].style.display = 'none';
+                currentQuestion++;
+                document.querySelectorAll('.question')[currentQuestion - 1].style.display = 'block';
+                
+                document.getElementById('prevBtn').disabled = false;
+                
+                if (currentQuestion === totalQuestions) {
+                    document.getElementById('nextBtn').textContent = 'Finish';
+                }
+            } else {
+                // Finish the lesson
+                alert('You have completed the lesson questions!');
+            }
+        });
+        
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentQuestion > 1) {
+                document.querySelectorAll('.question')[currentQuestion - 1].style.display = 'none';
+                currentQuestion--;
+                document.querySelectorAll('.question')[currentQuestion - 1].style.display = 'block';
+                
+                document.getElementById('nextBtn').textContent = 'Next';
+                
+                if (currentQuestion === 1) {
+                    document.getElementById('prevBtn').disabled = true;
+                }
+            }
+        });
+        
+        // Initialize by showing only the first question
+        document.querySelectorAll('.question').forEach((question, index) => {
+            if (index !== 0) {
+                question.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
