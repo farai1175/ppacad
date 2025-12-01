@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 12 Physical Sciences: Doppler Effect</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .lesson-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .lesson-info div {
+            margin-right: 20px;
+            margin-bottom: 10px;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin: 25px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+        
+        h3 {
+            color: var(--dark-color);
+            margin: 20px 0 10px;
+        }
+        
+        .collapsible {
+            background-color: white;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .collapsible-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .collapsible-header:hover {
+            background-color: var(--dark-color);
+        }
+        
+        .collapsible-header::after {
+            content: '+';
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+        
+        .collapsible.active .collapsible-header::after {
+            transform: rotate(45deg);
+        }
+        
+        .collapsible-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s;
+        }
+        
+        .collapsible.active .collapsible-content {
+            padding: 20px;
+            max-height: 1000px;
+        }
+        
+        .objectives-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .objectives-list li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .objectives-list li::before {
+            content: '✓';
+            color: var(--success-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .diagram-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .diagram {
+            max-width: 100%;
+            height: auto;
+            margin: 15px 0;
+        }
+        
+        .question-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .question {
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .options {
+            margin-bottom: 15px;
+        }
+        
+        .option {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .option input {
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+        
+        .feedback {
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .correct {
+            background-color: rgba(46, 204, 113, 0.2);
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-color);
+        }
+        
+        .btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+        
+        .results-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            display: none;
+        }
+        
+        .score {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin: 15px 0;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background-color: #ecf0f1;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: var(--success-color);
+            width: 0%;
+            transition: width 0.5s;
+        }
+        
+        @media (max-width: 768px) {
+            .lesson-info {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="lesson-info">
+                <div><strong>SUBJECT:</strong> Physical Sciences</div>
+                <div><strong>GRADE:</strong> 12</div>
+                <div><strong>TOPIC:</strong> Doppler Effect</div>
+                <div><strong>LESSON:</strong> 4</div>
+            </div>
+            <h1>Redshifts and the Expanding Universe</h1>
+        </header>
+
+        <main>
+            <section class="collapsible">
+                <div class="collapsible-header">
+                    <h2>Learning Objectives</h2>
+                </div>
+                <div class="collapsible-content">
+                    <p>By the end of this lesson, learners must be able to:</p>
+                    <ul class="objectives-list">
+                        <li>State that light from many stars is shifted towards the red, or longer wavelength/lower frequency, end of the spectrum</li>
+                        <li>Apply the Doppler effect to these "redshifts" to conclude that most stars are moving away from Earth</li>
+                        <li>Understand that the universe is expanding based on redshift observations</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="collapsible">
+                <div class="collapsible-header">
+                    <h2>Lesson Overview</h2>
+                </div>
+                <div class="collapsible-content">
+                    <p>This lesson explores how the Doppler Effect applies to light from distant stars and galaxies, leading to the discovery of redshifts. We'll examine how these observations provide evidence for an expanding universe and support the Big Bang theory.</p>
+                    <p>Key concepts include: spectrum of light, frequency and wavelength relationships, Doppler Effect for light, redshifts and blueshifts, and the expanding universe model.</p>
+                </div>
+            </section>
+
+            <section class="collapsible">
+                <div class="collapsible-header">
+                    <h2>Main Body</h2>
+                </div>
+                <div class="collapsible-content">
+                    <h3>The Doppler Effect and Light</h3>
+                    <p>The Doppler Effect, which we typically associate with sound, also applies to light waves. When a light source moves relative to an observer, the observed frequency (and wavelength) of the light changes.</p>
+                    
+                    <div class="diagram-container">
+                        <h3>Doppler Effect for Light</h3>
+                        <svg class="diagram" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Stationary source -->
+                            <text x="100" y="50" font-size="16" text-anchor="middle">Stationary Source</text>
+                            <circle cx="100" cy="100" r="10" fill="#3498db"/>
+                            <circle cx="100" cy="100" r="40" stroke="#3498db" stroke-width="2" fill="none" stroke-dasharray="5,5"/>
+                            <circle cx="100" cy="100" r="80" stroke="#3498db" stroke-width="2" fill="none" stroke-dasharray="5,5"/>
+                            <text x="100" y="200" font-size="14" text-anchor="middle">Waves equally spaced</text>
+                            
+                            <!-- Moving source -->
+                            <text x="400" y="50" font-size="16" text-anchor="middle">Source Moving Away</text>
+                            <circle cx="400" cy="100" r="10" fill="#e74c3c"/>
+                            <ellipse cx="360" cy="100" rx="40" ry="40" stroke="#e74c3c" stroke-width="2" fill="none" stroke-dasharray="5,5"/>
+                            <ellipse cx="320" cy="100" rx="80" ry="80" stroke="#e74c3c" stroke-width="2" fill="none" stroke-dasharray="5,5"/>
+                            <text x="400" y="200" font-size="14" text-anchor="middle">Waves stretched (redshift)</text>
+                            
+                            <!-- Arrow -->
+                            <polygon points="450,100 470,95 470,105" fill="#2c3e50"/>
+                            <line x1="350" y1="100" x2="468" y2="100" stroke="#2c3e50" stroke-width="2"/>
+                            
+                            <!-- Legend -->
+                            <rect x="600" y="50" width="180" height="80" fill="#f8f9fa" stroke="#bdc3c7" stroke-width="1"/>
+                            <text x="610" y="70" font-size="14">Legend:</text>
+                            <circle cx="610" y="90" r="5" fill="#3498db"/>
+                            <text x="620" y="95" font-size="12">Stationary source</text>
+                            <circle cx="610" y="110" r="5" fill="#e74c3c"/>
+                            <text x="620" y="115" font-size="12">Moving source</text>
+                        </svg>
+                        <p>When a light source moves away from an observer, the waves are stretched, resulting in longer wavelengths (redshift). When it moves toward the observer, waves are compressed, resulting in shorter wavelengths (blueshift).</p>
+                    </div>
+                    
+                    <h3>Redshifts and the Expanding Universe</h3>
+                    <p>Astronomers have observed that light from distant galaxies is consistently shifted toward the red end of the spectrum. This redshift indicates that these galaxies are moving away from us.</p>
+                    
+                    <div class="diagram-container">
+                        <h3>Spectrum Comparison</h3>
+                        <svg class="diagram" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Reference spectrum -->
+                            <text x="100" y="30" font-size="14" text-anchor="middle">Reference Spectrum</text>
+                            <line x1="50" y1="50" x2="150" y2="50" stroke="#2c3e50" stroke-width="2"/>
+                            <line x1="70" y1="45" x2="70" y2="55" stroke="#2c3e50" stroke-width="1"/>
+                            <line x1="90" y1="45" x2="90" y2="55" stroke="#2c3e50" stroke-width="1"/>
+                            <line x1="110" y1="45" x2="110" y2="55" stroke="#2c3e50" stroke-width="1"/>
+                            <line x1="130" y1="45" x2="130" y2="55" stroke="#2c3e50" stroke-width="1"/>
+                            
+                            <!-- Redshifted spectrum -->
+                            <text x="100" y="100" font-size="14" text-anchor="middle">Redshifted Spectrum</text>
+                            <line x1="50" y1="120" x2="150" y2="120" stroke="#e74c3c" stroke-width="2"/>
+                            <line x1="65" y1="115" x2="65" y2="125" stroke="#e74c3c" stroke-width="1"/>
+                            <line x1="85" y1="115" x2="85" y2="125" stroke="#e74c3c" stroke-width="1"/>
+                            <line x1="105" y1="115" x2="105" y2="125" stroke="#e74c3c" stroke-width="1"/>
+                            <line x1="125" y1="115" x2="125" y2="125" stroke="#e74c3c" stroke-width="1"/>
+                            <line x1="145" y1="115" x2="145" y2="125" stroke="#e74c3c" stroke-width="1"/>
+                            
+                            <!-- Arrow showing shift -->
+                            <polygon points="160,85 170,80 170,90" fill="#2c3e50"/>
+                            <line x1="110" y1="85" x2="168" y2="85" stroke="#2c3e50" stroke-width="2"/>
+                            <text x="135" y="80" font-size="12" text-anchor="middle">Redshift</text>
+                            
+                            <!-- Wavelength labels -->
+                            <text x="50" y="170" font-size="12" text-anchor="middle">Violet</text>
+                            <text x="150" y="170" font-size="12" text-anchor="middle">Red</text>
+                            <line x1="50" y1="160" x2="50" y2="165" stroke="#2c3e50" stroke-width="1"/>
+                            <line x1="150" y1="160" x2="150" y2="165" stroke="#2c3e50" stroke-width="1"/>
+                        </svg>
+                        <p>Absorption lines in stellar spectra are shifted toward longer wavelengths (red end) compared to laboratory references, indicating motion away from Earth.</p>
+                    </div>
+                    
+                    <h3>Hubble's Law and the Big Bang</h3>
+                    <p>Edwin Hubble discovered that the redshift of galaxies is proportional to their distance from us. The further away a galaxy is, the greater its redshift and the faster it appears to be moving away.</p>
+                    
+                    <p>This relationship, known as Hubble's Law, provides strong evidence for an expanding universe. If we extrapolate this expansion backward in time, we arrive at the concept of the Big Bang - a moment when the entire universe was concentrated in an extremely hot, dense state.</p>
+                    
+                    <h3>Blueshifts</h3>
+                    <p>While most galaxies show redshifts, a small number exhibit blueshifts, indicating they are moving toward us. These are typically nearby galaxies within our Local Group, where gravitational interactions can overcome the general expansion of the universe.</p>
+                </div>
+            </section>
+
+            <section class="collapsible">
+                <div class="collapsible-header">
+                    <h2>End of Lesson Questions</h2>
+                </div>
+                <div class="collapsible-content">
+                    <p>Answer the following questions to test your understanding of the lesson. You will receive immediate feedback for each answer.</p>
+                    
+                    <div class="question-container" id="q1">
+                        <div class="question">1. What does a redshift in the spectrum of a star indicate?</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q1a" name="q1" value="a">
+                                <label for="q1a">The star is moving toward Earth</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q1b" name="q1" value="b">
+                                <label for="q1b">The star is moving away from Earth</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q1c" name="q1" value="c">
+                                <label for="q1c">The star is not moving relative to Earth</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q1d" name="q1" value="d">
+                                <label for="q1d">The star is rotating rapidly</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q2">
+                        <div class="question">2. Which color of light has the longest wavelength?</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q2a" name="q2" value="a">
+                                <label for="q2a">Violet</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q2b" name="q2" value="b">
+                                <label for="q2b">Blue</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q2c" name="q2" value="c">
+                                <label for="q2c">Green</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q2d" name="q2" value="d">
+                                <label for="q2d">Red</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q3">
+                        <div class="question">3. What cosmological theory is supported by the observation that most galaxies show redshifts?</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q3a" name="q3" value="a">
+                                <label for="q3a">Steady State Theory</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q3b" name="q3" value="b">
+                                <label for="q3b">Big Bang Theory</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q3c" name="q3" value="c">
+                                <label for="q3c">Pulsating Universe Theory</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q3d" name="q3" value="d">
+                                <label for="q3d">Geocentric Theory</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q4">
+                        <div class="question">4. If a galaxy's spectrum shows absorption lines at longer wavelengths than expected, this is called:</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q4a" name="q4" value="a">
+                                <label for="q4a">Blueshift</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q4b" name="q4" value="b">
+                                <label for="q4b">Redshift</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q4c" name="q4" value="c">
+                                <label for="q4c">Frequency shift</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q4d" name="q4" value="d">
+                                <label for="q4d">Amplitude shift</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q5">
+                        <div class="question">5. According to Hubble's Law, what relationship exists between a galaxy's distance and its redshift?</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q5a" name="q5" value="a">
+                                <label for="q5a">The further the galaxy, the smaller the redshift</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q5b" name="q5" value="b">
+                                <label for="q5b">The further the galaxy, the greater the redshift</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q5c" name="q5" value="c">
+                                <label for="q5c">There is no relationship between distance and redshift</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q5d" name="q5" value="d">
+                                <label for="q5d">The relationship varies randomly</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q6">
+                        <div class="question">6. What would you observe in the spectrum of a star that is moving toward Earth?</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q6a" name="q6" value="a">
+                                <label for="q6a">Redshift</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q6b" name="q6" value="b">
+                                <label for="q6b">Blueshift</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q6c" name="q6" value="c">
+                                <label for="q6c">No shift</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q6d" name="q6" value="d">
+                                <label for="q6d">Random shifts</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q7">
+                        <div class="question">7. Which of the following is evidence for the Big Bang theory?</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q7a" name="q7" value="a">
+                                <label for="q7a">The existence of black holes</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q7b" name="q7" value="b">
+                                <label for="q7b">The redshift of distant galaxies</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q7c" name="q7" value="c">
+                                <label for="q7c">The presence of dark matter</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q7d" name="q7" value="d">
+                                <label for="q7d">The rotation of galaxies</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q8">
+                        <div class="question">8. What does the term "spectrum of light" refer to?</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q8a" name="q8" value="a">
+                                <label for="q8a">The brightness of a light source</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q8b" name="q8" value="b">
+                                <label for="q8b">The rainbow-like series of colors produced by splitting light</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q8c" name="q8" value="c">
+                                <label for="q8c">The speed of light in a vacuum</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q8d" name="q8" value="d">
+                                <label for="q8d">The particle nature of light</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q9">
+                        <div class="question">9. What would cause a "Big Crunch" scenario for the universe?</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q9a" name="q9" value="a">
+                                <label for="q9a">Continued expansion of the universe</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q9b" name="q9" value="b">
+                                <label for="q9b">The universe stopping its expansion</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q9c" name="q9" value="c">
+                                <label for="q9c">The universe contracting after expansion</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q9d" name="q9" value="d">
+                                <label for="q9d">A decrease in the cosmic microwave background radiation</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="question-container" id="q10">
+                        <div class="question">10. How do astronomers use the Doppler effect to study stars and galaxies?</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" id="q10a" name="q10" value="a">
+                                <label for="q10a">To determine their chemical composition</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q10b" name="q10" value="b">
+                                <label for="q10b">To measure their temperature</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q10c" name="q10" value="c">
+                                <label for="q10c">To determine their motion relative to Earth</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" id="q10d" name="q10" value="d">
+                                <label for="q10d">To calculate their age</label>
+                            </div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <button id="check-answers" class="btn">Check Answers</button>
+                    
+                    <div class="results-container" id="results">
+                        <h3>Quiz Results</h3>
+                        <div class="score">Your Score: <span id="score-value">0</span>%</div>
+                        <div class="progress-bar">
+                            <div class="progress" id="progress-bar"></div>
+                        </div>
+                        <p id="results-message"></p>
+                        <button id="try-again" class="btn">Try Again</button>
+                    </div>
+                </div>
+            </section>
+            
+            <div class="navigation">
+                <button id="prev-btn" class="btn" disabled>Previous Lesson</button>
+                <button id="next-btn" class="btn">Next Lesson</button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Collapsible sections functionality
+        document.querySelectorAll('.collapsible-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const collapsible = header.parentElement;
+                collapsible.classList.toggle('active');
+            });
+        });
+
+        // Open the first section by default
+        document.querySelector('.collapsible').classList.add('active');
+
+        // Question answers
+        const correctAnswers = {
+            q1: 'b',
+            q2: 'd',
+            q3: 'b',
+            q4: 'b',
+            q5: 'b',
+            q6: 'b',
+            q7: 'b',
+            q8: 'b',
+            q9: 'c',
+            q10: 'c'
+        };
+
+        // Check answers function
+        document.getElementById('check-answers').addEventListener('click', function() {
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+            
+            // Check each question
+            for (let i = 1; i <= totalQuestions; i++) {
+                const questionId = `q${i}`;
+                const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
+                const feedbackElement = document.getElementById(questionId).querySelector('.feedback');
+                
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswers[questionId]) {
+                        score++;
+                        feedbackElement.textContent = "Correct! " + getExplanation(questionId);
+                        feedbackElement.className = "feedback correct";
+                    } else {
+                        feedbackElement.textContent = "Incorrect. " + getExplanation(questionId);
+                        feedbackElement.className = "feedback incorrect";
+                    }
+                    feedbackElement.style.display = "block";
+                } else {
+                    const feedbackElement = document.getElementById(questionId).querySelector('.feedback');
+                    feedbackElement.textContent = "Please select an answer.";
+                    feedbackElement.className = "feedback incorrect";
+                    feedbackElement.style.display = "block";
+                }
+            }
+            
+            // Calculate and display score
+            const percentage = Math.round((score / totalQuestions) * 100);
+            document.getElementById('score-value').textContent = percentage;
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+            
+            // Display results message
+            const resultsMessage = document.getElementById('results-message');
+            if (percentage >= 80) {
+                resultsMessage.textContent = "Excellent! You have a strong understanding of redshifts and the expanding universe.";
+            } else if (percentage >= 60) {
+                resultsMessage.textContent = "Good job! You understand the main concepts but could use some review.";
+            } else {
+                resultsMessage.textContent = "You might want to review the lesson material and try again.";
+            }
+            
+            // Show results container
+            document.getElementById('results').style.display = "block";
+            
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Try again button
+        document.getElementById('try-again').addEventListener('click', function() {
+            // Reset all answers
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+            
+            // Hide feedback
+            document.querySelectorAll('.feedback').forEach(feedback => {
+                feedback.style.display = "none";
+            });
+            
+            // Hide results
+            document.getElementById('results').style.display = "none";
+            
+            // Scroll to questions
+            document.querySelector('.collapsible-header').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Function to provide explanations for answers
+        function getExplanation(questionId) {
+            const explanations = {
+                q1: "A redshift indicates that the star is moving away from Earth, stretching the light waves to longer wavelengths.",
+                q2: "Red light has the longest wavelength in the visible spectrum, while violet has the shortest.",
+                q3: "The observed redshifts of distant galaxies provide key evidence for the Big Bang theory and an expanding universe.",
+                q4: "A redshift means the absorption lines are shifted toward longer wavelengths (the red end of the spectrum).",
+                q5: "Hubble's Law states that the further a galaxy is from us, the greater its redshift, indicating it's moving away faster.",
+                q6: "A blueshift indicates the object is moving toward Earth, compressing the light waves to shorter wavelengths.",
+                q7: "The redshift of distant galaxies is a primary piece of evidence supporting the Big Bang theory.",
+                q8: "A spectrum is produced when light is split into its component colors, like a rainbow.",
+                q9: "A Big Crunch would occur if the universe stopped expanding and began contracting under gravity.",
+                q10: "The Doppler effect allows astronomers to measure whether celestial objects are moving toward or away from Earth."
+            };
+            return explanations[questionId] || "Review the lesson material for more information.";
+        }
+    </script>
+
+    <!-- Shared lesson navigation (previous/next) -->
+    <script>
+    (function(){
+        const maxLessons = 19;
+        function navigateLesson(direction){
+            const m = window.location.pathname.match(/less(\d+)\.html$/i);
+            if(!m) return;
+            const current = parseInt(m[1],10);
+            const next = direction === 'next' ? current + 1 : current - 1;
+            if(next < 1 || next > maxLessons) return;
+            const newHref = window.location.pathname.replace(/less\d+\.html$/i, `less${next}.html`);
+            window.location.href = newHref;
+        }
+        [['prevBtn','nextBtn'], ['prev-btn','next-btn']].forEach(ids => {
+            const prev = document.getElementById(ids[0]);
+            const next = document.getElementById(ids[1]);
+            if(prev) prev.addEventListener('click', () => navigateLesson('prev'));
+            if(next) next.addEventListener('click', () => navigateLesson('next'));
+        });
+    })();
+    </script>
+</body>
+</html>

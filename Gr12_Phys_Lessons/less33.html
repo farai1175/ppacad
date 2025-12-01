@@ -1,0 +1,2244 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaction of Light with Materials - PassProof Academy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1a73e8;
+            --dark-blue: #0d47a1;
+            --light-blue: #e3f2fd;
+            --accent-blue: #2196f3;
+            --white: #ffffff;
+            --gray: #f5f7fa;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --success: #4caf50;
+            --error: #f44336;
+            --warning: #ff9800;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gray);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: var(--white);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--white);
+        }
+
+        .logo span {
+            color: #64b5f6;
+        }
+
+        nav {
+            position: relative;
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 0.5rem;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: var(--white);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+            display: block;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--white);
+            min-width: 220px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-hover);
+            overflow: hidden;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .nav-item:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: var(--text-dark);
+            padding: 0.75rem 1rem;
+            display: block;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .lesson-header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .lesson-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-header h2 {
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        h3 {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h3::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: var(--primary-blue);
+            border-radius: 2px;
+        }
+
+        h4 {
+            color: var(--dark-blue);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.2rem;
+        }
+
+        .objectives-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .objectives-list li {
+            padding: 0.75rem 1rem;
+            margin: 0.5rem 0;
+            background: var(--light-blue);
+            border-left: 4px solid var(--primary-blue);
+            border-radius: 0 8px 8px 0;
+            transition: transform 0.3s;
+        }
+
+        .objectives-list li:hover {
+            transform: translateX(5px);
+        }
+
+        .objectives-list li::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        /* Definition Cards */
+        .definition-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .definition-card {
+            background: linear-gradient(135deg, #fff, var(--light-blue));
+            border-radius: 12px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary-blue);
+            transition: all 0.3s;
+        }
+
+        .definition-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .definition-card.transmission {
+            border-left-color: #4caf50;
+        }
+
+        .definition-card.absorption {
+            border-left-color: #f44336;
+        }
+
+        .definition-card.reflection {
+            border-left-color: #ff9800;
+        }
+
+        .definition-card h5 {
+            font-size: 1.1rem;
+            color: var(--dark-blue);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .definition-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Key Points */
+        .key-point {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-left: 4px solid var(--primary-blue);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .key-point h4 {
+            color: var(--dark-blue);
+            margin-top: 0;
+        }
+
+        /* Concept Box */
+        .concept-box {
+            background: #fff3e0;
+            border: 2px solid var(--warning);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .concept-box h4 {
+            color: #e65100;
+            margin-top: 0;
+        }
+
+        /* Band Theory Visualization */
+        .band-diagram {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .band-item {
+            text-align: center;
+            padding: 1rem;
+            background: var(--gray);
+            border-radius: 12px;
+            min-width: 150px;
+        }
+
+        .band-visual {
+            position: relative;
+            height: 120px;
+            width: 80px;
+            margin: 0 auto 1rem;
+        }
+
+        .band {
+            position: absolute;
+            width: 100%;
+            height: 30px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .conduction-band {
+            background: var(--primary-blue);
+            top: 0;
+        }
+
+        .valence-band {
+            background: #4caf50;
+            bottom: 0;
+        }
+
+        .band-gap {
+            position: absolute;
+            top: 35px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: var(--text-light);
+        }
+
+        /* Simulations */
+        .simulation-container {
+            background: linear-gradient(135deg, #1a237e, #0d47a1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            color: var(--white);
+        }
+
+        .simulation-container h4 {
+            color: var(--white);
+            margin-top: 0;
+        }
+
+        .canvas-container {
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .control-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.3);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--white);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        select, input[type="number"] {
+            width: 100%;
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn {
+            background: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background: var(--dark-blue);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+
+        .btn-secondary:hover {
+            background: var(--light-blue);
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-success:hover {
+            background: #388e3c;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .btn-group .btn {
+            flex: 1;
+            min-width: 120px;
+            justify-content: center;
+        }
+
+        /* Material Cards */
+        .material-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .material-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .material-card:hover {
+            transform: scale(1.05);
+        }
+
+        .material-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .material-card.carbon .material-icon {
+            background: #1a1a1a;
+            color: #333;
+        }
+
+        .material-card.copper .material-icon {
+            background: linear-gradient(135deg, #b87333, #da8a67);
+            color: #fff;
+        }
+
+        .material-card.aluminum .material-icon {
+            background: linear-gradient(135deg, #c0c0c0, #e8e8e8);
+            color: #666;
+        }
+
+        /* Quiz Section */
+        .quiz-section {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .question-card {
+            background: var(--gray);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .question-card.correct {
+            border-color: var(--success);
+            background: #e8f5e9;
+        }
+
+        .question-card.incorrect {
+            border-color: var(--error);
+            background: #ffebee;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: var(--primary-blue);
+            color: var(--white);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 0.5rem;
+            font-weight: bold;
+        }
+
+        .question-text {
+            font-weight: 500;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: var(--white);
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option:hover {
+            border-color: var(--primary-blue);
+            background: var(--light-blue);
+        }
+
+        .option.selected {
+            border-color: var(--primary-blue);
+            background: var(--light-blue);
+        }
+
+        .option.correct-answer {
+            border-color: var(--success);
+            background: #e8f5e9;
+        }
+
+        .option.wrong-answer {
+            border-color: var(--error);
+            background: #ffebee;
+        }
+
+        .option input {
+            margin-right: 1rem;
+            transform: scale(1.2);
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .feedback.correct {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid var(--success);
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid var(--error);
+        }
+
+        /* Score Display */
+        .score-display {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .score-display.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .score-number {
+            font-size: 4rem;
+            font-weight: bold;
+        }
+
+        .score-label {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .score-message {
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: var(--light-blue);
+            border-radius: 10px;
+            height: 10px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue));
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Navigation Buttons */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .lesson-nav .btn {
+            flex: 1;
+            min-width: 150px;
+            justify-content: center;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-blue);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            opacity: 0.9;
+        }
+
+        /* Info box */
+        .info-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--light-blue);
+            border-radius: 12px;
+            margin: 1rem 0;
+        }
+
+        .info-box-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        /* Frequency matching table */
+        .frequency-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .frequency-table th {
+            background: var(--primary-blue);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .frequency-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--light-blue);
+        }
+
+        .frequency-table tr:nth-child(even) {
+            background: var(--gray);
+        }
+
+        .frequency-table tr:hover {
+            background: var(--light-blue);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+
+            .nav-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                padding-top: 1rem;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .dropdown-content {
+                position: static;
+                box-shadow: none;
+                background: rgba(255,255,255,0.1);
+                margin-top: 0.5rem;
+            }
+
+            .dropdown-content a {
+                color: var(--white);
+                padding-left: 2rem;
+            }
+
+            .lesson-header {
+                padding: 2rem 1rem;
+            }
+
+            .lesson-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .lesson-nav {
+                flex-direction: column;
+            }
+
+            .band-diagram {
+                gap: 1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px currentColor; }
+            50% { box-shadow: 0 0 20px currentColor; }
+        }
+
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo">Pass<span>Proof</span> Academy</a>
+            <button class="nav-toggle" onclick="toggleNav()">☰</button>
+            <nav>
+                <ul class="nav-menu" id="navMenu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Subjects ▼</a>
+                        <div class="dropdown-content">
+                            <a href="#">Physical Sciences</a>
+                            <a href="#">Mathematics</a>
+                            <a href="#">Life Sciences</a>
+                            <a href="#">Chemistry</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Grade 12 ▼</a>
+                        <div class="dropdown-content">
+                            <a href="#">Term 1</a>
+                            <a href="#">Term 2</a>
+                            <a href="#">Term 3</a>
+                            <a href="#">Term 4</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Topics ▼</a>
+                        <div class="dropdown-content">
+                            <a href="#">Waves, Sound & Light</a>
+                            <a href="#">Electric Circuits</a>
+                            <a href="#">Electrodynamics</a>
+                            <a href="#">Optical Phenomena</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Progress</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Lesson Header -->
+        <div class="lesson-header">
+            <div class="badge">Physical Sciences • Grade 12 • Week 8</div>
+            <h1>Transmission and Scattering of Light</h1>
+            <h2>Lesson 2: Interaction of Light with Materials</h2>
+            <div class="progress-container" style="max-width: 300px; margin: 1rem auto 0;">
+                <div class="progress-bar" id="lessonProgress" style="width: 0%;"></div>
+            </div>
+            <p style="margin-top: 0.5rem; opacity: 0.8;">Lesson Progress: <span id="progressText">0%</span></p>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="card">
+            <h3>🎯 Learning Objectives</h3>
+            <p>By the end of this lesson, you will be able to:</p>
+            <ul class="objectives-list">
+                <li>Explain the interaction of light with different materials</li>
+                <li>Describe transmission, absorption, and reflection of light</li>
+                <li>Explain how UV and visible radiation interacts with metals</li>
+                <li>Apply the Band Theory to explain why metals reflect light</li>
+                <li>Predict which phenomenon (transmission, absorption, or reflection) will occur based on frequency matching</li>
+                <li>Explain why different materials appear different colours</li>
+            </ul>
+        </div>
+
+        <!-- Overview -->
+        <div class="card">
+            <h3>📚 Overview</h3>
+            <p>When light encounters a material, three things can happen: the light can pass through (transmission), be absorbed by the material (absorption), or bounce back (reflection). The specific behavior depends on the properties of the material's electrons and how they interact with the incoming light's frequency.</p>
+            
+            <div class="info-box">
+                <div class="info-box-icon">💡</div>
+                <div>
+                    <strong>Key Concept:</strong> Light is energy. When it strikes a material, this energy is transferred to the electrons in the atoms. What happens next depends on whether the light's frequency matches the natural frequency of those electrons.
+                </div>
+            </div>
+        </div>
+
+        <!-- Pre-Knowledge -->
+        <div class="card">
+            <h3>🔄 Pre-Knowledge Review</h3>
+            <p>Before we explore how light interacts with materials, let's review some essential concepts:</p>
+            
+            <div class="key-point">
+                <h4>Electronic Properties of Matter</h4>
+                <ul>
+                    <li><strong>Electrons:</strong> The electrical conductivity of metals depends on electrons.</li>
+                    <li><strong>Band Theory:</strong> In metals, the conduction and valence bands are close together (or overlap), making it easy for excited electrons to move between bands.</li>
+                    <li><strong>Why metals conduct:</strong> The small gap between energy bands allows electrons to move freely when energy is applied.</li>
+                </ul>
+            </div>
+
+            <h4>Band Theory Visualization</h4>
+            <div class="band-diagram">
+                <div class="band-item">
+                    <div class="band-visual">
+                        <div class="band conduction-band">Conduction</div>
+                        <div class="band-gap">Small gap</div>
+                        <div class="band valence-band">Valence</div>
+                    </div>
+                    <p><strong>Metals</strong></p>
+                    <p style="font-size: 0.85rem; color: var(--text-light);">Bands overlap or are very close</p>
+                </div>
+                <div class="band-item">
+                    <div class="band-visual">
+                        <div class="band conduction-band">Conduction</div>
+                        <div class="band-gap" style="height: 50px;">Large gap</div>
+                        <div class="band valence-band" style="bottom: 0;">Valence</div>
+                    </div>
+                    <p><strong>Insulators</strong></p>
+                    <p style="font-size: 0.85rem; color: var(--text-light);">Large energy gap between bands</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Concepts -->
+        <div class="card">
+            <h3>📖 Main Concepts & Principles</h3>
+            
+            <h4>1. How Light Interacts with Materials</h4>
+            <p>When light strikes a material, it interacts with the electrons in the atoms of that material. Here's what happens:</p>
+            <ul>
+                <li><strong>Light carries energy</strong> that is transferred to electrons in atoms</li>
+                <li>The <strong>amount of energy transferred</strong> depends on the material's properties</li>
+                <li>In <strong>metals</strong>, energy levels are close together, so almost all frequencies of light can be absorbed</li>
+                <li>When electrons absorb energy, they become <strong>excited</strong> and jump to higher energy levels</li>
+            </ul>
+
+            <h4>2. Three Types of Light Interaction</h4>
+            <div class="definition-grid">
+                <div class="definition-card transmission">
+                    <h5>🔵 Transmission</h5>
+                    <p>Light passes through a substance virtually unchanged. This occurs when the frequency of light is <strong>different</strong> from the natural frequency of the electrons in the material.</p>
+                    <p style="margin-top: 0.5rem;"><em>Example: Light passing through glass</em></p>
+                </div>
+                <div class="definition-card absorption">
+                    <h5>🔴 Absorption</h5>
+                    <p>Light is neither transmitted nor reflected, but absorbed by the material. Electrons use the energy and vibrate more energetically. The absorbed energy is converted to <strong>internal energy (heat)</strong>.</p>
+                    <p style="margin-top: 0.5rem;"><em>Example: Black objects absorbing all light</em></p>
+                </div>
+                <div class="definition-card reflection">
+                    <h5>🟠 Reflection</h5>
+                    <p>Light beams hit the surface and "bounce off" rather than penetrating the material. This happens when electrons absorb light and <strong>immediately re-emit</strong> it.</p>
+                    <p style="margin-top: 0.5rem;"><em>Example: Mirrors, polished metals</em></p>
+                </div>
+            </div>
+
+            <h4>3. Frequency Matching</h4>
+            <p>The relationship between the incident light frequency and the natural frequency of electrons determines what happens:</p>
+            
+            <table class="frequency-table">
+                <thead>
+                    <tr>
+                        <th>Condition</th>
+                        <th>Result</th>
+                        <th>What Happens</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>f<sub>light</sub> = f<sub>natural</sub></td>
+                        <td><strong>Reflection</strong></td>
+                        <td>Light is absorbed and immediately re-emitted</td>
+                    </tr>
+                    <tr>
+                        <td>f<sub>light</sub> > f<sub>natural</sub></td>
+                        <td><strong>Transmission</strong></td>
+                        <td>Light passes through the material</td>
+                    </tr>
+                    <tr>
+                        <td>f<sub>light</sub> < f<sub>natural</sub></td>
+                        <td><strong>Absorption</strong></td>
+                        <td>Light energy is converted to heat</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>4. Why Objects Have Colour</h4>
+            <div class="key-point">
+                <h4>Colour and Light</h4>
+                <ul>
+                    <li>The <strong>colour of an object</strong> is determined by the frequency of light it transmits or reflects.</li>
+                    <li>If <strong>no light is reflected or transmitted</strong>, the object appears <strong>black</strong>.</li>
+                    <li>If <strong>all frequencies are reflected</strong>, the object appears <strong>white or silver</strong>.</li>
+                    <li>If only <strong>certain frequencies are reflected</strong>, the object appears that colour.</li>
+                </ul>
+            </div>
+
+            <h4>5. Metals: Absorption and Re-emission</h4>
+            <p>Metals have special properties regarding light interaction:</p>
+            <ul>
+                <li>Because energy levels in metals are <strong>close together</strong>, almost all frequencies can be absorbed</li>
+                <li>The absorbed light is then <strong>quickly re-emitted</strong> (reflected)</li>
+                <li>This is why metals appear <strong>shiny</strong> - they reflect most of the light that hits them</li>
+                <li>Different metals reflect different combinations of frequencies, giving them distinct colours (copper = reddish-orange, gold = yellow, silver = silvery-white)</li>
+            </ul>
+        </div>
+
+        <!-- Worked Examples -->
+        <div class="card">
+            <h3>✏️ Worked Examples</h3>
+            
+            <div class="concept-box">
+                <h4>Example: Three Blocks Experiment</h4>
+                <p>A beam of white light falls onto three rectangular blocks: a carbon block (black), a copper block (reddish-orange), and an aluminum block (silvery).</p>
+                
+                <div class="material-grid">
+                    <div class="material-card carbon">
+                        <div class="material-icon">⬛</div>
+                        <h5>Carbon Block</h5>
+                        <p style="color: var(--text-light);">Appears Black</p>
+                        <p><strong>Absorbs most</strong> energy from light</p>
+                        <p style="font-size: 0.85rem; margin-top: 0.5rem;">All frequencies absorbed, very little re-emitted</p>
+                    </div>
+                    <div class="material-card copper">
+                        <div class="material-icon">🟤</div>
+                        <h5>Copper Block</h5>
+                        <p style="color: var(--text-light);">Appears Reddish-Orange</p>
+                        <p><strong>Moderate</strong> energy absorption</p>
+                        <p style="font-size: 0.85rem; margin-top: 0.5rem;">Only red/orange frequencies transmitted, rest absorbed</p>
+                    </div>
+                    <div class="material-card aluminum">
+                        <div class="material-icon">⬜</div>
+                        <h5>Aluminum Block</h5>
+                        <p style="color: var(--text-light);">Appears Silvery</p>
+                        <p><strong>Absorbs least</strong> energy from light</p>
+                        <p style="font-size: 0.85rem; margin-top: 0.5rem;">Most frequencies re-emitted (reflected)</p>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(0,0,0,0.05); border-radius: 8px;">
+                    <p><strong>Key Points:</strong></p>
+                    <ul>
+                        <li><strong>Carbon (black):</strong> Absorbs ALL frequencies → no colour seen → appears black</li>
+                        <li><strong>Aluminum (silver):</strong> Reflects MOST frequencies → minimal absorption → appears silvery</li>
+                        <li><strong>Copper:</strong> Only reflects red/orange → other frequencies absorbed → appears reddish-orange</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Simulations -->
+        <div class="card">
+            <h3>🎮 Interactive Simulations</h3>
+            
+            <!-- Simulation 1: Light Interaction -->
+            <div class="simulation-container">
+                <h4>Simulation 1: Light Interaction with Materials</h4>
+                <p>Select different materials to see how light interacts with them. Observe transmission, absorption, and reflection!</p>
+                
+                <div class="canvas-container">
+                    <canvas id="interactionCanvas" width="800" height="400"></canvas>
+                </div>
+                
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Select Material:</label>
+                        <select id="materialSelect">
+                            <option value="glass">Glass (Transparent)</option>
+                            <option value="aluminum">Aluminum (Reflective)</option>
+                            <option value="copper">Copper (Colored Metal)</option>
+                            <option value="carbon">Carbon (Black/Absorbing)</option>
+                            <option value="red-filter">Red Filter</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>Light Intensity: <span id="intensityValue">100%</span></label>
+                        <input type="range" id="lightIntensity" min="20" max="100" value="100">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulation 2: Frequency Matching -->
+            <div class="simulation-container" style="margin-top: 1.5rem;">
+                <h4>Simulation 2: Frequency Matching</h4>
+                <p>Adjust the incident light frequency to see whether the light is reflected, transmitted, or absorbed based on the material's natural frequency.</p>
+                
+                <div class="canvas-container">
+                    <canvas id="frequencyCanvas" width="800" height="350"></canvas>
+                </div>
+                
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Incident Light Frequency: <span id="incidentFreqValue">5.0</span> × 10¹⁴ Hz</label>
+                        <input type="range" id="incidentFreq" min="4" max="8" step="0.1" value="5">
+                    </div>
+                    <div class="control-group">
+                        <label>Material Natural Frequency: <span id="naturalFreqValue">5.0</span> × 10¹⁴ Hz</label>
+                        <input type="range" id="naturalFreq" min="4" max="8" step="0.1" value="5">
+                    </div>
+                </div>
+                
+                <div id="frequencyResult" style="margin-top: 1rem; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 8px; text-align: center;">
+                    <p style="font-size: 1.2rem;"><strong>Result:</strong> <span id="resultText">Reflection</span></p>
+                    <p id="resultExplanation">f<sub>light</sub> = f<sub>natural</sub> → Light is absorbed and re-emitted</p>
+                </div>
+            </div>
+
+            <!-- Simulation 3: Band Theory -->
+            <div class="simulation-container" style="margin-top: 1.5rem;">
+                <h4>Simulation 3: Band Theory Visualization</h4>
+                <p>Explore how electrons move between energy bands in different materials when light energy is absorbed.</p>
+                
+                <div class="canvas-container">
+                    <canvas id="bandCanvas" width="800" height="400"></canvas>
+                </div>
+                
+                <div class="btn-group">
+                    <button class="btn" onclick="setMaterialType('metal')">Metal (Small Gap)</button>
+                    <button class="btn btn-secondary" onclick="setMaterialType('semiconductor')">Semiconductor</button>
+                    <button class="btn btn-secondary" onclick="setMaterialType('insulator')">Insulator (Large Gap)</button>
+                </div>
+                
+                <div style="margin-top: 1rem;">
+                    <button class="btn btn-success" onclick="addPhoton()">Add Photon Energy →</button>
+                </div>
+            </div>
+
+            <!-- Simulation 4: Color Mixing -->
+            <div class="simulation-container" style="margin-top: 1.5rem;">
+                <h4>Simulation 4: Why Objects Have Color</h4>
+                <p>Shine white light on different objects to see which colors are absorbed and which are reflected.</p>
+                
+                <div class="canvas-container">
+                    <canvas id="colorCanvas" width="800" height="400"></canvas>
+                </div>
+                
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Select Object:</label>
+                        <select id="objectSelect">
+                            <option value="red-apple">Red Apple</option>
+                            <option value="green-leaf">Green Leaf</option>
+                            <option value="blue-ball">Blue Ball</option>
+                            <option value="black-coal">Black Coal</option>
+                            <option value="white-paper">White Paper</option>
+                            <option value="yellow-banana">Yellow Banana</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="colorExplanation" style="margin-top: 1rem; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                    <p><strong>Explanation:</strong> <span id="colorExplanationText">The red apple absorbs all colors except red, which is reflected to your eyes.</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="quiz-section" id="quizSection">
+            <h3>📝 Knowledge Check</h3>
+            <p>Test your understanding of how light interacts with materials. Select your answer and receive immediate feedback!</p>
+            
+            <div id="quizContainer"></div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <button class="btn btn-success" onclick="submitQuiz()" id="submitBtn">Submit All Answers</button>
+                <button class="btn btn-secondary" onclick="resetQuiz()" style="margin-left: 1rem;">Reset Quiz</button>
+            </div>
+            
+            <div class="score-display" id="scoreDisplay">
+                <p class="score-label">Your Score</p>
+                <p class="score-number" id="scoreNumber">0%</p>
+                <p class="score-message" id="scoreMessage"></p>
+                <button class="btn" onclick="resetQuiz()" style="margin-top: 1rem;">Try Again</button>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="lesson-nav">
+            <button class="btn btn-secondary" onclick="goToPrevious()">
+                ← Previous Lesson
+            </button>
+            <button class="btn" onclick="goToNext()">
+                Next Lesson →
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 PassProof Academy. All Rights Reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">Empowering learners to achieve academic excellence.</p>
+    </footer>
+
+    <script>
+        // ==================== QUIZ DATA ====================
+        const quizQuestions = [
+            {
+                question: "What is meant by transmission of light?",
+                options: [
+                    "Light is absorbed by the material",
+                    "Light bounces off the surface",
+                    "Light passes through a substance virtually unchanged",
+                    "Light is scattered in all directions"
+                ],
+                correct: 2,
+                explanation: "Transmission of light describes the situation where light passes through a substance virtually unchanged."
+            },
+            {
+                question: "What happens during absorption of light?",
+                options: [
+                    "Light passes through the material",
+                    "Light is reflected back",
+                    "Light is absorbed and the energy makes electrons vibrate more energetically",
+                    "Light changes color"
+                ],
+                correct: 2,
+                explanation: "During absorption, light striking a surface is neither transmitted nor reflected, but absorbed by the material, causing electrons to vibrate more energetically."
+            },
+            {
+                question: "According to Band Theory, why do metals conduct electricity?",
+                options: [
+                    "Metals have a large gap between conduction and valence bands",
+                    "Metals have no electrons",
+                    "The conduction and valence bands in metals are close together, allowing electrons to move easily",
+                    "Metals absorb all light energy"
+                ],
+                correct: 2,
+                explanation: "According to Band Theory, the conduction and valence bands of metals are close together (or overlap), making it easy for excited electrons to move between bands."
+            },
+            {
+                question: "When the frequency of incident light equals the natural frequency of electrons in a material, what happens?",
+                options: [
+                    "Transmission occurs",
+                    "Reflection occurs (absorption and re-emission)",
+                    "The material melts",
+                    "Nothing happens"
+                ],
+                correct: 1,
+                explanation: "When the frequency of incident light equals the natural frequency of electrons, reflection occurs - the light is absorbed and immediately re-emitted."
+            },
+            {
+                question: "When the frequency of incident light is HIGHER than the natural frequency of electrons, what happens?",
+                options: [
+                    "Absorption occurs",
+                    "Reflection occurs",
+                    "Transmission occurs",
+                    "Scattering occurs"
+                ],
+                correct: 2,
+                explanation: "When the light frequency is higher than the natural frequency of electrons, the light passes through the material - transmission occurs."
+            },
+            {
+                question: "When the frequency of incident light is LOWER than the natural frequency of electrons, what happens?",
+                options: [
+                    "Transmission occurs",
+                    "Reflection occurs",
+                    "Absorption occurs",
+                    "Refraction occurs"
+                ],
+                correct: 2,
+                explanation: "When the light frequency is slightly lower than the natural frequency of electrons, absorption occurs - the energy is converted to internal energy (heat)."
+            },
+            {
+                question: "A carbon block appears black because:",
+                options: [
+                    "It reflects all frequencies of light",
+                    "It absorbs all frequencies of light and re-emits very little",
+                    "It only reflects black light",
+                    "It transmits all light"
+                ],
+                correct: 1,
+                explanation: "Carbon appears black because all frequencies are absorbed and very little is re-emitted. No reflected light means no color - the object appears black."
+            },
+            {
+                question: "An aluminum block appears silvery because:",
+                options: [
+                    "It absorbs all light",
+                    "It only reflects silver-colored light",
+                    "Most frequencies are re-emitted (reflected), so minimal absorption occurs",
+                    "It transmits all light"
+                ],
+                correct: 2,
+                explanation: "Aluminum appears silvery because most frequencies are re-emitted (reflected). Since very little light is absorbed, the object appears bright and silvery."
+            },
+            {
+                question: "A copper block appears reddish-orange because:",
+                options: [
+                    "It absorbs only red and orange light",
+                    "It reflects only red and orange frequencies while absorbing other colors",
+                    "Copper naturally glows red",
+                    "Red light passes through copper"
+                ],
+                correct: 1,
+                explanation: "Copper appears reddish-orange because only red and orange frequencies are reflected (transmitted to our eyes), while other frequencies are absorbed."
+            },
+            {
+                question: "The absorbed energy from light is converted to:",
+                options: [
+                    "Sound energy",
+                    "Internal energy (heat)",
+                    "Nuclear energy",
+                    "Gravitational energy"
+                ],
+                correct: 1,
+                explanation: "When light is absorbed, the energy is converted into internal energy, making the object hotter."
+            },
+            {
+                question: "Why can metals absorb almost all frequencies of light?",
+                options: [
+                    "Metals have no electrons",
+                    "Energy levels in metals are far apart",
+                    "Energy levels in metals are close together",
+                    "Metals are transparent"
+                ],
+                correct: 2,
+                explanation: "Since the energy levels in metals are close together, almost all frequencies of light can be absorbed, exciting electrons into higher available energy levels."
+            },
+            {
+                question: "What determines the colour of an object?",
+                options: [
+                    "The material's temperature",
+                    "The frequency of light it absorbs",
+                    "The frequency of light it reflects or transmits",
+                    "The object's size"
+                ],
+                correct: 2,
+                explanation: "The colour of an object is determined by the frequency of light it reflects or transmits to our eyes."
+            }
+        ];
+
+        // ==================== QUIZ SYSTEM ====================
+        let userAnswers = {};
+        let quizSubmitted = false;
+
+        function initQuiz() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = '';
+            
+            quizQuestions.forEach((q, index) => {
+                const questionHTML = `
+                    <div class="question-card" id="question${index}">
+                        <p class="question-text">
+                            <span class="question-number">${index + 1}</span>
+                            ${q.question}
+                        </p>
+                        <div class="options">
+                            ${q.options.map((opt, optIndex) => `
+                                <label class="option" id="option${index}_${optIndex}">
+                                    <input type="radio" name="q${index}" value="${optIndex}" 
+                                           onchange="selectAnswer(${index}, ${optIndex})">
+                                    ${opt}
+                                </label>
+                            `).join('')}
+                        </div>
+                        <div class="feedback" id="feedback${index}"></div>
+                    </div>
+                `;
+                container.innerHTML += questionHTML;
+            });
+            
+            loadProgress();
+        }
+
+        function selectAnswer(questionIndex, optionIndex) {
+            if (quizSubmitted) return;
+            
+            userAnswers[questionIndex] = optionIndex;
+            saveProgress();
+            updateProgressBar();
+            
+            const options = document.querySelectorAll(`[name="q${questionIndex}"]`);
+            options.forEach((opt, idx) => {
+                opt.closest('.option').classList.remove('selected');
+            });
+            document.getElementById(`option${questionIndex}_${optionIndex}`).classList.add('selected');
+        }
+
+        function submitQuiz() {
+            if (Object.keys(userAnswers).length < quizQuestions.length) {
+                alert('Please answer all questions before submitting!');
+                return;
+            }
+            
+            quizSubmitted = true;
+            let score = 0;
+            
+            quizQuestions.forEach((q, index) => {
+                const questionCard = document.getElementById(`question${index}`);
+                const feedback = document.getElementById(`feedback${index}`);
+                const userAnswer = userAnswers[index];
+                const correctAnswer = q.correct;
+                
+                q.options.forEach((_, optIdx) => {
+                    const optionEl = document.getElementById(`option${index}_${optIdx}`);
+                    optionEl.classList.remove('correct-answer', 'wrong-answer');
+                });
+                
+                document.getElementById(`option${index}_${correctAnswer}`).classList.add('correct-answer');
+                
+                if (userAnswer === correctAnswer) {
+                    score++;
+                    questionCard.classList.add('correct');
+                    questionCard.classList.remove('incorrect');
+                    feedback.className = 'feedback show correct';
+                    feedback.innerHTML = `✓ Correct! ${q.explanation}`;
+                } else {
+                    questionCard.classList.add('incorrect');
+                    questionCard.classList.remove('correct');
+                    document.getElementById(`option${index}_${userAnswer}`).classList.add('wrong-answer');
+                    feedback.className = 'feedback show incorrect';
+                    feedback.innerHTML = `✗ Incorrect. ${q.explanation}`;
+                }
+            });
+            
+            const percentage = Math.round((score / quizQuestions.length) * 100);
+            document.getElementById('scoreNumber').textContent = `${percentage}%`;
+            document.getElementById('scoreDisplay').classList.add('show');
+            
+            let message = '';
+            if (percentage >= 80) {
+                message = '🌟 Excellent! You have mastered this topic!';
+            } else if (percentage >= 60) {
+                message = '👍 Good job! Review the concepts you missed.';
+            } else if (percentage >= 40) {
+                message = '📚 Keep studying! Review the lesson content.';
+            } else {
+                message = '💪 Don\'t give up! Re-read the lesson carefully.';
+            }
+            document.getElementById('scoreMessage').textContent = message;
+            
+            document.getElementById('submitBtn').disabled = true;
+            
+            localStorage.setItem('lesson2_completed', 'true');
+            localStorage.setItem('lesson2_score', percentage);
+        }
+
+        function resetQuiz() {
+            quizSubmitted = false;
+            userAnswers = {};
+            document.getElementById('scoreDisplay').classList.remove('show');
+            document.getElementById('submitBtn').disabled = false;
+            initQuiz();
+            updateProgressBar();
+        }
+
+        // ==================== PROGRESS TRACKING ====================
+        function saveProgress() {
+            localStorage.setItem('lesson2_answers', JSON.stringify(userAnswers));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('lesson2_answers');
+            if (saved) {
+                userAnswers = JSON.parse(saved);
+                Object.entries(userAnswers).forEach(([qIndex, optIndex]) => {
+                    const radio = document.querySelector(`input[name="q${qIndex}"][value="${optIndex}"]`);
+                    if (radio) {
+                        radio.checked = true;
+                        radio.closest('.option').classList.add('selected');
+                    }
+                });
+            }
+            updateProgressBar();
+        }
+
+        function updateProgressBar() {
+            const answered = Object.keys(userAnswers).length;
+            const total = quizQuestions.length;
+            const percentage = Math.round((answered / total) * 100);
+            
+            document.getElementById('lessonProgress').style.width = `${percentage}%`;
+            document.getElementById('progressText').textContent = `${percentage}%`;
+        }
+
+        // ==================== NAVIGATION ====================
+        function toggleNav() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+
+        function goToPrevious() {
+            alert('Going to Lesson 1: Understanding Light Scattering');
+        }
+
+        function goToNext() {
+            if (localStorage.getItem('lesson2_completed') === 'true') {
+                alert('Proceeding to Lesson 3: Applications of Light Interaction');
+            } else {
+                alert('Please complete the quiz before moving to the next lesson!');
+            }
+        }
+
+        // ==================== SIMULATION 1: LIGHT INTERACTION ====================
+        let interactionCanvas, interactionCtx;
+        let lightParticles = [];
+
+        function initInteractionSimulation() {
+            interactionCanvas = document.getElementById('interactionCanvas');
+            interactionCtx = interactionCanvas.getContext('2d');
+            
+            document.getElementById('materialSelect').addEventListener('change', updateInteraction);
+            document.getElementById('lightIntensity').addEventListener('input', function() {
+                document.getElementById('intensityValue').textContent = this.value + '%';
+            });
+            
+            animateInteraction();
+        }
+
+        function updateInteraction() {
+            lightParticles = [];
+        }
+
+        function animateInteraction() {
+            const width = interactionCanvas.width;
+            const height = interactionCanvas.height;
+            const material = document.getElementById('materialSelect').value;
+            const intensity = parseInt(document.getElementById('lightIntensity').value) / 100;
+            
+            // Clear canvas
+            interactionCtx.fillStyle = '#0a0a20';
+            interactionCtx.fillRect(0, 0, width, height);
+            
+            // Draw light source
+            const gradient = interactionCtx.createRadialGradient(50, height/2, 0, 50, height/2, 60);
+            gradient.addColorStop(0, '#ffffff');
+            gradient.addColorStop(0.5, '#ffff88');
+            gradient.addColorStop(1, 'transparent');
+            interactionCtx.fillStyle = gradient;
+            interactionCtx.beginPath();
+            interactionCtx.arc(50, height/2, 60, 0, Math.PI * 2);
+            interactionCtx.fill();
+            
+            interactionCtx.fillStyle = '#fff';
+            interactionCtx.font = '14px Arial';
+            interactionCtx.textAlign = 'center';
+            interactionCtx.fillText('Light Source', 50, height/2 + 90);
+            
+            // Draw material block
+            let materialColor, materialLabel;
+            let transmissionRate = 0, reflectionRate = 0, absorptionRate = 0;
+            
+            switch(material) {
+                case 'glass':
+                    materialColor = 'rgba(200, 230, 255, 0.3)';
+                    materialLabel = 'Glass';
+                    transmissionRate = 0.9;
+                    reflectionRate = 0.05;
+                    absorptionRate = 0.05;
+                    break;
+                case 'aluminum':
+                    materialColor = 'linear-gradient(135deg, #c0c0c0, #e8e8e8)';
+                    materialLabel = 'Aluminum';
+                    transmissionRate = 0;
+                    reflectionRate = 0.95;
+                    absorptionRate = 0.05;
+                    break;
+                case 'copper':
+                    materialColor = '#b87333';
+                    materialLabel = 'Copper';
+                    transmissionRate = 0;
+                    reflectionRate = 0.6;
+                    absorptionRate = 0.4;
+                    break;
+                case 'carbon':
+                    materialColor = '#1a1a1a';
+                    materialLabel = 'Carbon';
+                    transmissionRate = 0;
+                    reflectionRate = 0.05;
+                    absorptionRate = 0.95;
+                    break;
+                case 'red-filter':
+                    materialColor = 'rgba(255, 0, 0, 0.5)';
+                    materialLabel = 'Red Filter';
+                    transmissionRate = 0.7;
+                    reflectionRate = 0.1;
+                    absorptionRate = 0.2;
+                    break;
+            }
+            
+            // Draw material
+            interactionCtx.fillStyle = materialColor.includes('gradient') ? '#c0c0c0' : materialColor;
+            interactionCtx.fillRect(350, 100, 100, 200);
+            interactionCtx.strokeStyle = '#fff';
+            interactionCtx.lineWidth = 2;
+            interactionCtx.strokeRect(350, 100, 100, 200);
+            interactionCtx.fillStyle = '#fff';
+            interactionCtx.fillText(materialLabel, 400, 330);
+            
+            // Create new light particles
+            if (Math.random() < 0.15 * intensity) {
+                const colors = ['#ff0000', '#ff8800', '#ffff00', '#00ff00', '#0088ff', '#0000ff', '#8800ff'];
+                lightParticles.push({
+                    x: 110,
+                    y: height/2 + (Math.random() - 0.5) * 80,
+                    vx: 4,
+                    vy: 0,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    state: 'incoming',
+                    alpha: 1
+                });
+            }
+            
+            // Update and draw light particles
+            lightParticles = lightParticles.filter(p => {
+                if (p.state === 'incoming') {
+                    p.x += p.vx;
+                    
+                    // Check collision with material
+                    if (p.x >= 350) {
+                        const rand = Math.random();
+                        if (rand < transmissionRate) {
+                            p.state = 'transmitted';
+                            if (material === 'red-filter' && p.color !== '#ff0000' && p.color !== '#ff8800') {
+                                p.state = 'absorbed';
+                            }
+                        } else if (rand < transmissionRate + reflectionRate) {
+                            p.state = 'reflected';
+                            p.vx = -3;
+                            p.vy = (Math.random() - 0.5) * 2;
+                            if (material === 'copper') {
+                                p.color = Math.random() < 0.5 ? '#ff8800' : '#ff4400';
+                            }
+                        } else {
+                            p.state = 'absorbed';
+                        }
+                    }
+                } else if (p.state === 'transmitted') {
+                    p.x += p.vx;
+                } else if (p.state === 'reflected') {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                } else if (p.state === 'absorbed') {
+                    p.alpha -= 0.1;
+                }
+                
+                // Draw particle
+                if (p.alpha > 0) {
+                    interactionCtx.globalAlpha = p.alpha;
+                    interactionCtx.fillStyle = p.color;
+                    interactionCtx.beginPath();
+                    interactionCtx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+                    interactionCtx.fill();
+                    interactionCtx.globalAlpha = 1;
+                }
+                
+                return p.x > 0 && p.x < width && p.y > 0 && p.y < height && p.alpha > 0;
+            });
+            
+            // Draw labels
+            interactionCtx.fillStyle = '#4caf50';
+            interactionCtx.fillText('Transmitted →', 600, 150);
+            interactionCtx.fillStyle = '#ff9800';
+            interactionCtx.fillText('← Reflected', 200, 120);
+            interactionCtx.fillStyle = '#f44336';
+            interactionCtx.fillText('Absorbed (heat)', 400, 380);
+            
+            // Draw screen
+            interactionCtx.fillStyle = '#333';
+            interactionCtx.fillRect(700, 100, 30, 200);
+            interactionCtx.fillStyle = '#fff';
+            interactionCtx.fillText('Screen', 715, 330);
+            
+            requestAnimationFrame(animateInteraction);
+        }
+
+        // ==================== SIMULATION 2: FREQUENCY MATCHING ====================
+        let frequencyCanvas, frequencyCtx;
+
+        function initFrequencySimulation() {
+            frequencyCanvas = document.getElementById('frequencyCanvas');
+            frequencyCtx = frequencyCanvas.getContext('2d');
+            
+            document.getElementById('incidentFreq').addEventListener('input', updateFrequency);
+            document.getElementById('naturalFreq').addEventListener('input', updateFrequency);
+            
+            updateFrequency();
+        }
+
+        function updateFrequency() {
+            const incidentFreq = parseFloat(document.getElementById('incidentFreq').value);
+            const naturalFreq = parseFloat(document.getElementById('naturalFreq').value);
+            
+            document.getElementById('incidentFreqValue').textContent = incidentFreq.toFixed(1);
+            document.getElementById('naturalFreqValue').textContent = naturalFreq.toFixed(1);
+            
+            const width = frequencyCanvas.width;
+            const height = frequencyCanvas.height;
+            
+            // Clear canvas
+            frequencyCtx.fillStyle = '#0a0a20';
+            frequencyCtx.fillRect(0, 0, width, height);
+            
+            // Determine result
+            let result, color, explanation;
+            const diff = incidentFreq - naturalFreq;
+            
+            if (Math.abs(diff) < 0.3) {
+                result = 'REFLECTION';
+                color = '#ff9800';
+                explanation = 'f_light ≈ f_natural → Light is absorbed and immediately re-emitted';
+            } else if (diff > 0) {
+                result = 'TRANSMISSION';
+                color = '#4caf50';
+                explanation = 'f_light > f_natural → Light passes through the material';
+            } else {
+                result = 'ABSORPTION';
+                color = '#f44336';
+                explanation = 'f_light < f_natural → Light energy is converted to heat';
+            }
+            
+            document.getElementById('resultText').textContent = result;
+            document.getElementById('resultText').style.color = color;
+            document.getElementById('resultExplanation').innerHTML = explanation;
+            
+            // Draw visualization
+            // Light source
+            frequencyCtx.fillStyle = '#ffff00';
+            frequencyCtx.beginPath();
+            frequencyCtx.arc(80, height/2, 40, 0, Math.PI * 2);
+            frequencyCtx.fill();
+            frequencyCtx.fillStyle = '#000';
+            frequencyCtx.font = '12px Arial';
+            frequencyCtx.textAlign = 'center';
+            frequencyCtx.fillText('Light', 80, height/2 + 5);
+            
+            // Material
+            frequencyCtx.fillStyle = '#555';
+            frequencyCtx.fillRect(350, 80, 100, 190);
+            frequencyCtx.fillStyle = '#fff';
+            frequencyCtx.font = '14px Arial';
+            frequencyCtx.fillText('Material', 400, 60);
+            frequencyCtx.font = '10px Arial';
+            frequencyCtx.fillText(`f_nat = ${naturalFreq.toFixed(1)} × 10¹⁴ Hz`, 400, 290);
+            
+            // Draw electrons
+            for (let i = 0; i < 6; i++) {
+                const ex = 370 + (i % 2) * 60;
+                const ey = 110 + Math.floor(i / 2) * 55;
+                frequencyCtx.fillStyle = '#00ffff';
+                frequencyCtx.beginPath();
+                frequencyCtx.arc(ex, ey, 8, 0, Math.PI * 2);
+                frequencyCtx.fill();
+            }
+            
+            // Draw incident light waves
+            frequencyCtx.strokeStyle = color;
+            frequencyCtx.lineWidth = 3;
+            frequencyCtx.beginPath();
+            for (let x = 130; x < 350; x += 5) {
+                const y = height/2 + Math.sin((x - 130) * incidentFreq * 0.05) * 30;
+                if (x === 130) {
+                    frequencyCtx.moveTo(x, y);
+                } else {
+                    frequencyCtx.lineTo(x, y);
+                }
+            }
+            frequencyCtx.stroke();
+            
+            // Draw result arrow and effect
+            if (result === 'TRANSMISSION') {
+                frequencyCtx.strokeStyle = color;
+                frequencyCtx.beginPath();
+                for (let x = 450; x < 700; x += 5) {
+                    const y = height/2 + Math.sin((x - 450) * incidentFreq * 0.05) * 30;
+                    if (x === 450) {
+                        frequencyCtx.moveTo(x, y);
+                    } else {
+                        frequencyCtx.lineTo(x, y);
+                    }
+                }
+                frequencyCtx.stroke();
+                
+                frequencyCtx.fillStyle = color;
+                frequencyCtx.font = '16px Arial';
+                frequencyCtx.fillText('→ Light passes through', 580, height/2 - 50);
+            } else if (result === 'REFLECTION') {
+                frequencyCtx.strokeStyle = color;
+                frequencyCtx.beginPath();
+                for (let x = 340; x > 130; x -= 5) {
+                    const y = height/2 - 60 + Math.sin((340 - x) * incidentFreq * 0.05) * 20;
+                    if (x === 340) {
+                        frequencyCtx.moveTo(x, y);
+                    } else {
+                        frequencyCtx.lineTo(x, y);
+                    }
+                }
+                frequencyCtx.stroke();
+                
+                frequencyCtx.fillStyle = color;
+                frequencyCtx.font = '16px Arial';
+                frequencyCtx.fillText('← Light reflected', 240, height/2 - 100);
+            } else {
+                // Absorption - show heat
+                const heatGradient = frequencyCtx.createRadialGradient(400, height/2, 0, 400, height/2, 80);
+                heatGradient.addColorStop(0, 'rgba(255, 0, 0, 0.5)');
+                heatGradient.addColorStop(1, 'transparent');
+                frequencyCtx.fillStyle = heatGradient;
+                frequencyCtx.fillRect(320, 60, 160, 230);
+                
+                frequencyCtx.fillStyle = color;
+                frequencyCtx.font = '16px Arial';
+                frequencyCtx.fillText('Energy → Heat', 400, 320);
+            }
+            
+            // Labels
+            frequencyCtx.fillStyle = '#fff';
+            frequencyCtx.font = '12px Arial';
+            frequencyCtx.fillText(`f_inc = ${incidentFreq.toFixed(1)} × 10¹⁴ Hz`, 240, 50);
+        }
+
+        // ==================== SIMULATION 3: BAND THEORY ====================
+        let bandCanvas, bandCtx;
+        let materialType = 'metal';
+        let electrons = [];
+        let photons = [];
+
+        function initBandSimulation() {
+            bandCanvas = document.getElementById('bandCanvas');
+            bandCtx = bandCanvas.getContext('2d');
+            
+            resetElectrons();
+            animateBands();
+        }
+
+        function setMaterialType(type) {
+            materialType = type;
+            resetElectrons();
+            photons = [];
+        }
+
+        function resetElectrons() {
+            electrons = [];
+            for (let i = 0; i < 8; i++) {
+                electrons.push({
+                    x: 250 + i * 40,
+                    y: 320,
+                    targetY: 320,
+                    excited: false
+                });
+            }
+        }
+
+        function addPhoton() {
+            photons.push({
+                x: 50,
+                y: 200,
+                speed: 5
+            });
+        }
+
+        function animateBands() {
+            const width = bandCanvas.width;
+            const height = bandCanvas.height;
+            
+            // Clear
+            bandCtx.fillStyle = '#0a0a20';
+            bandCtx.fillRect(0, 0, width, height);
+            
+            // Band gap sizes
+            let gapSize, gapLabel;
+            switch(materialType) {
+                case 'metal':
+                    gapSize = 20;
+                    gapLabel = 'Very small/no gap - Easy for electrons to jump!';
+                    break;
+                case 'semiconductor':
+                    gapSize = 60;
+                    gapLabel = 'Medium gap - Some energy needed';
+                    break;
+                case 'insulator':
+                    gapSize = 120;
+                    gapLabel = 'Large gap - Very hard for electrons to jump';
+                    break;
+            }
+            
+            // Draw conduction band
+            bandCtx.fillStyle = 'rgba(33, 150, 243, 0.5)';
+            bandCtx.fillRect(200, 80, 400, 80);
+            bandCtx.strokeStyle = '#2196f3';
+            bandCtx.lineWidth = 2;
+            bandCtx.strokeRect(200, 80, 400, 80);
+            bandCtx.fillStyle = '#fff';
+            bandCtx.font = '16px Arial';
+            bandCtx.textAlign = 'center';
+            bandCtx.fillText('CONDUCTION BAND', 400, 125);
+            bandCtx.font = '12px Arial';
+            bandCtx.fillText('(electrons can move freely here)', 400, 145);
+            
+            // Draw valence band
+            const valenceY = 160 + gapSize;
+            bandCtx.fillStyle = 'rgba(76, 175, 80, 0.5)';
+            bandCtx.fillRect(200, valenceY, 400, 80);
+            bandCtx.strokeStyle = '#4caf50';
+            bandCtx.strokeRect(200, valenceY, 400, 80);
+            bandCtx.fillStyle = '#fff';
+            bandCtx.font = '16px Arial';
+            bandCtx.fillText('VALENCE BAND', 400, valenceY + 45);
+            bandCtx.font = '12px Arial';
+            bandCtx.fillText('(electrons bound to atoms)', 400, valenceY + 65);
+            
+            // Draw energy gap
+            if (gapSize > 30) {
+                bandCtx.fillStyle = 'rgba(255, 152, 0, 0.3)';
+                bandCtx.fillRect(200, 160, 400, gapSize);
+                bandCtx.fillStyle = '#ff9800';
+                bandCtx.font = '14px Arial';
+                bandCtx.fillText('ENERGY GAP', 400, 160 + gapSize/2 + 5);
+            }
+            
+            // Label
+            bandCtx.fillStyle = '#fff';
+            bandCtx.font = '14px Arial';
+            bandCtx.fillText(gapLabel, 400, 380);
+            bandCtx.fillText(`Material: ${materialType.toUpperCase()}`, 400, 50);
+            
+            // Update photons
+            photons = photons.filter(p => {
+                p.x += p.speed;
+                
+                // Draw photon
+                bandCtx.fillStyle = '#ffff00';
+                bandCtx.beginPath();
+                bandCtx.arc(p.x, p.y, 10, 0, Math.PI * 2);
+                bandCtx.fill();
+                bandCtx.fillStyle = '#000';
+                bandCtx.font = '10px Arial';
+                bandCtx.fillText('hν', p.x, p.y + 4);
+                
+                // Check if photon hits electrons
+                if (p.x >= 250) {
+                    // Find an unexcited electron
+                    const unexcited = electrons.find(e => !e.excited);
+                    if (unexcited) {
+                        if (materialType === 'metal' || (materialType === 'semiconductor' && Math.random() < 0.7)) {
+                            unexcited.excited = true;
+                            unexcited.targetY = 120;
+                        } else if (materialType === 'insulator') {
+                            // Energy not enough - photon absorbed as heat
+                            bandCtx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+                            bandCtx.beginPath();
+                            bandCtx.arc(p.x, valenceY + 40, 30, 0, Math.PI * 2);
+                            bandCtx.fill();
+                        }
+                    }
+                    return false;
+                }
+                
+                return p.x < width;
+            });
+            
+            // Update and draw electrons
+            electrons.forEach(e => {
+                // Move towards target
+                e.y += (e.targetY - e.y) * 0.1;
+                
+                // Calculate actual Y based on band positions
+                let actualY;
+                if (e.excited) {
+                    actualY = 120;
+                } else {
+                    actualY = valenceY + 40;
+                }
+                e.y += (actualY - e.y) * 0.1;
+                
+                // Draw electron
+                bandCtx.fillStyle = e.excited ? '#00ffff' : '#ff6b6b';
+                bandCtx.beginPath();
+                bandCtx.arc(e.x, e.y, 12, 0, Math.PI * 2);
+                bandCtx.fill();
+                bandCtx.fillStyle = '#000';
+                bandCtx.font = 'bold 10px Arial';
+                bandCtx.fillText('e⁻', e.x, e.y + 4);
+                
+                // Slowly de-excite
+                if (e.excited && Math.random() < 0.005) {
+                    e.excited = false;
+                    e.targetY = valenceY + 40;
+                }
+            });
+            
+            // Draw arrow for photon direction
+            bandCtx.strokeStyle = '#ffff00';
+            bandCtx.lineWidth = 2;
+            bandCtx.beginPath();
+            bandCtx.moveTo(50, 200);
+            bandCtx.lineTo(150, 200);
+            bandCtx.lineTo(140, 190);
+            bandCtx.moveTo(150, 200);
+            bandCtx.lineTo(140, 210);
+            bandCtx.stroke();
+            bandCtx.fillStyle = '#ffff00';
+            bandCtx.font = '12px Arial';
+            bandCtx.fillText('Photon', 100, 230);
+            
+            requestAnimationFrame(animateBands);
+        }
+
+        // ==================== SIMULATION 4: COLOR ====================
+        let colorCanvas, colorCtx;
+
+        function initColorSimulation() {
+            colorCanvas = document.getElementById('colorCanvas');
+            colorCtx = colorCanvas.getContext('2d');
+            
+            document.getElementById('objectSelect').addEventListener('change', updateColorSim);
+            
+            updateColorSim();
+        }
+
+        function updateColorSim() {
+            const object = document.getElementById('objectSelect').value;
+            const width = colorCanvas.width;
+            const height = colorCanvas.height;
+            
+            // Clear
+            colorCtx.fillStyle = '#1a1a2e';
+            colorCtx.fillRect(0, 0, width, height);
+            
+            // Object properties
+            let objectColor, objectName, reflected, absorbed, explanation;
+            
+            switch(object) {
+                case 'red-apple':
+                    objectColor = '#cc0000';
+                    objectName = 'Red Apple';
+                    reflected = ['red'];
+                    absorbed = ['orange', 'yellow', 'green', 'blue', 'violet'];
+                    explanation = 'The red apple absorbs all colors except red, which is reflected to your eyes.';
+                    break;
+                case 'green-leaf':
+                    objectColor = '#228b22';
+                    objectName = 'Green Leaf';
+                    reflected = ['green'];
+                    absorbed = ['red', 'orange', 'yellow', 'blue', 'violet'];
+                    explanation = 'The leaf absorbs all colors except green, which is reflected to your eyes.';
+                    break;
+                case 'blue-ball':
+                    objectColor = '#0066cc';
+                    objectName = 'Blue Ball';
+                    reflected = ['blue'];
+                    absorbed = ['red', 'orange', 'yellow', 'green', 'violet'];
+                    explanation = 'The blue ball absorbs all colors except blue, which is reflected to your eyes.';
+                    break;
+                case 'black-coal':
+                    objectColor = '#1a1a1a';
+                    objectName = 'Black Coal';
+                    reflected = [];
+                    absorbed = ['red', 'orange', 'yellow', 'green', 'blue', 'violet'];
+                    explanation = 'Black coal absorbs ALL colors - no light is reflected, so it appears black.';
+                    break;
+                case 'white-paper':
+                    objectColor = '#f5f5f5';
+                    objectName = 'White Paper';
+                    reflected = ['red', 'orange', 'yellow', 'green', 'blue', 'violet'];
+                    absorbed = [];
+                    explanation = 'White paper reflects ALL colors equally - all light is reflected, so it appears white.';
+                    break;
+                case 'yellow-banana':
+                    objectColor = '#ffcc00';
+                    objectName = 'Yellow Banana';
+                    reflected = ['red', 'yellow', 'green'];
+                    absorbed = ['blue', 'violet'];
+                    explanation = 'The banana reflects red, yellow, and green light (which combine to appear yellow), while absorbing blue and violet.';
+                    break;
+            }
+            
+            document.getElementById('colorExplanationText').textContent = explanation;
+            
+            // Draw white light source
+            const gradient = colorCtx.createRadialGradient(100, height/2, 0, 100, height/2, 60);
+            gradient.addColorStop(0, '#ffffff');
+            gradient.addColorStop(1, 'transparent');
+            colorCtx.fillStyle = gradient;
+            colorCtx.beginPath();
+            colorCtx.arc(100, height/2, 60, 0, Math.PI * 2);
+            colorCtx.fill();
+            colorCtx.fillStyle = '#000';
+            colorCtx.font = '12px Arial';
+            colorCtx.textAlign = 'center';
+            colorCtx.fillText('White Light', 100, height/2 + 5);
+            
+            // Draw incoming light rays (rainbow)
+            const colors = [
+                {name: 'red', color: '#ff0000', y: -40},
+                {name: 'orange', color: '#ff8800', y: -25},
+                {name: 'yellow', color: '#ffff00', y: -10},
+                {name: 'green', color: '#00ff00', y: 5},
+                {name: 'blue', color: '#0088ff', y: 20},
+                {name: 'violet', color: '#8800ff', y: 35}
+            ];
+            
+            colors.forEach(c => {
+                colorCtx.strokeStyle = c.color;
+                colorCtx.lineWidth = 3;
+                colorCtx.beginPath();
+                colorCtx.moveTo(160, height/2 + c.y);
+                colorCtx.lineTo(350, height/2 + c.y);
+                colorCtx.stroke();
+            });
+            
+            // Draw object
+            colorCtx.fillStyle = objectColor;
+            colorCtx.beginPath();
+            colorCtx.arc(400, height/2, 60, 0, Math.PI * 2);
+            colorCtx.fill();
+            colorCtx.strokeStyle = '#fff';
+            colorCtx.lineWidth = 2;
+            colorCtx.stroke();
+            colorCtx.fillStyle = objectColor === '#1a1a1a' || objectColor === '#0066cc' ? '#fff' : '#000';
+            colorCtx.font = '12px Arial';
+            colorCtx.fillText(objectName, 400, height/2 + 5);
+            
+            // Draw reflected rays
+            colors.forEach((c, i) => {
+                if (reflected.includes(c.name)) {
+                    colorCtx.strokeStyle = c.color;
+                    colorCtx.lineWidth = 3;
+                    colorCtx.beginPath();
+                    colorCtx.moveTo(460, height/2 + c.y);
+                    colorCtx.lineTo(650, height/2 + c.y - 20);
+                    colorCtx.stroke();
+                    
+                    // Arrow head
+                    colorCtx.beginPath();
+                    colorCtx.moveTo(650, height/2 + c.y - 20);
+                    colorCtx.lineTo(640, height/2 + c.y - 15);
+                    colorCtx.moveTo(650, height/2 + c.y - 20);
+                    colorCtx.lineTo(640, height/2 + c.y - 25);
+                    colorCtx.stroke();
+                }
+            });
+            
+            // Draw absorbed indication
+            absorbed.forEach((colorName, i) => {
+                const colorData = colors.find(c => c.name === colorName);
+                if (colorData) {
+                    // Small X at object
+                    colorCtx.strokeStyle = colorData.color;
+                    colorCtx.lineWidth = 2;
+                    const xPos = 400;
+                    const yPos = height/2 + colorData.y;
+                    colorCtx.beginPath();
+                    colorCtx.moveTo(xPos - 8, yPos - 8);
+                    colorCtx.lineTo(xPos + 8, yPos + 8);
+                    colorCtx.moveTo(xPos + 8, yPos - 8);
+                    colorCtx.lineTo(xPos - 8, yPos + 8);
+                    colorCtx.stroke();
+                }
+            });
+            
+            // Draw eye
+            colorCtx.fillStyle = '#fff';
+            colorCtx.beginPath();
+            colorCtx.ellipse(700, height/2 - 30, 25, 15, 0, 0, Math.PI * 2);
+            colorCtx.fill();
+            colorCtx.fillStyle = objectColor === '#1a1a1a' ? '#333' : objectColor;
+            colorCtx.beginPath();
+            colorCtx.arc(700, height/2 - 30, 8, 0, Math.PI * 2);
+            colorCtx.fill();
+            colorCtx.fillStyle = '#000';
+            colorCtx.beginPath();
+            colorCtx.arc(700, height/2 - 30, 4, 0, Math.PI * 2);
+            colorCtx.fill();
+            colorCtx.fillStyle = '#fff';
+            colorCtx.font = '12px Arial';
+            colorCtx.fillText('Eye sees:', 700, height/2 + 10);
+            colorCtx.fillStyle = objectColor;
+            colorCtx.font = 'bold 14px Arial';
+            colorCtx.fillText(objectColor === '#1a1a1a' ? 'BLACK' : objectName.split(' ')[0].toUpperCase(), 700, height/2 + 30);
+            
+            // Labels
+            colorCtx.fillStyle = '#fff';
+            colorCtx.font = '14px Arial';
+            colorCtx.textAlign = 'left';
+            colorCtx.fillText('Incoming white light', 180, 60);
+            colorCtx.fillText('(all colors)', 180, 80);
+            
+            if (reflected.length > 0) {
+                colorCtx.fillStyle = '#4caf50';
+                colorCtx.fillText('Reflected: ' + reflected.join(', '), 500, 60);
+            }
+            if (absorbed.length > 0) {
+                colorCtx.fillStyle = '#f44336';
+                colorCtx.fillText('Absorbed: ' + absorbed.join(', '), 500, 340);
+            }
+        }
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            initQuiz();
+            initInteractionSimulation();
+            initFrequencySimulation();
+            initBandSimulation();
+            initColorSimulation();
+            
+            if (localStorage.getItem('lesson2_completed') === 'true') {
+                const score = localStorage.getItem('lesson2_score');
+                console.log('Lesson previously completed with score:', score + '%');
+            }
+        });
+    </script>
+</body>
+</html>
+```

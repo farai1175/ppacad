@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Molecular Shape and VSEPR Theory</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subject-info {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        
+        .subject-item {
+            margin-right: 20px;
+        }
+        
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .lesson-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .main-content {
+            flex: 3;
+            min-width: 300px;
+        }
+        
+        .sidebar {
+            flex: 1;
+            min-width: 250px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .section-header:hover {
+            background-color: #34495e;
+        }
+        
+        .section-header h2 {
+            font-size: 1.4rem;
+            margin: 0;
+        }
+        
+        .section-content {
+            padding: 20px;
+            display: none;
+        }
+        
+        .section.active .section-content {
+            display: block;
+        }
+        
+        .section.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .toggle-icon {
+            transition: transform 0.3s;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--light-color);
+            font-weight: 600;
+        }
+        
+        .definition-table th:first-child {
+            width: 30%;
+        }
+        
+        .vsepr-table {
+            width: 100%;
+            margin: 20px 0;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .vsepr-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+        
+        .vsepr-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .vsepr-cell {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .vsepr-cell:not(:last-child) {
+            border-right: 1px solid #eee;
+        }
+        
+        .molecule-visualization {
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .molecule-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            margin: 30px 0;
+            padding: 30px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .molecule {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            transition: all 0.5s ease;
+            min-width: 200px;
+            position: relative;
+        }
+        
+        .molecule-3d {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 15px;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .atom {
+            position: absolute;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+        
+        .central-atom {
+            background-color: var(--primary-color);
+            width: 40px;
+            height: 40px;
+            z-index: 10;
+        }
+        
+        .bonded-atom {
+            background-color: var(--secondary-color);
+            width: 30px;
+            height: 30px;
+        }
+        
+        .lone-pair {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--warning-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: white;
+        }
+        
+        .bond {
+            position: absolute;
+            background-color: #333;
+            transform-origin: 0 0;
+        }
+        
+        .molecule-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .molecule-shape {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .active-btn {
+            background-color: var(--primary-color);
+        }
+        
+        .polarity-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        .polar {
+            background-color: var(--accent-color);
+        }
+        
+        .non-polar {
+            background-color: var(--success-color);
+        }
+        
+        .step-by-step {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .step {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .step:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .quiz-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .quiz-question {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .quiz-question:last-child {
+            border-bottom: none;
+        }
+        
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .option.selected {
+            background-color: var(--light-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .option.correct {
+            background-color: rgba(46, 204, 113, 0.2);
+            border-color: var(--success-color);
+        }
+        
+        .option.incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            border-color: var(--danger-color);
+        }
+        
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            display: block;
+        }
+        
+        .feedback.incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            color: #c0392b;
+            display: block;
+        }
+        
+        .submit-btn {
+            background-color: var(--primary-color);
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+        
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .results.success {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            display: block;
+        }
+        
+        .results.warning {
+            background-color: rgba(243, 156, 18, 0.2);
+            color: #d35400;
+            display: block;
+        }
+        
+        .key-point {
+            background-color: var(--light-color);
+            padding: 15px;
+            border-left: 4px solid var(--secondary-color);
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .activity-box {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .activity-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .lesson-content {
+                flex-direction: column;
+            }
+            
+            .molecule-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .vsepr-header, .vsepr-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .subject-info {
+                flex-direction: column;
+            }
+            
+            .subject-item {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="subject-info">
+                <div class="subject-item"><strong>Subject:</strong> Physical Sciences</div>
+                <div class="subject-item"><strong>Topic:</strong> Atomic Combinations: Molecular Structure</div>
+                <div class="subject-item"><strong>Subtopic:</strong> Predicting Molecular Shapes using VSEPR Theory</div>
+            </div>
+            <h1>Molecular Shape and VSEPR Theory</h1>
+            <div class="subtitle">Understanding 3D Molecular Geometry and Its Impact on Physical Properties</div>
+        </header>
+        
+        <div class="lesson-content">
+            <div class="main-content">
+                <div class="section" id="objectives">
+                    <div class="section-header">
+                        <h2>Learning Objectives</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>By the end of this lesson, learners must be able to:</p>
+                        <ol>
+                            <li><strong>Draw Lewis diagrams</strong> for simple molecules.</li>
+                            <li><strong>Use VSEPR theory</strong> to predict the 3D-shape of molecules.</li>
+                            <li><strong>Relate molecular shape</strong> to physical properties like polarity and intermolecular forces.</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="section" id="overview">
+                    <div class="section-header">
+                        <h2>Overview</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>
+                            Chemical bonding models, such as Lewis diagrams, help predict the arrangement of valence electrons and explain bonding. 
+                            To predict the three-dimensional shapes of molecules formed by covalent bonding between non-metals, we use the 
+                            <strong>Valence Shell Electron Pair Repulsion (VSEPR) model</strong>.
+                        </p>
+                        <p>
+                            Understanding molecular structure is crucial because the physical and chemical properties of a compound are 
+                            determined by its molecular shape and polarity. This lesson focuses on applying VSEPR theory, a reliable method 
+                            for predicting molecular shapes by considering repulsive forces between electron pairs around the central atom.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="section" id="definitions">
+                    <div class="section-header">
+                        <h2>Definitions and Scientific Principles</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <table class="definition-table">
+                            <thead>
+                                <tr>
+                                    <th>Term</th>
+                                    <th>Definition/Principle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>VSEPR Theory</strong></td>
+                                    <td>
+                                        A model that predicts the 3D shape of molecules based on the repulsion between electron pairs 
+                                        in the valence shell of the central atom. The model minimizes electron-pair repulsion.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Electron Pairs</strong></td>
+                                    <td>
+                                        May be <strong>bonding pairs</strong> (shared between atoms) or <strong>lone pairs</strong> 
+                                        (not shared). Lone pairs repel more strongly than bonding pairs.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Molecular Polarity</strong></td>
+                                    <td>
+                                        Determined by both bond polarity and molecular shape. If polar bonds are arranged 
+                                        <strong>symmetrically</strong>, dipole moments cancel out, resulting in a 
+                                        <strong>non-polar molecule</strong>.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="section" id="main-body">
+                    <div class="section-header">
+                        <h2>Main Body</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <h3>1. Steps for Determining Molecular Shape</h3>
+                        
+                        <div class="step-by-step">
+                            <div class="step">
+                                <span class="step-number">1</span>
+                                <strong>Draw a Lewis Diagram</strong> of the molecule showing all valence electrons.
+                            </div>
+                            <div class="step">
+                                <span class="step-number">2</span>
+                                <strong>Count electron pairs</strong> around the central atom (treat multiple bonds as one electron pair).
+                            </div>
+                            <div class="step">
+                                <span class="step-number">3</span>
+                                <strong>Identify the basic geometry</strong> corresponding to the total number of electron pairs.
+                            </div>
+                            <div class="step">
+                                <span class="step-number">4</span>
+                                <strong>Determine the molecular shape</strong> by considering lone pairs (if present).
+                            </div>
+                        </div>
+                        
+                        <h3>2. VSEPR Theory and Molecular Shapes</h3>
+                        
+                        <div class="vsepr-table">
+                            <div class="vsepr-header">
+                                <div class="vsepr-cell">Formula</div>
+                                <div class="vsepr-cell">Electron Pairs</div>
+                                <div class="vsepr-cell">Shape Name</div>
+                                <div class="vsepr-cell">Example</div>
+                                <div class="vsepr-cell">Bond Angle</div>
+                            </div>
+                            <div class="vsepr-row">
+                                <div class="vsepr-cell">AX₂</div>
+                                <div class="vsepr-cell">2</div>
+                                <div class="vsepr-cell">Linear</div>
+                                <div class="vsepr-cell">CO₂, BeCl₂</div>
+                                <div class="vsepr-cell">180°</div>
+                            </div>
+                            <div class="vsepr-row">
+                                <div class="vsepr-cell">AX₃</div>
+                                <div class="vsepr-cell">3</div>
+                                <div class="vsepr-cell">Trigonal Planar</div>
+                                <div class="vsepr-cell">BF₃</div>
+                                <div class="vsepr-cell">120°</div>
+                            </div>
+                            <div class="vsepr-row">
+                                <div class="vsepr-cell">AX₂L</div>
+                                <div class="vsepr-cell">3 (2 bonding, 1 lone)</div>
+                                <div class="vsepr-cell">Bent</div>
+                                <div class="vsepr-cell">SO₂</div>
+                                <div class="vsepr-cell">~120°</div>
+                            </div>
+                            <div class="vsepr-row">
+                                <div class="vsepr-cell">AX₄</div>
+                                <div class="vsepr-cell">4</div>
+                                <div class="vsepr-cell">Tetrahedral</div>
+                                <div class="vsepr-cell">CH₄, CCl₄</div>
+                                <div class="vsepr-cell">109.5°</div>
+                            </div>
+                            <div class="vsepr-row">
+                                <div class="vsepr-cell">AX₃L</div>
+                                <div class="vsepr-cell">4 (3 bonding, 1 lone)</div>
+                                <div class="vsepr-cell">Trigonal Pyramidal</div>
+                                <div class="vsepr-cell">NH₃</div>
+                                <div class="vsepr-cell">~107°</div>
+                            </div>
+                            <div class="vsepr-row">
+                                <div class="vsepr-cell">AX₂L₂</div>
+                                <div class="vsepr-cell">4 (2 bonding, 2 lone)</div>
+                                <div class="vsepr-cell">Bent</div>
+                                <div class="vsepr-cell">H₂O</div>
+                                <div class="vsepr-cell">~104.5°</div>
+                            </div>
+                        </div>
+                        
+                        <div class="molecule-visualization">
+                            <h4>Interactive Molecular Shapes</h4>
+                            <div class="molecule-container">
+                                <div class="molecule">
+                                    <div class="molecule-3d" id="molecule-3d">
+                                        <!-- 3D visualization will be created with JavaScript -->
+                                    </div>
+                                    <div class="molecule-name" id="molecule-name">Methane (CH₄)</div>
+                                    <div class="molecule-shape" id="molecule-shape">Tetrahedral</div>
+                                    <div class="molecule-polarity" id="molecule-polarity">
+                                        <span class="polarity-indicator non-polar"></span> Non-polar
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="controls">
+                                <button id="show-ch4">CH₄</button>
+                                <button id="show-nh3">NH₃</button>
+                                <button id="show-h2o">H₂O</button>
+                                <button id="show-co2">CO₂</button>
+                                <button id="show-bf3">BF₃</button>
+                            </div>
+                            
+                            <div id="molecule-explanation" style="margin-top: 20px; font-weight: bold;">
+                                Methane has 4 bonding pairs, no lone pairs → Tetrahedral shape, symmetrical → Non-polar
+                            </div>
+                        </div>
+                        
+                        <h3>3. Relating Molecular Shape to Physical Properties</h3>
+                        <p>
+                            The shape of a molecule dictates its overall <strong>polarity</strong>, which determines the type and strength of 
+                            <strong>intermolecular forces (IMFs)</strong> present.
+                        </p>
+                        
+                        <div class="key-point">
+                            <strong>Polarity Rules:</strong> 
+                            <ul>
+                                <li>If polar bonds are arranged <strong>symmetrically</strong>, dipole moments cancel → <strong>Non-polar molecule</strong></li>
+                                <li>If polar bonds are arranged <strong>asymmetrically</strong>, dipole moments don't cancel → <strong>Polar molecule</strong></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="key-point">
+                            <strong>Physical Properties Affected by IMFs:</strong>
+                            <ul>
+                                <li><strong>Solubility:</strong> "Like dissolves like" - polar dissolves polar, non-polar dissolves non-polar</li>
+                                <li><strong>Melting/Boiling Points:</strong> Stronger IMFs → Higher melting/boiling points</li>
+                                <li>Vapor pressure, volatility, viscosity, surface tension</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="activity-box">
+                            <div class="activity-title">Hands-On Activity: Molecular Modeling</div>
+                            <p>
+                                Build molecular shapes using <strong>Jelly Tots and toothpicks</strong> or atomic model kits. 
+                                For non-ideal shapes with lone pairs, remove one toothpick and place a label representing a "lone pair" 
+                                to visualize how it distorts the shape.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section" id="conclusion">
+                    <div class="section-header">
+                        <h2>Conclusion</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <p>
+                            The VSEPR theory is an effective model for predicting the molecular geometry of covalently bonded molecules 
+                            by minimizing the repulsion between valence electron pairs around the central atom. By determining the shape, 
+                            including the identification of lone pairs and resulting symmetry, we can predict the overall molecular polarity. 
+                            Molecular polarity directly governs the type of intermolecular forces present, which ultimately determines 
+                            macroscopic physical properties such as solubility, melting point, and boiling point.
+                        </p>
+                        
+                        <div class="key-point">
+                            <strong>Key Takeaway:</strong> Mastery of VSEPR theory provides a solid foundation for predicting chemical 
+                            behavior based on microscopic structure. Remember that lone pairs repel more strongly than bonding pairs 
+                            and can significantly alter molecular geometry.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quiz-container" id="quiz">
+                    <h2>End-of-Lesson Questions</h2>
+                    <p>Test your understanding of molecular shapes and VSEPR theory. Select the correct answer for each question.</p>
+                    
+                    <div class="quiz-question" id="q1">
+                        <div class="question-text">1. Define the Valence Shell Electron Pair Repulsion (VSEPR) theory.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">A theory that explains ionic bonding in compounds</div>
+                            <div class="option" data-correct="true">A model that predicts molecular shape based on electron pair repulsion</div>
+                            <div class="option" data-correct="false">A method for calculating atomic masses</div>
+                            <div class="option" data-correct="false">A technique for balancing chemical equations</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q2">
+                        <div class="question-text">2. Explain the relative strengths of repulsion forces between electron pairs.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">Bonding pairs repel more strongly than lone pairs</div>
+                            <div class="option" data-correct="false">All electron pairs repel equally</div>
+                            <div class="option" data-correct="true">Lone pairs repel more strongly than bonding pairs</div>
+                            <div class="option" data-correct="false">Only bonding pairs cause repulsion</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q3">
+                        <div class="question-text">3. Determine the shape for a molecule with 3 bonding pairs and 1 lone pair.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">Tetrahedral</div>
+                            <div class="option" data-correct="false">Linear</div>
+                            <div class="option" data-correct="true">Trigonal pyramidal</div>
+                            <div class="option" data-correct="false">Bent</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q4">
+                        <div class="question-text">4. Predict the shape of Carbon dioxide (CO₂) using VSEPR theory.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">Bent</div>
+                            <div class="option" data-correct="false">Tetrahedral</div>
+                            <div class="option" data-correct="true">Linear</div>
+                            <div class="option" data-correct="false">Trigonal planar</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q5">
+                        <div class="question-text">5. Why do CH₄ and NH₃ have different molecular shapes despite both having 4 electron domains?</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">They have different central atoms</div>
+                            <div class="option" data-correct="false">They have different numbers of atoms</div>
+                            <div class="option" data-correct="true">NH₃ has a lone pair that changes the shape</div>
+                            <div class="option" data-correct="false">CH₄ has double bonds</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q6">
+                        <div class="question-text">6. Why is CH₄ non-polar while H₂O is polar?</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">CH₄ has polar bonds, H₂O doesn't</div>
+                            <div class="option" data-correct="false">H₂O has more atoms</div>
+                            <div class="option" data-correct="true">CH₄ is symmetrical, H₂O is bent and asymmetrical</div>
+                            <div class="option" data-correct="false">CH₄ has lone pairs</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q7">
+                        <div class="question-text">7. Will a non-polar substance dissolve in water (a polar substance)?</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">Yes, because all substances dissolve in water</div>
+                            <div class="option" data-correct="true">No, because "like dissolves like"</div>
+                            <div class="option" data-correct="false">Yes, if it's a solid</div>
+                            <div class="option" data-correct="false">No, only ionic compounds dissolve in water</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q8">
+                        <div class="question-text">8. Which molecule has a bent shape?</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">CH₄</div>
+                            <div class="option" data-correct="false">CO₂</div>
+                            <div class="option" data-correct="true">H₂O</div>
+                            <div class="option" data-correct="false">BF₃</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q9">
+                        <div class="question-text">9. What is the bond angle in a tetrahedral molecule?</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">180°</div>
+                            <div class="option" data-correct="false">120°</div>
+                            <div class="option" data-correct="true">109.5°</div>
+                            <div class="option" data-correct="false">90°</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <div class="quiz-question" id="q10">
+                        <div class="question-text">10. Describe an activity using common materials to model VSEPR shapes.</div>
+                        <div class="options">
+                            <div class="option" data-correct="false">Mix chemicals to observe reactions</div>
+                            <div class="option" data-correct="false">Draw 2D diagrams only</div>
+                            <div class="option" data-correct="true">Use Jelly Tots and toothpicks to build 3D models</div>
+                            <div class="option" data-correct="false">Watch videos without hands-on activity</div>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    
+                    <button class="submit-btn" id="submit-quiz">Submit Answers</button>
+                    <div class="results" id="quiz-results"></div>
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <h3>Lesson Navigation</h3>
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <li style="margin-bottom: 10px;"><a href="#objectives" class="nav-link">Learning Objectives</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#overview" class="nav-link">Overview</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#definitions" class="nav-link">Definitions</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#main-body" class="nav-link">Main Body</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#conclusion" class="nav-link">Conclusion</a></li>
+                    <li style="margin-bottom: 10px;"><a href="#quiz" class="nav-link">Quiz</a></li>
+                </ul>
+                
+                <div style="margin-top: 30px;">
+                    <h3>Key Shapes</h3>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Linear:</strong> 2 electron pairs (180°)
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Trigonal Planar:</strong> 3 electron pairs (120°)
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Tetrahedral:</strong> 4 electron pairs (109.5°)
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Trigonal Pyramidal:</strong> 3 bonding + 1 lone pair
+                    </div>
+                    <div class="key-point" style="font-size: 0.9rem;">
+                        <strong>Bent:</strong> 2 bonding + 2 lone pairs
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <h3>Repulsion Strength</h3>
+                    <div style="font-size: 0.9rem;">
+                        <div>Lone pair - Lone pair ></div>
+                        <div>Lone pair - Bonding pair ></div>
+                        <div>Bonding pair - Bonding pair</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <h3>Polarity Rules</h3>
+                    <div style="font-size: 0.9rem;">
+                        <div><strong>Symmetrical:</strong> Non-polar</div>
+                        <div><strong>Asymmetrical:</strong> Polar</div>
+                        <div>"Like dissolves like"</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Collapsible sections functionality
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const section = header.parentElement;
+                section.classList.toggle('active');
+            });
+        });
+        
+        // Navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                // Expand the target section if it's collapsed
+                if (!targetSection.classList.contains('active')) {
+                    targetSection.classList.add('active');
+                }
+                
+                // Scroll to the target section
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        // Interactive molecular visualization
+        const molecule3d = document.getElementById('molecule-3d');
+        const moleculeName = document.getElementById('molecule-name');
+        const moleculeShape = document.getElementById('molecule-shape');
+        const moleculePolarity = document.getElementById('molecule-polarity');
+        const moleculeExplanation = document.getElementById('molecule-explanation');
+        
+        function createMolecule(type) {
+            // Clear previous molecule
+            molecule3d.innerHTML = '';
+            
+            // Create central atom
+            const centralAtom = document.createElement('div');
+            centralAtom.className = 'atom central-atom';
+            centralAtom.textContent = type === 'co2' ? 'C' : 
+                                     type === 'bf3' ? 'B' : 
+                                     type === 'ch4' || type === 'nh3' || type === 'h2o' ? 'O' : 'C';
+            molecule3d.appendChild(centralAtom);
+            
+            // Create bonds and atoms based on molecule type
+            if (type === 'ch4') {
+                // Tetrahedral - CH4
+                createAtom(0, 0, 40, 'H');
+                createAtom(40, 0, 0, 'H');
+                createAtom(-28, 28, 0, 'H');
+                createAtom(-28, -28, 0, 'H');
+                
+                moleculeName.textContent = 'Methane (CH₄)';
+                moleculeShape.textContent = 'Tetrahedral';
+                moleculePolarity.innerHTML = '<span class="polarity-indicator non-polar"></span> Non-polar';
+                moleculeExplanation.textContent = 'Methane has 4 bonding pairs, no lone pairs → Tetrahedral shape, symmetrical → Non-polar';
+            } else if (type === 'nh3') {
+                // Trigonal pyramidal - NH3
+                createAtom(0, 40, 0, 'H');
+                createAtom(35, -20, 0, 'H');
+                createAtom(-35, -20, 0, 'H');
+                
+                // Add lone pair
+                const lonePair = document.createElement('div');
+                lonePair.className = 'lone-pair';
+                lonePair.style.top = '20px';
+                lonePair.style.left = '20px';
+                lonePair.textContent = 'LP';
+                molecule3d.appendChild(lonePair);
+                
+                moleculeName.textContent = 'Ammonia (NH₃)';
+                moleculeShape.textContent = 'Trigonal Pyramidal';
+                moleculePolarity.innerHTML = '<span class="polarity-indicator polar"></span> Polar';
+                moleculeExplanation.textContent = 'Ammonia has 3 bonding pairs, 1 lone pair → Trigonal pyramidal shape, asymmetrical → Polar';
+            } else if (type === 'h2o') {
+                // Bent - H2O
+                createAtom(0, 40, 0, 'H');
+                createAtom(0, -40, 0, 'H');
+                
+                // Add two lone pairs
+                const lonePair1 = document.createElement('div');
+                lonePair1.className = 'lone-pair';
+                lonePair1.style.top = '20px';
+                lonePair1.style.left = '20px';
+                lonePair1.textContent = 'LP';
+                molecule3d.appendChild(lonePair1);
+                
+                const lonePair2 = document.createElement('div');
+                lonePair2.className = 'lone-pair';
+                lonePair2.style.top = '20px';
+                lonePair2.style.right = '20px';
+                lonePair2.textContent = 'LP';
+                molecule3d.appendChild(lonePair2);
+                
+                moleculeName.textContent = 'Water (H₂O)';
+                moleculeShape.textContent = 'Bent';
+                moleculePolarity.innerHTML = '<span class="polarity-indicator polar"></span> Polar';
+                moleculeExplanation.textContent = 'Water has 2 bonding pairs, 2 lone pairs → Bent shape, asymmetrical → Polar';
+            } else if (type === 'co2') {
+                // Linear - CO2
+                createAtom(60, 0, 0, 'O');
+                createAtom(-60, 0, 0, 'O');
+                
+                moleculeName.textContent = 'Carbon Dioxide (CO₂)';
+                moleculeShape.textContent = 'Linear';
+                moleculePolarity.innerHTML = '<span class="polarity-indicator non-polar"></span> Non-polar';
+                moleculeExplanation.textContent = 'Carbon dioxide has 2 bonding pairs (double bonds), no lone pairs → Linear shape, symmetrical → Non-polar';
+            } else if (type === 'bf3') {
+                // Trigonal planar - BF3
+                createAtom(0, 40, 0, 'F');
+                createAtom(35, -20, 0, 'F');
+                createAtom(-35, -20, 0, 'F');
+                
+                moleculeName.textContent = 'Boron Trifluoride (BF₃)';
+                moleculeShape.textContent = 'Trigonal Planar';
+                moleculePolarity.innerHTML = '<span class="polarity-indicator non-polar"></span> Non-polar';
+                moleculeExplanation.textContent = 'Boron trifluoride has 3 bonding pairs, no lone pairs → Trigonal planar shape, symmetrical → Non-polar';
+            }
+            
+            function createAtom(x, y, z, element) {
+                const atom = document.createElement('div');
+                atom.className = 'atom bonded-atom';
+                atom.textContent = element;
+                atom.style.transform = `translate(${x}px, ${y}px)`;
+                molecule3d.appendChild(atom);
+                
+                // Create bond
+                const bond = document.createElement('div');
+                bond.className = 'bond';
+                bond.style.width = `${Math.sqrt(x*x + y*y)}px`;
+                bond.style.transform = `rotate(${Math.atan2(y, x)}rad)`;
+                bond.style.left = '50%';
+                bond.style.top = '50%';
+                molecule3d.appendChild(bond);
+            }
+        }
+        
+        // Set up molecule buttons
+        document.getElementById('show-ch4').addEventListener('click', () => {
+            createMolecule('ch4');
+            setActiveButton('show-ch4');
+        });
+        
+        document.getElementById('show-nh3').addEventListener('click', () => {
+            createMolecule('nh3');
+            setActiveButton('show-nh3');
+        });
+        
+        document.getElementById('show-h2o').addEventListener('click', () => {
+            createMolecule('h2o');
+            setActiveButton('show-h2o');
+        });
+        
+        document.getElementById('show-co2').addEventListener('click', () => {
+            createMolecule('co2');
+            setActiveButton('show-co2');
+        });
+        
+        document.getElementById('show-bf3').addEventListener('click', () => {
+            createMolecule('bf3');
+            setActiveButton('show-bf3');
+        });
+        
+        function setActiveButton(buttonId) {
+            document.querySelectorAll('.controls button').forEach(btn => {
+                btn.classList.remove('active-btn');
+            });
+            document.getElementById(buttonId).classList.add('active-btn');
+        }
+        
+        // Initialize with CH4
+        createMolecule('ch4');
+        setActiveButton('show-ch4');
+        
+        // Quiz functionality
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options in this question
+                const question = this.closest('.quiz-question');
+                question.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // Remove any existing feedback
+                const feedback = question.querySelector('.feedback');
+                feedback.className = 'feedback';
+                feedback.textContent = '';
+            });
+        });
+        
+        document.getElementById('submit-quiz').addEventListener('click', () => {
+            let score = 0;
+            const totalQuestions = 10;
+            
+            // Check each question
+            document.querySelectorAll('.quiz-question').forEach(question => {
+                const selectedOption = question.querySelector('.option.selected');
+                const feedback = question.querySelector('.feedback');
+                
+                if (selectedOption) {
+                    const isCorrect = selectedOption.getAttribute('data-correct') === 'true';
+                    
+                    if (isCorrect) {
+                        score++;
+                        feedback.className = 'feedback correct';
+                        feedback.textContent = 'Correct! Well done.';
+                        selectedOption.classList.add('correct');
+                    } else {
+                        feedback.className = 'feedback incorrect';
+                        feedback.textContent = 'Incorrect. Try again.';
+                        selectedOption.classList.add('incorrect');
+                        
+                        // Highlight the correct answer
+                        const correctOption = question.querySelector('.option[data-correct="true"]');
+                        correctOption.classList.add('correct');
+                    }
+                } else {
+                    // No option selected
+                    const correctOption = question.querySelector('.option[data-correct="true"]');
+                    correctOption.classList.add('correct');
+                    
+                    feedback.className = 'feedback incorrect';
+                    feedback.textContent = 'Please select an answer.';
+                }
+            });
+            
+            // Display results
+            const results = document.getElementById('quiz-results');
+            const percentage = (score / totalQuestions) * 100;
+            
+            if (percentage >= 80) {
+                results.className = 'results success';
+                results.textContent = `Excellent! You scored ${score}/${totalQuestions} (${percentage}%). You have a strong understanding of molecular shapes and VSEPR theory.`;
+            } else if (percentage >= 60) {
+                results.className = 'results warning';
+                results.textContent = `Good effort! You scored ${score}/${totalQuestions} (${percentage}%). Review the material and try again to improve your score.`;
+            } else {
+                results.className = 'results warning';
+                results.textContent = `You scored ${score}/${totalQuestions} (${percentage}%). We recommend reviewing the lesson material and trying the quiz again.`;
+            }
+        });
+        
+        // Expand the first section by default
+        document.querySelector('.section').classList.add('active');
+    </script>
+</body>
+</html>

@@ -1,0 +1,2344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EM Radiation - Lesson 2 | PassProof Academy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1a73e8;
+            --primary-dark: #1557b0;
+            --primary-light: #e8f0fe;
+            --accent-blue: #4285f4;
+            --white: #ffffff;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-600: #6c757d;
+            --gray-800: #343a40;
+            --success: #28a745;
+            --error: #dc3545;
+            --warning: #ffc107;
+            --purple: #6f42c1;
+            --purple-light: #e9e2f8;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-lg: 0 4px 20px rgba(0,0,0,0.15);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gray-100);
+            color: var(--gray-800);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--purple), #5a2d9c);
+            color: var(--white);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--purple);
+            font-weight: bold;
+        }
+
+        /* Dropdown Navigation */
+        .nav-container {
+            position: relative;
+        }
+
+        .nav-toggle {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: var(--white);
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .nav-toggle:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .nav-toggle .arrow {
+            transition: var(--transition);
+        }
+
+        .nav-toggle.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            right: 0;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            min-width: 280px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 1rem 1.25rem;
+            color: var(--gray-800);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--primary-light);
+            color: var(--primary-blue);
+        }
+
+        .dropdown-menu a.current {
+            background: var(--purple);
+            color: var(--white);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: var(--gray-200);
+            height: 4px;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), #20c997);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:nth-child(6) { animation-delay: 0.6s; }
+
+        /* Subject & Grade Badge */
+        .subject-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: linear-gradient(135deg, var(--purple-light), #d4e5ff);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .badge-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .badge-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            font-weight: 600;
+        }
+
+        .badge-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--purple);
+        }
+
+        .badge-divider {
+            width: 1px;
+            height: 40px;
+            background: var(--purple);
+            opacity: 0.3;
+        }
+
+        /* Topic Header */
+        .topic-header {
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .topic-tag {
+            display: inline-block;
+            background: var(--purple);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .topic-title {
+            font-size: 2rem;
+            color: var(--purple);
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-info {
+            color: var(--gray-600);
+            font-size: 1rem;
+        }
+
+        .lesson-title {
+            font-size: 1.5rem;
+            color: var(--gray-800);
+            margin-top: 0.5rem;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--purple-light);
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--purple);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            font-size: 1.35rem;
+            color: var(--purple);
+        }
+
+        /* Objectives List */
+        .objectives-list {
+            list-style: none;
+        }
+
+        .objectives-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .objectives-list li:last-child {
+            border-bottom: none;
+        }
+
+        .check-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--success);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.875rem;
+        }
+
+        /* Content Styling */
+        .content-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--gray-800);
+        }
+
+        .content-text p {
+            margin-bottom: 1rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, var(--purple-light), #d4e5ff);
+            border-left: 4px solid var(--purple);
+            padding: 1.25rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box h4 {
+            color: var(--purple);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .key-term {
+            background: var(--warning);
+            color: var(--gray-800);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .formula-box h4 {
+            color: var(--warning);
+            margin-bottom: 1rem;
+        }
+
+        .formula {
+            font-size: 1.5rem;
+            font-family: 'Times New Roman', serif;
+            margin: 0.75rem 0;
+            padding: 0.75rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: var(--radius);
+            display: inline-block;
+            min-width: 200px;
+        }
+
+        .formula sub, .formula sup {
+            font-size: 0.7em;
+        }
+
+        .formula-description {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+            margin-top: 0.5rem;
+        }
+
+        /* Concept Cards */
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1.25rem;
+        }
+
+        .concept-card {
+            background: var(--gray-100);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            border: 1px solid var(--gray-200);
+            transition: var(--transition);
+        }
+
+        .concept-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+            border-color: var(--purple);
+        }
+
+        .concept-card h4 {
+            color: var(--purple);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .concept-card p {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+        }
+
+        /* Simulation Container */
+        .simulation-container {
+            background: var(--gray-800);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .simulation-header {
+            color: var(--white);
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .simulation-title {
+            font-size: 1.1rem;
+        }
+
+        .simulation-canvas {
+            background: #1a1a2e;
+            border-radius: var(--radius);
+            width: 100%;
+            height: 300px;
+            display: block;
+        }
+
+        .simulation-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
+        .sim-btn {
+            background: var(--purple);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sim-btn:hover {
+            background: #5a2d9c;
+            transform: scale(1.05);
+        }
+
+        .sim-btn.secondary {
+            background: var(--gray-600);
+        }
+
+        .sim-btn.secondary:hover {
+            background: var(--gray-800);
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--white);
+            flex-wrap: wrap;
+        }
+
+        .slider-container label {
+            font-size: 0.9rem;
+            min-width: 80px;
+        }
+
+        .slider-container input[type="range"] {
+            width: 120px;
+            accent-color: var(--purple);
+        }
+
+        .slider-value {
+            min-width: 60px;
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        /* Graph Display */
+        .graph-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: var(--radius);
+        }
+
+        .graph-stat {
+            text-align: center;
+            color: var(--white);
+        }
+
+        .graph-stat-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .graph-stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+
+        /* Worked Examples */
+        .example-box {
+            background: var(--white);
+            border: 2px solid var(--purple-light);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .example-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            color: var(--purple);
+        }
+
+        .example-number {
+            background: var(--purple);
+            color: var(--white);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .example-question {
+            background: var(--gray-100);
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .example-solution {
+            border-left: 3px solid var(--success);
+            padding-left: 1rem;
+        }
+
+        .example-solution h5 {
+            color: var(--success);
+            margin-bottom: 0.5rem;
+        }
+
+        .step {
+            background: var(--gray-100);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+            margin: 0.5rem 0;
+            border-left: 3px solid var(--purple);
+        }
+
+        .step-label {
+            font-weight: 600;
+            color: var(--purple);
+            font-size: 0.85rem;
+        }
+
+        /* EM Wave Diagram */
+        .diagram-container {
+            background: var(--gray-100);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+        }
+
+        .diagram-title {
+            text-align: center;
+            color: var(--purple);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            margin-top: 2rem;
+        }
+
+        .question-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.25rem;
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .question-card.correct {
+            border-color: var(--success);
+            background: #d4edda;
+        }
+
+        .question-card.incorrect {
+            border-color: var(--error);
+            background: #f8d7da;
+        }
+
+        .question-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--purple);
+            color: var(--white);
+            border-radius: 50%;
+            font-weight: 700;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            margin-bottom: 1rem;
+            display: inline;
+        }
+
+        .options-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .option-item {
+            margin-bottom: 0.75rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: var(--gray-100);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .option-label:hover {
+            border-color: var(--purple);
+            background: var(--purple-light);
+        }
+
+        .option-label input {
+            display: none;
+        }
+
+        .option-radio {
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--gray-300);
+            border-radius: 50%;
+            margin-right: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .option-label input:checked + .option-radio {
+            border-color: var(--purple);
+            background: var(--purple);
+        }
+
+        .option-label input:checked + .option-radio::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--white);
+            border-radius: 50%;
+        }
+
+        .option-label.correct-answer {
+            border-color: var(--success);
+            background: #d4edda;
+        }
+
+        .option-label.wrong-answer {
+            border-color: var(--error);
+            background: #f8d7da;
+        }
+
+        .feedback-message {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: var(--radius);
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .feedback-message.correct {
+            display: block;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback-message.incorrect {
+            display: block;
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background: linear-gradient(135deg, var(--purple), #5a2d9c);
+            color: var(--white);
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin: 2rem auto;
+            min-width: 200px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .submit-btn:disabled {
+            background: var(--gray-300);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Score Display */
+        .score-card {
+            background: linear-gradient(135deg, var(--purple), #5a2d9c);
+            color: var(--white);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            text-align: center;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .score-card.visible {
+            display: block;
+            animation: scaleIn 0.5s ease;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .score-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 6px solid var(--white);
+        }
+
+        .score-percentage {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .score-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .score-message {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .score-details {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .retry-btn {
+            background: var(--white);
+            color: var(--purple);
+            border: none;
+            padding: 0.875rem 2rem;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .retry-btn:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow);
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: var(--white);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius);
+            color: var(--gray-800);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            border-color: var(--purple);
+            color: var(--purple);
+            transform: translateX(-3px);
+        }
+
+        .nav-btn.next:hover {
+            transform: translateX(3px);
+        }
+
+        .nav-btn.next {
+            margin-left: auto;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gray-800);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-copyright {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .logo {
+                font-size: 1.25rem;
+            }
+
+            .topic-title {
+                font-size: 1.5rem;
+            }
+
+            .card {
+                padding: 1.25rem;
+            }
+
+            .subject-badge {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .simulation-canvas {
+                height: 250px;
+            }
+
+            .simulation-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .slider-container {
+                justify-content: center;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                justify-content: center;
+            }
+
+            .nav-btn.next {
+                margin-left: 0;
+            }
+
+            .score-circle {
+                width: 120px;
+                height: 120px;
+            }
+
+            .score-percentage {
+                font-size: 2rem;
+            }
+
+            .formula {
+                font-size: 1.2rem;
+                min-width: auto;
+                padding: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .graph-info {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .calc-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-1 { margin-top: 0.5rem; }
+        .mt-2 { margin-top: 1rem; }
+        .mb-1 { margin-bottom: 0.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #fff3cd, #ffeeba);
+            border-left: 4px solid var(--warning);
+            padding: 1.25rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box h4 {
+            color: #856404;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Info List */
+        .info-list {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .info-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .info-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--purple);
+            font-weight: bold;
+        }
+        
+        /* EM Wave Animation */
+        .wave-animation-container {
+            position: relative;
+            height: 300px;
+            margin: 2rem 0;
+            overflow: hidden;
+            border-radius: var(--radius);
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+        }
+        
+        .field-vector {
+            position: absolute;
+            transition: all 0.3s ease;
+        }
+        
+        .electric-field {
+            color: #4285f4;
+            border-bottom: 2px solid #4285f4;
+        }
+        
+        .magnetic-field {
+            color: #dc3545;
+            border-bottom: 2px solid #dc3545;
+        }
+        
+        .propagation-direction {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        /* Polarization Demo */
+        .polarization-demo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .polarization-filter {
+            width: 200px;
+            height: 200px;
+            border: 2px solid var(--gray-300);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .polarization-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 18px,
+                rgba(66, 133, 244, 0.3) 18px,
+                rgba(66, 133, 244, 0.3) 20px
+            );
+        }
+        
+        .polarization-controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo">
+                <div class="logo-icon">P</div>
+                PassProof Academy
+            </a>
+            <nav class="nav-container">
+                <button class="nav-toggle" id="navToggle">
+                    <span>📚 Lessons Menu</span>
+                    <span class="arrow">▼</span>
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="#">🏠 Home</a>
+                    <a href="#">📖 Lesson 1: EM Radiation Basics</a>
+                    <a href="#" class="current">📖 Lesson 2: Nature of EM Waves</a>
+                    <a href="#">📖 Lesson 3: Photon Energy Calculations</a>
+                    <a href="#">📖 Lesson 4: EM Spectrum & Applications</a>
+                    <a href="#">📖 Lesson 5: Quantum Physics</a>
+                    <a href="#">📊 My Progress</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Subject & Grade Card -->
+        <div class="card">
+            <div class="subject-badge">
+                <div class="badge-item">
+                    <span class="badge-label">Subject</span>
+                    <span class="badge-value">Physical Sciences</span>
+                </div>
+                <div class="badge-divider"></div>
+                <div class="badge-item">
+                    <span class="badge-label">Grade</span>
+                    <span class="badge-value">12</span>
+                </div>
+                <div class="badge-divider"></div>
+                <div class="badge-item">
+                    <span class="badge-label">Week</span>
+                    <span class="badge-value">25</span>
+                </div>
+            </div>
+
+            <div class="topic-header">
+                <span class="topic-tag">Term 3 • Electricity & Magnetism</span>
+                <h1 class="topic-title">Electromagnetic Radiation</h1>
+                <p class="lesson-info">Lesson 2 of 5</p>
+                <h2 class="lesson-title">Nature of EM Waves & Propagation</h2>
+            </div>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">🎯</div>
+                <h3 class="section-title">Learning Objectives</h3>
+            </div>
+            <p class="mb-2">By the end of this lesson, you will be able to:</p>
+            <ul class="objectives-list">
+                <li>
+                    <span class="check-icon">✓</span>
+                    <span>Describe the source of electromagnetic waves as accelerating charges</span>
+                </li>
+                <li>
+                    <span class="check-icon">✓</span>
+                    <span>Use words and diagrams to explain EM wave propagation</span>
+                </li>
+                <li>
+                    <span class="check-icon">✓</span>
+                    <span>Explain how oscillating electric and magnetic fields regenerate each other</span>
+                </li>
+                <li>
+                    <span class="check-icon">✓</span>
+                    <span>State that EM waves travel through space at constant speed c = 3×10⁸ m/s</span>
+                </li>
+                <li>
+                    <span class="check-icon">✓</span>
+                    <span>Identify key properties of electromagnetic waves</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Overview -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">📋</div>
+                <h3 class="section-title">Lesson Overview</h3>
+            </div>
+            <div class="content-text">
+                <p>In this lesson, we explore the fundamental nature of electromagnetic waves - how they are generated, how they propagate through space, and their unique properties. You will learn about James Maxwell's groundbreaking insights that unified electricity and magnetism.</p>
+                
+                <div class="highlight-box">
+                    <h4>💡 Prior Knowledge Required</h4>
+                    <p>Before starting this lesson, you should understand:</p>
+                    <ul class="info-list">
+                        <li>Basic concepts of electric and magnetic fields</li>
+                        <li>Wave properties from Lesson 1</li>
+                        <li>The concept of acceleration in physics</li>
+                        <li>Transverse vs longitudinal waves</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Baseline Assessment -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">🔍</div>
+                <h3 class="section-title">Baseline Assessment</h3>
+            </div>
+            
+            <div class="content-text">
+                <p>Let's start by testing your prior knowledge. Try to answer these questions before we proceed:</p>
+                
+                <div class="example-box">
+                    <div class="example-header">
+                        <span class="example-number">1</span>
+                        <h4>What is meant by the term polarisation?</h4>
+                    </div>
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-header">
+                        <span class="example-number">2</span>
+                        <h4>What is a transverse wave?</h4>
+                    </div>
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-header">
+                        <span class="example-number">3</span>
+                        <h4>Define reflection and refraction</h4>
+                    </div>
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-header">
+                        <span class="example-number">4</span>
+                        <h4>What is meant by interference and diffraction?</h4>
+                    </div>
+                </div>
+                
+                <div class="highlight-box">
+                    <h4>📝 Baseline Answers</h4>
+                    <ul class="info-list">
+                        <li><strong>Polarisation:</strong> The phenomenon in which waves of light or other radiation are restricted in direction of vibration.</li>
+                        <li><strong>Transverse wave:</strong> A wave vibrating at right angles to the direction of its propagation.</li>
+                        <li><strong>Reflection:</strong> The change in direction of a wave away from a boundary it encounters.</li>
+                        <li><strong>Refraction:</strong> The bending of light as it passes from one substance to another.</li>
+                        <li><strong>Interference:</strong> The combining or cancelling of two or more waves of the same frequency.</li>
+                        <li><strong>Diffraction:</strong> The bending of waves around an object.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Source of EM Waves -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">⚡</div>
+                <h3 class="section-title">Source of Electromagnetic Waves</h3>
+            </div>
+            
+            <div class="content-text">
+                <div class="highlight-box">
+                    <h4>🔑 Key Discovery</h4>
+                    <p>Electromagnetic waves originate from <span class="key-term">accelerating charges</span>. This fundamental principle was established by James Maxwell in the 19th century.</p>
+                </div>
+
+                <h4 class="mt-2 mb-1" style="color: var(--purple);">How are EM Waves Generated?</h4>
+                
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>🌀 Accelerating Charges</h4>
+                        <p>When electric charges accelerate, they create changing electric and magnetic fields.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>⚡ Changing Fields</h4>
+                        <p>A changing electric field produces a changing magnetic field, and vice versa.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>🔄 Mutual Induction</h4>
+                        <p>The electric and magnetic fields continuously regenerate each other, creating a self-sustaining wave.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>📡 Practical Example</h4>
+                        <p>Radio waves are produced when electrons move back and forth in an antenna.</p>
+                    </div>
+                </div>
+
+                <!-- Maxwell's Insight -->
+                <div class="formula-box">
+                    <h4>🧠 Maxwell's Revolutionary Insight</h4>
+                    
+                    <div class="formula">
+                        Changing E → Changing B → Changing E → ...
+                    </div>
+                    <p class="formula-description">Mutual regeneration of electric and magnetic fields</p>
+                    
+                    <div class="formula">
+                        c = 3 × 10⁸ m/s
+                    </div>
+                    <p class="formula-description">Constant speed of EM waves in vacuum</p>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Important Note</h4>
+                    <p>Stationary charges create electric fields, and moving charges at constant velocity create magnetic fields. But only <strong>accelerating charges</strong> create electromagnetic waves!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- EM Wave Propagation -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">🌊</div>
+                <h3 class="section-title">EM Wave Propagation</h3>
+            </div>
+            
+            <div class="content-text">
+                <p>Electromagnetic waves propagate through the mutual induction of oscillating electric and magnetic fields. Let's examine this process step by step:</p>
+                
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>1. Initial Acceleration</h4>
+                        <p>A charged particle accelerates, creating a changing electric field.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>2. Magnetic Field Creation</h4>
+                        <p>The changing electric field produces a changing magnetic field at right angles to it.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>3. Electric Field Regeneration</h4>
+                        <p>The changing magnetic field creates another changing electric field.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>4. Continuous Process</h4>
+                        <p>The process continues indefinitely, with fields regenerating each other.</p>
+                    </div>
+                </div>
+
+                <!-- EM Wave Visualization -->
+                <div class="wave-animation-container" id="waveAnimation">
+                    <canvas id="emWaveCanvas"></canvas>
+                </div>
+
+                <div class="simulation-controls">
+                    <button class="sim-btn" id="playWave">
+                        ▶ Play Animation
+                    </button>
+                    <button class="sim-btn secondary" id="pauseWave">
+                        ⏸ Pause
+                    </button>
+                    <button class="sim-btn secondary" id="resetWave">
+                        ↺ Reset
+                    </button>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>📐 Right Angle Relationship</h4>
+                    <p>The electric field (E), magnetic field (B), and direction of propagation are all mutually perpendicular to each other. This is why EM waves are transverse waves.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Properties of EM Waves -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">📊</div>
+                <h3 class="section-title">Properties of Electromagnetic Waves</h3>
+            </div>
+            
+            <div class="content-text">
+                <p>Electromagnetic waves possess several distinctive properties that set them apart from other types of waves:</p>
+
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>🌀 Source</h4>
+                        <p>Originate from accelerating electric charges</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>⚡ Field Composition</h4>
+                        <p>Consist of electric and magnetic fields at right angles to each other</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>🚀 Constant Speed</h4>
+                        <p>Travel at 3 × 10⁸ m/s in vacuum (speed of light)</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>📏 Transverse Nature</h4>
+                        <p>Are transverse waves and can be polarised</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>🌌 Vacuum Propagation</h4>
+                        <p>Can pass through vacuum (no medium required)</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>⚖️ Neutral Charge</h4>
+                        <p>Do not carry electric charge</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>🪞 Reflection/Refraction</h4>
+                        <p>Can be reflected and refracted like other waves</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>🌈 Wave Effects</h4>
+                        <p>Show interference and diffraction effects</p>
+                    </div>
+                </div>
+
+                <!-- Polarization Demo -->
+                <div class="polarization-demo">
+                    <h4 style="color: var(--purple); text-align: center;">Polarization Demonstration</h4>
+                    <div class="polarization-filter">
+                        <div class="polarization-lines" id="polarizationLines"></div>
+                        <div style="text-align: center; color: var(--gray-600);">
+                            <p>Transverse waves can be polarized</p>
+                            <p>This is evidence they are transverse!</p>
+                        </div>
+                    </div>
+                    <div class="polarization-controls">
+                        <button class="sim-btn" id="rotatePolarizer">
+                            🔄 Rotate Polarizer
+                        </button>
+                        <div class="slider-container">
+                            <label>Angle:</label>
+                            <input type="range" id="polarizationSlider" min="0" max="90" value="0">
+                            <span class="slider-value" id="polarizationValue">0°</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Classwork Examples -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">✏️</div>
+                <h3 class="section-title">Classwork & Examples</h3>
+            </div>
+
+            <div class="example-box">
+                <div class="example-header">
+                    <span class="example-number">1</span>
+                    <h4>Evidence for Transverse Nature</h4>
+                </div>
+                <div class="example-question">
+                    <p>Evidence that electromagnetic waves are transverse waves is that:</p>
+                    <p>A. the electric charges undergo acceleration.</p>
+                    <p>B. they undergo interference.</p>
+                    <p>C. they undergo diffraction through narrow slits.</p>
+                    <p>D. they can be polarised.</p>
+                </div>
+                <div class="example-solution">
+                    <h5>Solution:</h5>
+                    
+                    <div class="step">
+                        <span class="step-label">Analysis</span>
+                        <p>Let's evaluate each option:</p>
+                        <ul class="info-list">
+                            <li><strong>A:</strong> Acceleration of charges is how EM waves are generated, but doesn't prove they are transverse</li>
+                            <li><strong>B:</strong> Interference is a wave property but doesn't distinguish between transverse and longitudinal waves</li>
+                            <li><strong>C:</strong> Diffraction is also a general wave property</li>
+                            <li><strong>D:</strong> Polarization is unique to transverse waves - longitudinal waves cannot be polarized</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-label">Conclusion</span>
+                        <p><strong>Correct answer: D</strong></p>
+                        <p>The ability to be polarized is definitive evidence that electromagnetic waves are transverse waves.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-header">
+                    <span class="example-number">2</span>
+                    <h4>Properties of EM Waves</h4>
+                </div>
+                <div class="example-question">
+                    <p>List four properties of electromagnetic waves.</p>
+                </div>
+                <div class="example-solution">
+                    <h5>Solution:</h5>
+                    
+                    <div class="step">
+                        <span class="step-label">Key Properties</span>
+                        <ol style="padding-left: 1.5rem;">
+                            <li>Originate from accelerating charges</li>
+                            <li>Are transverse waves and can be polarized</li>
+                            <li>Travel at constant speed of 3 × 10⁸ m/s in vacuum</li>
+                            <li>Can pass through vacuum (no medium required)</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-label">Additional Properties</span>
+                        <p>Other important properties include:</p>
+                        <ul class="info-list">
+                            <li>Consist of mutually perpendicular electric and magnetic fields</li>
+                            <li>Do not carry electric charge</li>
+                            <li>Can be reflected, refracted, diffracted, and show interference</li>
+                            <li>Are generated by oscillating charges</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-header">
+                    <span class="example-number">3</span>
+                    <h4>Propagation Without Medium</h4>
+                </div>
+                <div class="example-question">
+                    <p>Explain how EM waves can be propagated without a medium.</p>
+                </div>
+                <div class="example-solution">
+                    <h5>Solution:</h5>
+                    
+                    <div class="step">
+                        <span class="step-label">Mutual Induction</span>
+                        <p>EM waves are generated by the mutual induction of electric and magnetic fields:</p>
+                        <ul class="info-list">
+                            <li>A changing electric field produces a changing magnetic field</li>
+                            <li>The changing magnetic field produces another changing electric field</li>
+                            <li>This process continues indefinitely</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-label">Self-Sustaining Process</span>
+                        <p>The electric and magnetic fields continuously regenerate each other, creating a self-sustaining wave that requires no material medium for propagation.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-label">Constant Speed</span>
+                        <p>Maxwell calculated that this mutual induction process would propagate through space at a constant speed of 3 × 10⁸ m/s, which is the speed of light.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">❓</div>
+                <h3 class="section-title">End of Lesson Assessment</h3>
+            </div>
+            <p class="mb-2">Test your understanding with these questions. Select the best answer for each question.</p>
+
+            <div class="quiz-container" id="quizContainer">
+                <!-- Question 1 -->
+                <div class="question-card" data-question="1">
+                    <span class="question-number">1</span>
+                    <span class="question-text">What is the source of all electromagnetic waves?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q1" value="a">
+                                <span class="option-radio"></span>
+                                Stationary electric charges
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q1" value="b">
+                                <span class="option-radio"></span>
+                                Charges moving at constant velocity
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q1" value="c">
+                                <span class="option-radio"></span>
+                                Accelerating electric charges
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q1" value="d">
+                                <span class="option-radio"></span>
+                                Magnetic monopoles
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question-card" data-question="2">
+                    <span class="question-number">2</span>
+                    <span class="question-text">How do electric and magnetic fields relate in an EM wave?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q2" value="a">
+                                <span class="option-radio"></span>
+                                They are parallel to each other
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q2" value="b">
+                                <span class="option-radio"></span>
+                                They are perpendicular to each other
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q2" value="c">
+                                <span class="option-radio"></span>
+                                The magnetic field leads the electric field by 90°
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q2" value="d">
+                                <span class="option-radio"></span>
+                                They are independent of each other
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question-card" data-question="3">
+                    <span class="question-number">3</span>
+                    <span class="question-text">What is the speed of electromagnetic waves in vacuum?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q3" value="a">
+                                <span class="option-radio"></span>
+                                3 × 10⁶ m/s
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q3" value="b">
+                                <span class="option-radio"></span>
+                                3 × 10⁸ m/s
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q3" value="c">
+                                <span class="option-radio"></span>
+                                3 × 10¹⁰ m/s
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q3" value="d">
+                                <span class="option-radio"></span>
+                                It depends on the frequency
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="question-card" data-question="4">
+                    <span class="question-number">4</span>
+                    <span class="question-text">Which property proves that EM waves are transverse?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q4" value="a">
+                                <span class="option-radio"></span>
+                                Reflection
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q4" value="b">
+                                <span class="option-radio"></span>
+                                Refraction
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q4" value="c">
+                                <span class="option-radio"></span>
+                                Polarization
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q4" value="d">
+                                <span class="option-radio"></span>
+                                Diffraction
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="question-card" data-question="5">
+                    <span class="question-number">5</span>
+                    <span class="question-text">Who developed the theory explaining EM wave propagation?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q5" value="a">
+                                <span class="option-radio"></span>
+                                Isaac Newton
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q5" value="b">
+                                <span class="option-radio"></span>
+                                Albert Einstein
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q5" value="c">
+                                <span class="option-radio"></span>
+                                James Maxwell
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q5" value="d">
+                                <span class="option-radio"></span>
+                                Niels Bohr
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 6 -->
+                <div class="question-card" data-question="6">
+                    <span class="question-number">6</span>
+                    <span class="question-text">Which of these is NOT a property of EM waves?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q6" value="a">
+                                <span class="option-radio"></span>
+                                Can travel through vacuum
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q6" value="b">
+                                <span class="option-radio"></span>
+                                Carry electric charge
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q6" value="c">
+                                <span class="option-radio"></span>
+                                Can be reflected and refracted
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q6" value="d">
+                                <span class="option-radio"></span>
+                                Show interference and diffraction
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 7 -->
+                <div class="question-card" data-question="7">
+                    <span class="question-number">7</span>
+                    <span class="question-text">What is the relationship between the direction of propagation and the fields?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q7" value="a">
+                                <span class="option-radio"></span>
+                                Parallel to both fields
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q7" value="b">
+                                <span class="option-radio"></span>
+                                Perpendicular to both fields
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q7" value="c">
+                                <span class="option-radio"></span>
+                                Parallel to electric field only
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q7" value="d">
+                                <span class="option-radio"></span>
+                                Parallel to magnetic field only
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 8 -->
+                <div class="question-card" data-question="8">
+                    <span class="question-number">8</span>
+                    <span class="question-text">How are radio waves typically generated?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q8" value="a">
+                                <span class="option-radio"></span>
+                                By heating metal to high temperatures
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q8" value="b">
+                                <span class="option-radio"></span>
+                                By electrons oscillating in an antenna
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q8" value="c">
+                                <span class="option-radio"></span>
+                                By nuclear reactions
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q8" value="d">
+                                <span class="option-radio"></span>
+                                By chemical reactions
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+            </div>
+
+            <button class="submit-btn" id="submitQuiz">
+                <span>📝</span> Submit Answers
+            </button>
+
+            <div class="score-card" id="scoreCard">
+                <h3 class="score-title">Your Results</h3>
+                <div class="score-circle">
+                    <span class="score-percentage" id="scorePercentage">0%</span>
+                    <span class="score-label">Score</span>
+                </div>
+                <p class="score-message" id="scoreMessage">Well done!</p>
+                <p class="score-details" id="scoreDetails">You got 0 out of 8 questions correct</p>
+                <button class="retry-btn" id="retryQuiz">🔄 Try Again</button>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+            <a href="#" class="nav-btn prev">
+                <span>←</span>
+                <span>Previous: EM Radiation Basics</span>
+            </a>
+            <a href="#" class="nav-btn next">
+                <span>Next: Photon Energy Calculations</span>
+                <span>→</span>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">PassProof Academy</div>
+            <p class="footer-copyright">© 2026 PassProof Academy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== NAVIGATION ====================
+        const navToggle = document.getElementById('navToggle');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('active');
+            dropdownMenu.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!navToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                navToggle.classList.remove('active');
+                dropdownMenu.classList.remove('active');
+            }
+        });
+
+        // ==================== PROGRESS BAR ====================
+        const progressBar = document.getElementById('progressBar');
+        
+        function updateProgress() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            progressBar.style.width = progress + '%';
+        }
+
+        window.addEventListener('scroll', updateProgress);
+
+        // ==================== LOCAL STORAGE ====================
+        const STORAGE_KEY = 'passproofAcademy_emLesson2_progress';
+
+        function saveProgress(data) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            return saved ? JSON.parse(saved) : null;
+        }
+
+        // ==================== EM WAVE ANIMATION ====================
+        const emWaveCanvas = document.getElementById('emWaveCanvas');
+        const waveCtx = emWaveCanvas.getContext('2d');
+        const playWaveBtn = document.getElementById('playWave');
+        const pauseWaveBtn = document.getElementById('pauseWave');
+        const resetWaveBtn = document.getElementById('resetWave');
+
+        let waveAnimating = false;
+        let waveAnimationId = null;
+        let wavePhase = 0;
+
+        function resizeWaveCanvas() {
+            const container = document.getElementById('waveAnimation');
+            const rect = container.getBoundingClientRect();
+            const dpr = window.devicePixelRatio || 1;
+            emWaveCanvas.width = rect.width * dpr;
+            emWaveCanvas.height = rect.height * dpr;
+            waveCtx.scale(dpr, dpr);
+            return { width: rect.width, height: rect.height };
+        }
+
+        function drawEMWave(phase = 0) {
+            const { width, height } = resizeWaveCanvas();
+
+            // Clear canvas
+            waveCtx.fillStyle = '#1a1a2e';
+            waveCtx.fillRect(0, 0, width, height);
+
+            const centerY = height / 2;
+            const amplitude = height / 3;
+            const wavelength = width / 3;
+
+            // Draw grid
+            waveCtx.strokeStyle = 'rgba(255,255,255,0.1)';
+            waveCtx.lineWidth = 1;
+            for (let i = 0; i <= 10; i++) {
+                const x = (width / 10) * i;
+                waveCtx.beginPath();
+                waveCtx.moveTo(x, 0);
+                waveCtx.lineTo(x, height);
+                waveCtx.stroke();
+            }
+            for (let i = 0; i <= 6; i++) {
+                const y = (height / 6) * i;
+                waveCtx.beginPath();
+                waveCtx.moveTo(0, y);
+                waveCtx.lineTo(width, y);
+                waveCtx.stroke();
+            }
+
+            // Draw propagation direction
+            waveCtx.strokeStyle = '#28a745';
+            waveCtx.lineWidth = 3;
+            waveCtx.setLineDash([5, 5]);
+            waveCtx.beginPath();
+            waveCtx.moveTo(50, centerY);
+            waveCtx.lineTo(width - 50, centerY);
+            waveCtx.stroke();
+            waveCtx.setLineDash([]);
+
+            // Draw electric field (blue)
+            waveCtx.strokeStyle = '#4285f4';
+            waveCtx.lineWidth = 3;
+            waveCtx.beginPath();
+            for (let x = 50; x <= width - 50; x++) {
+                const electricValue = Math.sin((x / wavelength) * 2 * Math.PI + phase);
+                const y = centerY + electricValue * amplitude;
+                if (x === 50) {
+                    waveCtx.moveTo(x, y);
+                } else {
+                    waveCtx.lineTo(x, y);
+                }
+            }
+            waveCtx.stroke();
+
+            // Draw magnetic field (red) - perpendicular
+            waveCtx.strokeStyle = '#dc3545';
+            waveCtx.lineWidth = 3;
+            waveCtx.beginPath();
+            for (let x = 50; x <= width - 50; x++) {
+                const magneticValue = Math.sin((x / wavelength) * 2 * Math.PI + phase);
+                // For demonstration, we'll draw this as coming out of the screen
+                const radius = Math.abs(magneticValue) * 15;
+                const y = centerY;
+                
+                if (magneticValue > 0) {
+                    waveCtx.fillStyle = 'rgba(220, 53, 69, 0.7)';
+                    waveCtx.beginPath();
+                    waveCtx.arc(x, y, radius, 0, Math.PI * 2);
+                    waveCtx.fill();
+                } else {
+                    waveCtx.strokeStyle = '#dc3545';
+                    waveCtx.beginPath();
+                    waveCtx.arc(x, y, radius, 0, Math.PI * 2);
+                    waveCtx.stroke();
+                }
+            }
+
+            // Draw labels
+            waveCtx.fillStyle = '#fff';
+            waveCtx.font = 'bold 16px Segoe UI';
+            waveCtx.textAlign = 'center';
+            
+            // Electric field label
+            waveCtx.fillStyle = '#4285f4';
+            waveCtx.fillText('Electric Field (E)', width / 2, 30);
+            
+            // Magnetic field label
+            waveCtx.fillStyle = '#dc3545';
+            waveCtx.fillText('Magnetic Field (B)', width / 2, height - 20);
+            
+            // Propagation direction label
+            waveCtx.fillStyle = '#28a745';
+            waveCtx.fillText('Direction of Propagation', width / 2, centerY - 40);
+
+            // Draw field vectors at sample points
+            const samplePoints = [width * 0.25, width * 0.5, width * 0.75];
+            samplePoints.forEach(x => {
+                const electricValue = Math.sin((x / wavelength) * 2 * Math.PI + phase);
+                const electricY = centerY + electricValue * amplitude;
+                
+                // Electric field vector
+                waveCtx.strokeStyle = '#4285f4';
+                waveCtx.lineWidth = 2;
+                waveCtx.beginPath();
+                waveCtx.moveTo(x, centerY);
+                waveCtx.lineTo(x, electricY);
+                waveCtx.stroke();
+                
+                // Electric field arrowhead
+                waveCtx.fillStyle = '#4285f4';
+                waveCtx.beginPath();
+                waveCtx.moveTo(x - 5, electricY - (electricValue > 0 ? -10 : 10));
+                waveCtx.lineTo(x, electricY);
+                waveCtx.lineTo(x + 5, electricY - (electricValue > 0 ? -10 : 10));
+                waveCtx.fill();
+            });
+        }
+
+        function animateWave() {
+            if (!waveAnimating) return;
+            wavePhase += 0.05;
+            drawEMWave(wavePhase);
+            waveAnimationId = requestAnimationFrame(animateWave);
+        }
+
+        playWaveBtn.addEventListener('click', () => {
+            waveAnimating = true;
+            animateWave();
+            playWaveBtn.textContent = '▶ Playing...';
+        });
+
+        pauseWaveBtn.addEventListener('click', () => {
+            waveAnimating = false;
+            cancelAnimationFrame(waveAnimationId);
+            playWaveBtn.textContent = '▶ Play Animation';
+        });
+
+        resetWaveBtn.addEventListener('click', () => {
+            waveAnimating = false;
+            cancelAnimationFrame(waveAnimationId);
+            wavePhase = 0;
+            drawEMWave(0);
+            playWaveBtn.textContent = '▶ Play Animation';
+        });
+
+        // ==================== POLARIZATION DEMO ====================
+        const polarizationLines = document.getElementById('polarizationLines');
+        const polarizationSlider = document.getElementById('polarizationSlider');
+        const polarizationValue = document.getElementById('polarizationValue');
+        const rotatePolarizerBtn = document.getElementById('rotatePolarizer');
+
+        function updatePolarization(angle) {
+            polarizationLines.style.transform = `rotate(${angle}deg)`;
+            polarizationValue.textContent = angle + '°';
+        }
+
+        polarizationSlider.addEventListener('input', (e) => {
+            updatePolarization(parseInt(e.target.value));
+        });
+
+        rotatePolarizerBtn.addEventListener('click', () => {
+            const currentAngle = parseInt(polarizationSlider.value);
+            const newAngle = (currentAngle + 30) % 90;
+            polarizationSlider.value = newAngle;
+            updatePolarization(newAngle);
+        });
+
+        // ==================== QUIZ SYSTEM ====================
+        const correctAnswers = {
+            q1: 'c',
+            q2: 'b',
+            q3: 'b',
+            q4: 'c',
+            q5: 'c',
+            q6: 'b',
+            q7: 'b',
+            q8: 'b'
+        };
+
+        const explanations = {
+            q1: 'Only accelerating charges create electromagnetic waves. Stationary charges create electric fields, and charges moving at constant velocity create magnetic fields, but only acceleration produces both changing fields necessary for EM waves.',
+            q2: 'In an electromagnetic wave, the electric and magnetic fields are always perpendicular to each other and to the direction of propagation.',
+            q3: 'All electromagnetic waves travel at the speed of light in vacuum, which is exactly 299,792,458 m/s, commonly approximated as 3 × 10⁸ m/s.',
+            q4: 'Polarization is unique to transverse waves. Longitudinal waves cannot be polarized, so this property definitively proves EM waves are transverse.',
+            q5: 'James Clerk Maxwell developed the theory of electromagnetism in the 1860s, showing that light is an electromagnetic wave.',
+            q6: 'EM waves do not carry electric charge. They consist of oscillating electric and magnetic fields but are electrically neutral.',
+            q7: 'The direction of propagation is perpendicular to both the electric field and magnetic field vectors in an EM wave.',
+            q8: 'Radio waves are generated by electrons oscillating back and forth in an antenna, which are accelerating charges.'
+        };
+
+        let quizSubmitted = false;
+
+        function checkQuiz() {
+            if (quizSubmitted) return;
+            
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+            
+            for (let q in correctAnswers) {
+                const questionCard = document.querySelector(`[data-question="${q.substring(1)}"]`);
+                const selectedOption = document.querySelector(`input[name="${q}"]:checked`);
+                const feedbackDiv = questionCard.querySelector('.feedback-message');
+                const options = questionCard.querySelectorAll('.option-label');
+                
+                options.forEach(opt => {
+                    opt.classList.remove('correct-answer', 'wrong-answer');
+                });
+                
+                if (selectedOption) {
+                    const selectedValue = selectedOption.value;
+                    const isCorrect = selectedValue === correctAnswers[q];
+                    
+                    if (isCorrect) {
+                        score++;
+                        questionCard.classList.add('correct');
+                        questionCard.classList.remove('incorrect');
+                        selectedOption.parentElement.classList.add('correct-answer');
+                        feedbackDiv.className = 'feedback-message correct';
+                        feedbackDiv.innerHTML = `<strong>✓ Correct!</strong> ${explanations[q]}`;
+                    } else {
+                        questionCard.classList.add('incorrect');
+                        questionCard.classList.remove('correct');
+                        selectedOption.parentElement.classList.add('wrong-answer');
+                        
+                        const correctOption = document.querySelector(`input[name="${q}"][value="${correctAnswers[q]}"]`);
+                        correctOption.parentElement.classList.add('correct-answer');
+                        
+                        feedbackDiv.className = 'feedback-message incorrect';
+                        feedbackDiv.innerHTML = `<strong>✗ Incorrect.</strong> ${explanations[q]}`;
+                    }
+                } else {
+                    questionCard.classList.add('incorrect');
+                    feedbackDiv.className = 'feedback-message incorrect';
+                    feedbackDiv.innerHTML = `<strong>✗ Not answered.</strong> ${explanations[q]}`;
+                    
+                    const correctOption = document.querySelector(`input[name="${q}"][value="${correctAnswers[q]}"]`);
+                    correctOption.parentElement.classList.add('correct-answer');
+                }
+            }
+            
+            const percentage = Math.round((score / totalQuestions) * 100);
+            
+            const scoreCard = document.getElementById('scoreCard');
+            scoreCard.classList.add('visible');
+            
+            document.getElementById('scorePercentage').textContent = percentage + '%';
+            document.getElementById('scoreDetails').textContent = `You got ${score} out of ${totalQuestions} questions correct`;
+            
+            let message = '';
+            if (percentage >= 80) {
+                message = '🌟 Excellent! You thoroughly understand EM wave nature!';
+            } else if (percentage >= 60) {
+                message = '👍 Good job! You grasp the key concepts well.';
+            } else if (percentage >= 40) {
+                message = '📚 Fair attempt. Review the material and try again.';
+            } else {
+                message = '💪 Keep trying! Focus on the mutual induction concept.';
+            }
+            document.getElementById('scoreMessage').textContent = message;
+            
+            saveProgress({
+                lessonId: 'em-lesson-2',
+                score: score,
+                percentage: percentage,
+                completedAt: new Date().toISOString()
+            });
+            
+            quizSubmitted = true;
+            document.getElementById('submitQuiz').disabled = true;
+            
+            scoreCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function resetQuiz() {
+            quizSubmitted = false;
+            document.getElementById('submitQuiz').disabled = false;
+            
+            const questionCards = document.querySelectorAll('.question-card');
+            questionCards.forEach(card => {
+                card.classList.remove('correct', 'incorrect');
+                const options = card.querySelectorAll('.option-label');
+                options.forEach(opt => {
+                    opt.classList.remove('correct-answer', 'wrong-answer');
+                });
+                const feedback = card.querySelector('.feedback-message');
+                feedback.className = 'feedback-message';
+                feedback.innerHTML = '';
+            });
+            
+            const radios = document.querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => radio.checked = false);
+            
+            document.getElementById('scoreCard').classList.remove('visible');
+            
+            document.getElementById('quizContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        document.getElementById('submitQuiz').addEventListener('click', checkQuiz);
+        document.getElementById('retryQuiz').addEventListener('click', resetQuiz);
+
+        // ==================== INITIALIZATION ====================
+        function initializeSimulations() {
+            drawEMWave(0);
+            updatePolarization(0);
+        }
+
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                drawEMWave(wavePhase);
+            }, 100);
+        });
+
+        function checkSavedProgress() {
+            const saved = loadProgress();
+            if (saved && saved.lessonId === 'em-lesson-2') {
+                console.log('Previous progress found:', saved);
+            }
+        }
+
+        window.addEventListener('load', () => {
+            initializeSimulations();
+            checkSavedProgress();
+            updateProgress();
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
