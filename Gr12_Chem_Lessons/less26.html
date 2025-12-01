@@ -1,0 +1,2656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alternating Current - Lesson 3 | PassProof Academy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1a73e8;
+            --primary-dark: #1557b0;
+            --primary-light: #e8f0fe;
+            --accent-blue: #4285f4;
+            --white: #ffffff;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-600: #6c757d;
+            --gray-800: #343a40;
+            --success: #28a745;
+            --error: #dc3545;
+            --warning: #ffc107;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-lg: 0 4px 20px rgba(0,0,0,0.15);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gray-100);
+            color: var(--gray-800);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark));
+            color: var(--white);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-blue);
+            font-weight: bold;
+        }
+
+        /* Dropdown Navigation */
+        .nav-container {
+            position: relative;
+        }
+
+        .nav-toggle {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: var(--white);
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .nav-toggle:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .nav-toggle .arrow {
+            transition: var(--transition);
+        }
+
+        .nav-toggle.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            right: 0;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            min-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 1rem 1.25rem;
+            color: var(--gray-800);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--primary-light);
+            color: var(--primary-blue);
+        }
+
+        .dropdown-menu a.current {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: var(--gray-200);
+            height: 4px;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), #20c997);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+
+        /* Subject & Grade Badge */
+        .subject-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: linear-gradient(135deg, var(--primary-light), #d4e5ff);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+        }
+
+        .badge-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .badge-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            font-weight: 600;
+        }
+
+        .badge-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        .badge-divider {
+            width: 1px;
+            height: 40px;
+            background: var(--primary-blue);
+            opacity: 0.3;
+        }
+
+        /* Topic Header */
+        .topic-header {
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .topic-tag {
+            display: inline-block;
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .topic-title {
+            font-size: 2rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-info {
+            color: var(--gray-600);
+            font-size: 1rem;
+        }
+
+        .lesson-title {
+            font-size: 1.5rem;
+            color: var(--gray-800);
+            margin-top: 0.5rem;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .section-title {
+            font-size: 1.35rem;
+            color: var(--primary-dark);
+        }
+
+        /* Objectives List */
+        .objectives-list {
+            list-style: none;
+        }
+
+        .objectives-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .objectives-list li:last-child {
+            border-bottom: none;
+        }
+
+        .check-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--success);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.875rem;
+        }
+
+        /* Content Styling */
+        .content-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--gray-800);
+        }
+
+        .content-text p {
+            margin-bottom: 1rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, var(--primary-light), #d4e5ff);
+            border-left: 4px solid var(--primary-blue);
+            padding: 1.25rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box h4 {
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .key-term {
+            background: var(--warning);
+            color: var(--gray-800);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        /* Concept Cards */
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1.25rem;
+        }
+
+        .concept-card {
+            background: var(--gray-100);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            border: 1px solid var(--gray-200);
+            transition: var(--transition);
+        }
+
+        .concept-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary-blue);
+        }
+
+        .concept-card h4 {
+            color: var(--primary-dark);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .concept-card p {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+        }
+
+        /* Simulation Container */
+        .simulation-container {
+            background: var(--gray-800);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .simulation-header {
+            color: var(--white);
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .simulation-title {
+            font-size: 1.1rem;
+        }
+
+        .simulation-canvas {
+            background: #1a1a2e;
+            border-radius: var(--radius);
+            width: 100%;
+            height: 300px;
+            display: block;
+        }
+
+        .simulation-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
+        .sim-btn {
+            background: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sim-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .sim-btn.secondary {
+            background: var(--gray-600);
+        }
+
+        .sim-btn.secondary:hover {
+            background: var(--gray-800);
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--white);
+        }
+
+        .slider-container label {
+            font-size: 0.9rem;
+        }
+
+        .slider-container input[type="range"] {
+            width: 120px;
+            accent-color: var(--primary-blue);
+        }
+
+        .slider-value {
+            min-width: 50px;
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        /* Graph Display */
+        .graph-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: var(--radius);
+        }
+
+        .graph-stat {
+            text-align: center;
+            color: var(--white);
+        }
+
+        .graph-stat-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .graph-stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+
+        /* Worked Examples */
+        .example-box {
+            background: var(--white);
+            border: 2px solid var(--primary-light);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .example-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+
+        .example-number {
+            background: var(--primary-blue);
+            color: var(--white);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .example-question {
+            background: var(--gray-100);
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .example-solution {
+            border-left: 3px solid var(--success);
+            padding-left: 1rem;
+        }
+
+        .example-solution h5 {
+            color: var(--success);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            margin-top: 2rem;
+        }
+
+        .question-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.25rem;
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .question-card.correct {
+            border-color: var(--success);
+            background: #d4edda;
+        }
+
+        .question-card.incorrect {
+            border-color: var(--error);
+            background: #f8d7da;
+        }
+
+        .question-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--primary-blue);
+            color: var(--white);
+            border-radius: 50%;
+            font-weight: 700;
+            margin-right: 0.75rem;
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            margin-bottom: 1rem;
+            display: inline;
+        }
+
+        .options-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .option-item {
+            margin-bottom: 0.75rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: var(--gray-100);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .option-label:hover {
+            border-color: var(--primary-blue);
+            background: var(--primary-light);
+        }
+
+        .option-label input {
+            display: none;
+        }
+
+        .option-radio {
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--gray-300);
+            border-radius: 50%;
+            margin-right: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .option-label input:checked + .option-radio {
+            border-color: var(--primary-blue);
+            background: var(--primary-blue);
+        }
+
+        .option-label input:checked + .option-radio::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--white);
+            border-radius: 50%;
+        }
+
+        .option-label.correct-answer {
+            border-color: var(--success);
+            background: #d4edda;
+        }
+
+        .option-label.wrong-answer {
+            border-color: var(--error);
+            background: #f8d7da;
+        }
+
+        .feedback-message {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: var(--radius);
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .feedback-message.correct {
+            display: block;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback-message.incorrect {
+            display: block;
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark));
+            color: var(--white);
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin: 2rem auto;
+            min-width: 200px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .submit-btn:disabled {
+            background: var(--gray-300);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Score Display */
+        .score-card {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark));
+            color: var(--white);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            text-align: center;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .score-card.visible {
+            display: block;
+            animation: scaleIn 0.5s ease;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .score-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 6px solid var(--white);
+        }
+
+        .score-percentage {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .score-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .score-message {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .score-details {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .retry-btn {
+            background: var(--white);
+            color: var(--primary-blue);
+            border: none;
+            padding: 0.875rem 2rem;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .retry-btn:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow);
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: var(--white);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius);
+            color: var(--gray-800);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            border-color: var(--primary-blue);
+            color: var(--primary-blue);
+            transform: translateX(-3px);
+        }
+
+        .nav-btn.next:hover {
+            transform: translateX(3px);
+        }
+
+        .nav-btn.next {
+            margin-left: auto;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gray-800);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-copyright {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .logo {
+                font-size: 1.25rem;
+            }
+
+            .topic-title {
+                font-size: 1.5rem;
+            }
+
+            .card {
+                padding: 1.25rem;
+            }
+
+            .subject-badge {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .simulation-canvas {
+                height: 250px;
+            }
+
+            .simulation-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .slider-container {
+                justify-content: center;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                justify-content: center;
+            }
+
+            .nav-btn.next {
+                margin-left: 0;
+            }
+
+            .score-circle {
+                width: 120px;
+                height: 120px;
+            }
+
+            .score-percentage {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .graph-info {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-1 { margin-top: 0.5rem; }
+        .mt-2 { margin-top: 1rem; }
+        .mb-1 { margin-bottom: 0.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo">
+                <div class="logo-icon">P</div>
+                PassProof Academy
+            </a>
+            <nav class="nav-container">
+                <button class="nav-toggle" id="navToggle">
+                    <span>📚 Lessons Menu</span>
+                    <span class="arrow">▼</span>
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="#">🏠 Home</a>
+                    <a href="#">📖 Lesson 1: AC Generator Basics</a>
+                    <a href="#">📖 Lesson 2: RMS Values & Power</a>
+                    <a href="#" class="current">📖 Lesson 3: AC Graphs</a>
+                    <a href="#">📖 Lesson 4: Transformers</a>
+                    <a href="#">📊 My Progress</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Subject & Grade Card -->
+        <div class="card">
+            <div class="subject-badge">
+                <div class="badge-item">
+                    <span class="badge-label">Subject</span>
+                    <span class="badge-value">Physical Sciences</span>
+                </div>
+                <div class="badge-divider"></div>
+                <div class="badge-item">
+                    <span class="badge-label">Grade</span>
+                    <span class="badge-value">12</span>
+                </div>
+                <div class="badge-divider"></div>
+                <div class="badge-item">
+                    <span class="badge-label">Week</span>
+                    <span class="badge-value">24</span>
+                </div>
+            </div>
+
+            <div class="topic-header">
+                <span class="topic-tag">Term 3 • Electricity & Magnetism</span>
+                <h1 class="topic-title">Alternating Current</h1>
+                <p class="lesson-info">Lesson 3 of 4</p>
+                <h2 class="lesson-title">Voltage and Current Graphs in AC Circuits</h2>
+            </div>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">🎯</div>
+                <h3 class="section-title">Learning Objectives</h3>
+            </div>
+            <p class="mb-2">By the end of this lesson, you will be able to:</p>
+            <ul class="objectives-list">
+                <li>
+                    <span class="check-icon">✓</span>
+                    <span>Understand and explain the meaning of alternating current (AC)</span>
+                </li>
+                <li>
+                    <span class="check-icon">✓</span>
+                    <span>Draw and interpret voltage vs time graphs for AC circuits</span>
+                </li>
+                <li>
+                    <span class="check-icon">✓</span>
+                    <span>Draw and interpret current vs time graphs for AC circuits</span>
+                </li>
+                <li>
+                    <span class="check-icon">✓</span>
+                    <span>Identify key features of AC waveforms including amplitude, frequency, and RMS values</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Overview -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">📋</div>
+                <h3 class="section-title">Lesson Overview</h3>
+            </div>
+            <div class="content-text">
+                <p>In this lesson, we explore how alternating current behaves over time by examining voltage and current graphs. Understanding these graphical representations is crucial for analyzing AC circuits and their applications in everyday electrical systems.</p>
+                
+                <div class="highlight-box">
+                    <h4>💡 Prior Knowledge Required</h4>
+                    <p>Before starting this lesson, you should understand:</p>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>RMS values for current and voltage</li>
+                        <li>Average power in AC circuits</li>
+                        <li>Basic generator operation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Concepts -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">📚</div>
+                <h3 class="section-title">Main Concepts & Principles</h3>
+            </div>
+            
+            <div class="content-text">
+                <h4 class="mb-1" style="color: var(--primary-dark);">What is Alternating Current?</h4>
+                
+                <div class="highlight-box">
+                    <h4>📝 Definition</h4>
+                    <p>An <span class="key-term">alternating current (AC)</span> is current that keeps changing direction backwards and forwards in a repetitive manner.</p>
+                </div>
+
+                <p>We have seen that the electricity produced by AC generators alternates, which is why it's called alternating current. The current flows first in one direction, then reverses and flows in the opposite direction, repeating this cycle continuously.</p>
+
+                <h4 class="mt-2 mb-1" style="color: var(--primary-dark);">Advantages of Alternating Current</h4>
+                <p>The main advantage of alternating current is that the voltage can be easily changed using transformers. This makes it ideal for:</p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>Long-distance power transmission (high voltage reduces energy loss)</li>
+                    <li>Safe household distribution (stepped down to safer voltages)</li>
+                    <li>Various industrial applications</li>
+                </ul>
+
+                <h4 class="mt-2 mb-1" style="color: var(--primary-dark);">Self-Inductance in AC</h4>
+                <p>When alternating current flows through wires, it causes <span class="key-term">self-inductance</span>. When the current changes direction, the magnetic field associated with it changes in such a way as to oppose the change. This is described by Lenz's Law.</p>
+
+                <h4 class="mt-2 mb-1" style="color: var(--primary-dark);">Understanding RMS Values</h4>
+                
+                <div class="highlight-box">
+                    <h4>📝 Definition</h4>
+                    <p><span class="key-term">Root Mean Square (RMS)</span> is the effective value of alternating current that corresponds with a direct current that produces the same heating effect.</p>
+                </div>
+
+                <p>Appliances receive a lower maximum voltage than the peak value supplied. We call this lower effective voltage the root-mean-square (RMS) value.</p>
+
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>⚡ Peak vs RMS Voltage</h4>
+                        <p>V<sub>rms</sub> = V<sub>max</sub> / √2</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.85rem;">The RMS voltage is approximately 70.7% of the peak voltage.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>🔌 Peak vs RMS Current</h4>
+                        <p>I<sub>rms</sub> = I<sub>max</sub> / √2</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.85rem;">The RMS current is approximately 70.7% of the peak current.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Voltage vs Time Graph -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">📈</div>
+                <h3 class="section-title">Voltage vs Time Graphs</h3>
+            </div>
+            
+            <div class="content-text">
+                <p>The voltage in an AC circuit varies sinusoidally with time. The graph below shows how voltage changes over one complete cycle:</p>
+            </div>
+
+            <div class="simulation-container">
+                <div class="simulation-header">
+                    <h4 class="simulation-title">🔬 Interactive: Voltage vs Time Graph</h4>
+                </div>
+                <canvas id="voltageCanvas" class="simulation-canvas"></canvas>
+                <div class="simulation-controls">
+                    <div class="slider-container">
+                        <label>Peak Voltage:</label>
+                        <input type="range" id="voltageSlider" min="50" max="350" value="311">
+                        <span class="slider-value" id="voltageValue">311 V</span>
+                    </div>
+                    <div class="slider-container">
+                        <label>Frequency:</label>
+                        <input type="range" id="freqSlider" min="25" max="100" value="50">
+                        <span class="slider-value" id="freqValue">50 Hz</span>
+                    </div>
+                    <button class="sim-btn" id="playVoltage">▶ Play Animation</button>
+                    <button class="sim-btn secondary" id="resetVoltage">↺ Reset</button>
+                </div>
+                <div class="graph-info">
+                    <div class="graph-stat">
+                        <div class="graph-stat-label">Peak Voltage (V<sub>max</sub>)</div>
+                        <div class="graph-stat-value" id="peakVoltage">311 V</div>
+                    </div>
+                    <div class="graph-stat">
+                        <div class="graph-stat-label">RMS Voltage (V<sub>rms</sub>)</div>
+                        <div class="graph-stat-value" id="rmsVoltage">220 V</div>
+                    </div>
+                    <div class="graph-stat">
+                        <div class="graph-stat-label">Period (T)</div>
+                        <div class="graph-stat-value" id="periodValue">0.02 s</div>
+                    </div>
+                    <div class="graph-stat">
+                        <div class="graph-stat-label">Frequency (f)</div>
+                        <div class="graph-stat-value" id="frequencyValue">50 Hz</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Current vs Time Graph -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">📉</div>
+                <h3 class="section-title">Current vs Time Graphs</h3>
+            </div>
+            
+            <div class="content-text">
+                <p>Similar to voltage, the current in an AC circuit also varies sinusoidally with time. In a purely resistive circuit, current and voltage are in phase (they reach their maximum and minimum values at the same time).</p>
+            </div>
+
+            <div class="simulation-container">
+                <div class="simulation-header">
+                    <h4 class="simulation-title">🔬 Interactive: Current vs Time Graph</h4>
+                </div>
+                <canvas id="currentCanvas" class="simulation-canvas"></canvas>
+                <div class="simulation-controls">
+                    <div class="slider-container">
+                        <label>Peak Current:</label>
+                        <input type="range" id="currentSlider" min="1" max="20" value="10">
+                        <span class="slider-value" id="currentValue">10 A</span>
+                    </div>
+                    <button class="sim-btn" id="playCurrent">▶ Play Animation</button>
+                    <button class="sim-btn secondary" id="resetCurrent">↺ Reset</button>
+                </div>
+                <div class="graph-info">
+                    <div class="graph-stat">
+                        <div class="graph-stat-label">Peak Current (I<sub>max</sub>)</div>
+                        <div class="graph-stat-value" id="peakCurrent">10 A</div>
+                    </div>
+                    <div class="graph-stat">
+                        <div class="graph-stat-label">RMS Current (I<sub>rms</sub>)</div>
+                        <div class="graph-stat-value" id="rmsCurrent">7.07 A</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Combined V-I Graph -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">⚡</div>
+                <h3 class="section-title">Combined Voltage & Current Display</h3>
+            </div>
+            
+            <div class="content-text">
+                <p>This simulation shows both voltage (blue) and current (red) on the same graph. Notice how they oscillate together in a resistive circuit.</p>
+            </div>
+
+            <div class="simulation-container">
+                <div class="simulation-header">
+                    <h4 class="simulation-title">🔬 Interactive: V and I Combined</h4>
+                </div>
+                <canvas id="combinedCanvas" class="simulation-canvas"></canvas>
+                <div class="simulation-controls">
+                    <button class="sim-btn" id="playCombined">▶ Play Animation</button>
+                    <button class="sim-btn secondary" id="resetCombined">↺ Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Generator EMF Simulation -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">🔄</div>
+                <h3 class="section-title">AC Generator EMF Simulation</h3>
+            </div>
+            
+            <div class="content-text">
+                <p>This simulation shows how the EMF (electromotive force) is generated as the coil rotates in a magnetic field. The vertical axis shows the induced EMF, while time progresses along the horizontal axis.</p>
+            </div>
+
+            <div class="simulation-container">
+                <div class="simulation-header">
+                    <h4 class="simulation-title">🔬 Interactive: Generator Coil Rotation</h4>
+                </div>
+                <canvas id="generatorCanvas" class="simulation-canvas"></canvas>
+                <div class="simulation-controls">
+                    <div class="slider-container">
+                        <label>Rotation Speed:</label>
+                        <input type="range" id="speedSlider" min="1" max="5" value="2">
+                        <span class="slider-value" id="speedValue">Normal</span>
+                    </div>
+                    <button class="sim-btn" id="playGenerator">▶ Start Generator</button>
+                    <button class="sim-btn secondary" id="resetGenerator">↺ Reset</button>
+                </div>
+                <div class="graph-info">
+                    <div class="graph-stat">
+                        <div class="graph-stat-label">Coil Angle</div>
+                        <div class="graph-stat-value" id="coilAngle">0°</div>
+                    </div>
+                    <div class="graph-stat">
+                        <div class="graph-stat-label">Induced EMF</div>
+                        <div class="graph-stat-value" id="inducedEmf">0 V</div>
+                    </div>
+                    <div class="graph-stat">
+                        <div class="graph-stat-label">Coil Position</div>
+                        <div class="graph-stat-value" id="coilPosition">Horizontal</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Worked Examples -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">✏️</div>
+                <h3 class="section-title">Worked Examples</h3>
+            </div>
+
+            <div class="example-box">
+                <div class="example-header">
+                    <span class="example-number">1</span>
+                    <h4>Identifying Generator Type from Graph</h4>
+                </div>
+                <div class="example-question">
+                    <p>A graph shows induced emf varying sinusoidally between positive and negative values over time (0 to 0.2 s). The emf crosses zero at 0.05 s and 0.15 s.</p>
+                    <p><strong>a)</strong> Is this an AC or DC generator? Explain.</p>
+                    <p><strong>b)</strong> Is the coil horizontal or vertical at t = 0.05 s?</p>
+                    <p><strong>c)</strong> How would you convert this to the other type of generator?</p>
+                </div>
+                <div class="example-solution">
+                    <h5>Solution:</h5>
+                    <p><strong>a)</strong> This is a <strong>DC generator</strong> because the current flows in one direction only. Wait - looking at the description more carefully, if the EMF varies between positive and negative values, this is actually an <strong>AC generator</strong>. The EMF alternates between positive and negative, indicating the current changes direction.</p>
+                    <p style="margin-top: 0.5rem;"><strong>b)</strong> The coil is <strong>vertical</strong> at t = 0.05 s. When the EMF is zero (crossing the time axis), the coil is cutting minimum magnetic field lines, which occurs when the coil is vertical (parallel to the magnetic field).</p>
+                    <p style="margin-top: 0.5rem;"><strong>c)</strong> To convert an AC generator to a DC generator, <strong>replace the slip rings with a split ring commutator</strong>. The split ring commutator reverses the connection to the external circuit every half rotation, ensuring current flows in one direction only.</p>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-header">
+                    <span class="example-number">2</span>
+                    <h4>Energy Conversion in Generators</h4>
+                </div>
+                <div class="example-question">
+                    <p><strong>a)</strong> What energy conversions take place in an AC generator?</p>
+                    <p><strong>b)</strong> Draw a sketch graph of emf vs time for one full rotation of the coil.</p>
+                </div>
+                <div class="example-solution">
+                    <h5>Solution:</h5>
+                    <p><strong>a)</strong> In an AC generator, <strong>mechanical energy is converted to electrical energy</strong>. The mechanical energy (from rotation of the coil or magnet) is transformed into electrical energy through electromagnetic induction.</p>
+                    <p style="margin-top: 0.5rem;"><strong>b)</strong> The graph should show:</p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>A sinusoidal wave starting at EMF = 0 when θ = 0°</li>
+                        <li>Maximum positive EMF at θ = 90° (¼ rotation)</li>
+                        <li>EMF = 0 again at θ = 180° (½ rotation)</li>
+                        <li>Maximum negative EMF at θ = 270° (¾ rotation)</li>
+                        <li>Returns to EMF = 0 at θ = 360° (full rotation)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">❓</div>
+                <h3 class="section-title">End of Lesson Assessment</h3>
+            </div>
+            <p class="mb-2">Test your understanding with these questions. Select the best answer for each question.</p>
+
+            <div class="quiz-container" id="quizContainer">
+                <!-- Question 1 -->
+                <div class="question-card" data-question="1">
+                    <span class="question-number">1</span>
+                    <span class="question-text">What is the definition of alternating current (AC)?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q1" value="a">
+                                <span class="option-radio"></span>
+                                Current that flows steadily in one direction
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q1" value="b">
+                                <span class="option-radio"></span>
+                                Current that keeps changing direction backwards and forwards in a repetitive manner
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q1" value="c">
+                                <span class="option-radio"></span>
+                                Current that increases continuously over time
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q1" value="d">
+                                <span class="option-radio"></span>
+                                Current that decreases exponentially
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question-card" data-question="2">
+                    <span class="question-number">2</span>
+                    <span class="question-text">What is the root mean square (RMS) value?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q2" value="a">
+                                <span class="option-radio"></span>
+                                The maximum value of AC voltage or current
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q2" value="b">
+                                <span class="option-radio"></span>
+                                The average value of AC over one complete cycle
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q2" value="c">
+                                <span class="option-radio"></span>
+                                The effective value of AC that produces the same heating effect as DC
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q2" value="d">
+                                <span class="option-radio"></span>
+                                The minimum value of AC voltage or current
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question-card" data-question="3">
+                    <span class="question-number">3</span>
+                    <span class="question-text">If the peak voltage is 311 V, what is the RMS voltage? (V<sub>rms</sub> = V<sub>max</sub>/√2)</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q3" value="a">
+                                <span class="option-radio"></span>
+                                440 V
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q3" value="b">
+                                <span class="option-radio"></span>
+                                220 V
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q3" value="c">
+                                <span class="option-radio"></span>
+                                156 V
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q3" value="d">
+                                <span class="option-radio"></span>
+                                311 V
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="question-card" data-question="4">
+                    <span class="question-number">4</span>
+                    <span class="question-text">What is the main advantage of alternating current over direct current?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q4" value="a">
+                                <span class="option-radio"></span>
+                                AC is safer than DC
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q4" value="b">
+                                <span class="option-radio"></span>
+                                AC voltage can be easily changed using transformers
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q4" value="c">
+                                <span class="option-radio"></span>
+                                AC flows faster through wires
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q4" value="d">
+                                <span class="option-radio"></span>
+                                AC does not produce heat in resistors
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="question-card" data-question="5">
+                    <span class="question-number">5</span>
+                    <span class="question-text">In an AC generator, when is the induced EMF at its maximum value?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q5" value="a">
+                                <span class="option-radio"></span>
+                                When the coil is vertical (parallel to the magnetic field)
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q5" value="b">
+                                <span class="option-radio"></span>
+                                When the coil is horizontal (perpendicular to the magnetic field)
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q5" value="c">
+                                <span class="option-radio"></span>
+                                When the coil stops rotating
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q5" value="d">
+                                <span class="option-radio"></span>
+                                When the coil is at 45° to the magnetic field
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 6 -->
+                <div class="question-card" data-question="6">
+                    <span class="question-number">6</span>
+                    <span class="question-text">What structural change converts an AC generator to a DC generator?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q6" value="a">
+                                <span class="option-radio"></span>
+                                Add more coils to the armature
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q6" value="b">
+                                <span class="option-radio"></span>
+                                Replace slip rings with a split ring commutator
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q6" value="c">
+                                <span class="option-radio"></span>
+                                Use stronger magnets
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q6" value="d">
+                                <span class="option-radio"></span>
+                                Rotate the coil faster
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 7 -->
+                <div class="question-card" data-question="7">
+                    <span class="question-number">7</span>
+                    <span class="question-text">What energy conversion takes place in an AC generator?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q7" value="a">
+                                <span class="option-radio"></span>
+                                Electrical energy to mechanical energy
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q7" value="b">
+                                <span class="option-radio"></span>
+                                Mechanical energy to electrical energy
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q7" value="c">
+                                <span class="option-radio"></span>
+                                Chemical energy to electrical energy
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q7" value="d">
+                                <span class="option-radio"></span>
+                                Heat energy to electrical energy
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 8 -->
+                <div class="question-card" data-question="8">
+                    <span class="question-number">8</span>
+                    <span class="question-text">In South Africa, the AC supply frequency is 50 Hz. What is the period of one complete cycle?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q8" value="a">
+                                <span class="option-radio"></span>
+                                0.02 s
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q8" value="b">
+                                <span class="option-radio"></span>
+                                0.05 s
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q8" value="c">
+                                <span class="option-radio"></span>
+                                50 s
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q8" value="d">
+                                <span class="option-radio"></span>
+                                0.5 s
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 9 -->
+                <div class="question-card" data-question="9">
+                    <span class="question-number">9</span>
+                    <span class="question-text">What does self-inductance in AC circuits cause?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q9" value="a">
+                                <span class="option-radio"></span>
+                                The current to increase indefinitely
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q9" value="b">
+                                <span class="option-radio"></span>
+                                The magnetic field to oppose changes in current
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q9" value="c">
+                                <span class="option-radio"></span>
+                                The voltage to remain constant
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q9" value="d">
+                                <span class="option-radio"></span>
+                                The frequency to double
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 10 -->
+                <div class="question-card" data-question="10">
+                    <span class="question-number">10</span>
+                    <span class="question-text">When is the induced EMF zero in an AC generator?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q10" value="a">
+                                <span class="option-radio"></span>
+                                When the coil is cutting maximum magnetic field lines
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q10" value="b">
+                                <span class="option-radio"></span>
+                                When the coil is rotating at maximum speed
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q10" value="c">
+                                <span class="option-radio"></span>
+                                When the coil is parallel to the magnetic field (vertical position)
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q10" value="d">
+                                <span class="option-radio"></span>
+                                When the coil is perpendicular to the magnetic field
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 11 -->
+                <div class="question-card" data-question="11">
+                    <span class="question-number">11</span>
+                    <span class="question-text">The voltage-time graph for AC is a:</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q11" value="a">
+                                <span class="option-radio"></span>
+                                Straight horizontal line
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q11" value="b">
+                                <span class="option-radio"></span>
+                                Sinusoidal (sine) wave
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q11" value="c">
+                                <span class="option-radio"></span>
+                                Square wave
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q11" value="d">
+                                <span class="option-radio"></span>
+                                Exponential curve
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 12 -->
+                <div class="question-card" data-question="12">
+                    <span class="question-number">12</span>
+                    <span class="question-text">If I<sub>max</sub> = 14.14 A, what is I<sub>rms</sub>?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q12" value="a">
+                                <span class="option-radio"></span>
+                                20 A
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q12" value="b">
+                                <span class="option-radio"></span>
+                                10 A
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q12" value="c">
+                                <span class="option-radio"></span>
+                                7.07 A
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q12" value="d">
+                                <span class="option-radio"></span>
+                                14.14 A
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+            </div>
+
+            <button class="submit-btn" id="submitQuiz">
+                <span>📝</span> Submit Answers
+            </button>
+
+            <div class="score-card" id="scoreCard">
+                <h3 class="score-title">Your Results</h3>
+                <div class="score-circle">
+                    <span class="score-percentage" id="scorePercentage">0%</span>
+                    <span class="score-label">Score</span>
+                </div>
+                <p class="score-message" id="scoreMessage">Well done!</p>
+                <p class="score-details" id="scoreDetails">You got 0 out of 12 questions correct</p>
+                <button class="retry-btn" id="retryQuiz">🔄 Try Again</button>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+            <a href="#" class="nav-btn prev">
+                <span>←</span>
+                <span>Previous: RMS Values & Power</span>
+            </a>
+            <a href="#" class="nav-btn next">
+                <span>Next: Transformers</span>
+                <span>→</span>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">PassProof Academy</div>
+            <p class="footer-copyright">© 2026 PassProof Academy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== NAVIGATION ====================
+        const navToggle = document.getElementById('navToggle');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('active');
+            dropdownMenu.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                navToggle.classList.remove('active');
+                dropdownMenu.classList.remove('active');
+            }
+        });
+
+        // ==================== PROGRESS BAR ====================
+        const progressBar = document.getElementById('progressBar');
+        
+        function updateProgress() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            progressBar.style.width = progress + '%';
+        }
+
+        window.addEventListener('scroll', updateProgress);
+
+        // ==================== LOCAL STORAGE ====================
+        const STORAGE_KEY = 'passproofAcademy_lesson3_progress';
+
+        function saveProgress(data) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            return saved ? JSON.parse(saved) : null;
+        }
+
+        // ==================== VOLTAGE GRAPH SIMULATION ====================
+        const voltageCanvas = document.getElementById('voltageCanvas');
+        const voltageCtx = voltageCanvas.getContext('2d');
+        const voltageSlider = document.getElementById('voltageSlider');
+        const freqSlider = document.getElementById('freqSlider');
+        const playVoltageBtn = document.getElementById('playVoltage');
+        const resetVoltageBtn = document.getElementById('resetVoltage');
+
+        let voltageAnimating = false;
+        let voltageAnimationId = null;
+        let voltagePhase = 0;
+
+        function resizeCanvas(canvas) {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            const ctx = canvas.getContext('2d');
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            return { width: rect.width, height: rect.height };
+        }
+
+        function drawVoltageGraph(phase = 0) {
+            const { width, height } = resizeCanvas(voltageCanvas);
+            const peakVoltage = parseInt(voltageSlider.value);
+            const frequency = parseInt(freqSlider.value);
+            
+            // Clear canvas
+            voltageCtx.fillStyle = '#1a1a2e';
+            voltageCtx.fillRect(0, 0, width, height);
+            
+            // Draw grid
+            voltageCtx.strokeStyle = 'rgba(255,255,255,0.1)';
+            voltageCtx.lineWidth = 1;
+            
+            // Vertical grid lines
+            for (let i = 0; i <= 10; i++) {
+                const x = (width / 10) * i;
+                voltageCtx.beginPath();
+                voltageCtx.moveTo(x, 0);
+                voltageCtx.lineTo(x, height);
+                voltageCtx.stroke();
+            }
+            
+            // Horizontal grid lines
+            for (let i = 0; i <= 6; i++) {
+                const y = (height / 6) * i;
+                voltageCtx.beginPath();
+                voltageCtx.moveTo(0, y);
+                voltageCtx.lineTo(width, y);
+                voltageCtx.stroke();
+            }
+            
+            // Draw axes
+            voltageCtx.strokeStyle = 'rgba(255,255,255,0.5)';
+            voltageCtx.lineWidth = 2;
+            
+            // X-axis (time)
+            voltageCtx.beginPath();
+            voltageCtx.moveTo(0, height / 2);
+            voltageCtx.lineTo(width, height / 2);
+            voltageCtx.stroke();
+            
+            // Y-axis
+            voltageCtx.beginPath();
+            voltageCtx.moveTo(40, 0);
+            voltageCtx.lineTo(40, height);
+            voltageCtx.stroke();
+            
+            // Draw RMS lines
+            const rmsVoltage = peakVoltage / Math.sqrt(2);
+            const rmsY = (height / 2) - (rmsVoltage / peakVoltage) * (height / 2 - 20);
+            const rmsYNeg = (height / 2) + (rmsVoltage / peakVoltage) * (height / 2 - 20);
+            
+            voltageCtx.strokeStyle = 'rgba(255,193,7,0.5)';
+            voltageCtx.setLineDash([5, 5]);
+            voltageCtx.beginPath();
+            voltageCtx.moveTo(40, rmsY);
+            voltageCtx.lineTo(width, rmsY);
+            voltageCtx.moveTo(40, rmsYNeg);
+            voltageCtx.lineTo(width, rmsYNeg);
+            voltageCtx.stroke();
+            voltageCtx.setLineDash([]);
+            
+            // Draw sine wave
+            voltageCtx.strokeStyle = '#4285f4';
+            voltageCtx.lineWidth = 3;
+            voltageCtx.beginPath();
+            
+            const amplitude = (height / 2 - 20);
+            const graphWidth = width - 50;
+            
+            for (let x = 0; x <= graphWidth; x++) {
+                const time = (x / graphWidth) * 0.04; // 40ms = 2 periods at 50Hz
+                const voltage = Math.sin(2 * Math.PI * frequency * time + phase);
+                const y = (height / 2) - voltage * amplitude;
+                
+                if (x === 0) {
+                    voltageCtx.moveTo(x + 45, y);
+                } else {
+                    voltageCtx.lineTo(x + 45, y);
+                }
+            }
+            voltageCtx.stroke();
+            
+            // Labels
+            voltageCtx.fillStyle = '#ffffff';
+            voltageCtx.font = '12px Segoe UI';
+            voltageCtx.fillText('V (V)', 5, 20);
+            voltageCtx.fillText('t (s)', width - 30, height / 2 + 20);
+            voltageCtx.fillText(`+${peakVoltage}`, 5, 25);
+            voltageCtx.fillText(`-${peakVoltage}`, 5, height - 10);
+            voltageCtx.fillText('0', 45, height / 2 + 15);
+            
+            // RMS labels
+            voltageCtx.fillStyle = '#ffc107';
+            voltageCtx.fillText(`Vrms`, width - 50, rmsY - 5);
+            
+            // Update info displays
+            document.getElementById('peakVoltage').textContent = peakVoltage + ' V';
+            document.getElementById('rmsVoltage').textContent = Math.round(rmsVoltage) + ' V';
+            document.getElementById('periodValue').textContent = (1/frequency).toFixed(4) + ' s';
+            document.getElementById('frequencyValue').textContent = frequency + ' Hz';
+            document.getElementById('voltageValue').textContent = peakVoltage + ' V';
+            document.getElementById('freqValue').textContent = frequency + ' Hz';
+        }
+
+        function animateVoltage() {
+            if (!voltageAnimating) return;
+            voltagePhase += 0.05;
+            drawVoltageGraph(voltagePhase);
+            voltageAnimationId = requestAnimationFrame(animateVoltage);
+        }
+
+        playVoltageBtn.addEventListener('click', () => {
+            voltageAnimating = !voltageAnimating;
+            playVoltageBtn.textContent = voltageAnimating ? '⏸ Pause' : '▶ Play Animation';
+            if (voltageAnimating) {
+                animateVoltage();
+            } else {
+                cancelAnimationFrame(voltageAnimationId);
+            }
+        });
+
+        resetVoltageBtn.addEventListener('click', () => {
+            voltageAnimating = false;
+            cancelAnimationFrame(voltageAnimationId);
+            playVoltageBtn.textContent = '▶ Play Animation';
+            voltagePhase = 0;
+            voltageSlider.value = 311;
+            freqSlider.value = 50;
+            drawVoltageGraph(0);
+        });
+
+        voltageSlider.addEventListener('input', () => drawVoltageGraph(voltagePhase));
+        freqSlider.addEventListener('input', () => drawVoltageGraph(voltagePhase));
+
+        // ==================== CURRENT GRAPH SIMULATION ====================
+        const currentCanvas = document.getElementById('currentCanvas');
+        const currentCtx = currentCanvas.getContext('2d');
+        const currentSlider = document.getElementById('currentSlider');
+        const playCurrentBtn = document.getElementById('playCurrent');
+        const resetCurrentBtn = document.getElementById('resetCurrent');
+
+        let currentAnimating = false;
+        let currentAnimationId = null;
+        let currentPhase = 0;
+
+        function drawCurrentGraph(phase = 0) {
+            const { width, height } = resizeCanvas(currentCanvas);
+            const peakCurrent = parseInt(currentSlider.value);
+            
+            // Clear canvas
+            currentCtx.fillStyle = '#1a1a2e';
+            currentCtx.fillRect(0, 0, width, height);
+            
+            // Draw grid
+            currentCtx.strokeStyle =            'rgba(255,255,255,0.1)';
+            currentCtx.lineWidth = 1;
+            
+            for (let i = 0; i <= 10; i++) {
+                const x = (width / 10) * i;
+                currentCtx.beginPath();
+                currentCtx.moveTo(x, 0);
+                currentCtx.lineTo(x, height);
+                currentCtx.stroke();
+            }
+            
+            for (let i = 0; i <= 6; i++) {
+                const y = (height / 6) * i;
+                currentCtx.beginPath();
+                currentCtx.moveTo(0, y);
+                currentCtx.lineTo(width, y);
+                currentCtx.stroke();
+            }
+            
+            // Draw axes
+            currentCtx.strokeStyle = 'rgba(255,255,255,0.5)';
+            currentCtx.lineWidth = 2;
+            
+            currentCtx.beginPath();
+            currentCtx.moveTo(0, height / 2);
+            currentCtx.lineTo(width, height / 2);
+            currentCtx.stroke();
+            
+            currentCtx.beginPath();
+            currentCtx.moveTo(40, 0);
+            currentCtx.lineTo(40, height);
+            currentCtx.stroke();
+            
+            // Draw RMS lines
+            const rmsCurrent = peakCurrent / Math.sqrt(2);
+            const rmsY = (height / 2) - (rmsCurrent / peakCurrent) * (height / 2 - 20);
+            const rmsYNeg = (height / 2) + (rmsCurrent / peakCurrent) * (height / 2 - 20);
+            
+            currentCtx.strokeStyle = 'rgba(255,193,7,0.5)';
+            currentCtx.setLineDash([5, 5]);
+            currentCtx.beginPath();
+            currentCtx.moveTo(40, rmsY);
+            currentCtx.lineTo(width, rmsY);
+            currentCtx.moveTo(40, rmsYNeg);
+            currentCtx.lineTo(width, rmsYNeg);
+            currentCtx.stroke();
+            currentCtx.setLineDash([]);
+            
+            // Draw sine wave (red for current)
+            currentCtx.strokeStyle = '#dc3545';
+            currentCtx.lineWidth = 3;
+            currentCtx.beginPath();
+            
+            const amplitude = (height / 2 - 20);
+            const graphWidth = width - 50;
+            
+            for (let x = 0; x <= graphWidth; x++) {
+                const time = (x / graphWidth) * 0.04;
+                const current = Math.sin(2 * Math.PI * 50 * time + phase);
+                const y = (height / 2) - current * amplitude;
+                
+                if (x === 0) {
+                    currentCtx.moveTo(x + 45, y);
+                } else {
+                    currentCtx.lineTo(x + 45, y);
+                }
+            }
+            currentCtx.stroke();
+            
+            // Labels
+            currentCtx.fillStyle = '#ffffff';
+            currentCtx.font = '12px Segoe UI';
+            currentCtx.fillText('I (A)', 5, 20);
+            currentCtx.fillText('t (s)', width - 30, height / 2 + 20);
+            currentCtx.fillText(`+${peakCurrent}`, 5, 25);
+            currentCtx.fillText(`-${peakCurrent}`, 5, height - 10);
+            currentCtx.fillText('0', 45, height / 2 + 15);
+            
+            currentCtx.fillStyle = '#ffc107';
+            currentCtx.fillText(`Irms`, width - 50, rmsY - 5);
+            
+            // Update displays
+            document.getElementById('peakCurrent').textContent = peakCurrent + ' A';
+            document.getElementById('rmsCurrent').textContent = (rmsCurrent).toFixed(2) + ' A';
+            document.getElementById('currentValue').textContent = peakCurrent + ' A';
+        }
+
+        function animateCurrent() {
+            if (!currentAnimating) return;
+            currentPhase += 0.05;
+            drawCurrentGraph(currentPhase);
+            currentAnimationId = requestAnimationFrame(animateCurrent);
+        }
+
+        playCurrentBtn.addEventListener('click', () => {
+            currentAnimating = !currentAnimating;
+            playCurrentBtn.textContent = currentAnimating ? '⏸ Pause' : '▶ Play Animation';
+            if (currentAnimating) {
+                animateCurrent();
+            } else {
+                cancelAnimationFrame(currentAnimationId);
+            }
+        });
+
+        resetCurrentBtn.addEventListener('click', () => {
+            currentAnimating = false;
+            cancelAnimationFrame(currentAnimationId);
+            playCurrentBtn.textContent = '▶ Play Animation';
+            currentPhase = 0;
+            currentSlider.value = 10;
+            drawCurrentGraph(0);
+        });
+
+        currentSlider.addEventListener('input', () => drawCurrentGraph(currentPhase));
+
+        // ==================== COMBINED GRAPH SIMULATION ====================
+        const combinedCanvas = document.getElementById('combinedCanvas');
+        const combinedCtx = combinedCanvas.getContext('2d');
+        const playCombinedBtn = document.getElementById('playCombined');
+        const resetCombinedBtn = document.getElementById('resetCombined');
+
+        let combinedAnimating = false;
+        let combinedAnimationId = null;
+        let combinedPhase = 0;
+
+        function drawCombinedGraph(phase = 0) {
+            const { width, height } = resizeCanvas(combinedCanvas);
+            
+            // Clear canvas
+            combinedCtx.fillStyle = '#1a1a2e';
+            combinedCtx.fillRect(0, 0, width, height);
+            
+            // Draw grid
+            combinedCtx.strokeStyle = 'rgba(255,255,255,0.1)';
+            combinedCtx.lineWidth = 1;
+            
+            for (let i = 0; i <= 10; i++) {
+                const x = (width / 10) * i;
+                combinedCtx.beginPath();
+                combinedCtx.moveTo(x, 0);
+                combinedCtx.lineTo(x, height);
+                combinedCtx.stroke();
+            }
+            
+            for (let i = 0; i <= 6; i++) {
+                const y = (height / 6) * i;
+                combinedCtx.beginPath();
+                combinedCtx.moveTo(0, y);
+                combinedCtx.lineTo(width, y);
+                combinedCtx.stroke();
+            }
+            
+            // Draw axes
+            combinedCtx.strokeStyle = 'rgba(255,255,255,0.5)';
+            combinedCtx.lineWidth = 2;
+            
+            combinedCtx.beginPath();
+            combinedCtx.moveTo(0, height / 2);
+            combinedCtx.lineTo(width, height / 2);
+            combinedCtx.stroke();
+            
+            combinedCtx.beginPath();
+            combinedCtx.moveTo(40, 0);
+            combinedCtx.lineTo(40, height);
+            combinedCtx.stroke();
+            
+            const amplitude = (height / 2 - 20);
+            const graphWidth = width - 50;
+            
+            // Draw voltage wave (blue)
+            combinedCtx.strokeStyle = '#4285f4';
+            combinedCtx.lineWidth = 3;
+            combinedCtx.beginPath();
+            
+            for (let x = 0; x <= graphWidth; x++) {
+                const time = (x / graphWidth) * 0.04;
+                const voltage = Math.sin(2 * Math.PI * 50 * time + phase);
+                const y = (height / 2) - voltage * amplitude;
+                
+                if (x === 0) {
+                    combinedCtx.moveTo(x + 45, y);
+                } else {
+                    combinedCtx.lineTo(x + 45, y);
+                }
+            }
+            combinedCtx.stroke();
+            
+            // Draw current wave (red) - in phase for resistive circuit
+            combinedCtx.strokeStyle = '#dc3545';
+            combinedCtx.lineWidth = 3;
+            combinedCtx.beginPath();
+            
+            for (let x = 0; x <= graphWidth; x++) {
+                const time = (x / graphWidth) * 0.04;
+                const current = Math.sin(2 * Math.PI * 50 * time + phase);
+                const y = (height / 2) - current * amplitude * 0.7;
+                
+                if (x === 0) {
+                    combinedCtx.moveTo(x + 45, y);
+                } else {
+                    combinedCtx.lineTo(x + 45, y);
+                }
+            }
+            combinedCtx.stroke();
+            
+            // Legend
+            combinedCtx.fillStyle = '#4285f4';
+            combinedCtx.fillRect(width - 120, 20, 15, 15);
+            combinedCtx.fillStyle = '#ffffff';
+            combinedCtx.font = '12px Segoe UI';
+            combinedCtx.fillText('Voltage', width - 100, 32);
+            
+            combinedCtx.fillStyle = '#dc3545';
+            combinedCtx.fillRect(width - 120, 45, 15, 15);
+            combinedCtx.fillStyle = '#ffffff';
+            combinedCtx.fillText('Current', width - 100, 57);
+            
+            combinedCtx.fillText('t (s)', width - 30, height / 2 + 20);
+        }
+
+        function animateCombined() {
+            if (!combinedAnimating) return;
+            combinedPhase += 0.05;
+            drawCombinedGraph(combinedPhase);
+            combinedAnimationId = requestAnimationFrame(animateCombined);
+        }
+
+        playCombinedBtn.addEventListener('click', () => {
+            combinedAnimating = !combinedAnimating;
+            playCombinedBtn.textContent = combinedAnimating ? '⏸ Pause' : '▶ Play Animation';
+            if (combinedAnimating) {
+                animateCombined();
+            } else {
+                cancelAnimationFrame(combinedAnimationId);
+            }
+        });
+
+        resetCombinedBtn.addEventListener('click', () => {
+            combinedAnimating = false;
+            cancelAnimationFrame(combinedAnimationId);
+            playCombinedBtn.textContent = '▶ Play Animation';
+            combinedPhase = 0;
+            drawCombinedGraph(0);
+        });
+
+        // ==================== GENERATOR SIMULATION ====================
+        const generatorCanvas = document.getElementById('generatorCanvas');
+        const generatorCtx = generatorCanvas.getContext('2d');
+        const speedSlider = document.getElementById('speedSlider');
+        const playGeneratorBtn = document.getElementById('playGenerator');
+        const resetGeneratorBtn = document.getElementById('resetGenerator');
+
+        let generatorAnimating = false;
+        let generatorAnimationId = null;
+        let coilAngle = 0;
+        let emfHistory = [];
+
+        function drawGenerator() {
+            const { width, height } = resizeCanvas(generatorCanvas);
+            
+            // Clear canvas
+            generatorCtx.fillStyle = '#1a1a2e';
+            generatorCtx.fillRect(0, 0, width, height);
+            
+            const coilCenterX = 120;
+            const coilCenterY = height / 2;
+            const graphStartX = 250;
+            const graphWidth = width - graphStartX - 20;
+            const graphHeight = height - 60;
+            
+            // Draw magnets
+            generatorCtx.fillStyle = '#dc3545';
+            generatorCtx.fillRect(30, coilCenterY - 80, 30, 160);
+            generatorCtx.fillStyle = '#ffffff';
+            generatorCtx.font = 'bold 20px Segoe UI';
+            generatorCtx.fillText('N', 38, coilCenterY + 7);
+            
+            generatorCtx.fillStyle = '#4285f4';
+            generatorCtx.fillRect(180, coilCenterY - 80, 30, 160);
+            generatorCtx.fillStyle = '#ffffff';
+            generatorCtx.fillText('S', 190, coilCenterY + 7);
+            
+            // Draw rotating coil
+            generatorCtx.save();
+            generatorCtx.translate(coilCenterX, coilCenterY);
+            generatorCtx.rotate(coilAngle * Math.PI / 180);
+            
+            generatorCtx.strokeStyle = '#ffc107';
+            generatorCtx.lineWidth = 4;
+            generatorCtx.strokeRect(-40, -50, 80, 100);
+            
+            // Coil direction indicator
+            generatorCtx.fillStyle = '#28a745';
+            generatorCtx.beginPath();
+            generatorCtx.arc(0, -50, 8, 0, Math.PI * 2);
+            generatorCtx.fill();
+            
+            generatorCtx.restore();
+            
+            // Draw rotation arrow
+            generatorCtx.strokeStyle = 'rgba(255,255,255,0.5)';
+            generatorCtx.lineWidth = 2;
+            generatorCtx.beginPath();
+            generatorCtx.arc(coilCenterX, coilCenterY, 70, 0, Math.PI * 1.5);
+            generatorCtx.stroke();
+            
+            // Arrow head
+            generatorCtx.fillStyle = 'rgba(255,255,255,0.5)';
+            generatorCtx.beginPath();
+            generatorCtx.moveTo(coilCenterX - 5, coilCenterY - 70);
+            generatorCtx.lineTo(coilCenterX + 10, coilCenterY - 70);
+            generatorCtx.lineTo(coilCenterX, coilCenterY - 80);
+            generatorCtx.closePath();
+            generatorCtx.fill();
+            
+            // Draw EMF graph
+            generatorCtx.strokeStyle = 'rgba(255,255,255,0.3)';
+            generatorCtx.lineWidth = 1;
+            
+            // Graph axes
+            generatorCtx.beginPath();
+            generatorCtx.moveTo(graphStartX, 30);
+            generatorCtx.lineTo(graphStartX, height - 30);
+            generatorCtx.moveTo(graphStartX, height / 2);
+            generatorCtx.lineTo(width - 10, height / 2);
+            generatorCtx.stroke();
+            
+            // Grid lines
+            for (let i = 0; i <= 4; i++) {
+                const x = graphStartX + (graphWidth / 4) * i;
+                generatorCtx.beginPath();
+                generatorCtx.moveTo(x, 30);
+                generatorCtx.lineTo(x, height - 30);
+                generatorCtx.stroke();
+            }
+            
+            // Calculate current EMF
+            const currentEmf = Math.sin(coilAngle * Math.PI / 180);
+            emfHistory.push(currentEmf);
+            
+            if (emfHistory.length > graphWidth) {
+                emfHistory.shift();
+            }
+            
+            // Draw EMF trace
+            generatorCtx.strokeStyle = '#28a745';
+            generatorCtx.lineWidth = 2;
+            generatorCtx.beginPath();
+            
+            for (let i = 0; i < emfHistory.length; i++) {
+                const x = graphStartX + i;
+                const y = (height / 2) - emfHistory[i] * (graphHeight / 2 - 10);
+                
+                if (i === 0) {
+                    generatorCtx.moveTo(x, y);
+                } else {
+                    generatorCtx.lineTo(x, y);
+                }
+            }
+            generatorCtx.stroke();
+            
+            // Current point indicator
+            if (emfHistory.length > 0) {
+                const lastX = graphStartX + emfHistory.length - 1;
+                const lastY = (height / 2) - emfHistory[emfHistory.length - 1] * (graphHeight / 2 - 10);
+                
+                generatorCtx.fillStyle = '#28a745';
+                generatorCtx.beginPath();
+                generatorCtx.arc(lastX, lastY, 6, 0, Math.PI * 2);
+                generatorCtx.fill();
+            }
+            
+            // Labels
+            generatorCtx.fillStyle = '#ffffff';
+            generatorCtx.font = '12px Segoe UI';
+            generatorCtx.fillText('EMF', graphStartX + 5, 25);
+            generatorCtx.fillText('Time', width - 40, height / 2 + 15);
+            generatorCtx.fillText('+Emax', graphStartX + 5, 45);
+            generatorCtx.fillText('-Emax', graphStartX + 5, height - 35);
+            
+            // Update info displays
+            const angleDisplay = Math.round(coilAngle % 360);
+            document.getElementById('coilAngle').textContent = angleDisplay + '°';
+            document.getElementById('inducedEmf').textContent = (currentEmf * 100).toFixed(1) + ' V';
+            
+            // Determine coil position
+            const normalizedAngle = angleDisplay % 360;
+            let position = 'Horizontal';
+            if (normalizedAngle > 80 && normalizedAngle < 100) position = 'Vertical (↑)';
+            else if (normalizedAngle > 170 && normalizedAngle < 190) position = 'Horizontal';
+            else if (normalizedAngle > 260 && normalizedAngle < 280) position = 'Vertical (↓)';
+            else if (normalizedAngle > 350 || normalizedAngle < 10) position = 'Horizontal';
+            document.getElementById('coilPosition').textContent = position;
+        }
+
+        function animateGenerator() {
+            if (!generatorAnimating) return;
+            const speed = parseInt(speedSlider.value);
+            coilAngle += speed;
+            drawGenerator();
+            generatorAnimationId = requestAnimationFrame(animateGenerator);
+        }
+
+        playGeneratorBtn.addEventListener('click', () => {
+            generatorAnimating = !generatorAnimating;
+            playGeneratorBtn.textContent = generatorAnimating ? '⏸ Stop Generator' : '▶ Start Generator';
+            if (generatorAnimating) {
+                animateGenerator();
+            } else {
+                cancelAnimationFrame(generatorAnimationId);
+            }
+        });
+
+        resetGeneratorBtn.addEventListener('click', () => {
+            generatorAnimating = false;
+            cancelAnimationFrame(generatorAnimationId);
+            playGeneratorBtn.textContent = '▶ Start Generator';
+            coilAngle = 0;
+            emfHistory = [];
+            drawGenerator();
+        });
+
+        speedSlider.addEventListener('input', () => {
+            const speed = parseInt(speedSlider.value);
+            const labels = ['Slow', 'Normal', 'Fast', 'Faster', 'Fastest'];
+            document.getElementById('speedValue').textContent = labels[speed - 1];
+        });
+
+        // ==================== QUIZ SYSTEM ====================
+        const correctAnswers = {
+            q1: 'b',
+            q2: 'c',
+            q3: 'b',
+            q4: 'b',
+            q5: 'b',
+            q6: 'b',
+            q7: 'b',
+            q8: 'a',
+            q9: 'b',
+            q10: 'c',
+            q11: 'b',
+            q12: 'b'
+        };
+
+        const explanations = {
+            q1: 'Alternating current (AC) is defined as current that keeps changing direction backwards and forwards in a repetitive manner.',
+            q2: 'RMS (Root Mean Square) is the effective value of AC that produces the same heating effect as an equivalent DC.',
+            q3: 'Vrms = Vmax/√2 = 311/1.414 ≈ 220 V. This is the standard household voltage in South Africa.',
+            q4: 'The main advantage of AC is that voltage can be easily stepped up or down using transformers, making power transmission efficient.',
+            q5: 'Maximum EMF occurs when the coil is horizontal (perpendicular to the magnetic field), cutting through the maximum number of field lines.',
+            q6: 'Replacing slip rings with a split ring commutator converts AC to DC by reversing the external connection every half rotation.',
+            q7: 'In a generator, mechanical energy (rotation) is converted to electrical energy through electromagnetic induction.',
+            q8: 'Period T = 1/f = 1/50 = 0.02 seconds. This is the time for one complete cycle.',
+            q9: 'Self-inductance creates a magnetic field that opposes changes in current, as described by Lenz\'s Law.',
+            q10: 'EMF is zero when the coil is parallel to the magnetic field (vertical position), cutting minimum field lines.',
+            q11: 'AC voltage and current follow a sinusoidal (sine wave) pattern over time.',
+            q12: 'Irms = Imax/√2 = 14.14/1.414 = 10 A'
+        };
+
+        let quizSubmitted = false;
+
+        function checkQuiz() {
+            if (quizSubmitted) return;
+            
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+            
+            for (let q in correctAnswers) {
+                const questionCard = document.querySelector(`[data-question="${q.substring(1)}"]`);
+                const selectedOption = document.querySelector(`input[name="${q}"]:checked`);
+                const feedbackDiv = questionCard.querySelector('.feedback-message');
+                const options = questionCard.querySelectorAll('.option-label');
+                
+                // Reset styles
+                options.forEach(opt => {
+                    opt.classList.remove('correct-answer', 'wrong-answer');
+                });
+                
+                if (selectedOption) {
+                    const selectedValue = selectedOption.value;
+                    const isCorrect = selectedValue === correctAnswers[q];
+                    
+                    if (isCorrect) {
+                        score++;
+                        questionCard.classList.add('correct');
+                        questionCard.classList.remove('incorrect');
+                        selectedOption.parentElement.classList.add('correct-answer');
+                        feedbackDiv.className = 'feedback-message correct';
+                        feedbackDiv.innerHTML = `<strong>✓ Correct!</strong> ${explanations[q]}`;
+                    } else {
+                        questionCard.classList.add('incorrect');
+                        questionCard.classList.remove('correct');
+                        selectedOption.parentElement.classList.add('wrong-answer');
+                        
+                        // Highlight correct answer
+                        const correctOption = document.querySelector(`input[name="${q}"][value="${correctAnswers[q]}"]`);
+                        correctOption.parentElement.classList.add('correct-answer');
+                        
+                        feedbackDiv.className = 'feedback-message incorrect';
+                        feedbackDiv.innerHTML = `<strong>✗ Incorrect.</strong> ${explanations[q]}`;
+                    }
+                } else {
+                    questionCard.classList.add('incorrect');
+                    feedbackDiv.className = 'feedback-message incorrect';
+                    feedbackDiv.innerHTML = `<strong>✗ Not answered.</strong> ${explanations[q]}`;
+                    
+                    // Highlight correct answer
+                    const correctOption = document.querySelector(`input[name="${q}"][value="${correctAnswers[q]}"]`);
+                    correctOption.parentElement.classList.add('correct-answer');
+                }
+            }
+            
+            // Calculate percentage
+            const percentage = Math.round((score / totalQuestions) * 100);
+            
+            // Show score card
+            const scoreCard = document.getElementById('scoreCard');
+            scoreCard.classList.add('visible');
+            
+            document.getElementById('scorePercentage').textContent = percentage + '%';
+            document.getElementById('scoreDetails').textContent = `You got ${score} out of ${totalQuestions} questions correct`;
+            
+            // Set message based on score
+            let message = '';
+            if (percentage >= 80) {
+                message = '🌟 Excellent! Outstanding performance!';
+            } else if (percentage >= 60) {
+                message = '👍 Good job! Keep practicing!';
+            } else if (percentage >= 40) {
+                message = '📚 Fair attempt. Review the material and try again.';
+            } else {
+                message = '💪 Keep trying! Review the lesson content.';
+            }
+            document.getElementById('scoreMessage').textContent = message;
+            
+            // Save progress
+            saveProgress({
+                lessonId: 'ac-lesson-3',
+                score: score,
+                percentage: percentage,
+                completedAt: new Date().toISOString()
+            });
+            
+            quizSubmitted = true;
+            document.getElementById('submitQuiz').disabled = true;
+            
+            // Scroll to score card
+            scoreCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function resetQuiz() {
+            quizSubmitted = false;
+            document.getElementById('submitQuiz').disabled = false;
+            
+            // Reset all questions
+            const questionCards = document.querySelectorAll('.question-card');
+            questionCards.forEach(card => {
+                card.classList.remove('correct', 'incorrect');
+                const options = card.querySelectorAll('.option-label');
+                options.forEach(opt => {
+                    opt.classList.remove('correct-answer', 'wrong-answer');
+                });
+                const feedback = card.querySelector('.feedback-message');
+                feedback.className = 'feedback-message';
+                feedback.innerHTML = '';
+            });
+            
+            // Clear radio selections
+            const radios = document.querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => radio.checked = false);
+            
+            // Hide score card
+            document.getElementById('scoreCard').classList.remove('visible');
+            
+            // Scroll to quiz
+            document.getElementById('quizContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        document.getElementById('submitQuiz').addEventListener('click', checkQuiz);
+        document.getElementById('retryQuiz').addEventListener('click', resetQuiz);
+
+        // ==================== INITIALIZATION ====================
+        function initializeSimulations() {
+            drawVoltageGraph(0);
+            drawCurrentGraph(0);
+            drawCombinedGraph(0);
+            drawGenerator();
+        }
+
+        // Handle window resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                drawVoltageGraph(voltagePhase);
+                drawCurrentGraph(currentPhase);
+                drawCombinedGraph(combinedPhase);
+                drawGenerator();
+            }, 100);
+        });
+
+        // Load saved progress
+        function checkSavedProgress() {
+            const saved = loadProgress();
+            if (saved && saved.lessonId === 'ac-lesson-3') {
+                console.log('Previous progress found:', saved);
+            }
+        }
+
+        // Initialize on load
+        window.addEventListener('load', () => {
+            initializeSimulations();
+            checkSavedProgress();
+            updateProgress();
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

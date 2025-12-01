@@ -3,1444 +3,3046 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grade 12 Physical Sciences: Conservation of Momentum Applications</title>
+    <title>Momentum and Impulse - Lesson 5: Collisions & Explosions | PassProof Academy</title>
     <style>
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --accent-color: #e74c3c;
-            --success-color: #2ecc71;
-            --warning-color: #f39c12;
-        }
-        }
-    </script>
-
-    <!-- Shared lesson navigation (previous/next) -->
-    <script>
-    (function(){
-        const maxLessons = 19;
-        function navigateLesson(direction){
-            const m = window.location.pathname.match(/less(\d+)\.html$/i);
-            if(!m) return;
-            const current = parseInt(m[1],10);
-            const next = direction === 'next' ? current + 1 : current - 1;
-            if(next < 1 || next > maxLessons) return;
-            const newHref = window.location.pathname.replace(/less\d+\.html$/i, `less${next}.html`);
-            window.location.href = newHref;
-        }
-        [['prevBtn','nextBtn'], ['prev-btn','next-btn']].forEach(ids => {
-            const prev = document.getElementById(ids[0]);
-            const next = document.getElementById(ids[1]);
-            if(prev) prev.addEventListener('click', () => navigateLesson('prev'));
-            if(next) next.addEventListener('click', () => navigateLesson('next'));
-        });
-    })();
-    </script>
-</body>
-</html>
+        * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
+        :root {
+            --primary-blue: #1a73e8;
+            --primary-dark: #1557b0;
+            --light-blue: #e8f0fe;
+            --white: #ffffff;
+            --gray-light: #f8f9fa;
+            --gray-medium: #6c757d;
+            --gray-dark: #343a40;
+            --success: #28a745;
+            --error: #dc3545;
+            --warning: #ffc107;
+            --orange: #fd7e14;
+            --purple: #6f42c1;
+            --teal: #20c997;
+            --pink: #e91e63;
+            --indigo: #3f51b5;
+            --red: #f44336;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.15);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
         body {
-            background-color: #f5f7fa;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gray-light);
+            color: var(--gray-dark);
             line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-        
-        .container {
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark));
+            color: var(--white);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .header-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 30px 20px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        .lesson-info {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .info-item {
-            background-color: rgba(255, 255, 255, 0.2);
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
-        
-        h1 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-        }
-        
-        .lesson-summary {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-        
-        .collapsible {
-            background-color: white;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-        
-        .collapsible-header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 15px 20px;
-            cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: background-color 0.3s;
         }
-        
-        .collapsible-header:hover {
-            background-color: #1a252f;
-        }
-        
-        .collapsible-header h2 {
-            font-size: 1.4rem;
-            margin: 0;
-        }
-        
-        .collapsible-content {
-            padding: 0;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out, padding 0.3s ease;
-        }
-        
-        .collapsible-content.active {
-            padding: 20px;
-            max-height: 5000px;
-        }
-        
-        .content-section {
-            margin-bottom: 25px;
-        }
-        
-        .content-section h3 {
-            color: var(--secondary-color);
-            margin-bottom: 10px;
-            padding-bottom: 5px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        ul, ol {
-            padding-left: 20px;
-            margin-bottom: 15px;
-        }
-        
-        li {
-            margin-bottom: 8px;
-        }
-        
-        .formula-box {
-            background-color: #f8f9fa;
-            border-left: 4px solid var(--secondary-color);
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 0 5px 5px 0;
-        }
-        
-        .formula {
-            font-family: 'Cambria Math', serif;
-            font-size: 1.2rem;
-            text-align: center;
-            margin: 10px 0;
-        }
-        
-        .example-box {
-            background-color: #e8f4fc;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 15px 0;
-        }
-        
-        .calculator {
-            background-color: #f0f7ff;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        
-        .input-group {
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--white);
             display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 15px;
+            align-items: center;
+            gap: 0.5rem;
         }
-        
-        .input-field {
-            flex: 1;
-            min-width: 200px;
+
+        .logo span {
+            color: var(--light-blue);
         }
-        
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-        
-        input, select, button {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-        
-        button {
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        button:hover {
-            background-color: #2980b9;
-        }
-        
-        .result {
-            margin-top: 15px;
-            padding: 10px;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-        
-        .success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        .questions-container {
-            margin-top: 30px;
-        }
-        
-        .question {
-            background-color: white;
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            background: var(--white);
             border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        
-        .question h3 {
-            margin-bottom: 15px;
-            color: var(--primary-color);
-        }
-        
-        .options {
-            margin: 15px 0;
-        }
-        
-        .option {
-            margin-bottom: 10px;
-        }
-        
-        .option input {
-            margin-right: 10px;
-            width: auto;
-        }
-        
-        .feedback {
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 4px;
-            display: none;
-        }
-        
-        .correct {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .incorrect {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-        }
-        
-        .nav-btn {
-            width: auto;
-            padding: 10px 20px;
-        }
-        
-        .score-container {
-            text-align: center;
-            margin: 30px 0;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        
-        .score-display {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--secondary-color);
-            margin: 10px 0;
-        }
-        
-        .progress-bar {
-            height: 20px;
-            background-color: #e0e0e0;
-            border-radius: 10px;
-            margin: 15px 0;
-            overflow: hidden;
-        }
-        
-        .progress {
-            height: 100%;
-            background-color: var(--success-color);
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-        
-        .collision-simulator {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        
-        .simulation-area {
-            height: 200px;
-            background: #f8f9fa;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            margin: 15px 0;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .object {
-            position: absolute;
-            width: 60px;
-            height: 40px;
-            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-weight: bold;
-            transition: all 0.5s ease;
-        }
-        
-        .object-1 {
-            background-color: var(--secondary-color);
-        }
-        
-        .object-2 {
-            background-color: var(--accent-color);
-        }
-        
-        .combined-object {
-            background-color: var(--warning-color);
-        }
-        
-        .velocity-display {
-            text-align: center;
-            margin: 10px 0;
+            color: var(--primary-blue);
             font-weight: bold;
         }
-        
-        .interactive-problem {
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-            border-left: 4px solid var(--accent-color);
+
+        nav {
+            position: relative;
         }
-        
-        .problem-step {
-            margin-bottom: 15px;
-            padding: 10px;
-            background: white;
-            border-radius: 5px;
-        }
-        
-        .step-toggle {
-            background: var(--secondary-color);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-right: 10px;
-            width: auto;
-        }
-        
-        .step-content {
+
+        .nav-toggle {
             display: none;
-            margin-top: 10px;
-            padding: 10px;
-            background: #f0f7ff;
-            border-radius: 4px;
-        }
-        
-        .interactive-calc {
-            background: white;
+            background: none;
+            border: 2px solid rgba(255,255,255,0.3);
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem 0.75rem;
             border-radius: 8px;
-            padding: 15px;
-            margin: 15px 0;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
         }
-        
-        .momentum-table {
+
+        .nav-toggle:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 0.5rem;
+            list-style: none;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: var(--white);
+            text-decoration: none;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--white);
+            min-width: 220px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-hover);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .nav-item:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(5px);
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--gray-dark);
+            text-decoration: none;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+
+        .dropdown a:hover {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+            border-left-color: var(--primary-blue);
+        }
+
+        .dropdown a.active {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            width: 100%;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:nth-child(6) { animation-delay: 0.6s; }
+        .card:nth-child(7) { animation-delay: 0.7s; }
+
+        /* Badge Container */
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .badge {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .badge.primary {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .badge.lesson {
+            background: var(--indigo);
+            color: var(--white);
+        }
+
+        .badge.collision {
+            background: var(--orange);
+            color: var(--white);
+        }
+
+        .badge.explosion {
+            background: var(--red);
+            color: var(--white);
+        }
+
+        /* Headings */
+        h1 {
+            color: var(--primary-blue);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        h2 {
+            color: var(--primary-dark);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--light-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h3 {
+            color: var(--gray-dark);
+            font-size: 1.25rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        h4 {
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+            margin: 1rem 0 0.5rem;
+        }
+
+        .topic-title {
+            color: var(--gray-medium);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-info {
+            color: var(--gray-medium);
+            font-size: 0.95rem;
+        }
+
+        /* Objectives */
+        .objectives-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .objectives-list li {
+            padding: 0.75rem 1rem;
+            background: var(--light-blue);
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .objectives-list li::before {
+            content: "✓";
+            color: var(--primary-blue);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* Scenario Type Boxes */
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .scenario-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--primary-blue);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scenario-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .scenario-card.stick {
+            border-top-color: var(--orange);
+        }
+
+        .scenario-card.explosion {
+            border-top-color: var(--red);
+        }
+
+        .scenario-card.bullet {
+            border-top-color: var(--indigo);
+        }
+
+        .scenario-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .scenario-card h4 {
+            color: var(--gray-dark);
+            margin-bottom: 0.5rem;
+            font-size: 1.15rem;
+        }
+
+        .scenario-card p {
+            color: var(--gray-medium);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .scenario-formula {
+            background: var(--gray-light);
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            text-align: center;
+            color: var(--gray-dark);
+        }
+
+        .scenario-note {
+            font-size: 0.85rem;
+            color: var(--gray-medium);
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark));
+            color: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin: 1.5rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .formula-box::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+
+        .formula {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+
+        .formula-description {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            position: relative;
+        }
+
+        .formula-box.orange {
+            background: linear-gradient(135deg, var(--orange), #e65c00);
+        }
+
+        .formula-box.red {
+            background: linear-gradient(135deg, var(--red), #c62828);
+        }
+
+        .formula-box.indigo {
+            background: linear-gradient(135deg, var(--indigo), #303f9f);
+        }
+
+        .formula-box.large {
+            padding: 2rem;
+        }
+
+        .formula-box.large .formula {
+            font-size: 1.8rem;
+        }
+
+        /* Key Points */
+        .key-point {
+            background: var(--light-blue);
+            border-left: 4px solid var(--primary-blue);
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+
+        .key-point strong {
+            color: var(--primary-blue);
+        }
+
+        .key-point.warning {
+            background: #fff3cd;
+            border-left-color: var(--warning);
+        }
+
+        .key-point.warning strong {
+            color: #856404;
+        }
+
+        .key-point.success {
+            background: #d4edda;
+            border-left-color: var(--success);
+        }
+
+        .key-point.success strong {
+            color: var(--success);
+        }
+
+        .key-point.danger {
+            background: #ffebee;
+            border-left-color: var(--red);
+        }
+
+        .key-point.danger strong {
+            color: var(--red);
+        }
+
+        .key-point.orange {
+            background: #fff3e0;
+            border-left-color: var(--orange);
+        }
+
+        .key-point.orange strong {
+            color: var(--orange);
+        }
+
+        /* Worked Examples */
+        .example-box {
+            background: var(--gray-light);
+            border: 2px solid var(--light-blue);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .example-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            color: var(--primary-blue);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .example-icon {
+            background: var(--primary-blue);
+            color: var(--white);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+        }
+
+        .example-icon.orange {
+            background: var(--orange);
+        }
+
+        .example-icon.red {
+            background: var(--red);
+        }
+
+        .example-icon.indigo {
+            background: var(--indigo);
+        }
+
+        .example-type {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            margin-left: auto;
+        }
+
+        .example-type.stick {
+            background: var(--orange);
+            color: white;
+        }
+
+        .example-type.explosion {
+            background: var(--red);
+            color: white;
+        }
+
+        .problem-statement {
+            background: var(--white);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--orange);
+        }
+
+        .solution {
+            background: var(--white);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-family: 'Courier New', monospace;
+            line-height: 1.9;
+            border-left: 3px solid var(--success);
+        }
+
+        .solution-step {
+            margin: 0.5rem 0;
+            padding-left: 1rem;
+        }
+
+        .solution-final {
+            background: var(--light-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            display: inline-block;
+            margin-top: 0.5rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+        }
+
+        .solution-note {
+            background: #fff3cd;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            border-left: 3px solid var(--warning);
+        }
+
+        .direction-note {
+            background: var(--light-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 15px 0;
+            margin: 1.5rem 0;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
         }
-        
-        .momentum-table th, .momentum-table td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--light-blue);
         }
-        
-        .momentum-table th {
-            background-color: var(--primary-color);
-            color: white;
+
+        .comparison-table th {
+            background: var(--primary-blue);
+            color: var(--white);
+            font-weight: 600;
         }
-        
-        .scenario-type {
+
+        .comparison-table tr:nth-child(even) {
+            background: var(--light-blue);
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(26, 115, 232, 0.1);
+        }
+
+        /* Simulation Container */
+        .simulation-container {
+            background: linear-gradient(180deg, #f0f4f8 0%, var(--white) 100%);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 2px solid var(--light-blue);
+        }
+
+        .simulation-title {
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            align-items: center;
+            gap: 0.5rem;
         }
-        
-        .scenario-btn {
-            flex: 1;
-            padding: 15px;
-            background: #f8f9fa;
-            border: 2px solid #ddd;
+
+        .simulation-description {
+            color: var(--gray-medium);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .simulation-canvas {
+            width: 100%;
+            height: 350px;
+            background: var(--white);
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin-bottom: 1rem;
+        }
+
+        .simulation-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: flex-end;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .control-group label {
+            font-size: 0.85rem;
+            color: var(--gray-medium);
+            font-weight: 500;
+        }
+
+        .control-group input[type="range"] {
+            width: 120px;
+            height: 8px;
+            accent-color: var(--primary-blue);
+            cursor: pointer;
+        }
+
+        .control-group input[type="number"] {
+            width: 90px;
+            padding: 0.5rem;
+            border: 2px solid var(--light-blue);
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .control-group input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+
+        .control-group select {
+            padding: 0.5rem;
+            border: 2px solid var(--light-blue);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .sim-btn {
+            background: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
             border-radius: 8px;
             cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sim-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .sim-btn.reset {
+            background: var(--gray-medium);
+        }
+
+        .sim-btn.reset:hover {
+            background: var(--gray-dark);
+        }
+
+        .sim-btn.orange {
+            background: var(--orange);
+        }
+
+        .sim-btn.red {
+            background: var(--red);
+        }
+
+        .sim-output {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 1rem;
+            border-radius: 8px;
             text-align: center;
-            transition: all 0.3s;
         }
-        
-        .scenario-btn.active {
-            background: var(--secondary-color);
-            color: white;
-            border-color: var(--secondary-color);
+
+        .sim-output.multi {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 0.75rem;
         }
-        
+
+        .sim-output-item {
+            background: rgba(255,255,255,0.1);
+            padding: 0.75rem;
+            border-radius: 6px;
+        }
+
+        .sim-output .label {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            margin-bottom: 0.25rem;
+        }
+
+        .sim-output .value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+        }
+
+        .sim-output .value.highlight {
+            color: #69db7c;
+        }
+
+        /* Quiz Section */
+        .quiz-section {
+            margin-top: 2rem;
+        }
+
+        .question-card {
+            background: var(--white);
+            border: 2px solid var(--light-blue);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .question-card.correct {
+            border-color: var(--success);
+            background: rgba(40, 167, 69, 0.05);
+        }
+
+        .question-card.incorrect {
+            border-color: var(--error);
+            background: rgba(220, 53, 69, 0.05);
+        }
+
+        .question-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .question-number {
+            background: var(--primary-blue);
+            color: var(--white);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .question-type {
+            font-size: 0.8rem;
+            color: var(--gray-medium);
+            background: var(--gray-light);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            margin-bottom: 1rem;
+            color: var(--gray-dark);
+            line-height: 1.6;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--gray-light);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .option:hover {
+            border-color: var(--primary-blue);
+            background: var(--light-blue);
+        }
+
+        .option input {
+            display: none;
+        }
+
+        .option-marker {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--gray-medium);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .option.selected .option-marker {
+            background: var(--primary-blue);
+            border-color: var(--primary-blue);
+        }
+
+        .option.selected .option-marker::after {
+            content: "";
+            width: 8px;
+            height: 8px;
+            background: var(--white);
+            border-radius: 50%;
+        }
+
+        .option.correct-answer {
+            background: rgba(40, 167, 69, 0.15);
+            border-color: var(--success);
+        }
+
+        .option.correct-answer .option-marker {
+            background: var(--success);
+            border-color: var(--success);
+        }
+
+        .option.wrong-answer {
+            background: rgba(220, 53, 69, 0.15);
+            border-color: var(--error);
+        }
+
+        .option.wrong-answer .option-marker {
+            background: var(--error);
+            border-color: var(--error);
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: rgba(40, 167, 69, 0.1);
+            color: var(--success);
+            border-left: 4px solid var(--success);
+        }
+
+        .feedback.incorrect {
+            background: rgba(220, 53, 69, 0.1);
+            color: var(--error);
+            border-left: 4px solid var(--error);
+        }
+
+        /* Score Display */
+        .score-container {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark));
+            color: var(--white);
+            padding: 2rem;
+            border-radius: var(--radius);
+            text-align: center;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .score-container.show {
+            display: block;
+            animation: scaleIn 0.5s ease;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: var(--white);
+            color: var(--primary-blue);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .score-circle::before {
+            content: "";
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            border: 5px solid rgba(255,255,255,0.3);
+        }
+
+        .score-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .score-label {
+            font-size: 0.9rem;
+            color: var(--gray-medium);
+        }
+
+        .score-message {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .score-details {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .progress-saved {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background: var(--success);
+            color: var(--white);
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: block;
+            margin: 2rem auto;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        .submit-btn:disabled {
+            background: var(--gray-medium);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Navigation Buttons */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: var(--white);
+            border: 2px solid var(--primary-blue);
+            color: var(--primary-blue);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            flex: 1;
+            justify-content: center;
+            min-width: 200px;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-btn.next {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .nav-btn.next:hover {
+            background: var(--primary-dark);
+        }
+
+        .nav-btn-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .nav-btn-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gray-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: auto;
+        }
+
+        footer p {
+            margin: 0.25rem 0;
+        }
+
+        footer a {
+            color: var(--light-blue);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Progress Indicator */
+        .progress-indicator {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: var(--white);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow-hover);
+            font-size: 0.85rem;
+            z-index: 100;
+            display: none;
+            border-left: 4px solid var(--success);
+        }
+
+        .progress-indicator.show {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Mobile Responsiveness */
         @media (max-width: 768px) {
-            .container {
-                padding: 10px;
+            header {
+                padding: 1rem;
             }
-            
+
+            .nav-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                left: -100%;
+                right: 0;
+                background: var(--primary-dark);
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0;
+                width: 100vw;
+                transition: var(--transition);
+                border-radius: 0 0 var(--radius) var(--radius);
+            }
+
+            .nav-menu.active {
+                left: -1rem;
+            }
+
+            .nav-item {
+                width: 100%;
+            }
+
+            .nav-link {
+                padding: 1rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .dropdown {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                background: rgba(255, 255, 255, 0.1);
+                display: none;
+                border-radius: 0;
+            }
+
+            .nav-item.active .dropdown {
+                display: block;
+            }
+
+            .dropdown a {
+                color: var(--white);
+                padding-left: 2rem;
+                border-left: none;
+            }
+
+            .dropdown a:hover {
+                background: rgba(255, 255, 255, 0.1);
+                color: var(--white);
+            }
+
+            .card {
+                padding: 1.25rem;
+            }
+
             h1 {
-                font-size: 1.8rem;
+                font-size: 1.5rem;
             }
-            
-            .collapsible-header h2 {
+
+            h2 {
+                font-size: 1.25rem;
+            }
+
+            .formula {
                 font-size: 1.2rem;
             }
-            
-            .input-group {
+
+            .scenario-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .simulation-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .control-group {
+                width: 100%;
+            }
+
+            .control-group input[type="range"] {
+                width: 100%;
+            }
+
+            .control-group input[type="number"] {
+                width: 100%;
+            }
+
+            .sim-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .lesson-nav {
                 flex-direction: column;
             }
-            
-            .input-field {
-                min-width: 100%;
+
+            .nav-btn {
+                width: 100%;
             }
-            
-            .scenario-type {
-                flex-direction: column;
+
+            .progress-indicator {
+                top: auto;
+                bottom: 80px;
+                right: 10px;
+                left: 10px;
+                text-align: center;
+                justify-content: center;
+            }
+
+            .sim-output.multi {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .comparison-table {
+                font-size: 0.85rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.6rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .badge-container {
+                justify-content: center;
+            }
+
+            .formula {
+                font-size: 1rem;
+            }
+
+            .formula-description {
+                font-size: 0.85rem;
+            }
+
+            .sim-output.multi {
+                grid-template-columns: 1fr;
+            }
+
+            .simulation-canvas {
+                height: 280px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            header, footer, .simulation-container, .submit-btn, .lesson-nav, .progress-indicator {
+                display: none;
+            }
+
+            .card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+
+            body {
+                background: white;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="lesson-info">
-                <div class="info-item">GRADE: 12</div>
-                <div class="info-item">SUBJECT: Physical Sciences</div>
-                <div class="info-item">TOPIC: Momentum and Impulse</div>
-                <div class="info-item">LESSON: 5</div>
-            </div>
-            <h1>Conservation of Momentum Applications</h1>
-            <p class="lesson-summary">Applying momentum conservation to collisions where objects stick together and explosion scenarios</p>
-        </header>
-        
-        <div class="collapsible">
-            <div class="collapsible-header">
-                <h2>Learning Objectives</h2>
-                <span class="toggle-icon">+</span>
-            </div>
-            <div class="collapsible-content">
-                <div class="content-section">
-                    <p>By the end of this lesson, learners must be able to:</p>
-                    <ul>
-                        <li>Apply conservation of momentum to collisions where objects stick together</li>
-                        <li>Solve problems involving explosions using momentum conservation</li>
-                        <li>Calculate velocities in inelastic collisions</li>
-                        <li>Understand that total momentum remains zero in explosion scenarios</li>
-                    </ul>
-                </div>
-            </div>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">
+                <span class="logo-icon">P</span>
+                PassProof <span>Academy</span>
+            </a>
+            <nav>
+                <button class="nav-toggle" onclick="toggleMenu()" aria-label="Toggle navigation">☰</button>
+                <ul class="nav-menu" id="navMenu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">🏠 Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">📚 Subjects ▾</a>
+                        <div class="dropdown">
+                            <a href="#" class="active">Physical Sciences</a>
+                            <a href="#">Mathematics</a>
+                            <a href="#">Life Sciences</a>
+                            <a href="#">Chemistry</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">🎓 Grade 12 ▾</a>
+                        <div class="dropdown">
+                            <a href="#">Grade 10</a>
+                            <a href="#">Grade 11</a>
+                            <a href="#" class="active">Grade 12</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">📖 Topics ▾</a>
+                        <div class="dropdown">
+                            <a href="#" class="active">Momentum & Impulse</a>
+                            <a href="#">Electrostatics</a>
+                            <a href="#">Electric Circuits</a>
+                            <a href="#">Electromagnetism</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">📊 Progress</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
-        
-        <div class="collapsible">
-            <div class="collapsible-header">
-                <h2>Lesson Overview</h2>
-                <span class="toggle-icon">+</span>
-            </div>
-            <div class="collapsible-content">
-                <div class="content-section">
-                    <p>This lesson focuses on applying the conservation of momentum principle to specific scenarios: collisions where objects stick together (perfectly inelastic collisions) and explosions. In both cases, the total momentum of the system is conserved.</p>
-                    
-                    <div class="formula-box">
-                        <h3>Key Formulas</h3>
-                        <div class="formula">For objects sticking together: m₁v₁ᵢ + m₂v₂ᵢ = (m₁ + m₂)v<sub>f</sub></div>
-                        <div class="formula">For explosions: 0 = m₁v₁<sub>f</sub> + m₂v₂<sub>f</sub></div>
-                        <p>Where momentum before explosion is zero.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="collapsible">
-            <div class="collapsible-header">
-                <h2>Main Body</h2>
-                <span class="toggle-icon">+</span>
-            </div>
-            <div class="collapsible-content">
-                <div class="content-section">
-                    <h3>Types of Collisions</h3>
-                    
-                    <div class="scenario-type">
-                        <div class="scenario-btn active" id="stickTogetherBtn">Objects Stick Together</div>
-                        <div class="scenario-btn" id="explosionBtn">Explosion Scenario</div>
-                    </div>
-                    
-                    <div id="stickTogetherContent">
-                        <h4>Collisions Where Objects Stick Together</h4>
-                        <p>In perfectly inelastic collisions, objects stick together after collision and move with a common velocity. The conservation of momentum equation becomes:</p>
-                        
-                        <div class="formula-box">
-                            <div class="formula">m₁v₁ᵢ + m₂v₂ᵢ = (m₁ + m₂)v<sub>f</sub></div>
-                        </div>
-                        
-                        <div class="collision-simulator">
-                            <h4>Inelastic Collision Simulator</h4>
-                            <p>Adjust the masses and velocities to see how objects stick together after collision:</p>
-                            
-                            <div class="input-group">
-                                <div class="input-field">
-                                    <label for="stick_mass1">Mass 1 (kg)</label>
-                                    <input type="number" id="stick_mass1" value="2" min="0.1" step="0.1">
-                                </div>
-                                <div class="input-field">
-                                    <label for="stick_velocity1">Velocity 1 (m/s)</label>
-                                    <input type="number" id="stick_velocity1" value="5" step="0.1">
-                                </div>
-                                <div class="input-field">
-                                    <label for="stick_mass2">Mass 2 (kg)</label>
-                                    <input type="number" id="stick_mass2" value="3" min="0.1" step="0.1">
-                                </div>
-                                <div class="input-field">
-                                    <label for="stick_velocity2">Velocity 2 (m/s)</label>
-                                    <input type="number" id="stick_velocity2" value="0" step="0.1">
-                                </div>
-                            </div>
-                            
-                            <div class="simulation-area" id="stickSimulationArea">
-                                <div class="object object-1" id="stickObject1">Object 1</div>
-                                <div class="object object-2" id="stickObject2">Object 2</div>
-                                <div class="object combined-object" id="combinedObject" style="display: none;">Combined</div>
-                            </div>
-                            
-                            <div class="velocity-display">
-                                <p>Initial Momentum: <span id="stickInitialMomentum">0</span> kg·m/s</p>
-                                <p>Final Velocity: <span id="stickFinalVelocity">0</span> m/s</p>
-                                <p>Final Momentum: <span id="stickFinalMomentum">0</span> kg·m/s</p>
-                            </div>
-                            
-                            <button id="runStickSimulation">Run Inelastic Collision</button>
-                        </div>
-                    </div>
-                    
-                    <div id="explosionContent" style="display: none;">
-                        <h4>Explosion Scenarios</h4>
-                        <p>In explosion scenarios, objects start together at rest and then move apart. The total momentum before the explosion is zero, so the total momentum after must also be zero.</p>
-                        
-                        <div class="formula-box">
-                            <div class="formula">0 = m₁v₁<sub>f</sub> + m₂v₂<sub>f</sub></div>
-                            <p>This means the objects move in opposite directions with momenta that are equal in magnitude but opposite in direction.</p>
-                        </div>
-                        
-                        <div class="collision-simulator">
-                            <h4>Explosion Simulator</h4>
-                            <p>Adjust the masses to see how objects move apart after an explosion:</p>
-                            
-                            <div class="input-group">
-                                <div class="input-field">
-                                    <label for="exp_mass1">Mass 1 (kg)</label>
-                                    <input type="number" id="exp_mass1" value="0.05" min="0.01" step="0.01">
-                                </div>
-                                <div class="input-field">
-                                    <label for="exp_velocity1">Velocity 1 (m/s)</label>
-                                    <input type="number" id="exp_velocity1" value="400" step="10">
-                                </div>
-                                <div class="input-field">
-                                    <label for="exp_mass2">Mass 2 (kg)</label>
-                                    <input type="number" id="exp_mass2" value="3" min="0.1" step="0.1">
-                                </div>
-                            </div>
-                            
-                            <div class="simulation-area" id="expSimulationArea">
-                                <div class="object combined-object" id="expCombinedObject" style="left: 50%; transform: translateX(-50%);">Combined</div>
-                                <div class="object object-1" id="expObject1" style="display: none;">Bullet</div>
-                                <div class="object object-2" id="expObject2" style="display: none;">Rifle</div>
-                            </div>
-                            
-                            <div class="velocity-display">
-                                <p>Initial Momentum: <span id="expInitialMomentum">0</span> kg·m/s</p>
-                                <p>Velocity of Object 2: <span id="expVelocity2">0</span> m/s</p>
-                                <p>Final Momentum: <span id="expFinalMomentum">0</span> kg·m/s</p>
-                            </div>
-                            
-                            <button id="runExpSimulation">Run Explosion Simulation</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="content-section">
-                    <h3>Worked Examples</h3>
-                    
-                    <div class="interactive-problem">
-                        <h4>Problem 1: Bullet and Wooden Block</h4>
-                        <p>A 30 g bullet is shot horizontally with a certain velocity into a wooden block of mass 1.47 kg, which is standing on a smooth surface. After the impact the bullet gets embedded in the wood and they move off together with a horizontal velocity of 4 m/s. Calculate the initial velocity of the bullet.</p>
-                        
-                        <div class="interactive-calc">
-                            <h4>Interactive Calculator for Problem 1</h4>
-                            <div class="input-group">
-                                <div class="input-field">
-                                    <label for="p1_mass1">Bullet Mass (kg)</label>
-                                    <input type="number" id="p1_mass1" value="0.03" step="0.001">
-                                </div>
-                                <div class="input-field">
-                                    <label for="p1_mass2">Block Mass (kg)</label>
-                                    <input type="number" id="p1_mass2" value="1.47" step="0.01">
-                                </div>
-                                <div class="input-field">
-                                    <label for="p1_vf">Final Velocity (m/s)</label>
-                                    <input type="number" id="p1_vf" value="4" step="0.1">
-                                </div>
-                            </div>
-                            <button id="calculateProblem1">Calculate Initial Bullet Velocity</button>
-                            <div id="problem1Result" class="result"></div>
-                        </div>
-                        
-                        <div class="problem-step">
-                            <button class="step-toggle" onclick="toggleStep('step1-1')">Step 1</button>
-                            <span>Set up the conservation of momentum equation</span>
-                            <div class="step-content" id="step1-1">
-                                <p>Take the initial velocity of the bullet as positive:</p>
-                                <p>Σp<sub>before</sub> = Σp<sub>after</sub></p>
-                                <p>m₁v₁ᵢ + m₂v₂ᵢ = (m₁ + m₂)v<sub>f</sub></p>
-                                <p>(0.03 × v₁ᵢ) + (1.47 × 0) = (0.03 + 1.47) × 4</p>
-                            </div>
-                        </div>
-                        
-                        <div class="problem-step">
-                            <button class="step-toggle" onclick="toggleStep('step1-2')">Step 2</button>
-                            <span>Solve for the unknown velocity</span>
-                            <div class="step-content" id="step1-2">
-                                <p>0.03v₁ᵢ + 0 = 1.5 × 4</p>
-                                <p>0.03v₁ᵢ = 6</p>
-                                <p>v₁ᵢ = 200 m/s</p>
-                                <p>The initial velocity of the bullet is 200 m/s.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="interactive-problem">
-                        <h4>Problem 2: Car Collision</h4>
-                        <p>The driver of a 1800 kg car stops the car when he sees that the robot he is approaching turns red. A smaller car, whose driver tries to 'beat' the red light, collides into the back of the stationary car and the two cars become entangled during the collision. If the smaller car, of mass 900 kg, was moving at 20 m/s when it hit the stationary car, calculate the velocity of the entangled wreckage after the collision.</p>
-                        
-                        <div class="interactive-calc">
-                            <h4>Interactive Calculator for Problem 2</h4>
-                            <div class="input-group">
-                                <div class="input-field">
-                                    <label for="p2_mass1">Car 1 Mass (kg)</label>
-                                    <input type="number" id="p2_mass1" value="1800" step="10">
-                                </div>
-                                <div class="input-field">
-                                    <label for="p2_v1i">Car 1 Velocity (m/s)</label>
-                                    <input type="number" id="p2_v1i" value="0" step="0.1">
-                                </div>
-                                <div class="input-field">
-                                    <label for="p2_mass2">Car 2 Mass (kg)</label>
-                                    <input type="number" id="p2_mass2" value="900" step="10">
-                                </div>
-                                <div class="input-field">
-                                    <label for="p2_v2i">Car 2 Velocity (m/s)</label>
-                                    <input type="number" id="p2_v2i" value="20" step="0.1">
-                                </div>
-                            </div>
-                            <button id="calculateProblem2">Calculate Final Velocity</button>
-                            <div id="problem2Result" class="result"></div>
-                        </div>
-                        
-                        <div class="problem-step">
-                            <button class="step-toggle" onclick="toggleStep('step2-1')">Step 1</button>
-                            <span>Set up the conservation of momentum equation</span>
-                            <div class="step-content" id="step2-1">
-                                <p>Take initial velocity as positive:</p>
-                                <p>Σp<sub>before</sub> = Σp<sub>after</sub></p>
-                                <p>m₁v₁ᵢ + m₂v₂ᵢ = (m₁ + m₂)v<sub>f</sub></p>
-                                <p>(1800 × 0) + (900 × 20) = (1800 + 900) × v<sub>f</sub></p>
-                            </div>
-                        </div>
-                        
-                        <div class="problem-step">
-                            <button class="step-toggle" onclick="toggleStep('step2-2')">Step 2</button>
-                            <span>Solve for the unknown velocity</span>
-                            <div class="step-content" id="step2-2">
-                                <p>0 + 18000 = 2700 × v<sub>f</sub></p>
-                                <p>18000 = 2700v<sub>f</sub></p>
-                                <p>v<sub>f</sub> = 6.67 m/s</p>
-                                <p>The entangled wreckage moves at 6.67 m/s.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="interactive-problem">
-                        <h4>Problem 3: Rifle Recoil</h4>
-                        <p>A bullet with a mass of 50 g leaves the barrel of a rifle with a velocity of 400 m/s. If the mass of the rifle is 3 kg, calculate the recoil velocity of the rifle.</p>
-                        
-                        <div class="interactive-calc">
-                            <h4>Interactive Calculator for Problem 3</h4>
-                            <div class="input-group">
-                                <div class="input-field">
-                                    <label for="p3_mass1">Bullet Mass (kg)</label>
-                                    <input type="number" id="p3_mass1" value="0.05" step="0.001">
-                                </div>
-                                <div class="input-field">
-                                    <label for="p3_v1f">Bullet Velocity (m/s)</label>
-                                    <input type="number" id="p3_v1f" value="400" step="1">
-                                </div>
-                                <div class="input-field">
-                                    <label for="p3_mass2">Rifle Mass (kg)</label>
-                                    <input type="number" id="p3_mass2" value="3" step="0.1">
-                                </div>
-                            </div>
-                            <button id="calculateProblem3">Calculate Recoil Velocity</button>
-                            <div id="problem3Result" class="result"></div>
-                        </div>
-                        
-                        <div class="problem-step">
-                            <button class="step-toggle" onclick="toggleStep('step3-1')">Step 1</button>
-                            <span>Set up the conservation of momentum equation</span>
-                            <div class="step-content" id="step3-1">
-                                <p>Take the velocity of the bullet as positive. Initial momentum is zero:</p>
-                                <p>Σp<sub>before</sub> = Σp<sub>after</sub></p>
-                                <p>0 = m₁v₁<sub>f</sub> + m₂v₂<sub>f</sub></p>
-                                <p>0 = (0.05 × 400) + (3 × v₂<sub>f</sub>)</p>
-                            </div>
-                        </div>
-                        
-                        <div class="problem-step">
-                            <button class="step-toggle" onclick="toggleStep('step3-2')">Step 2</button>
-                            <span>Solve for the unknown velocity</span>
-                            <div class="step-content" id="step3-2">
-                                <p>0 = 20 + 3v₂<sub>f</sub></p>
-                                <p>3v₂<sub>f</sub> = -20</p>
-                                <p>v₂<sub>f</sub> = -6.67 m/s</p>
-                                <p>The rifle recoils at 6.67 m/s in the opposite direction to the bullet.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="content-section">
-                    <h3>Momentum Conservation Calculator</h3>
-                    <div class="calculator">
-                        <p>Use this calculator to solve conservation of momentum problems for objects that stick together:</p>
-                        <div class="input-group">
-                            <div class="input-field">
-                                <label for="calc_mass1">Mass 1 (kg)</label>
-                                <input type="number" id="calc_mass1" step="0.1" placeholder="Enter mass 1">
-                            </div>
-                            <div class="input-field">
-                                <label for="calc_v1i">Initial Velocity 1 (m/s)</label>
-                                <input type="number" id="calc_v1i" step="0.1" placeholder="Enter velocity 1">
-                            </div>
-                            <div class="input-field">
-                                <label for="calc_mass2">Mass 2 (kg)</label>
-                                <input type="number" id="calc_mass2" step="0.1" placeholder="Enter mass 2">
-                            </div>
-                            <div class="input-field">
-                                <label for="calc_v2i">Initial Velocity 2 (m/s)</label>
-                                <input type="number" id="calc_v2i" step="0.1" placeholder="Enter velocity 2">
-                            </div>
-                        </div>
-                        <button id="calculateStickTogether">Calculate Final Velocity</button>
-                        <div id="stickTogetherResult" class="result"></div>
-                        
-                        <table class="momentum-table">
-                            <thead>
-                                <tr>
-                                    <th>Object</th>
-                                    <th>Mass (kg)</th>
-                                    <th>Initial Velocity (m/s)</th>
-                                    <th>Initial Momentum (kg·m/s)</th>
-                                    <th>Final Velocity (m/s)</th>
-                                    <th>Final Momentum (kg·m/s)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Object 1</td>
-                                    <td id="table_mass1">-</td>
-                                    <td id="table_v1i">-</td>
-                                    <td id="table_p1i">-</td>
-                                    <td id="table_v1f">-</td>
-                                    <td id="table_p1f">-</td>
-                                </tr>
-                                <tr>
-                                    <td>Object 2</td>
-                                    <td id="table_mass2">-</td>
-                                    <td id="table_v2i">-</td>
-                                    <td id="table_p2i">-</td>
-                                    <td id="table_v2f">-</td>
-                                    <td id="table_p2f">-</td>
-                                </tr>
-                                <tr>
-                                    <td>Combined</td>
-                                    <td id="table_total_mass">-</td>
-                                    <td>-</td>
-                                    <td id="table_total_pi">-</td>
-                                    <td id="table_total_vf">-</td>
-                                    <td id="table_total_pf">-</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="collapsible">
-            <div class="collapsible-header">
-                <h2>End of Lesson Questions</h2>
-                <span class="toggle-icon">+</span>
-            </div>
-            <div class="collapsible-content">
-                <div class="questions-container">
-                    <div class="question">
-                        <h3>Question 1: In a perfectly inelastic collision, what happens to the objects after collision?</h3>
-                        <div class="options">
-                            <div class="option">
-                                <input type="radio" name="q1" id="q1a" value="a">
-                                <label for="q1a">They bounce off each other</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q1" id="q1b" value="b">
-                                <label for="q1b">They stick together and move with a common velocity</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q1" id="q1c" value="c">
-                                <label for="q1c">They come to rest</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q1" id="q1d" value="d">
-                                <label for="q1d">They move in opposite directions</label>
-                            </div>
-                        </div>
-                        <div class="feedback" id="feedback1"></div>
-                    </div>
-                    
-                    <div class="question">
-                        <h3>Question 2: What is the total momentum before an explosion?</h3>
-                        <div class="options">
-                            <div class="option">
-                                <input type="radio" name="q2" id="q2a" value="a">
-                                <label for="q2a">Zero</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q2" id="q2b" value="b">
-                                <label for="q2b">Equal to the mass times velocity</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q2" id="q2c" value="c">
-                                <label for="q2c">Maximum</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q2" id="q2d" value="d">
-                                <label for="q2d">Cannot be determined</label>
-                            </div>
-                        </div>
-                        <div class="feedback" id="feedback2"></div>
-                    </div>
-                    
-                    <div class="question">
-                        <h3>Question 3: A 2 kg object moving at 3 m/s collides and sticks to a stationary 3 kg object. What is their common velocity after collision?</h3>
-                        <div class="options">
-                            <div class="option">
-                                <input type="radio" name="q3" id="q3a" value="a">
-                                <label for="q3a">1.2 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q3" id="q3b" value="b">
-                                <label for="q3b">1.5 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q3" id="q3c" value="c">
-                                <label for="q3c">2.0 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q3" id="q3d" value="d">
-                                <label for="q3d">3.0 m/s</label>
-                            </div>
-                        </div>
-                        <div class="feedback" id="feedback3"></div>
-                    </div>
-                    
-                    <div class="question">
-                        <h3>Question 4: A 0.1 kg bullet is fired from a 4 kg rifle. If the bullet leaves with a velocity of 300 m/s, what is the recoil velocity of the rifle?</h3>
-                        <div class="options">
-                            <div class="option">
-                                <input type="radio" name="q4" id="q4a" value="a">
-                                <label for="q4a">7.5 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q4" id="q4b" value="b">
-                                <label for="q4b">-7.5 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q4" id="q4c" value="c">
-                                <label for="q4c">30 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q4" id="q4d" value="d">
-                                <label for="q4d">-30 m/s</label>
-                            </div>
-                        </div>
-                        <div class="feedback" id="feedback4"></div>
-                    </div>
-                    
-                    <div class="question">
-                        <h3>Question 5: Which equation correctly represents conservation of momentum for objects that stick together?</h3>
-                        <div class="options">
-                            <div class="option">
-                                <input type="radio" name="q5" id="q5a" value="a">
-                                <label for="q5a">m₁v₁ᵢ + m₂v₂ᵢ = m₁v₁<sub>f</sub> + m₂v₂<sub>f</sub></label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q5" id="q5b" value="b">
-                                <label for="q5b">m₁v₁ᵢ + m₂v₂ᵢ = (m₁ + m₂)v<sub>f</sub></label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q5" id="q5c" value="c">
-                                <label for="q5c">m₁v₁ᵢ = m₂v₂ᵢ</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q5" id="q5d" value="d">
-                                <label for="q5d">m₁v₁ᵢ + m₂v₂ᵢ = 0</label>
-                            </div>
-                        </div>
-                        <div class="feedback" id="feedback5"></div>
-                    </div>
-                    
-                    <div class="question">
-                        <h3>Question 6: A 1000 kg car moving at 10 m/s collides with a stationary 1500 kg car. If they stick together, what is their common velocity?</h3>
-                        <div class="options">
-                            <div class="option">
-                                <input type="radio" name="q6" id="q6a" value="a">
-                                <label for="q6a">2 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q6" id="q6b" value="b">
-                                <label for="q6b">4 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q6" id="q6c" value="c">
-                                <label for="q6c">6 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q6" id="q6d" value="d">
-                                <label for="q6d">8 m/s</label>
-                            </div>
-                        </div>
-                        <div class="feedback" id="feedback6"></div>
-                    </div>
-                    
-                    <div class="question">
-                        <h3>Question 7: In an explosion scenario, why must the objects move in opposite directions?</h3>
-                        <div class="options">
-                            <div class="option">
-                                <input type="radio" name="q7" id="q7a" value="a">
-                                <label for="q7a">To conserve kinetic energy</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q7" id="q7b" value="b">
-                                <label for="q7b">To conserve momentum</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q7" id="q7c" value="c">
-                                <label for="q7c">Due to Newton's third law</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q7" id="q7d" value="d">
-                                <label for="q7d">To increase the force</label>
-                            </div>
-                        </div>
-                        <div class="feedback" id="feedback7"></div>
-                    </div>
-                    
-                    <div class="question">
-                        <h3>Question 8: A 50 g ball of clay moving at 5 m/s hits and sticks to a stationary 100 g ball. What is their velocity after collision?</h3>
-                        <div class="options">
-                            <div class="option">
-                                <input type="radio" name="q8" id="q8a" value="a">
-                                <label for="q8a">1.67 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q8" id="q8b" value="b">
-                                <label for="q8b">2.5 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q8" id="q8c" value="c">
-                                <label for="q8c">3.33 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q8" id="q8d" value="d">
-                                <label for="q8d">5 m/s</label>
-                            </div>
-                        </div>
-                        <div class="feedback" id="feedback8"></div>
-                    </div>
-                    
-                    <div class="question">
-                        <h3>Question 9: What is the main difference between elastic and perfectly inelastic collisions?</h3>
-                        <div class="options">
-                            <div class="option">
-                                <input type="radio" name="q9" id="q9a" value="a">
-                                <label for="q9a">Momentum is not conserved in inelastic collisions</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q9" id="q9b" value="b">
-                                <label for="q9b">Objects stick together in perfectly inelastic collisions</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q9" id="q9c" value="c">
-                                <label for="q9c">Kinetic energy is conserved in inelastic collisions</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q9" id="q9d" value="d">
-                                <label for="q9d">There is no difference</label>
-                            </div>
-                        </div>
-                        <div class="feedback" id="feedback9"></div>
-                    </div>
-                    
-                    <div class="question">
-                        <h3>Question 10: A 0.02 kg bullet is fired into a 2 kg block of wood. If the block with the embedded bullet moves at 2 m/s, what was the bullet's initial velocity?</h3>
-                        <div class="options">
-                            <div class="option">
-                                <input type="radio" name="q10" id="q10a" value="a">
-                                <label for="q10a">100 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q10" id="q10b" value="b">
-                                <label for="q10b">200 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q10" id="q10c" value="c">
-                                <label for="q10c">300 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q10" id="q10d" value="d">
-                                <label for="q10d">400 m/s</label>
-                            </div>
-                        </div>
-                        <div class="feedback" id="feedback10"></div>
-                    </div>
-                    
-                    <button id="checkAnswers">Check Answers</button>
-                    
-                    <div class="score-container">
-                        <h3>Your Score</h3>
-                        <div class="score-display" id="scoreDisplay">0%</div>
-                        <div class="progress-bar">
-                            <div class="progress" id="progressBar"></div>
-                        </div>
-                        <p id="scoreMessage">Answer the questions to see your score</p>
-                    </div>
-                    
-                    <div class="navigation">
-                        <button id="prevBtn" class="nav-btn" disabled>Previous</button>
-                        <button id="nextBtn" class="nav-btn">Next</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+    </header>
+
+    <!-- Progress Indicator -->
+    <div class="progress-indicator" id="progressIndicator">
+        <span>✓</span>
+        <span id="progressText">Progress saved!</span>
     </div>
 
+    <!-- Main Content -->
+    <main>
+        <!-- Subject & Grade Card -->
+        <section class="card">
+            <div class="badge-container">
+                <span class="badge primary">Grade 12</span>
+                <span class="badge">Physical Sciences</span>
+                <span class="badge">Week 4</span>
+                <span class="badge lesson">Lesson 5</span>
+                <span class="badge collision">Collisions</span>
+                <span class="badge explosion">Explosions</span>
+            </div>
+            <p class="topic-title">TOPIC: Momentum and Impulse</p>
+            <h1>Lesson 5: Inelastic Collisions & Explosions</h1>
+            <p class="lesson-info">Apply conservation of momentum to real-world scenarios including bullets embedding in blocks, car crashes, railway coupling, and rifle recoil.</p>
+        </section>
+
+        <!-- Learning Objectives -->
+        <section class="card">
+            <h2>🎯 Learning Objectives</h2>
+            <p>By the end of this lesson, you will be able to:</p>
+            <ul class="objectives-list">
+                <li>Apply conservation of momentum when objects stick together after collision</li>
+                <li>Solve problems involving bullets embedding in wooden blocks</li>
+                <li>Calculate velocities in car crash scenarios where vehicles become entangled</li>
+                <li>Understand and apply momentum conservation to explosions (e.g., rifle recoil)</li>
+                <li>Recognize that total momentum before an explosion is zero</li>
+            </ul>
+        </section>
+
+        <!-- Overview & Baseline -->
+        <section class="card">
+            <h2>📖 Overview</h2>
+            <p>In this lesson, we apply the conservation of momentum to two important types of scenarios:</p>
+            <ol style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                <li><strong>Inelastic collisions</strong> where objects stick together</li>
+                <li><strong>Explosions</strong> where objects separate from rest</li>
+            </ol>
+            
+            <div class="key-point">
+                <strong>Pre-knowledge Required:</strong> Conservation of momentum principle
+                <p style="margin-top: 0.5rem;"><em>The total linear momentum in an isolated system is constant in both magnitude and direction.</em></p>
+            </div>
+
+            <h3>Baseline Questions</h3>
+            <div class="key-point orange">
+                <strong>Test yourself before continuing:</strong>
+                <ol style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                    <li>State the principle of conservation of momentum.</li>
+                    <li>An object of 4 kg moving to the right at 2 m·s⁻¹ collides with a stationary object with a mass of 6 kg. After collision the 4 kg mass moves at 1.5 m·s⁻¹ to the left. Calculate the velocity of the 6 kg after collision.</li>
+                </ol>
+            </div>
+
+            <div class="key-point success">
+                <strong>Answers:</strong>
+                <ol style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                    <li>The total linear momentum in an isolated system is constant in both magnitude and direction.</li>
+                    <li>
+                        Take right as positive:<br>
+                        p<sub>before</sub> = p<sub>after</sub><br>
+                        m₁v₁ᵢ + m₂v₂ᵢ = m₁v₁f + m₂v₂f<br>
+                        (4)(2) + (6)(0) = (4)(-1.5) + (6)v₂f<br>
+                        8 + 0 = -6 + 6v₂f<br>
+                        v₂f = 14/6 = <strong>2.3 m·s⁻¹ to the right</strong>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Types of Scenarios -->
+        <section class="card">
+            <h2>🎯 Types of Momentum Problems</h2>
+
+            <div class="scenario-grid">
+                <div class="scenario-card stick">
+                    <div class="scenario-icon">🔗💥</div>
+                    <h4>Objects Stick Together</h4>
+                    <p>After collision, objects combine into one mass and move together with the same velocity.</p>
+                    <div class="scenario-formula">
+                        m₁v₁ᵢ + m₂v₂ᵢ = (m₁ + m₂)vf
+                    </div>
+                    <p class="scenario-note">Examples: Bullet in block, car crashes, railway coupling</p>
+                </div>
+
+                <div class="scenario-card explosion">
+                    <div class="scenario-icon">💥⬅️➡️</div>
+                    <h4>Explosions</h4>
+                    <p>Objects start at rest (or together) and separate. Total initial momentum is zero!</p>
+                    <div class="scenario-formula">
+                        0 = m₁v₁f + m₂v₂f
+                    </div>
+                    <p class="scenario-note">Examples: Rifle recoil, fireworks, pushing apart</p>
+                </div>
+
+                <div class="scenario-card bullet">
+                    <div class="scenario-icon">🔫🎯</div>
+                    <h4>Bullet Problems</h4>
+                    <p>A bullet embeds in a stationary block. Find initial bullet velocity or final combined velocity.</p>
+                    <div class="scenario-formula">
+                        m<sub>b</sub>v<sub>b</sub> + 0 = (m<sub>b</sub> + m<sub>block</sub>)vf
+                    </div>
+                    <p class="scenario-note">Convert grams to kg! (÷1000)</p>
+                </div>
+            </div>
+
+            <h3>Comparing Collisions vs Explosions</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Collision (Stick Together)</th>
+                        <th>Explosion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Initial State</td>
+                        <td>Objects moving, then combine</td>
+                        <td>Objects at rest or together</td>
+                    </tr>
+                    <tr>
+                        <td>Final State</td>
+                        <td>One combined mass moving</td>
+                        <td>Separate objects moving apart</td>
+                    </tr>
+                    <tr>
+                        <td>Total p (before)</td>
+                        <td>Sum of individual momenta</td>
+                        <td>Zero (at rest)</td>
+                    </tr>
+                    <tr>
+                        <td>Conservation</td>
+                        <td>p<sub>before</sub> = p<sub>after</sub></td>
+                        <td>0 = p₁ + p₂ (opposite momenta)</td>
+                    </tr>
+                    <tr>
+                        <td>Kinetic Energy</td>
+                        <td>Decreases (lost to deformation)</td>
+                        <td>Increases (from chemical/stored energy)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="key-point danger">
+                <strong>Explosion Key Insight:</strong> In an explosion, the total momentum before is ZERO (objects at rest). After the explosion, the momenta of the separating objects are <strong>equal in magnitude but opposite in direction</strong>, so they still sum to zero!
+            </div>
+        </section>
+
+        <!-- Worked Examples -->
+        <section class="card">
+            <h2>📚 Worked Examples</h2>
+
+            <!-- Example 1: Railway Trucks Coupling -->
+            <div class="example-box">
+                <div class="example-header">
+                    <span class="example-icon orange">1</span>
+                    <span>Worked Example: Railway Trucks Coupling</span>
+                    <span class="example-type stick">Stick Together</span>
+                </div>
+                <div class="problem-statement">
+                    <strong>Problem:</strong> A railway truck with a mass of 2 × 10³ kg is moving at a speed of 5 m·s⁻¹. It collides with a stationary truck which has a mass of 3 × 10³ kg. If the two trucks couple together during the collision, what is their combined velocity after the collision?
+                </div>
+                <div class="solution">
+                    <div class="direction-note">📍 Take direction of moving truck as POSITIVE</div>
+                    <br>
+                    <strong>Given:</strong><br>
+                    m₁ = 2 × 10³ kg = 2000 kg, v₁ᵢ = +5 m·s⁻¹<br>
+                    m₂ = 3 × 10³ kg = 3000 kg, v₂ᵢ = 0 (stationary)<br>
+                    vf = ? (combined velocity)<br><br>
+
+                    <strong>Apply conservation of momentum (stick together):</strong><br>
+                    <div class="solution-step">
+                        p<sub>before</sub> = p<sub>after</sub><br>
+                        m₁v₁ᵢ + m₂v₂ᵢ = (m₁ + m₂)vf<br>
+                        (2000)(5) + (3000)(0) = (2000 + 3000)vf<br>
+                        10000 + 0 = 5000vf<br>
+                        vf = 10000 / 5000<br>
+                    </div>
+                    <span class="solution-final">vf = 2 m·s⁻¹ in the original direction</span>
+                </div>
+            </div>
+
+            <!-- Example 2: Rifle Recoil (Explosion) -->
+            <div class="example-box">
+                <div class="example-header">
+                    <span class="example-icon red">2</span>
+                    <span>Worked Example: Rifle Recoil (Explosion)</span>
+                    <span class="example-type explosion">Explosion</span>
+                </div>
+                <div class="problem-statement">
+                    <strong>Problem:</strong> A bullet with a mass of 100 g is fired from a rifle. The bullet's velocity as it leaves the barrel of the rifle is 300 m·s⁻¹. If the mass of the rifle is 5 kg, calculate its recoil velocity.
+                </div>
+                <div class="solution">
+                    <div class="direction-note">📍 Take bullet's direction as POSITIVE</div>
+                    <br>
+                    <strong>Key Insight:</strong> This is an EXPLOSION! Before firing, total momentum = 0<br><br>
+                    
+                    <strong>Given:</strong><br>
+                    m<sub>bullet</sub> = 100 g = 0.1 kg, v<sub>bullet</sub> = +300 m·s⁻¹<br>
+                    m<sub>rifle</sub> = 5 kg, v<sub>rifle</sub> = ?<br>
+                    p<sub>before</sub> = 0 (system at rest)<br><br>
+
+                    <strong>Apply conservation of momentum:</strong><br>
+                    <div class="solution-step">
+                        p<sub>before</sub> = p<sub>after</sub><br>
+                        0 = m<sub>bullet</sub>v<sub>bullet</sub> + m<sub>rifle</sub>v<sub>rifle</sub><br>
+                        0 = (0.1)(300) + (5)(v<sub>rifle</sub>)<br>
+                        0 = 30 + 5v<sub>rifle</sub><br>
+                        5v<sub>rifle</sub> = -30<br>
+                        v<sub>rifle</sub> = -6 m·s⁻¹<br>
+                    </div>
+                    <span class="solution-final">v<sub>rifle</sub> = 6 m·s⁻¹ in the opposite direction to the bullet</span>
+                    
+                    <div class="solution-note">
+                        <strong>The negative sign indicates:</strong> The rifle moves backward (recoils) in the opposite direction to the bullet. This is why you feel a "kick" when firing a gun!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 3: Bullet in Block -->
+            <div class="example-box">
+                <div class="example-header">
+                    <span class="example-icon indigo">3</span>
+                    <span>Worked Example: Bullet Embedding in Block</span>
+                    <span class="example-type stick">Stick Together</span>
+                </div>
+                <div class="problem-statement">
+                    <strong>Problem:</strong> A 30 g bullet is shot horizontally with a certain velocity into a wooden block of mass 1.47 kg, which is standing on a smooth surface. After the impact, the bullet gets embedded in the wood and they move off together with a horizontal velocity of 4 m·s⁻¹. Calculate the initial velocity of the bullet.
+                </div>
+                <div class="solution">
+                    <div class="direction-note">📍 Take initial bullet velocity direction as POSITIVE</div>
+                    <br>
+                    <strong>Given:</strong><br>
+                    m<sub>bullet</sub> = 30 g = 0.03 kg, v<sub>bullet</sub> = ?<br>
+                    m<sub>block</sub> = 1.47 kg, v<sub>block</sub> = 0 (stationary)<br>
+                    m<sub>combined</sub> = 0.03 + 1.47 = 1.5 kg<br>
+                    vf = 4 m·s⁻¹<br><br>
+
+                    <strong>Apply conservation of momentum (stick together):</strong><br>
+                    <div class="solution-step">
+                        p<sub>before</sub> = p<sub>after</sub><br>
+                        m₁v₁ᵢ + m₂v₂ᵢ = (m₁ + m₂)vf<br>
+                        (0.03)(v<sub>bullet</sub>) + (1.47)(0) = (1.5)(4)<br>
+                        0.03v<sub>bullet</sub> = 6<br>
+                        v<sub>bullet</sub> = 6 / 0.03<br>
+                    </div>
+                    <span class="solution-final">v<sub>bullet</sub> = 200 m·s⁻¹</span>
+                    
+                    <div class="solution-note">
+                        <strong>Unit Check:</strong> Always convert grams to kilograms (÷1000) before calculating!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 4: Car Crash -->
+            <div class="example-box">
+                <div class="example-header">
+                    <span class="example-icon orange">4</span>
+                    <span>Worked Example: Car Collision</span>
+                    <span class="example-type stick">Stick Together</span>
+                </div>
+                <div class="problem-statement">
+                    <strong>Problem:</strong> The driver of a 1800 kg car stops the car when he sees that the robot (traffic light) he is approaching turns red. A smaller car, whose driver tries to 'beat' the red light, collides into the back of the stationary car and the two cars become entangled during the collision. If the smaller car, of mass 900 kg, was moving at 20 m·s⁻¹ when it hit the stationary car, calculate the velocity of the entangled wreckage after the collision.
+                </div>
+                <div class="solution">
+                    <div class="direction-note">📍 Take direction of moving car as POSITIVE</div>
+                    <br>
+                    <strong>Given:</strong><br>
+                    m₁ = 1800 kg (stationary car), v₁ᵢ = 0<br>
+                    m₂ = 900 kg (moving car), v₂ᵢ = +20 m·s⁻¹<br>
+                    vf = ?<br><br>
+
+                    <strong>Apply conservation of momentum (stick together):</strong><br>
+                    <div class="solution-step">
+                        p<sub>before</sub> = p<sub>after</sub><br>
+                        m₁v₁ᵢ + m₂v₂ᵢ = (m₁ + m₂)vf<br>
+                        (1800)(0) + (900)(20) = (1800 + 900)vf<br>
+                        0 + 18000 = 2700vf<br>
+                        vf = 18000 / 2700<br>
+                    </div>
+                    <span class="solution-final">vf = 6.67 m·s⁻¹</span>
+                </div>
+            </div>
+
+            <!-- Example 5: Railway Coaches -->
+            <div class="example-box">
+                <div class="example-header">
+                    <span class="example-icon orange">5</span>
+                    <span>Worked Example: Railway Coaches Coupling</span>
+                    <span class="example-type stick">Stick Together</span>
+                </div>
+                <div class="problem-statement">
+                    <strong>Problem:</strong> A railway coach of mass 2 × 10⁴ kg moving at a speed of 4 m·s⁻¹ collides and couples with three other coupled coaches. The three coupled coaches each have the same mass as the single coach and are moving at 3 m·s⁻¹ in the same direction. Calculate the velocity of the coupled coaches after the collision.
+                </div>
+                <div class="solution">
+                    <div class="direction-note">📍 Take direction of motion as POSITIVE</div>
+                    <br>
+                    <strong>Given:</strong><br>
+                    m₁ = 2 × 10⁴ kg = 20000 kg, v₁ᵢ = +4 m·s⁻¹<br>
+                    m₂ = 3 × (2 × 10⁴) = 6 × 10⁴ kg = 60000 kg, v₂ᵢ = +3 m·s⁻¹<br>
+                    Total mass after = 20000 + 60000 = 80000 kg = 8 × 10⁴ kg<br>
+                    vf = ?<br><br>
+
+                    <strong>Apply conservation of momentum:</strong><br>
+                    <div class="solution-step">
+                        p<sub>before</sub> = p<sub>after</sub><br>
+                        m₁v₁ᵢ + m₂v₂ᵢ = (m₁ + m₂)vf<br>
+                        (2 × 10⁴)(4) + (6 × 10⁴)(3) = (8 × 10⁴)vf<br>
+                        80000 + 180000 = 80000vf<br>
+                        260000 = 80000vf<br>
+                        vf = 260000 / 80000<br>
+                    </div>
+                    <span class="solution-final">vf = 3.25 m·s⁻¹ in the same direction</span>
+                </div>
+            </div>
+
+            <!-- Example 6: Another Rifle Recoil -->
+            <div class="example-box">
+                <div class="example-header">
+                    <span class="example-icon red">6</span>
+                    <span>Worked Example: Rifle Recoil 2</span>
+                    <span class="example-type explosion">Explosion</span>
+                </div>
+                <div class="problem-statement">
+                    <strong>Problem:</strong> A bullet with a mass of 50 g leaves the barrel of a rifle with a velocity of 400 m·s⁻¹. If the mass of the rifle is 3 kg, calculate the recoil velocity of the rifle.
+                </div>
+                <div class="solution">
+                    <div class="direction-note">📍 Take bullet's direction as POSITIVE</div>
+                    <br>
+                    <strong>Given:</strong><br>
+                    m<sub>bullet</sub> = 50 g = 0.05 kg, v<sub>bullet</sub> = +400 m·s⁻¹<br>
+                    m<sub>rifle</sub> = 3 kg, v<sub>rifle</sub> = ?<br>
+                    p<sub>before</sub> = 0<br><br>
+
+                    <strong>Apply conservation of momentum (explosion):</strong><br>
+                    <div class="solution-step">
+                        p<sub>before</sub> = p<sub>after</sub><br>
+                        0 = m<sub>bullet</sub>v<sub>bullet</sub> + m<sub>rifle</sub>v<sub>rifle</sub><br>
+                        0 = (0.05)(400) + (3)(v<sub>rifle</sub>)<br>
+                        0 = 20 + 3v<sub>rifle</sub><br>
+                        3v<sub>rifle</sub> = -20<br>
+                        v<sub>rifle</sub> = -6.67 m·s⁻¹<br>
+                    </div>
+                    <span class="solution-final">v<sub>rifle</sub> = 6.67 m·s⁻¹ in the opposite direction to the bullet</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Simulations -->
+        <section class="card">
+            <h2>🔬 Interactive Simulations</h2>
+
+            <!-- Simulation 1: Bullet in Block -->
+            <div class="simulation-container">
+                <div class="simulation-title">🔫 Simulation 1: Bullet Embedding in Block</div>
+                <div class="simulation-description">
+                    A bullet is fired into a stationary wooden block. Adjust parameters to see how momentum is conserved when they move together.
+                </div>
+                <canvas id="bulletCanvas" class="simulation-canvas"></canvas>
+                <div class="simulation-controls">
+                    <div class="control-group">
+                        <label>Bullet Mass (g):</label>
+                        <input type="number" id="bulletMass" value="30" min="10" max="100" onchange="updateBulletSim()">
+                    </div>
+                    <div class="control-group">
+                        <label>Block Mass (kg):</label>
+                        <input type="number" id="blockMass" value="1.47" min="0.5" max="5" step="0.1" onchange="updateBulletSim()">
+                    </div>
+                    <div class="control-group">
+                        <label>Calculate:</label>
+                        <select id="bulletCalcMode" onchange="updateBulletSim()">
+                            <option value="bulletVel">Bullet Initial Velocity</option>
+                            <option value="finalVel">Combined Final Velocity</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label id="bulletInputLabel">Final Velocity (m/s):</label>
+                        <input type="number" id="bulletInputVal" value="4" min="1" max="20" step="0.1" onchange="updateBulletSim()">
+                    </div>
+                    <button class="sim-btn orange" onclick="fireBullet()">🔫 Fire!</button>
+                    <button class="sim-btn reset" onclick="resetBulletSim()">↺ Reset</button>
+                </div>
+                <div class="sim-output multi">
+                    <div class="sim-output-item">
+                        <div class="label">Bullet Momentum</div>
+                        <div class="value" id="bulletMomentum">6 kg·m/s</div>
+                    </div>
+                    <div class="sim-output-item">
+                        <div class="label">Block Initial p</div>
+                        <div class="value" id="blockMomentum">0 kg·m/s</div>
+                    </div>
+                    <div class="sim-output-item">
+                        <div class="label">Combined Mass</div>
+                        <div class="value" id="combinedMassBullet">1.5 kg</div>
+                    </div>
+                    <div class="sim-output-item">
+                        <div class="label">Result</div>
+                        <div class="value highlight" id="bulletResult">200 m/s</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulation 2: Explosion (Rifle Recoil) -->
+            <div class="simulation-container">
+                <div class="simulation-title">💥 Simulation 2: Rifle Recoil (Explosion)</div>
+                <div class="simulation-description">
+                    Watch how a rifle recoils when firing a bullet. The total momentum before firing is zero, and stays zero after!
+                </div>
+                <canvas id="recoilCanvas" class="simulation-canvas"></canvas>
+                <div class="simulation-controls">
+                    <div class="control-group">
+                        <label>Bullet Mass (g):</label>
+                        <input type="number" id="recoilBulletMass" value="100" min="20" max="200" onchange="updateRecoilSim()">
+                    </div>
+                    <div class="control-group">
+                        <label>Bullet Velocity (m/s):</label>
+                        <input type="number" id="recoilBulletVel" value="300" min="100" max="1000" step="50" onchange="updateRecoilSim()">
+                    </div>
+                    <div class="control-group">
+                        <label>Rifle Mass (kg):</label>
+                        <input type="number" id="rifleMass" value="5" min="1" max="10" step="0.5" onchange="updateRecoilSim()">
+                    </div>
+                    <button class="sim-btn red" onclick="fireRifle()">💥 Fire Rifle</button>
+                    <button class="sim-btn reset" onclick="resetRecoilSim()">↺ Reset</button>
+                </div>
+                <div class="sim-output multi">
+                    <div class="sim-output-item">
+                        <div class="label">p (before)</div>
+                        <div class="value" id="pBeforeRecoil">0 kg·m/s</div>
+                    </div>
+                    <div class="sim-output-item">
+                        <div class="label">Bullet Momentum</div>
+                        <div class="value" id="bulletPAfter">+30 kg·m/s</div>
+                    </div>
+                    <div class="sim-output-item">
+                        <div class="label">Rifle Momentum</div>
+                        <div class="value" id="riflePAfter">-30 kg·m/s</div>
+                    </div>
+                    <div class="sim-output-item">
+                        <div class="label">Recoil Velocity</div>
+                        <div class="value highlight" id="recoilVelocity">6 m/s ←</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulation 3: Car Crash -->
+            <div class="simulation-container">
+                <div class="simulation-title">🚗 Simulation 3: Car Collision (Entangled)</div>
+                <div class="simulation-description">
+                    Simulate a rear-end collision where cars become entangled. One car is stationary at a red light.
+                </div>
+                <canvas id="carCrashCanvas" class="simulation-canvas"></canvas>
+                <div class="simulation-controls">
+                    <div class="control-group">
+                        <label>Stationary Car (kg):</label>
+                        <input type="number" id="stationaryCarMass" value="1800" min="500" max="3000" step="100" onchange="updateCarCrashSim()">
+                    </div>
+                    <div class="control-group">
+                        <label>Moving Car (kg):</label>
+                        <input type="number" id="movingCarMass" value="900" min="500" max="2000" step="100" onchange="updateCarCrashSim()">
+                    </div>
+                    <div class="control-group">
+                        <label>Moving Car Speed (m/s):</label>
+                        <input type="number" id="movingCarSpeed" value="20" min="5" max="40" onchange="updateCarCrashSim()">
+                    </div>
+                    <button class="sim-btn orange" onclick="crashCars()">💥 Crash!</button>
+                    <button class="sim-btn reset" onclick="resetCarCrashSim()">↺ Reset</button>
+                </div>
+                <div class="sim-output multi">
+                    <div class="sim-output-item">
+                        <div class="label">Total p (before)</div>
+                        <div class="value" id="carPBefore">18000 kg·m/s</div>
+                    </div>
+                    <div class="sim-output-item">
+                        <div class="label">Combined Mass</div>
+                        <div class="value" id="carCombinedMass">2700 kg</div>
+                    </div>
+                    <div class="sim-output-item">
+                        <div class="label">Final Velocity</div>
+                        <div class="value highlight" id="carFinalVel">6.67 m/s</div>
+                    </div>
+                    <div class="sim-output-item">
+                        <div class="label">Total p (after)</div>
+                        <div class="value" id="carPAfter">18000 kg·m/s</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section class="card quiz-section">
+            <h2>📝 Check Your Understanding</h2>
+            <p>Answer all questions to test your knowledge of collisions and explosions.</p>
+
+            <div id="quizContainer">
+                <!-- Questions will be generated by JavaScript -->
+            </div>
+
+            <button class="submit-btn" id="submitBtn" onclick="submitQuiz()">Submit Answers</button>
+
+            <div class="score-container" id="scoreContainer">
+                <div class="score-circle">
+                    <div class="score-value" id="scoreValue">0%</div>
+                    <div class="score-label">Score</div>
+                </div>
+                <div class="score-message" id="scoreMessage">Well done!</div>
+                <div class="score-details" id="scoreDetails">You answered 0 out of 0 questions correctly.</div>
+                <div class="progress-saved">
+                    <span>✓</span>
+                    <span>Your progress has been saved</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation Buttons -->
+        <div class="lesson-nav">
+            <a href="#" class="nav-btn prev">
+                <span>←</span>
+                <div class="nav-btn-content">
+                    <span class="nav-btn-label">Previous Lesson</span>
+                    <span>Lesson 4: Conservation of Momentum</span>
+                </div>
+            </a>
+            <a href="#" class="nav-btn next">
+                <div class="nav-btn-content">
+                    <span class="nav-btn-label">Next Lesson</span>
+                    <span>Lesson 6: Elastic vs Inelastic Collisions</span>
+                </div>
+                <span>→</span>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 PassProof Academy. All rights reserved.</p>
+        <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">Contact Us</a></p>
+    </footer>
+
     <script>
-        // Collapsible sections functionality
-        document.querySelectorAll('.collapsible-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const content = header.nextElementSibling;
-                const icon = header.querySelector('.toggle-icon');
-                
-                content.classList.toggle('active');
-                icon.textContent = content.classList.contains('active') ? '−' : '+';
+        // =====================
+        // Navigation Functions
+        // =====================
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            menu.classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(e) {
+            const nav = document.querySelector('nav');
+            const menu = document.getElementById('navMenu');
+            if (!nav.contains(e.target) && menu.classList.contains('active')) {
+                menu.classList.remove('active');
+            }
+        });
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                }
             });
         });
 
-        // Toggle step content in interactive problems
-        function toggleStep(stepId) {
-            const stepContent = document.getElementById(stepId);
-            stepContent.style.display = stepContent.style.display === 'block' ? 'none' : 'block';
+        // =====================
+        // Quiz System
+        // =====================
+        const quizQuestions = [
+            {
+                question: "When objects stick together after a collision, which equation do we use?",
+                options: [
+                    "m₁v₁ᵢ + m₂v₂ᵢ = m₁v₁f + m₂v₂f",
+                    "m₁v₁ᵢ + m₂v₂ᵢ = (m₁ + m₂)vf",
+                    "0 = m₁v₁f + m₂v₂f",
+                    "p = mv"
+                ],
+                correct: 1,
+                explanation: "When objects stick together, they have the same final velocity, so we use: m₁v₁ᵢ + m₂v₂ᵢ = (m₁ + m₂)vf"
+            },
+            {
+                question: "In an explosion, what is the total momentum before the explosion?",
+                options: ["Equal to the momentum after", "Infinity", "Zero", "Cannot be determined"],
+                correct: 2,
+                explanation: "In an explosion, objects start at rest (or together), so the total initial momentum is zero."
+            },
+            {
+                question: "A 50 g bullet is fired at 400 m·s⁻¹ from a 4 kg rifle. What is the rifle's recoil velocity?",
+                options: ["5 m·s⁻¹", "4 m·s⁻¹", "8 m·s⁻¹", "2 m·s⁻¹"],
+                correct: 0,
+                explanation: "0 = (0.05)(400) + (4)(v) → 0 = 20 + 4v → v = -5 m·s⁻¹. Magnitude = 5 m·s⁻¹ backward."
+            },
+            {
+                question: "A 20 g bullet embeds in a 980 g block. The combined mass moves at 5 m·s⁻¹. What was the bullet's initial velocity?",
+                options: ["100 m·s⁻¹", "200 m·s⁻¹", "250 m·s⁻¹", "500 m·s⁻¹"],
+                correct: 2,
+                explanation: "(0.02)(v) + 0 = (1.0)(5) → 0.02v = 5 → v = 250 m·s⁻¹"
+            },
+            {
+                question: "Why does a rifle recoil backward when fired?",
+                options: [
+                    "The rifle loses mass",
+                    "Conservation of energy",
+                    "Conservation of momentum - bullet goes forward, rifle must go backward",
+                    "Air resistance"
+                ],
+                correct: 2,
+                explanation: "Conservation of momentum requires that if the bullet gains forward momentum, the rifle must gain equal backward momentum. Total momentum stays zero."
+            },
+            {
+                question: "A 2000 kg car moving at 10 m·s⁻¹ crashes into a stationary 1000 kg car. They stick together. What is the final velocity?",
+                options: ["3.33 m·s⁻¹", "5 m·s⁻¹", "6.67 m·s⁻¹", "10 m·s⁻¹"],
+                correct: 2,
+                explanation:"(2000)(10) + (1000)(0) = (3000)vf → 20000 = 3000vf → vf = 6.67 m·s⁻¹"
+            },
+            {
+                question: "What happens to kinetic energy in an inelastic collision where objects stick together?",
+                options: [
+                    "It increases",
+                    "It stays the same",
+                    "It decreases (lost to deformation, heat, sound)",
+                    "It becomes zero"
+                ],
+                correct: 2,
+                explanation: "In inelastic collisions, kinetic energy is NOT conserved. Some is converted to heat, sound, and deformation of the objects."
+            },
+            {
+                question: "A railway truck (3000 kg, 6 m·s⁻¹) couples with a stationary truck (2000 kg). Find the combined velocity.",
+                options: ["2.4 m·s⁻¹", "3.6 m·s⁻¹", "4.0 m·s⁻¹", "5.0 m·s⁻¹"],
+                correct: 1,
+                explanation: "(3000)(6) + (2000)(0) = (5000)vf → 18000 = 5000vf → vf = 3.6 m·s⁻¹"
+            },
+            {
+                question: "In an explosion, the momenta of the separating objects are:",
+                options: [
+                    "Equal and in the same direction",
+                    "Equal in magnitude but opposite in direction",
+                    "Unequal in magnitude",
+                    "Both zero"
+                ],
+                correct: 1,
+                explanation: "Since total momentum must stay zero, the objects must have equal magnitude momenta in opposite directions, so they cancel out."
+            },
+            {
+                question: "A 100 g bullet at 500 m·s⁻¹ embeds in a 4.9 kg block. What is the combined velocity?",
+                options: ["5 m·s⁻¹", "10 m·s⁻¹", "50 m·s⁻¹", "100 m·s⁻¹"],
+                correct: 1,
+                explanation: "(0.1)(500) + 0 = (5.0)vf → 50 = 5vf → vf = 10 m·s⁻¹"
+            },
+            {
+                question: "Why must we convert grams to kilograms in momentum calculations?",
+                options: [
+                    "Grams are too small",
+                    "To get the correct SI unit (kg·m·s⁻¹)",
+                    "It makes numbers easier",
+                    "It's not necessary"
+                ],
+                correct: 1,
+                explanation: "The SI unit for momentum is kg·m·s⁻¹. Using grams would give incorrect units and values."
+            },
+            {
+                question: "Two skaters push apart from rest. Skater A (60 kg) moves at 2 m·s⁻¹ right. Skater B (40 kg) moves at what velocity?",
+                options: ["2 m·s⁻¹ left", "3 m·s⁻¹ left", "3 m·s⁻¹ right", "1.5 m·s⁻¹ left"],
+                correct: 1,
+                explanation: "0 = (60)(2) + (40)(vB) → 0 = 120 + 40vB → vB = -3 m·s⁻¹ = 3 m·s⁻¹ left"
+            }
+        ];
+
+        let userAnswers = {};
+        let quizSubmitted = false;
+
+        function initQuiz() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = '';
+
+            quizQuestions.forEach((q, index) => {
+                const questionHTML = `
+                    <div class="question-card" id="question${index}">
+                        <div class="question-header">
+                            <div class="question-number">${index + 1}</div>
+                            <span class="question-type">Multiple Choice</span>
+                        </div>
+                        <p class="question-text">${q.question}</p>
+                        <div class="options">
+                            ${q.options.map((opt, optIndex) => `
+                                <label class="option" onclick="selectOption(${index}, ${optIndex})">
+                                    <input type="radio" name="q${index}" value="${optIndex}">
+                                    <span class="option-marker"></span>
+                                    <span class="option-text">${opt}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                        <div class="feedback" id="feedback${index}"></div>
+                    </div>
+                `;
+                container.innerHTML += questionHTML;
+            });
+
+            loadProgress();
         }
 
-        // Scenario type toggle
-        document.getElementById('stickTogetherBtn').addEventListener('click', () => {
-            document.getElementById('stickTogetherBtn').classList.add('active');
-            document.getElementById('explosionBtn').classList.remove('active');
-            document.getElementById('stickTogetherContent').style.display = 'block';
-            document.getElementById('explosionContent').style.display = 'none';
-        });
+        function selectOption(questionIndex, optionIndex) {
+            if (quizSubmitted) return;
 
-        document.getElementById('explosionBtn').addEventListener('click', () => {
-            document.getElementById('explosionBtn').classList.add('active');
-            document.getElementById('stickTogetherBtn').classList.remove('active');
-            document.getElementById('explosionContent').style.display = 'block';
-            document.getElementById('stickTogetherContent').style.display = 'none';
-        });
+            const options = document.querySelectorAll(`#question${questionIndex} .option`);
+            options.forEach(opt => opt.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
 
-        // Inelastic collision simulation
-        document.getElementById('runStickSimulation').addEventListener('click', () => {
-            const mass1 = parseFloat(document.getElementById('stick_mass1').value);
-            const velocity1 = parseFloat(document.getElementById('stick_velocity1').value);
-            const mass2 = parseFloat(document.getElementById('stick_mass2').value);
-            const velocity2 = parseFloat(document.getElementById('stick_velocity2').value);
-            
-            // Calculate final velocity using conservation of momentum
-            const totalMass = mass1 + mass2;
-            const finalVelocity = (mass1 * velocity1 + mass2 * velocity2) / totalMass;
-            
-            // Calculate momenta
-            const initialMomentum = (mass1 * velocity1) + (mass2 * velocity2);
-            const finalMomentum = totalMass * finalVelocity;
-            
-            // Update display
-            document.getElementById('stickInitialMomentum').textContent = initialMomentum.toFixed(2);
-            document.getElementById('stickFinalVelocity').textContent = finalVelocity.toFixed(2);
-            document.getElementById('stickFinalMomentum').textContent = finalMomentum.toFixed(2);
-            
-            // Animate objects
-            const object1 = document.getElementById('stickObject1');
-            const object2 = document.getElementById('stickObject2');
-            const combinedObject = document.getElementById('combinedObject');
-            const areaWidth = document.getElementById('stickSimulationArea').offsetWidth;
-            
-            // Set initial positions
-            object1.style.left = '50px';
-            object2.style.left = (areaWidth - 110) + 'px';
-            object1.style.display = 'block';
-            object2.style.display = 'block';
-            combinedObject.style.display = 'none';
-            
-            // Animate collision
-            setTimeout(() => {
-                object1.style.left = (areaWidth/2 - 80) + 'px';
-                object2.style.left = (areaWidth/2 + 20) + 'px';
-                
-                setTimeout(() => {
-                    // Show combined object
-                    object1.style.display = 'none';
-                    object2.style.display = 'none';
-                    combinedObject.style.display = 'block';
-                    combinedObject.style.left = (areaWidth/2 - 30) + 'px';
-                    
-                    // Move combined object based on final velocity
-                    setTimeout(() => {
-                        const finalPos = finalVelocity > 0 ? (areaWidth - 60) : 0;
-                        combinedObject.style.left = finalPos + 'px';
-                    }, 500);
-                }, 500);
-            }, 1000);
-        });
+            userAnswers[questionIndex] = optionIndex;
+            saveProgress();
+        }
 
-        // Explosion simulation
-        document.getElementById('runExpSimulation').addEventListener('click', () => {
-            const mass1 = parseFloat(document.getElementById('exp_mass1').value);
-            const velocity1 = parseFloat(document.getElementById('exp_velocity1').value);
-            const mass2 = parseFloat(document.getElementById('exp_mass2').value);
-            
-            // Calculate recoil velocity using conservation of momentum
-            const velocity2 = -(mass1 * velocity1) / mass2;
-            
-            // Calculate momenta
-            const initialMomentum = 0;
-            const finalMomentum = (mass1 * velocity1) + (mass2 * velocity2);
-            
-            // Update display
-            document.getElementById('expInitialMomentum').textContent = initialMomentum.toFixed(2);
-            document.getElementById('expVelocity2').textContent = Math.abs(velocity2).toFixed(2);
-            document.getElementById('expFinalMomentum').textContent = finalMomentum.toFixed(2);
-            
-            // Animate objects
-            const combinedObject = document.getElementById('expCombinedObject');
-            const object1 = document.getElementById('expObject1');
-            const object2 = document.getElementById('expObject2');
-            const areaWidth = document.getElementById('expSimulationArea').offsetWidth;
-            
-            // Set initial position
-            combinedObject.style.display = 'block';
-            object1.style.display = 'none';
-            object2.style.display = 'none';
-            combinedObject.style.left = '50%';
-            combinedObject.style.transform = 'translateX(-50%)';
-            
-            // Animate explosion
-            setTimeout(() => {
-                combinedObject.style.display = 'none';
-                object1.style.display = 'block';
-                object2.style.display = 'block';
-                
-                // Position objects at center initially
-                object1.style.left = '50%';
-                object2.style.left = '50%';
-                object1.style.transform = 'translateX(-50%)';
-                object2.style.transform = 'translateX(-50%)';
-                
-                // Move objects apart based on velocities
-                setTimeout(() => {
-                    const finalPos1 = velocity1 > 0 ? (areaWidth - 60) : 0;
-                    const finalPos2 = velocity2 > 0 ? (areaWidth - 60) : 0;
-                    
-                    object1.style.left = finalPos1 + 'px';
-                    object2.style.left = finalPos2 + 'px';
-                    object1.style.transform = 'none';
-                    object2.style.transform = 'none';
-                }, 500);
-            }, 1000);
-        });
-
-        // Problem calculators
-        document.getElementById('calculateProblem1').addEventListener('click', () => {
-            const mass1 = parseFloat(document.getElementById('p1_mass1').value);
-            const mass2 = parseFloat(document.getElementById('p1_mass2').value);
-            const vf = parseFloat(document.getElementById('p1_vf').value);
-            
-            // Calculate initial velocity using conservation of momentum
-            const totalMass = mass1 + mass2;
-            const vi = (totalMass * vf) / mass1;
-            
-            document.getElementById('problem1Result').textContent = 
-                `The initial velocity of the bullet is ${vi.toFixed(2)} m/s.`;
-            document.getElementById('problem1Result').className = 'result success';
-        });
-
-        document.getElementById('calculateProblem2').addEventListener('click', () => {
-            const mass1 = parseFloat(document.getElementById('p2_mass1').value);
-            const v1i = parseFloat(document.getElementById('p2_v1i').value);
-            const mass2 = parseFloat(document.getElementById('p2_mass2').value);
-            const v2i = parseFloat(document.getElementById('p2_v2i').value);
-            
-            // Calculate final velocity using conservation of momentum
-            const totalMass = mass1 + mass2;
-            const vf = (mass1 * v1i + mass2 * v2i) / totalMass;
-            
-            document.getElementById('problem2Result').textContent = 
-                `The entangled wreckage moves at ${vf.toFixed(2)} m/s.`;
-            document.getElementById('problem2Result').className = 'result success';
-        });
-
-        document.getElementById('calculateProblem3').addEventListener('click', () => {
-            const mass1 = parseFloat(document.getElementById('p3_mass1').value);
-            const v1f = parseFloat(document.getElementById('p3_v1f').value);
-            const mass2 = parseFloat(document.getElementById('p3_mass2').value);
-            
-            // Calculate recoil velocity using conservation of momentum
-            const v2f = -(mass1 * v1f) / mass2;
-            
-            document.getElementById('problem3Result').textContent = 
-                `The rifle recoils at ${Math.abs(v2f).toFixed(2)} m/s in the opposite direction.`;
-            document.getElementById('problem3Result').className = 'result success';
-        });
-
-        // General stick-together calculator
-        document.getElementById('calculateStickTogether').addEventListener('click', () => {
-            const mass1 = parseFloat(document.getElementById('calc_mass1').value);
-            const v1i = parseFloat(document.getElementById('calc_v1i').value);
-            const mass2 = parseFloat(document.getElementById('calc_mass2').value);
-            const v2i = parseFloat(document.getElementById('calc_v2i').value);
-            
-            if (isNaN(mass1) || isNaN(v1i) || isNaN(mass2) || isNaN(v2i)) {
-                document.getElementById('stickTogetherResult').textContent = 
-                    'Please enter valid numbers for all fields.';
-                document.getElementById('stickTogetherResult').className = 'result error';
-                return;
+        function submitQuiz() {
+            const answeredCount = Object.keys(userAnswers).length;
+            if (answeredCount < quizQuestions.length) {
+                const unanswered = quizQuestions.length - answeredCount;
+                if (!confirm(`You have ${unanswered} unanswered question(s). Submit anyway?`)) {
+                    return;
+                }
             }
-            
-            // Calculate final velocity using conservation of momentum
-            const totalMass = mass1 + mass2;
-            const vf = (mass1 * v1i + mass2 * v2i) / totalMass;
-            
-            // Update table
-            document.getElementById('table_mass1').textContent = mass1;
-            document.getElementById('table_v1i').textContent = v1i.toFixed(2);
-            document.getElementById('table_p1i').textContent = (mass1 * v1i).toFixed(2);
-            document.getElementById('table_v1f').textContent = vf.toFixed(2);
-            document.getElementById('table_p1f').textContent = (mass1 * vf).toFixed(2);
-            
-            document.getElementById('table_mass2').textContent = mass2;
-            document.getElementById('table_v2i').textContent = v2i.toFixed(2);
-            document.getElementById('table_p2i').textContent = (mass2 * v2i).toFixed(2);
-            document.getElementById('table_v2f').textContent = vf.toFixed(2);
-            document.getElementById('table_p2f').textContent = (mass2 * vf).toFixed(2);
-            
-            document.getElementById('table_total_mass').textContent = totalMass;
-            document.getElementById('table_total_pi').textContent = (mass1 * v1i + mass2 * v2i).toFixed(2);
-            document.getElementById('table_total_vf').textContent = vf.toFixed(2);
-            document.getElementById('table_total_pf').textContent = (totalMass * vf).toFixed(2);
-            
-            document.getElementById('stickTogetherResult').textContent = 
-                `The objects move together at ${vf.toFixed(2)} m/s after collision.`;
-            document.getElementById('stickTogetherResult').className = 'result success';
-        });
 
-        // Question checking functionality
-        document.getElementById('checkAnswers').addEventListener('click', () => {
-            const correctAnswers = {
-                q1: 'b',
-                q2: 'a',
-                q3: 'a',
-                q4: 'b',
-                q5: 'b',
-                q6: 'b',
-                q7: 'b',
-                q8: 'a',
-                q9: 'b',
-                q10: 'b'
-            };
-            
-            let score = 0;
-            const totalQuestions = Object.keys(correctAnswers).length;
-            
-            // Check each question
-            for (let i = 1; i <= totalQuestions; i++) {
-                const questionName = `q${i}`;
-                const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
-                const feedbackElement = document.getElementById(`feedback${i}`);
-                
-                if (selectedOption) {
-                    if (selectedOption.value === correctAnswers[questionName]) {
-                        feedbackElement.textContent = 'Correct!';
-                        feedbackElement.className = 'feedback correct';
-                        score++;
-                    } else {
-                        feedbackElement.textContent = 'Incorrect. Try again.';
-                        feedbackElement.className = 'feedback incorrect';
-                    }
-                    feedbackElement.style.display = 'block';
+            quizSubmitted = true;
+            let correctCount = 0;
+
+            quizQuestions.forEach((q, index) => {
+                const questionCard = document.getElementById(`question${index}`);
+                const feedback = document.getElementById(`feedback${index}`);
+                const options = questionCard.querySelectorAll('.option');
+                const userAnswer = userAnswers[index];
+
+                if (userAnswer === q.correct) {
+                    correctCount++;
+                    questionCard.classList.add('correct');
+                    feedback.className = 'feedback show correct';
+                    feedback.innerHTML = `✓ Correct! ${q.explanation}`;
                 } else {
-                    const feedbackElement = document.getElementById(`feedback${i}`);
-                    feedbackElement.textContent = 'Please select an answer.';
-                    feedbackElement.className = 'feedback incorrect';
-                    feedbackElement.style.display = 'block';
+                    questionCard.classList.add('incorrect');
+                    feedback.className = 'feedback show incorrect';
+                    feedback.innerHTML = `✗ Incorrect. ${q.explanation}`;
+                    options[q.correct].classList.add('correct-answer');
+                    if (userAnswer !== undefined) {
+                        options[userAnswer].classList.add('wrong-answer');
+                    }
+                }
+            });
+
+            const percentage = Math.round((correctCount / quizQuestions.length) * 100);
+            displayScore(correctCount, percentage);
+
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('submitBtn').textContent = 'Quiz Completed';
+
+            saveProgress(true, percentage);
+        }
+
+        function displayScore(correct, percentage) {
+            const scoreContainer = document.getElementById('scoreContainer');
+            const scoreValue = document.getElementById('scoreValue');
+            const scoreMessage = document.getElementById('scoreMessage');
+            const scoreDetails = document.getElementById('scoreDetails');
+
+            scoreValue.textContent = `${percentage}%`;
+            scoreDetails.textContent = `You answered ${correct} out of ${quizQuestions.length} questions correctly.`;
+
+            let message = '';
+            if (percentage >= 90) message = '🌟 Outstanding! You\'ve mastered collisions and explosions!';
+            else if (percentage >= 70) message = '👏 Great job! You understand these collision types well.';
+            else if (percentage >= 50) message = '📚 Good effort! Review the worked examples and try again.';
+            else message = '💪 Keep practicing! Focus on the difference between collisions and explosions.';
+
+            scoreMessage.textContent = message;
+            scoreContainer.classList.add('show');
+            scoreContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // =====================
+        // LocalStorage Functions
+        // =====================
+        function saveProgress(completed = false, score = null) {
+            const progress = {
+                lessonId: 'momentum-collisions-lesson-5',
+                answers: userAnswers,
+                completed: completed,
+                score: score,
+                lastUpdated: new Date().toISOString()
+            };
+
+            localStorage.setItem('passproofProgress_collisions5', JSON.stringify(progress));
+
+            const indicator = document.getElementById('progressIndicator');
+            indicator.classList.add('show');
+            setTimeout(() => indicator.classList.remove('show'), 2000);
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('passproofProgress_collisions5');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                userAnswers = progress.answers || {};
+
+                Object.keys(userAnswers).forEach(qIndex => {
+                    const options = document.querySelectorAll(`#question${qIndex} .option`);
+                    if (options[userAnswers[qIndex]]) {
+                        options[userAnswers[qIndex]].classList.add('selected');
+                    }
+                });
+
+                if (progress.completed) {
+                    quizSubmitted = true;
+                    submitQuiz();
                 }
             }
+        }
+
+        // =====================
+        // Simulation 1: Bullet in Block
+        // =====================
+        let bulletAnimationId = null;
+        let bulletPhase = 'ready';
+
+        function initBulletSim() {
+            const canvas = document.getElementById('bulletCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
             
-            // Calculate and display score
-            const percentage = Math.round((score / totalQuestions) * 100);
-            document.getElementById('scoreDisplay').textContent = `${percentage}%`;
-            document.getElementById('progressBar').style.width = `${percentage}%`;
+            document.getElementById('bulletCalcMode').addEventListener('change', function() {
+                const label = document.getElementById('bulletInputLabel');
+                if (this.value === 'bulletVel') {
+                    label.textContent = 'Final Velocity (m/s):';
+                    document.getElementById('bulletInputVal').value = 4;
+                } else {
+                    label.textContent = 'Bullet Velocity (m/s):';
+                    document.getElementById('bulletInputVal').value = 200;
+                }
+                updateBulletSim();
+            });
             
-            let message = '';
-            if (percentage >= 90) {
-                message = 'Excellent work! You have mastered momentum conservation applications.';
-            } else if (percentage >= 70) {
-                message = 'Good job! You understand the main concepts of inelastic collisions and explosions.';
-            } else if (percentage >= 50) {
-                message = 'Not bad, but review the material to improve your understanding.';
+            updateBulletSim();
+        }
+
+        function updateBulletSim() {
+            const bulletMassG = parseFloat(document.getElementById('bulletMass').value);
+            const blockMass = parseFloat(document.getElementById('blockMass').value);
+            const calcMode = document.getElementById('bulletCalcMode').value;
+            const inputVal = parseFloat(document.getElementById('bulletInputVal').value);
+
+            const bulletMass = bulletMassG / 1000; // Convert to kg
+            const combinedMass = bulletMass + blockMass;
+
+            let bulletVel, finalVel, result;
+
+            if (calcMode === 'bulletVel') {
+                // Calculate bullet velocity from final velocity
+                finalVel = inputVal;
+                bulletVel = (combinedMass * finalVel) / bulletMass;
+                result = bulletVel.toFixed(0) + ' m/s';
             } else {
-                message = 'Keep practicing! Review the lesson and try again.';
+                // Calculate final velocity from bullet velocity
+                bulletVel = inputVal;
+                finalVel = (bulletMass * bulletVel) / combinedMass;
+                result = finalVel.toFixed(2) + ' m/s';
+            }
+
+            const bulletMomentum = bulletMass * bulletVel;
+
+            document.getElementById('bulletMomentum').textContent = bulletMomentum.toFixed(1) + ' kg·m/s';
+            document.getElementById('blockMomentum').textContent = '0 kg·m/s';
+            document.getElementById('combinedMassBullet').textContent = combinedMass.toFixed(2) + ' kg';
+            document.getElementById('bulletResult').textContent = result;
+
+            drawBulletCanvas('ready', 0, bulletVel, finalVel, bulletMassG, blockMass);
+        }
+
+        function drawBulletCanvas(phase, progress, bulletVel, finalVel, bulletMassG, blockMass) {
+            const canvas = document.getElementById('bulletCanvas');
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+
+            ctx.clearRect(0, 0, width, height);
+
+            // Background
+            const gradient = ctx.createLinearGradient(0, 0, 0, height);
+            gradient.addColorStop(0, '#f5f5f5');
+            gradient.addColorStop(1, '#e0e0e0');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, width, height);
+
+            // Ground/Table
+            ctx.fillStyle = '#8d6e63';
+            ctx.fillRect(0, height - 50, width, 50);
+            ctx.fillStyle = '#6d4c41';
+            ctx.fillRect(0, height - 50, width, 5);
+
+            const blockX = width - 200;
+            const blockY = height - 50;
+            const blockWidth = 100;
+            const blockHeight = 80;
+
+            // Calculate bullet position
+            let bulletX;
+            const bulletY = blockY - blockHeight / 2;
+            const bulletLength = 30;
+
+            if (phase === 'ready') {
+                bulletX = 80;
+            } else if (phase === 'flying') {
+                bulletX = 80 + (blockX - 80 - bulletLength) * Math.min(progress * 2, 1);
+            } else if (phase === 'embedded') {
+                bulletX = blockX - bulletLength + 20;
+                // Move block and bullet together
+                const moveDistance = finalVel * 20 * Math.min((progress - 0.5) * 2, 1);
+            }
+
+            // Draw block
+            let currentBlockX = blockX;
+            if (phase === 'embedded') {
+                currentBlockX = blockX + finalVel * 15 * Math.max(0, (progress - 0.5) * 2);
             }
             
-            document.getElementById('scoreMessage').textContent = 
-                `You got ${score} out of ${totalQuestions} questions correct. ${message}`;
+            ctx.fillStyle = '#a1887f';
+            ctx.fillRect(currentBlockX, blockY - blockHeight, blockWidth, blockHeight);
+            
+            // Wood grain
+            ctx.strokeStyle = '#8d6e63';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < 5; i++) {
+                ctx.beginPath();
+                ctx.moveTo(currentBlockX, blockY - blockHeight + 15 + i * 15);
+                ctx.lineTo(currentBlockX + blockWidth, blockY - blockHeight + 15 + i * 15);
+                ctx.stroke();
+            }
+
+            // Block label
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 14px Segoe UI';
+            ctx.textAlign = 'center';
+            ctx.fillText(blockMass + ' kg', currentBlockX + blockWidth / 2, blockY - blockHeight / 2);
+
+            // Draw bullet
+            let currentBulletX = bulletX;
+            if (phase === 'flying') {
+                currentBulletX = 80 + (blockX - 80) * Math.min(progress * 2, 1);
+            } else if (phase === 'embedded') {
+                currentBulletX = blockX - 10 + finalVel * 15 * Math.max(0, (progress - 0.5) * 2);
+            }
+
+            // Bullet body
+            ctx.fillStyle = '#ffc107';
+            ctx.beginPath();
+            ctx.moveTo(currentBulletX + bulletLength, bulletY);
+            ctx.lineTo(currentBulletX, bulletY - 6);
+            ctx.lineTo(currentBulletX, bulletY + 6);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Bullet casing
+            ctx.fillStyle = '#ff9800';
+            ctx.fillRect(currentBulletX - 15, bulletY - 5, 15, 10);
+
+            // Speed lines when flying
+            if (phase === 'flying' && progress < 0.5) {
+                ctx.strokeStyle = 'rgba(255, 193, 7, 0.5)';
+                ctx.lineWidth = 2;
+                for (let i = 0; i < 5; i++) {
+                    ctx.beginPath();
+                    ctx.moveTo(currentBulletX - 20 - i * 15, bulletY + (Math.random() - 0.5) * 10);
+                    ctx.lineTo(currentBulletX - 35 - i * 15, bulletY + (Math.random() - 0.5) * 10);
+                    ctx.stroke();
+                }
+            }
+
+            // Impact effect
+            if (phase === 'flying' && progress > 0.45 && progress < 0.55) {
+                ctx.fillStyle = '#ff5722';
+                for (let i = 0; i < 8; i++) {
+                    const angle = (i / 8) * Math.PI * 2;
+                    const dist = 10 + Math.random() * 20;
+                    ctx.beginPath();
+                    ctx.arc(
+                        blockX + Math.cos(angle) * dist,
+                        bulletY + Math.sin(angle) * dist,
+                        3,
+                        0, Math.PI * 2
+                    );
+                    ctx.fill();
+                }
+            }
+
+            // Velocity arrows
+            ctx.lineWidth = 3;
+            if (phase === 'ready' || (phase === 'flying' && progress < 0.5)) {
+                // Bullet velocity arrow
+                drawArrow(ctx, currentBulletX + bulletLength + 10, bulletY - 25, 
+                         currentBulletX + bulletLength + 10 + Math.min(bulletVel / 5, 80), bulletY - 25, '#ff9800');
+                ctx.fillStyle = '#ff9800';
+                ctx.font = '11px Segoe UI';
+                ctx.textAlign = 'center';
+                ctx.fillText(bulletVel.toFixed(0) + ' m/s', currentBulletX + bulletLength + 50, bulletY - 35);
+            }
+
+            if (phase === 'embedded') {
+                // Combined velocity arrow
+                const arrowLen = Math.min(finalVel * 10, 60);
+                drawArrow(ctx, currentBlockX + blockWidth + 10, bulletY,
+                         currentBlockX + blockWidth + 10 + arrowLen, bulletY, '#4caf50');
+                ctx.fillStyle = '#4caf50';
+                ctx.font = '11px Segoe UI';
+                ctx.textAlign = 'center';
+                ctx.fillText(finalVel.toFixed(1) + ' m/s', currentBlockX + blockWidth + 10 + arrowLen / 2, bulletY - 15);
+            }
+
+            // Info box
+            ctx.fillStyle = 'rgba(255,255,255,0.95)';
+            ctx.fillRect(15, 15, 200, 90);
+            ctx.strokeStyle = '#ff9800';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(15, 15, 200, 90);
+
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 12px Segoe UI';
+            ctx.textAlign = 'left';
+            ctx.fillText('Bullet in Block', 25, 35);
+            ctx.font = '11px Segoe UI';
+            ctx.fillText(`Bullet: ${bulletMassG} g = ${(bulletMassG/1000).toFixed(3)} kg`, 25, 55);
+            ctx.fillText(`Block: ${blockMass} kg (stationary)`, 25, 72);
+            ctx.fillText(`Combined: ${(bulletMassG/1000 + blockMass).toFixed(2)} kg`, 25, 89);
+
+            // Phase indicator
+            ctx.fillStyle = phase === 'embedded' ? '#4caf50' : '#ff9800';
+            ctx.font = '12px Segoe UI';
+            ctx.textAlign = 'right';
+            ctx.fillText(phase === 'ready' ? 'Ready' : phase === 'flying' ? 'Flying...' : 'Embedded!', width - 20, 30);
+        }
+
+        function drawArrow(ctx, fromX, fromY, toX, toY, color) {
+            const headLen = 10;
+            const dx = toX - fromX;
+            const dy = toY - fromY;
+            const angle = Math.atan2(dy, dx);
+
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(fromX, fromY);
+            ctx.lineTo(toX, toY);
+            ctx.stroke();
+
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.moveTo(toX, toY);
+            ctx.lineTo(toX - headLen * Math.cos(angle - Math.PI / 6), toY - headLen * Math.sin(angle - Math.PI / 6));
+            ctx.lineTo(toX - headLen * Math.cos(angle + Math.PI / 6), toY - headLen * Math.sin(angle + Math.PI / 6));
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        function fireBullet() {
+            if (bulletAnimationId) {
+                cancelAnimationFrame(bulletAnimationId);
+            }
+
+            const bulletMassG = parseFloat(document.getElementById('bulletMass').value);
+            const blockMass = parseFloat(document.getElementById('blockMass').value);
+            const calcMode = document.getElementById('bulletCalcMode').value;
+            const inputVal = parseFloat(document.getElementById('bulletInputVal').value);
+
+            const bulletMass = bulletMassG / 1000;
+            const combinedMass = bulletMass + blockMass;
+
+            let bulletVel, finalVel;
+            if (calcMode === 'bulletVel') {
+                finalVel = inputVal;
+                bulletVel = (combinedMass * finalVel) / bulletMass;
+            } else {
+                bulletVel = inputVal;
+                finalVel = (bulletMass * bulletVel) / combinedMass;
+            }
+
+            let progress = 0;
+            bulletPhase = 'flying';
+
+            function animate() {
+                progress += 0.015;
+
+                if (progress < 0.5) {
+                    bulletPhase = 'flying';
+                } else {
+                    bulletPhase = 'embedded';
+                }
+
+                if (progress >= 1) {
+                    cancelAnimationFrame(bulletAnimationId);
+                    return;
+                }
+
+                drawBulletCanvas(bulletPhase, progress, bulletVel, finalVel, bulletMassG, blockMass);
+                bulletAnimationId = requestAnimationFrame(animate);
+            }
+
+            animate();
+        }
+
+        function resetBulletSim() {
+            if (bulletAnimationId) {
+                cancelAnimationFrame(bulletAnimationId);
+            }
+            document.getElementById('bulletMass').value = 30;
+            document.getElementById('blockMass').value = 1.47;
+            document.getElementById('bulletCalcMode').value = 'bulletVel';
+            document.getElementById('bulletInputLabel').textContent = 'Final Velocity (m/s):';
+            document.getElementById('bulletInputVal').value = 4;
+            bulletPhase = 'ready';
+            updateBulletSim();
+        }
+
+        // =====================
+        // Simulation 2: Rifle Recoil
+        // =====================
+        let recoilAnimationId = null;
+
+        function initRecoilSim() {
+            const canvas = document.getElementById('recoilCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            updateRecoilSim();
+        }
+
+        function updateRecoilSim() {
+            const bulletMassG = parseFloat(document.getElementById('recoilBulletMass').value);
+            const bulletVel = parseFloat(document.getElementById('recoilBulletVel').value);
+            const rifleMass = parseFloat(document.getElementById('rifleMass').value);
+
+            const bulletMass = bulletMassG / 1000;
+            const bulletMomentum = bulletMass * bulletVel;
+            const recoilVel = -bulletMomentum / rifleMass;
+
+            document.getElementById('pBeforeRecoil').textContent = '0 kg·m/s';
+            document.getElementById('bulletPAfter').textContent = '+' + bulletMomentum.toFixed(1) + ' kg·m/s';
+            document.getElementById('riflePAfter').textContent = (rifleMass * recoilVel).toFixed(1) + ' kg·m/s';
+            document.getElementById('recoilVelocity').textContent = Math.abs(recoilVel).toFixed(2) + ' m/s ←';
+
+            drawRecoilCanvas('ready', 0, bulletVel, recoilVel, bulletMassG, rifleMass);
+        }
+
+        function drawRecoilCanvas(phase, progress, bulletVel, recoilVel, bulletMassG, rifleMass) {
+            const canvas = document.getElementById('recoilCanvas');
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+
+            ctx.clearRect(0, 0, width, height);
+
+            // Background
+            ctx.fillStyle = '#263238';
+            ctx.fillRect(0, 0, width, height);
+
+            // Ground
+            ctx.fillStyle = '#37474f';
+            ctx.fillRect(0, height - 40, width, 40);
+
+            const centerY = height / 2;
+            const rifleStartX = width / 2 - 50;
+
+            // Calculate positions based on phase
+            let rifleX = rifleStartX;
+            let bulletX = rifleStartX + 120;
+
+            if (phase === 'firing') {
+                const firingProgress = Math.min(progress * 3, 1);
+                rifleX = rifleStartX + recoilVel * 30 * firingProgress;
+                bulletX = rifleStartX + 120 + bulletVel * 0.5 * progress;
+            } else if (phase === 'after') {
+                rifleX = rifleStartX + recoilVel * 30;
+                bulletX = rifleStartX + 120 + bulletVel * 0.5;
+            }
+
+            // Muzzle flash
+            if (phase === 'firing' && progress < 0.2) {
+                ctx.fillStyle = '#ffeb3b';
+                ctx.beginPath();
+                ctx.moveTo(rifleStartX + 120, centerY);
+                for (let i = 0; i < 12; i++) {
+                    const angle = (i / 12) * Math.PI * 2;
+                    const radius = 20 + Math.random() * 30;
+                    ctx.lineTo(
+                        rifleStartX + 130 + Math.cos(angle) * radius,
+                        centerY + Math.sin(angle) * radius
+                    );
+                }
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            // Draw rifle
+            // Stock
+            ctx.fillStyle = '#5d4037';
+            ctx.fillRect(rifleX - 80, centerY - 15, 80, 30);
+            
+            // Barrel
+            ctx.fillStyle = '#455a64';
+            ctx.fillRect(rifleX, centerY - 8, 120, 16);
+            
+            // Trigger guard
+            ctx.strokeStyle = '#37474f';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(rifleX - 20, centerY + 15, 15, 0, Math.PI);
+            ctx.stroke();
+
+            // Rifle label
+            ctx.fillStyle = '#fff';
+            ctx.font = '11px Segoe UI';
+            ctx.textAlign = 'center';
+            ctx.fillText(rifleMass + ' kg', rifleX - 40, centerY - 25);
+
+            // Draw bullet (if firing or after)
+            if (phase === 'firing' || phase === 'after') {
+                ctx.fillStyle = '#ffc107';
+                ctx.beginPath();
+                ctx.moveTo(bulletX + 20, centerY);
+                ctx.lineTo(bulletX, centerY - 5);
+                ctx.lineTo(bulletX, centerY + 5);
+                ctx.closePath();
+                ctx.fill();
+
+                // Bullet trail
+                if (phase === 'firing') {
+                    ctx.strokeStyle = 'rgba(255, 193, 7, 0.3)';
+                    ctx.lineWidth = 8;
+                    ctx.beginPath();
+                    ctx.moveTo(bulletX, centerY);
+                    ctx.lineTo(rifleStartX + 130, centerY);
+                    ctx.stroke();
+                }
+
+                // Bullet velocity arrow
+                const bulletArrowLen = Math.min(bulletVel / 10, 80);
+                drawArrow(ctx, bulletX + 30, centerY - 20, bulletX + 30 + bulletArrowLen, centerY - 20, '#4caf50');
+                ctx.fillStyle = '#4caf50';
+                ctx.font = '10px Segoe UI';
+                ctx.fillText(bulletVel + ' m/s →', bulletX + 30 + bulletArrowLen / 2, centerY - 30);
+            }
+
+            // Recoil arrow (if firing or after)
+            if ((phase === 'firing' && progress > 0.1) || phase === 'after') {
+                const recoilArrowLen = Math.min(Math.abs(recoilVel) * 8, 60);
+                drawArrow(ctx, rifleX - 90, centerY - 20, rifleX - 90 - recoilArrowLen, centerY - 20, '#f44336');
+                ctx.fillStyle = '#f44336';
+                ctx.font = '10px Segoe UI';
+                ctx.textAlign = 'center';
+                ctx.fillText('← ' + Math.abs(recoilVel).toFixed(1) + ' m/s', rifleX - 90 - recoilArrowLen / 2, centerY - 30);
+            }
+
+            // Momentum equation display
+            ctx.fillStyle = 'rgba(255,255,255,0.1)';
+            ctx.fillRect(20, height - 100, width - 40, 50);
+            
+            ctx.fillStyle = '#fff';
+            ctx.font = '14px Courier New';
+            ctx.textAlign = 'center';
+            
+            const bulletMass = bulletMassG / 1000;
+            const bulletP = (bulletMass * bulletVel).toFixed(1);
+            const rifleP = (rifleMass * recoilVel).toFixed(1);
+            
+            if (phase === 'ready') {
+                ctx.fillText('p(before) = 0    →    0 = p(bullet) + p(rifle)', width / 2, height - 70);
+            } else {
+                ctx.fillText(`0 = (+${bulletP}) + (${rifleP}) = ${(parseFloat(bulletP) + parseFloat(rifleP)).toFixed(1)} ✓`, width / 2, height - 70);
+            }
+
+            // Phase label
+            ctx.fillStyle = phase === 'ready' ? '#ffeb3b' : '#4caf50';
+            ctx.font = 'bold 14px Segoe UI';
+            ctx.textAlign = 'left';
+            ctx.fillText(phase === 'ready' ? '🎯 Ready to Fire' : phase === 'firing' ? '💥 BANG!' : '✓ Momentum Conserved!', 20, 30);
+        }
+
+        function fireRifle() {
+            if (recoilAnimationId) {
+                cancelAnimationFrame(recoilAnimationId);
+            }
+
+            const bulletMassG = parseFloat(document.getElementById('recoilBulletMass').value);
+            const bulletVel = parseFloat(document.getElementById('recoilBulletVel').value);
+            const rifleMass = parseFloat(document.getElementById('rifleMass').value);
+
+            const bulletMass = bulletMassG / 1000;
+            const recoilVel = -(bulletMass * bulletVel) / rifleMass;
+
+            let progress = 0;
+            let phase = 'firing';
+
+            function animate() {
+                progress += 0.02;
+
+                if (progress < 0.7) {
+                    phase = 'firing';
+                } else {
+                    phase = 'after';
+                }
+
+                if (progress >= 1) {
+                    cancelAnimationFrame(recoilAnimationId);
+                    return;
+                }
+
+                drawRecoilCanvas(phase, progress, bulletVel, recoilVel, bulletMassG, rifleMass);
+                recoilAnimationId = requestAnimationFrame(animate);
+            }
+
+            animate();
+        }
+
+        function resetRecoilSim() {
+            if (recoilAnimationId) {
+                cancelAnimationFrame(recoilAnimationId);
+            }
+            document.getElementById('recoilBulletMass').value = 100;
+            document.getElementById('recoilBulletVel').value = 300;
+            document.getElementById('rifleMass').value = 5;
+            updateRecoilSim();
+        }
+
+        // =====================
+        // Simulation 3: Car Crash
+        // =====================
+        let carCrashAnimationId = null;
+
+        function initCarCrashSim() {
+            const canvas = document.getElementById('carCrashCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            updateCarCrashSim();
+        }
+
+        function updateCarCrashSim() {
+            const stationaryMass = parseFloat(document.getElementById('stationaryCarMass').value);
+            const movingMass = parseFloat(document.getElementById('movingCarMass').value);
+            const movingSpeed = parseFloat(document.getElementById('movingCarSpeed').value);
+
+            const pBefore = movingMass * movingSpeed;
+            const combinedMass = stationaryMass + movingMass;
+            const finalVel = pBefore / combinedMass;
+            const pAfter = combinedMass * finalVel;
+
+            document.getElementById('carPBefore').textContent = pBefore.toFixed(0) + ' kg·m/s';
+            document.getElementById('carCombinedMass').textContent = combinedMass + ' kg';
+            document.getElementById('carFinalVel').textContent = finalVel.toFixed(2) + ' m/s';
+            document.getElementById('carPAfter').textContent = pAfter.toFixed(0) + ' kg·m/s';
+
+            drawCarCrashCanvas('ready', 0, stationaryMass, movingMass, movingSpeed, finalVel);
+        }
+
+        function drawCarCrashCanvas(phase, progress, stationaryMass, movingMass, movingSpeed, finalVel) {
+            const canvas = document.getElementById('carCrashCanvas');
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+
+            ctx.clearRect(0, 0, width, height);
+
+            // Sky
+            const skyGradient = ctx.createLinearGradient(0, 0, 0, height - 80);
+            skyGradient.addColorStop(0, '#87ceeb');
+            skyGradient.addColorStop(1, '#e0f7fa');
+            ctx.fillStyle = skyGradient;
+            ctx.fillRect(0, 0, width, height - 80);
+
+            // Road
+            ctx.fillStyle = '#424242';
+            ctx.fillRect(0, height - 80, width, 80);
+
+            // Road lines
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = 3;
+            ctx.setLineDash([40, 20]);
+            ctx.beginPath();
+            ctx.moveTo(0, height - 40);
+            ctx.lineTo(width, height - 40);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Traffic light
+            ctx.fillStyle = '#333';
+            ctx.fillRect(width - 80, 50, 20, 80);
+            ctx.fillRect(width - 100, 50, 60, 60);
+            
+            // Red light
+            ctx.fillStyle = '#f44336';
+            ctx.beginPath();
+            ctx.arc(width - 70, 80, 15, 0, Math.PI * 2);
+            ctx.fill();
+
+            const carY = height - 80;
+            const stationaryCarX = width - 250;
+            let movingCarX;
+            let showCombined = false;
+
+            if (phase === 'ready') {
+                movingCarX = 100;
+            } else if (phase === 'approaching') {
+                movingCarX = 100 + (stationaryCarX - 200) * Math.min(progress * 2, 1);
+            } else if (phase === 'crashed') {
+                showCombined = true;
+                movingCarX = stationaryCarX - 100 + finalVel * 20 * (progress - 0.5) * 2;
+            }
+
+            // Draw stationary car (or combined wreckage)
+            if (!showCombined) {
+                drawCar(ctx, stationaryCarX, carY, '#1976d2', stationaryMass, false);
+                
+                // "STOPPED" label
+                ctx.fillStyle = '#f44336';
+                ctx.font = 'bold 12px Segoe UI';
+                ctx.textAlign = 'center';
+                ctx.fillText('STOPPED', stationaryCarX + 50, carY - 70);
+            }
+
+            // Draw moving car (or combined)
+            if (!showCombined) {
+                drawCar(ctx, movingCarX, carY, '#ff9800', movingMass, true);
+                
+                // Velocity arrow for moving car
+                if (phase === 'ready' || phase === 'approaching') {
+                    const arrowLen = Math.min(movingSpeed * 3, 80);
+                    drawArrow(ctx, movingCarX + 110, carY - 50, movingCarX + 110 + arrowLen, carY - 50, '#ff9800');
+                    ctx.fillStyle = '#ff9800';
+                    ctx.font = '11px Segoe UI';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(movingSpeed + ' m/s', movingCarX + 110 + arrowLen / 2, carY - 60);
+                }
+            } else {
+                // Draw combined wreckage
+                drawWreckage(ctx, movingCarX, carY, stationaryMass + movingMass);
+                
+                // Combined velocity arrow
+                const arrowLen = Math.min(finalVel * 5, 60);
+                drawArrow(ctx, movingCarX + 130, carY - 50, movingCarX + 130 + arrowLen, carY - 50, '#4caf50');
+                ctx.fillStyle = '#4caf50';
+                ctx.font = '11px Segoe UI';
+                ctx.textAlign = 'center';
+                ctx.fillText(finalVel.toFixed(2) + ' m/s', movingCarX + 130 + arrowLen / 2, carY - 60);
+            }
+
+            // Impact effect
+            if (phase === 'approaching' && progress > 0.45 && progress < 0.55) {
+                ctx.fillStyle = '#ff5722';
+                ctx.font = 'bold 30px Segoe UI';
+                ctx.textAlign = 'center';
+                ctx.fillText('💥 CRASH!', width / 2, height / 2 - 50);
+                
+                // Debris
+                for (let i = 0; i < 10; i++) {
+                    ctx.fillStyle = ['#ff5722', '#ffeb3b', '#795548'][Math.floor(Math.random() * 3)];
+                    ctx.fillRect(
+                        stationaryCarX - 50 + Math.random() * 100,
+                        carY - 80 + Math.random() * 60,
+                        5 + Math.random() * 10,
+                        5 + Math.random() * 10
+                    );
+                }
+            }
+
+            // Info panel
+            ctx.fillStyle = 'rgba(255,255,255,0.95)';
+            ctx.fillRect(15, 15, 180, 85);
+            ctx.strokeStyle = '#1976d2';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(15, 15, 180, 85);
+
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 11px Segoe UI';
+            ctx.textAlign = 'left';
+            ctx.fillText('Rear-End Collision', 25, 32);
+            ctx.font = '10px Segoe UI';
+            ctx.fillText(`Blue car: ${stationaryMass} kg (stopped)`, 25, 48);
+            ctx.fillText(`Orange car: ${movingMass} kg @ ${movingSpeed} m/s`, 25, 63);
+            ctx.fillStyle = '#4caf50';
+            ctx.font = 'bold 10px Segoe UI';
+            ctx.fillText(`Combined: ${stationaryMass + movingMass} kg`, 25, 78);
+            ctx.fillText(`Final: ${finalVel.toFixed(2)} m/s`, 25, 93);
+        }
+
+        function drawCar(ctx, x, y, color, mass, hasMotion) {
+            // Car body
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y - 40, 100, 30);
+            
+            // Roof
+            ctx.fillRect(x + 20, y - 60, 50, 20);
+            
+            // Windows
+            ctx.fillStyle = '#b3e5fc';
+            ctx.fillRect(x + 25, y - 58, 40, 16);
+            
+            // Wheels
+            ctx.fillStyle = '#333';
+            ctx.beginPath();
+            ctx.arc(x + 20, y - 10, 12, 0, Math.PI * 2);
+            ctx.arc(x + 80, y - 10, 12, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Headlights
+            ctx.fillStyle = '#ffeb3b';
+            ctx.fillRect(x + 95, y - 35, 5, 10);
+            
+            // Mass label
+            ctx.fillStyle = '#fff';
+            ctx.font = '10px Segoe UI';
+            ctx.textAlign = 'center';
+            ctx.fillText(mass + ' kg', x + 50, y - 25);
+        }
+
+        function drawWreckage(ctx, x, y, mass) {
+            // Crumpled combined cars
+            ctx.fillStyle = '#795548';
+            
+            // Deformed shape
+            ctx.beginPath();
+            ctx.moveTo(x, y - 40);
+            ctx.lineTo(x + 120, y - 35);
+            ctx.lineTo(x + 130, y - 10);
+            ctx.lineTo(x, y - 10);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Some blue showing
+            ctx.fillStyle = '#1976d2';
+            ctx.fillRect(x + 70, y - 50, 50, 25);
+            
+            // Some orange showing
+            ctx.fillStyle = '#ff9800';
+            ctx.fillRect(x, y - 50, 40, 20);
+            
+            // Wheels (some askew)
+            ctx.fillStyle = '#333';
+            ctx.beginPath();
+            ctx.arc(x + 15, y - 10, 10, 0, Math.PI * 2);
+            ctx.arc(x + 50, y - 8, 11, 0, Math.PI * 2);
+            ctx.arc(x + 90, y - 10, 10, 0, Math.PI * 2);
+            ctx.arc(x + 115, y - 12, 9, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Damage marks
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            for (let i = 0; i < 5; i++) {
+                ctx.beginPath();
+                ctx.moveTo(x + 40 + Math.random() * 30, y - 45);
+                ctx.lineTo(x + 40 + Math.random() * 30, y - 20);
+                ctx.stroke();
+            }
+            
+            // Mass label
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 11px Segoe UI';
+            ctx.textAlign = 'center';
+            ctx.fillText(mass + ' kg', x + 65, y - 55);
+            ctx.fillText('(entangled)', x + 65, y - 42);
+        }
+
+        function crashCars() {
+            if (carCrashAnimationId) {
+                cancelAnimationFrame(carCrashAnimationId);
+            }
+
+            const stationaryMass = parseFloat(document.getElementById('stationaryCarMass').value);
+            const movingMass = parseFloat(document.getElementById('movingCarMass').value);
+            const movingSpeed = parseFloat(document.getElementById('movingCarSpeed').value);
+            const finalVel = (movingMass * movingSpeed) / (stationaryMass + movingMass);
+
+            let progress = 0;
+            let phase = 'approaching';
+
+            function animate() {
+                progress += 0.012;
+
+                if (progress < 0.5) {
+                    phase = 'approaching';
+                } else {
+                    phase = 'crashed';
+                }
+
+                if (progress >= 1) {
+                    cancelAnimationFrame(carCrashAnimationId);
+                    return;
+                }
+
+                drawCarCrashCanvas(phase, progress, stationaryMass, movingMass, movingSpeed, finalVel);
+                carCrashAnimationId = requestAnimationFrame(animate);
+            }
+
+            animate();
+        }
+
+        function resetCarCrashSim() {
+            if (carCrashAnimationId) {
+                cancelAnimationFrame(carCrashAnimationId);
+            }
+            document.getElementById('stationaryCarMass').value = 1800;
+            document.getElementById('movingCarMass').value = 900;
+            document.getElementById('movingCarSpeed').value = 20;
+            updateCarCrashSim();
+        }
+
+        // =====================
+        // Initialize Everything
+        // =====================
+        window.addEventListener('load', function() {
+            initQuiz();
+            
+            setTimeout(() => {
+                initBulletSim();
+                initRecoilSim();
+                initCarCrashSim();
+            }, 100);
         });
 
-        // Navigation between questions
-        let currentQuestion = 1;
-        const totalQuestions = 10;
-        
-        document.getElementById('nextBtn').addEventListener('click', () => {
-            if (currentQuestion < totalQuestions) {
-                document.querySelectorAll('.question')[currentQuestion - 1].style.display = 'none';
-                currentQuestion++;
-                document.querySelectorAll('.question')[currentQuestion - 1].style.display = 'block';
-                
-                document.getElementById('prevBtn').disabled = false;
-                
-                if (currentQuestion === totalQuestions) {
-                    document.getElementById('nextBtn').textContent = 'Finish';
-                }
-            } else {
-                // Finish the lesson
-                alert('You have completed the lesson questions!');
-            }
+        window.addEventListener('resize', function() {
+            initBulletSim();
+            initRecoilSim();
+            initCarCrashSim();
         });
-        
-        document.getElementById('prevBtn').addEventListener('click', () => {
-            if (currentQuestion > 1) {
-                document.querySelectorAll('.question')[currentQuestion - 1].style.display = 'none';
-                currentQuestion--;
-                document.querySelectorAll('.question')[currentQuestion - 1].style.display = 'block';
-                
-                document.getElementById('nextBtn').textContent = 'Next';
-                
-                if (currentQuestion === 1) {
-                    document.getElementById('prevBtn').disabled = true;
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
                 }
-            }
-        });
-        
-        // Initialize by showing only the first question
-        document.querySelectorAll('.question').forEach((question, index) => {
-            if (index !== 0) {
-                question.style.display = 'none';
-            }
+            });
         });
     </script>
 </body>

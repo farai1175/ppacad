@@ -1,0 +1,2373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AC Calculations: RMS Values - PassProof Academy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1a73e8;
+            --light-blue: #e8f0fe;
+            --dark-blue: #0d47a1;
+            --white: #ffffff;
+            --gray: #f5f5f5;
+            --dark-gray: #333;
+            --success: #34a853;
+            --error: #ea4335;
+            --warning: #fbbc04;
+            --purple: #7c4dff;
+            --teal: #00bcd4;
+            --teal-dark: #0097a7;
+            --orange: #ff6d00;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-lg: 0 4px 20px rgba(0,0,0,0.15);
+            --shadow-xl: 0 8px 30px rgba(0,0,0,0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+            color: var(--dark-gray);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+            color: var(--white);
+            padding: 1rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            font-size: 1.8rem;
+            animation: wave 2s ease-in-out infinite;
+        }
+
+        .nav-container {
+            position: relative;
+        }
+
+        .nav-toggle {
+            background: rgba(255,255,255,0.15);
+            color: var(--white);
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-toggle:hover {
+            background: rgba(255,255,255,0.25);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: calc(100% + 10px);
+            background: var(--white);
+            min-width: 300px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            animation: slideDown 0.3s ease;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+        }
+
+        .dropdown-menu a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.9rem 1.2rem;
+            color: var(--dark-gray);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--light-blue);
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a:hover {
+            background: #e0f7fa;
+            color: var(--teal-dark);
+            padding-left: 1.5rem;
+        }
+
+        .dropdown-menu .menu-section {
+            padding: 0.75rem 1.2rem;
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+            font-weight: bold;
+            color: var(--teal-dark);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.5s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .subject-grade {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+            color: var(--white);
+            padding: 0.5rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: var(--shadow);
+        }
+
+        .badge.secondary {
+            background: #e0f7fa;
+            color: var(--teal-dark);
+        }
+
+        .badge.math {
+            background: linear-gradient(135deg, var(--purple) 0%, #651fff 100%);
+        }
+
+        h1 {
+            color: var(--teal-dark);
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        h2 {
+            color: var(--teal);
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid #e0f7fa;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h3 {
+            color: var(--teal-dark);
+            font-size: 1.25rem;
+            margin: 1.25rem 0 0.75rem;
+        }
+
+        h4 {
+            color: var(--teal);
+            font-size: 1.1rem;
+            margin: 1rem 0 0.5rem;
+        }
+
+        .lesson-info {
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            border-left: 5px solid var(--teal);
+        }
+
+        .lesson-info p {
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-info p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Objectives */
+        .objectives-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .objectives-list li {
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.75rem;
+            background: linear-gradient(135deg, #e0f7fa 0%, var(--white) 100%);
+            border-radius: 12px;
+            border-left: 4px solid var(--teal);
+            transition: all 0.3s ease;
+        }
+
+        .objectives-list li:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow);
+        }
+
+        .objectives-list li::before {
+            content: "📐 ";
+        }
+
+        /* Formula Boxes */
+        .formula-box {
+            background: linear-gradient(135deg, var(--teal-dark) 0%, #00838f 100%);
+            color: var(--white);
+            padding: 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+            margin: 1.25rem 0;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .formula-box .formula {
+            font-size: 1.8rem;
+            font-family: 'Times New Roman', serif;
+            margin: 0.75rem 0;
+            letter-spacing: 2px;
+        }
+
+        .formula-box .formula-small {
+            font-size: 1.3rem;
+            font-family: 'Times New Roman', serif;
+            margin: 0.5rem 0;
+        }
+
+        .formula-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .formula-card {
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+            border: 2px solid var(--teal);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .formula-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .formula-card .formula-title {
+            font-weight: bold;
+            color: var(--teal-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .formula-card .formula-equation {
+            font-size: 1.5rem;
+            font-family: 'Times New Roman', serif;
+            color: var(--dark-gray);
+            margin: 0.75rem 0;
+            padding: 0.5rem;
+            background: var(--white);
+            border-radius: 8px;
+        }
+
+        .formula-card .formula-note {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Concept Boxes */
+        .concept-box {
+            background: linear-gradient(135deg, #e0f7fa 0%, var(--white) 100%);
+            border: 2px solid var(--teal);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.25rem 0;
+        }
+
+        .concept-box.purple {
+            background: linear-gradient(135deg, #ede7f6 0%, var(--white) 100%);
+            border-color: var(--purple);
+        }
+
+        .concept-box.warning {
+            background: linear-gradient(135deg, #fff8e1 0%, var(--white) 100%);
+            border-color: var(--warning);
+        }
+
+        .concept-box.success {
+            background: linear-gradient(135deg, #e8f5e9 0%, var(--white) 100%);
+            border-color: var(--success);
+        }
+
+        .key-point {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left: 5px solid #ff9800;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0 16px 16px 0;
+        }
+
+        .key-point strong {
+            color: #e65100;
+        }
+
+        .definition-box {
+            background: linear-gradient(135deg, #e0f7fa 0%, #80deea 100%);
+            border: 2px dashed var(--teal);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .definition-box .term {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--teal-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .definition-box .definition {
+            font-size: 1.1rem;
+            color: var(--dark-gray);
+        }
+
+        /* Worked Examples */
+        .example-box {
+            background: var(--white);
+            border: 2px solid var(--teal);
+            border-radius: 16px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+
+        .example-header {
+            background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+            color: var(--white);
+            padding: 1rem 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .example-content {
+            padding: 1.5rem;
+        }
+
+        .example-problem {
+            background: #f5f5f5;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--teal);
+        }
+
+        .example-solution {
+            background: #e8f5e9;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--success);
+        }
+
+        .example-solution h5 {
+            color: var(--success);
+            margin-bottom: 0.75rem;
+        }
+
+        .solution-step {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: var(--white);
+            border-radius: 6px;
+        }
+
+        .solution-step .step-label {
+            color: var(--teal-dark);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .solution-step .step-math {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.1rem;
+            margin-top: 0.25rem;
+        }
+
+        .answer-highlight {
+            background: linear-gradient(135deg, var(--success) 0%, #2e7d32 100%);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            display: inline-block;
+            margin-top: 0.5rem;
+            font-weight: bold;
+        }
+
+        /* Simulation Styles */
+        .simulation-container {
+            background: var(--white);
+            border: 2px solid var(--teal);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .simulation-container h3 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--teal);
+        }
+
+        .simulation-canvas {
+            width: 100%;
+            max-width: 700px;
+            height: 350px;
+            margin: 0 auto;
+            display: block;
+            border: 2px solid #e0f7fa;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        .simulation-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.25rem;
+        }
+
+        .sim-btn {
+            background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .sim-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .sim-btn.secondary {
+            background: var(--white);
+            color: var(--teal);
+            border: 2px solid var(--teal);
+        }
+
+        .sim-btn.secondary:hover {
+            background: #e0f7fa;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .slider-container label {
+            font-weight: 600;
+            color: var(--teal-dark);
+            min-width: 140px;
+        }
+
+        .slider-container input[type="range"] {
+            flex: 1;
+            max-width: 200px;
+            height: 8px;
+            border-radius: 4px;
+            background: #e0f7fa;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--teal);
+            cursor: pointer;
+            box-shadow: var(--shadow);
+        }
+
+        .slider-value {
+            background: var(--teal);
+            color: var(--white);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-weight: bold;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .output-display {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #00ff88;
+            padding: 1.25rem;
+            border-radius: 16px;
+            font-family: 'Courier New', monospace;
+            margin-top: 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .output-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0.75rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+        }
+
+        .output-label {
+            color: #888;
+        }
+
+        .output-value {
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        .output-value.cyan {
+            color: #00bcd4;
+        }
+
+        .output-value.yellow {
+            color: #ffeb3b;
+        }
+
+        .output-value.purple {
+            color: #ce93d8;
+        }
+
+        /* Calculator Styles */
+        .calculator-container {
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+            border: 2px solid var(--teal);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .calculator-container h3 {
+            text-align: center;
+            color: var(--teal-dark);
+            margin-bottom: 1rem;
+        }
+
+        .calc-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .calc-tab {
+            background: var(--white);
+            color: var(--teal);
+            border: 2px solid var(--teal);
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .calc-tab:hover {
+            background: #e0f7fa;
+        }
+
+        .calc-tab.active {
+            background: var(--teal);
+            color: var(--white);
+        }
+
+        .calc-panel {
+            display: none;
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+        }
+
+        .calc-panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .calc-input-group {
+            margin-bottom: 1rem;
+        }
+
+        .calc-input-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--teal-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .calc-input-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e0f7fa;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .calc-input-group input:focus {
+            outline: none;
+            border-color: var(--teal);
+            box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.2);
+        }
+
+        .calc-input-group .unit {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.25rem;
+        }
+
+        .calc-btn {
+            background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .calc-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .calc-result {
+            background: linear-gradient(135deg, var(--success) 0%, #2e7d32 100%);
+            color: var(--white);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            text-align: center;
+            display: none;
+        }
+
+        .calc-result.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .calc-result .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .calc-result .result-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Quiz Styles */
+        .quiz-container {
+            margin-top: 2rem;
+        }
+
+        .question-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--teal);
+            transition: all 0.3s ease;
+        }
+
+        .question-card.correct {
+            border-left-color: var(--success);
+            background: linear-gradient(135deg, #e8f5e9 0%, var(--white) 100%);
+        }
+
+        .question-card.incorrect {
+            border-left-color: var(--error);
+            background: linear-gradient(135deg, #ffebee 0%, var(--white) 100%);
+        }
+
+        .question-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .question-number {
+            background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+            color: var(--white);
+            min-width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            font-size: 1.1rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--dark-gray);
+            line-height: 1.5;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.75rem;
+            background: var(--gray);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .option-item:hover {
+            background: #e0f7fa;
+            border-color: var(--teal);
+            transform: translateX(5px);
+        }
+
+        .option-item.selected {
+            background: #e0f7fa;
+            border-color: var(--teal);
+        }
+
+        .option-item.correct-answer {
+            background: #c8e6c9;
+            border-color: var(--success);
+        }
+
+        .option-item.wrong-answer {
+            background: #ffcdd2;
+            border-color: var(--error);
+        }
+
+        .option-letter {
+            background: var(--teal);
+            color: var(--white);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            display: none;
+        }
+
+        .feedback.show {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .feedback-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%);
+            color: #1b5e20;
+        }
+
+        .feedback.incorrect {
+            background: linear-gradient(135deg, #ffcdd2 0%, #ef9a9a 100%);
+            color: #b71c1c;
+        }
+
+        .submit-quiz-btn {
+            background: linear-gradient(135deg, var(--success) 0%, #2e7d32 100%);
+            color: var(--white);
+            border: none;
+            padding: 1.1rem 2.5rem;
+            border-radius: 30px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            width: 100%;
+            max-width: 350px;
+            margin: 2rem auto;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .submit-quiz-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .score-container {
+            background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+            color: var(--white);
+            padding: 2.5rem;
+            border-radius: 24px;
+            text-align: center;
+            margin: 2rem 0;
+            display: none;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .score-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .score-container.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .score-icon {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        .score-number {
+            font-size: 4rem;
+            font-weight: bold;
+        }
+
+        .score-percentage {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            max-width: 400px;
+            height: 14px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 7px;
+            overflow: hidden;
+            margin: 1.5rem auto;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4caf50, #8bc34a, #cddc39);
+            border-radius: 7px;
+            transition: width 1s ease;
+        }
+
+        .score-feedback {
+            font-size: 1.15rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.15);
+            border-radius: 12px;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .retry-btn {
+            background: var(--white);
+            color: var(--teal);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .retry-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+            color: var(--white);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .nav-btn.prev {
+            background: var(--white);
+            color: var(--teal);
+            border: 2px solid var(--teal);
+        }
+
+        .nav-btn.prev:hover {
+            background: #e0f7fa;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--teal-dark) 0%, #006064 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .copyright {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+            color: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-xl);
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            animation: slideIn 0.3s ease;
+            max-width: 350px;
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, var(--success) 0%, #2e7d32 100%);
+        }
+
+        .notification.warning {
+            background: linear-gradient(135deg, var(--warning) 0%, #f57c00 100%);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            .card {
+                padding: 1.25rem;
+            }
+
+            .simulation-canvas {
+                height: 280px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .output-display {
+                grid-template-columns: 1fr;
+            }
+
+            .formula-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .formula-box .formula {
+                font-size: 1.4rem;
+            }
+        }
+
+        /* Math styling */
+        .math-fraction {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            margin: 0 0.25rem;
+        }
+
+        .math-fraction .numerator {
+            border-bottom: 2px solid currentColor;
+            padding-bottom: 2px;
+        }
+
+        .math-fraction .denominator {
+            padding-top: 2px;
+        }
+
+        .sqrt-symbol {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-icon">📐</span>
+                <span>PassProof Academy</span>
+            </div>
+            <div class="nav-container">
+                <button class="nav-toggle" onclick="toggleNav()">
+                    <span>☰</span>
+                    <span>Menu</span>
+                </button>
+                <nav class="dropdown-menu" id="dropdownMenu">
+                    <div class="menu-section">📘 Physical Sciences - Grade 12</div>
+                    <a href="#" onclick="saveProgress()">💾 Save Progress</a>
+                    <a href="#objectives">🎯 Learning Objectives</a>
+                    <a href="#formulas">📐 Key Formulas</a>
+                    <a href="#examples">✏️ Worked Examples</a>
+                    <a href="#simulation">🔬 Interactive Simulation</a>
+                    <a href="#calculator">🧮 RMS Calculator</a>
+                    <a href="#quiz">✍️ Quiz</a>
+                    <div class="menu-section">🔗 Quick Links</div>
+                    <a href="#">🏠 Dashboard</a>
+                    <a href="#">📚 All Lessons</a>
+                    <a href="#">📊 My Progress</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Subject & Grade Card -->
+        <div class="card">
+            <div class="subject-grade">
+                <span class="badge">Grade 12</span>
+                <span class="badge secondary">Physical Sciences</span>
+                <span class="badge secondary">Week 24</span>
+                <span class="badge math">📐 Calculations</span>
+            </div>
+            
+            <h1>📊 AC Calculations: RMS Values</h1>
+            
+            <div class="lesson-info">
+                <p><strong>📌 Topic:</strong> Alternating Current</p>
+                <p><strong>📝 Lesson Number:</strong> 2</p>
+                <p><strong>📚 Lesson Title:</strong> RMS Values and AC Power Calculations</p>
+                <p><strong>⏱️ Duration:</strong> 50 minutes</p>
+            </div>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="card" id="objectives">
+            <h2>🎯 Learning Objectives</h2>
+            <p>At the end of this lesson, you should be able to:</p>
+            <ul class="objectives-list">
+                <li>Write expressions for current and voltage in an AC circuit (V = V<sub>max</sub> sin 2πft)</li>
+                <li>Define root mean square (RMS) values and understand their significance</li>
+                <li>Calculate RMS values using I<sub>rms</sub> = I<sub>max</sub>/√2 and V<sub>rms</sub> = V<sub>max</sub>/√2</li>
+                <li>Calculate average power using P<sub>average</sub> = V<sub>rms</sub> × I<sub>rms</sub></li>
+                <li>Solve problems involving RMS values, peak values, and power in AC circuits</li>
+            </ul>
+        </div>
+
+        <!-- Pre-knowledge -->
+        <div class="card">
+            <h2>📚 Pre-Knowledge Required</h2>
+            
+            <div class="definition-box">
+                <div class="term">🔑 Root Mean Square (RMS)</div>
+                <div class="definition">The <strong>effective value</strong> of alternating current that corresponds with a direct current that produces the <strong>same heating effect</strong>.</div>
+            </div>
+
+            <div class="key-point">
+                <strong>💡 Why RMS Matters:</strong> Since AC constantly changes, we need a way to express its "equivalent DC value" for power calculations. The RMS value tells us what DC voltage or current would deliver the same power as the AC signal.
+            </div>
+        </div>
+
+        <!-- Key Formulas -->
+        <div class="card" id="formulas">
+            <h2>📐 Key Formulas</h2>
+
+            <h3>AC Voltage and Current Equations</h3>
+            
+            <div class="formula-box">
+                <strong>Instantaneous Values</strong>
+                <div class="formula">V = V<sub>max</sub> sin(2πft)</div>
+                <div class="formula">I = I<sub>max</sub> sin(2πft)</div>
+                <p style="margin-top: 0.5rem; font-size: 0.95rem;">where f = frequency (Hz), t = time (s)</p>
+            </div>
+
+            <h3>RMS Formulas</h3>
+            
+            <div class="formula-grid">
+                <div class="formula-card">
+                    <div class="formula-title">RMS Current</div>
+                    <div class="formula-equation">I<sub>rms</sub> = I<sub>max</sub> / √2</div>
+                    <div class="formula-note">or I<sub>rms</sub> ≈ 0.707 × I<sub>max</sub></div>
+                </div>
+                
+                <div class="formula-card">
+                    <div class="formula-title">RMS Voltage</div>
+                    <div class="formula-equation">V<sub>rms</sub> = V<sub>max</sub> / √2</div>
+                    <div class="formula-note">or V<sub>rms</sub> ≈ 0.707 × V<sub>max</sub></div>
+                </div>
+                
+                <div class="formula-card">
+                    <div class="formula-title">Average Power</div>
+                    <div class="formula-equation">P<sub>avg</sub> = V<sub>rms</sub> × I<sub>rms</sub></div>
+                    <div class="formula-note">Same as DC power formula!</div>
+                </div>
+                
+                <div class="formula-card">
+                    <div class="formula-title">Resistance (Ohm's Law)</div>
+                    <div class="formula-equation">R = V<sub>rms</sub> / I<sub>rms</sub></div>
+                    <div class="formula-note">Works for RMS values</div>
+                </div>
+            </div>
+
+            <div class="concept-box purple">
+                <h4>📊 Understanding the √2 Factor</h4>
+                <p>The factor √2 (approximately 1.414) comes from the mathematical averaging of a sine wave:</p>
+                <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                    <li><strong>Peak value (V<sub>max</sub>):</strong> The maximum value reached by the wave</li>
+                    <li><strong>RMS value:</strong> Peak value ÷ √2 ≈ Peak value × 0.707</li>
+                    <li><strong>Peak from RMS:</strong> RMS value × √2 ≈ RMS value × 1.414</li>
+                </ul>
+                <p style="margin-top: 0.75rem;"><strong>Example:</strong> South African household voltage is 220V RMS, which means the peak voltage is 220 × √2 ≈ 311V!</p>
+            </div>
+        </div>
+
+        <!-- Worked Examples -->
+        <div class="card" id="examples">
+            <h2>✏️ Worked Examples</h2>
+
+            <!-- Example 1 -->
+            <div class="example-box">
+                <div class="example-header">
+                    <span>📝</span>
+                    <span>Example 1: Hair Dryer Calculation</span>
+                </div>
+                <div class="example-content">
+                    <div class="example-problem">
+                        <strong>Problem:</strong> Calculate the peak current in a 1000 W hair dryer connected to a 120 V line.
+                    </div>
+                    <div class="example-solution">
+                        <h5>✅ Solution:</h5>
+                        <div class="solution-step">
+                            <div class="step-label">Step 1: Find I<sub>rms</sub> using power formula</div>
+                            <div class="step-math">P<sub>average</sub> = V<sub>rms</sub> × I<sub>rms</sub></div>
+                            <div class="step-math">1000 = 120 × I<sub>rms</sub></div>
+                            <div class="step-math">I<sub>rms</sub> = 1000 ÷ 120 = 8.33 A</div>
+                        </div>
+                        <div class="solution-step">
+                            <div class="step-label">Step 2: Find I<sub>max</sub> using RMS formula</div>
+                            <div class="step-math">I<sub>rms</sub> = I<sub>max</sub> / √2</div>
+                            <div class="step-math">8.33 = I<sub>max</sub> / √2</div>
+                            <div class="step-math">I<sub>max</sub> = 8.33 × √2 = 8.33 × 1.414</div>
+                        </div>
+                        <div class="answer-highlight">I<sub>max</sub> = 11.8 A</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 2 -->
+            <div class="example-box">
+                <div class="example-header">
+                    <span>📝</span>
+                    <span>Example 2: Electric Stove</span>
+                </div>
+                <div class="example-content">
+                    <div class="example-problem">
+                        <strong>Problem:</strong> An electric stove is marked 2000 W, 240 V.<br>
+                        a) Calculate the maximum voltage through the stove.<br>
+                        b) Calculate the resistance of the stove.
+                    </div>
+                    <div class="example-solution">
+                        <h5>✅ Solution (a): Maximum Voltage</h5>
+                        <div class="solution-step">
+                            <div class="step-label">Using RMS formula:</div>
+                            <div class="step-math">V<sub>rms</sub> = V<sub>max</sub> / √2</div>
+                            <div class="step-math">240 = V<sub>max</sub> / √2</div>
+                            <div class="step-math">V<sub>max</sub> = 240 × √2 = 240 × 1.414</div>
+                        </div>
+                        <div class="answer-highlight">V<sub>max</sub> = 339.41 V</div>
+                        
+                        <h5 style="margin-top: 1rem;">✅ Solution (b): Resistance</h5>
+                        <div class="solution-step">
+                            <div class="step-label">Step 1: Find I<sub>rms</sub></div>
+                            <div class="step-math">P = V<sub>rms</sub> × I<sub>rms</sub></div>
+                            <div class="step-math">2000 = 240 × I<sub>rms</sub></div>
+                            <div class="step-math">I<sub>rms</sub> = 2000 ÷ 240 = 8.33 A</div>
+                        </div>
+                        <div class="solution-step">
+                            <div class="step-label">Step 2: Find Resistance using Ohm's Law</div>
+                            <div class="step-math">R = V<sub>rms</sub> / I<sub>rms</sub></div>
+                            <div class="step-math">R = 240 / 8.33</div>
+                        </div>
+                        <div class="answer-highlight">R = 28.81 Ω</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 3 -->
+            <div class="example-box">
+                <div class="example-header">
+                    <span>📝</span>
+                    <span>Example 3: Resistor with AC</span>
+                </div>
+                <div class="example-content">
+                    <div class="example-problem">
+                        <strong>Problem:</strong> An AC voltage, whose peak value is 180 V, is across a 330 Ω resistor. What are the RMS and peak currents in the resistor?
+                    </div>
+                    <div class="example-solution">
+                        <h5>✅ Solution:</h5>
+                        <div class="solution-step">
+                            <div class="step-label">Step 1: Find V<sub>rms</sub></div>
+                            <div class="step-math">V<sub>rms</sub> = V<sub>max</sub> / √2 = 180 / √2 = 127.28 V</div>
+                        </div>
+                        <div class="solution-step">
+                            <div class="step-label">Step 2: Find I<sub>rms</sub> using Ohm's Law</div>
+                            <div class="step-math">R = V<sub>rms</sub> / I<sub>rms</sub></div>
+                            <div class="step-math">330 = 127.28 / I<sub>rms</sub></div>
+                            <div class="step-math">I<sub>rms</sub> = 127.28 / 330 = 0.39 A</div>
+                        </div>
+                        <div class="solution-step">
+                            <div class="step-label">Step 3: Find I<sub>max</sub></div>
+                            <div class="step-math">I<sub>max</sub> = I<sub>rms</sub> × √2 = 0.39 × 1.414</div>
+                        </div>
+                        <div class="answer-highlight">I<sub>rms</sub> = 0.39 A, I<sub>max</sub> = 0.55 A</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 4 -->
+            <div class="example-box">
+                <div class="example-header">
+                    <span>📝</span>
+                    <span>Example 4: Finding RMS Voltage from Power and Current</span>
+                </div>
+                <div class="example-content">
+                    <div class="example-problem">
+                        <strong>Problem:</strong> The maximum value of alternating current in a 700 W device is 2.7 A. What is the RMS voltage across it?
+                    </div>
+                    <div class="example-solution">
+                        <h5>✅ Solution:</h5>
+                        <div class="solution-step">
+                            <div class="step-label">Step 1: Find I<sub>rms</sub></div>
+                            <div class="step-math">I<sub>rms</sub> = I<sub>max</sub> / √2</div>
+                            <div class="step-math">I<sub>rms</sub> = 2.7 / √2 = 2.7 / 1.414 = 1.91 A</div>
+                        </div>
+                        <div class="solution-step">
+                            <div class="step-label">Step 2: Find V<sub>rms</sub> using power formula</div>
+                            <div class="step-math">P<sub>average</sub> = V<sub>rms</sub> × I<sub>rms</sub></div>
+                            <div class="step-math">700 = V<sub>rms</sub> × 1.91</div>
+                            <div class="step-math">V<sub>rms</sub> = 700 / 1.91</div>
+                        </div>
+                        <div class="answer-highlight">V<sub>rms</sub> = 366.49 V</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 5 -->
+            <div class="example-box">
+                <div class="example-header">
+                    <span>📝</span>
+                    <span>Example 5: Drill Machine Peak Voltage</span>
+                </div>
+                <div class="example-content">
+                    <div class="example-problem">
+                        <strong>Problem:</strong> A 1600 W drill machine is connected to a 660 V<sub>rms</sub> AC line. Calculate the peak voltage.
+                    </div>
+                    <div class="example-solution">
+                        <h5>✅ Solution:</h5>
+                        <div class="solution-step">
+                            <div class="step-label">Using RMS formula:</div>
+                            <div class="step-math">V<sub>rms</sub> = V<sub>max</sub> / √2</div>
+                            <div class="step-math">660 = V<sub>max</sub> / √2</div>
+                            <div class="step-math">V<sub>max</sub> = 660 × √2 = 660 × 1.414</div>
+                        </div>
+                        <div class="answer-highlight">V<sub>max</sub> = 933.33 V</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Simulation -->
+        <div class="card" id="simulation">
+            <h2>🔬 Interactive AC Waveform Simulation</h2>
+
+            <div class="simulation-container">
+                <h3>〰️ Peak vs RMS Values Visualization</h3>
+                <p style="text-align: center; margin-bottom: 1rem;">See how peak and RMS values relate on an AC waveform.</p>
+                
+                <canvas id="waveformCanvas" class="simulation-canvas"></canvas>
+                
+                <div class="slider-container">
+                    <label for="peakVoltage">V<sub>max</sub> (Peak):</label>
+                    <input type="range" id="peakVoltage" min="50" max="500" value="311">
+                    <span class="slider-value" id="peakVValue">311 V</span>
+                </div>
+
+                <div class="slider-container">
+                    <label for="frequency">Frequency:</label>
+                    <input type="range" id="frequency" min="10" max="100" value="50">
+                    <span class="slider-value" id="freqValue">50 Hz</span>
+                </div>
+
+                <div class="simulation-controls">
+                    <button class="sim-btn" onclick="toggleWaveformSim()" id="waveformBtn">
+                        <span id="waveformBtnIcon">▶️</span>
+                        <span id="waveformBtnText">Start</span>
+                    </button>
+                    <button class="sim-btn secondary" onclick="resetWaveformSim()">🔄 Reset</button>
+                    <button class="sim-btn secondary" onclick="toggleRMSLine()">📊 Toggle RMS Lines</button>
+                </div>
+
+                <div class="output-display">
+                    <div class="output-item">
+                        <span class="output-label">V<sub>max</sub> (Peak):</span>
+                        <span class="output-value" id="dispVmax">311 V</span>
+                    </div>
+                    <div class="output-item">
+                        <span class="output-label">V<sub>rms</sub>:</span>
+                        <span class="output-value cyan" id="dispVrms">220 V</span>
+                    </div>
+                    <div class="output-item">
+                        <span class="output-label">Frequency:</span>
+                        <span class="output-value yellow" id="dispFreq">50 Hz</span>
+                    </div>
+                    <div class="output-item">
+                        <span class="output-label">Period:</span>
+                        <span class="output-value" id="dispPeriod">20 ms</span>
+                    </div>
+                    <div class="output-item">
+                        <span class="output-label">√2 Factor:</span>
+                        <span class="output-value purple" id="dispSqrt2">1.414</span>
+                    </div>
+                    <div class="output-item">
+                        <span class="output-label">Current Time:</span>
+                        <span class="output-value" id="dispTime">0 ms</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RMS Calculator -->
+        <div class="card" id="calculator">
+            <h2>🧮 RMS Calculator</h2>
+
+            <div class="calculator-container">
+                <h3>Interactive AC Calculator</h3>
+                
+                <div class="calc-tabs">
+                    <button class="calc-tab active" onclick="showCalcPanel('rms-calc')">RMS ↔ Peak</button>
+                    <button class="calc-tab" onclick="showCalcPanel('power-calc')">Power Calc</button>
+                    <button class="calc-tab" onclick="showCalcPanel('resistance-calc')">Resistance</button>
+                </div>
+
+                <!-- RMS Calculator Panel -->
+                <div class="calc-panel active" id="rms-calc">
+                    <h4 style="margin-bottom: 1rem; color: var(--teal-dark);">Convert between RMS and Peak Values</h4>
+                    
+                    <div class="calc-input-group">
+                        <label for="calcPeakV">Peak Voltage (V<sub>max</sub>):</label>
+                        <input type="number" id="calcPeakV" placeholder="Enter peak voltage" oninput="calculateRMS()">
+                        <div class="unit">Enter value in Volts (V)</div>
+                    </div>
+                    
+                    <div class="calc-input-group">
+                        <label for="calcRmsV">RMS Voltage (V<sub>rms</sub>):</label>
+                        <input type="number" id="calcRmsV" placeholder="Or enter RMS voltage" oninput="calculatePeak()">
+                        <div class="unit">Enter value in Volts (V)</div>
+                    </div>
+                    
+                    <div class="calc-result" id="rmsResult">
+                        <div class="result-label">Calculation Result:</div>
+                        <div class="result-value" id="rmsResultValue">-</div>
+                    </div>
+                </div>
+
+                <!-- Power Calculator Panel -->
+                <div class="calc-panel" id="power-calc">
+                    <h4 style="margin-bottom: 1rem; color: var(--teal-dark);">Calculate Average Power</h4>
+                    
+                    <div class="calc-input-group">
+                        <label for="calcVrmsP">RMS Voltage (V<sub>rms</sub>):</label>
+                        <input type="number" id="calcVrmsP" placeholder="Enter RMS voltage">
+                        <div class="unit">Enter value in Volts (V)</div>
+                    </div>
+                    
+                    <div class="calc-input-group">
+                        <label for="calcIrmsP">RMS Current (I<sub>rms</sub>):</label>
+                        <input type="number" id="calcIrmsP" placeholder="Enter RMS current">
+                        <div class="unit">Enter value in Amperes (A)</div>
+                    </div>
+                    
+                    <button class="calc-btn" onclick="calculatePower()">Calculate Power</button>
+                    
+                    <div class="calc-result" id="powerResult">
+                        <div class="result-label">Average Power:</div>
+                        <div class="result-value" id="powerResultValue">-</div>
+                    </div>
+                </div>
+
+                <!-- Resistance Calculator Panel -->
+                <div class="calc-panel" id="resistance-calc">
+                    <h4 style="margin-bottom: 1rem; color: var(--teal-dark);">Calculate Resistance from Power & Voltage</h4>
+                    
+                    <div class="calc-input-group">
+                        <label for="calcPowerR">Power (P):</label>
+                        <input type="number" id="calcPowerR" placeholder="Enter power">
+                        <div class="unit">Enter value in Watts (W)</div>
+                    </div>
+                    
+                    <div class="calc-input-group">
+                        <label for="calcVoltageR">RMS Voltage (V<sub>rms</sub>):</label>
+                        <input type="number" id="calcVoltageR" placeholder="Enter RMS voltage">
+                        <div class="unit">Enter value in Volts (V)</div>
+                    </div>
+                    
+                    <button class="calc-btn" onclick="calculateResistance()">Calculate Resistance</button>
+                    
+                    <div class="calc-result" id="resistanceResult">
+                        <div class="result-label">Resistance & Current:</div>
+                        <div class="result-value" id="resistanceResultValue">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="card" id="quiz">
+            <h2>✍️ End of Lesson Quiz</h2>
+            <p>Test your understanding of RMS values and AC calculations. Select the best answer for each question.</p>
+
+            <div class="quiz-container" id="quizContainer">
+                <!-- Questions will be dynamically inserted here -->
+            </div>
+
+            <button class="submit-quiz-btn" id="submitQuiz" onclick="submitQuiz()">
+                📝 Submit Answers
+            </button>
+
+            <div class="score-container" id="scoreContainer">
+                <div class="score-icon" id="scoreIcon">🏆</div>
+                <div class="score-number" id="scoreNumber">0/12</div>
+                <div class="score-percentage" id="scorePercentage">0%</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                <div class="score-feedback" id="scoreFeedback"></div>
+                <div class="action-buttons">
+                    <button class="retry-btn" onclick="retryQuiz()">🔄 Try Again</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+            <button class="nav-btn prev" onclick="goToPrevious()">
+                ← Previous: Introduction to AC
+            </button>
+            <button class="nav-btn" onclick="goToNext()">
+                Next: AC Power & Energy →
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span>📚</span>
+                <span>PassProof Academy</span>
+            </div>
+            <p>Empowering learners through quality education</p>
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">Contact</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            <div class="copyright">
+                © 2026 PassProof Academy. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // =====================
+        // NAVIGATION FUNCTIONS
+        // =====================
+        function toggleNav() {
+            const menu = document.getElementById('dropdownMenu');
+            menu.classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('dropdownMenu');
+            const toggle = document.querySelector('.nav-toggle');
+            if (!menu.contains(event.target) && !toggle.contains(event.target)) {
+                menu.classList.remove('active');
+            }
+        });
+
+        // =====================
+        // WAVEFORM SIMULATION
+        // =====================
+        let waveformCanvas, waveformCtx;
+        let waveformRunning = false;
+        let waveformAnimationId = null;
+        let waveformTime = 0;
+        let showRMSLines = true;
+
+        function initWaveformCanvas() {
+            waveformCanvas = document.getElementById('waveformCanvas');
+            waveformCtx = waveformCanvas.getContext('2d');
+            waveformCanvas.width = waveformCanvas.offsetWidth;
+            waveformCanvas.height = waveformCanvas.offsetHeight;
+            drawWaveform();
+        }
+
+        function drawWaveform() {
+            const ctx = waveformCtx;
+            const w = waveformCanvas.width;
+            const h = waveformCanvas.height;
+
+            // Clear canvas
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fillRect(0, 0, w, h);
+
+            const peakVoltage = parseInt(document.getElementById('peakVoltage').value);
+            const frequency = parseInt(document.getElementById('frequency').value);
+            const rmsVoltage = peakVoltage / Math.sqrt(2);
+
+            const centerY = h / 2;
+            const amplitude = (h / 2 - 50) * (peakVoltage / 500);
+            const rmsAmplitude = amplitude / Math.sqrt(2);
+
+            // Draw grid
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            
+            // Horizontal center line (0V)
+            ctx.beginPath();
+            ctx.moveTo(0, centerY);
+            ctx.lineTo(w, centerY);
+            ctx.stroke();
+
+            // Vertical grid lines
+            for (let x = 0; x < w; x += 50) {
+                ctx.beginPath();
+                ctx.setLineDash([2, 4]);
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, h);
+                ctx.stroke();
+            }
+            ctx.setLineDash([]);
+
+            // Draw RMS lines if enabled
+            if (showRMSLines) {
+                ctx.strokeStyle = '#00bcd4';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([10, 5]);
+                
+                // +Vrms line
+                ctx.beginPath();
+                ctx.moveTo(0, centerY - rmsAmplitude);
+                ctx.lineTo(w, centerY - rmsAmplitude);
+                ctx.stroke();
+                
+                // -Vrms line
+                ctx.beginPath();
+                ctx.moveTo(0, centerY + rmsAmplitude);
+                ctx.lineTo(w, centerY + rmsAmplitude);
+                ctx.stroke();
+                
+                ctx.setLineDash([]);
+
+                // RMS labels
+                ctx.fillStyle = '#00bcd4';
+                ctx.font = 'bold 12px Arial';
+                ctx.textAlign = 'right';
+                ctx.fillText(`+V_rms = ${rmsVoltage.toFixed(1)}V`, w - 10, centerY - rmsAmplitude - 5);
+                ctx.fillText(`-V_rms = -${rmsVoltage.toFixed(1)}V`, w - 10, centerY + rmsAmplitude + 15);
+            }
+
+            // Draw peak lines
+            ctx.strokeStyle = '#ff9800';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 5]);
+            
+            // +Vmax line
+            ctx.beginPath();
+            ctx.moveTo(0, centerY - amplitude);
+            ctx.lineTo(w, centerY - amplitude);
+            ctx.stroke();
+            
+            // -Vmax line
+            ctx.beginPath();
+            ctx.moveTo(0, centerY + amplitude);
+            ctx.lineTo(w, centerY + amplitude);
+            ctx.stroke();
+            
+            ctx.setLineDash([]);
+
+            // Peak labels
+            ctx.fillStyle = '#ff9800';
+            ctx.font = 'bold 12px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText(`+V_max = ${peakVoltage}V`, 10, centerY - amplitude - 5);
+            ctx.fillText(`-V_max = -${peakVoltage}V`, 10, centerY + amplitude + 15);
+
+            // Draw AC waveform
+            ctx.strokeStyle = '#4caf50';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+
+            for (let x = 0; x < w; x++) {
+                const t = (x / w) * 4 * Math.PI + waveformTime;
+                const y = centerY - amplitude * Math.sin(t);
+                
+                if (x === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+
+            // Draw moving dot on waveform
+            const dotX = (waveformTime % (4 * Math.PI)) / (4 * Math.PI) * w;
+            const dotY = centerY - amplitude * Math.sin(waveformTime);
+            
+            ctx.fillStyle = '#ffeb3b';
+            ctx.beginPath();
+            ctx.arc(dotX, dotY, 8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Current instantaneous voltage display
+            const instantV = peakVoltage * Math.sin(waveformTime);
+            ctx.fillStyle = '#ffeb3b';
+            ctx.font = 'bold 14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(`V = ${instantV.toFixed(1)}V`, dotX, dotY - 20);
+
+            // Labels
+            ctx.fillStyle = '#4caf50';
+            ctx.font = 'bold 14px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText('AC Voltage Waveform', 10, 25);
+
+            ctx.fillStyle = '#888';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('0V', 25, centerY - 5);
+
+            // Formula display
+            ctx.fillStyle = '#fff';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(`V = ${peakVoltage} × sin(2π × ${frequency} × t)`, w / 2, h - 15);
+
+            // Update displays
+            document.getElementById('dispVmax').textContent = peakVoltage + ' V';
+            document.getElementById('dispVrms').textContent = rmsVoltage.toFixed(1) + ' V';
+            document.getElementById('dispFreq').textContent = frequency + ' Hz';
+            document.getElementById('dispPeriod').textContent = (1000 / frequency).toFixed(1) + ' ms';
+            document.getElementById('dispSqrt2').textContent = '1.414';
+            document.getElementById('dispTime').textContent = ((waveformTime / (2 * Math.PI)) * (1000 / frequency)).toFixed(1) + ' ms';
+        }
+
+        function animateWaveform() {
+            waveformTime += 0.05;
+            drawWaveform();
+            
+            if (waveformRunning) {
+                waveformAnimationId = requestAnimationFrame(animateWaveform);
+            }
+        }
+
+        function toggleWaveformSim() {
+            waveformRunning = !waveformRunning;
+            document.getElementById('waveformBtnIcon').textContent = waveformRunning ? '⏸️' : '▶️';
+            document.getElementById('waveformBtnText').textContent = waveformRunning ? 'Pause' : 'Start';
+            
+            if (waveformRunning) animateWaveform();
+        }
+
+        function resetWaveformSim() {
+            waveformRunning = false;
+            waveformTime = 0;
+            if (waveformAnimationId) cancelAnimationFrame(waveformAnimationId);
+            document.getElementById('waveformBtnIcon').textContent = '▶️';
+            document.getElementById('waveformBtnText').textContent = 'Start';
+            drawWaveform();
+        }
+
+        function toggleRMSLine() {
+            showRMSLines = !showRMSLines;
+            drawWaveform();
+        }
+
+        // =====================
+        // CALCULATOR FUNCTIONS
+        // =====================
+        function showCalcPanel(panelId) {
+            document.querySelectorAll('.calc-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            document.querySelectorAll('.calc-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.getElementById(panelId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function calculateRMS() {
+            const peakV = parseFloat(document.getElementById('calcPeakV').value);
+            if (isNaN(peakV) || peakV <= 0) return;
+            
+            const rmsV = peakV / Math.sqrt(2);
+            document.getElementById('calcRmsV').value = '';
+            
+            document.getElementById('rmsResultValue').innerHTML = 
+                `V<sub>rms</sub> = ${peakV} / √2 = <strong>${rmsV.toFixed(2)} V</strong>`;
+            document.getElementById('rmsResult').classList.add('show');
+        }
+
+        function calculatePeak() {
+            const rmsV = parseFloat(document.getElementById('calcRmsV').value);
+            if (isNaN(rmsV) || rmsV <= 0) return;
+            
+            const peakV = rmsV * Math.sqrt(2);
+            document.getElementById('calcPeakV').value = '';
+            
+            document.getElementById('rmsResultValue').innerHTML = 
+                `V<sub>max</sub> = ${rmsV} × √2 = <strong>${peakV.toFixed(2)} V</strong>`;
+            document.getElementById('rmsResult').classList.add('show');
+        }
+
+        function calculatePower() {
+            const vrms = parseFloat(document.getElementById('calcVrmsP').value);
+            const irms = parseFloat(document.getElementById('calcIrmsP').value);
+            
+            if (isNaN(vrms) || isNaN(irms) || vrms <= 0 || irms <= 0) {
+                showNotification('Please enter valid values', 'warning');
+                return;
+            }
+            
+            const power = vrms * irms;
+            
+            document.getElementById('powerResultValue').innerHTML = 
+                `P = ${vrms} × ${irms} = <strong>${power.toFixed(2)} W</strong>`;
+            document.getElementById('powerResult').classList.add('show');
+        }
+
+        function calculateResistance() {
+            const power = parseFloat(document.getElementById('calcPowerR').value);
+            const vrms = parseFloat(document.getElementById('calcVoltageR').value);
+            
+            if (isNaN(power) || isNaN(vrms) || power <= 0 || vrms <= 0) {
+                showNotification('Please enter valid values', 'warning');
+                return;
+            }
+            
+            const irms = power / vrms;
+            const resistance = vrms / irms;
+            
+            document.getElementById('resistanceResultValue').innerHTML = 
+                `I<sub>rms</sub> = ${power}/${vrms} = ${irms.toFixed(2)} A<br>
+                R = ${vrms}/${irms.toFixed(2)} = <strong>${resistance.toFixed(2)} Ω</strong>`;
+            document.getElementById('resistanceResult').classList.add('show');
+        }
+
+        // =====================
+        // QUIZ SYSTEM
+        // =====================
+        const quizQuestions = [
+            {
+                question: "What is the relationship between RMS voltage and peak voltage?",
+                options: [
+                    "V_rms = V_max × √2",
+                    "V_rms = V_max / √2",
+                    "V_rms = V_max × 2",
+                    "V_rms = V_max / 2"
+                ],
+                correct: 1,
+                explanation: "The RMS voltage is the peak voltage divided by √2. This gives V_rms = V_max / √2, or approximately V_rms = 0.707 × V_max."
+            },
+            {
+                question: "If the peak voltage of an AC source is 340 V, what is the RMS voltage?",
+                options: [
+                    "480.8 V",
+                    "240.4 V",
+                    "170 V",
+                    "340 V"
+                ],
+                correct: 1,
+                explanation: "V_rms = V_max / √2 = 340 / 1.414 = 240.4 V. This is close to the standard household voltage of 240V."
+            },
+            {
+                question: "The RMS value of AC is defined as the:",
+                options: [
+                    "Maximum value of the AC wave",
+                    "Average value of the AC wave",
+                    "Effective DC value that produces the same heating effect",
+                    "Minimum value of the AC wave"
+                ],
+                correct: 2,
+                explanation: "RMS is the effective value of AC that corresponds to a DC value that would produce the same heating effect in a resistor."
+            },
+            {
+                question: "A 1000 W heater operates at 220 V RMS. What is the RMS current?",
+                options: [
+                    "0.22 A",
+                    "4.55 A",
+                    "6.43 A",
+                    "220 A"
+                ],
+                correct: 1,
+                explanation: "Using P = V_rms × I_rms, we get I_rms = P / V_rms = 1000 / 220 = 4.55 A."
+            },
+            {
+                question: "If the RMS current in a circuit is 5 A, what is the peak current?",
+                options: [
+                    "3.54 A",
+                    "5 A",
+                    "7.07 A",
+                    "10 A"
+                ],
+                correct: 2,
+                explanation: "I_max = I_rms × √2 = 5 × 1.414 = 7.07 A. The peak current is always √2 times larger than the RMS current."
+            },
+            {
+                question: "The formula for average power in an AC circuit is:",
+                options: [
+                    "P = V_max × I_max",
+                    "P = V_rms × I_rms",
+                    "P = V_max × I_rms",
+                    "P = (V_max × I_max) / 2"
+                ],
+                correct: 1,
+                explanation: "Average power in an AC circuit is calculated using RMS values: P_average = V_rms × I_rms. This is analogous to the DC power formula P = VI."
+            },
+            {
+                question: "South African household voltage is 220 V RMS. What is the peak voltage?",
+                options: [
+                    "155.6 V",
+                    "220 V",
+                    "311.1 V",
+                    "440 V"
+                ],
+                correct: 2,
+                explanation: "V_max = V_rms × √2 = 220 × 1.414 = 311.1 V. The actual peak voltage in your wall socket is about 311 V!"
+            },
+            {
+                question: "The instantaneous voltage in an AC circuit is given by V = V_max sin(2πft). In this equation, 'f' represents:",
+                options: [
+                    "Force",
+                    "Frequency",
+                    "Factor",
+                    "Function"
+                ],
+                correct: 1,
+                explanation: "In the equation V = V_max sin(2πft), 'f' is the frequency in Hertz (Hz), and 't' is time in seconds."
+            },
+            {
+                question: "A 2000 W stove operates at 240 V. Calculate the resistance of the stove.",
+                options: [
+                    "8.33 Ω",
+                    "28.8 Ω",
+                    "120 Ω",
+                    "480 Ω"
+                ],
+                correct: 1,
+                explanation: "First find I_rms = P/V = 2000/240 = 8.33 A. Then R = V/I = 240/8.33 = 28.8 Ω."
+            },
+            {
+                question: "Why is √2 (approximately 1.414) used in RMS calculations?",
+                options: [
+                    "It's an arbitrary constant chosen for convenience",
+                    "It comes from the mathematical averaging of a sine wave's squares",
+                    "It's the ratio of peak to average voltage",
+                    "It's the power factor"
+                ],
+                correct: 1,
+                explanation: "The √2 factor comes from the mathematical process of finding the root mean square - taking the square root of the mean of the squared values of a sine wave."
+            },
+            {
+                question: "The maximum current in a 700 W device is 2.7 A. What is the RMS voltage?",
+                options: [
+                    "259.26 V",
+                    "366.49 V",
+                    "518.52 V",
+                    "700 V"
+                ],
+                correct: 1,
+                explanation: "First find I_rms = I_max / √2 = 2.7 / 1.414 = 1.91 A. Then V_rms = P / I_rms = 700 / 1.91 = 366.49 V."
+            },
+            {
+                question: "A 1600 W drill is connected to a 660 V RMS line. What is the peak voltage?",
+                options: [
+                    "466.7 V",
+                    "660 V",
+                    "933.4 V",
+                    "1320 V"
+                ],
+                correct: 2,
+                explanation: "V_max = V_rms × √2 = 660 × 1.414 = 933.4 V. The peak voltage is √2 times the RMS voltage."
+            }
+        ];
+
+        let userAnswers = {};
+        let quizSubmitted = false;
+
+        function initQuiz() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = '';
+
+            quizQuestions.forEach((q, index) => {
+                const questionCard = document.createElement('div');
+                questionCard.className = 'question-card';
+                questionCard.id = `question-${index}`;
+
+                let optionsHTML = '';
+                q.options.forEach((option, optIndex) => {
+                    optionsHTML += `
+                        <li class="option-item" onclick="selectOption(${index}, ${optIndex})" id="option-${index}-${optIndex}">
+                            <span class="option-letter">${String.fromCharCode(65 + optIndex)}</span>
+                            <span>${option}</span>
+                        </li>
+                    `;
+                });
+
+                questionCard.innerHTML = `
+                    <div class="question-header">
+                        <span class="question-number">${index + 1}</span>
+                        <span class="question-text">${q.question}</span>
+                    </div>
+                    <ul class="options-list">
+                        ${optionsHTML}
+                    </ul>
+                    <div class="feedback" id="feedback-${index}"></div>
+                `;
+
+                container.appendChild(questionCard);
+            });
+
+            loadProgress();
+        }
+
+        function selectOption(questionIndex, optionIndex) {
+            if (quizSubmitted) return;
+
+            document.querySelectorAll(`#question-${questionIndex} .option-item`).forEach(opt => {
+                opt.classList.remove('selected');
+            });
+
+            document.getElementById(`option-${questionIndex}-${optionIndex}`).classList.add('selected');
+            userAnswers[questionIndex] = optionIndex;
+            saveProgress();
+        }
+
+        function submitQuiz() {
+            if (quizSubmitted) return;
+
+            const unanswered = quizQuestions.length - Object.keys(userAnswers).length;
+            if (unanswered > 0) {
+                showNotification(`⚠️ Please answer all questions. ${unanswered} remaining.`, 'warning');
+                return;
+            }
+
+            let score = 0;
+            quizSubmitted = true;
+
+            quizQuestions.forEach((q, index) => {
+                const questionCard = document.getElementById(`question-${index}`);
+                const feedback = document.getElementById(`feedback-${index}`);
+                const userAnswer = userAnswers[index];
+
+                document.querySelectorAll(`#question-${index} .option-item`).forEach((opt, optIndex) => {
+                    opt.classList.remove('selected');
+                    opt.style.pointerEvents = 'none';
+                    
+                    if (optIndex === q.correct) {
+                        opt.classList.add('correct-answer');
+                    }
+                    if (userAnswer === optIndex && optIndex !== q.correct) {
+                        opt.classList.add('wrong-answer');
+                    }
+                });
+
+                if (userAnswer === q.correct) {
+                    score++;
+                    questionCard.classList.add('correct');
+                    feedback.className = 'feedback show correct';
+                    feedback.innerHTML = `<span class="feedback-icon">✅</span><span><strong>Correct!</strong> ${q.explanation}</span>`;
+                } else {
+                    questionCard.classList.add('incorrect');
+                    feedback.className = 'feedback show incorrect';
+                    const correctLetter = String.fromCharCode(65 + q.correct);
+                    feedback.innerHTML = `<span class="feedback-icon">❌</span><span><strong>Incorrect.</strong> The correct answer is <strong>${correctLetter}</strong>. ${q.explanation}</span>`;
+                }
+            });
+
+            // Calculate and display score
+            const percentage = Math.round((score / quizQuestions.length) * 100);
+            document.getElementById('scoreNumber').textContent = `${score}/${quizQuestions.length}`;
+            document.getElementById('scorePercentage').textContent = `${percentage}%`;
+            
+            setTimeout(() => {
+                document.getElementById('progressFill').style.width = `${percentage}%`;
+            }, 100);
+            
+            let feedbackMessage = '';
+            let icon = '';
+            
+            if (percentage >= 90) {
+                feedbackMessage = '🌟 Outstanding! You have mastered RMS calculations!';
+                icon = '🏆';
+            } else if (percentage >= 75) {
+                feedbackMessage = '👏 Great work! You understand RMS values well. Practice the calculations you missed.';
+                icon = '🥇';
+            } else if (percentage >= 60) {
+                feedbackMessage = '👍 Good effort! Review the formulas and try the calculator for more practice.';
+                icon = '📚';
+            } else if (percentage >= 40) {
+                feedbackMessage = '📖 Keep practicing! Focus on the relationship between RMS and peak values.';
+                icon = '💪';
+            } else {
+                feedbackMessage = '🔄 Review the lesson again, especially the key formulas and worked examples.';
+                icon = '📝';
+            }
+            
+            document.getElementById('scoreIcon').textContent = icon;
+            document.getElementById('scoreFeedback').textContent = feedbackMessage;
+            document.getElementById('scoreContainer').classList.add('show');
+
+            // Save completion data
+            localStorage.setItem('ac_lesson2_completed', 'true');
+            localStorage.setItem('ac_lesson2_score', score.toString());
+            localStorage.setItem('ac_lesson2_percentage', percentage.toString());
+
+            document.getElementById('submitQuiz').style.display = 'none';
+
+            setTimeout(() => {
+                document.getElementById('scoreContainer').scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        }
+
+        function retryQuiz() {
+            quizSubmitted = false;
+            userAnswers = {};
+            
+            localStorage.removeItem('ac_lesson2_answers');
+            localStorage.removeItem('ac_lesson2_completed');
+            
+            document.getElementById('scoreContainer').classList.remove('show');
+            document.getElementById('submitQuiz').style.display = 'flex';
+            
+            initQuiz();
+            
+            showNotification('🔄 Quiz reset. Try again!', 'info');
+            
+            setTimeout(() => {
+                document.getElementById('quiz').scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        }
+
+        // =====================
+        // PROGRESS MANAGEMENT
+        // =====================
+        function saveProgress() {
+            localStorage.setItem('ac_lesson2_answers', JSON.stringify(userAnswers));
+            localStorage.setItem('ac_lesson2_lastVisited', new Date().toISOString());
+        }
+
+        function loadProgress() {
+            const savedAnswers = localStorage.getItem('ac_lesson2_answers');
+            if (savedAnswers) {
+                userAnswers = JSON.parse(savedAnswers);
+                
+                Object.keys(userAnswers).forEach(questionIndex => {
+                    const optionIndex = userAnswers[questionIndex];
+                    const optionElement = document.getElementById(`option-${questionIndex}-${optionIndex}`);
+                    if (optionElement) {
+                        optionElement.classList.add('selected');
+                    }
+                });
+                
+                showNotification('📂 Previous progress loaded!', 'success');
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            document.querySelectorAll('.notification').forEach(n => n.remove());
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `<span>${message}</span>`;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100px)';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // =====================
+        // NAVIGATION
+        // =====================
+        function goToPrevious() {
+            saveProgress();
+            showNotification('📖 Going to Lesson 1: Introduction to AC', 'info');
+            setTimeout(() => {
+                alert('Navigating to Lesson 1: Introduction to Alternating Current');
+            }, 500);
+        }
+
+        function goToNext() {
+            saveProgress();
+            showNotification('📖 Going to Lesson 3: AC Power & Energy', 'info');
+            setTimeout(() => {
+                alert('Navigating to Lesson 3: AC Power & Energy');
+            }, 500);
+        }
+
+        // =====================
+        // EVENT LISTENERS
+        // =====================
+        document.getElementById('peakVoltage').addEventListener('input', function() {
+            document.getElementById('peakVValue').textContent = this.value + ' V';
+            drawWaveform();
+        });
+
+        document.getElementById('frequency').addEventListener('input', function() {
+            document.getElementById('freqValue').textContent = this.value + ' Hz';
+            drawWaveform();
+        });
+
+        // =====================
+        // INITIALIZATION
+        // =====================
+        window.addEventListener('load', function() {
+            initWaveformCanvas();
+            initQuiz();
+        });
+
+        window.addEventListener('resize', function() {
+            initWaveformCanvas();
+        });
+    </script>
+</body>
+</html>

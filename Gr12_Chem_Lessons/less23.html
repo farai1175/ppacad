@@ -1,0 +1,2437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electrical Machines Consolidation - PassProof Academy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1a73e8;
+            --light-blue: #e8f0fe;
+            --dark-blue: #0d47a1;
+            --white: #ffffff;
+            --gray: #f5f5f5;
+            --dark-gray: #333;
+            --success: #34a853;
+            --error: #ea4335;
+            --warning: #fbbc04;
+            --purple: #7c4dff;
+            --teal: #00bcd4;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-lg: 0 4px 20px rgba(0,0,0,0.15);
+            --shadow-xl: 0 8px 30px rgba(0,0,0,0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            color: var(--dark-gray);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: var(--white);
+            padding: 1rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            font-size: 1.8rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .nav-container {
+            position: relative;
+        }
+
+        .nav-toggle {
+            background: rgba(255,255,255,0.15);
+            color: var(--white);
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-toggle:hover {
+            background: rgba(255,255,255,0.25);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: calc(100% + 10px);
+            background: var(--white);
+            min-width: 300px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            animation: slideDown 0.3s ease;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px var(--primary-blue); }
+            50% { box-shadow: 0 0 20px var(--primary-blue), 0 0 30px var(--primary-blue); }
+        }
+
+        .dropdown-menu a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.9rem 1.2rem;
+            color: var(--dark-gray);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--light-blue);
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+            padding-left: 1.5rem;
+        }
+
+        .dropdown-menu .menu-section {
+            padding: 0.75rem 1.2rem;
+            background: linear-gradient(135deg, var(--light-blue) 0%, #d4e5fc 100%);
+            font-weight: bold;
+            color: var(--dark-blue);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Progress Bar */
+        .lesson-progress {
+            background: rgba(255,255,255,0.2);
+            height: 4px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        .lesson-progress-fill {
+            background: linear-gradient(90deg, #4caf50, #8bc34a);
+            height: 100%;
+            width: 80%;
+            transition: width 0.5s ease;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.5s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card.highlight {
+            border: 2px solid var(--primary-blue);
+            background: linear-gradient(135deg, var(--white) 0%, var(--light-blue) 100%);
+        }
+
+        .subject-grade {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: var(--white);
+            padding: 0.5rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: var(--shadow);
+        }
+
+        .badge.secondary {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+        }
+
+        .badge.highlight {
+            background: linear-gradient(135deg, var(--warning) 0%, #f57c00 100%);
+            color: var(--white);
+        }
+
+        .badge.success {
+            background: linear-gradient(135deg, var(--success) 0%, #2e7d32 100%);
+        }
+
+        .badge.purple {
+            background: linear-gradient(135deg, var(--purple) 0%, #651fff 100%);
+        }
+
+        h1 {
+            color: var(--dark-blue);
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        h2 {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid var(--light-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h3 {
+            color: var(--dark-blue);
+            font-size: 1.25rem;
+            margin: 1.25rem 0 0.75rem;
+        }
+
+        h4 {
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+            margin: 1rem 0 0.5rem;
+        }
+
+        .lesson-info {
+            background: linear-gradient(135deg, var(--light-blue) 0%, #d4e5fc 100%);
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            border-left: 5px solid var(--primary-blue);
+        }
+
+        .lesson-info p {
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-info p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Objectives Grid */
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .objective-card {
+            background: linear-gradient(135deg, var(--white) 0%, var(--light-blue) 100%);
+            border-radius: 12px;
+            padding: 1.25rem;
+            border-left: 4px solid var(--primary-blue);
+            transition: all 0.3s ease;
+        }
+
+        .objective-card:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow);
+        }
+
+        .objective-card.generators {
+            border-left-color: var(--success);
+        }
+
+        .objective-card.motors {
+            border-left-color: var(--warning);
+        }
+
+        .objective-card.applications {
+            border-left-color: var(--purple);
+        }
+
+        .objective-card h4 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .objective-card ul {
+            list-style: none;
+            padding: 0;
+            font-size: 0.95rem;
+        }
+
+        .objective-card li {
+            padding: 0.4rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .objective-card li::before {
+            content: "✓";
+            color: var(--success);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* Concept Boxes */
+        .concept-box {
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
+            border: 2px solid var(--primary-blue);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.25rem 0;
+        }
+
+        .concept-box.warning {
+            background: linear-gradient(135deg, #fff8e1 0%, var(--white) 100%);
+            border-color: var(--warning);
+        }
+
+        .concept-box.success {
+            background: linear-gradient(135deg, #e8f5e9 0%, var(--white) 100%);
+            border-color: var(--success);
+        }
+
+        .concept-box.purple {
+            background: linear-gradient(135deg, #ede7f6 0%, var(--white) 100%);
+            border-color: var(--purple);
+        }
+
+        .formula-box {
+            background: linear-gradient(135deg, var(--dark-blue) 0%, #1565c0 100%);
+            color: var(--white);
+            padding: 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+            font-size: 1.1rem;
+            margin: 1.25rem 0;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .key-point {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left: 5px solid #ff9800;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0 16px 16px 0;
+        }
+
+        .key-point strong {
+            color: #e65100;
+        }
+
+        /* Summary Cards */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .summary-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--primary-blue);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .summary-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 0%, rgba(26, 115, 232, 0.05) 100%);
+            pointer-events: none;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .summary-card.generators {
+            border-top-color: var(--success);
+        }
+
+        .summary-card.motors {
+            border-top-color: var(--warning);
+        }
+
+        .summary-card h4 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .summary-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.25rem 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid var(--light-blue);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: var(--light-blue);
+        }
+
+        .comparison-table tr:hover {
+            background: #d4e5fc;
+        }
+
+        /* Simulation Styles */
+        .simulation-container {
+            background: var(--white);
+            border: 2px solid var(--primary-blue);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .simulation-container h3 {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .simulation-canvas {
+            width: 100%;
+            max-width: 700px;
+            height: 400px;
+            margin: 0 auto;
+            display: block;
+            border: 2px solid var(--light-blue);
+            border-radius: 16px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e3f2fd 100%);
+        }
+
+        .simulation-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.25rem;
+        }
+
+        .sim-btn {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .sim-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .sim-btn.secondary {
+            background: var(--white);
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+
+        .sim-btn.secondary:hover {
+            background: var(--light-blue);
+        }
+
+        .sim-btn.success {
+            background: linear-gradient(135deg, var(--success) 0%, #2e7d32 100%);
+        }
+
+        .sim-btn.warning {
+            background: linear-gradient(135deg, var(--warning) 0%, #f57c00 100%);
+        }
+
+        .mode-selector {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+            border: 2px solid transparent;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .mode-btn:hover {
+            background: #d4e5fc;
+        }
+
+        .mode-btn.active {
+            background: var(--primary-blue);
+            color: var(--white);
+            border-color: var(--dark-blue);
+        }
+
+        .output-display {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #00ff88;
+            padding: 1.25rem;
+            border-radius: 16px;
+            font-family: 'Courier New', monospace;
+            margin-top: 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .output-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0.75rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+        }
+
+        .output-label {
+            color: #888;
+        }
+
+        .output-value {
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        .output-value.warning {
+            color: #ffeb3b;
+        }
+
+        .output-value.error {
+            color: #ff5252;
+        }
+
+        /* Quiz Styles */
+        .quiz-container {
+            margin-top: 2rem;
+        }
+
+        .question-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary-blue);
+            transition: all 0.3s ease;
+        }
+
+        .question-card.correct {
+            border-left-color: var(--success);
+            background: linear-gradient(135deg, #e8f5e9 0%, var(--white) 100%);
+        }
+
+        .question-card.incorrect {
+            border-left-color: var(--error);
+            background: linear-gradient(135deg, #ffebee 0%, var(--white) 100%);
+        }
+
+        .question-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .question-number {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: var(--white);
+            min-width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            font-size: 1.1rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--dark-gray);
+            line-height: 1.5;
+        }
+
+        .question-context {
+            background: var(--light-blue);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            border-left: 3px solid var(--primary-blue);
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.75rem;
+            background: var(--gray);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .option-item:hover {
+            background: var(--light-blue);
+            border-color: var(--primary-blue);
+            transform: translateX(5px);
+        }
+
+        .option-item.selected {
+            background: var(--light-blue);
+            border-color: var(--primary-blue);
+        }
+
+        .option-item.correct-answer {
+            background: #c8e6c9;
+            border-color: var(--success);
+        }
+
+        .option-item.wrong-answer {
+            background: #ffcdd2;
+            border-color: var(--error);
+        }
+
+        .option-letter {
+            background: var(--primary-blue);
+            color: var(--white);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            display: none;
+        }
+
+        .feedback.show {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .feedback-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%);
+            color: #1b5e20;
+        }
+
+        .feedback.incorrect {
+            background: linear-gradient(135deg, #ffcdd2 0%, #ef9a9a 100%);
+            color: #b71c1c;
+        }
+
+        .submit-quiz-btn {
+            background: linear-gradient(135deg, var(--success) 0%, #2e7d32 100%);
+            color: var(--white);
+            border: none;
+            padding: 1.1rem 2.5rem;
+            border-radius: 30px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            width: 100%;
+            max-width: 350px;
+            margin: 2rem auto;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .submit-quiz-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .submit-quiz-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .score-container {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: var(--white);
+            padding: 2.5rem;
+            border-radius: 24px;
+            text-align: center;
+            margin: 2rem 0;
+            display: none;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .score-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .score-container.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .score-icon {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        .score-number {
+            font-size: 4rem;
+            font-weight: bold;
+        }
+
+        .score-percentage {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            max-width: 400px;
+            height: 14px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 7px;
+            overflow: hidden;
+            margin: 1.5rem auto;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4caf50, #8bc34a, #cddc39);
+            border-radius: 7px;
+            transition: width 1s ease;
+        }
+
+        .score-feedback {
+            font-size: 1.15rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.15);
+            border-radius: 12px;
+            backdrop-filter: blur(5px);
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .retry-btn, .review-btn {
+            background: var(--white);
+            color: var(--primary-blue);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .retry-btn:hover, .review-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: var(--white);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .nav-btn.prev {
+            background: var(--white);
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+
+        .nav-btn.prev:hover {
+            background: var(--light-blue);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--dark-blue) 0%, #0a3d91 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .copyright {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-xl);
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            animation: slideIn 0.3s ease;
+            max-width: 350px;
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, var(--success) 0%, #2e7d32 100%);
+        }
+
+        .notification.warning {
+            background: linear-gradient(135deg, var(--warning) 0%, #f57c00 100%);
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, var(--error) 0%, #c62828 100%);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            .card {
+                padding: 1.25rem;
+            }
+
+            .simulation-canvas {
+                height: 320px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .output-display {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-table {
+                font-size: 0.85rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .objectives-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animated Icons */
+        .rotating {
+            animation: rotate 3s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Waveform canvas */
+        .waveform-canvas {
+            width: 100%;
+            height: 120px;
+            background: #1a1a2e;
+            border-radius: 12px;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-icon">📚</span>
+                <span>PassProof Academy</span>
+            </div>
+            <div class="nav-container">
+                <button class="nav-toggle" onclick="toggleNav()">
+                    <span>☰</span>
+                    <span>Menu</span>
+                </button>
+                <nav class="dropdown-menu" id="dropdownMenu">
+                    <div class="menu-section">📘 Physical Sciences - Grade 12</div>
+                    <a href="#" onclick="saveProgress()">💾 Save Progress</a>
+                    <a href="#objectives">🎯 Learning Objectives</a>
+                    <a href="#summary">📋 Topic Summary</a>
+                    <a href="#simulation">🔬 Interactive Review</a>
+                    <a href="#quiz">✍️ Consolidation Exercise</a>
+                    <div class="menu-section">🔗 Quick Links</div>
+                    <a href="#">🏠 Dashboard</a>
+                    <a href="#">📚 All Lessons</a>
+                    <a href="#">📊 My Progress</a>
+                    <a href="#">❓ Help & Support</a>
+                </nav>
+            </div>
+        </div>
+        <div class="lesson-progress">
+            <div class="lesson-progress-fill" id="lessonProgress"></div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Subject & Grade Card -->
+        <div class="card highlight">
+            <div class="subject-grade">
+                <span class="badge">Grade 12</span>
+                <span class="badge secondary">Physical Sciences</span>
+                <span class="badge secondary">Week 23</span>
+                <span class="badge highlight">Term 3</span>
+                <span class="badge purple">Consolidation</span>
+            </div>
+            
+            <h1>⚡ Electrical Machines - Consolidation</h1>
+            
+            <div class="lesson-info">
+                <p><strong>📌 Topic:</strong> Electrical Machines - Complete Review</p>
+                <p><strong>📝 Lesson Number:</strong> 4 (Consolidation)</p>
+                <p><strong>📚 Focus:</strong> Generators, Motors & Applications - Comprehensive Review</p>
+                <p><strong>⏱️ Duration:</strong> 50 minutes</p>
+            </div>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="card" id="objectives">
+            <h2>🎯 Learning Objectives Review</h2>
+            <p>This consolidation lesson covers all key concepts from the Electrical Machines topic:</p>
+            
+            <div class="objectives-grid">
+                <div class="objective-card generators">
+                    <h4>🔄 Generators</h4>
+                    <ul>
+                        <li>Explain AC generator principles (mechanical → electrical energy)</li>
+                        <li>Describe DC generator operation and differences from AC</li>
+                        <li>Understand slip rings vs split-ring commutator</li>
+                        <li>Know factors affecting generator output</li>
+                    </ul>
+                </div>
+                
+                <div class="objective-card motors">
+                    <h4>⚙️ Motors</h4>
+                    <ul>
+                        <li>Explain electric motor principles (electrical → mechanical energy)</li>
+                        <li>Describe force on current-carrying coil in magnetic field</li>
+                        <li>Understand torque and continuous rotation</li>
+                        <li>Know function of commutator and brushes</li>
+                    </ul>
+                </div>
+                
+                <div class="objective-card applications">
+                    <h4>💡 Applications</h4>
+                    <ul>
+                        <li>List uses of AC generators</li>
+                        <li>List uses of DC generators</li>
+                        <li>Identify electric motor applications</li>
+                        <li>Compare AC vs DC advantages</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Topic Summary -->
+        <div class="card" id="summary">
+            <h2>📋 Topic Summary</h2>
+
+            <div class="formula-box">
+                <strong>🔑 Key Energy Conversions</strong><br><br>
+                <span style="font-size: 1.2rem;">
+                    <strong>Generators:</strong> Mechanical Energy → Electrical Energy<br>
+                    <strong>Motors:</strong> Electrical Energy → Mechanical Energy
+                </span>
+            </div>
+
+            <div class="summary-grid">
+                <div class="summary-card generators">
+                    <div class="icon">🔄</div>
+                    <h4>AC Generator</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>✓ Uses <strong>slip rings</strong></li>
+                        <li>✓ Produces alternating current</li>
+                        <li>✓ Current changes direction every half turn</li>
+                        <li>✓ Used in power stations</li>
+                        <li>✓ Voltage can be stepped up/down</li>
+                    </ul>
+                </div>
+
+                <div class="summary-card generators">
+                    <div class="icon">⚡</div>
+                    <h4>DC Generator</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>✓ Uses <strong>split-ring commutator</strong></li>
+                        <li>✓ Produces direct current</li>
+                        <li>✓ Current flows in one direction</li>
+                        <li>✓ Used for electroplating</li>
+                        <li>✓ Charges batteries in vehicles</li>
+                    </ul>
+                </div>
+
+                <div class="summary-card motors">
+                    <div class="icon">⚙️</div>
+                    <h4>DC Motor</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>✓ Uses <strong>split-ring commutator</strong></li>
+                        <li>✓ Force on current-carrying coil creates torque</li>
+                        <li>✓ Commutator reverses current for continuous rotation</li>
+                        <li>✓ Brushes maintain electrical contact</li>
+                        <li>✓ Momentum carries coil past dead point</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="key-point">
+                <strong>💡 Key Relationship:</strong> Both motors and generators involve a coil rotating in a magnetic field. The main difference is the direction of energy conversion!
+            </div>
+
+            <h3>📊 Comparison Table</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Feature</th>
+                    <th>AC Generator</th>
+                    <th>DC Generator</th>
+                    <th>DC Motor</th>
+                </tr>
+                <tr>
+                    <td><strong>Energy Conversion</strong></td>
+                    <td>Mechanical → Electrical</td>
+                    <td>Mechanical → Electrical</td>
+                    <td>Electrical → Mechanical</td>
+                </tr>
+                <tr>
+                    <td><strong>Ring Type</strong></td>
+                    <td>Slip rings</td>
+                    <td>Split-ring commutator</td>
+                    <td>Split-ring commutator</td>
+                </tr>
+                <tr>
+                    <td><strong>Output/Effect</strong></td>
+                    <td>AC current</td>
+                    <td>DC current</td>
+                    <td>Rotation/torque</td>
+                </tr>
+                <tr>
+                    <td><strong>Current Direction</strong></td>
+                    <td>Alternates</td>
+                    <td>One direction</td>
+                    <td>Reversed by commutator</td>
+                </tr>
+            </table>
+
+            <div class="concept-box success">
+                <h4>✅ Ways to Improve Output/Efficiency</h4>
+                <p><strong>For Generators:</strong></p>
+                <ul>
+                    <li>Use stronger magnets</li>
+                    <li>Increase number of coils/turns</li>
+                    <li>Spin the coil faster</li>
+                </ul>
+                <p style="margin-top: 1rem;"><strong>For Motors:</strong></p>
+                <ul>
+                    <li>Increase strength of permanent magnet</li>
+                    <li>Increase induced EMF</li>
+                    <li>Increase number of turns in the coil</li>
+                </ul>
+            </div>
+
+            <div class="concept-box purple">
+                <h4>🔌 AC vs DC Conversion</h4>
+                <p><strong>To convert AC generator to DC generator:</strong></p>
+                <p>Replace the slip rings with a split-ring commutator. This ensures current in the external circuit does not change direction.</p>
+                <br>
+                <p><strong>AC motor vs DC motor:</strong></p>
+                <p>An AC motor works <em>without</em> a commutator since the current already alternates. A DC motor <em>needs</em> a commutator to reverse current direction.</p>
+            </div>
+        </div>
+
+        <!-- Interactive Review Simulation -->
+        <div class="card" id="simulation">
+            <h2>🔬 Interactive Review Simulation</h2>
+            <p style="margin-bottom: 1rem;">Compare generators and motors side-by-side. Switch between modes to review each concept.</p>
+
+            <div class="simulation-container">
+                <h3>⚡ Electrical Machines Comparison</h3>
+                
+                <div class="mode-selector">
+                    <button class="mode-btn active" onclick="setMode('ac-gen')">AC Generator</button>
+                    <button class="mode-btn" onclick="setMode('dc-gen')">DC Generator</button>
+                    <button class="mode-btn" onclick="setMode('dc-motor')">DC Motor</button>
+                    <button class="mode-btn" onclick="setMode('comparison')">Compare All</button>
+                </div>
+                
+                <canvas id="mainCanvas" class="simulation-canvas"></canvas>
+                
+                <canvas id="waveformCanvas" class="waveform-canvas"></canvas>
+                
+                <div class="simulation-controls">
+                    <button class="sim-btn" onclick="toggleSimulation()" id="mainSimBtn">
+                        <span id="simBtnIcon">▶️</span>
+                        <span id="simBtnText">Start</span>
+                    </button>
+                    <button class="sim-btn secondary" onclick="resetSimulation()">🔄 Reset</button>
+                    <button class="sim-btn secondary" onclick="stepSimulation()">⏭️ Step</button>
+                </div>
+
+                <div class="output-display" id="outputDisplay">
+                    <div class="output-item">
+                        <span class="output-label">Mode:</span>
+                        <span class="output-value" id="currentMode">AC Generator</span>
+                    </div>
+                    <div class="output-item">
+                        <span class="output-label">Angle:</span>
+                        <span class="output-value" id="currentAngle">0°</span>
+                    </div>
+                    <div class="output-item">
+                        <span class="output-label">Output:</span>
+                        <span class="output-value" id="currentOutput">0.00 V</span>
+                    </div>
+                    <div class="output-item">
+                        <span class="output-label">Ring Type:</span>
+                        <span class="output-value" id="ringType">Slip Rings</span>
+                    </div>
+                    <div class="output-item">
+                        <span class="output-label">Energy Flow:</span>
+                        <span class="output-value" id="energyFlow">Mech → Elec</span>
+                    </div>
+                    <div class="output-item">
+                        <span class="output-label">Status:</span>
+                        <span class="output-value" id="simStatus">Ready</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Consolidation Exercise (Quiz) -->
+        <div class="card" id="quiz">
+            <h2>✍️ Consolidation Exercise</h2>
+            <p>Complete this comprehensive exercise to test your understanding of electrical machines. These questions are based on past examination papers.</p>
+
+            <div class="quiz-container" id="quizContainer">
+                <!-- Questions will be dynamically inserted here -->
+            </div>
+
+            <button class="submit-quiz-btn" id="submitQuiz" onclick="submitQuiz()">
+                📝 Submit Answers
+            </button>
+
+            <div class="score-container" id="scoreContainer">
+                <div class="score-icon" id="scoreIcon">🏆</div>
+                <div class="score-number" id="scoreNumber">0/15</div>
+                <div class="score-percentage" id="scorePercentage">0%</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                <div class="score-feedback" id="scoreFeedback"></div>
+                <div class="action-buttons">
+                    <button class="retry-btn" onclick="retryQuiz()">🔄 Try Again</button>
+                    <button class="review-btn" onclick="reviewAnswers()">📋 Review Answers</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+            <button class="nav-btn prev" onclick="goToPrevious()">
+                ← Previous: DC Motors
+            </button>
+            <button class="nav-btn" onclick="goToNext()">
+                Next Topic: Photoelectric Effect →
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span>📚</span>
+                <span>PassProof Academy</span>
+            </div>
+            <p>Empowering learners through quality education</p>
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">Contact</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            <div class="copyright">
+                © 2026 PassProof Academy. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // =====================
+        // NAVIGATION FUNCTIONS
+        // =====================
+        function toggleNav() {
+            const menu = document.getElementById('dropdownMenu');
+            menu.classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('dropdownMenu');
+            const toggle = document.querySelector('.nav-toggle');
+            if (!menu.contains(event.target) && !toggle.contains(event.target)) {
+                menu.classList.remove('active');
+            }
+        });
+
+        // =====================
+        // SIMULATION VARIABLES
+        // =====================
+        let mainCanvas, mainCtx;
+        let waveformCanvas, waveformCtx;
+        let currentMode = 'ac-gen';
+        let angle = 0;
+        let running = false;
+        let animationId = null;
+        let waveformData = [];
+
+        // =====================
+        // SIMULATION FUNCTIONS
+        // =====================
+        function initCanvas() {
+            mainCanvas = document.getElementById('mainCanvas');
+            mainCtx = mainCanvas.getContext('2d');
+            mainCanvas.width = mainCanvas.offsetWidth;
+            mainCanvas.height = mainCanvas.offsetHeight;
+
+            waveformCanvas = document.getElementById('waveformCanvas');
+            waveformCtx = waveformCanvas.getContext('2d');
+            waveformCanvas.width = waveformCanvas.offsetWidth;
+            waveformCanvas.height = waveformCanvas.offsetHeight;
+
+            drawSimulation();
+            drawWaveform();
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            waveformData = [];
+            updateDisplays();
+            drawSimulation();
+            drawWaveform();
+        }
+
+        function drawSimulation() {
+            const ctx = mainCtx;
+            const w = mainCanvas.width;
+            const h = mainCanvas.height;
+
+            ctx.clearRect(0, 0, w, h);
+
+            // Background
+            const gradient = ctx.createLinearGradient(0, 0, w, h);
+            gradient.addColorStop(0, '#f8fafc');
+            gradient.addColorStop(1, '#e8f4fd');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, w, h);
+
+            if (currentMode === 'comparison') {
+                drawComparisonMode(ctx, w, h);
+            } else {
+                drawSingleMode(ctx, w, h);
+            }
+        }
+
+        function drawSingleMode(ctx, w, h) {
+            const centerX = w / 2;
+            const centerY = h / 2 - 40;
+            const angleRad = angle * Math.PI / 180;
+            const normalizedAngle = ((angle % 360) + 360) % 360;
+
+            // Title
+            ctx.fillStyle = '#1a73e8';
+            ctx.font = 'bold 18px Arial';
+            ctx.textAlign = 'center';
+            const titles = {
+                'ac-gen': 'AC Generator (Alternator)',
+                'dc-gen': 'DC Generator',
+                'dc-motor': 'DC Motor'
+            };
+            ctx.fillText(titles[currentMode], centerX, 30);
+
+            // Magnetic poles
+            ctx.fillStyle = '#e53935';
+            ctx.beginPath();
+            ctx.roundRect(30, centerY - 80, 60, 160, 10);
+            ctx.fill();
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 24px Arial';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('N', 60, centerY);
+
+            ctx.fillStyle = '#1e88e5';
+            ctx.beginPath();
+            ctx.roundRect(w - 90, centerY - 80, 60, 160, 10);
+            ctx.fill();
+            ctx.fillStyle = '#fff';
+            ctx.fillText('S', w - 60, centerY);
+
+            // Field lines
+            ctx.strokeStyle = 'rgba(144, 202, 249, 0.5)';
+            ctx.setLineDash([6, 6]);
+            ctx.lineWidth = 2;
+            for (let i = -2; i <= 2; i++) {
+                ctx.beginPath();
+                ctx.moveTo(90, centerY + i * 30);
+                ctx.lineTo(w - 90, centerY + i * 30);
+                ctx.stroke();
+            }
+            ctx.setLineDash([]);
+
+            // Rotating coil
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            ctx.rotate(angleRad);
+
+            const coilW = 130;
+            const coilH = 85;
+
+            ctx.strokeStyle = currentMode === 'dc-motor' ? '#9c27b0' : '#ff9800';
+            ctx.lineWidth = 5;
+            ctx.fillStyle = currentMode === 'dc-motor' ? 'rgba(156, 39, 176, 0.15)' : 'rgba(255, 152, 0, 0.15)';
+            ctx.beginPath();
+            ctx.roundRect(-coilW/2, -coilH/2, coilW, coilH, 5);
+            ctx.fill();
+            ctx.stroke();
+
+            // Coil labels
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 14px Arial';
+            ctx.fillText('P', -coilW/2 + 15, -coilH/2 + 20);
+            ctx.fillText('Q', coilW/2 - 15, -coilH/2 + 20);
+
+            // For motors, show force arrows
+            if (currentMode === 'dc-motor') {
+                const forceDir = normalizedAngle < 180 ? -1 : 1;
+                const forceMag = Math.abs(Math.cos(angleRad)) * 35;
+                
+                if (forceMag > 5) {
+                    ctx.strokeStyle = '#4caf50';
+                    ctx.lineWidth = 3;
+                    ctx.fillStyle = '#4caf50';
+                    
+                    // Left force
+                    ctx.beginPath();
+                    ctx.moveTo(-coilW/2, 0);
+                    ctx.lineTo(-coilW/2, forceDir * forceMag);
+                    ctx.stroke();
+                    
+                    // Right force (opposite)
+                    ctx.beginPath();
+                    ctx.moveTo(coilW/2, 0);
+                    ctx.lineTo(coilW/2, -forceDir * forceMag);
+                    ctx.stroke();
+                }
+            }
+
+            ctx.restore();
+
+            // Draw rings/commutator
+            const ringY = centerY + 100;
+            
+            if (currentMode === 'ac-gen') {
+                // Slip rings (two complete rings)
+                ctx.save();
+                ctx.translate(centerX, ringY);
+                ctx.rotate(angleRad);
+                
+                ctx.fillStyle = '#ffd54f';
+                ctx.beginPath();
+                ctx.arc(-20, 0, 18, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.arc(20, 0, 18, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+                
+                ctx.restore();
+                
+                ctx.fillStyle = '#333';
+                ctx.font = '11px Arial';
+                ctx.fillText('Slip Rings', centerX, ringY + 35);
+            } else {
+                // Split-ring commutator
+                ctx.save();
+                ctx.translate(centerX, ringY);
+                ctx.rotate(angleRad);
+                
+                const commRadius = 22;
+                
+                // First half
+                ctx.fillStyle = normalizedAngle < 180 ? '#ffd54f' : '#ffab40';
+                ctx.beginPath();
+                ctx.arc(0, 0, commRadius, -Math.PI/2 + 0.1, Math.PI/2 - 0.1);
+                ctx.lineTo(0, 0);
+                ctx.closePath();
+                ctx.fill();
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                
+                // Second half
+                ctx.fillStyle = normalizedAngle < 180 ? '#ffab40' : '#ffd54f';
+                ctx.beginPath();
+                ctx.arc(0, 0, commRadius, Math.PI/2 + 0.1, -Math.PI/2 - 0.1);
+                ctx.lineTo(0, 0);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+                
+                // Gap
+                ctx.fillStyle = '#1a1a2e';
+                ctx.fillRect(-3, -commRadius - 2, 6, commRadius * 2 + 4);
+                
+                ctx.restore();
+                
+                ctx.fillStyle = '#333';
+                ctx.font = '11px Arial';
+                ctx.fillText('Split-Ring Commutator', centerX, ringY + 40);
+            }
+
+            // Brushes
+            ctx.fillStyle = '#424242';
+            ctx.fillRect(centerX - 55, ringY - 10, 20, 20);
+            ctx.fillRect(centerX + 35, ringY - 10, 20, 20);
+
+            // Power source / load
+            if (currentMode === 'dc-motor') {
+                // Battery (input)
+                ctx.fillStyle = '#333';
+                ctx.fillRect(centerX - 50, ringY + 55, 100, 35);
+                ctx.fillStyle = '#e53935';
+                ctx.fillRect(centerX - 40, ringY + 62, 12, 20);
+                ctx.fillStyle = '#1e88e5';
+                ctx.fillRect(centerX + 28, ringY + 62, 12, 20);
+                ctx.fillStyle = '#fff';
+                ctx.font = 'bold 11px Arial';
+                ctx.fillText('DC INPUT', centerX, ringY + 78);
+            } else {
+                // Load (output)
+                ctx.fillStyle = '#333';
+                ctx.fillRect(centerX - 40, ringY + 55, 80, 30);
+                ctx.fillStyle = '#ffeb3b';
+                ctx.font = '20px Arial';
+                ctx.fillText('💡', centerX, ringY + 75);
+                ctx.fillStyle = '#fff';
+                ctx.font = 'bold 10px Arial';
+                ctx.fillText('LOAD', centerX, ringY + 92);
+            }
+
+            // Energy flow indicator
+            ctx.fillStyle = '#1a73e8';
+            ctx.font = 'bold 12px Arial';
+            if (currentMode === 'dc-motor') {
+                ctx.fillText('⚡ → ⚙️ (Electrical → Mechanical)', centerX, h - 15);
+            } else {
+                ctx.fillText('⚙️ → ⚡ (Mechanical → Electrical)', centerX, h - 15);
+            }
+        }
+
+        function drawComparisonMode(ctx, w, h) {
+            const sections = [
+                { x: w * 0.17, title: 'AC Generator', color: '#4caf50' },
+                { x: w * 0.5, title: 'DC Generator', color: '#ff9800' },
+                { x: w * 0.83, title: 'DC Motor', color: '#9c27b0' }
+            ];
+
+            const angleRad = angle * Math.PI / 180;
+            const normalizedAngle = ((angle % 360) + 360) % 360;
+
+            sections.forEach((section, index) => {
+                const centerX = section.x;
+                const centerY = h / 2 - 20;
+
+                // Title
+                ctx.fillStyle = section.color;
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(section.title, centerX, 25);
+
+                // Mini magnetic poles
+                ctx.fillStyle = '#e53935';
+                ctx.fillRect(centerX - 70, centerY - 35, 25, 70);
+                ctx.fillStyle = '#1e88e5';
+                ctx.fillRect(centerX + 45, centerY - 35, 25, 70);
+
+                // Rotating coil
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(angleRad);
+
+                ctx.strokeStyle = section.color;
+                ctx.lineWidth = 3;
+                ctx.strokeRect(-35, -25, 70, 50);
+
+                ctx.restore();
+
+                // Ring type
+                const ringY = centerY + 55;
+                
+                if (index === 0) {
+                    // Slip rings
+                    ctx.save();
+                    ctx.translate(centerX, ringY);
+                    ctx.rotate(angleRad);
+                    ctx.fillStyle = '#ffd54f';
+                    ctx.beginPath();
+                    ctx.arc(-10, 0, 10, 0, Math.PI * 2);
+                    ctx.arc(10, 0, 10, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                } else {
+                    // Split ring
+                    ctx.save();
+                    ctx.translate(centerX, ringY);
+                    ctx.rotate(angleRad);
+                    ctx.fillStyle = '#ffd54f';
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 12, -Math.PI/2 + 0.15, Math.PI/2 - 0.15);
+                    ctx.fill();
+                    ctx.fillStyle = '#ffab40';
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 12, Math.PI/2 + 0.15, -Math.PI/2 - 0.15);
+                    ctx.fill();
+                    ctx.restore();
+                }
+
+                // Labels
+                ctx.fillStyle = '#666';
+                ctx.font = '10px Arial';
+                ctx.fillText(index === 0 ? 'Slip Rings' : 'Commutator', centerX, ringY + 25);
+                ctx.fillText(index === 2 ? 'Elec→Mech' : 'Mech→Elec', centerX, ringY + 40);
+            });
+
+            // Main label
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 12px Arial';
+            ctx.fillText('All three involve a coil rotating in a magnetic field!', w/2, h - 10);
+        }
+
+        function drawWaveform() {
+            const ctx = waveformCtx;
+            const w = waveformCanvas.width;
+            const h = waveformCanvas.height;
+
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fillRect(0, 0, w, h);
+
+            // Grid lines
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(0, h/2);
+            ctx.lineTo(w, h/2);
+            ctx.stroke();
+
+            if (waveformData.length < 2) return;
+
+            // Draw waveform
+            ctx.lineWidth = 2;
+            
+            if (currentMode === 'ac-gen') {
+                ctx.strokeStyle = '#00ff88';
+            } else if (currentMode === 'dc-gen') {
+                ctx.strokeStyle = '#ffab40';
+            } else if (currentMode === 'dc-motor') {
+                ctx.strokeStyle = '#ce93d8';
+            } else {
+                // Comparison - draw all three
+                drawComparisonWaveforms(ctx, w, h);
+                return;
+            }
+
+            ctx.beginPath();
+            for (let i = 0; i < waveformData.length; i++) {
+                const x = (i / waveformData.length) * w;
+                let y;
+                
+                if (currentMode === 'ac-gen') {
+                    y = h/2 - waveformData[i].ac * (h/2 - 10);
+                } else if (currentMode === 'dc-gen') {
+                    y = h/2 - waveformData[i].dc * (h/2 - 10);
+                } else {
+                    y = h/2 - waveformData[i].motor * (h/2 - 10);
+                }
+                
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = ctx.strokeStyle;
+            ctx.font = '11px monospace';
+            ctx.textAlign = 'left';
+            const labels = {
+                'ac-gen': 'AC Output (Alternating)',
+                'dc-gen': 'DC Output (Pulsating)',
+                'dc-motor': 'Torque Output'
+            };
+            ctx.fillText(labels[currentMode], 10, 18);
+        }
+
+        function drawComparisonWaveforms(ctx, w, h) {
+            const colors = ['#00ff88', '#ffab40', '#ce93d8'];
+            const labels = ['AC Gen', 'DC Gen', 'Motor'];
+            const dataKeys = ['ac', 'dc', 'motor'];
+
+            dataKeys.forEach((key, index) => {
+                ctx.strokeStyle = colors[index];
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                
+                for (let i = 0; i < waveformData.length; i++) {
+                    const x = (i / waveformData.length) * w;
+                    const y = h/2 - waveformData[i][key] * (h/2 - 15);
+                    
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+            });
+
+            // Legend
+            ctx.font = '10px monospace';
+            labels.forEach((label, index) => {
+                ctx.fillStyle = colors[index];
+                ctx.fillText('● ' + label, 10 + index * 80, 15);
+            });
+        }
+
+        function updateDisplays() {
+            const normalizedAngle = ((angle % 360) + 360) % 360;
+            const angleRad = angle * Math.PI / 180;
+
+            const modeNames = {
+                'ac-gen': 'AC Generator',
+                'dc-gen': 'DC Generator',
+                'dc-motor': 'DC Motor',
+                'comparison': 'Comparison'
+            };
+
+            const ringTypes = {
+                'ac-gen': 'Slip Rings',
+                'dc-gen': 'Split-Ring',
+                'dc-motor': 'Split-Ring',
+                'comparison': 'Various'
+            };
+
+            const energyFlows = {
+                'ac-gen': 'Mech → Elec',
+                'dc-gen': 'Mech → Elec',
+                'dc-motor': 'Elec → Mech',
+                'comparison': 'See Display'
+            };
+
+            document.getElementById('currentMode').textContent = modeNames[currentMode];
+            document.getElementById('currentAngle').textContent = Math.round(normalizedAngle) + '°';
+            document.getElementById('ringType').textContent = ringTypes[currentMode];
+            document.getElementById('energyFlow').textContent = energyFlows[currentMode];
+            document.getElementById('simStatus').textContent = running ? 'Running' : 'Stopped';
+
+            // Calculate output
+            let output;
+            if (currentMode === 'ac-gen') {
+                output = (Math.sin(angleRad) * 220).toFixed(1) + ' V (AC)';
+            } else if (currentMode === 'dc-gen') {
+                output = (Math.abs(Math.sin(angleRad)) * 220).toFixed(1) + ' V (DC)';
+            } else if (currentMode === 'dc-motor') {
+                output = (Math.abs(Math.sin(angleRad)) * 10).toFixed(1) + ' N·m';
+            } else {
+                output = 'Multiple';
+            }
+            document.getElementById('currentOutput').textContent = output;
+        }
+
+        function animate() {
+            angle += 2;
+
+            // Record waveform data
+            const angleRad = angle * Math.PI / 180;
+            waveformData.push({
+                ac: Math.sin(angleRad),
+                dc: Math.abs(Math.sin(angleRad)),
+                motor: Math.abs(Math.sin(angleRad)) * 0.8
+            });
+            
+            if (waveformData.length > 200) waveformData.shift();
+
+            drawSimulation();
+            drawWaveform();
+            updateDisplays();
+
+            if (running) {
+                animationId = requestAnimationFrame(animate);
+            }
+        }
+
+        function toggleSimulation() {
+            running = !running;
+            document.getElementById('simBtnIcon').textContent = running ? '⏸️' : '▶️';
+            document.getElementById('simBtnText').textContent = running ? 'Pause' : 'Start';
+            
+            if (running) animate();
+        }
+
+        function resetSimulation() {
+            running = false;
+            angle = 0;
+            waveformData = [];
+            if (animationId) cancelAnimationFrame(animationId);
+            document.getElementById('simBtnIcon').textContent = '▶️';
+            document.getElementById('simBtnText').textContent = 'Start';
+            drawSimulation();
+            drawWaveform();
+            updateDisplays();
+        }
+
+        function stepSimulation() {
+            angle += 15;
+            const angleRad = angle * Math.PI / 180;
+            waveformData.push({
+                ac: Math.sin(angleRad),
+                dc: Math.abs(Math.sin(angleRad)),
+                motor: Math.abs(Math.sin(angleRad)) * 0.8
+            });
+            if (waveformData.length > 200) waveformData.shift();
+            
+            drawSimulation();
+            drawWaveform();
+            updateDisplays();
+        }
+
+        // =====================
+        // QUIZ SYSTEM
+        // =====================
+        const quizQuestions = [
+            {
+                question: "Describe the energy change that occurs in a motor.",
+                context: "Question 1.1 from consolidation exercise",
+                options: [
+                    "Mechanical energy is converted to electrical energy",
+                    "Electrical energy is converted to mechanical energy",
+                    "Chemical energy is converted to electrical energy",
+                    "Thermal energy is converted to mechanical energy"
+                ],
+                correct: 1,
+                explanation: "In an electric motor, electrical energy is converted to mechanical energy. This is the opposite of what happens in a generator."
+            },
+            {
+                question: "What does 'DC' mean in electrical terms?",
+                context: "Question 1.2 from consolidation exercise",
+                options: [
+                    "Dual Current - current flowing in two directions",
+                    "Direct Current - current flowing in one direction only",
+                    "Dynamic Current - current that changes magnitude",
+                    "Distributed Current - current spread across multiple paths"
+                ],
+                correct: 1,
+                explanation: "DC means Direct Current - the current flows in one direction only, unlike AC (Alternating Current) which changes direction periodically."
+            },
+            {
+                question: "Using the motor effect, why does a current-carrying coil experience a force in a magnetic field?",
+                context: "Question 1.3 from consolidation exercise",
+                options: [
+                    "The coil heats up and expands, causing movement",
+                    "The electrical charges create gravity that pulls the coil",
+                    "The moving charges in the coil create a magnetic field that interacts with the permanent magnet's field",
+                    "The electrons jump from the coil to the magnet"
+                ],
+                correct: 2,
+                explanation: "The electrical charge carriers moving through the coil create a magnetic field around the coil. This field interacts with the field of the permanent magnet, creating a force that causes the coil to move."
+            },
+            {
+                question: "Which of the following factors affect the power of a DC motor?",
+                context: "Question 1.4 from consolidation exercise",
+                options: [
+                    "Only the colour of the wires used",
+                    "Strength of permanent magnet, induced EMF, and number of turns in coil",
+                    "Only the size of the brushes",
+                    "The material of the commutator only"
+                ],
+                correct: 1,
+                explanation: "The power of a DC motor is affected by: the strength of the permanent magnet, the induced EMF, and the number of turns in the coil. These factors all contribute to the torque produced."
+            },
+            {
+                question: "How do the brushes and commutator ensure continuous rotation in one direction?",
+                context: "Question 1.5 from consolidation exercise",
+                options: [
+                    "They increase the voltage every half turn",
+                    "They add more current every rotation",
+                    "They switch contact points every half rotation, reversing current direction in the coil",
+                    "They create additional magnetic fields"
+                ],
+                correct: 2,
+                explanation: "As the motor turns through half a rotation, the brushes switch contact points with the incoming current. This reverses the current direction in the coil, ensuring that side of the coil experiences a force in the direction needed for continuous rotation."
+            },
+            {
+                question: "Looking at an EMF vs time graph that shows output always above zero (positive), is this an AC or DC generator?",
+                context: "Question 2.1 - Graph interpretation",
+                options: [
+                    "AC generator, because the output varies",
+                    "DC generator, because current flows in one direction only",
+                    "Neither, it must be a motor",
+                    "Both AC and DC combined"
+                ],
+                correct: 1,
+                explanation: "If the EMF output is always positive (above zero), this represents a DC generator. In a DC generator, the split-ring commutator ensures current flows in one direction only, so the output never goes negative."
+            },
+            {
+                question: "At t = 0.05s in a generator's EMF graph, if the EMF is at maximum, what position is the coil in?",
+                context: "Question 2.2 - Understanding coil position",
+                options: [
+                    "Horizontal (parallel to field lines)",
+                    "Vertical (perpendicular to field lines)",
+                    "At 45 degrees to the field",
+                    "Position cannot be determined"
+                ],
+                correct: 1,
+                explanation: "When the EMF is at maximum, the coil is vertical (perpendicular to the magnetic field). This is when the rate of change of magnetic flux through the coil is greatest."
+            },
+            {
+                question: "What are two advantages of using AC over DC for long distance power transmission?",
+                context: "Question 2.3 from consolidation exercise",
+                options: [
+                    "AC is safer and requires less wire",
+                    "AC is easier to generate/transport and voltage can be stepped up/down",
+                    "AC uses less electricity and produces more light",
+                    "AC doesn't require transformers"
+                ],
+                correct: 1,
+                explanation: "AC advantages: (1) Easier to generate and transport over long distances, (2) Voltage can be stepped up (for efficient transmission) or down (for safe use) using transformers."
+            },
+            {
+                question: "In an AC generator diagram, what are the slip ring commutators (A) and brushes (B) used for?",
+                context: "Question 3.1 - Component identification",
+                options: [
+                    "A creates the magnetic field, B spins the coil",
+                    "A connects rotating coil to external circuit, B maintains electrical contact",
+                    "A and B both generate electricity",
+                    "A stores electricity, B releases it"
+                ],
+                correct: 1,
+                explanation: "Slip ring commutators (A) connect the rotating coil to the external circuit while allowing rotation. Brushes (B) are stationary contacts that maintain electrical contact with the rotating slip rings."
+            },
+            {
+                question: "If segment PQ must rotate to produce current in a specific direction, which way does it rotate?",
+                context: "Question 3.2 - Understanding rotation direction",
+                options: [
+                    "Always anticlockwise",
+                                        "Depends on the magnetic field direction and current direction shown",
+                    "It doesn't matter which direction",
+                    "It must oscillate back and forth"
+                ],
+                correct: 1,
+                explanation: "The rotation direction (clockwise or anticlockwise) depends on the orientation of the magnetic field and the desired current direction. Using the right-hand rule, we can determine the correct rotation direction."
+            },
+            {
+                question: "How can the output of a generator be improved?",
+                context: "Question 3.3 from consolidation exercise",
+                options: [
+                    "Use weaker magnets and fewer coils",
+                    "Spin slower and use thinner wire",
+                    "Use stronger magnets, more coils, and spin faster",
+                    "Remove the commutator"
+                ],
+                correct: 2,
+                explanation: "Generator output can be improved by: (1) Using stronger magnets (increases magnetic field), (2) Adding more coils/turns (increases flux linkage), (3) Spinning the coil faster (increases rate of change of flux)."
+            },
+            {
+                question: "What change must be made to convert an AC generator to a DC generator?",
+                context: "Question 3.4 from consolidation exercise",
+                options: [
+                    "Add more magnets",
+                    "Replace the slip rings with a split-ring commutator",
+                    "Remove the brushes",
+                    "Spin the coil in the opposite direction"
+                ],
+                correct: 1,
+                explanation: "To convert an AC generator to a DC generator, replace the slip rings with a split-ring commutator. The commutator reverses the connections every half turn, ensuring current in the external circuit always flows in the same direction."
+            },
+            {
+                question: "What energy conversion takes place in electric motors?",
+                context: "Question 4.1 - DoE Preparatory Examination 2008",
+                options: [
+                    "Mechanical energy to electrical energy",
+                    "Electrical energy to mechanical energy",
+                    "Chemical energy to mechanical energy",
+                    "Light energy to electrical energy"
+                ],
+                correct: 1,
+                explanation: "Electric motors convert electrical energy into mechanical energy. This is the fundamental principle that makes motors useful for driving machinery, appliances, and vehicles."
+            },
+            {
+                question: "What is the essential difference in design between DC motors and AC motors?",
+                context: "Question 4.2 - DoE Preparatory Examination 2008",
+                options: [
+                    "DC motors are larger than AC motors",
+                    "DC motors use a commutator; AC motors don't need one since current already alternates",
+                    "AC motors have more coils",
+                    "DC motors don't use magnets"
+                ],
+                correct: 1,
+                explanation: "The essential difference is that DC motors require a split-ring commutator to reverse current direction for continuous rotation. AC motors don't need a commutator because the alternating current already changes direction naturally."
+            },
+            {
+                question: "Which of the following would improve the efficiency of a motor?",
+                context: "Question 4.3 - DoE Preparatory Examination 2008",
+                options: [
+                    "Using weaker magnets and fewer coil turns",
+                    "Increasing friction in the bearings",
+                    "Using stronger magnets, increasing coil turns, or increasing current",
+                    "Removing the commutator"
+                ],
+                correct: 2,
+                explanation: "Motor efficiency can be improved by: (1) Using stronger permanent magnets, (2) Increasing the number of turns in the coil, (3) Increasing the current through the coil. All these increase the force and torque produced."
+            }
+        ];
+
+        let userAnswers = {};
+        let quizSubmitted = false;
+
+        function initQuiz() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = '';
+
+            quizQuestions.forEach((q, index) => {
+                const questionCard = document.createElement('div');
+                questionCard.className = 'question-card';
+                questionCard.id = `question-${index}`;
+
+                let optionsHTML = '';
+                q.options.forEach((option, optIndex) => {
+                    optionsHTML += `
+                        <li class="option-item" onclick="selectOption(${index}, ${optIndex})" id="option-${index}-${optIndex}">
+                            <span class="option-letter">${String.fromCharCode(65 + optIndex)}</span>
+                            <span>${option}</span>
+                        </li>
+                    `;
+                });
+
+                questionCard.innerHTML = `
+                    <div class="question-header">
+                        <span class="question-number">${index + 1}</span>
+                        <span class="question-text">${q.question}</span>
+                    </div>
+                    ${q.context ? `<div class="question-context">📋 ${q.context}</div>` : ''}
+                    <ul class="options-list">
+                        ${optionsHTML}
+                    </ul>
+                    <div class="feedback" id="feedback-${index}"></div>
+                `;
+
+                container.appendChild(questionCard);
+            });
+
+            loadProgress();
+            updateProgressBar();
+        }
+
+        function selectOption(questionIndex, optionIndex) {
+            if (quizSubmitted) return;
+
+            document.querySelectorAll(`#question-${questionIndex} .option-item`).forEach(opt => {
+                opt.classList.remove('selected');
+            });
+
+            document.getElementById(`option-${questionIndex}-${optionIndex}`).classList.add('selected');
+            userAnswers[questionIndex] = optionIndex;
+            
+            saveProgress();
+            updateProgressBar();
+        }
+
+        function updateProgressBar() {
+            const answered = Object.keys(userAnswers).length;
+            const total = quizQuestions.length;
+            const percentage = (answered / total) * 100;
+            document.getElementById('lessonProgress').style.width = `${percentage}%`;
+        }
+
+        function submitQuiz() {
+            if (quizSubmitted) return;
+
+            const unanswered = quizQuestions.length - Object.keys(userAnswers).length;
+            if (unanswered > 0) {
+                showNotification(`⚠️ Please answer all questions. ${unanswered} remaining.`, 'warning');
+                return;
+            }
+
+            let score = 0;
+            quizSubmitted = true;
+
+            quizQuestions.forEach((q, index) => {
+                const questionCard = document.getElementById(`question-${index}`);
+                const feedback = document.getElementById(`feedback-${index}`);
+                const userAnswer = userAnswers[index];
+
+                document.querySelectorAll(`#question-${index} .option-item`).forEach((opt, optIndex) => {
+                    opt.classList.remove('selected');
+                    opt.style.pointerEvents = 'none';
+                    
+                    if (optIndex === q.correct) {
+                        opt.classList.add('correct-answer');
+                    }
+                    if (userAnswer === optIndex && optIndex !== q.correct) {
+                        opt.classList.add('wrong-answer');
+                    }
+                });
+
+                if (userAnswer === q.correct) {
+                    score++;
+                    questionCard.classList.add('correct');
+                    feedback.className = 'feedback show correct';
+                    feedback.innerHTML = `<span class="feedback-icon">✅</span><span><strong>Correct!</strong> ${q.explanation}</span>`;
+                } else {
+                    questionCard.classList.add('incorrect');
+                    feedback.className = 'feedback show incorrect';
+                    const correctLetter = String.fromCharCode(65 + q.correct);
+                    feedback.innerHTML = `<span class="feedback-icon">❌</span><span><strong>Incorrect.</strong> The correct answer is <strong>${correctLetter}</strong>. ${q.explanation}</span>`;
+                }
+            });
+
+            // Calculate and display score
+            const percentage = Math.round((score / quizQuestions.length) * 100);
+            document.getElementById('scoreNumber').textContent = `${score}/${quizQuestions.length}`;
+            document.getElementById('scorePercentage').textContent = `${percentage}%`;
+            
+            // Animate progress bar
+            setTimeout(() => {
+                document.getElementById('progressFill').style.width = `${percentage}%`;
+            }, 100);
+            
+            // Determine feedback and icon
+            let feedbackMessage = '';
+            let icon = '';
+            
+            if (percentage >= 90) {
+                feedbackMessage = '🌟 Outstanding! You have excellent mastery of Electrical Machines! Ready for the exam!';
+                icon = '🏆';
+            } else if (percentage >= 75) {
+                feedbackMessage = '👏 Great work! You have a solid understanding. Review the few concepts you missed.';
+                icon = '🥇';
+            } else if (percentage >= 60) {
+                feedbackMessage = '👍 Good effort! Focus on the areas where you made mistakes and try again.';
+                icon = '📚';
+            } else if (percentage >= 40) {
+                feedbackMessage = '📖 Keep studying! Review the lesson summaries and practice with the simulations.';
+                icon = '💪';
+            } else {
+                feedbackMessage = '🔄 Don\'t give up! Go through all four lessons again, focusing on key concepts.';
+                icon = '📝';
+            }
+            
+            document.getElementById('scoreIcon').textContent = icon;
+            document.getElementById('scoreFeedback').textContent = feedbackMessage;
+            document.getElementById('scoreContainer').classList.add('show');
+
+            // Save completion data
+            localStorage.setItem('lesson4_completed', 'true');
+            localStorage.setItem('lesson4_score', score.toString());
+            localStorage.setItem('lesson4_percentage', percentage.toString());
+            localStorage.setItem('lesson4_completedDate', new Date().toISOString());
+
+            // Update progress bar to 100%
+            document.getElementById('lessonProgress').style.width = '100%';
+
+            // Hide submit button
+            document.getElementById('submitQuiz').style.display = 'none';
+
+            // Scroll to score
+            setTimeout(() => {
+                document.getElementById('scoreContainer').scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        }
+
+        function retryQuiz() {
+            quizSubmitted = false;
+            userAnswers = {};
+            
+            localStorage.removeItem('lesson4_answers');
+            localStorage.removeItem('lesson4_completed');
+            localStorage.removeItem('lesson4_score');
+            localStorage.removeItem('lesson4_percentage');
+            
+            document.getElementById('scoreContainer').classList.remove('show');
+            document.getElementById('submitQuiz').style.display = 'flex';
+            
+            initQuiz();
+            
+            showNotification('🔄 Quiz reset. Try again!', 'info');
+            
+            setTimeout(() => {
+                document.getElementById('quiz').scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        }
+
+        function reviewAnswers() {
+            document.getElementById('quizContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // =====================
+        // PROGRESS MANAGEMENT
+        // =====================
+        function saveProgress() {
+            localStorage.setItem('lesson4_answers', JSON.stringify(userAnswers));
+            localStorage.setItem('lesson4_lastVisited', new Date().toISOString());
+        }
+
+        function loadProgress() {
+            const savedAnswers = localStorage.getItem('lesson4_answers');
+            if (savedAnswers) {
+                userAnswers = JSON.parse(savedAnswers);
+                
+                Object.keys(userAnswers).forEach(questionIndex => {
+                    const optionIndex = userAnswers[questionIndex];
+                    const optionElement = document.getElementById(`option-${questionIndex}-${optionIndex}`);
+                    if (optionElement) {
+                        optionElement.classList.add('selected');
+                    }
+                });
+                
+                showNotification('📂 Previous progress loaded!', 'success');
+            }
+
+            // Check if already completed
+            const completed = localStorage.getItem('lesson4_completed');
+            if (completed === 'true') {
+                const savedScore = localStorage.getItem('lesson4_score');
+                const savedPercentage = localStorage.getItem('lesson4_percentage');
+                showNotification(`📊 Previously completed with ${savedPercentage}%`, 'info');
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            // Remove existing notifications
+            document.querySelectorAll('.notification').forEach(n => n.remove());
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `<span>${message}</span>`;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100px)';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // =====================
+        // NAVIGATION
+        // =====================
+        function goToPrevious() {
+            saveProgress();
+            showNotification('📖 Going to Lesson 3: DC Motors', 'info');
+            setTimeout(() => {
+                alert('Navigating to Lesson 3: DC Motors');
+                // In production: window.location.href = 'lesson3.html';
+            }, 500);
+        }
+
+        function goToNext() {
+            saveProgress();
+            showNotification('📖 Going to Next Topic: Photoelectric Effect', 'info');
+            setTimeout(() => {
+                alert('Navigating to Next Topic: Photoelectric Effect');
+                // In production: window.location.href = 'photoelectric-effect-lesson1.html';
+            }, 500);
+        }
+
+        // =====================
+        // INITIALIZATION
+        // =====================
+        window.addEventListener('load', function() {
+            initCanvas();
+            initQuiz();
+            updateDisplays();
+        });
+
+        window.addEventListener('resize', function() {
+            initCanvas();
+        });
+
+        // Polyfill for roundRect
+        if (!CanvasRenderingContext2D.prototype.roundRect) {
+            CanvasRenderingContext2D.prototype.roundRect = function(x, y, width, height, radius) {
+                if (typeof radius === 'number') {
+                    radius = {tl: radius, tr: radius, br: radius, bl: radius};
+                }
+                this.beginPath();
+                this.moveTo(x + radius.tl, y);
+                this.lineTo(x + width - radius.tr, y);
+                this.quadraticCurveTo(x + width, y, x + width, y + radius.tr);
+                this.lineTo(x + width, y + height - radius.br);
+                this.quadraticCurveTo(x + width, y + height, x + width - radius.br, y + height);
+                this.lineTo(x + radius.bl, y + height);
+                this.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
+                this.lineTo(x, y + radius.tl);
+                this.quadraticCurveTo(x, y, x + radius.tl, y);
+                this.closePath();
+                return this;
+            };
+        }
+    </script>
+</body>
+</html>

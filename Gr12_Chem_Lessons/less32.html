@@ -1,0 +1,1913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transmission and Scattering of Light - PassProof Academy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1a73e8;
+            --dark-blue: #0d47a1;
+            --light-blue: #e3f2fd;
+            --accent-blue: #2196f3;
+            --white: #ffffff;
+            --gray: #f5f7fa;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --success: #4caf50;
+            --error: #f44336;
+            --warning: #ff9800;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gray);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: var(--white);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--white);
+        }
+
+        .logo span {
+            color: #64b5f6;
+        }
+
+        nav {
+            position: relative;
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 0.5rem;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: var(--white);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+            display: block;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--white);
+            min-width: 220px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-hover);
+            overflow: hidden;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .nav-item:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: var(--text-dark);
+            padding: 0.75rem 1rem;
+            display: block;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .lesson-header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .lesson-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-header h2 {
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        h3 {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h3::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: var(--primary-blue);
+            border-radius: 2px;
+        }
+
+        h4 {
+            color: var(--dark-blue);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.2rem;
+        }
+
+        .objectives-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .objectives-list li {
+            padding: 0.75rem 1rem;
+            margin: 0.5rem 0;
+            background: var(--light-blue);
+            border-left: 4px solid var(--primary-blue);
+            border-radius: 0 8px 8px 0;
+            transition: transform 0.3s;
+        }
+
+        .objectives-list li:hover {
+            transform: translateX(5px);
+        }
+
+        .objectives-list li::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        /* Tables */
+        .table-container {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 1rem;
+            text-align: left;
+        }
+
+        td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--light-blue);
+        }
+
+        tr:nth-child(even) {
+            background: var(--gray);
+        }
+
+        tr:hover {
+            background: var(--light-blue);
+        }
+
+        .color-cell {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .color-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid rgba(0,0,0,0.1);
+        }
+
+        /* Key Points */
+        .key-point {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-left: 4px solid var(--primary-blue);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .key-point h4 {
+            color: var(--dark-blue);
+            margin-top: 0;
+        }
+
+        .formula-box {
+            background: var(--dark-blue);
+            color: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 1.5rem 0;
+            font-size: 1.3rem;
+        }
+
+        .formula-box code {
+            font-family: 'Courier New', monospace;
+            font-size: 1.5rem;
+        }
+
+        /* Worked Examples */
+        .worked-example {
+            background: #fff3e0;
+            border: 2px solid var(--warning);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .worked-example h4 {
+            color: #e65100;
+            margin-top: 0;
+        }
+
+        .step {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+            border-left: 3px solid var(--warning);
+        }
+
+        /* Simulations */
+        .simulation-container {
+            background: linear-gradient(135deg, #1a237e, #0d47a1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            color: var(--white);
+        }
+
+        .simulation-container h4 {
+            color: var(--white);
+            margin-top: 0;
+        }
+
+        .canvas-container {
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .control-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.3);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--white);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .btn {
+            background: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background: var(--dark-blue);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+
+        .btn-secondary:hover {
+            background: var(--light-blue);
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-success:hover {
+            background: #388e3c;
+        }
+
+        /* Quiz Section */
+        .quiz-section {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .question-card {
+            background: var(--gray);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .question-card.correct {
+            border-color: var(--success);
+            background: #e8f5e9;
+        }
+
+        .question-card.incorrect {
+            border-color: var(--error);
+            background: #ffebee;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: var(--primary-blue);
+            color: var(--white);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 0.5rem;
+            font-weight: bold;
+        }
+
+        .question-text {
+            font-weight: 500;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: var(--white);
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option:hover {
+            border-color: var(--primary-blue);
+            background: var(--light-blue);
+        }
+
+        .option.selected {
+            border-color: var(--primary-blue);
+            background: var(--light-blue);
+        }
+
+        .option.correct-answer {
+            border-color: var(--success);
+            background: #e8f5e9;
+        }
+
+        .option.wrong-answer {
+            border-color: var(--error);
+            background: #ffebee;
+        }
+
+        .option input {
+            margin-right: 1rem;
+            transform: scale(1.2);
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .feedback.correct {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid var(--success);
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid var(--error);
+        }
+
+        /* Score Display */
+        .score-display {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .score-display.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .score-number {
+            font-size: 4rem;
+            font-weight: bold;
+        }
+
+        .score-label {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .score-message {
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: var(--light-blue);
+            border-radius: 10px;
+            height: 10px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue));
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Navigation Buttons */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .lesson-nav .btn {
+            flex: 1;
+            min-width: 150px;
+            justify-content: center;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-blue);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            opacity: 0.9;
+        }
+
+        /* Info boxes */
+        .info-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--light-blue);
+            border-radius: 12px;
+            margin: 1rem 0;
+        }
+
+        .info-box-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        /* Experiment Box */
+        .experiment-box {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            border: 2px solid var(--success);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .experiment-box h4 {
+            color: #2e7d32;
+            margin-top: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+
+            .nav-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                padding-top: 1rem;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .dropdown-content {
+                position: static;
+                box-shadow: none;
+                background: rgba(255,255,255,0.1);
+                margin-top: 0.5rem;
+            }
+
+            .dropdown-content a {
+                color: var(--white);
+                padding-left: 2rem;
+            }
+
+            .lesson-header {
+                padding: 2rem 1rem;
+            }
+
+            .lesson-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .lesson-nav {
+                flex-direction: column;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            header, footer, .simulation-container, .quiz-section, .lesson-nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo">Pass<span>Proof</span> Academy</a>
+            <button class="nav-toggle" onclick="toggleNav()">☰</button>
+            <nav>
+                <ul class="nav-menu" id="navMenu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Subjects ▼</a>
+                        <div class="dropdown-content">
+                            <a href="#">Physical Sciences</a>
+                            <a href="#">Mathematics</a>
+                            <a href="#">Life Sciences</a>
+                            <a href="#">Chemistry</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Grade 12 ▼</a>
+                        <div class="dropdown-content">
+                            <a href="#">Term 1</a>
+                            <a href="#">Term 2</a>
+                            <a href="#">Term 3</a>
+                            <a href="#">Term 4</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Topics ▼</a>
+                        <div class="dropdown-content">
+                            <a href="#">Waves, Sound & Light</a>
+                            <a href="#">Electric Circuits</a>
+                            <a href="#">Electrodynamics</a>
+                            <a href="#">Optical Phenomena</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Progress</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Lesson Header -->
+        <div class="lesson-header">
+            <div class="badge">Physical Sciences • Grade 12 • Week 8</div>
+            <h1>Transmission and Scattering of Light</h1>
+            <h2>Lesson 1: Understanding Light Scattering</h2>
+            <div class="progress-container" style="max-width: 300px; margin: 1rem auto 0;">
+                <div class="progress-bar" id="lessonProgress" style="width: 0%;"></div>
+            </div>
+            <p style="margin-top: 0.5rem; opacity: 0.8;">Lesson Progress: <span id="progressText">0%</span></p>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="card">
+            <h3>🎯 Learning Objectives</h3>
+            <p>By the end of this lesson, you will be able to:</p>
+            <ul class="objectives-list">
+                <li>Explain what is meant by the scattering of light</li>
+                <li>Describe how the size of particles affects light scattering</li>
+                <li>Understand Rayleigh Scattering and its characteristics</li>
+                <li>Explain why the sky appears blue during the day</li>
+                <li>Explain why the sky appears red/orange at sunrise and sunset</li>
+                <li>Apply the relationship between wavelength and frequency of light</li>
+            </ul>
+        </div>
+
+        <!-- Overview -->
+        <div class="card">
+            <h3>📚 Overview</h3>
+            <p>When light travels through the atmosphere, it interacts with tiny particles such as dust, water droplets, and gas molecules. Unlike reflection from smooth surfaces where light bounces in a predictable direction, light hitting small particles scatters in various directions. This phenomenon, known as <strong>scattering</strong>, is responsible for many beautiful optical effects we observe in nature, including the blue color of the sky and the red hues of sunsets.</p>
+            
+            <div class="info-box">
+                <div class="info-box-icon">💡</div>
+                <div>
+                    <strong>Key Concept:</strong> Scattering occurs when light is deflected in different directions upon encountering particles. The degree of scattering depends on the size of the particles and the wavelength of light.
+                </div>
+            </div>
+        </div>
+
+        <!-- Pre-Knowledge -->
+        <div class="card">
+            <h3>🔄 Pre-Knowledge Review</h3>
+            <p>Before we explore scattering, let's review some important concepts:</p>
+            
+            <div class="key-point">
+                <h4>Essential Prior Knowledge</h4>
+                <ul>
+                    <li><strong>Light as a wave:</strong> Light is an electromagnetic wave that can be characterized by its wavelength and frequency.</li>
+                    <li><strong>Reflection:</strong> The change in direction of a wavefront at an interface between two different media so that the wavefront returns into the medium from which it originated.</li>
+                    <li><strong>Refraction:</strong> Light bends when it travels from one medium to another of different optical density.</li>
+                    <li><strong>Spectrum of light:</strong> White light can be separated into its component colors (ROYGBIV).</li>
+                </ul>
+            </div>
+
+            <div class="formula-box">
+                <p>Wave Equation</p>
+                <code>c = f × λ</code>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">where c = 3 × 10⁸ m/s (speed of light), f = frequency (Hz), λ = wavelength (m)</p>
+            </div>
+        </div>
+
+        <!-- Main Concepts -->
+        <div class="card">
+            <h3>📖 Main Concepts & Principles</h3>
+            
+            <h4>1. What is Scattering?</h4>
+            <p>When parallel light rays fall onto a smooth surface, they are reflected parallel and evenly in a new direction. However, when light encounters a rough surface or small particles, the reflected rays scatter in various directions. This reflection off a rough surface or from particles is called <strong>diffuse reflection</strong> or <strong>scattering</strong>.</p>
+            
+            <div class="key-point">
+                <h4>Definition of Scattering</h4>
+                <p>Scattering is the process by which light is deflected in various directions when it interacts with particles or irregularities in a medium. When light passes through the atmosphere, it is scattered by dust particles in the air and water droplets in clouds.</p>
+            </div>
+
+            <h4>2. Factors Affecting Scattering</h4>
+            <p>The degree of scattering depends on two main factors:</p>
+            <ul>
+                <li><strong>The size of the particles:</strong> Smaller particles scatter light more effectively.</li>
+                <li><strong>The wavelength of the light:</strong> Shorter wavelengths are scattered more than longer wavelengths.</li>
+            </ul>
+
+            <h4>3. The Spectrum of Visible Light</h4>
+            <p>White light from the sun contains all colors of the visible spectrum. Each color has a specific range of wavelengths:</p>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Colour</th>
+                            <th>Wavelength (nm)</th>
+                            <th>Relative Scattering</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><div class="color-cell"><span class="color-dot" style="background: #ff0000;"></span>Red</div></td>
+                            <td>780 - 622</td>
+                            <td>Least scattered</td>
+                        </tr>
+                        <tr>
+                            <td><div class="color-cell"><span class="color-dot" style="background: #ff8c00;"></span>Orange</div></td>
+                            <td>622 - 597</td>
+                            <td>↑</td>
+                        </tr>
+                        <tr>
+                            <td><div class="color-cell"><span class="color-dot" style="background: #ffff00;"></span>Yellow</div></td>
+                            <td>597 - 577</td>
+                            <td>|</td>
+                        </tr>
+                        <tr>
+                            <td><div class="color-cell"><span class="color-dot" style="background: #00ff00;"></span>Green</div></td>
+                            <td>577 - 492</td>
+                            <td>|</td>
+                        </tr>
+                        <tr>
+                            <td><div class="color-cell"><span class="color-dot" style="background: #0000ff;"></span>Blue</div></td>
+                            <td>492 - 455</td>
+                            <td>|</td>
+                        </tr>
+                        <tr>
+                            <td><div class="color-cell"><span class="color-dot" style="background: #4b0082;"></span>Indigo</div></td>
+                            <td>455 - 430</td>
+                            <td>↓</td>
+                        </tr>
+                        <tr>
+                            <td><div class="color-cell"><span class="color-dot" style="background: #8b00ff;"></span>Violet</div></td>
+                            <td>430 - 390</td>
+                            <td>Most scattered</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>4. Rayleigh Scattering</h4>
+            <div class="key-point">
+                <h4>Definition</h4>
+                <p><strong>Rayleigh Scattering</strong> is the scattering of light by particles that are smaller than the wavelength of the light. Named after Lord Rayleigh, this type of scattering explains why the sky appears blue.</p>
+                <p style="margin-top: 1rem;"><strong>Key principle:</strong> Short wavelengths (blue end of the spectrum) are scattered far more than long wavelengths (red end).</p>
+            </div>
+
+            <h4>5. Why is the Sky Blue?</h4>
+            <p>The sky appears blue because:</p>
+            <ul>
+                <li>Sunlight enters Earth's atmosphere and encounters tiny gas molecules (mainly nitrogen and oxygen).</li>
+                <li>These molecules are much smaller than the wavelength of visible light.</li>
+                <li>Blue light has a shorter wavelength than red light.</li>
+                <li>Shorter wavelengths are scattered more effectively in all directions.</li>
+                <li>When we look at the sky (not directly at the sun), we see this scattered blue light coming from all directions.</li>
+            </ul>
+
+            <h4>6. Why are Sunsets Red?</h4>
+            <p>At sunrise and sunset:</p>
+            <ul>
+                <li>Sunlight has to travel through more of the atmosphere to reach our eyes.</li>
+                <li>Most of the blue wavelengths have been scattered away during this longer journey.</li>
+                <li>The remaining light that reaches us is predominantly red and orange.</li>
+                <li>This is why the sun and sky appear red/orange at these times.</li>
+            </ul>
+        </div>
+
+        <!-- Worked Examples -->
+        <div class="card">
+            <h3>✏️ Worked Examples</h3>
+            
+            <div class="worked-example">
+                <h4>Example 1: Calculating Wavelength from Frequency</h4>
+                <p><strong>Question:</strong> What colour is associated with the frequency 4.9 × 10¹⁴ Hz?</p>
+                
+                <div class="step">
+                    <p><strong>Step 1:</strong> Write down the wave equation</p>
+                    <p>c = f × λ</p>
+                </div>
+                
+                <div class="step">
+                    <p><strong>Step 2:</strong> Rearrange to find wavelength</p>
+                    <p>λ = c / f</p>
+                </div>
+                
+                <div class="step">
+                    <p><strong>Step 3:</strong> Substitute values</p>
+                    <p>λ = (3 × 10⁸ m/s) / (4.9 × 10¹⁴ Hz)</p>
+                    <p>λ = 6.12 × 10⁻⁷ m</p>
+                </div>
+                
+                <div class="step">
+                    <p><strong>Step 4:</strong> Convert to nanometers</p>
+                    <p>λ = 6.12 × 10⁻⁷ m × (10⁹ nm/m) = 612 nm</p>
+                </div>
+                
+                <div class="step">
+                    <p><strong>Answer:</strong> From the table, 612 nm falls in the orange range (622 - 597 nm). The colour is <strong>Orange</strong>.</p>
+                </div>
+            </div>
+
+            <div class="worked-example">
+                <h4>Example 2: Why Does an Apple Appear Red?</h4>
+                <p><strong>Question:</strong> Explain why an apple appears to be red in white light.</p>
+                
+                <div class="step">
+                    <p><strong>Explanation:</strong></p>
+                    <p>The apple consists of atoms whose electrons have the same natural frequency as all the colours of light, <em>except</em> red.</p>
+                    <p>This means:</p>
+                    <ul>
+                        <li>All colours except red are <strong>absorbed</strong> by the apple's surface.</li>
+                        <li>Red light is <strong>reflected</strong> because it doesn't match the natural frequency of the electrons.</li>
+                        <li>Therefore, the apple appears red in colour under white light because only red light reaches our eyes.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Experiment Box -->
+        <div class="card">
+            <h3>🔬 Demonstration: The Milk Experiment</h3>
+            
+            <div class="experiment-box">
+                <h4>Materials Needed:</h4>
+                <ul>
+                    <li>A clear, straight-sided glass jar or drinking glass</li>
+                    <li>Water</li>
+                    <li>Milk (a few teaspoons)</li>
+                    <li>Torch (flashlight)</li>
+                    <li>Darkened room</li>
+                </ul>
+                
+                <h4 style="margin-top: 1.5rem;">Observations:</h4>
+                <ul>
+                    <li>The image on the screen appears <strong>red/orange</strong></li>
+                    <li>The milk in the glass appears <strong>blue</strong></li>
+                    <li>As more milk is added, less light passes through the liquid</li>
+                </ul>
+                
+                <h4 style="margin-top: 1.5rem;">Explanation:</h4>
+                <p>The fat particles in milk are small enough to scatter light (similar to Rayleigh scattering):</p>
+                <ul>
+                    <li>Blue wavelengths are scattered more, making the milk appear blue when viewed from the side.</li>
+                    <li>Red wavelengths pass through more easily, making the light on the screen appear red/orange.</li>
+                    <li>This mimics how our atmosphere scatters sunlight!</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Interactive Simulations -->
+        <div class="card">
+            <h3>🎮 Interactive Simulations</h3>
+            
+            <!-- Simulation 1: Light Scattering -->
+            <div class="simulation-container">
+                <h4>Simulation 1: Rayleigh Scattering</h4>
+                <p>Observe how different wavelengths of light scatter when passing through particles. Blue light scatters more than red light.</p>
+                
+                <div class="canvas-container">
+                    <canvas id="scatteringCanvas" width="800" height="400"></canvas>
+                </div>
+                
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Particle Density: <span id="densityValue">50</span></label>
+                        <input type="range" id="particleDensity" min="10" max="100" value="50">
+                    </div>
+                    <div class="control-group">
+                        <label>Show Wavelength:</label>
+                        <select id="wavelengthSelect" style="padding: 0.5rem; border-radius: 5px; width: 100%;">
+                            <option value="all">All Colors</option>
+                            <option value="red">Red Only</option>
+                            <option value="blue">Blue Only</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn" onclick="resetScattering()" style="margin-top: 1rem;">Reset Simulation</button>
+            </div>
+
+            <!-- Simulation 2: Sky Color -->
+            <div class="simulation-container" style="margin-top: 1.5rem;">
+                <h4>Simulation 2: Why is the Sky Blue?</h4>
+                <p>Move the sun across the sky to see how the sky color changes from blue to red at sunset.</p>
+                
+                <div class="canvas-container">
+                    <canvas id="skyCanvas" width="800" height="350"></canvas>
+                </div>
+                
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Sun Position (Time of Day): <span id="timeValue">Noon</span></label>
+                        <input type="range" id="sunPosition" min="0" max="100" value="50">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulation 3: Wavelength Calculator -->
+            <div class="simulation-container" style="margin-top: 1.5rem;">
+                <h4>Simulation 3: Wavelength-Frequency Calculator</h4>
+                <p>Calculate the wavelength or frequency of light using the wave equation c = fλ</p>
+                
+                <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 12px; margin: 1rem 0;">
+                    <div class="controls">
+                        <div class="control-group">
+                            <label>Enter Frequency (× 10¹⁴ Hz):</label>
+                            <input type="number" id="freqInput" step="0.1" value="4.9" style="padding: 0.5rem; border-radius: 5px; width: 100%; font-size: 1rem;">
+                        </div>
+                        <div class="control-group">
+                            <button class="btn btn-success" onclick="calculateWavelength()" style="width: 100%; margin-top: 1.5rem;">Calculate Wavelength</button>
+                        </div>
+                    </div>
+                    
+                    <div id="calcResult" style="margin-top: 1rem; padding: 1rem; background: rgba(0,0,0,0.3); border-radius: 8px; display: none;">
+                        <p><strong>Wavelength:</strong> <span id="wavelengthResult"></span></p>
+                        <p><strong>Colour:</strong> <span id="colorResult"></span></p>
+                        <div id="colorPreview" style="width: 50px; height: 50px; border-radius: 50%; margin-top: 0.5rem; border: 3px solid white;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulation 4: Milk Experiment -->
+            <div class="simulation-container" style="margin-top: 1.5rem;">
+                <h4>Simulation 4: Virtual Milk Experiment</h4>
+                <p>Add milk to the water and observe how it affects light scattering. Watch the glass and the screen!</p>
+                
+                <div class="canvas-container">
+                    <canvas id="milkCanvas" width="800" height="400"></canvas>
+                </div>
+                
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Milk Concentration: <span id="milkValue">0%</span></label>
+                        <input type="range" id="milkConcentration" min="0" max="100" value="0">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="quiz-section" id="quizSection">
+            <h3>📝 Knowledge Check</h3>
+            <p>Test your understanding of light scattering with these questions. Select your answer and receive immediate feedback!</p>
+            
+            <div id="quizContainer"></div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <button class="btn btn-success" onclick="submitQuiz()" id="submitBtn">Submit All Answers</button>
+                <button class="btn btn-secondary" onclick="resetQuiz()" style="margin-left: 1rem;">Reset Quiz</button>
+            </div>
+            
+            <div class="score-display" id="scoreDisplay">
+                <p class="score-label">Your Score</p>
+                <p class="score-number" id="scoreNumber">0%</p>
+                <p class="score-message" id="scoreMessage"></p>
+                <button class="btn" onclick="resetQuiz()" style="margin-top: 1rem;">Try Again</button>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="lesson-nav">
+            <button class="btn btn-secondary" onclick="goToPrevious()">
+                ← Previous Lesson
+            </button>
+            <button class="btn" onclick="goToNext()">
+                Next Lesson →
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 PassProof Academy. All Rights Reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">Empowering learners to achieve academic excellence.</p>
+    </footer>
+
+    <script>
+        // ==================== QUIZ DATA ====================
+        const quizQuestions = [
+            {
+                question: "What is the scattering of light?",
+                options: [
+                    "Light traveling in a straight line",
+                    "Light being deflected in various directions when encountering particles",
+                    "Light being absorbed by a surface",
+                    "Light passing through a prism"
+                ],
+                correct: 1,
+                explanation: "Scattering is the process by which light is deflected in various directions when it interacts with particles or irregularities in a medium."
+            },
+            {
+                question: "Which type of scattering occurs when particles are smaller than the wavelength of light?",
+                options: [
+                    "Mie Scattering",
+                    "Compton Scattering",
+                    "Rayleigh Scattering",
+                    "Thomson Scattering"
+                ],
+                correct: 2,
+                explanation: "Rayleigh Scattering occurs when light is scattered by particles that are smaller than the wavelength of the light."
+            },
+            {
+                question: "Why does the sky appear blue during the day?",
+                options: [
+                    "Because blue light has the longest wavelength",
+                    "Because the ocean reflects blue light into the sky",
+                    "Because blue light has shorter wavelengths and is scattered more by atmospheric particles",
+                    "Because the sun emits only blue light"
+                ],
+                correct: 2,
+                explanation: "Blue light has shorter wavelengths than red light and is scattered more effectively by small gas molecules in the atmosphere, making the sky appear blue."
+            },
+            {
+                question: "At sunrise and sunset, the sky appears red/orange because:",
+                options: [
+                    "The sun gets hotter and emits more red light",
+                    "Sunlight travels through more atmosphere, and most blue light has been scattered away",
+                    "The atmosphere absorbs all blue light",
+                    "Red light travels faster than blue light"
+                ],
+                correct: 1,
+                explanation: "At sunrise/sunset, sunlight travels through more of the atmosphere. Most blue wavelengths have been scattered away during this longer journey, leaving predominantly red and orange light."
+            },
+            {
+                question: "Which colour of light has the shortest wavelength?",
+                options: [
+                    "Red",
+                    "Yellow",
+                    "Green",
+                    "Violet"
+                ],
+                correct: 3,
+                explanation: "Violet light has the shortest wavelength (430-390 nm) in the visible spectrum, while red has the longest (780-622 nm)."
+            },
+            {
+                question: "Which colour of light is scattered the LEAST by small particles?",
+                options: [
+                    "Blue",
+                    "Violet",
+                    "Red",
+                    "Green"
+                ],
+                correct: 2,
+                explanation: "Red light has the longest wavelength and is scattered the least by small particles. This is why red light passes through the atmosphere more easily."
+            },
+            {
+                question: "The degree of light scattering depends on:",
+                options: [
+                    "The size of particles and the wavelength of light",
+                    "Only the color of the particles",
+                    "The temperature of the atmosphere",
+                    "The speed of light"
+                ],
+                correct: 0,
+                explanation: "The degree of scattering depends on two main factors: the size of the particles and the wavelength of the light."
+            },
+            {
+                question: "In the milk experiment, why does the milk appear blue when viewed from the side?",
+                options: [
+                    "Milk is naturally blue in color",
+                    "Blue wavelengths are scattered more by the milk particles",
+                    "Red light is absorbed by the milk",
+                    "The water turns the milk blue"
+                ],
+                correct: 1,
+                explanation: "The fat particles in milk scatter blue light more than red light (similar to Rayleigh scattering), making the milk appear blue when viewed from the side."
+            },
+            {
+                question: "What is the relationship between wavelength and frequency of light?",
+                options: [
+                    "They are directly proportional - higher frequency means longer wavelength",
+                    "They are inversely proportional - higher frequency means shorter wavelength",
+                    "They are always equal",
+                    "There is no relationship between them"
+                ],
+                correct: 1,
+                explanation: "Wavelength and frequency are inversely proportional. The higher the frequency, the shorter the wavelength, as shown by c = fλ."
+            },
+            {
+                question: "Calculate the wavelength of light with frequency 6.0 × 10¹⁴ Hz. (c = 3 × 10⁸ m/s)",
+                options: [
+                    "500 nm (Green)",
+                    "600 nm (Orange)",
+                    "700 nm (Red)",
+                    "400 nm (Violet)"
+                ],
+                correct: 0,
+                explanation: "λ = c/f = (3 × 10⁸)/(6.0 × 10¹⁴) = 5 × 10⁻⁷ m = 500 nm, which corresponds to green light."
+            },
+            {
+                question: "Why does an apple appear red in white light?",
+                options: [
+                    "The apple emits red light",
+                    "The apple absorbs red light and reflects all other colors",
+                    "The apple absorbs all colors except red, which it reflects",
+                    "White light only contains red color"
+                ],
+                correct: 2,
+                explanation: "The apple absorbs all colours except red. The red light is reflected because it doesn't match the natural frequency of the electrons in the apple's surface, making it appear red."
+            },
+            {
+                question: "What happens to light when it passes through a prism?",
+                options: [
+                    "It becomes invisible",
+                    "It is absorbed completely",
+                    "It separates into a spectrum of colors",
+                    "It travels faster"
+                ],
+                correct: 2,
+                explanation: "When white light passes through a prism, it separates into a spectrum of colors (ROYGBIV) because different wavelengths are refracted by different amounts."
+            }
+        ];
+
+        // ==================== QUIZ SYSTEM ====================
+        let userAnswers = {};
+        let quizSubmitted = false;
+
+        function initQuiz() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = '';
+            
+            quizQuestions.forEach((q, index) => {
+                const questionHTML = `
+                    <div class="question-card" id="question${index}">
+                        <p class="question-text">
+                            <span class="question-number">${index + 1}</span>
+                            ${q.question}
+                        </p>
+                        <div class="options">
+                            ${q.options.map((opt, optIndex) => `
+                                <label class="option" id="option${index}_${optIndex}">
+                                    <input type="radio" name="q${index}" value="${optIndex}" 
+                                           onchange="selectAnswer(${index}, ${optIndex})">
+                                    ${opt}
+                                </label>
+                            `).join('')}
+                        </div>
+                        <div class="feedback" id="feedback${index}"></div>
+                    </div>
+                `;
+                container.innerHTML += questionHTML;
+            });
+            
+            loadProgress();
+        }
+
+        function selectAnswer(questionIndex, optionIndex) {
+            if (quizSubmitted) return;
+            
+            userAnswers[questionIndex] = optionIndex;
+            saveProgress();
+            updateProgressBar();
+            
+            // Visual feedback for selection
+            const options = document.querySelectorAll(`[name="q${questionIndex}"]`);
+            options.forEach((opt, idx) => {
+                opt.closest('.option').classList.remove('selected');
+            });
+            document.getElementById(`option${questionIndex}_${optionIndex}`).classList.add('selected');
+        }
+
+        function submitQuiz() {
+            if (Object.keys(userAnswers).length < quizQuestions.length) {
+                alert('Please answer all questions before submitting!');
+                return;
+            }
+            
+            quizSubmitted = true;
+            let score = 0;
+            
+            quizQuestions.forEach((q, index) => {
+                const questionCard = document.getElementById(`question${index}`);
+                const feedback = document.getElementById(`feedback${index}`);
+                const userAnswer = userAnswers[index];
+                const correctAnswer = q.correct;
+                
+                // Reset all options
+                q.options.forEach((_, optIdx) => {
+                    const optionEl = document.getElementById(`option${index}_${optIdx}`);
+                    optionEl.classList.remove('correct-answer', 'wrong-answer');
+                });
+                
+                // Show correct answer
+                document.getElementById(`option${index}_${correctAnswer}`).classList.add('correct-answer');
+                
+                if (userAnswer === correctAnswer) {
+                    score++;
+                    questionCard.classList.add('correct');
+                    questionCard.classList.remove('incorrect');
+                    feedback.className = 'feedback show correct';
+                    feedback.innerHTML = `✓ Correct! ${q.explanation}`;
+                } else {
+                    questionCard.classList.add('incorrect');
+                    questionCard.classList.remove('correct');
+                    document.getElementById(`option${index}_${userAnswer}`).classList.add('wrong-answer');
+                    feedback.className = 'feedback show incorrect';
+                    feedback.innerHTML = `✗ Incorrect. ${q.explanation}`;
+                }
+            });
+            
+            // Show score
+            const percentage = Math.round((score / quizQuestions.length) * 100);
+            document.getElementById('scoreNumber').textContent = `${percentage}%`;
+            document.getElementById('scoreDisplay').classList.add('show');
+            
+            let message = '';
+            if (percentage >= 80) {
+                message = '🌟 Excellent! You have mastered this topic!';
+            } else if (percentage >= 60) {
+                message = '👍 Good job! Review the concepts you missed.';
+            } else if (percentage >= 40) {
+                message = '📚 Keep studying! Review the lesson content.';
+            } else {
+                message = '💪 Don\'t give up! Re-read the lesson carefully.';
+            }
+            document.getElementById('scoreMessage').textContent = message;
+            
+            // Disable submit button
+            document.getElementById('submitBtn').disabled = true;
+            
+            // Save completion
+            localStorage.setItem('lesson1_completed', 'true');
+            localStorage.setItem('lesson1_score', percentage);
+        }
+
+        function resetQuiz() {
+            quizSubmitted = false;
+            userAnswers = {};
+            document.getElementById('scoreDisplay').classList.remove('show');
+            document.getElementById('submitBtn').disabled = false;
+            initQuiz();
+            updateProgressBar();
+        }
+
+        // ==================== PROGRESS TRACKING ====================
+        function saveProgress() {
+            localStorage.setItem('lesson1_answers', JSON.stringify(userAnswers));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('lesson1_answers');
+            if (saved) {
+                userAnswers = JSON.parse(saved);
+                Object.entries(userAnswers).forEach(([qIndex, optIndex]) => {
+                    const radio = document.querySelector(`input[name="q${qIndex}"][value="${optIndex}"]`);
+                    if (radio) {
+                        radio.checked = true;
+                        radio.closest('.option').classList.add('selected');
+                    }
+                });
+            }
+            updateProgressBar();
+        }
+
+        function updateProgressBar() {
+            const answered = Object.keys(userAnswers).length;
+            const total = quizQuestions.length;
+            const percentage = Math.round((answered / total) * 100);
+            
+            document.getElementById('lessonProgress').style.width = `${percentage}%`;
+            document.getElementById('progressText').textContent = `${percentage}%`;
+        }
+
+        // ==================== NAVIGATION ====================
+        function toggleNav() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+
+        function goToPrevious() {
+            alert('This is the first lesson in this topic. No previous lesson available.');
+        }
+
+        function goToNext() {
+            if (localStorage.getItem('lesson1_completed') === 'true') {
+                alert('Proceeding to Lesson 2: Applications of Light Scattering');
+            } else {
+                alert('Please complete the quiz before moving to the next lesson!');
+            }
+        }
+
+        // ==================== SIMULATION 1: SCATTERING ====================
+        let scatteringCanvas, scatteringCtx;
+        let particles = [];
+        let lightRays = [];
+
+        function initScatteringSimulation() {
+            scatteringCanvas = document.getElementById('scatteringCanvas');
+            scatteringCtx = scatteringCanvas.getContext('2d');
+            
+            document.getElementById('particleDensity').addEventListener('input', function() {
+                document.getElementById('densityValue').textContent = this.value;
+                createParticles();
+            });
+            
+            document.getElementById('wavelengthSelect').addEventListener('change', resetScattering);
+            
+            createParticles();
+            animateScattering();
+        }
+
+        function createParticles() {
+            const density = parseInt(document.getElementById('particleDensity').value);
+            particles = [];
+            
+            for (let i = 0; i < density; i++) {
+                particles.push({
+                    x: 150 + Math.random() * 500,
+                    y: 50 + Math.random() * 300,
+                    size: 2 + Math.random() * 3
+                });
+            }
+        }
+
+        function resetScattering() {
+            lightRays = [];
+            createParticles();
+        }
+
+        function animateScattering() {
+            scatteringCtx.fillStyle = '#0a0a20';
+            scatteringCtx.fillRect(0, 0, scatteringCanvas.width, scatteringCanvas.height);
+            
+            // Draw light source
+            scatteringCtx.fillStyle = '#fff';
+            scatteringCtx.beginPath();
+            scatteringCtx.arc(50, 200, 30, 0, Math.PI * 2);
+            scatteringCtx.fill();
+            scatteringCtx.fillStyle = '#000';
+            scatteringCtx.font = '12px Arial';
+            scatteringCtx.textAlign = 'center';
+            scatteringCtx.fillText('SUN', 50, 204);
+            
+            // Draw screen
+            scatteringCtx.fillStyle = '#333';
+            scatteringCtx.fillRect(750, 100, 40, 200);
+            
+            // Draw particles
+            scatteringCtx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+            particles.forEach(p => {
+                scatteringCtx.beginPath();
+                scatteringCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                scatteringCtx.fill();
+            });
+            
+            // Create new light rays
+            const wavelength = document.getElementById('wavelengthSelect').value;
+            if (Math.random() < 0.1) {
+                if (wavelength === 'all' || wavelength === 'red') {
+                    lightRays.push({
+                        x: 80, y: 200,
+                        vx: 4, vy: (Math.random() - 0.5) * 0.5,
+                        color: 'rgba(255, 50, 50, 0.8)',
+                        wavelength: 'red',
+                        scattered: false
+                    });
+                }
+                if (wavelength === 'all' || wavelength === 'blue') {
+                    lightRays.push({
+                        x: 80, y: 200,
+                        vx: 4, vy: (Math.random() - 0.5) * 0.5,
+                        color: 'rgba(50, 100, 255, 0.8)',
+                        wavelength: 'blue',
+                        scattered: false
+                    });
+                }
+            }
+            
+            // Update and draw light rays
+            lightRays = lightRays.filter(ray => {
+                ray.x += ray.vx;
+                ray.y += ray.vy;
+                
+                // Check collision with particles
+                if (!ray.scattered) {
+                    particles.forEach(p => {
+                        const dx = ray.x - p.x;
+                        const dy = ray.y - p.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (dist < p.size + 5) {
+                            // Scatter probability based on wavelength
+                            const scatterProb = ray.wavelength === 'blue' ? 0.8 : 0.2;
+                            if (Math.random() < scatterProb) {
+                                ray.scattered = true;
+                                const angle = Math.random() * Math.PI * 2;
+                                ray.vx = Math.cos(angle) * 3;
+                                ray.vy = Math.sin(angle) * 3;
+                            }
+                        }
+                    });
+                }
+                
+                // Draw ray
+                scatteringCtx.strokeStyle = ray.color;
+                scatteringCtx.lineWidth = 2;
+                scatteringCtx.beginPath();
+                scatteringCtx.moveTo(ray.x - ray.vx * 3, ray.y - ray.vy * 3);
+                scatteringCtx.lineTo(ray.x, ray.y);
+                scatteringCtx.stroke();
+                
+                return ray.x > 0 && ray.x < 800 && ray.y > 0 && ray.y < 400;
+            });
+            
+            // Labels
+            scatteringCtx.fillStyle = '#fff';
+            scatteringCtx.font = '14px Arial';
+            scatteringCtx.textAlign = 'left';
+            scatteringCtx.fillText('Atmosphere with particles', 250, 30);
+            scatteringCtx.fillText('Screen', 750, 90);
+            
+            // Legend
+            scatteringCtx.fillStyle = 'rgba(255, 50, 50, 0.8)';
+            scatteringCtx.fillRect(600, 350, 20, 10);
+            scatteringCtx.fillStyle = '#fff';
+            scatteringCtx.fillText('Red (less scattered)', 625, 360);
+            
+            scatteringCtx.fillStyle = 'rgba(50, 100, 255, 0.8)';
+            scatteringCtx.fillRect(600, 370, 20, 10);
+            scatteringCtx.fillStyle = '#fff';
+            scatteringCtx.fillText('Blue (more scattered)', 625, 380);
+            
+            requestAnimationFrame(animateScattering);
+        }
+
+        // ==================== SIMULATION 2: SKY COLOR ====================
+        let skyCanvas, skyCtx;
+
+        function initSkySimulation() {
+            skyCanvas = document.getElementById('skyCanvas');
+            skyCtx = skyCanvas.getContext('2d');
+            
+            document.getElementById('sunPosition').addEventListener('input', function() {
+                updateSky(parseInt(this.value));
+            });
+            
+            updateSky(50);
+        }
+
+        function updateSky(position) {
+            const width = skyCanvas.width;
+            const height = skyCanvas.height;
+            
+            // Calculate sun position
+            const sunX = (position / 100) * width;
+            const sunY = height - 50 - Math.sin((position / 100) * Math.PI) * 200;
+            
+            // Determine time of day
+            let timeLabel = 'Noon';
+            let skyColor1, skyColor2, sunColor;
+            
+            if (position < 15 || position > 85) {
+                timeLabel = position < 50 ? 'Sunrise' : 'Sunset';
+                skyColor1 = '#ff6b35';
+                skyColor2 = '#1a1a2e';
+                sunColor = '#ff4500';
+            } else if (position < 30 || position > 70) {
+                timeLabel = position < 50 ? 'Morning' : 'Evening';
+                skyColor1 = '#87ceeb';
+                skyColor2 = '#ff9966';
+                sunColor = '#ffd700';
+            } else {
+                timeLabel = 'Noon';
+                skyColor1 = '#1e90ff';
+                skyColor2 = '#87ceeb';
+                sunColor = '#ffff00';
+            }
+            
+            document.getElementById('timeValue').textContent = timeLabel;
+            
+            // Draw sky gradient
+            const gradient = skyCtx.createLinearGradient(0, 0, 0, height);
+            gradient.addColorStop(0, skyColor1);
+            gradient.addColorStop(1, skyColor2);
+            skyCtx.fillStyle = gradient;
+            skyCtx.fillRect(0, 0, width, height);
+            
+            // Draw ground
+            skyCtx.fillStyle = '#2d5016';
+            skyCtx.fillRect(0, height - 50, width, 50);
+            
+            // Draw sun with glow
+            const glowGradient = skyCtx.createRadialGradient(sunX, sunY, 0, sunX, sunY, 80);
+            glowGradient.addColorStop(0, sunColor);
+            glowGradient.addColorStop(0.3, sunColor + '88');
+            glowGradient.addColorStop(1, 'transparent');
+            skyCtx.fillStyle = glowGradient;
+            skyCtx.beginPath();
+            skyCtx.arc(sunX, sunY, 80, 0, Math.PI * 2);
+            skyCtx.fill();
+            
+            skyCtx.fillStyle = sunColor;
+            skyCtx.beginPath();
+            skyCtx.arc(sunX, sunY, 30, 0, Math.PI * 2);
+            skyCtx.fill();
+            
+            // Draw scattered light visualization
+            if (position < 20 || position > 80) {
+                // Show light path at sunrise/sunset
+                skyCtx.strokeStyle = 'rgba(255, 100, 50, 0.3)';
+                skyCtx.lineWidth = 30;
+                skyCtx.beginPath();
+                skyCtx.moveTo(sunX, sunY);
+                skyCtx.lineTo(width / 2, height - 100);
+                skyCtx.stroke();
+                
+                skyCtx.fillStyle = '#fff';
+                skyCtx.font = '14px Arial';
+                skyCtx.textAlign = 'center';
+                skyCtx.fillText('Light travels through more atmosphere', width / 2, height - 70);
+                skyCtx.fillText('Blue light scattered away → Red/Orange sky', width / 2, height - 55);
+            } else {
+                // Show blue scattering during day
+                for (let i = 0; i < 20; i++) {
+                    skyCtx.fillStyle = 'rgba(100, 150, 255, 0.3)';
+                    skyCtx.beginPath();
+                    skyCtx.arc(
+                        100 + Math.random() * 600,
+                        50 + Math.random() * 150,
+                        5 + Math.random() * 10,
+                        0, Math.PI * 2
+                    );
+                    skyCtx.fill();
+                }
+                
+                skyCtx.fillStyle = '#fff';
+                skyCtx.font = '14px Arial';
+                skyCtx.textAlign = 'center';
+                skyCtx.fillText('Blue light scattered in all directions → Blue sky', width / 2, 30);
+            }
+            
+            // Observer
+            skyCtx.fillStyle = '#333';
+            skyCtx.beginPath();
+            skyCtx.arc(width / 2, height - 60, 10, 0, Math.PI * 2);
+            skyCtx.fill();
+            skyCtx.fillRect(width / 2 - 5, height - 60, 10, 20);
+            skyCtx.fillStyle = '#fff';
+            skyCtx.font = '12px Arial';
+            skyCtx.fillText('Observer', width / 2, height - 25);
+        }
+
+        // ==================== SIMULATION 3: CALCULATOR ====================
+        function calculateWavelength() {
+            const freq = parseFloat(document.getElementById('freqInput').value);
+            if (isNaN(freq) || freq <= 0) {
+                alert('Please enter a valid frequency');
+                return;
+            }
+            
+            const c = 3e8;
+            const f = freq * 1e14;
+            const wavelength = c / f;
+            const wavelengthNm = wavelength * 1e9;
+            
+            let color = 'Unknown';
+            let colorHex = '#888';
+            
+            if (wavelengthNm >= 622 && wavelengthNm <= 780) {
+                color = 'Red';
+                colorHex = '#ff0000';
+            } else if (wavelengthNm >= 597 && wavelengthNm < 622) {
+                color = 'Orange';
+                colorHex = '#ff8c00';
+            } else if (wavelengthNm >= 577 && wavelengthNm < 597) {
+                color = 'Yellow';
+                colorHex = '#ffff00';
+            } else if (wavelengthNm >= 492 && wavelengthNm < 577) {
+                color = 'Green';
+                colorHex = '#00ff00';
+            } else if (wavelengthNm >= 455 && wavelengthNm < 492) {
+                color = 'Blue';
+                colorHex = '#0000ff';
+            } else if (wavelengthNm >= 430 && wavelengthNm < 455) {
+                color = 'Indigo';
+                colorHex = '#4b0082';
+            } else if (wavelengthNm >= 390 && wavelengthNm < 430) {
+                color = 'Violet';
+                colorHex = '#8b00ff';
+            } else if (wavelengthNm < 390) {
+                color = 'Ultraviolet (not visible)';
+                colorHex = '#9400d3';
+            } else {
+                color = 'Infrared (not visible)';
+                colorHex = '#8b0000';
+            }
+            
+            document.getElementById('wavelengthResult').textContent = 
+                `${wavelength.toExponential(2)} m = ${wavelengthNm.toFixed(1)} nm`;
+            document.getElementById('colorResult').textContent = color;
+            document.getElementById('colorPreview').style.backgroundColor = colorHex;
+            document.getElementById('calcResult').style.display = 'block';
+        }
+
+        // ==================== SIMULATION 4: MILK EXPERIMENT ====================
+        let milkCanvas, milkCtx;
+
+        function initMilkSimulation() {
+            milkCanvas = document.getElementById('milkCanvas');
+            milkCtx = milkCanvas.getContext('2d');
+            
+            document.getElementById('milkConcentration').addEventListener('input', function() {
+                document.getElementById('milkValue').textContent = this.value + '%';
+                drawMilkExperiment(parseInt(this.value));
+            });
+            
+            drawMilkExperiment(0);
+        }
+
+        function drawMilkExperiment(concentration) {
+            const width = milkCanvas.width;
+            const height = milkCanvas.height;
+            
+            // Background
+            milkCtx.fillStyle = '#1a1a2e';
+            milkCtx.fillRect(0, 0, width, height);
+            
+            // Draw torch
+            milkCtx.fillStyle = '#333';
+            milkCtx.fillRect(20, 150, 80, 100);
+            milkCtx.fillStyle = '#ffff00';
+            milkCtx.beginPath();
+            milkCtx.arc(100, 200, 20, 0, Math.PI * 2);
+            milkCtx.fill();
+            milkCtx.fillStyle = '#fff';
+            milkCtx.font = '12px Arial';
+            milkCtx.textAlign = 'center';
+            milkCtx.fillText('TORCH', 60, 280);
+            
+            // Draw glass
+            milkCtx.strokeStyle = '#87ceeb';
+            milkCtx.lineWidth = 3;
+            milkCtx.beginPath();
+            milkCtx.moveTo(200, 100);
+            milkCtx.lineTo(200, 300);
+            milkCtx.lineTo(450, 300);
+            milkCtx.lineTo(450, 100);
+            milkCtx.stroke();
+            
+            // Draw water/milk mixture
+            const blueAmount = Math.min(concentration / 100, 1);
+            const waterColor = `rgba(${200 - blueAmount * 150}, ${220 - blueAmount * 80}, ${255}, 0.7)`;
+            milkCtx.fillStyle = waterColor;
+            milkCtx.fillRect(203, 103, 244, 194);
+            
+            // Draw milk particles
+            if (concentration > 0) {
+                milkCtx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                for (let i = 0; i < concentration * 2; i++) {
+                    milkCtx.beginPath();
+                    milkCtx.arc(
+                        210 + Math.random() * 230,
+                        110 + Math.random() * 180,
+                        1 + Math.random() * 2,
+                        0, Math.PI * 2
+                    );
+                    milkCtx.fill();
+                }
+            }
+            
+            // Draw light beam
+            const beamOpacity = Math.max(0.1, 1 - concentration / 100);
+            const beamColor = concentration > 20 ? 
+                `rgba(255, ${150 - concentration}, ${50 - concentration / 2}, ${beamOpacity})` :
+                `rgba(255, 255, 200, ${beamOpacity})`;
+            
+            milkCtx.fillStyle = beamColor;
+            milkCtx.beginPath();
+            milkCtx.moveTo(120, 180);
+            milkCtx.lineTo(200, 175);
+            milkCtx.lineTo(450, 170 - concentration * 0.2);
+            milkCtx.lineTo(600, 165 - concentration * 0.3);
+            milkCtx.lineTo(600, 235 + concentration * 0.3);
+            milkCtx.lineTo(450, 230 + concentration * 0.2);
+            milkCtx.lineTo(200, 225);
+            milkCtx.lineTo(120, 220);
+            milkCtx.closePath();
+            milkCtx.fill();
+            
+            // Draw screen
+            const screenColor = concentration > 20 ? 
+                `rgb(${255}, ${Math.max(100, 200 - concentration * 2)}, ${Math.max(50, 150 - concentration * 2)})` :
+                `rgb(255, 255, 200)`;
+            milkCtx.fillStyle = '#222';
+            milkCtx.fillRect(600, 100, 40, 200);
+            milkCtx.fillStyle = screenColor;
+            milkCtx.beginPath();
+            milkCtx.ellipse(620, 200, 15, 30, 0, 0, Math.PI * 2);
+            milkCtx.fill();
+            milkCtx.fillStyle = '#fff';
+            milkCtx.font = '12px Arial';
+            milkCtx.fillText('SCREEN', 620, 330);
+            
+            // Blue glow from milk (scattering)
+            if (concentration > 20) {
+                const blueGlow = milkCtx.createRadialGradient(325, 200, 0, 325, 200, 150);
+                blueGlow.addColorStop(0, `rgba(100, 150, 255, ${concentration / 200})`);
+                blueGlow.addColorStop(1, 'transparent');
+                milkCtx.fillStyle = blueGlow;
+                milkCtx.fillRect(200, 50, 260, 300);
+            }
+            
+            // Labels
+            milkCtx.fillStyle = '#fff';
+            milkCtx.font = '14px Arial';
+            milkCtx.textAlign = 'left';
+            
+            if (concentration < 20) {
+                milkCtx.fillText('Pure water - light passes through', 200, 350);
+            } else if (concentration < 50) {
+                milkCtx.fillText('Some milk - blue light starts scattering', 200, 350);
+                milkCtx.fillText('Glass appears slightly blue, screen slightly orange', 200, 370);
+            } else {
+                milkCtx.fillText('More milk - strong blue scattering!', 200, 350);
+                milkCtx.fillText('Glass appears blue, screen appears red/orange', 200, 370);
+            }
+            
+            // Draw arrows showing scattering
+            if (concentration > 30) {
+                milkCtx.strokeStyle = 'rgba(100, 150, 255, 0.8)';
+                milkCtx.lineWidth = 2;
+                
+                // Scattered blue arrows
+                const arrows = [
+                    {from: {x: 300, y: 200}, to: {x: 280, y: 120}},
+                    {from: {x: 350, y: 200}, to: {x: 370, y: 130}},
+                    {from: {x: 320, y: 200}, to: {x: 300, y: 280}},
+                    {from: {x: 380, y: 200}, to: {x: 400, y: 270}}
+                ];
+                
+                arrows.forEach(arrow => {
+                    milkCtx.beginPath();
+                    milkCtx.moveTo(arrow.from.x, arrow.from.y);
+                    milkCtx.lineTo(arrow.to.x, arrow.to.y);
+                    milkCtx.stroke();
+                    
+                    // Arrow head
+                    const angle = Math.atan2(arrow.to.y - arrow.from.y, arrow.to.x - arrow.from.x);
+                    milkCtx.beginPath();
+                    milkCtx.moveTo(arrow.to.x, arrow.to.y);
+                    milkCtx.lineTo(arrow.to.x - 10 * Math.cos(angle - 0.3), arrow.to.y - 10 * Math.sin(angle - 0.3));
+                    milkCtx.moveTo(arrow.to.x, arrow.to.y);
+                    milkCtx.lineTo(arrow.to.x - 10 * Math.cos(angle + 0.3), arrow.to.y - 10 * Math.sin(angle + 0.3));
+                    milkCtx.stroke();
+                });
+                
+                milkCtx.fillStyle = 'rgba(100, 150, 255, 0.9)';
+                milkCtx.font = '12px Arial';
+                milkCtx.fillText('Blue scattered', 260, 100);
+            }
+        }
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            initQuiz();
+            initScatteringSimulation();
+            initSkySimulation();
+            initMilkSimulation();
+            
+            // Check if lesson was previously completed
+            if (localStorage.getItem('lesson1_completed') === 'true') {
+                const score = localStorage.getItem('lesson1_score');
+                console.log('Lesson previously completed with score:', score + '%');
+            }
+        });
+    </script>
+</body>
+</html>

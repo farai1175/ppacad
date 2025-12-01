@@ -1,0 +1,2531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EM Radiation - Lesson 3 | PassProof Academy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1a73e8;
+            --primary-dark: #1557b0;
+            --primary-light: #e8f0fe;
+            --accent-blue: #4285f4;
+            --white: #ffffff;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-600: #6c757d;
+            --gray-800: #343a40;
+            --success: #28a745;
+            --error: #dc3545;
+            --warning: #ffc107;
+            --purple: #6f42c1;
+            --purple-light: #e9e2f8;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-lg: 0 4px 20px rgba(0,0,0,0.15);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gray-100);
+            color: var(--gray-800);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--purple), #5a2d9c);
+            color: var(--white);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--purple);
+            font-weight: bold;
+        }
+
+        /* Dropdown Navigation */
+        .nav-container {
+            position: relative;
+        }
+
+        .nav-toggle {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: var(--white);
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .nav-toggle:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .nav-toggle .arrow {
+            transition: var(--transition);
+        }
+
+        .nav-toggle.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            right: 0;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            min-width: 280px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 1rem 1.25rem;
+            color: var(--gray-800);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--primary-light);
+            color: var(--primary-blue);
+        }
+
+        .dropdown-menu a.current {
+            background: var(--purple);
+            color: var(--white);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: var(--gray-200);
+            height: 4px;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), #20c997);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:nth-child(6) { animation-delay: 0.6s; }
+
+        /* Subject & Grade Badge */
+        .subject-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: linear-gradient(135deg, var(--purple-light), #d4e5ff);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .badge-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .badge-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            font-weight: 600;
+        }
+
+        .badge-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--purple);
+        }
+
+        .badge-divider {
+            width: 1px;
+            height: 40px;
+            background: var(--purple);
+            opacity: 0.3;
+        }
+
+        /* Topic Header */
+        .topic-header {
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .topic-tag {
+            display: inline-block;
+            background: var(--purple);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .topic-title {
+            font-size: 2rem;
+            color: var(--purple);
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-info {
+            color: var(--gray-600);
+            font-size: 1rem;
+        }
+
+        .lesson-title {
+            font-size: 1.5rem;
+            color: var(--gray-800);
+            margin-top: 0.5rem;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--purple-light);
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--purple);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            font-size: 1.35rem;
+            color: var(--purple);
+        }
+
+        /* Objectives List */
+        .objectives-list {
+            list-style: none;
+        }
+
+        .objectives-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .objectives-list li:last-child {
+            border-bottom: none;
+        }
+
+        .check-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--success);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.875rem;
+        }
+
+        /* Content Styling */
+        .content-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--gray-800);
+        }
+
+        .content-text p {
+            margin-bottom: 1rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, var(--purple-light), #d4e5ff);
+            border-left: 4px solid var(--purple);
+            padding: 1.25rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box h4 {
+            color: var(--purple);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .key-term {
+            background: var(--warning);
+            color: var(--gray-800);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .formula-box h4 {
+            color: var(--warning);
+            margin-bottom: 1rem;
+        }
+
+        .formula {
+            font-size: 1.5rem;
+            font-family: 'Times New Roman', serif;
+            margin: 0.75rem 0;
+            padding: 0.75rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: var(--radius);
+            display: inline-block;
+            min-width: 200px;
+        }
+
+        .formula sub, .formula sup {
+            font-size: 0.7em;
+        }
+
+        .formula-description {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+            margin-top: 0.5rem;
+        }
+
+        /* Concept Cards */
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1.25rem;
+        }
+
+        .concept-card {
+            background: var(--gray-100);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            border: 1px solid var(--gray-200);
+            transition: var(--transition);
+        }
+
+        .concept-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+            border-color: var(--purple);
+        }
+
+        .concept-card h4 {
+            color: var(--purple);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .concept-card p {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+        }
+
+        /* Simulation Container */
+        .simulation-container {
+            background: var(--gray-800);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .simulation-header {
+            color: var(--white);
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .simulation-title {
+            font-size: 1.1rem;
+        }
+
+        .simulation-canvas {
+            background: #1a1a2e;
+            border-radius: var(--radius);
+            width: 100%;
+            height: 300px;
+            display: block;
+        }
+
+        .simulation-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
+        .sim-btn {
+            background: var(--purple);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sim-btn:hover {
+            background: #5a2d9c;
+            transform: scale(1.05);
+        }
+
+        .sim-btn.secondary {
+            background: var(--gray-600);
+        }
+
+        .sim-btn.secondary:hover {
+            background: var(--gray-800);
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--white);
+            flex-wrap: wrap;
+        }
+
+        .slider-container label {
+            font-size: 0.9rem;
+            min-width: 80px;
+        }
+
+        .slider-container input[type="range"] {
+            width: 120px;
+            accent-color: var(--purple);
+        }
+
+        .slider-value {
+            min-width: 60px;
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        /* Graph Display */
+        .graph-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: var(--radius);
+        }
+
+        .graph-stat {
+            text-align: center;
+            color: var(--white);
+        }
+
+        .graph-stat-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .graph-stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+
+        /* Worked Examples */
+        .example-box {
+            background: var(--white);
+            border: 2px solid var(--purple-light);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .example-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            color: var(--purple);
+        }
+
+        .example-number {
+            background: var(--purple);
+            color: var(--white);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .example-question {
+            background: var(--gray-100);
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .example-solution {
+            border-left: 3px solid var(--success);
+            padding-left: 1rem;
+        }
+
+        .example-solution h5 {
+            color: var(--success);
+            margin-bottom: 0.5rem;
+        }
+
+        .step {
+            background: var(--gray-100);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+            margin: 0.5rem 0;
+            border-left: 3px solid var(--purple);
+        }
+
+        .step-label {
+            font-weight: 600;
+            color: var(--purple);
+            font-size: 0.85rem;
+        }
+
+        /* EM Spectrum Diagram */
+        .spectrum-container {
+            height: 150px;
+            position: relative;
+            margin: 2rem 0;
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: linear-gradient(90deg, 
+                #8b00ff 0%, 
+                #4b0082 14.3%, 
+                #0000ff 28.6%, 
+                #00ff00 42.9%, 
+                #ffff00 57.2%, 
+                #ff7f00 71.5%, 
+                #ff0000 85.8%, 
+                #ff00ff 100%);
+        }
+        
+        .spectrum-band {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+            position: relative;
+            float: left;
+        }
+        
+        .spectrum-band:hover {
+            transform: scaleY(1.1);
+            z-index: 10;
+        }
+        
+        .spectrum-label {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+            color: var(--gray-800);
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            margin-top: 2rem;
+        }
+
+        .question-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.25rem;
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .question-card.correct {
+            border-color: var(--success);
+            background: #d4edda;
+        }
+
+        .question-card.incorrect {
+            border-color: var(--error);
+            background: #f8d7da;
+        }
+
+        .question-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--purple);
+            color: var(--white);
+            border-radius: 50%;
+            font-weight: 700;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            margin-bottom: 1rem;
+            display: inline;
+        }
+
+        .options-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .option-item {
+            margin-bottom: 0.75rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: var(--gray-100);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .option-label:hover {
+            border-color: var(--purple);
+            background: var(--purple-light);
+        }
+
+        .option-label input {
+            display: none;
+        }
+
+        .option-radio {
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--gray-300);
+            border-radius: 50%;
+            margin-right: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .option-label input:checked + .option-radio {
+            border-color: var(--purple);
+            background: var(--purple);
+        }
+
+        .option-label input:checked + .option-radio::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--white);
+            border-radius: 50%;
+        }
+
+        .option-label.correct-answer {
+            border-color: var(--success);
+            background: #d4edda;
+        }
+
+        .option-label.wrong-answer {
+            border-color: var(--error);
+            background: #f8d7da;
+        }
+
+        .feedback-message {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: var(--radius);
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .feedback-message.correct {
+            display: block;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback-message.incorrect {
+            display: block;
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background: linear-gradient(135deg, var(--purple), #5a2d9c);
+            color: var(--white);
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin: 2rem auto;
+            min-width: 200px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .submit-btn:disabled {
+            background: var(--gray-300);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Score Display */
+        .score-card {
+            background: linear-gradient(135deg, var(--purple), #5a2d9c);
+            color: var(--white);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            text-align: center;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .score-card.visible {
+            display: block;
+            animation: scaleIn 0.5s ease;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .score-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 6px solid var(--white);
+        }
+
+        .score-percentage {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .score-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .score-message {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .score-details {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .retry-btn {
+            background: var(--white);
+            color: var(--purple);
+            border: none;
+            padding: 0.875rem 2rem;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .retry-btn:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow);
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: var(--white);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius);
+            color: var(--gray-800);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            border-color: var(--purple);
+            color: var(--purple);
+            transform: translateX(-3px);
+        }
+
+        .nav-btn.next:hover {
+            transform: translateX(3px);
+        }
+
+        .nav-btn.next {
+            margin-left: auto;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gray-800);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-copyright {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .logo {
+                font-size: 1.25rem;
+            }
+
+            .topic-title {
+                font-size: 1.5rem;
+            }
+
+            .card {
+                padding: 1.25rem;
+            }
+
+            .subject-badge {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .simulation-canvas {
+                height: 250px;
+            }
+
+            .simulation-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .slider-container {
+                justify-content: center;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                justify-content: center;
+            }
+
+            .nav-btn.next {
+                margin-left: 0;
+            }
+
+            .score-circle {
+                width: 120px;
+                height: 120px;
+            }
+
+            .score-percentage {
+                font-size: 2rem;
+            }
+
+            .formula {
+                font-size: 1.2rem;
+                min-width: auto;
+                padding: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .graph-info {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .calc-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-1 { margin-top: 0.5rem; }
+        .mt-2 { margin-top: 1rem; }
+        .mb-1 { margin-bottom: 0.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #fff3cd, #ffeeba);
+            border-left: 4px solid var(--warning);
+            padding: 1.25rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box h4 {
+            color: #856404;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Info List */
+        .info-list {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .info-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .info-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--purple);
+            font-weight: bold;
+        }
+        
+        /* Interactive Spectrum */
+        .interactive-spectrum {
+            position: relative;
+            height: 200px;
+            margin: 2rem 0;
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: linear-gradient(90deg, 
+                #8b00ff 0%,      /* Radio */
+                #4b0082 14.3%,   /* Microwave */
+                #0000ff 28.6%,   /* Infrared */
+                #00ff00 42.9%,   /* Visible */
+                #ffff00 57.2%,   /* Ultraviolet */
+                #ff7f00 71.5%,   /* X-ray */
+                #ff0000 85.8%,   /* Gamma */
+                #ff00ff 100%);
+        }
+        
+        .spectrum-cursor {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: white;
+            box-shadow: 0 0 10px rgba(255,255,255,0.8);
+            transform: translateX(-50%);
+        }
+        
+        .spectrum-info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px;
+            border-radius: var(--radius);
+            min-width: 200px;
+        }
+        
+        /* Calculator Styles */
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .calc-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .calc-input-group label {
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+        
+        .calc-input-group input {
+            padding: 0.75rem;
+            border: 2px solid var(--gray-300);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .calc-input-group input:focus {
+            outline: none;
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px rgba(111, 66, 193, 0.1);
+        }
+        
+        .calc-unit {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo">
+                <div class="logo-icon">P</div>
+                PassProof Academy
+            </a>
+            <nav class="nav-container">
+                <button class="nav-toggle" id="navToggle">
+                    <span>📚 Lessons Menu</span>
+                    <span class="arrow">▼</span>
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="#">🏠 Home</a>
+                    <a href="#">📖 Lesson 1: EM Radiation Basics</a>
+                    <a href="#">📖 Lesson 2: Nature of EM Waves</a>
+                    <a href="#" class="current">📖 Lesson 3: EM Spectrum & Calculations</a>
+                    <a href="#">📖 Lesson 4: Applications & Safety</a>
+                    <a href="#">📖 Lesson 5: Quantum Phenomena</a>
+                    <a href="#">📊 My Progress</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Subject & Grade Card -->
+        <div class="card">
+            <div class="subject-badge">
+                <div class="badge-item">
+                    <span class="badge-label">Subject</span>
+                    <span class="badge-value">Physical Sciences</span>
+                </div>
+                <div class="badge-divider"></div>
+                <div class="badge-item">
+                    <span class="badge-label">Grade</span>
+                    <span class="badge-value">12</span>
+                </div>
+                <div class="badge-divider"></div>
+                <div class="badge-item">
+                    <span class="badge-label">Week</span>
+                    <span class="badge-value">25</span>
+                </div>
+            </div>
+
+            <div class="topic-header">
+                <span class="topic-tag">Term 3 • Electricity & Magnetism</span>
+                <h1 class="topic-title">Electromagnetic Radiation</h1>
+                <p class="lesson-info">Lesson 3 of 5</p>
+                <h2 class="lesson-title">EM Spectrum & Wavelength-Frequency Calculations</h2>
+            </div>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">🎯</div>
+                <h3 class="section-title">Learning Objectives</h3>
+            </div>
+            <p class="mb-2">By the end of this lesson, you will be able to:</p>
+            <ul class="objectives-list">
+                <li>
+                    <span class="check-icon">✓</span>
+                    <span>Understand the meaning of the electromagnetic spectrum</span>
+                </li>
+                <li>
+                    <span class="check-icon">✓</span>
+                    <span>Arrange EM radiation types in order of frequency and wavelength</span>
+                </li>
+                <li>
+                    <span class="check-icon">✓</span>
+                    <span>Use c = fλ to calculate frequency from wavelength and vice versa</span>
+                </li>
+                <li>
+                    <span class="check-icon">✓</span>
+                    <span>Explain why different EM radiation types have different effects on humans</span>
+                </li>
+                <li>
+                    <span class="check-icon">✓</span>
+                    <span>Apply wavelength-frequency calculations to real-world examples</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Overview -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">📋</div>
+                <h3 class="section-title">Lesson Overview</h3>
+            </div>
+            <div class="content-text">
+                <p>In this lesson, we explore the complete electromagnetic spectrum - from long radio waves to short gamma rays. You will learn to arrange different types of EM radiation and perform calculations using the fundamental wave equation c = fλ.</p>
+                
+                <div class="highlight-box">
+                    <h4>💡 Prior Knowledge Required</h4>
+                    <p>Before starting this lesson, you should understand:</p>
+                    <ul class="info-list">
+                        <li>Basic wave properties (wavelength, frequency)</li>
+                        <li>The nature of EM waves from Lesson 2</li>
+                        <li>Scientific notation and unit conversions</li>
+                        <li>Speed of light constant (3 × 10⁸ m/s)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Baseline Assessment -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">🔍</div>
+                <h3 class="section-title">Baseline Assessment</h3>
+            </div>
+            
+            <div class="content-text">
+                <p>Let's start by testing your prior knowledge. Try to answer these questions before we proceed:</p>
+                
+                <div class="example-box">
+                    <div class="example-header">
+                        <span class="example-number">1</span>
+                        <h4>Mention four properties of electromagnetic waves</h4>
+                    </div>
+                </div>
+                
+                <div class="highlight-box">
+                    <h4>📝 Baseline Answers</h4>
+                    <ul class="info-list">
+                        <li>They are produced by oscillating (accelerating) charges</li>
+                        <li>They are transverse waves</li>
+                        <li>They do not need a physical medium to travel in (can travel through vacuum)</li>
+                        <li>All travel at the speed of light: 3 × 10⁸ m/s in vacuum</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- The Electromagnetic Spectrum -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">🌈</div>
+                <h3 class="section-title">The Electromagnetic Spectrum</h3>
+            </div>
+            
+            <div class="content-text">
+                <div class="highlight-box">
+                    <h4>🔑 Key Concept</h4>
+                    <p>Visible light is only <span class="key-term">one small part</span> of a whole range of possible frequencies and wavelengths of electromagnetic waves. The complete range is called the <span class="key-term">electromagnetic spectrum</span>.</p>
+                </div>
+
+                <!-- Interactive Spectrum -->
+                <div class="interactive-spectrum" id="interactiveSpectrum">
+                    <div class="spectrum-cursor" id="spectrumCursor"></div>
+                    <div class="spectrum-info" id="spectrumInfo">
+                        <div><strong>Type:</strong> <span id="currentType">Radio Waves</span></div>
+                        <div><strong>Frequency:</strong> <span id="currentFreq">10⁴ - 10¹¹ Hz</span></div>
+                        <div><strong>Wavelength:</strong> <span id="currentWavelength">10⁻³ - 10⁴ m</span></div>
+                        <div><strong>Energy:</strong> <span id="currentEnergy">Low</span></div>
+                    </div>
+                </div>
+
+                <div class="simulation-controls">
+                    <div class="slider-container">
+                        <label>Explore Spectrum:</label>
+                        <input type="range" id="spectrumSlider" min="0" max="100" value="0">
+                        <span class="slider-value" id="spectrumValue">Radio Waves</span>
+                    </div>
+                    <button class="sim-btn" id="autoScan">
+                        🔄 Auto Scan
+                    </button>
+                </div>
+
+                <h4 class="mt-2 mb-1" style="color: var(--purple);">The Seven Regions of the EM Spectrum</h4>
+                
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>📻 Radio Waves</h4>
+                        <p><strong>Frequency:</strong> 10⁴ - 10¹¹ Hz<br>
+                           <strong>Wavelength:</strong> 10⁻³ - 10⁴ m<br>
+                           <strong>Uses:</strong> Broadcasting, communication</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>🍽️ Microwaves</h4>
+                        <p><strong>Frequency:</strong> 10⁹ - 10¹² Hz<br>
+                           <strong>Wavelength:</strong> 10⁻³ - 0.3 m<br>
+                           <strong>Uses:</strong> Cooking, radar, satellite</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>🔥 Infrared</h4>
+                        <p><strong>Frequency:</strong> 10¹² - 4×10¹⁴ Hz<br>
+                           <strong>Wavelength:</strong> 7×10⁻⁷ - 10⁻³ m<br>
+                           <strong>Uses:</strong> Heating, remote controls</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>👁️ Visible Light</h4>
+                        <p><strong>Frequency:</strong> 4×10¹⁴ - 8×10¹⁴ Hz<br>
+                           <strong>Wavelength:</strong> 4×10⁻⁷ - 7×10⁻⁷ m<br>
+                           <strong>Colors:</strong> ROYGBIV</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>☀️ Ultraviolet</h4>
+                        <p><strong>Frequency:</strong> 8×10¹⁴ - 10¹⁷ Hz<br>
+                           <strong>Wavelength:</strong> 10⁻⁸ - 4×10⁻⁷ m<br>
+                           <strong>Effects:</strong> Sunburn, vitamin D</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>🦴 X-rays</h4>
+                        <p><strong>Frequency:</strong> 10¹⁷ - 10²⁰ Hz<br>
+                           <strong>Wavelength:</strong> 10⁻¹¹ - 10⁻⁸ m<br>
+                           <strong>Uses:</strong> Medical imaging</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>☢️ Gamma Rays</h4>
+                        <p><strong>Frequency:</strong> >10²⁰ Hz<br>
+                           <strong>Wavelength:</strong> <10⁻¹¹ m<br>
+                           <strong>Sources:</strong> Nuclear reactions</p>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Important Relationship</h4>
+                    <p>As frequency increases, wavelength decreases, and energy increases. This is why gamma rays (high frequency, short wavelength) are extremely harmful, while radio waves (low frequency, long wavelength) are generally safe.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- The Wave Equation -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">📐</div>
+                <h3 class="section-title">The Wave Equation: c = fλ</h3>
+            </div>
+            
+            <div class="content-text">
+                <div class="highlight-box">
+                    <h4>📝 Fundamental Equation</h4>
+                    <p>Given the wavelength of EM waves, we can calculate the frequency and vice versa using the equation:</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>📊 Essential Wave Equation</h4>
+                    
+                    <div class="formula">
+                        c = f × λ
+                    </div>
+                    <p class="formula-description">Speed of light = frequency × wavelength</p>
+                    
+                    <div class="formula">
+                        c = 3 × 10⁸ m/s
+                    </div>
+                    <p class="formula-description">Constant speed of EM waves in vacuum</p>
+                    
+                    <div class="formula">
+                        f = c / λ
+                    </div>
+                    <p class="formula-description">Frequency from wavelength</p>
+                    
+                    <div class="formula">
+                        λ = c / f
+                    </div>
+                    <p class="formula-description">Wavelength from frequency</p>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Unit Consistency</h4>
+                    <p>Always ensure consistent units:</p>
+                    <ul class="info-list">
+                        <li>Speed of light (c): m/s</li>
+                        <li>Frequency (f): Hz (1/s)</li>
+                        <li>Wavelength (λ): meters (m)</li>
+                    </ul>
+                    <p>Common conversions: 1 MHz = 10⁶ Hz, 1 nm = 10⁻⁹ m</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Calculator -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">🧮</div>
+                <h3 class="section-title">Wavelength-Frequency Calculator</h3>
+            </div>
+            
+            <div class="calculator-container">
+                <h4 class="calculator-title">🔬 EM Wave Calculator</h4>
+                
+                <div class="calc-grid">
+                    <div class="calc-input-group">
+                        <label for="calcType">Select Calculation:</label>
+                        <select id="calcType">
+                            <option value="freqFromWavelength">Frequency from Wavelength</option>
+                            <option value="wavelengthFromFreq">Wavelength from Frequency</option>
+                            <option value="energyFromFreq">Energy from Frequency</option>
+                            <option value="energyFromWavelength">Energy from Wavelength</option>
+                        </select>
+                    </div>
+                    
+                    <div class="calc-input-group">
+                        <label for="calcInput1" id="input1Label">Wavelength (m):</label>
+                        <div style="display: flex; align-items: center;">
+                            <input type="number" id="calcInput1" placeholder="Enter value" step="any">
+                            <span class="calc-unit" id="input1Unit">m</span>
+                        </div>
+                    </div>
+                    
+                    <div class="calc-input-group" id="input2Group" style="display: none;">
+                        <label for="calcInput2" id="input2Label">Frequency (Hz):</label>
+                        <div style="display: flex; align-items: center;">
+                            <input type="number" id="calcInput2" placeholder="Enter value" step="any">
+                            <span class="calc-unit" id="input2Unit">Hz</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="sim-btn" id="calculateBtn" style="margin-top: 1rem;">
+                    🔢 Calculate
+                </button>
+                
+                <div class="calc-result" id="calcResult" style="display: none;">
+                    <p id="calcResultLabel">Result:</p>
+                    <p class="calc-result-value" id="calcResultValue">0</p>
+                    <p id="calcFormula" style="margin-top: 0.5rem; opacity: 0.8;"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Energy and Harmful Effects -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">⚡</div>
+                <h3 class="section-title">Energy & Harmful Effects</h3>
+            </div>
+            
+            <div class="content-text">
+                <p>The energy of electromagnetic radiation is directly related to its frequency through the Planck-Einstein relation:</p>
+                
+                <div class="formula-box">
+                    <div class="formula">
+                        E = hf
+                    </div>
+                    <p class="formula-description">Energy = Planck's constant × frequency</p>
+                </div>
+
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>📻 Radio Waves</h4>
+                        <p><strong>Energy:</strong> Very low (10⁻¹⁰ - 10⁻²² J)<br>
+                           <strong>Effect:</strong> Generally harmless</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>👁️ Visible Light</h4>
+                        <p><strong>Energy:</strong> Moderate (10⁻¹⁹ J)<br>
+                           <strong>Effect:</strong> Can be seen, heating</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>☀️ Ultraviolet</h4>
+                        <p><strong>Energy:</strong> High enough to damage cells<br>
+                           <strong>Effect:</strong> Sunburn, skin cancer risk</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>☢️ Gamma Rays</h4>
+                        <p><strong>Energy:</strong> Very high (>10⁻¹⁴ J)<br>
+                           <strong>Effect:</strong> Ionizing radiation, cell damage</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>🤔 Why are gamma rays harmful?</h4>
+                    <p>According to E = hf, energy is directly proportional to frequency. Gamma rays have very high frequency, which means they have very high energy. This high energy allows them to ionize atoms and damage DNA in cells, making them harmful to humans.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Classwork Examples -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">✏️</div>
+                <h3 class="section-title">Classwork & Examples</h3>
+            </div>
+
+            <div class="example-box">
+                <div class="example-header">
+                    <span class="example-number">1</span>
+                    <h4>Frequency Comparison</h4>
+                </div>
+                <div class="example-question">
+                    <p>Which has the lower frequency between infrared and X-rays?</p>
+                </div>
+                <div class="example-solution">
+                    <h5>Solution:</h5>
+                    
+                    <div class="step">
+                        <span class="step-label">Understanding the Spectrum</span>
+                        <p>The electromagnetic spectrum in order of increasing frequency:</p>
+                        <p>Radio → Microwaves → Infrared → Visible → Ultraviolet → X-rays → Gamma rays</p>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-label">Comparison</span>
+                        <p>Infrared comes before X-rays in the spectrum, therefore:</p>
+                        <p><strong>Infrared has lower frequency than X-rays</strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-header">
+                    <span class="example-number">2</span>
+                    <h4>Wavelength Comparison</h4>
+                </div>
+                <div class="example-question">
+                    <p>Which has a shorter wavelength between infrared and X-rays?</p>
+                </div>
+                <div class="example-solution">
+                    <h5>Solution:</h5>
+                    
+                    <div class="step">
+                        <span class="step-label">Inverse Relationship</span>
+                        <p>Since c = fλ is constant, frequency and wavelength are inversely proportional:</p>
+                        <p>Higher frequency ↔ Shorter wavelength</p>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-label">Comparison</span>
+                        <p>X-rays have higher frequency than infrared, therefore:</p>
+                        <p><strong>X-rays have shorter wavelength than infrared</strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-header">
+                    <span class="example-number">3</span>
+                    <h4>Gamma Ray Harmfulness</h4>
+                </div>
+                <div class="example-question">
+                    <p>Using the equation E = hf, explain why gamma rays are harmful to humans.</p>
+                </div>
+                <div class="example-solution">
+                    <h5>Solution:</h5>
+                    
+                    <div class="step">
+                        <span class="step-label">Energy-Frequency Relationship</span>
+                        <p>From E = hf, energy (E) is directly proportional to frequency (f).</p>
+                        <p>Higher frequency → Higher energy</p>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-label">Gamma Ray Properties</span>
+                        <p>Gamma rays have the highest frequency in the EM spectrum.</p>
+                        <p>Therefore, they have very high energy.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-label">Biological Effects</span>
+                        <p>This high energy allows gamma rays to:</p>
+                        <ul class="info-list">
+                            <li>Ionize atoms and molecules</li>
+                            <li>Damage DNA in cells</li>
+                            <li>Cause radiation sickness and cancer</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-header">
+                    <span class="example-number">4</span>
+                    <h4>EM Spectrum Order</h4>
+                </div>
+                <div class="example-question">
+                    <p>Name in order of increasing frequency, the seven regions in the electromagnetic spectrum.</p>
+                </div>
+                <div class="example-solution">
+                    <h5>Solution:</h5>
+                    
+                    <div class="step">
+                        <span class="step-label">From lowest to highest frequency:</span>
+                        <ol style="padding-left: 1.5rem;">
+                            <li>Radio waves</li>
+                            <li>Microwaves</li>
+                            <li>Infrared</li>
+                            <li>Visible light</li>
+                            <li>Ultraviolet</li>
+                            <li>X-rays</li>
+                            <li>Gamma rays</li>
+                        </ol>
+                    </div>
+                    
+                    <p style="margin-top: 1rem; color: var(--gray-600);"><em>Remember: ROYGBIV (Red, Orange, Yellow, Green, Blue, Indigo, Violet) for visible light from lowest to highest frequency.</em></p>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-header">
+                    <span class="example-number">5</span>
+                    <h4>Radio Wave Calculation</h4>
+                </div>
+                <div class="example-question">
+                    <p>Calculate the wavelength of Metro FM radio waves of frequency 96.4 MHz.</p>
+                </div>
+                <div class="example-solution">
+                    <h5>Solution:</h5>
+                    
+                    <div class="step">
+                        <span class="step-label">Step 1: Write the equation</span>
+                        <p>c = fλ</p>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-label">Step 2: Rearrange for wavelength</span>
+                        <p>λ = c / f</p>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-label">Step 3: Convert MHz to Hz</span>
+                        <p>96.4 MHz = 96.4 × 10⁶ Hz = 9.64 × 10⁷ Hz</p>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-label">Step 4: Substitute values</span>
+                        <p>λ = (3 × 10⁸ m/s) / (9.64 × 10⁷ Hz)</p>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-label">Step 5: Calculate</span>
+                        <p>λ = 3.11 m</p>
+                    </div>
+                    
+                    <p style="margin-top: 1rem; color: var(--gray-600);"><em>The wavelength of Metro FM radio waves is approximately 3.11 meters.</em></p>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-header">
+                    <span class="example-number">6</span>
+                    <h4>Frequency Calculation</h4>
+                </div>
+                <div class="example-question">
+                    <p>An electromagnetic wave has a wavelength of 986 nm. Find its frequency.</p>
+                </div>
+                <div class="example-solution">
+                    <h5>Solution:</h5>
+                    
+                    <div class="step">
+                        <span class="step-label">Step 1: Write the equation</span>
+                        <p>c = fλ</p>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-label">Step 2: Rearrange for frequency</span>
+                        <p>f = c / λ</p>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-label">Step 3: Convert nm to m</span>
+                        <p>986 nm = 986 × 10⁻⁹ m = 9.86 × 10⁻⁷ m</p>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-label">Step 4: Substitute values</span>
+                        <p>f = (3 × 10⁸ m/s) / (9.86 × 10⁻⁷ m)</p>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-label">Step 5: Calculate</span>
+                        <p>f = 3.04 × 10¹⁴ Hz</p>
+                    </div>
+                    
+                    <p style="margin-top: 1rem; color: var(--gray-600);"><em>The frequency is 3.04 × 10¹⁴ Hz, which is in the visible light range (infrared-visible boundary).</em></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">❓</div>
+                <h3 class="section-title">End of Lesson Assessment</h3>
+            </div>
+            <p class="mb-2">Test your understanding with these questions. Select the best answer for each question.</p>
+
+            <div class="quiz-container" id="quizContainer">
+                <!-- Question 1 -->
+                <div class="question-card" data-question="1">
+                    <span class="question-number">1</span>
+                    <span class="question-text">Which of these has the highest frequency?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q1" value="a">
+                                <span class="option-radio"></span>
+                                Radio waves
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q1" value="b">
+                                <span class="option-radio"></span>
+                                Microwaves
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q1" value="c">
+                                <span class="option-radio"></span>
+                                X-rays
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q1" value="d">
+                                <span class="option-radio"></span>
+                                Infrared
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question-card" data-question="2">
+                    <span class="question-number">2</span>
+                    <span class="question-text">What is the correct order of EM radiation from longest to shortest wavelength?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q2" value="a">
+                                <span class="option-radio"></span>
+                                Radio, Microwave, Infrared, Visible, UV, X-ray, Gamma
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q2" value="b">
+                                <span class="option-radio"></span>
+                                Gamma, X-ray, UV, Visible, Infrared, Microwave, Radio
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q2" value="c">
+                                <span class="option-radio"></span>
+                                Visible, UV, Infrared, Microwave, Radio, X-ray, Gamma
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q2" value="d">
+                                <span class="option-radio"></span>
+                                Radio, Visible, Microwave, Infrared, UV, X-ray, Gamma
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question-card" data-question="3">
+                    <span class="question-number">3</span>
+                    <span class="question-text">Calculate the frequency of light with wavelength 500 nm.</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q3" value="a">
+                                <span class="option-radio"></span>
+                                6 × 10¹⁴ Hz
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q3" value="b">
+                                <span class="option-radio"></span>
+                                1.5 × 10¹⁵ Hz
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q3" value="c">
+                                <span class="option-radio"></span>
+                                6 × 10¹⁵ Hz
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q3" value="d">
+                                <span class="option-radio"></span>
+                                1.5 × 10¹⁴ Hz
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="question-card" data-question="4">
+                    <span class="question-number">4</span>
+                    <span class="question-text">Which EM radiation has the lowest energy per photon?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q4" value="a">
+                                <span class="option-radio"></span>
+                                Gamma rays
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q4" value="b">
+                                <span class="option-radio"></span>
+                                X-rays
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q4" value="c">
+                                <span class="option-radio"></span>
+                                Visible light
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q4" value="d">
+                                <span class="option-radio"></span>
+                                Radio waves
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="question-card" data-question="5">
+                    <span class="question-number">5</span>
+                    <span class="question-text">Calculate the wavelength of a radio wave with frequency 100 MHz.</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q5" value="a">
+                                <span class="option-radio"></span>
+                                0.3 m
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q5" value="b">
+                                <span class="option-radio"></span>
+                                3 m
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q5" value="c">
+                                <span class="option-radio"></span>
+                                30 m
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q5" value="d">
+                                <span class="option-radio"></span>
+                                300 m
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 6 -->
+                <div class="question-card" data-question="6">
+                    <span class="question-number">6</span>
+                    <span class="question-text">Why are gamma rays more harmful than radio waves?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q6" value="a">
+                                <span class="option-radio"></span>
+                                They travel faster
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q6" value="b">
+                                <span class="option-radio"></span>
+                                They have higher frequency and energy
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q6" value="c">
+                                <span class="option-radio"></span>
+                                They are invisible
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q6" value="d">
+                                <span class="option-radio"></span>
+                                They are produced by different sources
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 7 -->
+                <div class="question-card" data-question="7">
+                    <span class="question-number">7</span>
+                    <span class="question-text">Which color of visible light has the longest wavelength?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q7" value="a">
+                                <span class="option-radio"></span>
+                                Violet
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q7" value="b">
+                                <span class="option-radio"></span>
+                                Green
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q7" value="c">
+                                <span class="option-radio"></span>
+                                Yellow
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q7" value="d">
+                                <span class="option-radio"></span>
+                                Red
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+
+                <!-- Question 8 -->
+                <div class="question-card" data-question="8">
+                    <span class="question-number">8</span>
+                    <span class="question-text">What is the speed of all electromagnetic waves in vacuum?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q8" value="a">
+                                <span class="option-radio"></span>
+                                3 × 10⁶ m/s
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q8" value="b">
+                                <span class="option-radio"></span>
+                                3 × 10⁸ m/s
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q8" value="c">
+                                <span class="option-radio"></span>
+                                3 × 10¹⁰ m/s
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q8" value="d">
+                                <span class="option-radio"></span>
+                                Depends on frequency
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback-message"></div>
+                </div>
+            </div>
+
+            <button class="submit-btn" id="submitQuiz">
+                <span>📝</span> Submit Answers
+            </button>
+
+            <div class="score-card" id="scoreCard">
+                <h3 class="score-title">Your Results</h3>
+                <div class="score-circle">
+                    <span class="score-percentage" id="scorePercentage">0%</span>
+                    <span class="score-label">Score</span>
+                </div>
+                <p class="score-message" id="scoreMessage">Well done!</p>
+                <p class="score-details" id="scoreDetails">You got 0 out of 8 questions correct</p>
+                <button class="retry-btn" id="retryQuiz">🔄 Try Again</button>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+            <a href="#" class="nav-btn prev">
+                <span>←</span>
+                <span>Previous: Nature of EM Waves</span>
+            </a>
+            <a href="#" class="nav-btn next">
+                <span>Next: Applications & Safety</span>
+                <span>→</span>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">PassProof Academy</div>
+            <p class="footer-copyright">© 2026 PassProof Academy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== NAVIGATION ====================
+        const navToggle = document.getElementById('navToggle');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('active');
+            dropdownMenu.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!navToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                navToggle.classList.remove('active');
+                dropdownMenu.classList.remove('active');
+            }
+        });
+
+        // ==================== PROGRESS BAR ====================
+        const progressBar = document.getElementById('progressBar');
+        
+        function updateProgress() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            progressBar.style.width = progress + '%';
+        }
+
+        window.addEventListener('scroll', updateProgress);
+
+        // ==================== LOCAL STORAGE ====================
+        const STORAGE_KEY = 'passproofAcademy_emLesson3_progress';
+
+        function saveProgress(data) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            return saved ? JSON.parse(saved) : null;
+        }
+
+        // ==================== INTERACTIVE SPECTRUM ====================
+        const interactiveSpectrum = document.getElementById('interactiveSpectrum');
+        const spectrumCursor = document.getElementById('spectrumCursor');
+        const spectrumSlider = document.getElementById('spectrumSlider');
+        const spectrumValue = document.getElementById('spectrumValue');
+        const autoScanBtn = document.getElementById('autoScan');
+        const spectrumInfo = document.getElementById('spectrumInfo');
+        
+        // EM Spectrum data
+        const spectrumData = [
+            {
+                name: "Radio Waves",
+                color: "#8b00ff",
+                freq: "10⁴ - 10¹¹ Hz",
+                wavelength: "10⁻³ - 10⁴ m",
+                energy: "Very Low",
+                examples: "Broadcasting, Communication"
+            },
+            {
+                name: "Microwaves",
+                color: "#4b0082",
+                freq: "10⁹ - 10¹² Hz",
+                wavelength: "10⁻³ - 0.3 m",
+                energy: "Low",
+                examples: "Cooking, Radar, Satellite"
+            },
+            {
+                name: "Infrared",
+                color: "#0000ff",
+                freq: "10¹² - 4×10¹⁴ Hz",
+                wavelength: "7×10⁻⁷ - 10⁻³ m",
+                energy: "Medium-Low",
+                examples: "Heating, Remote Controls"
+            },
+            {
+                name: "Visible Light",
+                color: "#00ff00",
+                freq: "4×10¹⁴ - 8×10¹⁴ Hz",
+                wavelength: "4×10⁻⁷ - 7×10⁻⁷ m",
+                energy: "Medium",
+                examples: "Vision, Colors"
+            },
+            {
+                name: "Ultraviolet",
+                color: "#ffff00",
+                freq: "8×10¹⁴ - 10¹⁷ Hz",
+                wavelength: "10⁻⁸ - 4×10⁻⁷ m",
+                energy: "Medium-High",
+                examples: "Sunburn, Vitamin D"
+            },
+            {
+                name: "X-rays",
+                color: "#ff7f00",
+                freq: "10¹⁷ - 10²⁰ Hz",
+                wavelength: "10⁻¹¹ - 10⁻⁸ m",
+                energy: "High",
+                examples: "Medical Imaging"
+            },
+            {
+                name: "Gamma Rays",
+                color: "#ff0000",
+                freq: ">10²⁰ Hz",
+                wavelength: "<10⁻¹¹ m",
+                energy: "Very High",
+                examples: "Nuclear Reactions"
+            }
+        ];
+
+        function updateSpectrumCursor(value) {
+            const containerWidth = interactiveSpectrum.offsetWidth;
+            const cursorPosition = (value / 100) * containerWidth;
+            spectrumCursor.style.left = `${cursorPosition}px`;
+            
+            // Determine which spectrum region we're in
+            const regionIndex = Math.floor(value / (100 / 7));
+            const region = spectrumData[Math.min(regionIndex, 6)];
+            
+            // Update display
+            document.getElementById('currentType').textContent = region.name;
+            document.getElementById('currentFreq').textContent = region.freq;
+            document.getElementById('currentWavelength').textContent = region.wavelength;
+            document.getElementById('currentEnergy').textContent = region.energy;
+            spectrumValue.textContent = region.name;
+            
+            // Update cursor color based on region
+            spectrumCursor.style.background = region.color;
+        }
+
+        spectrumSlider.addEventListener('input', (e) => {
+            updateSpectrumCursor(parseInt(e.target.value));
+        });
+
+        // Click on spectrum to move cursor
+        interactiveSpectrum.addEventListener('click', (e) => {
+            const rect = interactiveSpectrum.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const percentage = (clickX / rect.width) * 100;
+            spectrumSlider.value = percentage;
+            updateSpectrumCursor(percentage);
+        });
+
+        // Auto scan animation
+        let autoScanInterval = null;
+        let scanDirection = 1;
+        let scanValue = 0;
+
+        autoScanBtn.addEventListener('click', () => {
+            if (autoScanInterval) {
+                clearInterval(autoScanInterval);
+                autoScanInterval = null;
+                autoScanBtn.textContent = '🔄 Auto Scan';
+            } else {
+                autoScanBtn.textContent = '⏸ Stop Scan';
+                autoScanInterval = setInterval(() => {
+                    scanValue += scanDirection * 0.5;
+                    if (scanValue >= 100 || scanValue <= 0) {
+                        scanDirection *= -1;
+                    }
+                    spectrumSlider.value = scanValue;
+                    updateSpectrumCursor(scanValue);
+                }, 50);
+            }
+        });
+
+        // ==================== CALCULATOR ====================
+        const calcType = document.getElementById('calcType');
+        const calcInput1 = document.getElementById('calcInput1');
+        const calcInput2 = document.getElementById('calcInput2');
+        const input1Label = document.getElementById('input1Label');
+        const input2Label = document.getElementById('input2Label');
+        const input1Unit = document.getElementById('input1Unit');
+        const input2Unit = document.getElementById('input2Unit');
+        const input2Group = document.getElementById('input2Group');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const calcResult = document.getElementById('calcResult');
+        const calcResultValue = document.getElementById('calcResultValue');
+        const calcResultLabel = document.getElementById('calcResultLabel');
+        const calcFormula = document.getElementById('calcFormula');
+
+        // Constants
+        const SPEED_OF_LIGHT = 3e8; // m/s
+        const PLANCK_CONSTANT = 6.626e-34; // J·s
+
+        calcType.addEventListener('change', () => {
+            const type = calcType.value;
+            calcResult.style.display = 'none';
+            calcInput1.value = '';
+            calcInput2.value = '';
+
+            switch(type) {
+                case 'freqFromWavelength':
+                    input1Label.textContent = 'Wavelength:';
+                    input1Unit.textContent = 'm';
+                    input2Group.style.display = 'none';
+                    break;
+                case 'wavelengthFromFreq':
+                    input1Label.textContent = 'Frequency:';
+                    input1Unit.textContent = 'Hz';
+                    input2Group.style.display = 'none';
+                    break;
+                case 'energyFromFreq':
+                    input1Label.textContent = 'Frequency:';
+                    input1Unit.textContent = 'Hz';
+                    input2Group.style.display = 'none';
+                    break;
+                case 'energyFromWavelength':
+                    input1Label.textContent = 'Wavelength:';
+                    input1Unit.textContent = 'm';
+                    input2Group.style.display = 'none';
+                    break;
+            }
+        });
+
+        calculateBtn.addEventListener('click', () => {
+            const type = calcType.value;
+            const val1 = parseFloat(calcInput1.value);
+
+            if (isNaN(val1)) {
+                alert('Please enter a valid number');
+                return;
+            }
+
+            let result, label, formula;
+
+            switch(type) {
+                case 'freqFromWavelength':
+                    result = SPEED_OF_LIGHT / val1;
+                    label = 'Frequency =';
+                    formula = `f = c/λ = (3 × 10⁸) / (${val1}) = ${result.toExponential(3)} Hz`;
+                    break;
+                case 'wavelengthFromFreq':
+                    result = SPEED_OF_LIGHT / val1;
+                    label = 'Wavelength =';
+                    formula = `λ = c/f = (3 × 10⁸) / (${val1}) = ${result.toExponential(3)} m`;
+                    break;
+                case 'energyFromFreq':
+                    result = PLANCK_CONSTANT * val1;
+                    label = 'Energy =';
+                    formula = `E = hf = (6.626 × 10⁻³⁴) × (${val1}) = ${result.toExponential(3)} J`;
+                    break;
+                case 'energyFromWavelength':
+                    const freq = SPEED_OF_LIGHT / val1;
+                    result = PLANCK_CONSTANT * freq;
+                    label = 'Energy =';
+                    formula = `E = hc/λ = (6.626 × 10⁻³⁴ × 3 × 10⁸) / (${val1}) = ${result.toExponential(3)} J`;
+                    break;
+            }
+
+            calcResultLabel.textContent = label;
+            calcResultValue.textContent = result.toExponential(3) + (type.includes('energy') ? ' J' : (type.includes('freq') ? ' Hz' : ' m'));
+            calcFormula.textContent = formula;
+            calcResult.style.display = 'block';
+        });
+
+        // ==================== QUIZ SYSTEM ====================
+        const correctAnswers = {
+            q1: 'c',
+            q2: 'a',
+            q3: 'a',
+            q4: 'd',
+            q5: 'b',
+            q6: 'b',
+            q7: 'd',
+            q8: 'b'
+        };
+
+        const explanations = {
+            q1: 'X-rays have higher frequency than radio waves, microwaves, and infrared. The order from lowest to highest frequency is: Radio → Microwave → Infrared → Visible → UV → X-ray → Gamma.',
+            q2: 'Radio waves have the longest wavelength, followed by microwaves, infrared, visible light, ultraviolet, X-rays, and gamma rays with the shortest wavelength.',
+            q3: 'f = c/λ = (3 × 10⁸) / (500 × 10⁻⁹) = 6 × 10¹⁴ Hz. 500 nm is green light in the visible spectrum.',
+            q4: 'Radio waves have the lowest frequency, and since E = hf, they have the lowest energy per photon.',
+            q5: 'λ = c/f = (3 × 10⁸) / (100 × 10⁶) = 3 m. Radio waves typically have wavelengths from about 1 mm to 100 km.',
+            q6: 'From E = hf, gamma rays have much higher frequency than radio waves, giving them much higher energy per photon. This high energy allows them to ionize atoms and damage DNA.',
+            q7: 'In visible light, red has the longest wavelength (about 700 nm) and lowest frequency, while violet has the shortest wavelength (about 400 nm) and highest frequency.',
+            q8: 'All electromagnetic waves travel at the speed of light in vacuum: 299,792,458 m/s, commonly approximated as 3 × 10⁸ m/s.'
+        };
+
+        let quizSubmitted = false;
+
+        function checkQuiz() {
+            if (quizSubmitted) return;
+            
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+            
+            for (let q in correctAnswers) {
+                const questionCard = document.querySelector(`[data-question="${q.substring(1)}"]`);
+                const selectedOption = document.querySelector(`input[name="${q}"]:checked`);
+                const feedbackDiv = questionCard.querySelector('.feedback-message');
+                const options = questionCard.querySelectorAll('.option-label');
+                
+                options.forEach(opt => {
+                    opt.classList.remove('correct-answer', 'wrong-answer');
+                });
+                
+                if (selectedOption) {
+                    const selectedValue = selectedOption.value;
+                    const isCorrect = selectedValue === correctAnswers[q];
+                    
+                    if (isCorrect) {
+                        score++;
+                        questionCard.classList.add('correct');
+                        questionCard.classList.remove('incorrect');
+                        selectedOption.parentElement.classList.add('correct-answer');
+                        feedbackDiv.className = 'feedback-message correct';
+                        feedbackDiv.innerHTML = `<strong>✓ Correct!</strong> ${explanations[q]}`;
+                    } else {
+                        questionCard.classList.add('incorrect');
+                        questionCard.classList.remove('correct');
+                        selectedOption.parentElement.classList.add('wrong-answer');
+                        
+                        const correctOption = document.querySelector(`input[name="${q}"][value="${correctAnswers[q]}"]`);
+                        correctOption.parentElement.classList.add('correct-answer');
+                        
+                        feedbackDiv.className = 'feedback-message incorrect';
+                        feedbackDiv.innerHTML = `<strong>✗ Incorrect.</strong> ${explanations[q]}`;
+                    }
+                } else {
+                    questionCard.classList.add('incorrect');
+                    feedbackDiv.className = 'feedback-message incorrect';
+                    feedbackDiv.innerHTML = `<strong>✗ Not answered.</strong> ${explanations[q]}`;
+                    
+                    const correctOption = document.querySelector(`input[name="${q}"][value="${correctAnswers[q]}"]`);
+                    correctOption.parentElement.classList.add('correct-answer');
+                }
+            }
+            
+            const percentage = Math.round((score / totalQuestions) * 100);
+            
+            const scoreCard = document.getElementById('scoreCard');
+            scoreCard.classList.add('visible');
+            
+            document.getElementById('scorePercentage').textContent = percentage + '%';
+            document.getElementById('scoreDetails').textContent = `You got ${score} out of ${totalQuestions} questions correct`;
+            
+            let message = '';
+            if (percentage >= 80) {
+                message = '🌟 Excellent! You thoroughly understand the EM spectrum!';
+            } else if (percentage >= 60) {
+                message = '👍 Good job! You grasp the key concepts well.';
+            } else if (percentage >= 40) {
+                message = '📚 Fair attempt. Review the calculations and spectrum order.';
+            } else {
+                message = '💪 Keep trying! Focus on the c = fλ equation and spectrum order.';
+            }
+            document.getElementById('scoreMessage').textContent = message;
+            
+            saveProgress({
+                lessonId: 'em-lesson-3',
+                score: score,
+                percentage: percentage,
+                completedAt: new Date().toISOString()
+            });
+            
+            quizSubmitted = true;
+            document.getElementById('submitQuiz').disabled = true;
+            
+            scoreCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function resetQuiz() {
+            quizSubmitted = false;
+            document.getElementById('submitQuiz').disabled = false;
+            
+            const questionCards = document.querySelectorAll('.question-card');
+            questionCards.forEach(card => {
+                card.classList.remove('correct', 'incorrect');
+                const options = card.querySelectorAll('.option-label');
+                options.forEach(opt => {
+                    opt.classList.remove('correct-answer', 'wrong-answer');
+                });
+                const feedback = card.querySelector('.feedback-message');
+                feedback.className = 'feedback-message';
+                feedback.innerHTML = '';
+            });
+            
+            const radios = document.querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => radio.checked = false);
+            
+            document.getElementById('scoreCard').classList.remove('visible');
+            
+            document.getElementById('quizContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        document.getElementById('submitQuiz').addEventListener('click', checkQuiz);
+        document.getElementById('retryQuiz').addEventListener('click', resetQuiz);
+
+        // ==================== INITIALIZATION ====================
+        function initializeSimulations() {
+            updateSpectrumCursor(0);
+        }
+
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                updateSpectrumCursor(spectrumSlider.value);
+            }, 100);
+        });
+
+        function checkSavedProgress() {
+            const saved = loadProgress();
+            if (saved && saved.lessonId === 'em-lesson-3') {
+                console.log('Previous progress found:', saved);
+            }
+        }
+
+        window.addEventListener('load', () => {
+            initializeSimulations();
+            checkSavedProgress();
+            updateProgress();
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

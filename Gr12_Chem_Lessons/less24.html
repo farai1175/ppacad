@@ -1,0 +1,2395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alternating Current - PassProof Academy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1a73e8;
+            --light-blue: #e8f0fe;
+            --dark-blue: #0d47a1;
+            --white: #ffffff;
+            --gray: #f5f5f5;
+            --dark-gray: #333;
+            --success: #34a853;
+            --error: #ea4335;
+            --warning: #fbbc04;
+            --purple: #7c4dff;
+            --teal: #00bcd4;
+            --orange: #ff6d00;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-lg: 0 4px 20px rgba(0,0,0,0.15);
+            --shadow-xl: 0 8px 30px rgba(0,0,0,0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+            color: var(--dark-gray);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px var(--primary-blue); }
+            50% { box-shadow: 0 0 20px var(--primary-blue), 0 0 30px var(--teal); }
+        }
+
+        @keyframes flow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: var(--white);
+            padding: 1rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            font-size: 1.8rem;
+            animation: wave 2s ease-in-out infinite;
+        }
+
+        .nav-container {
+            position: relative;
+        }
+
+        .nav-toggle {
+            background: rgba(255,255,255,0.15);
+            color: var(--white);
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-toggle:hover {
+            background: rgba(255,255,255,0.25);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: calc(100% + 10px);
+            background: var(--white);
+            min-width: 300px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            animation: slideDown 0.3s ease;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+        }
+
+        .dropdown-menu a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.9rem 1.2rem;
+            color: var(--dark-gray);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--light-blue);
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+            padding-left: 1.5rem;
+        }
+
+        .dropdown-menu .menu-section {
+            padding: 0.75rem 1.2rem;
+            background: linear-gradient(135deg, var(--light-blue) 0%, #d4e5fc 100%);
+            font-weight: bold;
+            color: var(--dark-blue);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.5s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card.highlight {
+            border: 2px solid var(--teal);
+            background: linear-gradient(135deg, var(--white) 0%, #e0f7fa 100%);
+        }
+
+        .subject-grade {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: var(--white);
+            padding: 0.5rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: var(--shadow);
+        }
+
+        .badge.secondary {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+        }
+
+        .badge.new-topic {
+            background: linear-gradient(135deg, var(--teal) 0%, #0097a7 100%);
+            animation: pulse 2s infinite;
+        }
+
+        .badge.warning {
+            background: linear-gradient(135deg, var(--warning) 0%, #f57c00 100%);
+        }
+
+        h1 {
+            color: var(--dark-blue);
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        h2 {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid var(--light-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h3 {
+            color: var(--dark-blue);
+            font-size: 1.25rem;
+            margin: 1.25rem 0 0.75rem;
+        }
+
+        h4 {
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+            margin: 1rem 0 0.5rem;
+        }
+
+        .lesson-info {
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            border-left: 5px solid var(--teal);
+        }
+
+        .lesson-info p {
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-info p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Objectives */
+        .objectives-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .objectives-list li {
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.75rem;
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
+            border-radius: 12px;
+            border-left: 4px solid var(--primary-blue);
+            transition: all 0.3s ease;
+        }
+
+        .objectives-list li:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow);
+        }
+
+        .objectives-list li::before {
+            content: "✓ ";
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* Concept Boxes */
+        .concept-box {
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
+            border: 2px solid var(--primary-blue);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.25rem 0;
+        }
+
+        .concept-box.teal {
+            background: linear-gradient(135deg, #e0f7fa 0%, var(--white) 100%);
+            border-color: var(--teal);
+        }
+
+        .concept-box.warning {
+            background: linear-gradient(135deg, #fff8e1 0%, var(--white) 100%);
+            border-color: var(--warning);
+        }
+
+        .concept-box.success {
+            background: linear-gradient(135deg, #e8f5e9 0%, var(--white) 100%);
+            border-color: var(--success);
+        }
+
+        .concept-box.purple {
+            background: linear-gradient(135deg, #ede7f6 0%, var(--white) 100%);
+            border-color: var(--purple);
+        }
+
+        .formula-box {
+            background: linear-gradient(135deg, var(--dark-blue) 0%, #1565c0 100%);
+            color: var(--white);
+            padding: 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+            font-size: 1.1rem;
+            margin: 1.25rem 0;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .formula-box .formula {
+            font-size: 1.5rem;
+            font-family: 'Times New Roman', serif;
+            margin: 0.5rem 0;
+            letter-spacing: 2px;
+        }
+
+        .key-point {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left: 5px solid #ff9800;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0 16px 16px 0;
+        }
+
+        .key-point strong {
+            color: #e65100;
+        }
+
+        .definition-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border: 2px dashed var(--primary-blue);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .definition-box .term {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--dark-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .definition-box .definition {
+            font-size: 1.1rem;
+            color: var(--dark-gray);
+        }
+
+        /* AC Wave Visual */
+        .ac-wave-container {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .ac-wave-container h4 {
+            color: var(--teal);
+            margin-bottom: 1rem;
+        }
+
+        /* Comparison Cards */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .comparison-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--primary-blue);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .comparison-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 0%, rgba(26, 115, 232, 0.03) 100%);
+            pointer-events: none;
+        }
+
+        .comparison-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .comparison-card.ac {
+            border-top-color: var(--teal);
+        }
+
+        .comparison-card.dc {
+            border-top-color: var(--orange);
+        }
+
+        .comparison-card.transformer {
+            border-top-color: var(--purple);
+        }
+
+        .comparison-card h4 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .comparison-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .comparison-card li {
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed var(--light-blue);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .comparison-card li:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-card li::before {
+            content: "•";
+            color: var(--primary-blue);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Power Transmission Diagram */
+        .transmission-diagram {
+            background: linear-gradient(135deg, #fafafa 0%, #e0e0e0 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .transmission-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .transmission-step {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: var(--shadow);
+            min-width: 120px;
+            transition: all 0.3s ease;
+        }
+
+        .transmission-step:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .transmission-step .icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .transmission-step .label {
+            font-size: 0.85rem;
+            color: var(--dark-gray);
+        }
+
+        .transmission-step .voltage {
+            font-weight: bold;
+            color: var(--primary-blue);
+            margin-top: 0.25rem;
+        }
+
+        .transmission-arrow {
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+        }
+
+        /* Characteristics List */
+        .characteristics-list {
+            background: var(--light-blue);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .characteristics-list h4 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .characteristics-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .characteristics-list li {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: var(--white);
+            border-radius: 8px;
+            border-left: 3px solid var(--teal);
+        }
+
+        /* Simulation Styles */
+        .simulation-container {
+            background: var(--white);
+            border: 2px solid var(--teal);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .simulation-container h3 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--teal);
+        }
+
+        .simulation-canvas {
+            width: 100%;
+            max-width: 700px;
+            height: 350px;
+            margin: 0 auto;
+            display: block;
+            border: 2px solid var(--light-blue);
+            border-radius: 16px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        .simulation-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.25rem;
+        }
+
+        .sim-btn {
+            background: linear-gradient(135deg, var(--teal) 0%, #0097a7 100%);
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .sim-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .sim-btn.secondary {
+            background: var(--white);
+            color: var(--teal);
+            border: 2px solid var(--teal);
+        }
+
+        .sim-btn.secondary:hover {
+            background: #e0f7fa;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .slider-container label {
+            font-weight: 600;
+            color: var(--dark-blue);
+            min-width: 120px;
+        }
+
+        .slider-container input[type="range"] {
+            flex: 1;
+            max-width: 200px;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--light-blue);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--teal);
+            cursor: pointer;
+            box-shadow: var(--shadow);
+        }
+
+        .slider-value {
+            background: var(--teal);
+            color: var(--white);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-weight: bold;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .output-display {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #00ff88;
+            padding: 1.25rem;
+            border-radius: 16px;
+            font-family: 'Courier New', monospace;
+            margin-top: 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .output-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0.75rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+        }
+
+        .output-label {
+            color: #888;
+        }
+
+        .output-value {
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        .output-value.cyan {
+            color: #00bcd4;
+        }
+
+        .output-value.yellow {
+            color: #ffeb3b;
+        }
+
+        /* Quiz Styles */
+        .quiz-container {
+            margin-top: 2rem;
+        }
+
+        .question-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--teal);
+            transition: all 0.3s ease;
+        }
+
+        .question-card.correct {
+            border-left-color: var(--success);
+            background: linear-gradient(135deg, #e8f5e9 0%, var(--white) 100%);
+        }
+
+        .question-card.incorrect {
+            border-left-color: var(--error);
+            background: linear-gradient(135deg, #ffebee 0%, var(--white) 100%);
+        }
+
+        .question-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .question-number {
+            background: linear-gradient(135deg, var(--teal) 0%, #0097a7 100%);
+            color: var(--white);
+            min-width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            font-size: 1.1rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--dark-gray);
+            line-height: 1.5;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.75rem;
+            background: var(--gray);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .option-item:hover {
+            background: #e0f7fa;
+            border-color: var(--teal);
+            transform: translateX(5px);
+        }
+
+        .option-item.selected {
+            background: #e0f7fa;
+            border-color: var(--teal);
+        }
+
+        .option-item.correct-answer {
+            background: #c8e6c9;
+            border-color: var(--success);
+        }
+
+        .option-item.wrong-answer {
+            background: #ffcdd2;
+            border-color: var(--error);
+        }
+
+        .option-letter {
+            background: var(--teal);
+            color: var(--white);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            display: none;
+        }
+
+        .feedback.show {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .feedback-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%);
+            color: #1b5e20;
+        }
+
+        .feedback.incorrect {
+            background: linear-gradient(135deg, #ffcdd2 0%, #ef9a9a 100%);
+            color: #b71c1c;
+        }
+
+        .submit-quiz-btn {
+            background: linear-gradient(135deg, var(--success) 0%, #2e7d32 100%);
+            color: var(--white);
+            border: none;
+            padding: 1.1rem 2.5rem;
+            border-radius: 30px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            width: 100%;
+            max-width: 350px;
+            margin: 2rem auto;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .submit-quiz-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .score-container {
+            background: linear-gradient(135deg, var(--teal) 0%, #0097a7 100%);
+            color: var(--white);
+            padding: 2.5rem;
+            border-radius: 24px;
+            text-align: center;
+            margin: 2rem 0;
+            display: none;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .score-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .score-container.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .score-icon {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        .score-number {
+            font-size: 4rem;
+            font-weight: bold;
+        }
+
+        .score-percentage {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            max-width: 400px;
+            height: 14px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 7px;
+            overflow: hidden;
+            margin: 1.5rem auto;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4caf50, #8bc34a, #cddc39);
+            border-radius: 7px;
+            transition: width 1s ease;
+        }
+
+        .score-feedback {
+            font-size: 1.15rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.15);
+            border-radius: 12px;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .retry-btn {
+            background: var(--white);
+            color: var(--teal);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .retry-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: var(--white);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .nav-btn.prev {
+            background: var(--white);
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+
+        .nav-btn.prev:hover {
+            background: var(--light-blue);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--dark-blue) 0%, #0a3d91 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .copyright {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--teal) 0%, #0097a7 100%);
+            color: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-xl);
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            animation: slideIn 0.3s ease;
+            max-width: 350px;
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, var(--success) 0%, #2e7d32 100%);
+        }
+
+        .notification.warning {
+            background: linear-gradient(135deg, var(--warning) 0%, #f57c00 100%);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            .card {
+                padding: 1.25rem;
+            }
+
+            .simulation-canvas {
+                height: 280px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .output-display {
+                grid-template-columns: 1fr;
+            }
+
+            .transmission-flow {
+                flex-direction: column;
+            }
+
+            .transmission-arrow {
+                transform: rotate(90deg);
+            }
+        }
+
+        /* Eskom Fact Box */
+        .eskom-fact {
+            background: linear-gradient(135deg, #fff9c4 0%, #fff176 100%);
+            border: 2px solid #fbc02d;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .eskom-fact .icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .eskom-fact .content h4 {
+            color: #f57f17;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-icon">⚡</span>
+                <span>PassProof Academy</span>
+            </div>
+            <div class="nav-container">
+                <button class="nav-toggle" onclick="toggleNav()">
+                    <span>☰</span>
+                    <span>Menu</span>
+                </button>
+                <nav class="dropdown-menu" id="dropdownMenu">
+                    <div class="menu-section">📘 Physical Sciences - Grade 12</div>
+                    <a href="#" onclick="saveProgress()">💾 Save Progress</a>
+                    <a href="#objectives">🎯 Learning Objectives</a>
+                    <a href="#concepts">💡 Main Concepts</a>
+                    <a href="#advantages">✨ Advantages of AC</a>
+                    <a href="#simulation">🔬 Interactive Simulation</a>
+                    <a href="#quiz">✍️ Quiz</a>
+                    <div class="menu-section">🔗 Quick Links</div>
+                    <a href="#">🏠 Dashboard</a>
+                    <a href="#">📚 All Lessons</a>
+                    <a href="#">📊 My Progress</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Subject & Grade Card -->
+        <div class="card highlight">
+            <div class="subject-grade">
+                <span class="badge">Grade 12</span>
+                <span class="badge secondary">Physical Sciences</span>
+                <span class="badge secondary">Week 24</span>
+                <span class="badge new-topic">🆕 New Topic</span>
+            </div>
+            
+            <h1>⚡ Alternating Current</h1>
+            
+            <div class="lesson-info">
+                <p><strong>📌 Topic:</strong> Alternating Current (AC)</p>
+                <p><strong>📝 Lesson Number:</strong> 1</p>
+                <p><strong>📚 Lesson Title:</strong> Introduction to Alternating Current & Its Advantages</p>
+                <p><strong>⏱️ Duration:</strong> 50 minutes</p>
+            </div>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="card" id="objectives">
+            <h2>🎯 Learning Objectives</h2>
+            <p>At the end of this lesson, you should be able to:</p>
+            <ul class="objectives-list">
+                <li>Define and explain what alternating current (AC) is</li>
+                <li>Understand that AC changes direction periodically (50 Hz in South Africa)</li>
+                <li>Explain the advantages of using AC over DC for power transmission</li>
+                <li>Understand how transformers are used to step voltage up and down</li>
+                <li>Explain why high voltage transmission reduces energy loss</li>
+                <li>Describe the characteristics of AC including self-inductance</li>
+            </ul>
+        </div>
+
+        <!-- Pre-knowledge -->
+        <div class="card">
+            <h2>📚 Pre-Knowledge Required</h2>
+            
+            <div class="concept-box teal">
+                <h4>Before studying this lesson, you should understand:</h4>
+                <ul>
+                    <li>✅ <strong>Electric current</strong> - the flow of electric charge</li>
+                    <li>✅ <strong>Electromagnetic induction</strong> - how changing magnetic fields create current</li>
+                    <li>✅ <strong>Generators</strong> - how AC and DC are produced</li>
+                </ul>
+            </div>
+
+            <h3>📋 Baseline Questions Review</h3>
+            
+            <div class="definition-box">
+                <div class="term">Induced Current</div>
+                <div class="definition">Current that starts to flow due to the variation in the magnetic field surrounding its conductor.</div>
+            </div>
+
+            <div class="definition-box">
+                <div class="term">Step-Up Transformer</div>
+                <div class="definition">A transformer that <strong>increases</strong> voltage (more turns on secondary coil).</div>
+            </div>
+
+            <div class="definition-box">
+                <div class="term">Step-Down Transformer</div>
+                <div class="definition">A transformer that <strong>reduces</strong> voltage (fewer turns on secondary coil).</div>
+            </div>
+        </div>
+
+        <!-- Main Concepts -->
+        <div class="card" id="concepts">
+            <h2>💡 Main Concepts: Alternating Current</h2>
+
+            <div class="definition-box" style="background: linear-gradient(135deg, #e0f7fa 0%, #80deea 100%);">
+                <div class="term">⚡ Alternating Current (AC)</div>
+                <div class="definition">Current that keeps changing direction backwards and forwards in a repetitive manner.</div>
+            </div>
+
+            <div class="eskom-fact">
+                <div class="icon">🏭</div>
+                <div class="content">
+                    <h4>South African Power Supply</h4>
+                    <p>The electricity supplied by <strong>Eskom</strong> is alternating current. It changes direction <strong>50 times per second</strong>, meaning it has a frequency of <strong>50 Hz</strong>.</p>
+                    <p style="margin-top: 0.5rem;"><em>It is important that this frequency is kept constant to avoid damage to electrical equipment.</em></p>
+                </div>
+            </div>
+
+            <h3>🌊 Visualizing AC vs DC</h3>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card ac">
+                    <div class="icon">〰️</div>
+                    <h4>Alternating Current (AC)</h4>
+                    <ul>
+                        <li>Changes direction periodically</li>
+                        <li>Follows a sine wave pattern</li>
+                        <li>Has frequency (e.g., 50 Hz)</li>
+                        <li>Voltage varies continuously</li>
+                        <li>Can be transformed (stepped up/down)</li>
+                        <li>Used for power transmission</li>
+                    </ul>
+                </div>
+
+                <div class="comparison-card dc">
+                    <div class="icon">➡️</div>
+                    <h4>Direct Current (DC)</h4>
+                    <ul>
+                        <li>Flows in one direction only</li>
+                        <li>Constant or pulsating level</li>
+                        <li>No frequency (0 Hz)</li>
+                        <li>Voltage remains constant</li>
+                        <li>Cannot be easily transformed</li>
+                        <li>Used in batteries, electronics</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="key-point">
+                <strong>💡 Key Point:</strong> Alternating current is easier to generate than direct current, which is one reason why AC became the standard for power distribution worldwide.
+            </div>
+        </div>
+
+        <!-- Advantages of AC -->
+        <div class="card" id="advantages">
+            <h2>✨ Advantages of Alternating Current</h2>
+
+            <div class="formula-box">
+                <strong>🔑 The Power Equation</strong>
+                <div class="formula">P = V × I</div>
+                <p style="margin-top: 0.5rem;">Power = Voltage × Current</p>
+            </div>
+
+            <div class="concept-box success">
+                <h4>🎯 The Main Advantage: Transformers!</h4>
+                <p>AC voltage can be changed using <strong>transformers</strong>. This is crucial for efficient power transmission because:</p>
+                <ol style="margin-top: 0.75rem; margin-left: 1.5rem;">
+                    <li><strong>Step-up at power stations:</strong> Voltage is increased to very high levels (e.g., 400,000 V)</li>
+                    <li><strong>High voltage = Low current:</strong> Since P = VI, if V goes up, I can go down for the same power</li>
+                    <li><strong>Low current = Less heat loss:</strong> Energy loss due to heating in cables is reduced</li>
+                    <li><strong>Step-down for use:</strong> Voltage is reduced to safe levels (220V) for homes and businesses</li>
+                </ol>
+            </div>
+
+            <h3>🏗️ Power Transmission System</h3>
+            
+            <div class="transmission-diagram">
+                <h4 style="margin-bottom: 1rem;">How Electricity Gets to Your Home</h4>
+                <div class="transmission-flow">
+                    <div class="transmission-step">
+                        <div class="icon">🏭</div>
+                        <div class="label">Power Station</div>
+                        <div class="voltage">~25,000 V</div>
+                    </div>
+                    <div class="transmission-arrow">→</div>
+                    <div class="transmission-step" style="border: 2px solid var(--success);">
+                        <div class="icon">⬆️</div>
+                        <div class="label">Step-Up Transformer</div>
+                        <div class="voltage">400,000 V</div>
+                    </div>
+                    <div class="transmission-arrow">→</div>
+                    <div class="transmission-step">
+                        <div class="icon">🔌</div>
+                        <div class="label">Power Lines</div>
+                        <div class="voltage">High V, Low I</div>
+                    </div>
+                    <div class="transmission-arrow">→</div>
+                    <div class="transmission-step" style="border: 2px solid var(--warning);">
+                        <div class="icon">⬇️</div>
+                        <div class="label">Step-Down Transformer</div>
+                        <div class="voltage">220 V</div>
+                    </div>
+                    <div class="transmission-arrow">→</div>
+                    <div class="transmission-step">
+                        <div class="icon">🏠</div>
+                        <div class="label">Your Home</div>
+                        <div class="voltage">220 V AC</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="concept-box warning">
+                <h4>⚠️ Why Not Just Use High Current?</h4>
+                <p>From P = VI, we could deliver power using either high voltage or high current. However:</p>
+                <ul style="margin-top: 0.75rem;">
+                    <li>Power cables have <strong>resistance</strong></li>
+                    <li>When current flows through resistance, <strong>heat is produced</strong> (P = I²R)</li>
+                    <li>High current through hundreds of kilometers of cable = <strong>HUGE energy loss</strong></li>
+                    <li>Therefore: Keep current LOW by making voltage HIGH</li>
+                </ul>
+            </div>
+
+            <div class="formula-box" style="background: linear-gradient(135deg, #ff6f00 0%, #ff9800 100%);">
+                <strong>⚡ Heat Loss in Cables</strong>
+                <div class="formula">P<sub>loss</sub> = I²R</div>
+                <p style="margin-top: 0.5rem;">Power loss increases with the <strong>square</strong> of current!</p>
+                <p>Halving the current reduces heat loss to <strong>1/4</strong>!</p>
+            </div>
+
+            <div class="concept-box purple">
+                <h4>🔄 Why Transformers Only Work with AC</h4>
+                <p>Transformers use the principle of <strong>mutual induction</strong>:</p>
+                <ul style="margin-top: 0.75rem;">
+                    <li>A changing current in the primary coil creates a changing magnetic field</li>
+                    <li>This changing field induces a voltage in the secondary coil</li>
+                    <li>DC creates a <strong>constant</strong> magnetic field - no induction!</li>
+                    <li>AC <strong>constantly changes</strong> - continuous induction!</li>
+                </ul>
+                <p style="margin-top: 0.75rem;"><strong>Therefore:</strong> Transformers can only work with AC, which is why AC is used for power transmission.</p>
+            </div>
+        </div>
+
+        <!-- Characteristics of AC -->
+        <div class="card">
+            <h2>📊 Characteristics of Alternating Current</h2>
+
+            <div class="characteristics-list">
+                <h4>⚡ Key Characteristics of AC</h4>
+                <ul>
+                    <li><strong>Self-Inductance:</strong> When AC changes direction, the magnetic field associated with it changes in a way that opposes the change. This is called self-inductance.</li>
+                    <li><strong>Energy Loss:</strong> Because of self-inductance, some electrical energy is wasted, and appliances receive a lower maximum voltage than the peak value supplied.</li>
+                    <li><strong>RMS Value:</strong> The lower effective voltage is called the <strong>Root-Mean-Square (RMS)</strong> value. This is the equivalent DC voltage that would deliver the same power.</li>
+                    <li><strong>Frequency:</strong> AC has a specific frequency (50 Hz in South Africa, 60 Hz in USA).</li>
+                    <li><strong>Waveform:</strong> AC typically follows a sinusoidal (sine wave) pattern.</li>
+                </ul>
+            </div>
+
+            <div class="key-point">
+                <strong>💡 Did You Know?</strong> When we say household voltage is 220V in South Africa, we're talking about the RMS voltage, not the peak voltage. The actual peak voltage is about 311V!
+            </div>
+        </div>
+
+        <!-- Interactive Simulation -->
+        <div class="card" id="simulation">
+            <h2>🔬 Interactive AC Simulation</h2>
+
+            <div class="simulation-container">
+                <h3>〰️ AC Waveform & Power Transmission</h3>
+                <p style="text-align: center; margin-bottom: 1rem;">Visualize alternating current and see how voltage affects current in power transmission.</p>
+                
+                <canvas id="acCanvas" class="simulation-canvas"></canvas>
+                
+                <div class="slider-container">
+                    <label for="frequency">⚡ Frequency (Hz):</label>
+                    <input type="range" id="frequency" min="10" max="100" value="50">
+                    <span class="slider-value" id="freqValue">50</span>
+                </div>
+
+                <div class="slider-container">
+                    <label for="voltage">🔌 Voltage (kV):</label>
+                    <input type="range" id="voltage" min="1" max="400" value="220">
+                    <span class="slider-value" id="voltValue">220</span>
+                </div>
+
+                <div class="slider-container">
+                    <label for="power">💡 Power (MW):</label>
+                    <input type="range" id="power" min="10" max="1000" value="100">
+                    <span class="slider-value" id="powerValue">100</span>
+                </div>
+
+                <div class="simulation-controls">
+                    <button class="sim-btn" onclick="toggleACSimulation()" id="acSimBtn">
+                        <span id="acBtnIcon">▶️</span>
+                        <span id="acBtnText">Start</span>
+                    </button>
+                    <button class="sim-btn secondary" onclick="resetACSimulation()">🔄 Reset</button>
+                    <button class="sim-btn secondary" onclick="toggleTransmissionView()">🔌 Show Transmission</button>
+                </div>
+
+                <div class="output-display">
+                    <div class="output-item">
+                        <span class="output-label">Frequency:</span>
+                        <span class="output-value" id="dispFreq">50 Hz</span>
+                    </div>
+                    <div class="output-item">
+                        <span class="output-label">Voltage:</span>
+                        <span class="output-value cyan" id="dispVoltage">220 kV</span>
+                    </div>
+                    <div class="output-item">
+                        <span class="output-label">Current:</span>
+                        <span class="output-value yellow" id="dispCurrent">454.5 A</span>
+                    </div>
+                    <div class="output-item">
+                        <span class="output-label">Power:</span>
+                        <span class="output-value" id="dispPower">100 MW</span>
+                    </div>
+                    <div class="output-item">
+                        <span class="output-label">Period:</span>
+                        <span class="output-value" id="dispPeriod">20 ms</span>
+                    </div>
+                    <div class="output-item">
+                        <span class="output-label">Heat Loss:</span>
+                        <span class="output-value" id="dispLoss">Low</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transformer Simulation -->
+            <div class="simulation-container" style="margin-top: 2rem;">
+                <h3>🔄 Transformer Simulation</h3>
+                <p style="text-align: center; margin-bottom: 1rem;">See how transformers step voltage up and down.</p>
+                
+                <canvas id="transformerCanvas" class="simulation-canvas" style="height: 300px;"></canvas>
+                
+                <div class="slider-container">
+                    <label for="primaryTurns">Primary Turns:</label>
+                    <input type="range" id="primaryTurns" min="10" max="200" value="100">
+                    <span class="slider-value" id="primaryValue">100</span>
+                </div>
+
+                <div class="slider-container">
+                    <label for="secondaryTurns">Secondary Turns:</label>
+                    <input type="range" id="secondaryTurns" min="10" max="200" value="50">
+                    <span class="slider-value" id="secondaryValue">50</span>
+                </div>
+
+                <div class="simulation-controls">
+                    <button class="sim-btn" onclick="toggleTransformerSim()" id="transBtnMain">
+                        <span id="transBtnIcon">▶️</span>
+                        <span id="transBtnText">Start</span>
+                    </button>
+                    <button class="sim-btn secondary" onclick="resetTransformerSim()">🔄 Reset</button>
+                </div>
+
+                <div class="output-display">
+                    <div class="output-item">
+                        <span class="output-label">Input Voltage:</span>
+                        <span class="output-value" id="inputV">220 V</span>
+                    </div>
+                    <div class="output-item">
+                        <span class="output-label">Output Voltage:</span>
+                        <span class="output-value cyan" id="outputV">110 V</span>
+                    </div>
+                    <div class="output-item">
+                        <span class="output-label">Turns Ratio:</span>
+                        <span class="output-value" id="turnsRatio">2:1</span>
+                    </div>
+                    <div class="output-item">
+                        <span class="output-label">Transformer Type:</span>
+                        <span class="output-value yellow" id="transType">Step-Down</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="card" id="quiz">
+            <h2>✍️ End of Lesson Quiz</h2>
+            <p>Test your understanding of alternating current. Select the best answer for each question.</p>
+
+            <div class="quiz-container" id="quizContainer">
+                <!-- Questions will be dynamically inserted here -->
+            </div>
+
+            <button class="submit-quiz-btn" id="submitQuiz" onclick="submitQuiz()">
+                📝 Submit Answers
+            </button>
+
+            <div class="score-container" id="scoreContainer">
+                <div class="score-icon" id="scoreIcon">🏆</div>
+                <div class="score-number" id="scoreNumber">0/10</div>
+                <div class="score-percentage" id="scorePercentage">0%</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                <div class="score-feedback" id="scoreFeedback"></div>
+                <div class="action-buttons">
+                    <button class="retry-btn" onclick="retryQuiz()">🔄 Try Again</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+            <button class="nav-btn prev" onclick="goToPrevious()">
+                ← Previous: Electrical Machines
+            </button>
+            <button class="nav-btn" onclick="goToNext()">
+                Next: AC Calculations →
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span>📚</span>
+                <span>PassProof Academy</span>
+            </div>
+            <p>Empowering learners through quality education</p>
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">Contact</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            <div class="copyright">
+                © 2026 PassProof Academy. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // =====================
+        // NAVIGATION FUNCTIONS
+        // =====================
+        function toggleNav() {
+            const menu = document.getElementById('dropdownMenu');
+            menu.classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('dropdownMenu');
+            const toggle = document.querySelector('.nav-toggle');
+            if (!menu.contains(event.target) && !toggle.contains(event.target)) {
+                menu.classList.remove('active');
+            }
+        });
+
+        // =====================
+        // AC SIMULATION
+        // =====================
+        let acCanvas, acCtx;
+        let acRunning = false;
+        let acAnimationId = null;
+        let acTime = 0;
+        let showTransmission = false;
+
+        function initACCanvas() {
+            acCanvas = document.getElementById('acCanvas');
+            acCtx = acCanvas.getContext('2d');
+            acCanvas.width = acCanvas.offsetWidth;
+            acCanvas.height = acCanvas.offsetHeight;
+            drawACWaveform();
+        }
+
+        function drawACWaveform() {
+            const ctx = acCtx;
+            const w = acCanvas.width;
+            const h = acCanvas.height;
+
+            // Clear canvas
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fillRect(0, 0, w, h);
+
+            const frequency = parseInt(document.getElementById('frequency').value);
+            const voltage = parseInt(document.getElementById('voltage').value);
+            const power = parseInt(document.getElementById('power').value);
+
+            // Calculate current from P = VI (in appropriate units)
+            const current = (power * 1000) / voltage; // Convert MW to kW, then divide
+
+            if (showTransmission) {
+                drawTransmissionView(ctx, w, h, voltage, current, power);
+            } else {
+                drawWaveformView(ctx, w, h, frequency, voltage);
+            }
+
+            // Update displays
+            document.getElementById('dispFreq').textContent = frequency + ' Hz';
+            document.getElementById('dispVoltage').textContent = voltage + ' kV';
+            document.getElementById('dispCurrent').textContent = current.toFixed(1) + ' A';
+            document.getElementById('dispPower').textContent = power + ' MW';
+            document.getElementById('dispPeriod').textContent = (1000 / frequency).toFixed(1) + ' ms';
+            
+            // Heat loss indicator (proportional to I²)
+            const lossLevel = current < 300 ? 'Low ✓' : current < 600 ? 'Medium ⚠️' : 'High ❌';
+            document.getElementById('dispLoss').textContent = lossLevel;
+            document.getElementById('dispLoss').className = 'output-value' + (current < 300 ? '' : current < 600 ? ' yellow' : ' error');
+        }
+
+        function drawWaveformView(ctx, w, h, frequency, voltage) {
+            const centerY = h / 2;
+            const amplitude = (h / 2 - 40) * (voltage / 400);
+
+            // Draw grid
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            
+            // Horizontal center line
+            ctx.beginPath();
+            ctx.moveTo(0, centerY);
+            ctx.lineTo(w, centerY);
+            ctx.stroke();
+
+            // Vertical lines
+            for (let x = 0; x < w; x += 50) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, h);
+                ctx.stroke();
+            }
+
+            // Draw AC waveform
+            ctx.strokeStyle = '#00bcd4';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+
+            for (let x = 0; x < w; x++) {
+                const t = (x / w) * 4 * Math.PI + acTime;
+                const y = centerY - amplitude * Math.sin(t * frequency / 50);
+                
+                if (x === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+
+            // Draw DC comparison (dashed line)
+            ctx.strokeStyle = '#ff9800';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([10, 5]);
+            ctx.beginPath();
+            ctx.moveTo(0, centerY - amplitude * 0.7);
+            ctx.lineTo(w, centerY - amplitude * 0.7);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Labels
+            ctx.fillStyle = '#00bcd4';
+            ctx.font = 'bold 14px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText('AC Waveform', 10, 25);
+
+            ctx.fillStyle = '#ff9800';
+            ctx.fillText('DC Equivalent (RMS)', 10, 45);
+
+            ctx.fillStyle = '#888';
+            ctx.font = '12px Arial';
+            ctx.fillText('+V', 10, centerY - amplitude + 15);
+            ctx.fillText('0V', 10, centerY + 5);
+            ctx.fillText('-V', 10, centerY + amplitude - 5);
+
+            // Direction arrows
+            ctx.fillStyle = '#00bcd4';
+            ctx.font = '16px Arial';
+            const arrowY = centerY - amplitude * Math.sin(acTime * frequency / 50);
+            ctx.fillText(Math.sin(acTime * frequency / 50) > 0 ? '→' : '←', w - 30, arrowY);
+
+            // Frequency indicator
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 16px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(`f = ${frequency} Hz (${frequency} cycles/second)`, w / 2, h - 15);
+        }
+
+        function drawTransmissionView(ctx, w, h, voltage, current, power) {
+            // Background
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fillRect(0, 0, w, h);
+
+            const centerY = h / 2;
+
+            // Title
+            ctx.fillStyle = '#00bcd4';
+            ctx.font = 'bold 16px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Power Transmission: P = V × I', w / 2, 25);
+
+            // Draw power station
+            ctx.fillStyle = '#424242';
+            ctx.fillRect(30, centerY - 40, 80, 80);
+            ctx.fillStyle = '#fff';
+            ctx.font = '12px Arial';
+            ctx.fillText('Power', 70, centerY - 10);
+            ctx.fillText('Station', 70, centerY + 10);
+
+            // Draw transformer (step-up)
+            ctx.fillStyle = voltage > 100 ? '#4caf50' : '#ff9800';
+            ctx.fillRect(140, centerY - 30, 50, 60);
+            ctx.fillStyle = '#fff';
+            ctx.font = '10px Arial';
+            ctx.fillText('Step', 165, centerY - 5);
+            ctx.fillText('Up', 165, centerY + 10);
+
+            // Draw power lines
+            ctx.strokeStyle = '#ffeb3b';
+            ctx.lineWidth = voltage > 200 ? 2 : voltage > 100 ? 3 : 4;
+            ctx.beginPath();
+            ctx.moveTo(190, centerY);
+            ctx.lineTo(w - 190, centerY);
+            ctx.stroke();
+
+            // Show current flow animation
+            const flowOffset = (acTime * 50) % 30;
+            ctx.fillStyle = '#ffeb3b';
+            for (let x = 200 + flowOffset; x < w - 200; x += 30) {
+                ctx.beginPath();
+                ctx.arc(x, centerY, 4, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Draw transformer (step-down)
+            ctx.fillStyle = voltage > 100 ? '#ff9800' : '#4caf50';
+            ctx.fillRect(w - 190, centerY - 30, 50, 60);
+            ctx.fillStyle = '#fff';
+            ctx.fillText('Step', w - 165, centerY - 5);
+            ctx.fillText('Down', w - 165, centerY + 10);
+
+            // Draw house
+            ctx.fillStyle = '#424242';
+            ctx.fillRect(w - 110, centerY - 40, 80, 80);
+            ctx.fillStyle = '#fff';
+            ctx.font = '12px Arial';
+            ctx.fillText('Home', w - 70, centerY - 10);
+            ctx.fillText('220V', w - 70, centerY + 10);
+
+            // Voltage/Current labels
+            ctx.fillStyle = '#00bcd4';
+            ctx.font = 'bold 14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(`${voltage} kV`, w / 2, centerY - 50);
+            
+            ctx.fillStyle = '#ffeb3b';
+            ctx.fillText(`${current.toFixed(0)} A`, w / 2, centerY + 60);
+
+            // Heat loss indicator
+            const lossHeight = Math.min(current / 10, 50);
+            ctx.fillStyle = `rgba(255, ${255 - lossHeight * 4}, 0, 0.7)`;
+            ctx.fillRect(w / 2 - 40, centerY + 70, 80, lossHeight);
+            ctx.fillStyle = '#fff';
+            ctx.font = '11px Arial';
+            ctx.fillText('Heat Loss (I²R)', w / 2, centerY + 85 + lossHeight);
+
+            // Explanation
+            ctx.fillStyle = '#888';
+            ctx.font = '12px Arial';
+            ctx.fillText('Higher voltage → Lower current → Less heat loss in cables', w / 2, h - 15);
+        }
+
+        function animateAC() {
+            acTime += 0.05;
+            drawACWaveform();
+            
+            if (acRunning) {
+                acAnimationId = requestAnimationFrame(animateAC);
+            }
+        }
+
+        function toggleACSimulation() {
+            acRunning = !acRunning;
+            document.getElementById('acBtnIcon').textContent = acRunning ? '⏸️' : '▶️';
+            document.getElementById('acBtnText').textContent = acRunning ? 'Pause' : 'Start';
+            
+            if (acRunning) animateAC();
+        }
+
+        function resetACSimulation() {
+            acRunning = false;
+            acTime = 0;
+            showTransmission = false;
+            if (acAnimationId) cancelAnimationFrame(acAnimationId);
+            document.getElementById('acBtnIcon').textContent = '▶️';
+            document.getElementById('acBtnText').textContent = 'Start';
+            drawACWaveform();
+        }
+
+        function toggleTransmissionView() {
+            showTransmission = !showTransmission;
+            drawACWaveform();
+        }
+
+        // =====================
+        // TRANSFORMER SIMULATION
+        // =====================
+        let transCanvas, transCtx;
+        let transRunning = false;
+        let transAnimationId = null;
+        let transTime = 0;
+
+        function initTransCanvas() {
+            transCanvas = document.getElementById('transformerCanvas');
+            transCtx = transCanvas.getContext('2d');
+            transCanvas.width = transCanvas.offsetWidth;
+            transCanvas.height = transCanvas.offsetHeight;
+            drawTransformer();
+        }
+
+        function drawTransformer() {
+            const ctx = transCtx;
+            const w = transCanvas.width;
+            const h = transCanvas.height;
+
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fillRect(0, 0, w, h);
+
+            const primaryTurns = parseInt(document.getElementById('primaryTurns').value);
+            const secondaryTurns = parseInt(document.getElementById('secondaryTurns').value);
+            const inputVoltage = 220;
+            const outputVoltage = (inputVoltage * secondaryTurns / primaryTurns).toFixed(1);
+            const ratio = (primaryTurns / secondaryTurns).toFixed(2);
+            const isStepUp = secondaryTurns > primaryTurns;
+
+            const centerX = w / 2;
+            const centerY = h / 2;
+
+            // Draw iron core
+            ctx.fillStyle = '#616161';
+            ctx.fillRect(centerX - 60, centerY - 60, 120, 120);
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fillRect(centerX - 40, centerY - 40, 80, 80);
+
+            // Draw primary coil (left)
+            const primaryHeight = Math.min(primaryTurns * 0.8, 100);
+            ctx.strokeStyle = '#e53935';
+            ctx.lineWidth = 3;
+            
+            for (let i = 0; i < primaryTurns / 10; i++) {
+                const y = centerY - primaryHeight / 2 + (i * primaryHeight / (primaryTurns / 10));
+                ctx.beginPath();
+                ctx.arc(centerX - 70, y, 10, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            // Draw secondary coil (right)
+            const secondaryHeight = Math.min(secondaryTurns * 0.8, 100);
+            ctx.strokeStyle = '#2196f3';
+            
+            for (let i = 0; i < secondaryTurns / 10; i++) {
+                const y = centerY - secondaryHeight / 2 + (i * secondaryHeight / (secondaryTurns / 10));
+                ctx.beginPath();
+                ctx.arc(centerX + 70, y, 10, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            // Magnetic field animation
+            if (transRunning) {
+                ctx.strokeStyle = `rgba(156, 39, 176, ${0.3 + 0.3 * Math.sin(transTime * 5)})`;
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]);
+                
+                for (let i = -2; i <= 2; i++) {
+                    ctx.beginPath();
+                    ctx.arc(centerX, centerY + i * 15, 30 + Math.abs(i) * 10, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+                ctx.setLineDash([]);
+            }
+
+            // Labels
+            ctx.fillStyle = '#e53935';
+            ctx.font = 'bold 14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Primary', centerX - 70, centerY + 80);
+            ctx.fillText(`${primaryTurns} turns`, centerX - 70, centerY + 95);
+            ctx.fillText(`${inputVoltage}V`, centerX - 70, centerY - 70);
+
+            ctx.fillStyle = '#2196f3';
+            ctx.fillText('Secondary', centerX + 70, centerY + 80);
+            ctx.fillText(`${secondaryTurns} turns`, centerX + 70, centerY + 95);
+            ctx.fillText(`${outputVoltage}V`, centerX + 70, centerY - 70);
+
+            // Core label
+            ctx.fillStyle = '#9e9e9e';
+            ctx.font = '11px Arial';
+            ctx.fillText('Iron Core', centerX, centerY);
+
+            // Transformer type indicator
+            ctx.fillStyle = isStepUp ? '#4caf50' : '#ff9800';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText(isStepUp ? '⬆️ STEP-UP' : '⬇️ STEP-DOWN', centerX, 25);
+
+            // Formula
+            ctx.fillStyle = '#fff';
+            ctx.font = '12px Arial';
+            ctx.fillText(`Vp/Vs = Np/Ns → ${inputVoltage}/${outputVoltage} = ${primaryTurns}/${secondaryTurns}`, centerX, h - 15);
+
+            // Update displays
+            document.getElementById('inputV').textContent = inputVoltage + ' V';
+            document.getElementById('outputV').textContent = outputVoltage + ' V';
+            document.getElementById('turnsRatio').textContent = `${primaryTurns}:${secondaryTurns}`;
+            document.getElementById('transType').textContent = isStepUp ? 'Step-Up ⬆️' : 'Step-Down ⬇️';
+        }
+
+        function animateTransformer() {
+            transTime += 0.05;
+            drawTransformer();
+            
+            if (transRunning) {
+                transAnimationId = requestAnimationFrame(animateTransformer);
+            }
+        }
+
+        function toggleTransformerSim() {
+            transRunning = !transRunning;
+            document.getElementById('transBtnIcon').textContent = transRunning ? '⏸️' : '▶️';
+            document.getElementById('transBtnText').textContent = transRunning ? 'Pause' : 'Start';
+            
+            if (transRunning) animateTransformer();
+        }
+
+        function resetTransformerSim() {
+            transRunning = false;
+            transTime = 0;
+            if (transAnimationId) cancelAnimationFrame(transAnimationId);
+            document.getElementById('transBtnIcon').textContent = '▶️';
+            document.getElementById('transBtnText').textContent = 'Start';
+            document.getElementById('primaryTurns').value = 100;
+            document.getElementById('secondaryTurns').value = 50;
+            document.getElementById('primaryValue').textContent = '100';
+            document.getElementById('secondaryValue').textContent = '50';
+            drawTransformer();
+        }
+
+        // =====================
+        // QUIZ SYSTEM
+        // =====================
+        const quizQuestions = [
+            {
+                question: "Define alternating current (AC).",
+                options: [
+                    "Current that flows in one direction only",
+                    "Current that keeps changing direction backwards and forwards in a repetitive manner",
+                    "Current produced by batteries",
+                    "Current that has constant magnitude"
+                ],
+                correct: 1,
+                explanation: "Alternating current (AC) is current that keeps changing direction backwards and forwards in a repetitive manner. In South Africa, it changes direction 50 times per second."
+            },
+            {
+                question: "What is the frequency of electricity supplied by Eskom in South Africa?",
+                options: [
+                    "60 Hz",
+                    "100 Hz",
+                    "50 Hz",
+                    "25 Hz"
+                ],
+                correct: 2,
+                explanation: "Eskom supplies electricity at 50 Hz, meaning the current changes direction 50 times per second. This frequency must be kept constant to avoid damage to electrical equipment."
+            },
+            {
+                                question: "The frequency of a generator in a power station is 40 Hz. What does this mean?",
+                options: [
+                    "The voltage is 40 volts",
+                    "The current is 40 amperes",
+                    "The current is produced at 40 cycles (wavelengths) per second",
+                    "The power output is 40 watts"
+                ],
+                correct: 2,
+                explanation: "A frequency of 40 Hz means the current completes 40 full cycles per second. Each cycle involves the current changing direction twice (forward and backward)."
+            },
+            {
+                question: "Why is it important that the frequency of AC remains constant?",
+                options: [
+                    "To save electricity",
+                    "To make the current flow faster",
+                    "To avoid damage to electrical components and equipment",
+                    "To reduce the voltage"
+                ],
+                correct: 2,
+                explanation: "Electrical equipment is designed to operate at a specific frequency. If the frequency varies, it can cause damage to electrical components and appliances may not function correctly."
+            },
+            {
+                question: "Why is AC used rather than DC to transport electrical energy between cities?",
+                options: [
+                    "AC is safer than DC",
+                    "AC voltage can be stepped up/down using transformers, reducing energy loss in cables",
+                    "AC cables are cheaper",
+                    "DC cannot travel through wires"
+                ],
+                correct: 1,
+                explanation: "AC is used because transformers can step up the voltage for transmission (reducing current and heat loss) and step it down for safe use. Transformers only work with AC due to electromagnetic induction."
+            },
+            {
+                question: "According to P = VI, if we want to transmit 100 MW of power with less heat loss, we should:",
+                options: [
+                    "Use high current and low voltage",
+                    "Use high voltage and low current",
+                    "Use equal voltage and current",
+                    "Use the lowest possible voltage"
+                ],
+                correct: 1,
+                explanation: "Since heat loss = I²R, lower current means less heat loss. To maintain the same power (P = VI) with lower current, we must increase voltage. This is why power is transmitted at very high voltages."
+            },
+            {
+                question: "What is a step-up transformer used for?",
+                options: [
+                    "To decrease voltage",
+                    "To increase voltage",
+                    "To convert AC to DC",
+                    "To store electricity"
+                ],
+                correct: 1,
+                explanation: "A step-up transformer increases voltage. It has more turns on the secondary coil than the primary coil. Step-up transformers are used at power stations to increase voltage for efficient transmission."
+            },
+            {
+                question: "What is a step-down transformer used for?",
+                options: [
+                    "To increase voltage",
+                    "To decrease voltage",
+                    "To convert DC to AC",
+                    "To generate electricity"
+                ],
+                correct: 1,
+                explanation: "A step-down transformer decreases voltage. It has fewer turns on the secondary coil than the primary coil. Step-down transformers are used to reduce high transmission voltage to safe levels (220V) for homes."
+            },
+            {
+                question: "Why do transformers only work with AC and not DC?",
+                options: [
+                    "DC is too dangerous for transformers",
+                    "Transformers require a changing magnetic field, which only AC provides",
+                    "DC doesn't flow through transformer coils",
+                    "Transformers are too expensive for DC"
+                ],
+                correct: 1,
+                explanation: "Transformers work on the principle of mutual induction, which requires a changing magnetic field. AC constantly changes direction, creating a changing field. DC creates a constant field, so no voltage is induced in the secondary coil."
+            },
+            {
+                question: "What is the RMS (Root-Mean-Square) value of AC voltage?",
+                options: [
+                    "The maximum voltage reached during a cycle",
+                    "The minimum voltage during a cycle",
+                    "The effective voltage equivalent to DC that would deliver the same power",
+                    "The average of all voltages"
+                ],
+                correct: 2,
+                explanation: "The RMS value is the effective voltage of AC that would deliver the same power as an equivalent DC voltage. When we say household voltage is 220V, we mean the RMS value, not the peak value (which is about 311V)."
+            },
+            {
+                question: "What is self-inductance in AC circuits?",
+                options: [
+                    "The ability of a circuit to store charge",
+                    "When changing current creates a magnetic field that opposes the change",
+                    "The resistance of a wire",
+                    "The flow of current in one direction"
+                ],
+                correct: 1,
+                explanation: "Self-inductance occurs when the changing AC current creates a magnetic field that changes in a way that opposes the change in current. This is a characteristic of AC that causes some energy loss."
+            },
+            {
+                question: "Heat loss in power transmission cables is given by P = I²R. If the current is halved, the heat loss becomes:",
+                options: [
+                    "Half of the original",
+                    "Double the original",
+                    "One quarter of the original",
+                    "The same as original"
+                ],
+                correct: 2,
+                explanation: "Since P = I²R, if current (I) is halved, then I² becomes (1/2)² = 1/4. So the heat loss becomes one quarter (25%) of the original. This is why reducing current is so effective at reducing energy loss."
+            }
+        ];
+
+        let userAnswers = {};
+        let quizSubmitted = false;
+
+        function initQuiz() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = '';
+
+            quizQuestions.forEach((q, index) => {
+                const questionCard = document.createElement('div');
+                questionCard.className = 'question-card';
+                questionCard.id = `question-${index}`;
+
+                let optionsHTML = '';
+                q.options.forEach((option, optIndex) => {
+                    optionsHTML += `
+                        <li class="option-item" onclick="selectOption(${index}, ${optIndex})" id="option-${index}-${optIndex}">
+                            <span class="option-letter">${String.fromCharCode(65 + optIndex)}</span>
+                            <span>${option}</span>
+                        </li>
+                    `;
+                });
+
+                questionCard.innerHTML = `
+                    <div class="question-header">
+                        <span class="question-number">${index + 1}</span>
+                        <span class="question-text">${q.question}</span>
+                    </div>
+                    <ul class="options-list">
+                        ${optionsHTML}
+                    </ul>
+                    <div class="feedback" id="feedback-${index}"></div>
+                `;
+
+                container.appendChild(questionCard);
+            });
+
+            loadProgress();
+        }
+
+        function selectOption(questionIndex, optionIndex) {
+            if (quizSubmitted) return;
+
+            document.querySelectorAll(`#question-${questionIndex} .option-item`).forEach(opt => {
+                opt.classList.remove('selected');
+            });
+
+            document.getElementById(`option-${questionIndex}-${optionIndex}`).classList.add('selected');
+            userAnswers[questionIndex] = optionIndex;
+            saveProgress();
+        }
+
+        function submitQuiz() {
+            if (quizSubmitted) return;
+
+            const unanswered = quizQuestions.length - Object.keys(userAnswers).length;
+            if (unanswered > 0) {
+                showNotification(`⚠️ Please answer all questions. ${unanswered} remaining.`, 'warning');
+                return;
+            }
+
+            let score = 0;
+            quizSubmitted = true;
+
+            quizQuestions.forEach((q, index) => {
+                const questionCard = document.getElementById(`question-${index}`);
+                const feedback = document.getElementById(`feedback-${index}`);
+                const userAnswer = userAnswers[index];
+
+                document.querySelectorAll(`#question-${index} .option-item`).forEach((opt, optIndex) => {
+                    opt.classList.remove('selected');
+                    opt.style.pointerEvents = 'none';
+                    
+                    if (optIndex === q.correct) {
+                        opt.classList.add('correct-answer');
+                    }
+                    if (userAnswer === optIndex && optIndex !== q.correct) {
+                        opt.classList.add('wrong-answer');
+                    }
+                });
+
+                if (userAnswer === q.correct) {
+                    score++;
+                    questionCard.classList.add('correct');
+                    feedback.className = 'feedback show correct';
+                    feedback.innerHTML = `<span class="feedback-icon">✅</span><span><strong>Correct!</strong> ${q.explanation}</span>`;
+                } else {
+                    questionCard.classList.add('incorrect');
+                    feedback.className = 'feedback show incorrect';
+                    const correctLetter = String.fromCharCode(65 + q.correct);
+                    feedback.innerHTML = `<span class="feedback-icon">❌</span><span><strong>Incorrect.</strong> The correct answer is <strong>${correctLetter}</strong>. ${q.explanation}</span>`;
+                }
+            });
+
+            // Calculate and display score
+            const percentage = Math.round((score / quizQuestions.length) * 100);
+            document.getElementById('scoreNumber').textContent = `${score}/${quizQuestions.length}`;
+            document.getElementById('scorePercentage').textContent = `${percentage}%`;
+            
+            setTimeout(() => {
+                document.getElementById('progressFill').style.width = `${percentage}%`;
+            }, 100);
+            
+            let feedbackMessage = '';
+            let icon = '';
+            
+            if (percentage >= 90) {
+                feedbackMessage = '🌟 Outstanding! You have an excellent understanding of Alternating Current!';
+                icon = '🏆';
+            } else if (percentage >= 75) {
+                feedbackMessage = '👏 Great work! You understand AC well. Review the concepts you missed.';
+                icon = '🥇';
+            } else if (percentage >= 60) {
+                feedbackMessage = '👍 Good effort! Practice more with the simulations to strengthen your understanding.';
+                icon = '📚';
+            } else if (percentage >= 40) {
+                feedbackMessage = '📖 Keep studying! Focus on why AC is used for power transmission.';
+                icon = '💪';
+            } else {
+                feedbackMessage = '🔄 Review the lesson again, especially the advantages of AC and how transformers work.';
+                icon = '📝';
+            }
+            
+            document.getElementById('scoreIcon').textContent = icon;
+            document.getElementById('scoreFeedback').textContent = feedbackMessage;
+            document.getElementById('scoreContainer').classList.add('show');
+
+            // Save completion data
+            localStorage.setItem('ac_lesson1_completed', 'true');
+            localStorage.setItem('ac_lesson1_score', score.toString());
+            localStorage.setItem('ac_lesson1_percentage', percentage.toString());
+            localStorage.setItem('ac_lesson1_completedDate', new Date().toISOString());
+
+            document.getElementById('submitQuiz').style.display = 'none';
+
+            setTimeout(() => {
+                document.getElementById('scoreContainer').scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        }
+
+        function retryQuiz() {
+            quizSubmitted = false;
+            userAnswers = {};
+            
+            localStorage.removeItem('ac_lesson1_answers');
+            localStorage.removeItem('ac_lesson1_completed');
+            localStorage.removeItem('ac_lesson1_score');
+            localStorage.removeItem('ac_lesson1_percentage');
+            
+            document.getElementById('scoreContainer').classList.remove('show');
+            document.getElementById('submitQuiz').style.display = 'flex';
+            
+            initQuiz();
+            
+            showNotification('🔄 Quiz reset. Try again!', 'info');
+            
+            setTimeout(() => {
+                document.getElementById('quiz').scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        }
+
+        // =====================
+        // PROGRESS MANAGEMENT
+        // =====================
+        function saveProgress() {
+            localStorage.setItem('ac_lesson1_answers', JSON.stringify(userAnswers));
+            localStorage.setItem('ac_lesson1_lastVisited', new Date().toISOString());
+        }
+
+        function loadProgress() {
+            const savedAnswers = localStorage.getItem('ac_lesson1_answers');
+            if (savedAnswers) {
+                userAnswers = JSON.parse(savedAnswers);
+                
+                Object.keys(userAnswers).forEach(questionIndex => {
+                    const optionIndex = userAnswers[questionIndex];
+                    const optionElement = document.getElementById(`option-${questionIndex}-${optionIndex}`);
+                    if (optionElement) {
+                        optionElement.classList.add('selected');
+                    }
+                });
+                
+                showNotification('📂 Previous progress loaded!', 'success');
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            document.querySelectorAll('.notification').forEach(n => n.remove());
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `<span>${message}</span>`;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100px)';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // =====================
+        // NAVIGATION
+        // =====================
+        function goToPrevious() {
+            saveProgress();
+            showNotification('📖 Going to Electrical Machines topic', 'info');
+            setTimeout(() => {
+                alert('Navigating to Previous Topic: Electrical Machines Consolidation');
+                // In production: window.location.href = 'electrical-machines-lesson4.html';
+            }, 500);
+        }
+
+        function goToNext() {
+            saveProgress();
+            showNotification('📖 Going to Lesson 2: AC Calculations', 'info');
+            setTimeout(() => {
+                alert('Navigating to Lesson 2: AC Calculations (RMS, Peak Values)');
+                // In production: window.location.href = 'ac-lesson2.html';
+            }, 500);
+        }
+
+        // =====================
+        // EVENT LISTENERS
+        // =====================
+        document.getElementById('frequency').addEventListener('input', function() {
+            document.getElementById('freqValue').textContent = this.value;
+            drawACWaveform();
+        });
+
+        document.getElementById('voltage').addEventListener('input', function() {
+            document.getElementById('voltValue').textContent = this.value;
+            drawACWaveform();
+        });
+
+        document.getElementById('power').addEventListener('input', function() {
+            document.getElementById('powerValue').textContent = this.value;
+            drawACWaveform();
+        });
+
+        document.getElementById('primaryTurns').addEventListener('input', function() {
+            document.getElementById('primaryValue').textContent = this.value;
+            drawTransformer();
+        });
+
+        document.getElementById('secondaryTurns').addEventListener('input', function() {
+            document.getElementById('secondaryValue').textContent = this.value;
+            drawTransformer();
+        });
+
+        // =====================
+        // INITIALIZATION
+        // =====================
+        window.addEventListener('load', function() {
+            initACCanvas();
+            initTransCanvas();
+            initQuiz();
+        });
+
+        window.addEventListener('resize', function() {
+            initACCanvas();
+            initTransCanvas();
+        });
+    </script>
+</body>
+</html>
