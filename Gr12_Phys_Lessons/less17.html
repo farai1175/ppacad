@@ -1,1080 +1,2652 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grade 12 Physical Sciences: Doppler Effect Equations</title>
+    <title>Doppler Effect Calculations - Lesson 2 | PassProof Academy</title>
     <style>
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --accent-color: #e74c3c;
-            --light-color: #ecf0f1;
-            --dark-color: #34495e;
-            --success-color: #27ae60;
-            --warning-color: #f39c12;
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
+        :root {
+            --primary-blue: #1a73e8;
+            --light-blue: #e8f0fe;
+            --dark-blue: #0d47a1;
+            --white: #ffffff;
+            --gray: #f5f5f5;
+            --dark-gray: #333;
+            --success: #34a853;
+            --error: #ea4335;
+            --warning: #fbbc04;
+            --purple: #9c27b0;
+            --teal: #00897b;
+            --orange: #ff6d00;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-lg: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
         body {
-            line-height: 1.6;
-            color: #333;
-            background-color: #f9f9f9;
-            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gray);
+            color: var(--dark-gray);
+            line-height: 1.7;
         }
-        
-        .lesson-container {
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: var(--white);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header-container {
             max-width: 1200px;
             margin: 0 auto;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-        
-        .lesson-header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        
-        .lesson-title {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-        
-        .lesson-meta {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            margin-top: 15px;
-        }
-        
-        .meta-item {
-            margin: 5px 10px;
-        }
-        
-        .lesson-content {
-            padding: 20px;
-        }
-        
-        .section {
-            margin-bottom: 30px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        
-        .section-header {
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 15px;
-            cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: background-color 0.3s;
         }
-        
-        .section-header:hover {
-            background-color: var(--dark-color);
-        }
-        
-        .section-header h2 {
-            font-size: 1.4rem;
-            margin: 0;
-        }
-        
-        .toggle-icon {
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-        
-        .section-content {
-            padding: 20px;
-            display: none;
-        }
-        
-        .section.active .section-content {
-            display: block;
-        }
-        
-        .objective-list, .overview-content, .main-content {
-            margin-bottom: 20px;
-        }
-        
-        .objective-list li, .overview-content p, .main-content p {
-            margin-bottom: 10px;
-        }
-        
-        .example-box {
-            background-color: #f8f9fa;
-            border-left: 4px solid var(--secondary-color);
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 0 5px 5px 0;
-        }
-        
-        .example-title {
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: var(--primary-color);
-        }
-        
-        .formula-box {
-            background-color: #e8f4f8;
-            border: 1px solid var(--secondary-color);
-            border-radius: 5px;
-            padding: 15px;
-            margin: 15px 0;
-            text-align: center;
-        }
-        
-        .formula {
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin: 10px 0;
-            color: var(--primary-color);
-        }
-        
-        .calculator {
-            background-color: #f8f9fa;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        
-        .calculator h3 {
-            margin-bottom: 15px;
-            color: var(--primary-color);
-        }
-        
-        .input-group {
-            margin: 10px 0;
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        
-        .input-group label {
-            width: 200px;
-            margin-right: 10px;
-        }
-        
-        .input-group input, .input-group select {
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            width: 150px;
-        }
-        
-        .question-container {
-            margin-bottom: 20px;
-            padding: 15px;
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
-        }
-        
-        .question-text {
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        
-        .options-container {
-            margin: 10px 0;
-        }
-        
-        .option {
-            margin: 8px 0;
-            display: flex;
-            align-items: flex-start;
-        }
-        
-        .option input {
-            margin-right: 10px;
-            margin-top: 5px;
-        }
-        
-        .feedback {
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 5px;
-            display: none;
-        }
-        
-        .correct {
-            background-color: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
-        }
-        
-        .incorrect {
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
-        }
-        
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-        }
-        
-        .btn {
-            padding: 10px 20px;
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        .btn:hover {
-            background-color: var(--dark-color);
-        }
-        
-        .btn:disabled {
-            background-color: #bdc3c7;
-            cursor: not-allowed;
-        }
-        
-        .btn-success {
-            background-color: var(--success-color);
-        }
-        
-        .btn-warning {
-            background-color: var(--warning-color);
-        }
-        
-        .results-container {
-            text-align: center;
-            padding: 20px;
-            margin-top: 20px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            display: none;
-        }
-        
-        .score {
+
+        .logo {
             font-size: 1.5rem;
             font-weight: bold;
-            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        
-        .score-percentage {
-            color: var(--accent-color);
-            font-size: 2rem;
+
+        .nav-container {
+            position: relative;
         }
-        
-        .diagram-container {
-            text-align: center;
-            margin: 20px 0;
-            padding: 15px;
-            background-color: #f5f5f5;
+
+        .nav-toggle {
+            background: var(--white);
+            color: var(--primary-blue);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-toggle:hover {
+            background: var(--light-blue);
+            transform: scale(1.05);
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: calc(100% + 10px);
+            background: var(--white);
+            min-width: 280px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            animation: slideDown 0.3s ease;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-header {
+            background: var(--light-blue);
+            padding: 0.75rem 1rem;
+            font-weight: 600;
+            color: var(--dark-blue);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .dropdown-menu a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.85rem 1rem;
+            color: var(--dark-gray);
+            text-decoration: none;
+            border-bottom: 1px solid var(--gray);
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+            padding-left: 1.5rem;
+        }
+
+        .dropdown-menu a.active {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .subject-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .grade-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: linear-gradient(135deg, var(--purple), #7b1fa2);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .week-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: linear-gradient(135deg, var(--teal), #00695c);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .lesson-meta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .meta-item {
+            background: var(--light-blue);
+            padding: 0.5rem 1rem;
             border-radius: 8px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        
-        .diagram {
-            max-width: 100%;
-            height: auto;
+
+        h1 {
+            color: var(--dark-blue);
+            font-size: 2.2rem;
+            margin: 1rem 0;
+            line-height: 1.3;
         }
-        
-        .exercise-container {
-            background-color: #f8f9fa;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
+
+        h2 {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--light-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        
-        .exercise-title {
+
+        h3 {
+            color: var(--dark-blue);
+            font-size: 1.25rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        h4 {
+            color: var(--dark-gray);
+            font-size: 1.1rem;
+            margin: 1rem 0 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .objective-list {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .objective-list li {
+            background: linear-gradient(135deg, var(--light-blue), var(--white));
+            padding: 1rem 1rem 1rem 3rem;
+            margin-bottom: 0.75rem;
+            border-radius: 12px;
+            position: relative;
+            border-left: 4px solid var(--primary-blue);
+            transition: transform 0.3s ease;
+        }
+
+        .objective-list li:hover {
+            transform: translateX(5px);
+        }
+
+        .objective-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 1rem;
+            color: var(--success);
             font-weight: bold;
-            margin-bottom: 15px;
-            color: var(--primary-color);
             font-size: 1.2rem;
         }
-        
-        .exercise-part {
-            margin: 15px 0;
-            padding: 10px;
-            border-left: 3px solid var(--secondary-color);
-            background-color: white;
+
+        /* Formula Box Styles */
+        .formula-container {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .formula-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--purple), var(--teal));
+        }
+
+        .formula-title {
+            color: var(--white);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .formula-main {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            display: inline-block;
+            margin: 1rem 0;
+        }
+
+        .formula-text {
+            color: var(--white);
+            font-size: 2rem;
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+        }
+
+        .formula-fraction {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            margin: 0 0.5rem;
+        }
+
+        .fraction-top, .fraction-bottom {
+            padding: 0.25rem 0.5rem;
+        }
+
+        .fraction-line {
+            width: 100%;
+            height: 2px;
+            background: var(--white);
+        }
+
+        .formula-subscript {
+            font-size: 0.6em;
+            vertical-align: sub;
+        }
+
+        .formula-legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+            text-align: left;
+        }
+
+        .legend-item {
+            background: rgba(255,255,255,0.05);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .legend-symbol {
+            background: var(--primary-blue);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .legend-desc {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Equation Application Cards */
+        .equation-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .equation-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--primary-blue);
+            transition: transform 0.3s ease;
+        }
+
+        .equation-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .equation-card.approaching {
+            border-top-color: var(--success);
+        }
+
+        .equation-card.receding {
+            border-top-color: var(--error);
+        }
+
+        .equation-card h4 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .equation-card .formula {
+            background: var(--gray);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-family: 'Times New Roman', serif;
+            font-size: 1.3rem;
+            font-style: italic;
+            margin: 1rem 0;
+        }
+
+        /* Worked Example Styles */
+        .worked-example {
+            background: linear-gradient(135deg, #fff9e6, #fffdf5);
+            border: 2px solid var(--warning);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .worked-example::before {
+            content: '📝 Worked Example';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--warning);
+            color: var(--dark-gray);
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .example-problem {
+            background: var(--white);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--warning);
+        }
+
+        .example-solution {
+            background: #e8f5e9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .solution-step {
+            background: var(--white);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 0.75rem 0;
+            border-left: 4px solid var(--success);
+        }
+
+        .solution-step h5 {
+            color: var(--success);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .calculation {
+            background: var(--gray);
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 0.5rem 0;
+            overflow-x: auto;
+        }
+
+        .answer-box {
+            background: linear-gradient(135deg, var(--success), #2e7d32);
+            color: var(--white);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        /* Concept Box */
+        .concept-box {
+            background: linear-gradient(135deg, var(--light-blue), var(--white));
+            border-left: 5px solid var(--primary-blue);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+            border-left: 5px solid var(--success);
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 12px 12px 0;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .tip-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fff3e0, #fff8e1);
+            border-left: 5px solid var(--warning);
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e3f2fd, #e1f5fe);
+            border-left: 5px solid var(--primary-blue);
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        /* Unit Conversion Table */
+        .conversion-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .conversion-table th {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .conversion-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--gray);
+        }
+
+        .conversion-table tr:nth-child(even) {
+            background: var(--light-blue);
+        }
+
+        .conversion-table tr:hover {
+            background: #d0e4fc;
+        }
+
+        /* Simulation Styles */
+        .simulation-container {
+            background: var(--white);
+            border: 2px solid var(--primary-blue);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .simulation-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .simulation-header h3 {
+            margin: 0;
+        }
+
+        .sim-badge {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .calculator-container {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 16px;
+            padding: 2rem;
+            color: var(--white);
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .calc-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .calc-input-group label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .calc-input-group input, .calc-input-group select {
+            padding: 0.75rem 1rem;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .calc-input-group input:focus, .calc-input-group select:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .calc-input-group input::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .calc-input-group select option {
+            background: var(--dark-gray);
+            color: var(--white);
+        }
+
+        .calc-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+
+        .calc-btn {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: var(--white);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .calc-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(26, 115, 232, 0.4);
+        }
+
+        .calc-btn.success {
+            background: linear-gradient(135deg, var(--success), #2e7d32);
+        }
+
+        .calc-btn.danger {
+            background: linear-gradient(135deg, var(--error), #c62828);
+        }
+
+        .calc-result {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4fc3f7;
+        }
+
+        .result-unit {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .calc-steps {
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .calc-steps.visible {
+            display: block;
+        }
+
+        .calc-steps .step {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .calc-steps .step:last-child {
+            border-bottom: none;
+        }
+
+        /* Visual Simulation */
+        .visual-sim {
+            background: linear-gradient(to bottom, #87ceeb 0%, #87ceeb 70%, #4a4a4a 70%);
+            height: 300px;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .road-markings {
+            position: absolute;
+            bottom: 15%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: repeating-linear-gradient(
+                90deg,
+                #fff 0px,
+                #fff 40px,
+                transparent 40px,
+                transparent 80px
+            );
+        }
+
+        .sim-vehicle {
+            position: absolute;
+            bottom: 35%;
+            transition: left 0.05s linear;
+        }
+
+        .ambulance {
+            width: 100px;
+            height: 50px;
+            background: linear-gradient(to bottom, #fff 0%, #fff 60%, #e74c3c 60%);
+            border-radius: 10px 10px 5px 5px;
+            position: relative;
+        }
+
+        .ambulance::before {
+            content: '🚑';
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+        }
+
+        .ambulance-wheel {
+            position: absolute;
+            bottom: -8px;
+            width: 16px;
+            height: 16px;
+            background: #333;
+            border-radius: 50%;
+        }
+
+        .ambulance-wheel.front { right: 10px; }
+        .ambulance-wheel.back { left: 10px; }
+
+        .sim-observer {
+            position: absolute;
+            bottom: 32%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.5rem;
+            z-index: 10;
+        }
+
+        .wave-circles {
+            position: absolute;
+            bottom: 45%;
+            pointer-events: none;
+        }
+
+        .sim-info-panel {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .info-card {
+            background: rgba(0,0,0,0.7);
+            color: var(--white);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .info-card .value {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #4fc3f7;
+        }
+
+        .info-card .label {
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+
+        /* Accordion */
+        .accordion {
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            background: linear-gradient(135deg, var(--light-blue), var(--white));
+            padding: 1.25rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .accordion-header:hover {
+            background: var(--light-blue);
+        }
+
+        .accordion-icon {
+            font-size: 1.25rem;
+            transition: transform 0.3s ease;
+            color: var(--primary-blue);
+        }
+
+        .accordion-header.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            background: var(--white);
+        }
+
+        .accordion-content.active {
+            padding: 1.5rem;
+            max-height: 3000px;
+        }
+
+        /* Quiz Styles */
+        .quiz-container {
+            margin-top: 2rem;
+        }
+
+        .question-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary-blue);
+        }
+
+        .question-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .question-number {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: var(--white);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            color: var(--dark-gray);
+        }
+
+        .question-context {
+            background: var(--gray);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            background: var(--gray);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .option-label:hover {
+            background: var(--light-blue);
+            border-color: var(--primary-blue);
+        }
+
+        .option-label input {
+            margin-right: 1rem;
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary-blue);
+        }
+
+        .option-label.correct {
+            background: #e8f5e9;
+            border-color: var(--success);
+        }
+
+        .option-label.incorrect {
+            background: #ffebee;
+            border-color: var(--error);
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #e8f5e9;
+            color: #2e7d32;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            color: #c62828;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .feedback-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .submit-quiz-btn {
+            background: linear-gradient(135deg, var(--success), #2e7d32);
+            color: var(--white);
+            border: none;
+            padding: 1.25rem 2.5rem;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .submit-quiz-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 25px rgba(52, 168, 83, 0.4);
+        }
+
+        .score-container {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .score-container.visible {
+            display: block;
+            animation: scaleIn 0.5s ease;
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .score-value {
+            font-size: 4rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .progress-bar {
+            background: rgba(255,255,255,0.2);
+            height: 25px;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4fc3f7, #fff);
+            border-radius: 15px;
+            transition: width 1.5s ease;
+        }
+
+        .score-message {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+        }
+
+        .score-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        /* Navigation Buttons */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 2.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: var(--white);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(26, 115, 232, 0.4);
+        }
+
+        .nav-btn.prev {
+            background: linear-gradient(135deg, #757575, #616161);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--dark-blue), #0a2540);
+            color: var(--white);
+            text-align: center;
+            padding: 2.5rem 1rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .copyright {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Progress Indicator */
+        .progress-indicator {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: var(--white);
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: var(--shadow-lg);
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .progress-indicator:hover {
+            transform: scale(1.1);
+        }
+
+        /* Mobile Responsive */
         @media (max-width: 768px) {
-            .lesson-meta {
+            .header-container {
                 flex-direction: column;
-                align-items: flex-start;
+                gap: 1rem;
             }
-            
-            .meta-item {
-                margin: 5px 0;
+
+            h1 {
+                font-size: 1.6rem;
             }
-            
-            .section-header h2 {
-                font-size: 1.2rem;
+
+            .card {
+                padding: 1.5rem;
             }
-            
-            .input-group {
+
+            .formula-text {
+                font-size: 1.5rem;
+            }
+
+            .formula-legend {
+                grid-template-columns: 1fr;
+            }
+
+            .calc-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .visual-sim {
+                height: 250px;
+            }
+
+            .lesson-nav {
                 flex-direction: column;
-                align-items: flex-start;
             }
-            
-            .input-group label {
+
+            .nav-btn {
+                justify-content: center;
                 width: 100%;
-                margin-bottom: 5px;
             }
-            
-            .formula {
-                font-size: 1.4rem;
+
+            .score-value {
+                font-size: 3rem;
+            }
+
+            .progress-indicator {
+                width: 55px;
+                height: 55px;
+                font-size: 0.85rem;
+            }
+
+            .sim-info-panel {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .info-card {
+                min-width: 100px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="lesson-container">
-        <div class="lesson-header">
-            <h1 class="lesson-title">Doppler Effect Equations</h1>
+    <!-- Header with Dropdown Navigation -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <span>🎓</span>
+                <span>PassProof Academy</span>
+            </div>
+            <nav class="nav-container">
+                <button class="nav-toggle" onclick="toggleNav()">
+                    <span>☰</span>
+                    <span>Menu</span>
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <div class="dropdown-header">Navigation</div>
+                    <a href="#" onclick="navigateTo('home')">🏠 Home</a>
+                    <a href="#" onclick="navigateTo('subjects')">📚 All Subjects</a>
+                    <a href="#" onclick="navigateTo('physics')">⚛️ Physical Sciences</a>
+                    <div class="dropdown-header">Doppler Effect</div>
+                    <a href="#" onclick="navigateTo('lesson1')">📖 Lesson 1: Introduction</a>
+                    <a href="#" onclick="navigateTo('lesson2')" class="active">📖 Lesson 2: Calculations</a>
+                    <a href="#" onclick="navigateTo('lesson3')">📖 Lesson 3: Applications</a>
+                    <div class="dropdown-header">Student</div>
+                    <a href="#" onclick="navigateTo('progress')">📊 My Progress</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Subject and Grade Section -->
+        <div class="card">
+            <div class="badge-container">
+                <span class="subject-badge">⚛️ Physical Sciences</span>
+                <span class="grade-badge">📚 Grade 12</span>
+                <span class="week-badge">📅 Week 12</span>
+            </div>
+            
             <div class="lesson-meta">
-                <div class="meta-item"><strong>Grade:</strong> 12</div>
-                <div class="meta-item"><strong>Subject:</strong> Physical Sciences</div>
-                <div class="meta-item"><strong>Week:</strong> 12</div>
-                <div class="meta-item"><strong>Topic:</strong> Doppler Effect</div>
-                <div class="meta-item"><strong>Lesson:</strong> 2</div>
+                <span class="meta-item">📆 Term 2</span>
+                <span class="meta-item" id="lessonProgress">📈 Progress: Loading...</span>
+            </div>
+
+            <h1>🔢 Doppler Effect Calculations</h1>
+            <p style="font-size: 1.15rem; color: var(--dark-gray);"><strong>Sub-topic:</strong> Using the Doppler Equation</p>
+            <p style="font-size: 1.25rem; color: var(--primary-blue); font-weight: 500;"><strong>Lesson 2:</strong> Calculating Observed Frequency</p>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="card">
+            <h2>🎯 Learning Objectives</h2>
+            <p>At the end of this lesson, learners should be able to:</p>
+            <ul class="objective-list">
+                <li>Use the Doppler equation to calculate the frequency of sound detected by a listener</li>
+                <li>Apply the equation when the listener is stationary and the source is moving</li>
+                <li>Apply the equation when the source is stationary and the listener is moving</li>
+                <li>Correctly identify when to add or subtract velocities in the equation</li>
+                <li>Convert units appropriately (km/h to m/s, kHz to Hz)</li>
+            </ul>
+        </div>
+
+        <!-- Pre-Knowledge Review -->
+        <div class="card">
+            <h2>📚 Pre-Knowledge Review</h2>
+            
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>🔢 Units of Frequency</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p><strong>Frequency is measured in Hertz (Hz)</strong></p>
+                    <p>1 Hz = 1 wave per second</p>
+                    <p>Common conversions:</p>
+                    <ul>
+                        <li>1 kHz (kilohertz) = 1000 Hz = 10³ Hz</li>
+                        <li>1 MHz (megahertz) = 1,000,000 Hz = 10⁶ Hz</li>
+                    </ul>
+                    <div class="calculation">
+                        Example: 20 kHz = 20 × 10³ Hz = 20,000 Hz
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>🚗 Speed Unit Conversions</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p><strong>Converting km/h to m/s:</strong></p>
+                    <p>Divide by 3.6 (or multiply by 1000/3600)</p>
+                    <div class="calculation">
+                        72 km/h = 72 ÷ 3.6 = 20 m/s
+                    </div>
+                    <table class="conversion-table">
+                        <tr>
+                            <th>km/h</th>
+                            <th>m/s</th>
+                        </tr>
+                        <tr><td>36</td><td>10</td></tr>
+                        <tr><td>72</td><td>20</td></tr>
+                        <tr><td>108</td><td>30</td></tr>
+                        <tr><td>180</td><td>50</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>🔊 Speed of Sound</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p>The speed of sound in air at room temperature is approximately <strong>340 m/s</strong></p>
+                    <p>This value may vary slightly depending on temperature and altitude, but for most calculations, we use 340 m/s as the standard value.</p>
+                </div>
             </div>
         </div>
-        
-        <div class="lesson-content">
-            <div class="section" id="objectives">
-                <div class="section-header">
-                    <h2>Learning Objectives</h2>
-                    <span class="toggle-icon">+</span>
-                </div>
-                <div class="section-content">
-                    <p>By the end of this lesson, learners should be able to:</p>
-                    <ul class="objective-list">
-                        <li>Use the Doppler equation to calculate observed frequency</li>
-                        <li>Apply the correct sign convention for moving sources and listeners</li>
-                        <li>Solve problems involving both approaching and receding motion</li>
-                        <li>Convert between different units of speed (km/h to m/s)</li>
-                        <li>Interpret real-world scenarios using Doppler effect calculations</li>
-                    </ul>
-                </div>
-            </div>
+
+        <!-- The Doppler Equation -->
+        <div class="card">
+            <h2>📐 The Doppler Equation</h2>
             
-            <div class="section" id="overview">
-                <div class="section-header">
-                    <h2>Overview</h2>
-                    <span class="toggle-icon">+</span>
+            <p>The Doppler equation allows us to calculate the frequency of sound waves that a listener hears when there is relative motion between the source and the listener.</p>
+
+            <div class="formula-container">
+                <div class="formula-title">The Doppler Equation for Sound</div>
+                <div class="formula-main">
+                    <span class="formula-text">
+                        f<sub>L</sub> = 
+                        <span class="formula-fraction">
+                            <span class="fraction-top">v ± v<sub>L</sub></span>
+                            <span class="fraction-line"></span>
+                            <span class="fraction-bottom">v ∓ v<sub>S</sub></span>
+                        </span>
+                        × f<sub>S</sub>
+                    </span>
                 </div>
-                <div class="section-content">
-                    <div class="overview-content">
-                        <p>This lesson focuses on the mathematical formulation of the Doppler Effect. We'll learn to use the Doppler equation to calculate the frequency heard by a listener when either the source or listener is moving.</p>
-                        
-                        <div class="formula-box">
-                            <h3>The Doppler Equation</h3>
-                            <div class="formula">f<sub>L</sub> = (v ± v<sub>L</sub>) / (v ± v<sub>S</sub>) × f<sub>S</sub></div>
-                            <p>Where:</p>
-                            <p>f<sub>L</sub> = frequency heard by listener (Hz)</p>
-                            <p>f<sub>S</sub> = frequency emitted by source (Hz)</p>
-                            <p>v = speed of sound in air (340 m/s)</p>
-                            <p>v<sub>S</sub> = speed of source (m/s)</p>
-                            <p>v<sub>L</sub> = speed of listener (m/s)</p>
-                        </div>
-                        
-                        <div class="diagram-container">
-                            <h3>Sign Convention Guide</h3>
-                            <svg class="diagram" width="500" height="300" viewBox="0 0 500 300">
-                                <!-- Source moving toward listener -->
-                                <rect x="50" y="50" width="80" height="40" fill="#e74c3c" rx="5" />
-                                <text x="90" y="75" text-anchor="middle" fill="white">Source</text>
-                                <line x1="130" y1="70" x2="170" y2="70" stroke="#e74c3c" stroke-width="2" />
-                                <polygon points="170,70 165,65 170,70 165,75" fill="#e74c3c" />
-                                <text x="100" y="40" text-anchor="middle" fill="#2c3e50">Moving toward listener</text>
-                                <text x="100" y="110" text-anchor="middle" fill="#2c3e50">Use: v - v<sub>S</sub></text>
-                                
-                                <!-- Source moving away from listener -->
-                                <rect x="50" y="150" width="80" height="40" fill="#e74c3c" rx="5" />
-                                <text x="90" y="175" text-anchor="middle" fill="white">Source</text>
-                                <line x1="50" y1="170" x2="10" y2="170" stroke="#e74c3c" stroke-width="2" />
-                                <polygon points="10,170 15,165 10,170 15,175" fill="#e74c3c" />
-                                <text x="100" y="140" text-anchor="middle" fill="#2c3e50">Moving away from listener</text>
-                                <text x="100" y="210" text-anchor="middle" fill="#2c3e50">Use: v + v<sub>S</sub></text>
-                                
-                                <!-- Listener moving toward source -->
-                                <rect x="300" y="50" width="80" height="40" fill="#3498db" rx="5" />
-                                <text x="340" y="75" text-anchor="middle" fill="white">Listener</text>
-                                <line x1="300" y1="70" x2="260" y2="70" stroke="#3498db" stroke-width="2" />
-                                <polygon points="260,70 265,65 260,70 265,75" fill="#3498db" />
-                                <text x="340" y="40" text-anchor="middle" fill="#2c3e50">Moving toward source</text>
-                                <text x="340" y="110" text-anchor="middle" fill="#2c3e50">Use: v + v<sub>L</sub></text>
-                                
-                                <!-- Listener moving away from source -->
-                                <rect x="300" y="150" width="80" height="40" fill="#3498db" rx="5" />
-                                <text x="340" y="175" text-anchor="middle" fill="white">Listener</text>
-                                <line x1="380" y1="170" x2="420" y2="170" stroke="#3498db" stroke-width="2" />
-                                <polygon points="420,170 415,165 420,170 415,175" fill="#3498db" />
-                                <text x="340" y="140" text-anchor="middle" fill="#2c3e50">Moving away from source</text>
-                                <text x="340" y="210" text-anchor="middle" fill="#2c3e50">Use: v - v<sub>L</sub></text>
-                            </svg>
-                        </div>
+                <div class="formula-legend">
+                    <div class="legend-item">
+                        <span class="legend-symbol">f<sub>L</sub></span>
+                        <span class="legend-desc">Frequency heard by listener (Hz)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-symbol">f<sub>S</sub></span>
+                        <span class="legend-desc">Frequency emitted by source (Hz)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-symbol">v</span>
+                        <span class="legend-desc">Speed of sound in air (≈340 m/s)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-symbol">v<sub>L</sub></span>
+                        <span class="legend-desc">Speed of listener (m/s)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-symbol">v<sub>S</sub></span>
+                        <span class="legend-desc">Speed of source (m/s)</span>
                     </div>
                 </div>
             </div>
+
+            <h3>When to Use + or - Signs</h3>
             
-            <div class="section" id="main-body">
-                <div class="section-header">
-                    <h2>Main Body</h2>
-                    <span class="toggle-icon">+</span>
+            <div class="equation-cards">
+                <div class="equation-card approaching">
+                    <h4>🟢 Moving Towards Each Other</h4>
+                    <p>When source and listener move <strong>towards</strong> each other:</p>
+                    <div class="formula">
+                        f<sub>L</sub> = (v + v<sub>L</sub>) / (v - v<sub>S</sub>) × f<sub>S</sub>
+                    </div>
+                    <p style="text-align: center; color: var(--success); font-weight: bold;">
+                        ↑ Higher frequency (higher pitch)
+                    </p>
                 </div>
-                <div class="section-content">
-                    <div class="main-content">
-                        <h3>Understanding the Doppler Equation</h3>
-                        <p>The Doppler equation allows us to calculate the frequency heard by a listener when there is relative motion between the source and listener. The key is using the correct sign convention based on the direction of motion.</p>
-                        
-                        <div class="example-box">
-                            <div class="example-title">Worked Example: Ambulance Siren</div>
-                            <p>An ambulance moving at 15 m/s emits a siren at 1000 Hz. Calculate the frequency heard by a stationary listener when:</p>
-                            <p>a) The ambulance is moving toward the listener</p>
-                            <p>b) The ambulance is moving away from the listener</p>
-                            <p><strong>Solution:</strong></p>
-                            <p>Given: v = 340 m/s, v<sub>S</sub> = 15 m/s, f<sub>S</sub> = 1000 Hz, v<sub>L</sub> = 0 m/s</p>
-                            <p>a) Source moving toward listener: f<sub>L</sub> = v / (v - v<sub>S</sub>) × f<sub>S</sub></p>
-                            <p>f<sub>L</sub> = 340 / (340 - 15) × 1000 = 340 / 325 × 1000 = 1046.15 Hz</p>
-                            <p>b) Source moving away from listener: f<sub>L</sub> = v / (v + v<sub>S</sub>) × f<sub>S</sub></p>
-                            <p>f<sub>L</sub> = 340 / (340 + 15) × 1000 = 340 / 355 × 1000 = 957.75 Hz</p>
+                <div class="equation-card receding">
+                    <h4>🔴 Moving Away From Each Other</h4>
+                    <p>When source and listener move <strong>away from</strong> each other:</p>
+                    <div class="formula">
+                        f<sub>L</sub> = (v - v<sub>L</sub>) / (v + v<sub>S</sub>) × f<sub>S</sub>
+                    </div>
+                    <p style="text-align: center; color: var(--error); font-weight: bold;">
+                        ↓ Lower frequency (lower pitch)
+                    </p>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <div>
+                    <strong>Memory Tip:</strong> When approaching, the fraction should be greater than 1 (larger numerator, smaller denominator) to give a higher frequency. When receding, the fraction should be less than 1 to give a lower frequency.
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Important:</strong> If the listener is stationary, v<sub>L</sub> = 0. If the source is stationary, v<sub>S</sub> = 0. Always convert speeds to m/s before calculating!
+            </div>
+        </div>
+
+        <!-- Worked Examples -->
+        <div class="card">
+            <h2>✏️ Worked Examples</h2>
+
+            <!-- Example 1 -->
+            <div class="worked-example">
+                <h4 style="margin-top: 1rem;">Ambulance Approaching a Stationary Listener</h4>
+                <div class="example-problem">
+                    <p>The siren of an ambulance emits waves at a frequency of 1000 Hz. Determine the frequency of the sound heard by a stationary listener when the ambulance is moving <strong>towards</strong> the listener at a speed of 15 m/s.</p>
+                    <p><em>Use speed of sound = 340 m/s</em></p>
+                </div>
+                <div class="example-solution">
+                    <div class="solution-step">
+                        <h5>📋 Step 1: Identify Given Information</h5>
+                        <ul>
+                            <li>f<sub>S</sub> = 1000 Hz (source frequency)</li>
+                            <li>v<sub>S</sub> = 15 m/s (source moving towards)</li>
+                            <li>v<sub>L</sub> = 0 m/s (listener stationary)</li>
+                            <li>v = 340 m/s (speed of sound)</li>
+                        </ul>
+                    </div>
+                    <div class="solution-step">
+                        <h5>📝 Step 2: Choose the Correct Equation</h5>
+                        <p>Source approaching listener → use minus in denominator:</p>
+                        <div class="calculation">
+                            f<sub>L</sub> = (v + v<sub>L</sub>) / (v - v<sub>S</sub>) × f<sub>S</sub>
                         </div>
-                        
-                        <h3>Interactive Doppler Calculator</h3>
-                        <div class="calculator">
-                            <div class="input-group">
-                                <label for="source-freq">Source Frequency (Hz):</label>
-                                <input type="number" id="source-freq" value="1000" step="10">
-                            </div>
-                            <div class="input-group">
-                                <label for="sound-speed">Speed of Sound (m/s):</label>
-                                <input type="number" id="sound-speed" value="340" step="1">
-                            </div>
-                            <div class="input-group">
-                                <label for="source-speed">Source Speed (m/s):</label>
-                                <input type="number" id="source-speed" value="15" step="1">
-                            </div>
-                            <div class="input-group">
-                                <label for="listener-speed">Listener Speed (m/s):</label>
-                                <input type="number" id="listener-speed" value="0" step="1">
-                            </div>
-                            <div class="input-group">
-                                <label for="motion-type">Motion Type:</label>
-                                <select id="motion-type">
-                                    <option value="toward">Source moving toward listener</option>
-                                    <option value="away">Source moving away from listener</option>
-                                    <option value="listener-toward">Listener moving toward source</option>
-                                    <option value="listener-away">Listener moving away from source</option>
-                                    <option value="both-toward">Both moving toward each other</option>
-                                    <option value="both-away">Both moving away from each other</option>
-                                </select>
-                            </div>
-                            <button id="calculate-doppler" class="btn">Calculate Observed Frequency</button>
-                            <div id="calculation-result" style="margin-top: 15px; padding: 10px; background-color: #f8f9fa; border-radius: 5px;"></div>
+                    </div>
+                    <div class="solution-step">
+                        <h5>🔢 Step 3: Substitute and Calculate</h5>
+                        <div class="calculation">
+f<sub>L</sub> = (340 + 0) / (340 - 15) × 1000
+f<sub>L</sub> = 340 / 325 × 1000
+f<sub>L</sub> = 1.0462 × 1000
+f<sub>L</sub> = 1046.15 Hz
                         </div>
-                        
-                        <h3>Practice Exercises</h3>
-                        <div class="exercise-container">
-                            <div class="exercise-title">Exercise 1: Ambulance Scenario</div>
-                            <div class="exercise-part">
-                                <p>An ambulance moving at 40 m/s approaches a traffic light where a blind man and his dog are waiting. The siren transmits waves at 350 Hz. The speed of sound in air is 340 m/s.</p>
-                                
-                                <div class="input-group">
-                                    <label for="ex1-answer">Observed frequency as ambulance approaches:</label>
-                                    <input type="number" id="ex1-answer" step="0.01">
-                                    <button class="btn check-btn" data-answer="396.67">Check</button>
-                                </div>
-                                <div id="feedback-ex1" class="feedback"></div>
-                                
-                                <button class="btn" id="show-solution-1">Show Solution</button>
-                                <div id="solution-1" style="display: none; margin-top: 15px; padding: 10px; background-color: #e8f4f8; border-radius: 5px;">
-                                    <p><strong>Solution:</strong></p>
-                                    <p>f<sub>L</sub> = v / (v - v<sub>S</sub>) × f<sub>S</sub></p>
-                                    <p>f<sub>L</sub> = 340 / (340 - 40) × 350</p>
-                                    <p>f<sub>L</sub> = 340 / 300 × 350 = 396.67 Hz</p>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="answer-box">
+                        ✓ Answer: f<sub>L</sub> = 1046.15 Hz
+                    </div>
+                    <p style="margin-top: 1rem; text-align: center; color: var(--success);">
+                        <strong>The frequency is higher than 1000 Hz because the ambulance is approaching!</strong>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Example 2 -->
+            <div class="worked-example">
+                <h4 style="margin-top: 1rem;">Ambulance Moving Away from Listener</h4>
+                <div class="example-problem">
+                    <p>Using the same ambulance (siren frequency 1000 Hz), determine the frequency heard when it moves <strong>away</strong> from the stationary listener at 15 m/s.</p>
+                </div>
+                <div class="example-solution">
+                    <div class="solution-step">
+                        <h5>📝 Step 1: Choose the Correct Equation</h5>
+                        <p>Source moving away → use plus in denominator:</p>
+                        <div class="calculation">
+                            f<sub>L</sub> = (v + v<sub>L</sub>) / (v + v<sub>S</sub>) × f<sub>S</sub>
                         </div>
-                        
-                        <div class="exercise-container">
-                            <div class="exercise-title">Exercise 2: Train Scenario</div>
-                            <div class="exercise-part">
-                                <p>A train moving at 180 km/h approaches a railway crossing and transmits a siren at 2000 Hz. Calculate the frequency heard by pedestrians as the train approaches.</p>
-                                
-                                <div class="input-group">
-                                    <label for="ex2-answer">Observed frequency:</label>
-                                    <input type="number" id="ex2-answer" step="0.01">
-                                    <button class="btn check-btn" data-answer="2344.83">Check</button>
-                                </div>
-                                <div id="feedback-ex2" class="feedback"></div>
-                                
-                                <button class="btn" id="show-solution-2">Show Solution</button>
-                                <div id="solution-2" style="display: none; margin-top: 15px; padding: 10px; background-color: #e8f4f8; border-radius: 5px;">
-                                    <p><strong>Solution:</strong></p>
-                                    <p>First convert train speed: 180 km/h = 180 / 3.6 = 50 m/s</p>
-                                    <p>f<sub>L</sub> = v / (v - v<sub>S</sub>) × f<sub>S</sub></p>
-                                    <p>f<sub>L</sub> = 340 / (340 - 50) × 2000</p>
-                                    <p>f<sub>L</sub> = 340 / 290 × 2000 = 2344.83 Hz</p>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="solution-step">
+                        <h5>🔢 Step 2: Substitute and Calculate</h5>
+                        <div class="calculation">
+f<sub>L</sub> = (340 + 0) / (340 + 15) × 1000
+f<sub>L</sub> = 340 / 355 × 1000
+f<sub>L</sub> = 0.9577 × 1000
+f<sub>L</sub> = 957.75 Hz
                         </div>
-                        
-                        <div class="exercise-container">
-                            <div class="exercise-title">Exercise 3: Racing Car Scenario</div>
-                            <div class="exercise-part">
-                                <p>A racing car approaches an observer at 180 km/h. The car emits sound at 1250 Hz.</p>
-                                
-                                <div class="input-group">
-                                    <label for="ex3a-answer">a) Frequency when car approaches:</label>
-                                    <input type="number" id="ex3a-answer" step="0.01">
-                                    <button class="btn check-btn" data-answer="1465.52">Check</button>
-                                </div>
-                                <div id="feedback-ex3a" class="feedback"></div>
-                                
-                                <div class="input-group">
-                                    <label for="ex3b-answer">b) Frequency when car passes (instant):</label>
-                                    <input type="number" id="ex3b-answer" step="0.01">
-                                    <button class="btn check-btn" data-answer="1250">Check</button>
-                                </div>
-                                <div id="feedback-ex3b" class="feedback"></div>
-                                
-                                <div class="input-group">
-                                    <label for="ex3c-answer">c) Frequency when car moves away:</label>
-                                    <input type="number" id="ex3c-answer" step="0.01">
-                                    <button class="btn check-btn" data-answer="1089.74">Check</button>
-                                </div>
-                                <div id="feedback-ex3c" class="feedback"></div>
-                                
-                                <button class="btn" id="show-solution-3">Show Solution</button>
-                                <div id="solution-3" style="display: none; margin-top: 15px; padding: 10px; background-color: #e8f4f8; border-radius: 5px;">
-                                    <p><strong>Solution:</strong></p>
-                                    <p>Car speed: 180 km/h = 180 / 3.6 = 50 m/s</p>
-                                    <p>a) f<sub>L</sub> = v / (v - v<sub>S</sub>) × f<sub>S</sub> = 340 / (340 - 50) × 1250 = 1465.52 Hz</p>
-                                    <p>b) At the instant of passing, relative velocity is perpendicular, so f<sub>L</sub> = f<sub>S</sub> = 1250 Hz</p>
-                                    <p>c) f<sub>L</sub> = v / (v + v<sub>S</sub>) × f<sub>S</sub> = 340 / (340 + 50) × 1250 = 1089.74 Hz</p>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="answer-box">
+                        ✓ Answer: f<sub>L</sub> = 957.75 Hz
+                    </div>
+                    <p style="margin-top: 1rem; text-align: center; color: var(--error);">
+                        <strong>The frequency is lower than 1000 Hz because the ambulance is moving away!</strong>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Example 3 -->
+            <div class="worked-example">
+                <h4 style="margin-top: 1rem;">Train Approaching with Unit Conversion</h4>
+                <div class="example-problem">
+                    <p>A train moving at <strong>180 km/h</strong> approaches a railway crossing. It transmits a siren at a frequency of 2000 Hz. Calculate the frequency the pedestrians hear as the train approaches.</p>
+                    <p><em>Use speed of sound = 340 m/s</em></p>
+                </div>
+                <div class="example-solution">
+                    <div class="solution-step">
+                        <h5>🔄 Step 1: Convert Units</h5>
+                        <div class="calculation">
+v<sub>S</sub> = 180 km/h ÷ 3.6 = 50 m/s
                         </div>
-                        
-                        <div class="formula-box">
-                            <h3>Unit Conversion Guide</h3>
-                            <p><strong>km/h to m/s:</strong> Divide by 3.6</p>
-                            <p><strong>Example:</strong> 72 km/h = 72 ÷ 3.6 = 20 m/s</p>
-                            <p><strong>kHz to Hz:</strong> Multiply by 1000</p>
-                            <p><strong>Example:</strong> 20 kHz = 20 × 1000 = 20,000 Hz</p>
+                    </div>
+                    <div class="solution-step">
+                        <h5>📋 Step 2: List Given Values</h5>
+                        <ul>
+                            <li>f<sub>S</sub> = 2000 Hz</li>
+                            <li>v<sub>S</sub> = 50 m/s</li>
+                            <li>v<sub>L</sub> = 0 m/s (pedestrians stationary)</li>
+                            <li>v = 340 m/s</li>
+                        </ul>
+                    </div>
+                    <div class="solution-step">
+                        <h5>🔢 Step 3: Calculate</h5>
+                        <div class="calculation">
+f<sub>L</sub> = (v + v<sub>L</sub>) / (v - v<sub>S</sub>) × f<sub>S</sub>
+f<sub>L</sub> = (340 + 0) / (340 - 50) × 2000
+f<sub>L</sub> = 340 / 290 × 2000
+f<sub>L</sub> = 1.1724 × 2000
+f<sub>L</sub> = 2344.83 Hz
+                        </div>
+                    </div>
+                    <div class="answer-box">
+                        ✓ Answer: f<sub>L</sub> = 2344.83 Hz
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 4 -->
+            <div class="worked-example">
+                <h4 style="margin-top: 1rem;">Racing Car - Complete Scenario</h4>
+                <div class="example-problem">
+                    <p>A racing car approaches an observer at <strong>180 km/h</strong>. The frequency of the sound the car emits is 1250 Hz. Calculate:</p>
+                    <ol>
+                        <li>The frequency when the car approaches</li>
+                        <li>The frequency at the instant the car passes (relative velocity = 0)</li>
+                        <li>The frequency when the car moves away</li>
+                    </ol>
+                </div>
+                <div class="example-solution">
+                    <div class="solution-step">
+                        <h5>🔄 Convert Speed</h5>
+                        <div class="calculation">
+v<sub>S</sub> = 180 km/h ÷ 3.6 = 50 m/s
+                        </div>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <h5>1️⃣ Car Approaching</h5>
+                        <div class="calculation">
+f<sub>L</sub> = (340 + 0) / (340 - 50) × 1250
+f<sub>L</sub> = 340 / 290 × 1250
+f<sub>L</sub> = 1465.52 Hz
+                        </div>
+                        <div class="answer-box" style="background: linear-gradient(135deg, var(--success), #2e7d32);">
+                            Approaching: f<sub>L</sub> = 1465.52 Hz ↑
+                        </div>
+                    </div>
+
+                    <div class="solution-step">
+                        <h5>2️⃣ Car Passing (at the instant)</h5>
+                        <p>At the exact moment the car passes, there is no relative motion towards or away from the observer.</p>
+                        <div class="answer-box" style="background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));">
+                            Passing: f<sub>L</sub> = 1250 Hz (same as source)
+                        </div>
+                    </div>
+
+                    <div class="solution-step">
+                        <h5>3️⃣ Car Moving Away</h5>
+                        <div class="calculation">
+f<sub>L</sub> = (340 + 0) / (340 + 50) × 1250
+f<sub>L</sub> = 340 / 390 × 1250
+f<sub>L</sub> = 1089.74 Hz
+                        </div>
+                        <div class="answer-box" style="background: linear-gradient(135deg, var(--error), #c62828);">
+                            Receding: f<sub>L</sub> = 1089.74 Hz ↓
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="section" id="questions">
-                <div class="section-header">
-                    <h2>End of Lesson Questions</h2>
-                    <span class="toggle-icon">+</span>
+        </div>
+
+        <!-- Interactive Simulations -->
+        <div class="card">
+            <h2>🔬 Interactive Simulations</h2>
+
+            <!-- Doppler Calculator -->
+            <div class="simulation-container">
+                <div class="simulation-header">
+                    <h3>🧮 Doppler Effect Calculator</h3>
+                    <span class="sim-badge">INTERACTIVE</span>
                 </div>
-                <div class="section-content">
-                    <p>Answer the following questions to test your understanding of Doppler Effect equations:</p>
-                    
-                    <div class="question-container" id="q1">
-                        <div class="question-text">1. What is the correct Doppler equation when a source is moving toward a stationary listener?</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q1" value="a">
-                                <label>f<sub>L</sub> = (v + v<sub>S</sub>) / v × f<sub>S</sub></label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q1" value="b">
-                                <label>f<sub>L</sub> = v / (v - v<sub>S</sub>) × f<sub>S</sub></label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q1" value="c">
-                                <label>f<sub>L</sub> = (v - v<sub>S</sub>) / v × f<sub>S</sub></label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q1" value="d">
-                                <label>f<sub>L</sub> = v / (v + v<sub>S</sub>) × f<sub>S</sub></label>
-                            </div>
+                <p>Enter values to calculate the observed frequency. The calculator will show you step-by-step workings!</p>
+
+                <div class="calculator-container">
+                    <div class="calc-grid">
+                        <div class="calc-input-group">
+                            <label>📻 Source Frequency (f<sub>S</sub>)</label>
+                            <input type="number" id="calcFs" placeholder="e.g., 1000" value="1000">
+                            <small style="opacity: 0.7;">Hz</small>
                         </div>
-                        <div class="feedback"></div>
-                    </div>
-                    
-                    <div class="question-container" id="q2">
-                        <div class="question-text">2. A police car moving at 30 m/s emits a siren at 800 Hz. What frequency is heard by a stationary listener as the car approaches? (v = 340 m/s)</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q2" value="a">
-                                <label>725.8 Hz</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q2" value="b">
-                                <label>877.4 Hz</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q2" value="c">
-                                <label>800.0 Hz</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q2" value="d">
-                                <label>734.2 Hz</label>
-                            </div>
+                        <div class="calc-input-group">
+                            <label>🚗 Source Speed (v<sub>S</sub>)</label>
+                            <input type="number" id="calcVs" placeholder="e.g., 30" value="30">
+                            <small style="opacity: 0.7;">m/s</small>
                         </div>
-                        <div class="feedback"></div>
-                    </div>
-                    
-                    <div class="question-container" id="q3">
-                        <div class="question-text">3. Convert 108 km/h to m/s.</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q3" value="a">
-                                <label>25 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q3" value="b">
-                                <label>30 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q3" value="c">
-                                <label>388.8 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q3" value="d">
-                                <label>38.9 m/s</label>
-                            </div>
+                        <div class="calc-input-group">
+                            <label>👤 Listener Speed (v<sub>L</sub>)</label>
+                            <input type="number" id="calcVl" placeholder="e.g., 0" value="0">
+                            <small style="opacity: 0.7;">m/s</small>
                         </div>
-                        <div class="feedback"></div>
-                    </div>
-                    
-                    <div class="question-container" id="q4">
-                        <div class="question-text">4. A train moving away from a station at 25 m/s blows its whistle at 1500 Hz. What frequency is heard by people at the station? (v = 340 m/s)</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q4" value="a">
-                                <label>1397.3 Hz</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q4" value="b">
-                                <label>1610.3 Hz</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q4" value="c">
-                                <label>1500.0 Hz</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q4" value="d">
-                                <label>1390.2 Hz</label>
-                            </div>
+                        <div class="calc-input-group">
+                            <label>🔊 Speed of Sound (v)</label>
+                            <input type="number" id="calcV" placeholder="340" value="340">
+                            <small style="opacity: 0.7;">m/s</small>
                         </div>
-                        <div class="feedback"></div>
-                    </div>
-                    
-                    <div class="question-container" id="q5">
-                        <div class="question-text">5. What happens to the observed frequency when both source and listener move toward each other?</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q5" value="a">
-                                <label>It decreases</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q5" value="b">
-                                <label>It increases</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q5" value="c">
-                                <label>It stays the same</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q5" value="d">
-                                <label>It becomes zero</label>
-                            </div>
+                        <div class="calc-input-group">
+                            <label>📍 Source Direction</label>
+                            <select id="sourceDir">
+                                <option value="approaching">Approaching listener</option>
+                                <option value="receding">Moving away from listener</option>
+                                <option value="stationary">Stationary</option>
+                            </select>
                         </div>
-                        <div class="feedback"></div>
-                    </div>
-                    
-                    <div class="question-container" id="q6">
-                        <div class="question-text">6. A listener moves toward a stationary source at 20 m/s. The source emits sound at 1000 Hz. What frequency does the listener hear? (v = 340 m/s)</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q6" value="a">
-                                <label>941.2 Hz</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q6" value="b">
-                                <label>1058.8 Hz</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q6" value="c">
-                                <label>1000.0 Hz</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q6" value="d">
-                                <label>1111.1 Hz</label>
-                            </div>
+                        <div class="calc-input-group">
+                            <label>📍 Listener Direction</label>
+                            <select id="listenerDir">
+                                <option value="stationary">Stationary</option>
+                                <option value="approaching">Moving towards source</option>
+                                <option value="receding">Moving away from source</option>
+                            </select>
                         </div>
-                        <div class="feedback"></div>
                     </div>
-                    
-                    <div class="question-container" id="q7">
-                        <div class="question-text">7. At the exact moment a sound source passes a stationary listener, what is the relationship between emitted and observed frequency?</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q7" value="a">
-                                <label>Observed frequency is higher</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q7" value="b">
-                                <label>Observed frequency is lower</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q7" value="c">
-                                <label>They are equal</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q7" value="d">
-                                <label>No sound is heard</label>
-                            </div>
-                        </div>
-                        <div class="feedback"></div>
+
+                    <div class="calc-buttons">
+                        <button class="calc-btn success" onclick="calculateDoppler()">
+                            <span>🧮</span> Calculate
+                        </button>
+                        <button class="calc-btn" onclick="toggleSteps()">
+                            <span>📝</span> Show Steps
+                        </button>
+                        <button class="calc-btn danger" onclick="resetCalculator()">
+                            <span>↺</span> Reset
+                        </button>
                     </div>
-                    
-                    <div class="question-container" id="q8">
-                        <div class="question-text">8. Convert 15 kHz to Hz.</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q8" value="a">
-                                <label>150 Hz</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q8" value="b">
-                                <label>1500 Hz</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q8" value="c">
-                                <label>15,000 Hz</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q8" value="d">
-                                <label>1,500,000 Hz</label>
-                            </div>
-                        </div>
-                        <div class="feedback"></div>
+
+                    <div class="calc-result">
+                        <div class="result-label">Observed Frequency (f<sub>L</sub>)</div>
+                        <div class="result-value" id="calcResult">-- </div>
+                        <div class="result-unit">Hz</div>
+                        <div id="freqChange" style="margin-top: 0.5rem; font-size: 0.9rem;"></div>
                     </div>
-                    
-                    <div class="question-container" id="q9">
-                        <div class="question-text">9. Which scenario produces the highest observed frequency?</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q9" value="a">
-                                <label>Source moving away from stationary listener</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q9" value="b">
-                                <label>Source moving toward stationary listener</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q9" value="c">
-                                <label>Listener moving away from stationary source</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q9" value="d">
-                                <label>Both moving away from each other</label>
-                            </div>
-                        </div>
-                        <div class="feedback"></div>
-                    </div>
-                    
-                    <div class="question-container" id="q10">
-                        <div class="question-text">10. A car horn emits 440 Hz. If the car is moving toward you at 20 m/s, what frequency do you hear? (v = 340 m/s)</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q10" value="a">
-                                <label>414.4 Hz</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q10" value="b">
-                                <label>467.5 Hz</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q10" value="c">
-                                <label>440.0 Hz</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q10" value="d">
-                                <label>400.0 Hz</label>
-                            </div>
-                        </div>
-                        <div class="feedback"></div>
-                    </div>
-                    
-                    <div class="navigation">
-                        <button id="prev-btn" class="btn" disabled>Previous</button>
-                        <button id="check-btn" class="btn btn-success">Check Answers</button>
-                        <button id="next-btn" class="btn">Next</button>
-                    </div>
-                    
-                    <div class="results-container" id="results">
-                        <h2>Quiz Results</h2>
-                        <div class="score">Your score: <span id="score-value" class="score-percentage">0%</span></div>
-                        <p id="result-message"></p>
-                        <button id="retry-btn" class="btn btn-warning">Try Again</button>
+
+                    <div class="calc-steps" id="calcSteps">
+                        <div class="step" id="step1">Step 1: Identify the equation...</div>
+                        <div class="step" id="step2">Step 2: Substitute values...</div>
+                        <div class="step" id="step3">Step 3: Calculate...</div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Visual Simulation -->
+            <div class="simulation-container">
+                <div class="simulation-header">
+                    <h3>🚑 Visual Doppler Simulation</h3>
+                    <span class="sim-badge">INTERACTIVE</span>
+                </div>
+                <p>Watch the ambulance pass by and see how the observed frequency changes in real-time!</p>
+
+                <div class="visual-sim" id="visualSim">
+                    <div class="sim-info-panel">
+                        <div class="info-card">
+                            <div class="value" id="simSourceFreq">350 Hz</div>
+                            <div class="label">Source Frequency</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="value" id="simObsFreq">350 Hz</div>
+                            <div class="label">Observed Frequency</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="value" id="simSpeed">40 m/s</div>
+                            <div class="label">Ambulance Speed</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="value" id="simStatus">Ready</div>
+                            <div class="label">Status</div>
+                        </div>
+                    </div>
+
+                    <div class="road-markings"></div>
+                    
+                    <div class="sim-observer" id="simObserver">👤</div>
+                    
+                    <div class="sim-vehicle" id="ambulance" style="left: -120px;">
+                        <div class="ambulance">
+                            <div class="ambulance-wheel front"></div>
+                            <div class="ambulance-wheel back"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; justify-content: center; align-items: center;">
+                    <div class="calc-input-group" style="flex: 1; min-width: 150px;">
+                        <label style="color: var(--dark-gray);">Ambulance Speed: <span id="speedDisplay">40</span> m/s</label>
+                        <input type="range" id="simSpeedSlider" min="10" max="80" value="40" oninput="updateSimSpeed()" style="width: 100%;">
+                    </div>
+                    <button class="calc-btn success" id="simStartBtn" onclick="startVisualSim()">
+                        <span>▶️</span> Start
+                    </button>
+                    <button class="calc-btn danger" onclick="resetVisualSim()">
+                        <span>↺</span> Reset
+                    </button>
+                </div>
+
+                <div class="tip-box" style="margin-top: 1rem;">
+                    <span class="tip-icon">👀</span>
+                    <div>
+                        <strong>Watch carefully:</strong> Notice how the frequency increases (higher pitch) as the ambulance approaches and decreases (lower pitch) as it moves away. The source frequency (350 Hz) remains constant!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Unit Converter -->
+            <div class="simulation-container">
+                <div class="simulation-header">
+                    <h3>🔄 Unit Converter</h3>
+                    <span class="sim-badge">TOOL</span>
+                </div>
+                <p>Quickly convert between common units used in Doppler Effect calculations.</p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+                    <div style="background: var(--light-blue); padding: 1.5rem; border-radius: 12px;">
+                        <h4 style="margin-bottom: 1rem;">Speed: km/h → m/s</h4>
+                        <div style="display: flex; gap: 0.5rem; align-items: center;">
+                            <input type="number" id="kmhInput" placeholder="km/h" style="flex: 1; padding: 0.75rem; border: 2px solid var(--primary-blue); border-radius: 8px;">
+                            <span style="font-size: 1.5rem;">→</span>
+                            <input type="text" id="msOutput" placeholder="m/s" readonly style="flex: 1; padding: 0.75rem; border: 2px solid var(--success); border-radius: 8px; background: #e8f5e9;">
+                        </div>
+                        <button onclick="convertSpeed()" style="margin-top: 1rem; width: 100%; padding: 0.75rem; background: var(--primary-blue); color: white; border: none; border-radius: 8px; cursor: pointer;">Convert</button>
+                    </div>
+                    <div style="background: var(--light-blue); padding: 1.5rem; border-radius: 12px;">
+                        <h4 style="margin-bottom: 1rem;">Frequency: kHz → Hz</h4>
+                        <div style="display: flex; gap: 0.5rem; align-items: center;">
+                            <input type="number" id="khzInput" placeholder="kHz" style="flex: 1; padding: 0.75rem; border: 2px solid var(--primary-blue); border-radius: 8px;">
+                            <span style="font-size: 1.5rem;">→</span>
+                            <input type="text" id="hzOutput" placeholder="Hz" readonly style="flex: 1; padding: 0.75rem; border: 2px solid var(--success); border-radius: 8px; background: #e8f5e9;">
+                        </div>
+                        <button onclick="convertFrequency()" style="margin-top: 1rem; width: 100%; padding: 0.75rem; background: var(--primary-blue); color: white; border: none; border-radius: 8px; cursor: pointer;">Convert</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="card quiz-container">
+            <h2>📝 End-of-Lesson Assessment</h2>
+            <p>Test your understanding of Doppler Effect calculations. Use v = 340 m/s for speed of sound unless otherwise stated.</p>
+
+            <form id="quizForm">
+                <!-- Question 1 -->
+                <div class="question-card" id="q1">
+                    <div class="question-header">
+                        <span class="question-number">1</span>
+                        <p class="question-text">An ambulance moving at 40 m/s approaches a stationary observer. The siren emits waves at 350 Hz. What frequency does the observer hear?</p>
+                    </div>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q1" value="a">
+                            <span>303.33 Hz</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q1" value="b">
+                            <span>350 Hz</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q1" value="c">
+                            <span>396.67 Hz</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q1" value="d">
+                            <span>420 Hz</span>
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback1"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question-card" id="q2">
+                    <div class="question-header">
+                        <span class="question-number">2</span>
+                        <p class="question-text">Convert 180 km/h to m/s.</p>
+                    </div>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q2" value="a">
+                            <span>18 m/s</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q2" value="b">
+                            <span>50 m/s</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q2" value="c">
+                            <span>60 m/s</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q2" value="d">
+                            <span>100 m/s</span>
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback2"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question-card" id="q3">
+                    <div class="question-header">
+                        <span class="question-number">3</span>
+                        <p class="question-text">In the Doppler equation, what does f<sub>S</sub> represent?</p>
+                    </div>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q3" value="a">
+                            <span>Frequency heard by listener</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q3" value="b">
+                            <span>Frequency emitted by source</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q3" value="c">
+                            <span>Speed of sound</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q3" value="d">
+                            <span>Speed of source</span>
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback3"></div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="question-card" id="q4">
+                    <div class="question-header">
+                        <span class="question-number">4</span>
+                        <p class="question-text">When a source moves TOWARDS a stationary listener, which equation should be used?</p>
+                    </div>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q4" value="a">
+                            <span>f<sub>L</sub> = (v + v<sub>L</sub>) / (v + v<sub>S</sub>) × f<sub>S</sub></span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q4" value="b">
+                            <span>f<sub>L</sub> = (v + v<sub>L</sub>) / (v - v<sub>S</sub>) × f<sub>S</sub></span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q4" value="c">
+                            <span>f<sub>L</sub> = (v - v<sub>L</sub>) / (v - v<sub>S</sub>) × f<sub>S</sub></span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q4" value="d">
+                            <span>f<sub>L</sub> = (v - v<sub>L</sub>) / (v + v<sub>S</sub>) × f<sub>S</sub></span>
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback4"></div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="question-card" id="q5">
+                    <div class="question-header">
+                        <span class="question-number">5</span>
+                        <p class="question-text">A train moving at 50 m/s approaches a crossing with siren frequency 2000 Hz. The observed frequency will be:</p>
+                    </div>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q5" value="a">
+                            <span>Less than 2000 Hz</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q5" value="b">
+                            <span>Equal to 2000 Hz</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q5" value="c">
+                            <span>Greater than 2000 Hz</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q5" value="d">
+                            <span>Zero Hz</span>
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback5"></div>
+                </div>
+
+                <!-- Question 6 -->
+                <div class="question-card" id="q6">
+                    <div class="question-header">
+                        <span class="question-number">6</span>
+                        <p class="question-text">Calculate: A car moves away at 50 m/s. Source frequency is 1250 Hz. What is the observed frequency?</p>
+                    </div>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q6" value="a">
+                            <span>1089.74 Hz</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q6" value="b">
+                            <span>1250 Hz</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q6" value="c">
+                            <span>1465.52 Hz</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q6" value="d">
+                            <span>1560 Hz</span>
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback6"></div>
+</div>            <!-- Question 7 -->
+            <div class="question-card" id="q7">
+                <div class="question-header">
+                    <span class="question-number">7</span>
+                    <p class="question-text">What is the value of v<sub>L</sub> when the listener is stationary?</p>
+                </div>
+                <div class="options-container">
+                    <label class="option-label">
+                        <input type="radio" name="q7" value="a">
+                        <span>340 m/s</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q7" value="b">
+                        <span>0 m/s</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q7" value="c">
+                        <span>Equal to v<sub>S</sub></span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q7" value="d">
+                        <span>Unknown</span>
+                    </label>
+                </div>
+                <div class="feedback" id="feedback7"></div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question-card" id="q8">
+                <div class="question-header">
+                    <span class="question-number">8</span>
+                    <p class="question-text">Convert 20 kHz to Hz.</p>
+                </div>
+                <div class="options-container">
+                    <label class="option-label">
+                        <input type="radio" name="q8" value="a">
+                        <span>20 Hz</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q8" value="b">
+                        <span>200 Hz</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q8" value="c">
+                        <span>2000 Hz</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q8" value="d">
+                        <span>20000 Hz</span>
+                    </label>
+                </div>
+                <div class="feedback" id="feedback8"></div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question-card" id="q9">
+                <div class="question-header">
+                    <span class="question-number">9</span>
+                    <p class="question-text">At the exact instant a car passes an observer, the observed frequency is:</p>
+                </div>
+                <div class="options-container">
+                    <label class="option-label">
+                        <input type="radio" name="q9" value="a">
+                        <span>Higher than the source frequency</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q9" value="b">
+                        <span>Lower than the source frequency</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q9" value="c">
+                        <span>Equal to the source frequency</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q9" value="d">
+                        <span>Zero</span>
+                    </label>
+                </div>
+                <div class="feedback" id="feedback9"></div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question-card" id="q10">
+                <div class="question-header">
+                    <span class="question-number">10</span>
+                    <p class="question-text">An ambulance siren has frequency 1000 Hz. Moving towards listener at 15 m/s. Calculate observed frequency.</p>
+                </div>
+                <div class="options-container">
+                    <label class="option-label">
+                        <input type="radio" name="q10" value="a">
+                        <span>957.75 Hz</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q10" value="b">
+                        <span>1000 Hz</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q10" value="c">
+                        <span>1046.15 Hz</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q10" value="d">
+                        <span>1100 Hz</span>
+                    </label>
+                </div>
+                <div class="feedback" id="feedback10"></div>
+            </div>
+
+            <!-- Question 11 -->
+            <div class="question-card" id="q11">
+                <div class="question-header">
+                    <span class="question-number">11</span>
+                    <p class="question-text">When a source moves away from a listener, the denominator of the Doppler equation becomes:</p>
+                </div>
+                <div class="options-container">
+                    <label class="option-label">
+                        <input type="radio" name="q11" value="a">
+                        <span>v - v<sub>S</sub> (subtract source speed)</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q11" value="b">
+                        <span>v + v<sub>S</sub> (add source speed)</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q11" value="c">
+                        <span>v × v<sub>S</sub> (multiply)</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q11" value="d">
+                        <span>v ÷ v<sub>S</sub> (divide)</span>
+                    </label>
+                </div>
+                <div class="feedback" id="feedback11"></div>
+            </div>
+
+            <!-- Question 12 -->
+            <div class="question-card" id="q12">
+                <div class="question-header">
+                    <span class="question-number">12</span>
+                    <p class="question-text">A racing car approaches at 180 km/h with source frequency 1250 Hz. Calculate the observed frequency.</p>
+                </div>
+                <div class="question-context">
+                    <strong>Given:</strong> Speed of sound = 340 m/s. Remember to convert km/h to m/s first!
+                </div>
+                <div class="options-container">
+                    <label class="option-label">
+                        <input type="radio" name="q12" value="a">
+                        <span>1089.74 Hz</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q12" value="b">
+                        <span>1250 Hz</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q12" value="c">
+                        <span>1465.52 Hz</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="radio" name="q12" value="d">
+                        <span>2000 Hz</span>
+                    </label>
+                </div>
+                <div class="feedback" id="feedback12"></div>
+            </div>
+
+            <button type="button" class="submit-quiz-btn" onclick="submitQuiz()">
+                <span>📊</span> Submit & Check Answers
+            </button>
+        </form>
+
+        <div class="score-container" id="scoreContainer">
+            <div style="font-size: 1.5rem; margin-bottom: 1rem;">🎉 Your Results</div>
+            <div class="score-value" id="scoreValue">0/12</div>
+            <div id="scorePercentage" style="font-size: 1.3rem; opacity: 0.9;">0%</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="scoreFill" style="width: 0%;"></div>
+            </div>
+            <div class="score-message" id="scoreMessage"></div>
+            <div class="score-actions">
+                <button class="calc-btn" onclick="retryQuiz()">
+                    <span>🔄</span> Try Again
+                </button>
+                <button class="calc-btn success" onclick="scrollToTop()">
+                    <span>📚</span> Review Lesson
+                </button>
             </div>
         </div>
     </div>
 
-    <script>
-        // Collapsible sections functionality
-        document.querySelectorAll('.section-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const section = header.parentElement;
-                section.classList.toggle('active');
-                const icon = header.querySelector('.toggle-icon');
-                icon.textContent = section.classList.contains('active') ? '−' : '+';
-            });
+    <!-- Summary Section -->
+    <div class="card">
+        <h2>📋 Lesson Summary</h2>
+        
+        <div class="concept-box">
+            <h4>Key Formulas to Remember:</h4>
+            <div style="background: var(--gray); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: 'Times New Roman', serif; font-size: 1.2rem;">
+                <p><strong>Approaching:</strong> f<sub>L</sub> = (v + v<sub>L</sub>) / (v - v<sub>S</sub>) × f<sub>S</sub></p>
+                <p><strong>Receding:</strong> f<sub>L</sub> = (v - v<sub>L</sub>) / (v + v<sub>S</sub>) × f<sub>S</sub></p>
+            </div>
+            <h4>Key Points:</h4>
+            <ul>
+                <li><strong>Always convert units first:</strong> km/h ÷ 3.6 = m/s; kHz × 1000 = Hz</li>
+                <li><strong>Stationary listener:</strong> v<sub>L</sub> = 0</li>
+                <li><strong>Stationary source:</strong> v<sub>S</sub> = 0</li>
+                <li><strong>Approaching:</strong> frequency increases (higher pitch)</li>
+                <li><strong>Receding:</strong> frequency decreases (lower pitch)</li>
+                <li><strong>At passing moment:</strong> observed frequency = source frequency</li>
+            </ul>
+        </div>
+
+        <div class="tip-box">
+            <span class="tip-icon">🎓</span>
+            <div>
+                <strong>Exam Tip:</strong> Always show your working clearly in calculations. Write down given values, state the equation you're using, substitute values, and clearly indicate your final answer with the correct unit (Hz).
+            </div>
+        </div>
+    </div>
+
+    <!-- Lesson Navigation -->
+    <div class="lesson-nav">
+        <a href="#" class="nav-btn prev" onclick="navigateLesson('prev')">
+            <span>←</span> Lesson 1: Introduction
+        </a>
+        <a href="#" class="nav-btn next" onclick="navigateLesson('next')">
+            Lesson 3: Applications <span>→</span>
+        </a>
+    </div>
+</main>
+
+<!-- Progress Indicator -->
+<div class="progress-indicator" id="progressIndicator" onclick="scrollToTop()">
+    <span id="scrollProgress">0%</span>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-logo">🎓 PassProof Academy</div>
+        <p>Empowering learners through quality education</p>
+        <div class="footer-links">
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+        </div>
+        <div class="copyright">
+            © 2026 PassProof Academy. All rights reserved.
+        </div>
+    </div>
+</footer>
+
+<script>
+    // ==================== NAVIGATION ====================
+    function toggleNav() {
+        const menu = document.getElementById('dropdownMenu');
+        menu.classList.toggle('active');
+    }
+
+    document.addEventListener('click', function(e) {
+        const menu = document.getElementById('dropdownMenu');
+        const toggle = document.querySelector('.nav-toggle');
+        if (!menu.contains(e.target) && !toggle.contains(e.target)) {
+            menu.classList.remove('active');
+        }
+    });
+
+    function navigateTo(page) {
+        alert(`Navigating to: ${page}\n\nIn a full implementation, this would load the ${page} page.`);
+        document.getElementById('dropdownMenu').classList.remove('active');
+    }
+
+    function navigateLesson(direction) {
+        if (direction === 'prev') {
+            alert('Navigating to Lesson 1: Introduction to the Doppler Effect');
+        } else {
+            alert('Navigating to Lesson 3: Doppler Effect Applications');
+        }
+    }
+
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ==================== ACCORDION ====================
+    function toggleAccordion(header) {
+        const content = header.nextElementSibling;
+        const isActive = header.classList.contains('active');
+        
+        document.querySelectorAll('.accordion-header').forEach(h => {
+            h.classList.remove('active');
+            h.nextElementSibling.classList.remove('active');
         });
+        
+        if (!isActive) {
+            header.classList.add('active');
+            content.classList.add('active');
+        }
+    }
 
-        // Open the first section by default
-        document.querySelector('.section').classList.add('active');
-        document.querySelector('.section .toggle-icon').textContent = '−';
+    // ==================== DOPPLER CALCULATOR ====================
+    function calculateDoppler() {
+        const fs = parseFloat(document.getElementById('calcFs').value) || 0;
+        const vs = parseFloat(document.getElementById('calcVs').value) || 0;
+        const vl = parseFloat(document.getElementById('calcVl').value) || 0;
+        const v = parseFloat(document.getElementById('calcV').value) || 340;
+        const sourceDir = document.getElementById('sourceDir').value;
+        const listenerDir = document.getElementById('listenerDir').value;
 
-        // Doppler Calculator
-        document.getElementById('calculate-doppler').addEventListener('click', function() {
-            const fS = parseFloat(document.getElementById('source-freq').value);
-            const v = parseFloat(document.getElementById('sound-speed').value);
-            const vS = parseFloat(document.getElementById('source-speed').value);
-            const vL = parseFloat(document.getElementById('listener-speed').value);
-            const motionType = document.getElementById('motion-type').value;
-            
-            let fL, equation;
-            
-            switch(motionType) {
-                case 'toward':
-                    fL = (v / (v - vS)) * fS;
-                    equation = `f<sub>L</sub> = v / (v - v<sub>S</sub>) × f<sub>S</sub> = ${v} / (${v} - ${vS}) × ${fS}`;
-                    break;
-                case 'away':
-                    fL = (v / (v + vS)) * fS;
-                    equation = `f<sub>L</sub> = v / (v + v<sub>S</sub>) × f<sub>S</sub> = ${v} / (${v} + ${vS}) × ${fS}`;
-                    break;
-                case 'listener-toward':
-                    fL = ((v + vL) / v) * fS;
-                    equation = `f<sub>L</sub> = (v + v<sub>L</sub>) / v × f<sub>S</sub> = (${v} + ${vL}) / ${v} × ${fS}`;
-                    break;
-                case 'listener-away':
-                    fL = ((v - vL) / v) * fS;
-                    equation = `f<sub>L</sub> = (v - v<sub>L</sub>) / v × f<sub>S</sub> = (${v} - ${vL}) / ${v} × ${fS}`;
-                    break;
-                case 'both-toward':
-                    fL = ((v + vL) / (v - vS)) * fS;
-                    equation = `f<sub>L</sub> = (v + v<sub>L</sub>) / (v - v<sub>S</sub>) × f<sub>S</sub> = (${v} + ${vL}) / (${v} - ${vS}) × ${fS}`;
-                    break;
-                case 'both-away':
-                    fL = ((v - vL) / (v + vS)) * fS;
-                    equation = `f<sub>L</sub> = (v - v<sub>L</sub>) / (v + v<sub>S</sub>) × f<sub>S</sub> = (${v} - ${vL}) / (${v} + ${vS}) × ${fS}`;
-                    break;
-            }
-            
-            const resultHTML = `
-                <p><strong>Equation used:</strong> ${equation}</p>
-                <p><strong>Observed Frequency:</strong> ${fL.toFixed(2)} Hz</p>
-                <p><strong>Frequency Change:</strong> ${(fL - fS).toFixed(2)} Hz ${fL > fS ? 'increase' : 'decrease'}</p>
-            `;
-            
-            document.getElementById('calculation-result').innerHTML = resultHTML;
-        });
+        let numerator, denominator;
+        let numeratorStr, denominatorStr;
 
-        // Exercise solution toggles
-        document.getElementById('show-solution-1').addEventListener('click', function() {
-            const solution = document.getElementById('solution-1');
-            solution.style.display = solution.style.display === 'none' ? 'block' : 'none';
-            this.textContent = solution.style.display === 'none' ? 'Show Solution' : 'Hide Solution';
-        });
-
-        document.getElementById('show-solution-2').addEventListener('click', function() {
-            const solution = document.getElementById('solution-2');
-            solution.style.display = solution.style.display === 'none' ? 'block' : 'none';
-            this.textContent = solution.style.display === 'none' ? 'Show Solution' : 'Hide Solution';
-        });
-
-        document.getElementById('show-solution-3').addEventListener('click', function() {
-            const solution = document.getElementById('solution-3');
-            solution.style.display = solution.style.display === 'none' ? 'block' : 'none';
-            this.textContent = solution.style.display === 'none' ? 'Show Solution' : 'Hide Solution';
-        });
-
-        // Exercise answer checking
-        document.querySelectorAll('.check-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const answer = parseFloat(this.getAttribute('data-answer'));
-                const inputId = this.previousElementSibling.id;
-                const input = document.getElementById(inputId);
-                const feedback = document.getElementById('feedback-' + inputId);
-                
-                const userAnswer = parseFloat(input.value);
-                
-                if (Math.abs(userAnswer - answer) < 0.01) {
-                    feedback.textContent = 'Correct! Well done.';
-                    feedback.className = 'feedback correct';
-                } else {
-                    feedback.textContent = `Incorrect. The correct answer is ${answer}.`;
-                    feedback.className = 'feedback incorrect';
-                }
-                feedback.style.display = 'block';
-            });
-        });
-
-        // Quiz functionality
-        const correctAnswers = {
-            q1: 'b',
-            q2: 'b',
-            q3: 'b',
-            q4: 'a',
-            q5: 'b',
-            q6: 'b',
-            q7: 'c',
-            q8: 'c',
-            q9: 'b',
-            q10: 'b'
-        };
-
-        const questionContainers = document.querySelectorAll('.question-container');
-        let currentQuestion = 0;
-
-        // Show first question
-        showQuestion(currentQuestion);
-
-        // Navigation buttons
-        document.getElementById('prev-btn').addEventListener('click', () => {
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                showQuestion(currentQuestion);
-            }
-        });
-
-        document.getElementById('next-btn').addEventListener('click', () => {
-            if (currentQuestion < questionContainers.length - 1) {
-                currentQuestion++;
-                showQuestion(currentQuestion);
-            }
-        });
-
-        // Check answers button
-        document.getElementById('check-btn').addEventListener('click', checkAllAnswers);
-
-        // Retry button
-        document.getElementById('retry-btn').addEventListener('click', () => {
-            // Reset all answers
-            document.querySelectorAll('input[type="radio"]').forEach(radio => {
-                radio.checked = false;
-            });
-            
-            // Hide all feedback
-            document.querySelectorAll('.feedback').forEach(feedback => {
-                feedback.style.display = 'none';
-                feedback.className = 'feedback';
-            });
-            
-            // Hide results
-            document.getElementById('results').style.display = 'none';
-            
-            // Reset to first question
-            currentQuestion = 0;
-            showQuestion(currentQuestion);
-        });
-
-        function showQuestion(index) {
-            // Hide all questions
-            questionContainers.forEach(container => {
-                container.style.display = 'none';
-            });
-            
-            // Show current question
-            questionContainers[index].style.display = 'block';
-            
-            // Update navigation buttons
-            document.getElementById('prev-btn').disabled = index === 0;
-            document.getElementById('next-btn').disabled = index === questionContainers.length - 1;
-            
-            // Auto-check answer when selected
-            const radios = questionContainers[index].querySelectorAll('input[type="radio"]');
-            radios.forEach(radio => {
-                radio.addEventListener('change', function() {
-                    checkAnswer(this.name);
-                });
-            });
+        // Determine numerator based on listener direction
+        if (listenerDir === 'approaching') {
+            numerator = v + vl;
+            numeratorStr = `${v} + ${vl}`;
+        } else if (listenerDir === 'receding') {
+            numerator = v - vl;
+            numeratorStr = `${v} - ${vl}`;
+        } else {
+            numerator = v;
+            numeratorStr = `${v} + 0`;
         }
 
-        function checkAnswer(questionName) {
-            const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
-            const questionId = questionName.replace('q', 'q');
-            const feedback = document.querySelector(`#${questionId} .feedback`);
-            
-            if (selectedOption) {
-                if (selectedOption.value === correctAnswers[questionId]) {
-                    feedback.textContent = 'Correct! Well done.';
-                    feedback.className = 'feedback correct';
-                } else {
-                    feedback.textContent = 'Incorrect. Try again.';
-                    feedback.className = 'feedback incorrect';
-                }
-                feedback.style.display = 'block';
-            }
+        // Determine denominator based on source direction
+        if (sourceDir === 'approaching') {
+            denominator = v - vs;
+            denominatorStr = `${v} - ${vs}`;
+        } else if (sourceDir === 'receding') {
+            denominator = v + vs;
+            denominatorStr = `${v} + ${vs}`;
+        } else {
+            denominator = v;
+            denominatorStr = `${v} + 0`;
         }
 
-        function checkAllAnswers() {
-            let score = 0;
+        const fl = (numerator / denominator) * fs;
+        const freqChange = fl - fs;
+
+        document.getElementById('calcResult').textContent = fl.toFixed(2);
+        
+        const changeEl = document.getElementById('freqChange');
+        if (freqChange > 0) {
+            changeEl.innerHTML = `<span style="color: #4caf50;">↑ Increased by ${freqChange.toFixed(2)} Hz (Higher pitch)</span>`;
+        } else if (freqChange < 0) {
+            changeEl.innerHTML = `<span style="color: #f44336;">↓ Decreased by ${Math.abs(freqChange).toFixed(2)} Hz (Lower pitch)</span>`;
+        } else {
+            changeEl.innerHTML = `<span style="color: #2196f3;">No change in frequency</span>`;
+        }
+
+        // Update steps
+        document.getElementById('step1').innerHTML = `<strong>Step 1:</strong> Using f<sub>L</sub> = (v ± v<sub>L</sub>) / (v ∓ v<sub>S</sub>) × f<sub>S</sub>`;
+        document.getElementById('step2').innerHTML = `<strong>Step 2:</strong> f<sub>L</sub> = (${numeratorStr}) / (${denominatorStr}) × ${fs}`;
+        document.getElementById('step3').innerHTML = `<strong>Step 3:</strong> f<sub>L</sub> = ${numerator} / ${denominator} × ${fs} = <strong>${fl.toFixed(2)} Hz</strong>`;
+    }
+
+    function toggleSteps() {
+        const steps = document.getElementById('calcSteps');
+        steps.classList.toggle('visible');
+    }
+
+    function resetCalculator() {
+        document.getElementById('calcFs').value = 1000;
+        document.getElementById('calcVs').value = 30;
+        document.getElementById('calcVl').value = 0;
+        document.getElementById('calcV').value = 340;
+        document.getElementById('sourceDir').value = 'approaching';
+        document.getElementById('listenerDir').value = 'stationary';
+        document.getElementById('calcResult').textContent = '--';
+        document.getElementById('freqChange').innerHTML = '';
+        document.getElementById('calcSteps').classList.remove('visible');
+    }
+
+    // ==================== UNIT CONVERTERS ====================
+    function convertSpeed() {
+        const kmh = parseFloat(document.getElementById('kmhInput').value);
+        if (!isNaN(kmh)) {
+            const ms = (kmh / 3.6).toFixed(2);
+            document.getElementById('msOutput').value = ms + ' m/s';
+        }
+    }
+
+    function convertFrequency() {
+        const khz = parseFloat(document.getElementById('khzInput').value);
+        if (!isNaN(khz)) {
+            const hz = khz * 1000;
+            document.getElementById('hzOutput').value = hz + ' Hz';
+        }
+    }
+
+    // ==================== VISUAL SIMULATION ====================
+    let simInterval = null;
+    let ambulancePos = -120;
+    const sourceFreq = 350;
+    const speedOfSound = 340;
+
+    function updateSimSpeed() {
+        document.getElementById('speedDisplay').textContent = document.getElementById('simSpeedSlider').value;
+        document.getElementById('simSpeed').textContent = document.getElementById('simSpeedSlider').value + ' m/s';
+    }
+
+    function startVisualSim() {
+        if (simInterval) return;
+        
+        const ambulance = document.getElementById('ambulance');
+        const simContainer = document.getElementById('visualSim');
+        const containerWidth = simContainer.offsetWidth;
+        const observerPos = containerWidth / 2;
+        const speed = parseInt(document.getElementById('simSpeedSlider').value);
+        
+        document.getElementById('simStartBtn').disabled = true;
+        ambulancePos = -120;
+
+        simInterval = setInterval(() => {
+            ambulancePos += speed * 0.08;
+            ambulance.style.left = ambulancePos + 'px';
+
+            const distanceToObserver = observerPos - ambulancePos - 50;
+            let observedFreq, status;
+
+            if (distanceToObserver > 30) {
+                // Approaching
+                observedFreq = (speedOfSound / (speedOfSound - speed)) * sourceFreq;
+                status = 'Approaching ↗';
+                document.getElementById('simStatus').style.color = '#4caf50';
+            } else if (distanceToObserver < -30) {
+                // Receding
+                observedFreq = (speedOfSound / (speedOfSound + speed)) * sourceFreq;
+                status = 'Receding ↘';
+                document.getElementById('simStatus').style.color = '#f44336';
+            } else {
+                // Passing
+                observedFreq = sourceFreq;
+                status = 'Passing ➡';
+                document.getElementById('simStatus').style.color = '#2196f3';
+            }
+
+            document.getElementById('simObsFreq').textContent = observedFreq.toFixed(1) + ' Hz';
+            document.getElementById('simStatus').textContent = status;
+
+            // Stop when ambulance exits
+            if (ambulancePos > containerWidth + 50) {
+                clearInterval(simInterval);
+                simInterval = null;
+                document.getElementById('simStartBtn').disabled = false;
+                document.getElementById('simStatus').textContent = 'Complete';
+                document.getElementById('simStatus').style.color = '#fff';
+            }
+        }, 50);
+    }
+
+    function resetVisualSim() {
+        if (simInterval) {
+            clearInterval(simInterval);
+            simInterval = null;
+        }
+        
+        const ambulance = document.getElementById('ambulance');
+        ambulance.style.left = '-120px';
+        ambulancePos = -120;
+        
+        document.getElementById('simObsFreq').textContent = '350 Hz';
+        document.getElementById('simStatus').textContent = 'Ready';
+        document.getElementById('simStatus').style.color = '#fff';
+        document.getElementById('simStartBtn').disabled = false;
+    }
+
+    // ==================== QUIZ SYSTEM ====================
+    const correctAnswers = {
+        q1: 'c',  // 396.67 Hz (approaching: 340/(340-40) × 350)
+        q2: 'b',  // 50 m/s (180/3.6)
+        q3: 'b',  // Frequency emitted by source
+        q4: 'b',  // (v + vL)/(v - vS) × fS
+        q5: 'c',  // Greater than 2000 Hz (approaching)
+        q6: 'a',  // 1089.74 Hz (receding: 340/390 × 1250)
+        q7: 'b',  // 0 m/s
+        q8: 'd',  // 20000 Hz
+        q9: 'c',  // Equal to source frequency
+        q10: 'c', // 1046.15 Hz (340/325 × 1000)
+        q11: 'b', // v + vS
+        q12: 'c'  // 1465.52 Hz (340/290 × 1250)
+    };
+
+    const explanations = {
+        q1: 'Using f<sub>L</sub> = v/(v - v<sub>S</sub>) × f<sub>S</sub> = 340/(340-40) × 350 = 340/300 × 350 = 396.67 Hz. The frequency is higher because the ambulance is approaching.',
+        q2: 'To convert km/h to m/s, divide by 3.6: 180 ÷ 3.6 = 50 m/s.',
+        q3: 'In the Doppler equation, f<sub>S</sub> represents the frequency emitted by the source (S for Source). f<sub>L</sub> is the frequency heard by the listener.',
+        q4: 'When a source approaches a stationary listener (v<sub>L</sub> = 0), use f<sub>L</sub> = v/(v - v<sub>S</sub>) × f<sub>S</sub>. The minus sign in the denominator makes the fraction larger than 1.',
+        q5: 'When a source approaches, the observed frequency is always greater than the source frequency because the sound waves are compressed.',
+        q6: 'For a receding source: f<sub>L</sub> = v/(v + v<sub>S</sub>) × f<sub>S</sub> = 340/(340+50) × 1250 = 340/390 × 1250 = 1089.74 Hz.',
+        q7: 'When the listener is stationary (not moving), v<sub>L</sub> = 0 m/s. This simplifies the numerator to just v.',
+        q8: '1 kHz = 1000 Hz, so 20 kHz = 20 × 1000 = 20000 Hz.',
+        q9: 'At the exact instant of passing, the relative velocity component towards/away from the observer is zero, so the observed frequency equals the source frequency.',
+        q10: 'f<sub>L</sub> = 340/(340-15) × 1000 = 340/325 × 1000 = 1046.15 Hz. Higher than source because approaching.',
+        q11: 'When the source moves away, we add v<sub>S</sub> in the denominator (v + v<sub>S</sub>) to make the fraction less than 1, giving a lower frequency.',
+        q12: 'First convert: 180 km/h ÷ 3.6 = 50 m/s. Then: f<sub>L</sub> = 340/(340-50) × 1250 = 340/290 × 1250 = 1465.52 Hz.'
+    };
+
+    function submitQuiz() {
+        let score = 0;
+        const totalQuestions = Object.keys(correctAnswers).length;
+        
+        for (let q in correctAnswers) {
+            const selected = document.querySelector(`input[name="${q}"]:checked`);
+            const feedbackDiv = document.getElementById(`feedback${q.substring(1)}`);
+            const options = document.querySelectorAll(`#${q} .option-label`);
             
-            for (let i = 1; i <= 10; i++) {
-                const questionId = `q${i}`;
-                const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
+            options.forEach(opt => {
+                opt.classList.remove('correct', 'incorrect');
+            });
+            
+            if (selected) {
+                const selectedLabel = selected.closest('.option-label');
                 
-                if (selectedOption && selectedOption.value === correctAnswers[questionId]) {
+                if (selected.value === correctAnswers[q]) {
                     score++;
+                    selectedLabel.classList.add('correct');
+                    feedbackDiv.className = 'feedback correct';
+                    feedbackDiv.innerHTML = `<span class="feedback-icon">✅</span><div><strong>Correct!</strong> ${explanations[q]}</div>`;
+                } else {
+                    selectedLabel.classList.add('incorrect');
+                    options.forEach(opt => {
+                        if (opt.querySelector('input').value === correctAnswers[q]) {
+                            opt.classList.add('correct');
+                        }
+                    });
+                    feedbackDiv.className = 'feedback incorrect';
+                    feedbackDiv.innerHTML = `<span class="feedback-icon">❌</span><div><strong>Incorrect.</strong> ${explanations[q]}</div>`;
                 }
+            } else {
+                feedbackDiv.className = 'feedback incorrect';
+                feedbackDiv.innerHTML = `<span class="feedback-icon">⚠️</span><div><strong>Not answered.</strong> ${explanations[q]}</div>`;
+                options.forEach(opt => {
+                    if (opt.querySelector('input').value === correctAnswers[q]) {
+                        opt.classList.add('correct');
+                    }
+                });
             }
-            
-            const percentage = (score / 10) * 100;
-            document.getElementById('score-value').textContent = `${percentage}%`;
-            document.getElementById('result-message').textContent = 
-                `You got ${score} out of 10 questions correct. ${percentage >= 70 ? 'Great job!' : 'Keep practicing!'}`;
-            document.getElementById('results').style.display = 'block';
         }
-    </script>
+        
+        const percentage = Math.round((score / totalQuestions) * 100);
+        const scoreContainer = document.getElementById('scoreContainer');
+        
+        document.getElementById('scoreValue').textContent = `${score}/${totalQuestions}`;
+        document.getElementById('scorePercentage').textContent = `${percentage}%`;
+        
+        setTimeout(() => {
+            document.getElementById('scoreFill').style.width = percentage + '%';
+        }, 100);
+        
+        let message;
+        if (percentage >= 80) {
+            message = '🌟 <strong>Excellent!</strong> You have mastered Doppler Effect calculations!';
+        } else if (percentage >= 60) {
+            message = '👍 <strong>Good effort!</strong> Review the worked examples and try the questions you missed.';
+        } else if (percentage >= 40) {
+            message = '📚 <strong>Keep practicing!</strong> Focus on understanding when to add or subtract velocities.';
+        } else {
+            message = '💪 <strong>Don\'t give up!</strong> Go through the lesson again, especially the formula section and worked examples.';
+        }
+        document.getElementById('scoreMessage').innerHTML = message;
+        
+        scoreContainer.classList.add('visible');
+        scoreContainer.scrollIntoView({ behavior: 'smooth' });
+        
+        saveProgress(score, totalQuestions, percentage);
+    }
 
-    <!-- Shared lesson navigation (previous/next) -->
-    <script>
-    (function(){
-        const maxLessons = 19;
-        function navigateLesson(direction){
-            const m = window.location.pathname.match(/less(\d+)\.html$/i);
-            if(!m) return;
-            const current = parseInt(m[1],10);
-            const next = direction === 'next' ? current + 1 : current - 1;
-            if(next < 1 || next > maxLessons) return;
-            const newHref = window.location.pathname.replace(/less\d+\.html$/i, `less${next}.html`);
-            window.location.href = newHref;
-        }
-        [['prevBtn','nextBtn'], ['prev-btn','next-btn']].forEach(ids => {
-            const prev = document.getElementById(ids[0]);
-            const next = document.getElementById(ids[1]);
-            if(prev) prev.addEventListener('click', () => navigateLesson('prev'));
-            if(next) next.addEventListener('click', () => navigateLesson('next'));
+    function retryQuiz() {
+        document.querySelectorAll('input[type="radio"]').forEach(input => {
+            input.checked = false;
         });
-    })();
-    </script>
+        
+        for (let i = 1; i <= 12; i++) {
+            const feedbackDiv = document.getElementById(`feedback${i}`);
+            feedbackDiv.className = 'feedback';
+            feedbackDiv.innerHTML = '';
+        }
+        
+        document.querySelectorAll('.option-label').forEach(opt => {
+            opt.classList.remove('correct', 'incorrect');
+        });
+        
+        const scoreContainer = document.getElementById('scoreContainer');
+        scoreContainer.classList.remove('visible');
+        document.getElementById('scoreFill').style.width = '0%';
+        
+        document.querySelector('.quiz-container').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ==================== LOCAL STORAGE ====================
+    function saveProgress(score, total, percentage) {
+        const progress = {
+            lessonId: 'doppler-effect-lesson-2',
+            lessonTitle: 'Doppler Effect Calculations',
+            score: score,
+            total: total,
+            percentage: percentage,
+            completed: true,
+            timestamp: new Date().toISOString()
+        };
+        
+        let allProgress = JSON.parse(localStorage.getItem('passproofProgress') || '{}');
+        allProgress['doppler-effect-lesson-2'] = progress;
+        localStorage.setItem('passproofProgress', JSON.stringify(allProgress));
+        
+        updateProgressDisplay();
+    }
+
+    function loadProgress() {
+        const allProgress = JSON.parse(localStorage.getItem('passproofProgress') || '{}');
+        const lessonProgress = allProgress['doppler-effect-lesson-2'];
+        
+        if (lessonProgress) {
+            const date = new Date(lessonProgress.timestamp).toLocaleDateString();
+            document.getElementById('lessonProgress').innerHTML = 
+                `📈 Progress: <strong>${lessonProgress.percentage}%</strong> (${date})`;
+        } else {
+            document.getElementById('lessonProgress').textContent = '📈 Progress: Not started';
+        }
+    }
+
+    function updateProgressDisplay() {
+        const allProgress = JSON.parse(localStorage.getItem('passproofProgress') || '{}');
+        const lessonProgress = allProgress['doppler-effect-lesson-2'];
+        
+        if (lessonProgress) {
+            document.getElementById('lessonProgress').innerHTML = 
+                `📈 Progress: <strong>${lessonProgress.percentage}%</strong> ✓`;
+        }
+    }
+
+    // ==================== SCROLL PROGRESS ====================
+    function updateScrollProgress() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const progress = Math.round((scrollTop / scrollHeight) * 100);
+        document.getElementById('scrollProgress').textContent = progress + '%';
+    }
+
+    // ==================== INITIALIZATION ====================
+    document.addEventListener('DOMContentLoaded', function() {
+        loadProgress();
+        updateScrollProgress();
+    });
+
+    window.addEventListener('scroll', updateScrollProgress);
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.getElementById('dropdownMenu').classList.remove('active');
+        }
+    });
+
+    // Card animation on scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animationPlayState = 'running';
+            }
+        });
+    }, observerOptions);
+
+    setTimeout(() => {
+        document.querySelectorAll('.card').forEach(card => {
+            observer.observe(card);
+        });
+    }, 100);
+</script>
+    <script src="gr12-phys-nav.js"></script>
 </body>
 </html>

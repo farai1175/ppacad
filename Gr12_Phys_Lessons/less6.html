@@ -911,6 +911,62 @@
             color: var(--primary-blue);
         }
 
+        /* Key Points Box */
+        .key-points {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left: 4px solid var(--warning);
+            padding: 1.5rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 1.5rem 0;
+        }
+
+        .key-points h4 {
+            color: #e65100;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .key-points ul {
+            margin-left: 1.5rem;
+        }
+
+        .key-points li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: var(--white);
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+            background: var(--white);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover td {
+            background: var(--light-blue);
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             header {
@@ -998,62 +1054,6 @@
 
         ::-webkit-scrollbar-thumb:hover {
             background: var(--dark-blue);
-        }
-
-        /* Key Points Box */
-        .key-points {
-            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
-            border-left: 4px solid var(--warning);
-            padding: 1.5rem;
-            border-radius: 0 var(--radius) var(--radius) 0;
-            margin: 1.5rem 0;
-        }
-
-        .key-points h4 {
-            color: #e65100;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .key-points ul {
-            margin-left: 1.5rem;
-        }
-
-        .key-points li {
-            margin-bottom: 0.5rem;
-        }
-
-        /* Comparison Table */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-
-        .comparison-table th {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
-            color: var(--white);
-            padding: 1rem;
-            text-align: left;
-        }
-
-        .comparison-table td {
-            padding: 1rem;
-            border-bottom: 1px solid var(--gray-200);
-            background: var(--white);
-        }
-
-        .comparison-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .comparison-table tr:hover td {
-            background: var(--light-blue);
         }
     </style>
 </head>
@@ -1436,7 +1436,7 @@
                 <div class="quiz-progress">
                     <div class="quiz-progress-bar" id="progressBar" style="width: 0%"></div>
                 </div>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem;" id="progressText">Question 1 of 10</p>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem;" id="progressText">Question 1 of 12</p>
             </div>
 
             <div class="question-container" id="questionContainer">
@@ -1448,7 +1448,7 @@
                     <div class="score-text" id="scoreText">0%</div>
                 </div>
                 <h3 class="score-message" id="scoreMessage">Well Done!</h3>
-                <p class="score-details" id="scoreDetails">You scored X out of 10 questions correctly.</p>
+                <p class="score-details" id="scoreDetails">You scored X out of 12 questions correctly.</p>
                 <button class="retry-btn" onclick="resetQuiz()">↺ Try Again</button>
             </div>
 
@@ -1464,11 +1464,11 @@
 
         <!-- Lesson Navigation -->
         <div class="lesson-nav">
-            <a href="#" class="nav-btn prev">
+            <a href="less5.html" class="nav-btn prev">
                 ← Previous Lesson
                 <span style="font-size: 0.85rem; opacity: 0.8;">Lesson 5: Applications</span>
             </a>
-            <a href="#" class="nav-btn next">
+            <a href="less7.html" class="nav-btn next">
                 <span style="font-size: 0.85rem; opacity: 0.8;">Lesson 7: Review & Practice</span>
                 Next Lesson →
             </a>
@@ -1514,11 +1514,14 @@
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    dropdownMenu.classList.remove('active');
+                const href = this.getAttribute('href');
+                if (href.length > 1) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        dropdownMenu.classList.remove('active');
+                    }
                 }
             });
         });
@@ -1526,10 +1529,48 @@
         // ==================== SOLUTION TOGGLES ====================
         function toggleSolution(num) {
             const solution = document.getElementById(`solution${num}`);
+            if (!solution) {
+                console.error(`Solution ${num} not found`);
+                return;
+            }
             const btn = solution.previousElementSibling;
             solution.classList.toggle('active');
-            btn.textContent = solution.classList.contains('active') ? 'Hide Solution' : 'Show Solution';
+            if (btn) {
+                btn.textContent = solution.classList.contains('active') ? 'Hide Solution' : 'Show Solution';
+            }
         }
+
+        // ==================== PROGRESS TRACKING ====================
+        const STORAGE_KEYS = {
+            QUIZ_ANSWERS: 'lesson6_quiz_answers',
+            QUIZ_SCORE: 'lesson6_quiz_score',
+            COMPLETED: 'lesson6_completed',
+            SCROLL_POSITION: 'lesson6_scroll'
+        };
+
+        function updateProgress() {
+            const sections = document.querySelectorAll('.card');
+            const viewportHeight = window.innerHeight;
+            let visibleSections = 0;
+
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top < viewportHeight && rect.bottom > 0) {
+                    visibleSections++;
+                }
+            });
+
+            const progress = Math.min(Math.round((visibleSections / sections.length) * 100), 100);
+            document.getElementById('lessonProgress').textContent = `${progress}%`;
+            
+            const progressRing = document.getElementById('progressRing');
+            const circumference = 100.53;
+            const offset = circumference - (progress / 100) * circumference;
+            progressRing.style.strokeDashoffset = offset;
+        }
+
+        window.addEventListener('scroll', updateProgress);
+        window.addEventListener('resize', updateProgress);
 
         // ==================== COLLISION SIMULATION ====================
         const canvas = document.getElementById('collisionCanvas');
@@ -1547,8 +1588,9 @@
         let simState = {
             running: false,
             collided: false,
-            obj1: { x: 0, y: 0, vx: 0, mass: 2, radius: 30, color: '#4CAF50' },
-            obj2: { x: 0, y: 0, vx: 0, mass: 3, radius: 35, color: '#2196F3' },
+            animationId: null,
+            obj1: { x: 0, y: 0, vx: 0, mass: 2, radius: 30, color: '#4CAF50', initialVx: 0, finalVx: 0 },
+            obj2: { x: 0, y: 0, vx: 0, mass: 3, radius: 35, color: '#2196F3', initialVx: 0, finalVx: 0 },
             initialKE: 0,
             finalKE: 0,
             initialP: 0,
@@ -1596,7 +1638,8 @@
                 mass: m1,
                 radius: r1,
                 color: '#4CAF50',
-                initialVx: v1
+                initialVx: v1,
+                finalVx: 0
             };
 
             simState.obj2 = {
@@ -1606,12 +1649,15 @@
                 mass: m2,
                 radius: r2,
                 color: '#2196F3',
-                initialVx: v2
+                initialVx: v2,
+                finalVx: 0
             };
 
             // Calculate initial values
             simState.initialKE = 0.5 * m1 * v1 * v1 + 0.5 * m2 * v2 * v2;
             simState.initialP = m1 * v1 + m2 * v2;
+            simState.finalKE = 0;
+            simState.finalP = 0;
 
             updateDataDisplay();
             drawSimulation();
@@ -1758,7 +1804,7 @@
             drawSimulation();
 
             if (simState.running) {
-                requestAnimationFrame(animate);
+                simState.animationId = requestAnimationFrame(animate);
             }
         }
 
@@ -1799,11 +1845,13 @@
             updateDataDisplay();
 
             // Visual flash effect
+            const originalColor1 = simState.obj1.color;
+            const originalColor2 = simState.obj2.color;
             simState.obj1.color = '#FFD700';
             simState.obj2.color = '#FFD700';
             setTimeout(() => {
-                simState.obj1.color = '#4CAF50';
-                simState.obj2.color = '#2196F3';
+                simState.obj1.color = originalColor1;
+                simState.obj2.color = originalColor2;
             }, 200);
         }
 
@@ -1817,91 +1865,9 @@
         function updateCollisionResult() {
             const resultEl = document.getElementById('collisionResult');
             const keDiff = Math.abs(simState.finalKE - simState.initialKE);
-            const kePercent = (keDiff / simState.initialKE * 100).toFixed(1);
+            const kePercent = simState.initialKE > 0 ? (keDiff / simState.initialKE * 100).toFixed(1) : 0;
 
-            if (keDiff < 0.01) {
-                resultEl.className = 'collision-result elastic';
-                resultEl.innerHTML = '🟢 <strong>ELASTIC COLLISION</strong><br>Kinetic energy conserved! KE before ≈ KE after';
-            } else {
-                resultEl.className = 'collision-result inelastic';
-                resultEl.innerHTML = `🟠 <strong>INELASTIC COLLISION</strong><br>Kinetic energy NOT conserved! ${kePercent}% of KE was transformed to other forms (heat, sound)`;
-            }
-        }
-
-        // Event listeners for simulation controls
-        document.getElementById('startSim').addEventListener('click', () => {
-            initSimulation();
-            simState.running = true;
-            animate();
-        });
-
-        document.getElementById('resetSim').addEventListener('click', () => {
-            simState.running = false;
-            simState.collided = false;
-            document.getElementById('collisionResult').className = 'collision-result';
-            document.getElementById('collisionResult').textContent = 'Set parameters and click "Start Collision" to begin';
-            initSimulation();
-        });
-
-        // Initialize on load
-        updateDisplayValues();
-        initSimulation();
-
-        // ==================== QUIZ SYSTEM ====================
-        const questions = [
-            {
-                question: "In which type of collision is kinetic energy conserved?",
-                options: ["Inelastic collision", "Elastic collision", "Perfectly inelastic collision", "All collisions"],
-                correct: 1,
-                explanation: "In an elastic collision, kinetic energy is conserved. The total kinetic energy before equals the total kinetic energy after the collision."
-            },
-            {
-                question: "What happens to the 'lost' kinetic energy in an inelastic collision?",
-                options: ["It disappears completely", "It is transformed into heat and sound", "It becomes potential energy", "It is transferred to the environment as momentum"],
-                correct: 1,
-                explanation: "In inelastic collisions, the kinetic energy that appears to be 'lost' is actually transformed into other forms of energy, primarily heat and sound."
-            },
-            {
-                question: "Momentum is conserved in:",
-                options: ["Only elastic collisions", "Only inelastic collisions", "Both elastic and inelastic collisions", "Neither type of collision"],
-                correct: 2,
-                explanation: "Momentum is ALWAYS conserved in any collision within an isolated system, regardless of whether the collision is elastic or inelastic."
-            },
-            {
-                question: "A 2 kg object moving at 3 m·s⁻¹ has kinetic energy of:",
-                options: ["3 J", "6 J", "9 J", "18 J"],
-                correct: 2,
-                explanation: "Using Ek = ½mv² = ½(2)(3)² = ½(2)(9) = 9 J"
-            },
-            {
-                question: "Two objects collide and stick together. This is an example of:",
-                options: ["Elastic collision", "Inelastic collision", "Perfectly inelastic collision", "Explosive collision"],
-                correct: 2,
-                explanation: "When objects stick together after collision, it's called a perfectly inelastic collision. This represents the maximum loss of kinetic energy while still conserving momentum."
-            },
-            {
-                question: "Which of the following is most likely to be an elastic collision?",
-                options: ["A car crash", "A ball caught by a fielder", "Collision between gas molecules", "A meteor hitting Earth"],
-                correct: 2,
-                explanation: "Collisions between gas molecules are nearly elastic because they don't deform or stick together, and minimal energy is lost to heat or sound."
-            },
-            {
-                question: "To determine if a collision is elastic or inelastic, you must:",
-                options: ["Calculate momentum before and after", "Calculate kinetic energy before and after", "Measure the temperature change", "Count the number of objects"],
-                correct: 1,
-                explanation: "To classify a collision as elastic or inelastic, you must calculate the total kinetic energy before and after the collision and compare them."
-            },
-            {
-                question: "In the formula Ek = ½mv², if velocity doubles, kinetic energy:",
-                options: ["Doubles", "Quadruples", "Halves", "Stays the same"],
-                correct: 1,
-                explanation: "Since velocity is squared in the formula, if velocity doubles (×2), kinetic energy becomes ×(2)² = ×4, i.e., it quadruples."
-            },
-            {
-                question: "A 1000 kg car travelling at 10 m·s⁻¹ collides with a stationary 1500 kg truck. After collision, the car moves at 2 m·s⁻            
-                const kePercent = simState.initialKE > 0 ? (keDiff / simState.initialKE * 100).toFixed(1) : 0;
-
-            if (keDiff < 0.01 * simState.initialKE) {
+            if (keDiff < 0.01 * simState.initialKE || keDiff < 0.1) {
                 resultEl.className = 'collision-result elastic';
                 resultEl.innerHTML = '🟢 <strong>ELASTIC COLLISION</strong><br>Kinetic energy conserved! KE<sub>before</sub> ≈ KE<sub>after</sub>';
             } else {
@@ -1910,6 +1876,7 @@
             }
         }
 
+        // Event listeners for simulation controls
         document.getElementById('startSim').addEventListener('click', () => {
             if (simState.animationId) {
                 cancelAnimationFrame(simState.animationId);
@@ -1932,6 +1899,7 @@
             initSimulation();
         });
 
+        // Initialize on load
         updateDisplayValues();
         initSimulation();
 
@@ -1995,7 +1963,7 @@
                 question: "In a perfectly inelastic collision between two objects of equal mass where one is stationary, what fraction of the initial kinetic energy is lost?",
                 options: ["None (0%)", "One quarter (25%)", "One half (50%)", "Three quarters (75%)"],
                 correct: 2,
-                explanation: "In a perfectly inelastic collision with equal masses (one stationary), the final velocity is half the initial velocity. Since Eₖ ∝ v², the final KE is ¼ of initial, meaning 50% is lost. Actually, let's recalculate: if m₁=m₂=m and v₂=0, then vf = mv₁/(2m) = v₁/2. KE_before = ½mv₁². KE_after = ½(2m)(v₁/2)² = ½(2m)(v₁²/4) = mv₁²/4 = ½ × ½mv₁² = ½ KE_before. So 50% is lost."
+                explanation: "If m₁=m₂=m and v₂=0, then vf = v₁/2. KE_before = ½mv₁². KE_after = ½(2m)(v₁/2)² = mv₁²/4 = ½ KE_before. So 50% is lost."
             },
             {
                 question: "A bullet embeds itself in a wooden block. This collision is:",
@@ -2018,7 +1986,11 @@
         function loadSavedProgress() {
             const savedAnswers = localStorage.getItem(STORAGE_KEYS.QUIZ_ANSWERS);
             if (savedAnswers) {
-                userAnswers = JSON.parse(savedAnswers);
+                try {
+                    userAnswers = JSON.parse(savedAnswers);
+                } catch (e) {
+                    userAnswers = new Array(questions.length).fill(null);
+                }
             } else {
                 userAnswers = new Array(questions.length).fill(null);
             }
@@ -2206,34 +2178,11 @@
             renderQuestion();
         }
 
-        function reviewAnswers() {
-            document.getElementById('scoreContainer').classList.remove('show');
-            document.getElementById('questionContainer').style.display = 'block';
-            document.getElementById('questionNav').style.display = 'flex';
-            currentQuestion = 0;
-            renderQuestion();
-        }
-
         // Initialize quiz
         loadSavedProgress();
         if (!quizCompleted) {
             renderQuestion();
         }
-
-        // ==================== SMOOTH SCROLL FOR SECTIONS ====================
-        document.querySelectorAll('.dropdown-menu a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                const href = link.getAttribute('href');
-                if (href.startsWith('#') && href.length > 1) {
-                    e.preventDefault();
-                    const target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        dropdownMenu.classList.remove('active');
-                    }
-                }
-            });
-        });
 
         // ==================== KEYBOARD NAVIGATION ====================
         document.addEventListener('keydown', (e) => {
@@ -2289,24 +2238,15 @@
             observer.observe(card);
         });
 
-        // ==================== PRINT FUNCTIONALITY ====================
-        function printLesson() {
-            window.print();
-        }
-
-        // ==================== SERVICE WORKER REGISTRATION (PWA Support) ====================
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                // Service worker registration would go here for PWA support
-                console.log('PassProof Academy - Lesson 6 loaded successfully');
-            });
-        }
-
         // ==================== INITIAL LOAD ====================
         document.addEventListener('DOMContentLoaded', () => {
             updateProgress();
             console.log('Lesson initialized. Progress tracking active.');
         });
+
+        // Initialize on page load
+        updateProgress();
     </script>
+    <script src="gr12-phys-nav.js"></script>
 </body>
 </html>

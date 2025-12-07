@@ -3,1094 +3,2123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grade 12 Physical Sciences: Vertical Projectile Motion</title>
+    <title>Vertical Projectiles - Lesson 1 | PassProof Academy</title>
     <style>
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --accent-color: #e74c3c;
-            --light-color: #ecf0f1;
-            --dark-color: #34495e;
-            --success-color: #27ae60;
-            --warning-color: #f39c12;
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
+        :root {
+            --primary-blue: #1a73e8;
+            --primary-dark: #1557b0;
+            --primary-light: #e8f0fe;
+            --accent-blue: #4285f4;
+            --white: #ffffff;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-600: #475569;
+            --gray-800: #1e293b;
+            --success: #22c55e;
+            --error: #ef4444;
+            --warning: #f59e0b;
+        }
+
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-800);
             line-height: 1.6;
-            color: #333;
-            background-color: #f9f9f9;
-            padding: 20px;
+            min-height: 100vh;
         }
-        
-        .lesson-container {
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark));
+            color: var(--white);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-content {
             max-width: 1200px;
             margin: 0 auto;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: #fbbf24;
+        }
+
+        nav {
+            position: relative;
+        }
+
+        .nav-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: var(--white);
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-toggle::after {
+            content: '▼';
+            font-size: 0.7rem;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-toggle.active::after {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            right: 0;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            min-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: var(--gray-800);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .dropdown-menu a:first-child {
+            border-radius: 12px 12px 0 0;
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+            border-radius: 0 0 12px 12px;
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--primary-light);
+            color: var(--primary-blue);
+            padding-left: 2rem;
+        }
+
+        .dropdown-menu a.current {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Lesson Header */
         .lesson-header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 20px;
-            text-align: center;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            color: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(26, 115, 232, 0.3);
         }
-        
-        .lesson-title {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-        
+
         .lesson-meta {
             display: flex;
-            justify-content: space-around;
             flex-wrap: wrap;
-            margin-top: 15px;
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
-        
-        .meta-item {
-            margin: 5px 10px;
+
+        .meta-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
         }
-        
-        .lesson-content {
-            padding: 20px;
+
+        .lesson-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
         }
-        
-        .section {
-            margin-bottom: 30px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
+
+        .lesson-header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: var(--gray-200);
+            border-radius: 10px;
             overflow: hidden;
         }
-        
-        .section-header {
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 15px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background-color 0.3s;
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            width: 0%;
         }
-        
-        .section-header:hover {
-            background-color: var(--dark-color);
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
-        .section-header h2 {
-            font-size: 1.4rem;
-            margin: 0;
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
         }
-        
-        .toggle-icon {
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-        
-        .section-content {
-            padding: 20px;
-            display: none;
-        }
-        
-        .section.active .section-content {
-            display: block;
-        }
-        
-        .objective-list, .overview-content, .main-content {
-            margin-bottom: 20px;
-        }
-        
-        .objective-list li, .overview-content p, .main-content p {
-            margin-bottom: 10px;
-        }
-        
-        .example-box {
-            background-color: #f8f9fa;
-            border-left: 4px solid var(--secondary-color);
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 0 5px 5px 0;
-        }
-        
-        .example-title {
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: var(--primary-color);
-        }
-        
-        .diagram-container {
-            text-align: center;
-            margin: 20px 0;
-            padding: 15px;
-            background-color: #f5f5f5;
-            border-radius: 8px;
-        }
-        
-        .diagram {
-            max-width: 100%;
-            height: auto;
-        }
-        
-        .formula-box {
-            background-color: #e8f4f8;
-            border: 1px solid var(--secondary-color);
-            border-radius: 5px;
-            padding: 15px;
-            margin: 15px 0;
-            text-align: center;
-        }
-        
-        .formula {
-            font-size: 1.4rem;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-        
-        .calculator {
-            background-color: #f8f9fa;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        
-        .calculator h3 {
-            margin-bottom: 15px;
-            color: var(--primary-color);
-        }
-        
-        .input-group {
-            margin: 10px 0;
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        
-        .input-group label {
-            width: 200px;
-            margin-right: 10px;
-        }
-        
-        .input-group input, .input-group select {
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            width: 150px;
-        }
-        
-        .question-container {
-            margin-bottom: 20px;
-            padding: 15px;
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
-        }
-        
-        .question-text {
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        
-        .options-container {
-            margin: 10px 0;
-        }
-        
-        .option {
-            margin: 8px 0;
-            display: flex;
-            align-items: flex-start;
-        }
-        
-        .option input {
-            margin-right: 10px;
-            margin-top: 5px;
-        }
-        
-        .feedback {
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 5px;
-            display: none;
-        }
-        
-        .correct {
-            background-color: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
-        }
-        
-        .incorrect {
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
-        }
-        
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-        }
-        
-        .btn {
-            padding: 10px 20px;
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        .btn:hover {
-            background-color: var(--dark-color);
-        }
-        
-        .btn:disabled {
-            background-color: #bdc3c7;
-            cursor: not-allowed;
-        }
-        
-        .btn-success {
-            background-color: var(--success-color);
-        }
-        
-        .btn-warning {
-            background-color: var(--warning-color);
-        }
-        
-        .results-container {
-            text-align: center;
-            padding: 20px;
-            margin-top: 20px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            display: none;
-        }
-        
-        .score {
+
+        .card h2 {
+            color: var(--primary-blue);
             font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid var(--primary-light);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .card h2 .icon {
+            font-size: 1.8rem;
+        }
+
+        .card h3 {
+            color: var(--gray-800);
+            font-size: 1.2rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        /* Objectives List */
+        .objectives-list {
+            list-style: none;
+        }
+
+        .objectives-list li {
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            background: var(--primary-light);
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-blue);
+            position: relative;
+            padding-left: 3rem;
+            transition: all 0.3s ease;
+        }
+
+        .objectives-list li:hover {
+            transform: translateX(5px);
+            background: #dbeafe;
+        }
+
+        .objectives-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 1rem;
+            color: var(--primary-blue);
             font-weight: bold;
-            margin: 10px 0;
         }
-        
-        .score-percentage {
-            color: var(--accent-color);
-            font-size: 2rem;
+
+        /* Concept Box */
+        .concept-box {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 5px solid var(--warning);
         }
-        
+
+        .concept-box.important {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border-left-color: var(--error);
+        }
+
+        .concept-box.success {
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+            border-left-color: var(--success);
+        }
+
+        .concept-box h4 {
+            color: var(--gray-800);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Definition Box */
+        .definition-box {
+            background: var(--gray-100);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .definition-box strong {
+            color: var(--primary-blue);
+        }
+
+        /* Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .data-table th {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+            background: var(--white);
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table tr:hover td {
+            background: var(--primary-light);
+        }
+
+        /* Simulation Container */
         .simulation-container {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: var(--white);
+        }
+
+        .simulation-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .simulation-header h3 {
+            color: var(--white);
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .simulation-header p {
+            color: var(--gray-300);
+        }
+
+        .simulation-canvas-container {
+            background: linear-gradient(180deg, #0ea5e9, #60a5fa 30%, #93c5fd 60%, #86efac 85%, #4ade80);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
             position: relative;
             height: 400px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            margin: 20px 0;
             overflow: hidden;
-            background: linear-gradient(to bottom, #87CEEB, #E0F7FA);
         }
-        
-        .projectile {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: var(--accent-color);
+
+        #projectileCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .simulation-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .control-group {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--gray-300);
+            font-size: 0.9rem;
+        }
+
+        .control-group input[type="range"] {
+            width: 150px;
+            accent-color: var(--primary-blue);
+        }
+
+        .control-group .value {
+            color: #fbbf24;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 0.25rem;
+        }
+
+        .sim-btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sim-btn.primary {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .sim-btn.primary:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .sim-btn.secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--white);
+        }
+
+        .sim-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .simulation-data {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .data-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .data-item .label {
+            color: var(--gray-300);
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .data-item .value {
+            color: #fbbf24;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        /* Worked Example */
+        .worked-example {
+            background: linear-gradient(135deg, var(--primary-light), #dbeafe);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 2px solid var(--primary-blue);
+        }
+
+        .worked-example h4 {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .step {
+            background: var(--white);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 0.75rem 0;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: var(--primary-blue);
+            color: var(--white);
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
-            bottom: 50px;
-            left: 50%;
-            transform: translateX(-50%);
+            text-align: center;
+            line-height: 28px;
+            font-weight: 600;
+            margin-right: 0.75rem;
         }
-        
-        .controls {
+
+        /* Quiz Section */
+        .quiz-section {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .quiz-section h2 {
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .question {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .question.correct {
+            border-color: var(--success);
+            background: #f0fdf4;
+        }
+
+        .question.incorrect {
+            border-color: var(--error);
+            background: #fef2f2;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--gray-800);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .option {
+            padding: 1rem 1.25rem;
+            background: var(--white);
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .option:hover {
+            border-color: var(--primary-blue);
+            background: var(--primary-light);
+        }
+
+        .option.selected {
+            border-color: var(--primary-blue);
+            background: var(--primary-light);
+        }
+
+        .option.correct-answer {
+            border-color: var(--success);
+            background: #dcfce7;
+        }
+
+        .option.wrong-answer {
+            border-color: var(--error);
+            background: #fee2e2;
+        }
+
+        .option-letter {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--gray-200);
+            font-weight: 600;
+            color: var(--gray-600);
+            flex-shrink: 0;
+        }
+
+        .option.selected .option-letter {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .option.correct-answer .option-letter {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .option.wrong-answer .option-letter {
+            background: var(--error);
+            color: var(--white);
+        }
+
+        .text-input-container {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .text-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #dcfce7;
+            color: #166534;
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background: #fee2e2;
+            color: #991b1b;
+            display: block;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            color: var(--white);
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            display: block;
+            margin: 2rem auto;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(26, 115, 232, 0.4);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(26, 115, 232, 0.5);
+        }
+
+        .submit-btn:disabled {
+            background: var(--gray-300);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Score Display */
+        .score-display {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .score-display.show {
+            display: block;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .score-number {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .score-label {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .score-message {
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 3rem 0 2rem;
+        }
+
+        .nav-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn.prev {
+            background: var(--gray-200);
+            color: var(--gray-800);
+        }
+
+        .nav-btn.prev:hover {
+            background: var(--gray-300);
+        }
+
+        .nav-btn.next {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            color: var(--white);
+            margin-left: auto;
+        }
+
+        .nav-btn.next:hover {
+            transform: translateX(5px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gray-800);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            main {
+                padding: 1rem;
+            }
+
+            .lesson-header {
+                padding: 1.5rem;
+            }
+
+            .lesson-header h1 {
+                font-size: 1.6rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .simulation-canvas-container {
+                height: 300px;
+            }
+
+            .simulation-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .control-group input[type="range"] {
+                width: 200px;
+            }
+
+            .data-table {
+                font-size: 0.9rem;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 0.75rem;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                justify-content: center;
+            }
+
+            .nav-btn.next {
+                margin-left: 0;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Motion Diagram */
+        .motion-diagram {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin: 10px 0;
+            align-items: stretch;
+            gap: 2rem;
+            padding: 2rem;
+            background: var(--gray-100);
+            border-radius: 12px;
+            margin: 1.5rem 0;
         }
-        
-        @media (max-width: 768px) {
-            .lesson-meta {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .meta-item {
-                margin: 5px 0;
-            }
-            
-            .section-header h2 {
-                font-size: 1.2rem;
-            }
-            
-            .input-group {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .input-group label {
-                width: 100%;
-                margin-bottom: 5px;
-            }
+
+        .diagram-section {
+            text-align: center;
+            flex: 1;
+            max-width: 200px;
+        }
+
+        .diagram-visual {
+            height: 200px;
+            background: linear-gradient(180deg, #bfdbfe, #93c5fd);
+            border-radius: 10px;
+            position: relative;
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1rem;
+        }
+
+        .ball {
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle at 30% 30%, #fbbf24, #d97706);
+            border-radius: 50%;
+            margin: 0 auto;
+        }
+
+        .arrow-up, .arrow-down {
+            font-size: 2rem;
+            color: var(--primary-blue);
+        }
+
+        .diagram-label {
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: var(--gray-800);
+            color: var(--white);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .formula-box .formula {
+            color: #fbbf24;
+            margin: 0.5rem 0;
         }
     </style>
 </head>
 <body>
-    <div class="lesson-container">
-        <div class="lesson-header">
-            <h1 class="lesson-title">Vertical Projectile Motion</h1>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">Pass<span>Proof</span> Academy</div>
+            <nav>
+                <button class="nav-toggle" id="navToggle">
+                    Menu
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="#">🏠 Home</a>
+                    <a href="#">📚 All Subjects</a>
+                    <a href="#">🔬 Physical Sciences</a>
+                    <a href="#" class="current">📖 Vertical Projectiles</a>
+                    <a href="#">📊 My Progress</a>
+                    <a href="#">⚙️ Settings</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Lesson Header -->
+        <section class="lesson-header fade-in">
             <div class="lesson-meta">
-                <div class="meta-item"><strong>Grade:</strong> 12</div>
-                <div class="meta-item"><strong>Subject:</strong> Physical Sciences</div>
-                <div class="meta-item"><strong>Week:</strong> 2</div>
-                <div class="meta-item"><strong>Topic:</strong> Vertical Projectiles</div>
-                <div class="meta-item"><strong>Lesson:</strong> 1</div>
+                <span class="meta-badge">📘 Physical Sciences</span>
+                <span class="meta-badge">🎓 Grade 12</span>
+                <span class="meta-badge">📅 Term 1 • Week 2</span>
+            </div>
+            <h1>Vertical Projectiles</h1>
+            <p class="subtitle">Lesson 1: Introduction to Projectile Motion</p>
+        </section>
+
+        <!-- Progress Bar -->
+        <div class="progress-container fade-in">
+            <div class="progress-header">
+                <span>Lesson Progress</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
             </div>
         </div>
-        
-        <div class="lesson-content">
-            <div class="section" id="objectives">
-                <div class="section-header">
-                    <h2>Learning Objectives</h2>
-                    <span class="toggle-icon">+</span>
-                </div>
-                <div class="section-content">
-                    <p>By the end of this lesson, learners should be able to:</p>
-                    <ul class="objective-list">
-                        <li>Explain that projectiles fall freely with gravitational acceleration "g"</li>
-                        <li>Understand that projectiles accelerate downwards with constant acceleration</li>
-                        <li>Recognize that projectiles have zero velocity at their greatest height</li>
-                        <li>Calculate that time to reach maximum height equals time to fall back</li>
-                        <li>Apply equations of motion to vertical projectile problems</li>
-                        <li>Describe projectile motion using a single set of equations</li>
-                    </ul>
-                </div>
+
+        <!-- Learning Objectives -->
+        <section class="card fade-in">
+            <h2><span class="icon">🎯</span> Learning Objectives</h2>
+            <p>By the end of this lesson, you will be able to:</p>
+            <ul class="objectives-list">
+                <li>Define projectile motion and free fall</li>
+                <li>Explain that projectiles fall freely with gravitational acceleration "g"</li>
+                <li>State that objects accelerate downwards with constant acceleration (9,8 m·s⁻²) whether moving upward or downward</li>
+                <li>Explain why velocity is zero at the greatest height</li>
+                <li>Explain that time to reach maximum height equals time to return to launch point</li>
+                <li>Apply understanding to describe motion of falling objects and objects thrown upward</li>
+            </ul>
+        </section>
+
+        <!-- Overview -->
+        <section class="card fade-in">
+            <h2><span class="icon">📋</span> Overview</h2>
+            <p>Vertical projectile motion is one of the most fundamental concepts in physics. Every time you throw a ball into the air, drop an object, or watch a fountain, you're observing vertical projectile motion in action.</p>
+            
+            <div class="definition-box">
+                <p><strong>Vertical Projectile Motion</strong> deals with:</p>
+                <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                    <li>Objects that fall straight down</li>
+                    <li>Objects that are thrown straight up</li>
+                    <li>Motion of an object as it goes up and then comes down</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Prior Knowledge -->
+        <section class="card fade-in">
+            <h2><span class="icon">🧠</span> Prior Knowledge Review</h2>
+            <p>Before we dive in, let's review some important concepts:</p>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Quantity</th>
+                        <th>Definition</th>
+                        <th>Unit</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Distance</strong></td>
+                        <td>The actual path length covered</td>
+                        <td>m</td>
+                        <td>Scalar</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Displacement</strong></td>
+                        <td>Straight line distance from start to finish</td>
+                        <td>m + direction</td>
+                        <td>Vector</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Speed</strong></td>
+                        <td>Rate of change in distance</td>
+                        <td>m·s⁻¹</td>
+                        <td>Scalar</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Velocity</strong></td>
+                        <td>Rate of change in displacement</td>
+                        <td>m·s⁻¹ + direction</td>
+                        <td>Vector</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Acceleration</strong></td>
+                        <td>Rate of change in velocity</td>
+                        <td>m·s⁻²+ direction</td>
+                        <td>Vector</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Main Concepts -->
+        <section class="card fade-in">
+            <h2><span class="icon">📚</span> Main Concepts</h2>
+            
+            <h3>1. Free Fall</h3>
+            <div class="definition-box">
+                <p><strong>Free Fall:</strong> An object is in free fall when the ONLY force acting on it is the gravitational force of the Earth pulling it downwards.</p>
             </div>
             
-            <div class="section" id="overview">
-                <div class="section-header">
-                    <h2>Overview</h2>
-                    <span class="toggle-icon">+</span>
-                </div>
-                <div class="section-content">
-                    <div class="overview-content">
-                        <p>Vertical projectile motion deals with objects that fall straight down, objects thrown straight up, and objects moving up and then down under gravity.</p>
-                        
-                        <div class="formula-box">
-                            <div class="formula">g = 9.8 m/s² (on Earth)</div>
-                            <p>Gravitational acceleration is constant and always directed downward</p>
-                        </div>
-                        
-                        <p>Key characteristics of vertical projectile motion:</p>
-                        <ul>
-                            <li>Acceleration is constant at 9.8 m/s² downward</li>
-                            <li>Velocity is zero at the maximum height</li>
-                            <li>Time upward = Time downward (for same height)</li>
-                            <li>Motion can be described using equations of motion</li>
-                        </ul>
-                        
-                        <div class="diagram-container">
-                            <h3>Vertical Projectile Motion</h3>
-                            <svg class="diagram" width="400" height="300" viewBox="0 0 400 300">
-                                <!-- Building -->
-                                <rect x="180" y="50" width="40" height="250" fill="#95a5a6" />
-                                
-                                <!-- Projectile path -->
-                                <path d="M 200 100 Q 220 50 240 100 Q 260 150 200 250" stroke="#e74c3c" stroke-width="2" fill="none" stroke-dasharray="5,5" />
-                                
-                                <!-- Projectile at different positions -->
-                                <circle cx="200" cy="100" r="8" fill="#3498db" />
-                                <circle cx="220" cy="50" r="8" fill="#3498db" />
-                                <circle cx="240" cy="100" r="8" fill="#3498db" />
-                                <circle cx="200" cy="250" r="8" fill="#3498db" />
-                                
-                                <!-- Labels -->
-                                <text x="200" cy="90" text-anchor="middle" fill="#2c3e50">Launch</text>
-                                <text x="220" cy="40" text-anchor="middle" fill="#2c3e50">Max Height</text>
-                                <text x="240" cy="90" text-anchor="middle" fill="#2c3e50">Descent</text>
-                                <text x="200" cy="240" text-anchor="middle" fill="#2c3e50">Impact</text>
-                                
-                                <!-- Velocity arrows -->
-                                <line x1="200" y1="100" x2="210" y2="80" stroke="#27ae60" stroke-width="2" />
-                                <polygon points="210,80 207,75 210,80 213,75" fill="#27ae60" />
-                                
-                                <line x1="220" y1="50" x2="220" y2="50" stroke="#f39c12" stroke-width="2" />
-                                
-                                <line x1="240" y1="100" x2="230" y2="120" stroke="#e74c3c" stroke-width="2" />
-                                <polygon points="230,120 233,115 230,120 227,115" fill="#e74c3c" />
-                                
-                                <!-- Acceleration arrows -->
-                                <line x1="180" y1="150" x2="180" y2="160" stroke="#2c3e50" stroke-width="2" />
-                                <polygon points="180,160 177,155 180,160 183,155" fill="#2c3e50" />
-                                <text x="170" y="145" text-anchor="middle" fill="#2c3e50">g = 9.8 m/s²</text>
-                            </svg>
-                        </div>
-                    </div>
+            <div class="concept-box success">
+                <h4>🌍 Gravitational Acceleration</h4>
+                <p>The acceleration due to gravity on Earth is:</p>
+                <div class="formula-box">
+                    <div class="formula">g = 9,8 m·s⁻²</div>
+                    <p style="color: var(--gray-300); font-size: 0.9rem;">Always directed DOWNWARDS toward Earth's centre</p>
                 </div>
             </div>
+
+            <h3>2. Objects Falling Straight Down</h3>
+            <p>When an object is dropped from rest:</p>
             
-            <div class="section" id="main-body">
-                <div class="section-header">
-                    <h2>Main Body</h2>
-                    <span class="toggle-icon">+</span>
-                </div>
-                <div class="section-content">
-                    <div class="main-content">
-                        <h3>Understanding Vertical Projectile Motion</h3>
-                        <p>An object is in free fall when the only force acting on it is gravity. The acceleration due to gravity (g) is approximately 9.8 m/s² on Earth and is always directed downward.</p>
-                        
-                        <div class="formula-box">
-                            <h4>Equations of Motion for Vertical Projectiles</h4>
-                            <p>v<sub>f</sub> = v<sub>i</sub> + g·t</p>
-                            <p>Δy = v<sub>i</sub>·t + ½·g·t²</p>
-                            <p>v<sub>f</sub>² = v<sub>i</sub>² + 2·g·Δy</p>
-                            <p>Note: g is negative (-9.8 m/s²) when upward is positive</p>
-                        </div>
-                        
-                        <h3>Key Concepts:</h3>
-                        <ul>
-                            <li><strong>Objects falling from rest:</strong> Initial velocity is 0 m/s, acceleration is 9.8 m/s² downward</li>
-                            <li><strong>Objects projected upward:</strong> Initial velocity is upward, acceleration is 9.8 m/s² downward</li>
-                            <li><strong>At maximum height:</strong> Velocity is 0 m/s, acceleration is still 9.8 m/s² downward</li>
-                            <li><strong>Time symmetry:</strong> Time to reach maximum height = Time to fall back to launch point</li>
-                        </ul>
-                        
-                        <div class="example-box">
-                            <div class="example-title">Worked Example 1: Object Falling from Rest</div>
-                            <p>An object is dropped from the top of a 80 m tall building. Calculate:</p>
-                            <p>a) The time it takes to hit the ground</p>
-                            <p>b) Its velocity just before impact</p>
-                            <p><strong>Solution:</strong></p>
-                            <p>Given: v<sub>i</sub> = 0 m/s, Δy = -80 m, g = -9.8 m/s²</p>
-                            <p>a) Using Δy = v<sub>i</sub>·t + ½·g·t²</p>
-                            <p>-80 = 0 + ½·(-9.8)·t²</p>
-                            <p>t² = 80/4.9 ≈ 16.33</p>
-                            <p>t ≈ 4.04 s</p>
-                            <p>b) Using v<sub>f</sub> = v<sub>i</sub> + g·t</p>
-                            <p>v<sub>f</sub> = 0 + (-9.8)·4.04 ≈ -39.6 m/s</p>
-                            <p>The negative sign indicates downward direction.</p>
-                        </div>
-                        
-                        <div class="example-box">
-                            <div class="example-title">Worked Example 2: Object Projected Upward</div>
-                            <p>A stone is thrown vertically upward with an initial velocity of 24 m/s.</p>
-                            <p>a) Calculate the maximum height reached</p>
-                            <p>b) Determine the time taken to reach maximum height</p>
-                            <p>c) Find the total time until it returns to the thrower's hand</p>
-                            <p><strong>Solution:</strong></p>
-                            <p>Given: v<sub>i</sub> = 24 m/s, v<sub>f</sub> = 0 m/s (at max height), g = -9.8 m/s²</p>
-                            <p>a) Using v<sub>f</sub>² = v<sub>i</sub>² + 2·g·Δy</p>
-                            <p>0 = (24)² + 2·(-9.8)·Δy</p>
-                            <p>Δy = 576 / 19.6 ≈ 29.4 m</p>
-                            <p>b) Using v<sub>f</sub> = v<sub>i</sub> + g·t</p>
-                            <p>0 = 24 + (-9.8)·t</p>
-                            <p>t = 24 / 9.8 ≈ 2.45 s</p>
-                            <p>c) Total time = 2 × 2.45 = 4.9 s (time up = time down)</p>
-                        </div>
-                        
-                        <div class="simulation-container" id="simulation">
-                            <div class="projectile" id="projectile"></div>
-                        </div>
-                        
-                        <div class="controls">
-                            <button id="start-sim" class="btn">Start Simulation</button>
-                            <button id="reset-sim" class="btn btn-warning">Reset</button>
-                        </div>
-                        
-                        <div class="calculator">
-                            <h3>Vertical Projectile Calculator</h3>
-                            <div class="input-group">
-                                <label for="calc-type">Calculation Type:</label>
-                                <select id="calc-type">
-                                    <option value="time-height">Time to Fall from Height</option>
-                                    <option value="max-height">Maximum Height</option>
-                                    <option value="velocity">Final Velocity</option>
-                                </select>
-                            </div>
-                            
-                            <div id="time-height-inputs">
-                                <div class="input-group">
-                                    <label for="height">Height (m):</label>
-                                    <input type="number" id="height" value="80" step="1">
-                                </div>
-                            </div>
-                            
-                            <div id="max-height-inputs" style="display: none;">
-                                <div class="input-group">
-                                    <label for="initial-velocity">Initial Velocity (m/s):</label>
-                                    <input type="number" id="initial-velocity" value="24" step="1">
-                                </div>
-                            </div>
-                            
-                            <div id="velocity-inputs" style="display: none;">
-                                <div class="input-group">
-                                    <label for="fall-height">Fall Height (m):</label>
-                                    <input type="number" id="fall-height" value="80" step="1">
-                                </div>
-                            </div>
-                            
-                            <button id="calculate-proj" class="btn">Calculate</button>
-                            <div id="calculation-result" style="margin-top: 15px; padding: 10px; background-color: #f8f9fa; border-radius: 5px;"></div>
-                        </div>
-                        
-                        <div class="diagram-container">
-                            <h3>Motion Graphs for Vertical Projectiles</h3>
-                            <svg class="diagram" width="500" height="400" viewBox="0 0 500 400">
-                                <!-- Position-time graph -->
-                                <text x="250" y="30" text-anchor="middle" fill="#2c3e50" font-weight="bold">Position vs Time</text>
-                                <path d="M 50 100 Q 150 50 250 100 Q 350 150 450 200" stroke="#3498db" stroke-width="2" fill="none" />
-                                <text x="50" y="90" text-anchor="start" fill="#3498db">Parabolic curve</text>
-                                
-                                <!-- Velocity-time graph -->
-                                <text x="250" y="180" text-anchor="middle" fill="#2c3e50" font-weight="bold">Velocity vs Time</text>
-                                <line x1="50" y1="250" x2="450" y2="250" stroke="#e74c3c" stroke-width="2" />
-                                <text x="50" y="240" text-anchor="start" fill="#e74c3c">Straight line with negative slope</text>
-                                
-                                <!-- Acceleration-time graph -->
-                                <text x="250" y="330" text-anchor="middle" fill="#2c3e50" font-weight="bold">Acceleration vs Time</text>
-                                <line x1="50" y1="380" x2="450" y2="380" stroke="#27ae60" stroke-width="2" />
-                                <text x="50" y="370" text-anchor="start" fill="#27ae60">Constant at -9.8 m/s²</text>
-                                
-                                <!-- Axes -->
-                                <line x1="50" y1="100" x2="50" y2="200" stroke="#2c3e50" stroke-width="1" />
-                                <line x1="50" y1="200" x2="450" y2="200" stroke="#2c3e50" stroke-width="1" />
-                                
-                                <line x1="50" y1="250" x2="50" y2="350" stroke="#2c3e50" stroke-width="1" />
-                                <line x1="50" y1="350" x2="450" y2="350" stroke="#2c3e50" stroke-width="1" />
-                                
-                                <line x1="50" y1="380" x2="50" y2="400" stroke="#2c3e50" stroke-width="1" />
-                                <line x1="50" y1="400" x2="450" y2="400" stroke="#2c3e50" stroke-width="1" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Value/Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Initial velocity (vᵢ)</strong></td>
+                        <td>0 m·s⁻¹ (starts from rest)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Acceleration</strong></td>
+                        <td>9,8 m·s⁻² downwards (constant)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Displacement (y)</strong></td>
+                        <td>Equal to the height from which it falls</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Final velocity (vf)</strong></td>
+                        <td>Maximum value reached on impact</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>3. Objects Projected Vertically Upwards</h3>
+            <p>When an object is thrown straight up:</p>
             
-            <div class="section" id="questions">
-                <div class="section-header">
-                    <h2>End of Lesson Questions</h2>
-                    <span class="toggle-icon">+</span>
+            <div class="motion-diagram">
+                <div class="diagram-section">
+                    <div class="diagram-visual">
+                        <div class="ball"></div>
+                        <span class="arrow-up">⬆️</span>
+                    </div>
+                    <div class="diagram-label">Going UP</div>
+                    <p style="font-size: 0.85rem; color: var(--gray-600);">Velocity decreasing<br>Speed slowing down</p>
                 </div>
-                <div class="section-content">
-                    <p>Answer the following questions to test your understanding of vertical projectile motion:</p>
-                    
-                    <div class="question-container" id="q1">
-                        <div class="question-text">1. What is the acceleration of an object in free fall near the Earth's surface?</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q1" value="a">
-                                <label>0 m/s²</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q1" value="b">
-                                <label>9.8 m/s² upward</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q1" value="c">
-                                <label>9.8 m/s² downward</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q1" value="d">
-                                <label>It depends on the object's mass</label>
-                            </div>
-                        </div>
-                        <div class="feedback"></div>
+                <div class="diagram-section">
+                    <div class="diagram-visual" style="justify-content: center;">
+                        <div class="ball"></div>
+                        <span style="color: var(--error); font-weight: bold;">⭐ PEAK</span>
                     </div>
-                    
-                    <div class="question-container" id="q2">
-                        <div class="question-text">2. A ball is thrown vertically upward. What is its velocity at the highest point?</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q2" value="a">
-                                <label>9.8 m/s upward</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q2" value="b">
-                                <label>9.8 m/s downward</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q2" value="c">
-                                <label>0 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q2" value="d">
-                                <label>It depends on the initial velocity</label>
-                            </div>
-                        </div>
-                        <div class="feedback"></div>
+                    <div class="diagram-label">Highest Point</div>
+                    <p style="font-size: 0.85rem; color: var(--gray-600);">v = 0 m·s⁻¹<br>a = 9,8 m·s⁻² ↓</p>
+                </div>
+                <div class="diagram-section">
+                    <div class="diagram-visual">
+                        <span class="arrow-down">⬇️</span>
+                        <div class="ball"></div>
                     </div>
-                    
-                    <div class="question-container" id="q3">
-                        <div class="question-text">3. A stone is dropped from a height of 45 m. How long does it take to hit the ground? (g = 9.8 m/s²)</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q3" value="a">
-                                <label>2.1 s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q3" value="b">
-                                <label>3.0 s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q3" value="c">
-                                <label>4.3 s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q3" value="d">
-                                <label>9.2 s</label>
-                            </div>
-                        </div>
-                        <div class="feedback"></div>
+                    <div class="diagram-label">Coming DOWN</div>
+                    <p style="font-size: 0.85rem; color: var(--gray-600);">Velocity increasing<br>Speed increasing</p>
+                </div>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Phase</th>
+                        <th>Velocity</th>
+                        <th>Acceleration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Going UP</strong></td>
+                        <td>Decreasing (slowing down)</td>
+                        <td>9,8 m·s⁻² downward</td>
+                    </tr>
+                    <tr>
+                        <td><strong>At Highest Point</strong></td>
+                        <td>0 m·s⁻¹ (momentarily stops)</td>
+                        <td>9,8 m·s⁻² downward</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Coming DOWN</strong></td>
+                        <td>Increasing (speeding up)</td>
+                        <td>9,8 m·s⁻² downward</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="concept-box important">
+                <h4>⚠️ COMMON MISCONCEPTION - IMPORTANT!</h4>
+                <p>Many students think acceleration is zero at the highest point because velocity is zero.</p>
+                <p style="margin-top: 0.5rem;"><strong>THIS IS WRONG!</strong></p>
+                <p style="margin-top: 0.5rem;">Acceleration due to gravity is <strong>ALWAYS 9,8 m·s⁻² downward</strong> - whether the object is:</p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>Moving upward</li>
+                    <li>At the highest point</li>
+                    <li>Moving downward</li>
+                </ul>
+            </div>
+
+            <h3>4. Time Symmetry</h3>
+            <div class="concept-box success">
+                <h4>⏱️ Important Principle</h4>
+                <p>The time taken for an object to reach its maximum height is <strong>exactly the same</strong> as the time it takes to fall back to the launch point.</p>
+                <div class="formula-box">
+                    <div class="formula">t(up) = t(down)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Simulation -->
+        <section class="card fade-in">
+            <h2><span class="icon">🎮</span> Interactive Simulation</h2>
+            
+            <div class="simulation-container">
+                <div class="simulation-header">
+                    <h3>Vertical Projectile Motion Simulator</h3>
+                    <p>Experiment with dropping and throwing objects to see how they move!</p>
+                </div>
+                
+                <div class="simulation-canvas-container">
+                    <canvas id="projectileCanvas"></canvas>
+                </div>
+                
+                <div class="simulation-controls">
+                    <div class="control-group">
+                        <label>Initial Velocity (m/s)</label>
+                        <input type="range" id="velocitySlider" min="0" max="30" value="15">
+                        <div class="value" id="velocityValue">15 m/s</div>
                     </div>
-                    
-                    <div class="question-container" id="q4">
-                        <div class="question-text">4. A ball is thrown upward with an initial velocity of 19.6 m/s. How long does it take to reach its maximum height? (g = 9.8 m/s²)</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q4" value="a">
-                                <label>1 s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q4" value="b">
-                                <label>2 s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q4" value="c">
-                                <label>3 s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q4" value="d">
-                                <label>4 s</label>
-                            </div>
-                        </div>
-                        <div class="feedback"></div>
+                    <div class="control-group">
+                        <label>Mode</label>
+                        <select id="modeSelect" style="padding: 0.5rem; border-radius: 5px; border: none;">
+                            <option value="throw">Throw Upward</option>
+                            <option value="drop">Drop from Height</option>
+                        </select>
                     </div>
-                    
-                    <div class="question-container" id="q5">
-                        <div class="question-text">5. What is the acceleration of a golf ball at the highest point of its trajectory when hit vertically upward? (Ignore air resistance)</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q5" value="a">
-                                <label>0 m/s²</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q5" value="b">
-                                <label>9.8 m/s² upward</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q5" value="c">
-                                <label>9.8 m/s² downward</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q5" value="d">
-                                <label>It depends on the initial velocity</label>
-                            </div>
-                        </div>
-                        <div class="feedback"></div>
+                </div>
+                
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <button class="sim-btn primary" id="startBtn">▶️ Launch</button>
+                    <button class="sim-btn secondary" id="resetBtn">🔄 Reset</button>
+                </div>
+                
+                <div class="simulation-data">
+                    <div class="data-item">
+                        <div class="label">Time</div>
+                        <div class="value" id="simTime">0.00 s</div>
                     </div>
-                    
-                    <div class="question-container" id="q6">
-                        <div class="question-text">6. A stone is thrown vertically upward and returns to the thrower's hand after 4 seconds. What was its initial velocity? (g = 9.8 m/s²)</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q6" value="a">
-                                <label>9.8 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q6" value="b">
-                                <label>19.6 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q6" value="c">
-                                <label>29.4 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q6" value="d">
-                                <label>39.2 m/s</label>
-                            </div>
-                        </div>
-                        <div class="feedback"></div>
+                    <div class="data-item">
+                        <div class="label">Height</div>
+                        <div class="value" id="simHeight">0.00 m</div>
                     </div>
-                    
-                    <div class="question-container" id="q7">
-                        <div class="question-text">7. Which of the following is true about an object in vertical projectile motion?</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q7" value="a">
-                                <label>Acceleration is zero at the highest point</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q7" value="b">
-                                <label>Velocity and acceleration are always in the same direction</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q7" value="c">
-                                <label>Time to go up equals time to come down</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q7" value="d">
-                                <label>All of the above</label>
-                            </div>
-                        </div>
-                        <div class="feedback"></div>
+                    <div class="data-item">
+                        <div class="label">Velocity</div>
+                        <div class="value" id="simVelocity">0.00 m/s</div>
                     </div>
-                    
-                    <div class="question-container" id="q8">
-                        <div class="question-text">8. A ball is thrown upward with a velocity of 30 m/s. What is its velocity after 2 seconds? (g = 9.8 m/s²)</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q8" value="a">
-                                <label>10.4 m/s upward</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q8" value="b">
-                                <label>10.4 m/s downward</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q8" value="c">
-                                <label>49.6 m/s upward</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q8" value="d">
-                                <label>49.6 m/s downward</label>
-                            </div>
-                        </div>
-                        <div class="feedback"></div>
+                    <div class="data-item">
+                        <div class="label">Acceleration</div>
+                        <div class="value" id="simAccel">-9.8 m/s²</div>
                     </div>
-                    
-                    <div class="question-container" id="q9">
-                        <div class="question-text">9. An object is in free fall when:</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q9" value="a">
-                                <label>It is falling downward</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q9" value="b">
-                                <label>It is moving upward</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q9" value="c">
-                                <label>The only force acting on it is gravity</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q9" value="d">
-                                <label>It has reached terminal velocity</label>
-                            </div>
-                        </div>
-                        <div class="feedback"></div>
-                    </div>
-                    
-                    <div class="question-container" id="q10">
-                        <div class="question-text">10. A stone is thrown vertically upward and reaches a maximum height of 20 m. What was its initial velocity? (g = 9.8 m/s²)</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q10" value="a">
-                                <label>14 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q10" value="b">
-                                <label>19.8 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q10" value="c">
-                                <label>24.2 m/s</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q10" value="d">
-                                <label>28 m/s</label>
-                            </div>
-                        </div>
-                        <div class="feedback"></div>
-                    </div>
-                    
-                    <div class="navigation">
-                        <button id="prev-btn" class="btn" disabled>Previous</button>
-                        <button id="check-btn" class="btn btn-success">Check Answers</button>
-                        <button id="next-btn" class="btn">Next</button>
-                    </div>
-                    
-                    <div class="results-container" id="results">
-                        <h2>Quiz Results</h2>
-                        <div class="score">Your score: <span id="score-value" class="score-percentage">0%</span></div>
-                        <p id="result-message"></p>
-                        <button id="retry-btn" class="btn btn-warning">Try Again</button>
+                    <div class="data-item">
+                        <div class="label">Max Height</div>
+                        <div class="value" id="simMaxHeight">-- m</div>
                     </div>
                 </div>
             </div>
+        </section>
+
+        <!-- Worked Example -->
+        <section class="card fade-in">
+            <h2><span class="icon">✏️</span> Worked Example</h2>
+            
+            <div class="worked-example">
+                <h4>📝 Example Problem</h4>
+                <p><strong>A stone is thrown vertically upwards at an initial velocity of 24 m·s⁻¹. It reaches its maximum height after 2 s.</strong></p>
+                
+                <p style="margin-top: 1rem;"><strong>a) Describe the motion of the stone in terms of velocity and acceleration.</strong></p>
+                
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Initial motion:</strong> The stone starts with a velocity of 24 m·s⁻¹ upwards.
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Throughout the motion:</strong> It experiences a constant downward acceleration of 9,8 m·s⁻².
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>Going up:</strong> Its velocity decreases from 24 m·s⁻¹ to zero at the turning point.
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <strong>At the top:</strong> The direction of motion changes and velocity begins increasing downward.
+                </div>
+                
+                <p style="margin-top: 1rem;"><strong>b) How long will it take to return to the thrower's hand?</strong></p>
+                
+                <div class="step">
+                    Time up = 2 s, Time down = 2 s<br>
+                    <strong>Total time = 4 s</strong>
+                </div>
+                
+                <p style="margin-top: 1rem;"><strong>c) What is the velocity at the turning point?</strong></p>
+                
+                <div class="step">
+                    <strong>v = 0 m·s⁻¹</strong> (the stone momentarily stops)
+                </div>
+                
+                <p style="margin-top: 1rem;"><strong>d) What is the acceleration at the turning point?</strong></p>
+                
+                <div class="step">
+                    <strong>a = 9,8 m·s⁻² downward</strong> (acceleration is constant throughout!)
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section class="quiz-section fade-in" id="quizSection">
+            <h2><span class="icon">📝</span> Lesson Quiz</h2>
+            <p style="margin-bottom: 2rem;">Test your understanding of vertical projectile motion. Answer all questions and click "Submit Answers" to see your score.</p>
+            
+            <form id="quizForm">
+                <!-- Question 1 -->
+                <div class="question" data-question="1">
+                    <span class="question-number">Question 1</span>
+                    <p class="question-text">What is the force that acts on a body in free fall called?</p>
+                    <div class="options">
+                        <label class="option">
+                            <span class="option-letter">A</span>
+                            <input type="radio" name="q1" value="friction" hidden>
+                            Friction force
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">B</span>
+                            <input type="radio" name="q1" value="gravitational" hidden>
+                            Gravitational force / Weight
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">C</span>
+                            <input type="radio" name="q1" value="normal" hidden>
+                            Normal force
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">D</span>
+                            <input type="radio" name="q1" value="applied" hidden>
+                            Applied force
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question" data-question="2">
+                    <span class="question-number">Question 2</span>
+                    <p class="question-text">Motion of an object near the surface of the earth under the influence of the earth's gravitational force alone is called:</p>
+                    <div class="options">
+                        <label class="option">
+                            <span class="option-letter">A</span>
+                            <input type="radio" name="q2" value="projectile" hidden>
+                            Projectile motion
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">B</span>
+                            <input type="radio" name="q2" value="freefall" hidden>
+                            Free fall
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">C</span>
+                            <input type="radio" name="q2" value="uniform" hidden>
+                            Uniform motion
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">D</span>
+                            <input type="radio" name="q2" value="circular" hidden>
+                            Circular motion
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question" data-question="3">
+                    <span class="question-number">Question 3</span>
+                    <p class="question-text">Which of the following is a correct statement about gravitational force?</p>
+                    <div class="options">
+                        <label class="option">
+                            <span class="option-letter">A</span>
+                            <input type="radio" name="q3" value="solar" hidden>
+                            Applicable only in our solar system
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">B</span>
+                            <input type="radio" name="q3" value="repulsive" hidden>
+                            Both an attractive and repulsive force
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">C</span>
+                            <input type="radio" name="q3" value="proportional" hidden>
+                            Directly proportional to the product of the masses involved
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">D</span>
+                            <input type="radio" name="q3" value="radius" hidden>
+                            Directly proportional to the radius of the earth
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="question" data-question="4">
+                    <span class="question-number">Question 4</span>
+                    <p class="question-text">A golf ball is hit vertically upwards. What is the acceleration of the ball at the highest point? (Ignore friction)</p>
+                    <div class="options">
+                        <label class="option">
+                            <span class="option-letter">A</span>
+                            <input type="radio" name="q4" value="upward" hidden>
+                            9,8 m·s⁻² upwards
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">B</span>
+                            <input type="radio" name="q4" value="downward" hidden>
+                            9,8 m·s⁻² downwards
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">C</span>
+                            <input type="radio" name="q4" value="zero" hidden>
+                            0 m·s⁻²
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">D</span>
+                            <input type="radio" name="q4" value="less" hidden>
+                            6,8 m·s⁻² downwards
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="question" data-question="5">
+                    <span class="question-number">Question 5</span>
+                    <p class="question-text">What is the velocity of an object at its highest point when thrown vertically upward?</p>
+                    <div class="options">
+                        <label class="option">
+                            <span class="option-letter">A</span>
+                            <input type="radio" name="q5" value="zero" hidden>
+                            0 m·s⁻¹
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">B</span>
+                            <input type="radio" name="q5" value="9.8" hidden>
+                            9,8 m·s⁻¹
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">C</span>
+                            <input type="radio" name="q5" value="initial" hidden>
+                            Equal to initial velocity
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">D</span>
+                            <input type="radio" name="q5" value="half" hidden>
+                            Half of initial velocity
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Question 6 -->
+                <div class="question" data-question="6">
+                    <span class="question-number">Question 6</span>
+                    <p class="question-text">What is the value of gravitational acceleration on Earth?</p>
+                    <div class="options">
+                        <label class="option">
+                            <span class="option-letter">A</span>
+                            <input type="radio" name="q6" value="10" hidden>
+                            10 m·s⁻²
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">B</span>
+                            <input type="radio" name="q6" value="9.8" hidden>
+                            9,8 m·s⁻²
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">C</span>
+                            <input type="radio" name="q6" value="8.9" hidden>
+                            8,9 m·s⁻²
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">D</span>
+                            <input type="radio" name="q6" value="9.0" hidden>
+                            9,0 m·s⁻²
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Question 7 -->
+                <div class="question" data-question="7">
+                    <span class="question-number">Question 7</span>
+                    <p class="question-text">A ball takes 3 seconds to reach its maximum height when thrown upward. How long will it take to return to the thrower?</p>
+                    <div class="options">
+                        <label class="option">
+                            <span class="option-letter">A</span>
+                            <input type="radio" name="q7" value="3" hidden>
+                            3 seconds
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">B</span>
+                            <input type="radio" name="q7" value="6" hidden>
+                            6 seconds
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">C</span>
+                            <input type="radio" name="q7" value="1.5" hidden>
+                            1,5 seconds
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">D</span>
+                            <input type="radio" name="q7" value="9" hidden>
+                            9 seconds
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Question 8 -->
+                <div class="question" data-question="8">
+                    <span class="question-number">Question 8</span>
+                    <p class="question-text">Which statement about acceleration during vertical projectile motion is TRUE?</p>
+                    <div class="options">
+                        <label class="option">
+                            <span class="option-letter">A</span>
+                            <input type="radio" name="q8" value="upzero" hidden>
+                            Acceleration is zero when object moves upward
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">B</span>
+                            <input type="radio" name="q8" value="topzero" hidden>
+                            Acceleration is zero at the highest point
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">C</span>
+                            <input type="radio" name="q8" value="constant" hidden>
+                            Acceleration is constant throughout the motion
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">D</span>
+                            <input type="radio" name="q8" value="increases" hidden>
+                            Acceleration increases as object falls
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Question 9 -->
+                <div class="question" data-question="9">
+                    <span class="question-number">Question 9</span>
+                    <p class="question-text">When an object is dropped from rest, what is its initial velocity?</p>
+                    <div class="options">
+                        <label class="option">
+                            <span class="option-letter">A</span>
+                            <input type="radio" name="q9" value="zero" hidden>
+                            0 m·s⁻¹
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">B</span>
+                            <input type="radio" name="q9" value="9.8" hidden>
+                            9,8 m·s⁻¹
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">C</span>
+                            <input type="radio" name="q9" value="unknown" hidden>
+                            Cannot be determined
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">D</span>
+                            <input type="radio" name="q9" value="height" hidden>
+                            Depends on the height
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Question 10 -->
+                <div class="question" data-question="10">
+                    <span class="question-number">Question 10</span>
+                    <p class="question-text">Displacement is a vector quantity. What does this mean?</p>
+                    <div class="options">
+                        <label class="option">
+                            <span class="option-letter">A</span>
+                            <input type="radio" name="q10" value="magnitude" hidden>
+                            It only has magnitude
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">B</span>
+                            <input type="radio" name="q10" value="both" hidden>
+                            It has both magnitude and direction
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">C</span>
+                            <input type="radio" name="q10" value="path" hidden>
+                            It measures the total path length
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">D</span>
+                            <input type="radio" name="q10" value="speed" hidden>
+                            It is the same as speed
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Question 11 -->
+                <div class="question" data-question="11">
+                    <span class="question-number">Question 11</span>
+                    <p class="question-text">In which direction does gravitational acceleration always act?</p>
+                    <div class="options">
+                        <label class="option">
+                            <span class="option-letter">A</span>
+                            <input type="radio" name="q11" value="upward" hidden>
+                            Upward
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">B</span>
+                            <input type="radio" name="q11" value="downward" hidden>
+                            Downward (toward Earth's centre)
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">C</span>
+                            <input type="radio" name="q11" value="direction" hidden>
+                            In the direction of motion
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">D</span>
+                            <input type="radio" name="q11" value="opposite" hidden>
+                            Opposite to the direction of motion
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Question 12 -->
+                <div class="question" data-question="12">
+                    <span class="question-number">Question 12</span>
+                    <p class="question-text">A stone is thrown upward at 20 m·s⁻¹. Compared to when going up, how does its speed when passing the same point while coming down compare?</p>
+                    <div class="options">
+                        <label class="option">
+                            <span class="option-letter">A</span>
+                            <input type="radio" name="q12" value="same" hidden>
+                            The same speed
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">B</span>
+                            <input type="radio" name="q12" value="greater" hidden>
+                            Greater speed
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">C</span>
+                            <input type="radio" name="q12" value="less" hidden>
+                            Less speed
+                        </label>
+                        <label class="option">
+                            <span class="option-letter">D</span>
+                            <input type="radio" name="q12" value="cannot" hidden>
+                            Cannot be determined
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+            </form>
+
+            <button class="submit-btn" id="submitQuiz">Submit Answers</button>
+
+            <div class="score-display" id="scoreDisplay">
+                <div class="score-number" id="scoreNumber">0%</div>
+                <div class="score-label">Your Score</div>
+                <div class="score-message" id="scoreMessage"></div>
+            </div>
+        </section>
+
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+            <button class="nav-btn prev" id="prevBtn">
+                ← Previous Lesson
+            </button>
+            <button class="nav-btn next" id="nextBtn">
+                Next Lesson →
+            </button>
         </div>
-    </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 PassProof Academy. All rights reserved.</p>
+    </footer>
 
     <script>
-        // Collapsible sections functionality
-        document.querySelectorAll('.section-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const section = header.parentElement;
-                section.classList.toggle('active');
-                const icon = header.querySelector('.toggle-icon');
-                icon.textContent = section.classList.contains('active') ? '−' : '+';
-            });
+        // ========================================
+        // Navigation Toggle
+        // ========================================
+        const navToggle = document.getElementById('navToggle');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('active');
+            dropdownMenu.classList.toggle('active');
         });
 
-        // Open the first section by default
-        document.querySelector('.section').classList.add('active');
-        document.querySelector('.section .toggle-icon').textContent = '−';
-
-        // Calculator functionality
-        document.getElementById('calc-type').addEventListener('change', function() {
-            // Hide all input groups
-            document.getElementById('time-height-inputs').style.display = 'none';
-            document.getElementById('max-height-inputs').style.display = 'none';
-            document.getElementById('velocity-inputs').style.display = 'none';
-            
-            // Show selected input group
-            if (this.value === 'time-height') {
-                document.getElementById('time-height-inputs').style.display = 'block';
-            } else if (this.value === 'max-height') {
-                document.getElementById('max-height-inputs').style.display = 'block';
-            } else if (this.value === 'velocity') {
-                document.getElementById('velocity-inputs').style.display = 'block';
+        document.addEventListener('click', (e) => {
+            if (!navToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                navToggle.classList.remove('active');
+                dropdownMenu.classList.remove('active');
             }
         });
 
-        document.getElementById('calculate-proj').addEventListener('click', function() {
-            const calcType = document.getElementById('calc-type').value;
-            const g = 9.8;
-            let resultHTML = '';
-            
-            if (calcType === 'time-height') {
-                const height = parseFloat(document.getElementById('height').value);
-                
-                if (isNaN(height) || height <= 0) {
-                    resultHTML = '<p style="color: red;">Please enter a valid positive height.</p>';
-                } else {
-                    const time = Math.sqrt(2 * height / g);
-                    resultHTML = `
-                        <p><strong>Height:</strong> ${height.toFixed(2)} m</p>
-                        <p><strong>Time to fall:</strong> ${time.toFixed(2)} s</p>
-                        <p><strong>Formula:</strong> t = √(2h/g)</p>
-                    `;
-                }
-            } else if (calcType === 'max-height') {
-                const initialVelocity = parseFloat(document.getElementById('initial-velocity').value);
-                
-                if (isNaN(initialVelocity) || initialVelocity <= 0) {
-                    resultHTML = '<p style="color: red;">Please enter a valid positive initial velocity.</p>';
-                } else {
-                    const maxHeight = (initialVelocity * initialVelocity) / (2 * g);
-                    resultHTML = `
-                        <p><strong>Initial Velocity:</strong> ${initialVelocity.toFixed(2)} m/s</p>
-                        <p><strong>Maximum Height:</strong> ${maxHeight.toFixed(2)} m</p>
-                        <p><strong>Time to max height:</strong> ${(initialVelocity / g).toFixed(2)} s</p>
-                        <p><strong>Formula:</strong> h = v²/(2g)</p>
-                    `;
-                }
-            } else if (calcType === 'velocity') {
-                const fallHeight = parseFloat(document.getElementById('fall-height').value);
-                
-                if (isNaN(fallHeight) || fallHeight <= 0) {
-                    resultHTML = '<p style="color: red;">Please enter a valid positive fall height.</p>';
-                } else {
-                    const velocity = Math.sqrt(2 * g * fallHeight);
-                    resultHTML = `
-                        <p><strong>Fall Height:</strong> ${fallHeight.toFixed(2)} m</p>
-                        <p><strong>Final Velocity:</strong> ${velocity.toFixed(2)} m/s</p>
-                        <p><strong>Formula:</strong> v = √(2gh)</p>
-                    `;
-                }
-            }
-            
-            document.getElementById('calculation-result').innerHTML = resultHTML;
+        // ========================================
+        // Progress Tracking
+        // ========================================
+        const progressFill = document.getElementById('progressFill');
+        const progressPercent = document.getElementById('progressPercent');
+
+        function updateProgress(percent) {
+            progressFill.style.width = percent + '%';
+            progressPercent.textContent = percent + '%';
+            localStorage.setItem('lesson1Progress', percent);
+        }
+
+        // Load saved progress
+        const savedProgress = localStorage.getItem('lesson1Progress');
+        if (savedProgress) {
+            updateProgress(parseInt(savedProgress));
+        }
+
+        // Track scroll progress
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = Math.round((winScroll / height) * 100);
+            updateProgress(Math.min(scrolled, 100));
         });
 
-        // Simulation functionality
-        const projectile = document.getElementById('projectile');
-        let animationId;
-        
-        document.getElementById('start-sim').addEventListener('click', function() {
-            // Reset projectile position
-            projectile.style.bottom = '50px';
-            projectile.style.left = '50%';
-            
-            let time = 0;
-            const initialVelocity = 20; // m/s
-            const g = 9.8; // m/s²
-            const scale = 5; // pixels per meter
-            
-            function animate() {
-                time += 0.05;
-                
-                // Calculate position using projectile motion equations
-                // y = v₀t - ½gt² (with upward positive)
-                const displacement = initialVelocity * time - 0.5 * g * time * time;
-                
-                // Convert to pixels (bottom position)
-                const bottomPos = 50 + displacement * scale;
-                
-                // Update projectile position
-                projectile.style.bottom = `${bottomPos}px`;
-                
-                // Continue animation until projectile goes below starting point
-                if (bottomPos > 0) {
-                    animationId = requestAnimationFrame(animate);
-                }
-            }
-            
-            // Cancel any existing animation
-            cancelAnimationFrame(animationId);
-            animate();
-        });
-        
-        document.getElementById('reset-sim').addEventListener('click', function() {
-            cancelAnimationFrame(animationId);
-            projectile.style.bottom = '50px';
-            projectile.style.left = '50%';
-        });
+        // ========================================
+        // Projectile Motion Simulation
+        // ========================================
+        const canvas = document.getElementById('projectileCanvas');
+        const ctx = canvas.getContext('2d');
 
-        // Quiz functionality
-        const correctAnswers = {
-            q1: 'c',
-            q2: 'c',
-            q3: 'b',
-            q4: 'b',
-            q5: 'c',
-            q6: 'b',
-            q7: 'c',
-            q8: 'a',
-            q9: 'c',
-            q10: 'b'
+        let animationId = null;
+        let isRunning = false;
+
+        // Simulation state
+        let sim = {
+            time: 0,
+            y: 0,
+            vy: 0,
+            initialVy: 15,
+            mode: 'throw',
+            maxHeight: 0,
+            groundY: 0,
+            startY: 0
         };
 
-        const questionContainers = document.querySelectorAll('.question-container');
-        let currentQuestion = 0;
+        const g = 9.8; // gravitational acceleration
+        const scale = 8; // pixels per meter
 
-        // Show first question
-        showQuestion(currentQuestion);
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+            sim.groundY = canvas.height - 50;
+            sim.startY = sim.groundY - 20;
+        }
+
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        function resetSimulation() {
+            isRunning = false;
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
+            
+            sim.time = 0;
+            sim.maxHeight = 0;
+            sim.initialVy = parseFloat(document.getElementById('velocitySlider').value);
+            sim.mode = document.getElementById('modeSelect').value;
+            
+            if (sim.mode === 'throw') {
+                sim.y = 0;
+                sim.vy = sim.initialVy;
+            } else {
+                sim.y = (sim.groundY - 100) / scale; // Start from top
+                sim.vy = 0;
+            }
+            
+            updateDataDisplay();
+            draw();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw ground
+            ctx.fillStyle = '#4ade80';
+            ctx.fillRect(0, sim.groundY, canvas.width, canvas.height - sim.groundY);
+            
+            // Draw grass texture
+            ctx.strokeStyle = '#22c55e';
+            ctx.lineWidth = 2;
+            for (let x = 0; x < canvas.width; x += 15) {
+                ctx.beginPath();
+                ctx.moveTo(x, sim.groundY);
+                ctx.lineTo(x + 5, sim.groundY - 8);
+                ctx.stroke();
+            }
+            
+            // Draw building/platform for drop mode
+            if (sim.mode === 'drop') {
+                ctx.fillStyle = '#64748b';
+                ctx.fillRect(canvas.width / 2 - 30, 60, 60, sim.groundY - 60);
+                ctx.fillStyle = '#475569';
+                ctx.fillRect(canvas.width / 2 - 25, 65, 50, 20);
+            }
+            
+            // Calculate ball position
+            let ballY;
+            if (sim.mode === 'throw') {
+                ballY = sim.startY - (sim.y * scale);
+            } else {
+                ballY = 80 + (sim.y * scale);
+            }
+            
+            // Clamp ball position
+            ballY = Math.max(30, Math.min(sim.groundY - 20, ballY));
+            
+            // Draw ball
+            const ballX = canvas.width / 2;
+            
+            // Ball shadow
+            ctx.beginPath();
+            ctx.ellipse(ballX, sim.groundY - 5, 15, 5, 0, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+            ctx.fill();
+            
+            // Ball
+            const gradient = ctx.createRadialGradient(ballX - 5, ballY - 5, 2, ballX, ballY, 20);
+            gradient.addColorStop(0, '#fcd34d');
+            gradient.addColorStop(1, '#d97706');
+            
+            ctx.beginPath();
+            ctx.arc(ballX, ballY, 20, 0, Math.PI * 2);
+            ctx.fillStyle = gradient;
+            ctx.fill();
+            ctx.strokeStyle = '#b45309';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Draw velocity arrow
+            if (Math.abs(sim.vy) > 0.5) {
+                const arrowLength = Math.min(Math.abs(sim.vy) * 3, 60);
+                const arrowY = sim.vy > 0 ? ballY - 30 - arrowLength : ballY + 30;
+                
+                ctx.beginPath();
+                ctx.moveTo(ballX, ballY);
+                ctx.lineTo(ballX, sim.vy > 0 ? ballY - 30 - arrowLength : ballY + 30 + arrowLength);
+                ctx.strokeStyle = sim.vy > 0 ? '#22c55e' : '#ef4444';
+                ctx.lineWidth = 4;
+                ctx.stroke();
+                
+                // Arrow head
+                ctx.beginPath();
+                if (sim.vy > 0) {
+                    ctx.moveTo(ballX - 10, ballY - 20 - arrowLength + 15);
+                    ctx.lineTo(ballX, ballY - 30 - arrowLength);
+                    ctx.lineTo(ballX + 10, ballY - 20 - arrowLength + 15);
+                } else {
+                    ctx.moveTo(ballX - 10, ballY + 20 + arrowLength - 15);
+                    ctx.lineTo(ballX, ballY + 30 + arrowLength);
+                    ctx.lineTo(ballX + 10, ballY + 20 + arrowLength - 15);
+                }
+                ctx.fillStyle = sim.vy > 0 ? '#22c55e' : '#ef4444';
+                ctx.fill();
+            }
+            
+            // Draw max height indicator
+            if (sim.maxHeight > 0 && sim.mode === 'throw') {
+                const maxHeightY = sim.startY - (sim.maxHeight * scale);
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.moveTo(ballX - 50, maxHeightY);
+                ctx.lineTo(ballX + 50, maxHeightY);
+                ctx.strokeStyle = '#fbbf24';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                ctx.fillStyle = '#fbbf24';
+                ctx.font = 'bold 14px sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText(`Max: ${sim.maxHeight.toFixed(1)}m`, ballX + 55, maxHeightY + 5);
+            }
+            
+            // Draw scale
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            ctx.font = '12px sans-serif';
+            ctx.textAlign = 'right';
+            for (let h = 0; h <= 30; h += 10) {
+                const y = sim.startY - (h * scale);
+                if (y > 30) {
+                    ctx.fillText(`${h}m`, 35, y + 4);
+                    ctx.beginPath();
+                    ctx.moveTo(40, y);
+                    ctx.lineTo(50, y);
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            }
+        }
+
+        function updateDataDisplay() {
+            document.getElementById('simTime').textContent = sim.time.toFixed(2) + ' s';
+            document.getElementById('simHeight').textContent = Math.max(0, sim.y).toFixed(2) + ' m';
+            document.getElementById('simVelocity').textContent = sim.vy.toFixed(2) + ' m/s';
+            document.getElementById('simAccel').textContent = '-9.8 m/s²';
+            document.getElementById('simMaxHeight').textContent = sim.maxHeight > 0 ? sim.maxHeight.toFixed(2) + ' m' : '-- m';
+        }
+
+        function simulate() {
+            if (!isRunning) return;
+            
+            const dt = 0.02; // Time step
+            sim.time += dt;
+            
+            // Update physics
+            sim.vy -= g * dt;
+            sim.y += sim.vy * dt;
+            
+            // Track max height for throw mode
+            if (sim.mode === 'throw' && sim.y > sim.maxHeight) {
+                sim.maxHeight = sim.y;
+            }
+            
+            // Check for ground collision
+            if (sim.mode === 'throw' && sim.y <= 0 && sim.vy < 0) {
+                sim.y = 0;
+                sim.vy = 0;
+                isRunning = false;
+            }
+            
+            // For drop mode, check if reached ground
+            if (sim.mode === 'drop' && sim.y * scale >= sim.groundY - 100) {
+                isRunning = false;
+            }
+            
+            updateDataDisplay();
+            draw();
+            
+            if (isRunning) {
+                animationId = requestAnimationFrame(simulate);
+            }
+        }
+
+        // Event listeners
+        document.getElementById('startBtn').addEventListener('click', () => {
+            if (isRunning) return;
+            resetSimulation();
+            isRunning = true;
+            simulate();
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', resetSimulation);
+
+        document.getElementById('velocitySlider').addEventListener('input', (e) => {
+            document.getElementById('velocityValue').textContent = e.target.value + ' m/s';
+            if (!isRunning) {
+                sim.initialVy = parseFloat(e.target.value);
+            }
+        });
+
+        document.getElementById('modeSelect').addEventListener('change', () => {
+            resetSimulation();
+        });
+
+        // Initial draw
+        resetSimulation();
+
+        // ========================================
+        // Quiz System
+        // ========================================
+        const correctAnswers = {
+            q1: 'gravitational',
+            q2: 'freefall',
+            q3: 'proportional',
+            q4: 'downward',
+            q5: 'zero',
+            q6: '9.8',
+            q7: '6',
+            q8: 'constant',
+            q9: 'zero',
+            q10: 'both',
+            q11: 'downward',
+            q12: 'same'
+        };
+
+        const explanations = {
+            q1: 'The only force acting on a body in free fall is gravitational force (weight).',
+            q2: 'Free fall is motion under the influence of gravity alone.',
+            q3: 'According to Newton\'s Law of Universal Gravitation, gravitational force is directly proportional to the product of the masses.',
+            q4: 'Acceleration due to gravity is ALWAYS 9,8 m·s⁻² downwards, even at the highest point!',
+            q5: 'At the highest point, the object momentarily stops before falling back down.',
+            q6: 'The standard value of gravitational acceleration on Earth is 9,8 m·s⁻².',
+            q7: 'Time symmetry: time up = time down. Total time = 3 + 3 = 6 seconds.',
+            q8: 'Gravitational acceleration is constant at 9,8 m·s⁻² throughout the entire motion.',
+            q9: 'When dropped from rest, the initial velocity is 0 m·s⁻¹.',
+            q10: 'Vectors have both magnitude (size) and direction.',
+            q11: 'Gravitational acceleration always acts downward toward Earth\'s centre.',
+            q12: 'At the same height, the speed is identical (direction is opposite).'
+        };
+
+        // Option selection
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', () => {
+                const question = option.closest('.question');
+                question.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                option.querySelector('input').checked = true;
+            });
+        });
+
+        // Submit quiz
+        document.getElementById('submitQuiz').addEventListener('click', () => {
+            let score = 0;
+            let totalQuestions = Object.keys(correctAnswers).length;
+            
+            Object.keys(correctAnswers).forEach(qKey => {
+                const question = document.querySelector(`[data-question="${qKey.substring(1)}"]`);
+                const selected = document.querySelector(`input[name="${qKey}"]:checked`);
+                const feedback = question.querySelector('.feedback');
+                const options = question.querySelectorAll('.option');
+                
+                // Reset classes
+                question.classList.remove('correct', 'incorrect');
+                options.forEach(opt => opt.classList.remove('correct-answer', 'wrong-answer'));
+                
+                if (selected) {
+                    const selectedOption = selected.closest('.option');
+                    
+                    if (selected.value === correctAnswers[qKey]) {
+                        score++;
+                        question.classList.add('correct');
+                        selectedOption.classList.add('correct-answer');
+                        feedback.className = 'feedback correct';
+                        feedback.textContent = '✓ Correct! ' + explanations[qKey];
+                    } else {
+                        question.classList.add('incorrect');
+                        selectedOption.classList.add('wrong-answer');
+                        
+                        // Show correct answer
+                        options.forEach(opt => {
+                            if (opt.querySelector('input').value === correctAnswers[qKey]) {
+                                opt.classList.add('correct-answer');
+                            }
+                        });
+                        
+                        feedback.className = 'feedback incorrect';
+                        feedback.textContent = '✗ Incorrect. ' + explanations[qKey];
+                    }
+                } else {
+                    question.classList.add('incorrect');
+                    feedback.className = 'feedback incorrect';
+                    feedback.textContent = '⚠ No answer selected. ' + explanations[qKey];
+                    
+                    // Show correct answer
+                    options.forEach(opt => {
+                        if (opt.querySelector('input').value === correctAnswers[qKey]) {
+                            opt.classList.add('correct-answer');
+                        }
+                    });
+                }
+            });
+            
+            const percentage = Math.round((score / totalQuestions) * 100);
+            
+            // Display score
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const scoreNumber = document.getElementById('scoreNumber');
+            const scoreMessage = document.getElementById('scoreMessage');
+            
+            scoreNumber.textContent = percentage + '%';
+            
+            if (percentage >= 80) {
+                scoreMessage.textContent = '🎉 Excellent! You have a strong understanding of vertical projectile motion!';
+            } else if (percentage >= 60) {
+                scoreMessage.textContent = '👍 Good effort! Review the concepts you missed and try again.';
+            } else if (percentage >= 40) {
+                scoreMessage.textContent = '📚 Keep studying! Re-read the lesson and focus on the key concepts.';
+            } else {
+                scoreMessage.textContent = '💪 Don\'t give up! Review the lesson carefully and try the quiz again.';
+            }
+            
+            scoreDisplay.classList.add('show');
+            
+            // Save score to localStorage
+            localStorage.setItem('lesson1Score', percentage);
+            localStorage.setItem('lesson1Completed', 'true');
+            
+            // Scroll to score
+            scoreDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
 
         // Navigation buttons
-        document.getElementById('prev-btn').addEventListener('click', () => {
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                showQuestion(currentQuestion);
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            alert('This is the first lesson in this topic. Navigate using the menu to access other topics.');
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (localStorage.getItem('lesson1Completed') === 'true') {
+                alert('Proceeding to Lesson 2: Equations of Motion for Vertical Projectiles');
+                // In a real implementation, this would navigate to the next lesson
+            } else {
+                alert('Please complete the quiz before proceeding to the next lesson.');
+                document.getElementById('quizSection').scrollIntoView({ behavior: 'smooth' });
             }
         });
 
-        document.getElementById('next-btn').addEventListener('click', () => {
-            if (currentQuestion < questionContainers.length - 1) {
-                currentQuestion++;
-                showQuestion(currentQuestion);
+        // Check if lesson was previously completed
+        if (localStorage.getItem('lesson1Completed') === 'true') {
+            const savedScore = localStorage.getItem('lesson1Score');
+            if (savedScore) {
+                console.log('Previous score:', savedScore + '%');
             }
-        });
-
-        // Check answers button
-        document.getElementById('check-btn').addEventListener('click', checkAllAnswers);
-
-        // Retry button
-        document.getElementById('retry-btn').addEventListener('click', () => {
-            // Reset all answers
-            document.querySelectorAll('input[type="radio"]').forEach(radio => {
-                radio.checked = false;
-            });
-            
-            // Hide all feedback
-            document.querySelectorAll('.feedback').forEach(feedback => {
-                feedback.style.display = 'none';
-                feedback.className = 'feedback';
-            });
-            
-            // Hide results
-            document.getElementById('results').style.display = 'none';
-            
-            // Reset to first question
-            currentQuestion = 0;
-            showQuestion(currentQuestion);
-        });
-
-        function showQuestion(index) {
-            // Hide all questions
-            questionContainers.forEach(container => {
-                container.style.display = 'none';
-            });
-            
-            // Show current question
-            questionContainers[index].style.display = 'block';
-            
-            // Update navigation buttons
-            document.getElementById('prev-btn').disabled = index === 0;
-            document.getElementById('next-btn').disabled = index === questionContainers.length - 1;
-            
-            // Auto-check answer when selected
-            const radios = questionContainers[index].querySelectorAll('input[type="radio"]');
-            radios.forEach(radio => {
-                radio.addEventListener('change', function() {
-                    checkAnswer(this.name);
-                });
-            });
-        }
-
-        function checkAnswer(questionName) {
-            const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
-            const questionId = questionName.replace('q', 'q');
-            const feedback = document.querySelector(`#${questionId} .feedback`);
-            
-            if (selectedOption) {
-                if (selectedOption.value === correctAnswers[questionId]) {
-                    feedback.textContent = 'Correct! Well done.';
-                    feedback.className = 'feedback correct';
-                } else {
-                    feedback.textContent = 'Incorrect. Try again.';
-                    feedback.className = 'feedback incorrect';
-                }
-                feedback.style.display = 'block';
-            }
-        }
-
-        function checkAllAnswers() {
-            let score = 0;
-            
-            for (let i = 1; i <= 10; i++) {
-                const questionId = `q${i}`;
-                const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
-                
-                if (selectedOption && selectedOption.value === correctAnswers[questionId]) {
-                    score++;
-                }
-            }
-            
-            const percentage = (score / 10) * 100;
-            document.getElementById('score-value').textContent = `${percentage}%`;
-            document.getElementById('result-message').textContent = 
-                `You got ${score} out of 10 questions correct. ${percentage >= 70 ? 'Great job!' : 'Keep practicing!'}`;
-            document.getElementById('results').style.display = 'block';
         }
     </script>
-
-    <!-- Shared lesson navigation (previous/next) -->
-    <script>
-    (function(){
-        const maxLessons = 19;
-        function navigateLesson(direction){
-            const m = window.location.pathname.match(/less(\d+)\.html$/i);
-            if(!m) return;
-            const current = parseInt(m[1],10);
-            const next = direction === 'next' ? current + 1 : current - 1;
-            if(next < 1 || next > maxLessons) return;
-            const newHref = window.location.pathname.replace(/less\d+\.html$/i, `less${next}.html`);
-            window.location.href = newHref;
-        }
-        [['prevBtn','nextBtn'], ['prev-btn','next-btn']].forEach(ids => {
-            const prev = document.getElementById(ids[0]);
-            const next = document.getElementById(ids[1]);
-            if(prev) prev.addEventListener('click', () => navigateLesson('prev'));
-            if(next) next.addEventListener('click', () => navigateLesson('next'));
-        });
-    })();
-    </script>
+    <script src="gr12-phys-nav.js"></script>
 </body>
 </html>

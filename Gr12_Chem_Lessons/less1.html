@@ -1,0 +1,2382 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to Hydrocarbons - Lesson 1 | PassProof Academy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1e40af;
+            --primary-light: #3b82f6;
+            --primary-lighter: #60a5fa;
+            --primary-lightest: #dbeafe;
+            --accent-blue: #0ea5e9;
+            --white: #ffffff;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-600: #475569;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --success: #10b981;
+            --success-light: #d1fae5;
+            --error: #ef4444;
+            --error-light: #fee2e2;
+            --warning: #f59e0b;
+            --warning-light: #fef3c7;
+            --purple: #8b5cf6;
+            --purple-light: #ede9fe;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--gray-100) 0%, var(--primary-lightest) 50%, var(--gray-100) 100%);
+            min-height: 100vh;
+            color: var(--gray-800);
+            line-height: 1.7;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-light) 100%);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 
+                0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                0 10px 20px -5px rgba(30, 64, 175, 0.3),
+                0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--white);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-blue);
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 
+                0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                inset 0 2px 4px rgba(255, 255, 255, 0.5);
+            transform: perspective(100px) rotateX(5deg);
+        }
+
+        /* Dropdown Navigation */
+        .nav-container {
+            position: relative;
+        }
+
+        .nav-toggle {
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-toggle:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-dropdown {
+            position: absolute;
+            top: calc(100% + 12px);
+            right: 0;
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.15),
+                0 10px 20px rgba(0, 0, 0, 0.1),
+                0 0 0 1px rgba(0, 0, 0, 0.05);
+            min-width: 300px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px) scale(0.98);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .nav-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .nav-section-title {
+            padding: 1rem 1.5rem 0.5rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--gray-400);
+            font-weight: 600;
+            background: var(--gray-50);
+        }
+
+        .nav-dropdown a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.5rem;
+            color: var(--gray-800);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-dropdown a:hover {
+            background: var(--primary-lightest);
+            color: var(--primary-blue);
+            border-left-color: var(--primary-blue);
+            padding-left: 2rem;
+        }
+
+        .nav-dropdown a.active-link {
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-light));
+            color: var(--white);
+            border-left-color: var(--accent-blue);
+        }
+
+        .nav-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gray-200), transparent);
+            margin: 0.5rem 0;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* 3D Cards */
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.08),
+                0 4px 12px rgba(0, 0, 0, 0.05),
+                0 0 0 1px rgba(0, 0, 0, 0.02);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue), var(--primary-light));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px) perspective(1000px) rotateX(2deg);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.12),
+                0 10px 30px rgba(30, 64, 175, 0.1),
+                0 0 0 1px rgba(0, 0, 0, 0.02);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        /* Lesson Header */
+        .lesson-header {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-light) 50%, var(--accent-blue) 100%);
+            border-radius: 24px;
+            color: var(--white);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 20px 60px rgba(30, 64, 175, 0.3),
+                0 10px 30px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transform: perspective(1000px) rotateX(2deg);
+        }
+
+        .lesson-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 70%;
+            height: 200%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+            transform: rotate(30deg);
+            pointer-events: none;
+        }
+
+        .lesson-header::after {
+            content: '⚗️';
+            position: absolute;
+            bottom: 15px;
+            right: 30px;
+            font-size: 5rem;
+            opacity: 0.15;
+        }
+
+        .subject-grade {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .topic {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .lesson-number {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .lesson-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .sub-topic {
+            font-size: 1.4rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-light) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.8rem;
+            box-shadow: 
+                0 8px 20px rgba(30, 64, 175, 0.3),
+                inset 0 2px 4px rgba(255, 255, 255, 0.2);
+            transform: perspective(100px) rotateY(-5deg);
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            color: var(--gray-800);
+            font-weight: 600;
+        }
+
+        /* Objectives */
+        .objectives-list {
+            list-style: none;
+        }
+
+        .objectives-list li {
+            padding: 1.25rem;
+            background: linear-gradient(135deg, var(--primary-lightest) 0%, var(--white) 100%);
+            border-radius: 14px;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .objectives-list li:hover {
+            transform: translateX(8px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.15);
+            border-color: var(--primary-light);
+        }
+
+        .objective-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(30, 64, 175, 0.3);
+        }
+
+        /* Molecule Display */
+        .molecule-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .molecule-card {
+            background: linear-gradient(135deg, var(--gray-50), var(--white));
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            min-width: 180px;
+            border: 2px solid var(--gray-200);
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 4px 15px rgba(0, 0, 0, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        .molecule-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: var(--primary-light);
+            box-shadow: 
+                0 10px 30px rgba(59, 130, 246, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        .molecule-name {
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .molecule-formula {
+            font-family: 'Courier New', monospace;
+            font-size: 1.3rem;
+            color: var(--gray-800);
+            background: var(--primary-lightest);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        .molecule-type {
+            font-size: 0.85rem;
+            color: var(--gray-600);
+            margin-top: 0.5rem;
+        }
+
+        /* Info Boxes */
+        .info-box {
+            background: linear-gradient(135deg, var(--primary-lightest) 0%, #e0f2fe 100%);
+            border: 2px solid var(--primary-light);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.1);
+        }
+
+        .info-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .info-content h4 {
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .info-content p {
+            color: var(--gray-700);
+            line-height: 1.6;
+        }
+
+        /* Concept Cards */
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .concept-card {
+            background: linear-gradient(135deg, var(--white) 0%, var(--gray-50) 100%);
+            border-radius: 16px;
+            padding: 1.75rem;
+            border: 2px solid var(--gray-200);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .concept-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue));
+        }
+
+        .concept-card:hover {
+            transform: translateY(-8px) perspective(1000px) rotateX(3deg);
+            border-color: var(--primary-light);
+            box-shadow: 
+                0 20px 40px rgba(59, 130, 246, 0.15),
+                0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .concept-card.alkane::before {
+            background: linear-gradient(90deg, #10b981, #34d399);
+        }
+
+        .concept-card.alkene::before {
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+        }
+
+        .concept-card.alkyne::before {
+            background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+        }
+
+        .concept-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .concept-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .concept-card.alkane .concept-badge {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .concept-card.alkene .concept-badge {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .concept-card.alkyne .concept-badge {
+            background: #ede9fe;
+            color: #5b21b6;
+        }
+
+        /* Bond Display */
+        .bond-display {
+            background: var(--gray-800);
+            color: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.5rem;
+            text-align: center;
+            margin: 1rem 0;
+            letter-spacing: 2px;
+            box-shadow: 
+                0 4px 15px rgba(0, 0, 0, 0.2),
+                inset 0 2px 4px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Table Styles */
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 1.5rem 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.08),
+                0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .data-table th {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            padding: 1.25rem 1rem;
+            font-weight: 600;
+            text-align: left;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+            background: var(--white);
+            font-family: 'Courier New', monospace;
+            transition: all 0.2s ease;
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table tr:hover td {
+            background: var(--primary-lightest);
+        }
+
+        .data-table .name-cell {
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 500;
+            color: var(--primary-blue);
+        }
+
+        /* Simulation Container */
+        .simulation-container {
+            background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border: 2px solid var(--gray-200);
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.05),
+                inset 0 2px 4px rgba(255, 255, 255, 0.8);
+        }
+
+        .simulation-title {
+            font-size: 1.3rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 600;
+        }
+
+        .simulation-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+            align-items: flex-end;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .control-group label {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        .control-group input, .control-group select {
+            padding: 0.875rem 1rem;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            font-size: 1rem;
+            width: 180px;
+            transition: all 0.3s ease;
+            background: var(--white);
+        }
+
+        .control-group input:focus, .control-group select:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 4px var(--primary-lightest);
+        }
+
+        .sim-button {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            border: none;
+            padding: 0.875rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
+        }
+
+        .sim-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(30, 64, 175, 0.4);
+        }
+
+        .simulation-output {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            min-height: 250px;
+            border: 2px solid var(--gray-100);
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.03);
+        }
+
+        /* Molecule Canvas */
+        .molecule-canvas {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 12px;
+            border: 2px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .structural-formula {
+            font-family: 'Courier New', monospace;
+            font-size: 1.4rem;
+            line-height: 2;
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--white);
+            border-radius: 12px;
+            border: 2px solid var(--gray-200);
+            margin: 1rem 0;
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-top: 2rem;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.08),
+                0 10px 30px rgba(0, 0, 0, 0.04);
+        }
+
+        .quiz-progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--gray-100);
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 12px;
+            background: var(--gray-200);
+            border-radius: 10px;
+            margin: 0 1.5rem;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .question-card {
+            background: var(--gray-50);
+            border-radius: 18px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .question-card.correct {
+            background: var(--success-light);
+            border-color: var(--success);
+        }
+
+        .question-card.incorrect {
+            background: var(--error-light);
+            border-color: var(--error);
+        }
+
+        .question-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-weight: 600;
+            margin-right: 0.75rem;
+            box-shadow: 0 4px 10px rgba(30, 64, 175, 0.3);
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            margin-bottom: 1.5rem;
+            color: var(--gray-800);
+            line-height: 1.7;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            background: var(--white);
+            border: 2px solid var(--gray-200);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+        }
+
+        .option:hover {
+            border-color: var(--primary-light);
+            background: var(--primary-lightest);
+            transform: translateX(8px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.1);
+        }
+
+        .option.selected {
+            border-color: var(--primary-blue);
+            background: var(--primary-lightest);
+        }
+
+        .option.correct-answer {
+            border-color: var(--success);
+            background: var(--success-light);
+        }
+
+        .option.wrong-answer {
+            border-color: var(--error);
+            background: var(--error-light);
+        }
+
+        .option input {
+            display: none;
+        }
+
+        .option-marker {
+            width: 28px;
+            height: 28px;
+            border: 2px solid var(--gray-300);
+            border-radius: 50%;
+            margin-right: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            font-weight: 600;
+            color: var(--gray-400);
+        }
+
+        .option.selected .option-marker {
+            border-color: var(--primary-blue);
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .option.correct-answer .option-marker {
+            border-color: var(--success);
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .option.correct-answer .option-marker::after {
+            content: '✓';
+        }
+
+        .option.wrong-answer .option-marker {
+            border-color: var(--error);
+            background: var(--error);
+            color: var(--white);
+        }
+
+        .option.wrong-answer .option-marker::after {
+            content: '✗';
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1.25rem;
+            border-radius: 12px;
+            display: none;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feedback.correct {
+            background: var(--success-light);
+            color: #065f46;
+            border: 1px solid var(--success);
+        }
+
+        .feedback.incorrect {
+            background: var(--error-light);
+            color: #991b1b;
+            border: 1px solid var(--error);
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            border: none;
+            padding: 1.25rem 3.5rem;
+            font-size: 1.15rem;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 2.5rem auto;
+            font-weight: 600;
+            box-shadow: 
+                0 8px 30px rgba(30, 64, 175, 0.3),
+                0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 12px 40px rgba(30, 64, 175, 0.4),
+                0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .submit-btn:disabled {
+            background: var(--gray-300);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Score Display */
+        .score-container {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-light) 100%);
+            border-radius: 24px;
+            color: var(--white);
+            margin-top: 2rem;
+            display: none;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 20px 60px rgba(30, 64, 175, 0.3),
+                0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .score-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 60%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(-30deg);
+        }
+
+        .score-container.show {
+            display: block;
+            animation: scaleIn 0.5s ease;
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .score-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: var(--white);
+            margin: 0 auto 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 15px 50px rgba(0, 0, 0, 0.2),
+                inset 0 2px 4px rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .score-number {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            line-height: 1;
+        }
+
+        .score-label {
+            color: var(--gray-600);
+            font-size: 1rem;
+            margin-top: 0.25rem;
+        }
+
+        .score-message {
+            font-size: 1.8rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .score-details {
+            opacity: 0.9;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation Buttons */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2.5rem;
+            gap: 1.5rem;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1.25rem 2rem;
+            border: 2px solid var(--primary-blue);
+            background: var(--white);
+            color: var(--primary-blue);
+            border-radius: 16px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(30, 64, 175, 0.3);
+        }
+
+        .nav-btn.prev {
+            margin-right: auto;
+        }
+
+        .nav-btn.next {
+            margin-left: auto;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            border: none;
+        }
+
+        .nav-btn.next:hover {
+            box-shadow: 0 10px 30px rgba(30, 64, 175, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--gray-900) 0%, var(--gray-800) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .footer-copy {
+            opacity: 0.7;
+            font-size: 0.95rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+
+            .logo span:last-child {
+                display: none;
+            }
+
+            main {
+                padding: 1rem;
+            }
+
+            .lesson-header {
+                padding: 2.5rem 1.25rem;
+            }
+
+            .lesson-title {
+                font-size: 2rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+                border-radius: 16px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+
+            .section-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+
+            .concept-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .simulation-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .control-group {
+                width: 100%;
+            }
+
+            .control-group input, .control-group select {
+                width: 100%;
+            }
+
+            .sim-button {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .lesson-nav {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                justify-content: center;
+            }
+
+            .nav-btn.prev, .nav-btn.next {
+                margin: 0;
+            }
+
+            .data-table {
+                font-size: 0.85rem;
+            }
+
+            .data-table th, .data-table td {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .molecule-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .molecule-card {
+                width: 100%;
+                max-width: 280px;
+            }
+
+            .score-circle {
+                width: 150px;
+                height: 150px;
+            }
+
+            .score-number {
+                font-size: 3rem;
+            }
+
+            .quiz-container {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            header, footer, .lesson-nav, .simulation-container, .quiz-container {
+                display: none;
+            }
+            
+            .card {
+                box-shadow: none;
+                border: 1px solid var(--gray-200);
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo">
+                <div class="logo-icon">PP</div>
+                <span>PassProof Academy</span>
+            </a>
+            <div class="nav-container">
+                <button class="nav-toggle" id="navToggle">
+                    <span>📚</span> Menu <span>▼</span>
+                </button>
+                <nav class="nav-dropdown" id="navDropdown">
+                    <div class="nav-section-title">Navigation</div>
+                    <a href="#">🏠 Home</a>
+                    <a href="#">📊 Dashboard</a>
+                    <a href="#">📈 My Progress</a>
+                    <div class="nav-divider"></div>
+                    <div class="nav-section-title">Organic Chemistry</div>
+                    <a href="#" class="active-link">⚗️ Lesson 1: Introduction to Hydrocarbons</a>
+                    <a href="#">⚗️ Lesson 2: IUPAC Naming</a>
+                    <a href="#">⚗️ Lesson 3: Isomers</a>
+                    <a href="#">⚗️ Lesson 4: Physical Properties</a>
+                    <a href="#">⚗️ Lesson 5: Chemical Reactions</a>
+                    <div class="nav-divider"></div>
+                    <a href="#">📝 Practice Tests</a>
+                    <a href="#">🎯 Quick Revision</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Lesson Header -->
+        <div class="lesson-header">
+            <div class="subject-grade">Physical Sciences • Grade 12</div>
+            <div class="topic">Organic Chemistry</div>
+            <div class="lesson-number">Term 1 • Week 9 • Lesson 1</div>
+            <h1 class="lesson-title">Introduction to Hydrocarbons</h1>
+            <div class="sub-topic">Alkanes, Alkenes & Alkynes</div>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">🎯</div>
+                <h2 class="section-title">Learning Objectives</h2>
+            </div>
+            <ul class="objectives-list">
+                <li>
+                    <div class="objective-icon">1</div>
+                    <span>Understand the meaning of hydrocarbons and their classification</span>
+                </li>
+                <li>
+                    <div class="objective-icon">2</div>
+                    <span>Distinguish between alkanes, alkenes, and alkynes</span>
+                </li>
+                <li>
+                    <div class="objective-icon">3</div>
+                    <span>Explain the terms saturated and unsaturated hydrocarbons</span>
+                </li>
+                <li>
+                    <div class="objective-icon">4</div>
+                    <span>Write molecular formulae, condensed structural formulae, and structural formulae for hydrocarbons</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Overview -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">📋</div>
+                <h2 class="section-title">Lesson Overview</h2>
+            </div>
+            <p style="margin-bottom: 1.5rem; color: var(--gray-600); line-height: 1.8;">
+                Organic chemistry is the study of carbon-containing compounds. In this lesson, we'll explore <strong>hydrocarbons</strong> – compounds made up of only carbon and hydrogen atoms. Understanding hydrocarbons is fundamental to organic chemistry as they form the backbone of more complex organic molecules.
+            </p>
+
+            <div class="info-box">
+                <span class="info-icon">💡</span>
+                <div class="info-content">
+                    <h4>Why is Carbon Special?</h4>
+                    <p>Carbon has a valency of 4, meaning it can form four covalent bonds. This, combined with its ability to form long chains (called <strong>catenation</strong>), makes carbon incredibly versatile in forming millions of different compounds!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pre-Knowledge Review -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">🔄</div>
+                <h2 class="section-title">Pre-Knowledge Review</h2>
+            </div>
+            <p style="margin-bottom: 1.5rem;">Before we dive into hydrocarbons, let's review some essential concepts:</p>
+
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <div class="concept-title">🔗 Covalent Bonds</div>
+                    <p>Formed by the <strong>sharing of electrons</strong> between two atoms. Generally occurs between two non-metals.</p>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-title">🧲 Intermolecular Forces</div>
+                    <p>Forces that exist <strong>between molecules</strong> and hold them together. These affect physical properties like boiling point.</p>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-title">⚛️ Carbon's Valency</div>
+                    <p>Carbon has a valency of <strong>4</strong> and <strong>4 valence electrons</strong>. It can form 4 covalent bonds.</p>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-title">⛓️ Catenation</div>
+                    <p>The ability of carbon to form <strong>long chains</strong> by bonding with other carbon atoms.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content: Hydrocarbons -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">⚗️</div>
+                <h2 class="section-title">What are Hydrocarbons?</h2>
+            </div>
+
+            <div class="info-box" style="background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);">
+                <span class="info-icon">📚</span>
+                <div class="info-content">
+                    <h4>Definition</h4>
+                    <p><strong>Hydrocarbons</strong> are organic compounds that contain <strong>only carbon (C) and hydrogen (H) atoms</strong>. They are the simplest type of organic compounds.</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: var(--gray-800);">Classification of Hydrocarbons</h3>
+
+            <div style="background: var(--gray-50); border-radius: 16px; padding: 2rem; margin: 1.5rem 0;">
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <span style="background: var(--primary-blue); color: white; padding: 0.75rem 1.5rem; border-radius: 10px; font-weight: 600; display: inline-block;">ORGANIC COMPOUNDS</span>
+                </div>
+                <div style="display: flex; justify-content: center; margin-bottom: 1rem;">
+                    <span style="font-size: 2rem;">⬇️</span>
+                </div>
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <span style="background: var(--primary-light); color: white; padding: 0.75rem 1.5rem; border-radius: 10px; font-weight: 600; display: inline-block;">HYDROCARBONS (C and H only)</span>
+                </div>
+                <div style="display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">⬇️</div>
+                        <span style="background: #10b981; color: white; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500; display: inline-block;">ALIPHATIC</span>
+                        <p style="font-size: 0.85rem; color: var(--gray-600); margin-top: 0.5rem;">Straight chain structures</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">⬇️</div>
+                        <span style="background: #8b5cf6; color: white; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500; display: inline-block;">AROMATIC</span>
+                        <p style="font-size: 0.85rem; color: var(--gray-600); margin-top: 0.5rem;">Benzene ring structures</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aliphatic Hydrocarbons -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">⛓️</div>
+                <h2 class="section-title">Aliphatic Hydrocarbons</h2>
+            </div>
+
+            <p style="margin-bottom: 1.5rem; color: var(--gray-600);">Aliphatic hydrocarbons are classified based on the type of bonds between carbon atoms:</p>
+
+            <div class="concept-grid">
+                <div class="concept-card alkane">
+                    <div class="concept-title">
+                        ALKANES
+                        <span class="concept-badge">Saturated</span>
+                    </div>
+                    <div class="bond-display">C — C</div>
+                    <p>Only <strong>single bonds</strong> between carbon atoms</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--gray-600);">General Formula: C<sub>n</sub>H<sub>2n+2</sub></p>
+                </div>
+
+                <div class="concept-card alkene">
+                    <div class="concept-title">
+                        ALKENES
+                        <span class="concept-badge">Unsaturated</span>
+                    </div>
+                    <div class="bond-display">C = C</div>
+                    <p>At least one <strong>double bond</strong> between carbon atoms</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--gray-600);">General Formula: C<sub>n</sub>H<sub>2n</sub></p>
+                </div>
+
+                <div class="concept-card alkyne">
+                    <div class="concept-title">
+                        ALKYNES
+                        <span class="concept-badge">Unsaturated</span>
+                    </div>
+                    <div class="bond-display">C ≡ C</div>
+                    <p>At least one <strong>triple bond</strong> between carbon atoms</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--gray-600);">General Formula: C<sub>n</sub>H<sub>2n-2</sub></p>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 2rem;">
+                <span class="info-icon">🔬</span>
+                <div class="info-content">
+                    <h4>Saturated vs Unsaturated</h4>
+                    <p><strong>Saturated hydrocarbons</strong> (alkanes) have only single bonds – all carbon atoms are "saturated" with hydrogen atoms.</p>
+                    <p style="margin-top: 0.5rem;"><strong>Unsaturated hydrocarbons</strong> (alkenes and alkynes) have double or triple bonds – they can accept more hydrogen atoms.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test for Saturation -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">🧪</div>
+                <h2 class="section-title">Testing for Saturated and Unsaturated Compounds</h2>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #fef3c7 0%, #fffbeb 100%); border: 2px solid #f59e0b; border-radius: 16px; padding: 1.5rem; margin: 1.5rem 0;">
+                <h4 style="color: #92400e; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>🧫</span> Bromine Water Test
+                </h4>
+                <ol style="color: #78350f; padding-left: 1.5rem; line-height: 2;">
+                    <li>Add a few drops of <strong>bromine water</strong> (orange-brown) to the compound</li>
+                    <li>Shake the solution</li>
+                    <li>Observe the colour change</li>
+                </ol>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
+                    <div style="background: var(--white); border-radius: 12px; padding: 1rem; text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🟠 → ⚪</div>
+                        <strong style="color: #10b981;">Colour disappears immediately</strong>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">= <strong>UNSATURATED</strong> (alkene or alkyne)</p>
+                    </div>
+                    <div style="background: var(--white); border-radius: 12px; padding: 1rem; text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🟠 → 🟠</div>
+                        <strong style="color: #ef4444;">Colour remains</strong>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">= <strong>SATURATED</strong> (alkane)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Representing Hydrocarbons -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">📝</div>
+                <h2 class="section-title">Representing Hydrocarbons</h2>
+            </div>
+
+            <p style="margin-bottom: 1.5rem; color: var(--gray-600);">Hydrocarbons can be represented in three different ways:</p>
+
+            <div class="concept-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+                <div class="concept-card">
+                    <div class="concept-title">1️⃣ Molecular Formula</div>
+                    <p>Shows only the <strong>number and type of atoms</strong> in the molecule.</p>
+                    <div style="background: var(--primary-lightest); padding: 1rem; border-radius: 10px; text-align: center; margin-top: 1rem; font-family: monospace; font-size: 1.3rem;">
+                        C₂H₆
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <div class="concept-title">2️⃣ Condensed Structural Formula</div>
+                    <p>Shows how atoms are <strong>grouped together</strong>, but not all bonds.</p>
+                    <div style="background: var(--primary-lightest); padding: 1rem; border-radius: 10px; text-align: center; margin-top: 1rem; font-family: monospace; font-size: 1.3rem;">
+                        CH₃CH₃
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <div class="concept-title">3️⃣ Structural Formula</div>
+                    <p>Shows <strong>all atoms and all bonds</strong> in the molecule.</p>
+                    <div style="background: var(--primary-lightest); padding: 1rem; border-radius: 10px; text-align: center; margin-top: 1rem; font-family: monospace; font-size: 1.1rem;">
+                        <pre style="margin: 0;">    H   H
+    |   |
+H — C — C — H
+    |   |
+    H   H</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alkane Homologous Series -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">📊</div>
+                <h2 class="section-title">The Alkane Homologous Series</h2>
+            </div>
+
+            <p style="margin-bottom: 1.5rem; color: var(--gray-600);">A <strong>homologous series</strong> is a family of compounds with the same functional group and similar chemical properties. Each member differs by CH₂.</p>
+
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>No. of C</th>
+                            <th>Molecular Formula</th>
+                            <th>Condensed Structural Formula</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="name-cell">Methane</td>
+                            <td>1</td>
+                            <td>CH₄</td>
+                            <td>CH₄</td>
+                        </tr>
+                        <tr>
+                            <td class="name-cell">Ethane</td>
+                            <td>2</td>
+                            <td>C₂H₆</td>
+                            <td>CH₃CH₃</td>
+                        </tr>
+                        <tr>
+                            <td class="name-cell">Propane</td>
+                            <td>3</td>
+                            <td>C₃H₈</td>
+                            <td>CH₃CH₂CH₃</td>
+                        </tr>
+                        <tr>
+                            <td class="name-cell">Butane</td>
+                            <td>4</td>
+                            <td>C₄H₁₀</td>
+                            <td>CH₃CH₂CH₂CH₃</td>
+                        </tr>
+                        <tr>
+                            <td class="name-cell">Pentane</td>
+                            <td>5</td>
+                            <td>C₅H₁₂</td>
+                            <td>CH₃CH₂CH₂CH₂CH₃</td>
+                        </tr>
+                        <tr>
+                            <td class="name-cell">Hexane</td>
+                            <td>6</td>
+                            <td>C₆H₁₄</td>
+                            <td>CH₃CH₂CH₂CH₂CH₂CH₃</td>
+                        </tr>
+                        <tr>
+                            <td class="name-cell">Heptane</td>
+                            <td>7</td>
+                            <td>C₇H₁₆</td>
+                            <td>CH₃CH₂CH₂CH₂CH₂CH₂CH₃</td>
+                        </tr>
+                        <tr>
+                            <td class="name-cell">Octane</td>
+                            <td>8</td>
+                            <td>C₈H₁₈</td>
+                            <td>CH₃CH₂CH₂CH₂CH₂CH₂CH₂CH₃</td>
+                        </tr>
+                        <tr>
+                            <td class="name-cell">Nonane</td>
+                            <td>9</td>
+                            <td>C₉H₂₀</td>
+                            <td>CH₃CH₂CH₂CH₂CH₂CH₂CH₂CH₂CH₃</td>
+                        </tr>
+                        <tr>
+                            <td class="name-cell">Decane</td>
+                            <td>10</td>
+                            <td>C₁₀H₂₂</td>
+                            <td>CH₃CH₂CH₂CH₂CH₂CH₂CH₂CH₂CH₂CH₃</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-box" style="margin-top: 1.5rem;">
+                <span class="info-icon">📌</span>
+                <div class="info-content">
+                    <h4>Naming Tip</h4>
+                    <p>The prefixes indicate the number of carbon atoms: <strong>Meth-</strong> (1), <strong>Eth-</strong> (2), <strong>Prop-</strong> (3), <strong>But-</strong> (4), <strong>Pent-</strong> (5), <strong>Hex-</strong> (6), <strong>Hept-</strong> (7), <strong>Oct-</strong> (8), <strong>Non-</strong> (9), <strong>Dec-</strong> (10)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Simulations -->
+        <div class="card">
+            <div class="section-header">
+                <div class="section-icon">🔬</div>
+                <h2 class="section-title">Interactive Simulations</h2>
+            </div>
+
+            <!-- Simulation 1: Molecular Formula Generator -->
+            <div class="simulation-container">
+                <h3 class="simulation-title">🧪 Hydrocarbon Formula Generator</h3>
+                <p style="margin-bottom: 1rem; color: var(--gray-600);">Select a hydrocarbon type and number of carbons to see the molecular formula.</p>
+                
+                <div class="simulation-controls">
+                    <div class="control-group">
+                        <label for="sim1-type">Hydrocarbon Type</label>
+                        <select id="sim1-type">
+                            <option value="alkane">Alkane (C-C)</option>
+                            <option value="alkene">Alkene (C=C)</option>
+                            <option value="alkyne">Alkyne (C≡C)</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label for="sim1-carbons">Number of Carbons</label>
+                        <input type="number" id="sim1-carbons" min="1" max="10" value="3">
+                    </div>
+                    <button class="sim-button" onclick="generateFormula()">
+                        <span>⚗️</span> Generate
+                    </button>
+                </div>
+
+                <div class="simulation-output" id="sim1-output">
+                    <div id="formula-result" style="text-align: center;">
+                        <p style="color: var(--gray-500);">Select options and click "Generate" to see the formula</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulation 2: Molecule Builder -->
+            <div class="simulation-container">
+                <h3 class="simulation-title">🔧 Molecule Visualizer</h3>
+                <p style="margin-bottom: 1rem; color: var(--gray-600);">View the structural formula of different hydrocarbons.</p>
+                
+                <div class="simulation-controls">
+                    <div class="control-group">
+                        <label for="sim2-molecule">Select Molecule</label>
+                        <select id="sim2-molecule">
+                            <option value="methane">Methane (CH₄)</option>
+                            <option value="ethane">Ethane (C₂H₆)</option>
+                            <option value="propane">Propane (C₃H₈)</option>
+                            <option value="ethene">Ethene (C₂H₄)</option>
+                            <option value="propene">Propene (C₃H₆)</option>
+                            <option value="ethyne">Ethyne (C₂H₂)</option>
+                        </select>
+                    </div>
+                    <button class="sim-button" onclick="showMolecule()">
+                        <span>👁️</span> Visualize
+                    </button>
+                </div>
+
+                <div class="simulation-output" id="sim2-output">
+                    <div id="molecule-display" style="text-align: center;">
+                        <p style="color: var(--gray-500);">Select a molecule to see its structural formula</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulation 3: Bromine Test Simulator -->
+            <div class="simulation-container">
+                <h3 class="simulation-title">🧫 Bromine Water Test Simulator</h3>
+                <p style="margin-bottom: 1rem; color: var(--gray-600);">Test whether a compound is saturated or unsaturated.</p>
+                
+                <div class="simulation-controls">
+                    <div class="control-group">
+                        <label for="sim3-compound">Select Compound</label>
+                        <select id="sim3-compound">
+                            <option value="hexane">Hexane (alkane)</option>
+                            <option value="hexene">Hexene (alkene)</option>
+                            <option value="hexyne">Hexyne (alkyne)</option>
+                            <option value="propane">Propane (alkane)</option>
+                            <option value="propene">Propene (alkene)</option>
+                        </select>
+                    </div>
+                    <button class="sim-button" onclick="runBromineTest()">
+                        <span>🧪</span> Run Test
+                    </button>
+                </div>
+
+                <div class="simulation-output" id="sim3-output">
+                    <div id="bromine-result" style="text-align: center;">
+                        <p style="color: var(--gray-500);">Select a compound and click "Run Test"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="card quiz-container" id="quizContainer">
+            <div class="section-header">
+                <div class="section-icon">✏️</div>
+                <h2 class="section-title">Test Your Knowledge</h2>
+            </div>
+
+            <div class="quiz-progress">
+                <span id="progressText">Question 1 of 12</span>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                <span id="answeredCount">0/12 answered</span>
+            </div>
+
+            <div id="questionsContainer">
+                <!-- Questions will be dynamically generated -->
+            </div>
+
+            <button class="submit-btn" id="submitQuiz" onclick="submitQuiz()">Submit Answers</button>
+
+            <div class="score-container" id="scoreContainer">
+                <div class="score-circle">
+                    <span class="score-number" id="scoreNumber">0%</span>
+                    <span class="score-label">Score</span>
+                </div>
+                <p class="score-message" id="scoreMessage">Great job!</p>
+                <p class="score-details" id="scoreDetails">You got X out of 12 questions correct.</p>
+                <button class="sim-button" onclick="retryQuiz()" style="margin-top: 1.5rem; background: rgba(255,255,255,0.2);">🔄 Try Again</button>
+            </div>
+        </div>
+
+        <!-- Lesson Navigation -->
+        <div class="lesson-nav">
+            <button class="nav-btn prev">
+                ← Previous Lesson
+            </button>
+            <button class="nav-btn next">
+                Next Lesson →
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">⚗️ PassProof Academy</div>
+            <p class="footer-copy">© 2026 PassProof Academy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // =====================================================
+        // NAVIGATION
+        // =====================================================
+        const navToggle = document.getElementById('navToggle');
+        const navDropdown = document.getElementById('navDropdown');
+
+        navToggle.addEventListener('click', () => {
+            navDropdown.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!navToggle.contains(e.target) && !navDropdown.contains(e.target)) {
+                navDropdown.classList.remove('active');
+            }
+        });
+
+        // =====================================================
+        // SIMULATION 1: FORMULA GENERATOR
+        // =====================================================
+        function generateFormula() {
+            const type = document.getElementById('sim1-type').value;
+            const carbons = parseInt(document.getElementById('sim1-carbons').value);
+            const resultDiv = document.getElementById('formula-result');
+
+            if (carbons < 1 || carbons > 10) {
+                resultDiv.innerHTML = `<p style="color: var(--error);">Please enter a number between 1 and 10</p>`;
+                return;
+            }
+
+            let hydrogens, typeName, generalFormula, suffix;
+
+            switch(type) {
+                case 'alkane':
+                    hydrogens = 2 * carbons + 2;
+                    typeName = 'Alkane';
+                    generalFormula = 'CₙH₂ₙ₊₂';
+                    suffix = 'ane';
+                    break;
+                case 'alkene':
+                    if (carbons < 2) {
+                        resultDiv.innerHTML = `<p style="color: var(--error);">Alkenes need at least 2 carbon atoms for a double bond</p>`;
+                        return;
+                    }
+                    hydrogens = 2 * carbons;
+                    typeName = 'Alkene';
+                    generalFormula = 'CₙH₂ₙ';
+                    suffix = 'ene';
+                    break;
+                case 'alkyne':
+                    if (carbons < 2) {
+                        resultDiv.innerHTML = `<p style="color: var(--error);">Alkynes need at least 2 carbon atoms for a triple bond</p>`;
+                        return;
+                    }
+                    hydrogens = 2 * carbons - 2;
+                    typeName = 'Alkyne';
+                    generalFormula = 'CₙH₂ₙ₋₂';
+                    suffix = 'yne';
+                    break;
+            }
+
+            const prefixes = ['', 'meth', 'eth', 'prop', 'but', 'pent', 'hex', 'hept', 'oct', 'non', 'dec'];
+            const name = prefixes[carbons] + suffix;
+            const capitalizedName = name.charAt(0).toUpperCase() + name.slice(1);
+
+            resultDiv.innerHTML = `
+                <div style="animation: fadeIn 0.5s ease;">
+                    <h4 style="color: var(--primary-blue); margin-bottom: 1rem; font-size: 1.4rem;">${capitalizedName}</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                        <div style="background: var(--primary-lightest); padding: 1rem; border-radius: 10px; text-align: center;">
+                            <p style="font-size: 0.85rem; color: var(--gray-600); margin-bottom: 0.5rem;">Type</p>
+                            <p style="font-size: 1.2rem; font-weight: 600; color: var(--primary-blue);">${typeName}</p>
+                        </div>
+                        <div style="background: var(--primary-lightest); padding: 1rem; border-radius: 10px; text-align: center;">
+                            <p style="font-size: 0.85rem; color: var(--gray-600); margin-bottom: 0.5rem;">Molecular Formula</p>
+                            <p style="font-size: 1.3rem; font-weight: 600; color: var(--gray-800); font-family: monospace;">C${subscript(carbons)}H${subscript(hydrogens)}</p>
+                        </div>
+                        <div style="background: var(--primary-lightest); padding: 1rem; border-radius: 10px; text-align: center;">
+                            <p style="font-size: 0.85rem; color: var(--gray-600); margin-bottom: 0.5rem;">General Formula</p>
+                            <p style="font-size: 1.1rem; font-weight: 600; color: var(--gray-800);">${generalFormula}</p>
+                        </div>
+                    </div>
+                    <p style="color: var(--gray-600); font-size: 0.95rem;">
+                        <strong>Saturation:</strong> ${type === 'alkane' ? '✅ Saturated (single bonds only)' : '⚠️ Unsaturated (contains ' + (type === 'alkene' ? 'double' : 'triple') + ' bonds)'}
+                    </p>
+                </div>
+            `;
+        }
+
+        function subscript(num) {
+            if (num === 1) return '';
+            const subscripts = {'0': '₀', '1': '₁', '2': '₂', '3': '₃', '4': '₄', '5': '₅', '6': '₆', '7': '₇', '8': '₈', '9': '₉'};
+            return String(num).split('').map(d => subscripts[d]).join('');
+        }
+
+        // =====================================================
+        // SIMULATION 2: MOLECULE VISUALIZER
+        // =====================================================
+        function showMolecule() {
+            const molecule = document.getElementById('sim2-molecule').value;
+            const displayDiv = document.getElementById('molecule-display');
+
+            const molecules = {
+                methane: {
+                    name: 'Methane',
+formula: 'CH₄',
+type: 'Alkane (saturated)',
+structure: <pre style="font-family: 'Courier New', monospace; font-size: 1.2rem; line-height: 1.8;"> H | H — C — H | H </pre> ,
+condensed: 'CH₄',
+description: 'Simplest alkane with 1 carbon atom bonded to 4 hydrogen atoms.'
+},
+ethane: {
+name: 'Ethane',
+formula: 'C₂H₆',
+type: 'Alkane (saturated)',
+structure: <pre style="font-family: 'Courier New', monospace; font-size: 1.2rem; line-height: 1.8;"> H H | | H — C — C — H | | H H </pre> ,
+condensed: 'CH₃CH₃',
+description: 'Two carbon atoms joined by a single bond, each with 3 hydrogen atoms.'
+},
+propane: {
+name: 'Propane',
+formula: 'C₃H₈',
+type: 'Alkane (saturated)',
+structure: <pre style="font-family: 'Courier New', monospace; font-size: 1.1rem; line-height: 1.8;"> H H H | | | H — C — C — C — H | | | H H H </pre> ,
+condensed: 'CH₃CH₂CH₃',
+description: 'Three carbon atoms in a chain, commonly used as fuel (LPG).'
+},
+ethene: {
+name: 'Ethene (Ethylene)',
+formula: 'C₂H₄',
+type: 'Alkene (unsaturated)',
+structure: <pre style="font-family: 'Courier New', monospace; font-size: 1.2rem; line-height: 1.8;"> H H \\ / C = C / \\ H H </pre> ,
+condensed: 'CH₂=CH₂',
+description: 'Simplest alkene with a double bond between two carbon atoms.'
+},
+propene: {
+name: 'Propene (Propylene)',
+formula: 'C₃H₆',
+type: 'Alkene (unsaturated)',
+structure: <pre style="font-family: 'Courier New', monospace; font-size: 1.1rem; line-height: 1.8;"> H H H \\ / | C = C — C — H / | H H </pre> ,
+condensed: 'CH₂=CHCH₃',
+description: 'Three-carbon alkene with double bond between C1 and C2.'
+},
+ethyne: {
+name: 'Ethyne (Acetylene)',
+formula: 'C₂H₂',
+type: 'Alkyne (unsaturated)',
+structure: <pre style="font-family: 'Courier New', monospace; font-size: 1.2rem; line-height: 1.8;"> H — C ≡ C — H </pre> ,
+condensed: 'CH≡CH',
+description: 'Simplest alkyne with a triple bond. Used in welding torches.'
+}
+};        const mol = molecules[molecule];
+        
+        displayDiv.innerHTML = `
+            <div style="animation: fadeIn 0.5s ease;">
+                <h4 style="color: var(--primary-blue); margin-bottom: 0.5rem; font-size: 1.5rem;">${mol.name}</h4>
+                <p style="color: var(--gray-600); margin-bottom: 1rem;">${mol.type}</p>
+                
+                <div style="background: var(--gray-50); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; border: 2px solid var(--gray-200);">
+                    <p style="font-size: 0.9rem; color: var(--gray-500); margin-bottom: 0.5rem;">Structural Formula:</p>
+                    ${mol.structure}
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                    <div style="background: var(--primary-lightest); padding: 1rem; border-radius: 10px; text-align: center;">
+                        <p style="font-size: 0.85rem; color: var(--gray-600); margin-bottom: 0.5rem;">Molecular Formula</p>
+                        <p style="font-size: 1.3rem; font-weight: 600; color: var(--gray-800);">${mol.formula}</p>
+                    </div>
+                    <div style="background: var(--primary-lightest); padding: 1rem; border-radius: 10px; text-align: center;">
+                        <p style="font-size: 0.85rem; color: var(--gray-600); margin-bottom: 0.5rem;">Condensed Formula</p>
+                        <p style="font-size: 1.2rem; font-weight: 600; color: var(--gray-800); font-family: monospace;">${mol.condensed}</p>
+                    </div>
+                </div>
+                
+                <p style="color: var(--gray-600); font-size: 0.95rem; line-height: 1.6;">${mol.description}</p>
+            </div>
+        `;
+    }
+
+    // =====================================================
+    // SIMULATION 3: BROMINE TEST
+    // =====================================================
+    function runBromineTest() {
+        const compound = document.getElementById('sim3-compound').value;
+        const resultDiv = document.getElementById('bromine-result');
+
+        const compounds = {
+            hexane: { name: 'Hexane', type: 'alkane', saturated: true },
+            hexene: { name: 'Hexene', type: 'alkene', saturated: false },
+            hexyne: { name: 'Hexyne', type: 'alkyne', saturated: false },
+            propane: { name: 'Propane', type: 'alkane', saturated: true },
+            propene: { name: 'Propene', type: 'alkene', saturated: false }
+        };
+
+        const comp = compounds[compound];
+
+        // Animation sequence
+        resultDiv.innerHTML = `
+            <div style="animation: fadeIn 0.5s ease;">
+                <h4 style="color: var(--primary-blue); margin-bottom: 1.5rem;">Testing: ${comp.name}</h4>
+                
+                <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                    <div style="text-align: center;">
+                        <div id="testTube1" style="width: 60px; height: 120px; background: linear-gradient(to bottom, transparent 20%, #f97316 20%); border: 3px solid var(--gray-400); border-radius: 0 0 30px 30px; margin: 0 auto; transition: all 1s ease;"></div>
+                        <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--gray-600);">Bromine Water</p>
+                    </div>
+                    <div style="font-size: 2rem;" id="arrow">➕</div>
+                    <div style="text-align: center;">
+                        <div style="width: 60px; height: 120px; background: linear-gradient(to bottom, transparent 40%, #e5e7eb 40%); border: 3px solid var(--gray-400); border-radius: 0 0 30px 30px; margin: 0 auto;"></div>
+                        <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--gray-600);">${comp.name}</p>
+                    </div>
+                    <div style="font-size: 2rem;" id="equals">=</div>
+                    <div style="text-align: center;">
+                        <div id="resultTube" style="width: 60px; height: 120px; background: linear-gradient(to bottom, transparent 20%, #f97316 20%); border: 3px solid var(--gray-400); border-radius: 0 0 30px 30px; margin: 0 auto; transition: all 1.5s ease;"></div>
+                        <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--gray-600);">Result</p>
+                    </div>
+                </div>
+                
+                <button onclick="animateTest('${compound}')" class="sim-button" style="margin: 0 auto; display: flex;">
+                    <span>🔬</span> Shake & Observe
+                </button>
+                
+                <div id="testResult" style="margin-top: 1.5rem;"></div>
+            </div>
+        `;
+    }
+
+    function animateTest(compound) {
+        const compounds = {
+            hexane: { name: 'Hexane', type: 'alkane', saturated: true },
+            hexene: { name: 'Hexene', type: 'alkene', saturated: false },
+            hexyne: { name: 'Hexyne', type: 'alkyne', saturated: false },
+            propane: { name: 'Propane', type: 'alkane', saturated: true },
+            propene: { name: 'Propene', type: 'alkene', saturated: false }
+        };
+
+        const comp = compounds[compound];
+        const resultTube = document.getElementById('resultTube');
+        const testResult = document.getElementById('testResult');
+
+        // Shake animation
+        resultTube.style.animation = 'shake 0.5s ease';
+
+        setTimeout(() => {
+            if (comp.saturated) {
+                // Alkane - colour remains
+                resultTube.style.background = 'linear-gradient(to bottom, transparent 20%, #f97316 20%)';
+                testResult.innerHTML = `
+                    <div style="background: var(--error-light); border: 2px solid var(--error); border-radius: 12px; padding: 1.25rem; animation: fadeIn 0.5s ease;">
+                        <h4 style="color: #991b1b; margin-bottom: 0.5rem;">🟠 Colour Remains Orange-Brown</h4>
+                        <p style="color: #7f1d1d;"><strong>${comp.name}</strong> is a <strong>SATURATED</strong> hydrocarbon (${comp.type}).</p>
+                        <p style="color: #7f1d1d; margin-top: 0.5rem; font-size: 0.9rem;">The bromine water does not react because there are no double or triple bonds to break.</p>
+                    </div>
+                `;
+            } else {
+                // Alkene/Alkyne - colour disappears
+                resultTube.style.background = 'linear-gradient(to bottom, transparent 20%, #f1f5f9 20%)';
+                testResult.innerHTML = `
+                    <div style="background: var(--success-light); border: 2px solid var(--success); border-radius: 12px; padding: 1.25rem; animation: fadeIn 0.5s ease;">
+                        <h4 style="color: #065f46; margin-bottom: 0.5rem;">⚪ Colour Disappears (Decolourises)</h4>
+                        <p style="color: #064e3b;"><strong>${comp.name}</strong> is an <strong>UNSATURATED</strong> hydrocarbon (${comp.type}).</p>
+                        <p style="color: #064e3b; margin-top: 0.5rem; font-size: 0.9rem;">The bromine reacts with the ${comp.type === 'alkene' ? 'double' : 'triple'} bond in an addition reaction.</p>
+                    </div>
+                `;
+            }
+        }, 500);
+    }
+
+    // Add shake animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px) rotate(-5deg); }
+            75% { transform: translateX(5px) rotate(5deg); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // =====================================================
+    // QUIZ SYSTEM
+    // =====================================================
+    const questions = [
+        {
+            question: "What are hydrocarbons?",
+            options: [
+                "Compounds containing carbon, hydrogen, and oxygen",
+                "Compounds containing only carbon and hydrogen",
+                "Compounds containing only hydrogen",
+                "Compounds containing carbon and water"
+            ],
+            correct: 1,
+            explanation: "Hydrocarbons are organic compounds that contain ONLY carbon (C) and hydrogen (H) atoms."
+        },
+        {
+            question: "What is the valency of carbon?",
+            options: ["2", "3", "4", "6"],
+            correct: 2,
+            explanation: "Carbon has a valency of 4, meaning it can form 4 covalent bonds with other atoms."
+        },
+        {
+            question: "What type of bond exists between carbon atoms in alkanes?",
+            options: ["Double bonds", "Triple bonds", "Single bonds", "Ionic bonds"],
+            correct: 2,
+            explanation: "Alkanes contain only single bonds (C—C) between carbon atoms, making them saturated hydrocarbons."
+        },
+        {
+            question: "Which of the following is an UNSATURATED hydrocarbon?",
+            options: ["Methane", "Ethane", "Propane", "Ethene"],
+            correct: 3,
+            explanation: "Ethene (C₂H₄) is an alkene with a double bond, making it unsaturated. Methane, ethane, and propane are all alkanes (saturated)."
+        },
+        {
+            question: "What is the general formula for alkanes?",
+            options: ["CₙH₂ₙ", "CₙH₂ₙ₊₂", "CₙH₂ₙ₋₂", "CₙHₙ"],
+            correct: 1,
+            explanation: "The general formula for alkanes is CₙH₂ₙ₊₂, where n is the number of carbon atoms."
+        },
+        {
+            question: "What is the ability of carbon to form long chains called?",
+            options: ["Polymerization", "Catenation", "Ionization", "Saturation"],
+            correct: 1,
+            explanation: "Catenation is the ability of carbon atoms to bond with other carbon atoms to form long chains."
+        },
+        {
+            question: "In the bromine water test, what happens when an unsaturated compound is added?",
+            options: [
+                "The orange-brown colour remains",
+                "The solution turns blue",
+                "The orange-brown colour disappears",
+                "The solution turns green"
+            ],
+            correct: 2,
+            explanation: "Unsaturated compounds (alkenes and alkynes) react with bromine, causing the orange-brown colour to disappear (decolourise)."
+        },
+        {
+            question: "What is the molecular formula of propane?",
+            options: ["C₃H₆", "C₃H₈", "C₃H₄", "C₂H₆"],
+            correct: 1,
+            explanation: "Propane is an alkane with 3 carbons. Using CₙH₂ₙ₊₂: C₃H₈ (n=3, so 2×3+2=8 hydrogens)."
+        },
+        {
+            question: "Which type of hydrocarbon contains a triple bond?",
+            options: ["Alkane", "Alkene", "Alkyne", "Aromatic"],
+            correct: 2,
+            explanation: "Alkynes contain at least one triple bond (C≡C) between carbon atoms."
+        },
+        {
+            question: "What is the condensed structural formula for ethane?",
+            options: ["CH₄", "CH₃CH₃", "CH₂=CH₂", "CH≡CH"],
+            correct: 1,
+            explanation: "Ethane has 2 carbon atoms, each bonded to 3 hydrogen atoms, written as CH₃CH₃."
+        },
+        {
+            question: "A saturated hydrocarbon has:",
+            options: [
+                "Only double bonds",
+                "Only triple bonds",
+                "Only single bonds",
+                "Double and triple bonds"
+            ],
+            correct: 2,
+            explanation: "Saturated hydrocarbons (alkanes) have only single bonds between carbon atoms. All carbons are 'saturated' with hydrogen."
+        },
+        {
+            question: "What prefix indicates 4 carbon atoms in the IUPAC naming system?",
+            options: ["Meth-", "Eth-", "Prop-", "But-"],
+            correct: 3,
+            explanation: "The prefix 'But-' indicates 4 carbon atoms. Meth=1, Eth=2, Prop=3, But=4."
+        }
+    ];
+
+    let userAnswers = new Array(questions.length).fill(null);
+    let quizSubmitted = false;
+
+    function renderQuiz() {
+        const container = document.getElementById('questionsContainer');
+        container.innerHTML = '';
+
+        questions.forEach((q, index) => {
+            const questionCard = document.createElement('div');
+            questionCard.className = 'question-card';
+            questionCard.id = `question-${index}`;
+
+            const optionLabels = ['A', 'B', 'C', 'D'];
+            const optionsHTML = q.options.map((opt, optIndex) => `
+                <label class="option" id="option-${index}-${optIndex}">
+                    <input type="radio" name="q${index}" value="${optIndex}" onchange="selectAnswer(${index}, ${optIndex})">
+                    <span class="option-marker">${optionLabels[optIndex]}</span>
+                    <span>${opt}</span>
+                </label>
+            `).join('');
+
+            questionCard.innerHTML = `
+                <p class="question-text">
+                    <span class="question-number">${index + 1}</span>
+                    ${q.question}
+                </p>
+                <div class="options-container">
+                    ${optionsHTML}
+                </div>
+                <div class="feedback" id="feedback-${index}"></div>
+            `;
+
+            container.appendChild(questionCard);
+        });
+
+        updateProgress();
+    }
+
+    function selectAnswer(questionIndex, optionIndex) {
+        if (quizSubmitted) return;
+
+        userAnswers[questionIndex] = optionIndex;
+
+        const options = document.querySelectorAll(`[id^="option-${questionIndex}-"]`);
+        options.forEach((opt, idx) => {
+            opt.classList.toggle('selected', idx === optionIndex);
+        });
+
+        updateProgress();
+        saveProgress();
+    }
+
+    function updateProgress() {
+        const answered = userAnswers.filter(a => a !== null).length;
+        const percentage = (answered / questions.length) * 100;
+
+        document.getElementById('progressFill').style.width = `${percentage}%`;
+        document.getElementById('progressText').textContent = `Question ${Math.min(answered + 1, questions.length)} of ${questions.length}`;
+        document.getElementById('answeredCount').textContent = `${answered}/${questions.length} answered`;
+    }
+
+    function submitQuiz() {
+        if (quizSubmitted) return;
+
+        const unanswered = userAnswers.filter(a => a === null).length;
+        if (unanswered > 0) {
+            if (!confirm(`You have ${unanswered} unanswered question(s). Submit anyway?`)) {
+                return;
+            }
+        }
+
+        quizSubmitted = true;
+        let correctCount = 0;
+
+        questions.forEach((q, index) => {
+            const questionCard = document.getElementById(`question-${index}`);
+            const feedback = document.getElementById(`feedback-${index}`);
+            const isCorrect = userAnswers[index] === q.correct;
+
+            if (isCorrect) correctCount++;
+
+            q.options.forEach((_, optIndex) => {
+                const optElement = document.getElementById(`option-${index}-${optIndex}`);
+                if (optIndex === q.correct) {
+                    optElement.classList.add('correct-answer');
+                } else if (optIndex === userAnswers[index] && !isCorrect) {
+                    optElement.classList.add('wrong-answer');
+                }
+            });
+
+            questionCard.classList.add(isCorrect ? 'correct' : 'incorrect');
+            feedback.className = `feedback ${isCorrect ? 'correct' : 'incorrect'} show`;
+            feedback.innerHTML = `${isCorrect ? '✓ Correct!' : '✗ Incorrect.'} ${q.explanation}`;
+        });
+
+        // Show score
+        const percentage = Math.round((correctCount / questions.length) * 100);
+        document.getElementById('scoreNumber').textContent = `${percentage}%`;
+        document.getElementById('scoreDetails').textContent = `You got ${correctCount} out of ${questions.length} questions correct.`;
+
+        let message = '';
+        if (percentage >= 80) message = '🎉 Excellent! Outstanding performance!';
+        else if (percentage >= 60) message = '👍 Good job! Keep it up!';
+        else if (percentage >= 40) message = '📚 Keep studying and try again!';
+        else message = '💪 Don\'t give up! Review the material.';
+
+        document.getElementById('scoreMessage').textContent = message;
+        document.getElementById('scoreContainer').classList.add('show');
+        document.getElementById('submitQuiz').style.display = 'none';
+
+        saveProgress();
+        saveCompletion(percentage);
+
+        document.getElementById('scoreContainer').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function retryQuiz() {
+        quizSubmitted = false;
+        userAnswers = new Array(questions.length).fill(null);
+
+        document.getElementById('scoreContainer').classList.remove('show');
+        document.getElementById('submitQuiz').style.display = 'block';
+
+        renderQuiz();
+        localStorage.removeItem('passProof_organic_lesson1_progress');
+
+        document.getElementById('quizContainer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // =====================================================
+    // LOCAL STORAGE
+    // =====================================================
+    function saveProgress() {
+        const progressData = {
+            lessonId: 'organic-chemistry-lesson-1',
+            answers: userAnswers,
+            submitted: quizSubmitted,
+            timestamp: new Date().toISOString()
+        };
+        localStorage.setItem('passProof_organic_lesson1_progress', JSON.stringify(progressData));
+    }
+
+    function loadProgress() {
+        const saved = localStorage.getItem('passProof_organic_lesson1_progress');
+        if (saved) {
+            const data = JSON.parse(saved);
+            if (!data.submitted) {
+                userAnswers = data.answers || new Array(questions.length).fill(null);
+
+                userAnswers.forEach((answer, index) => {
+                    if (answer !== null) {
+                        const option = document.getElementById(`option-${index}-${answer}`);
+                        if (option) {
+                            option.classList.add('selected');
+                            option.querySelector('input').checked = true;
+                        }
+                    }
+                });
+
+                updateProgress();
+            }
+        }
+    }
+
+    function saveCompletion(score) {
+        const completionData = {
+            lessonId: 'organic-chemistry-lesson-1',
+            lessonTitle: 'Introduction to Hydrocarbons',
+            score: score,
+            completedAt: new Date().toISOString()
+        };
+
+        let completions = JSON.parse(localStorage.getItem('passProof_completions') || '[]');
+        const existingIndex = completions.findIndex(c => c.lessonId === completionData.lessonId);
+
+        if (existingIndex >= 0) {
+            if (score > completions[existingIndex].score) {
+                completions[existingIndex] = completionData;
+            }
+        } else {
+            completions.push(completionData);
+        }
+
+        localStorage.setItem('passProof_completions', JSON.stringify(completions));
+    }
+
+    function trackLessonVisit() {
+        const visitData = {
+            lessonId: 'organic-chemistry-lesson-1',
+            lessonTitle: 'Introduction to Hydrocarbons',
+            lastVisited: new Date().toISOString()
+        };
+
+        let visits = JSON.parse(localStorage.getItem('passProof_visits') || '[]');
+        const existingIndex = visits.findIndex(v => v.lessonId === visitData.lessonId);
+
+        if (existingIndex >= 0) {
+            visits[existingIndex] = visitData;
+        } else {
+            visits.push(visitData);
+        }
+
+        localStorage.setItem('passProof_visits', JSON.stringify(visits));
+    }
+
+    // =====================================================
+    // INITIALIZATION
+    // =====================================================
+    document.addEventListener('DOMContentLoaded', () => {
+        renderQuiz();
+        loadProgress();
+        trackLessonVisit();
+    });
+
+    // =====================================================
+    // SCROLL ANIMATIONS
+    // =====================================================
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+
+    // =====================================================
+    // LESSON NAVIGATION
+    // =====================================================
+    document.querySelector('.nav-btn.prev').addEventListener('click', () => {
+        alert('This is the first lesson in Organic Chemistry. Navigate to previous topic from the menu.');
+    });
+
+    document.querySelector('.nav-btn.next').addEventListener('click', () => {
+        saveProgress();
+        alert('Navigating to Lesson 2: IUPAC Naming');
+        // window.location.href = 'lesson-2.html';
+    });
+
+    // =====================================================
+    // CONSOLE MESSAGE
+    // =====================================================
+    console.log('%c⚗️ PassProof Academy', 'font-size: 24px; font-weight: bold; color: #1e40af;');
+    console.log('%cOrganic Chemistry - Lesson 1: Introduction to Hydrocarbons', 'font-size: 14px; color: #475569;');
+    console.log('%cHappy Learning! 🎓', 'font-size: 12px; color: #10b981;');
+</script>
+</body>
+</html>

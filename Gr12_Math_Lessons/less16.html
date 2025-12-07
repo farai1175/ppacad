@@ -1,0 +1,2233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 2: Functions - Linear, Quadratic, Hyperbolic & Exponential | PassProof Academy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1a73e8;
+            --secondary-blue: #4285f4;
+            --light-blue: #e8f0fe;
+            --dark-blue: #0d47a1;
+            --white: #ffffff;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-600: #6c757d;
+            --gray-800: #343a40;
+            --success: #28a745;
+            --error: #dc3545;
+            --warning: #ffc107;
+            --purple: #6f42c1;
+            --teal: #20c997;
+            --orange: #fd7e14;
+            --pink: #e83e8c;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+            color: var(--gray-800);
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: var(--white);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-blue);
+            font-weight: bold;
+        }
+
+        /* Dropdown Navigation */
+        .nav-container {
+            position: relative;
+        }
+
+        .nav-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .nav-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-toggle::after {
+            content: '▼';
+            font-size: 0.7rem;
+            transition: var(--transition);
+        }
+
+        .nav-toggle.active::after {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            min-width: 280px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+            margin-top: 0.5rem;
+            overflow: hidden;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: var(--gray-800);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+            padding-left: 2rem;
+        }
+
+        .dropdown-menu a.current {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Subject & Grade Badge */
+        .subject-badge {
+            display: inline-flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: var(--white);
+            padding: 0.5rem 1.25rem;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            box-shadow: var(--shadow);
+        }
+
+        .badge.outline {
+            background: transparent;
+            border: 2px solid var(--primary-blue);
+            color: var(--primary-blue);
+        }
+
+        .badge.functions {
+            background: linear-gradient(135deg, var(--purple), #9b59b6);
+        }
+
+        /* Topic Header */
+        .topic-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .topic-header h1 {
+            color: var(--dark-blue);
+            font-size: 2.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .topic-header .subtitle {
+            color: var(--gray-600);
+            font-size: 1.2rem;
+        }
+
+        .lesson-number {
+            display: inline-block;
+            background: var(--purple);
+            color: var(--white);
+            padding: 0.25rem 1rem;
+            border-radius: 15px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid var(--primary-blue);
+        }
+
+        .section-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.25rem;
+        }
+
+        .section-header h2 {
+            color: var(--dark-blue);
+            font-size: 1.5rem;
+        }
+
+        /* Objectives List */
+        .objectives-list {
+            list-style: none;
+        }
+
+        .objectives-list li {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            background: var(--light-blue);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: var(--transition);
+        }
+
+        .objectives-list li:hover {
+            transform: translateX(5px);
+            background: var(--gray-200);
+        }
+
+        .objectives-list li::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        /* Function Types Grid */
+        .function-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .function-type-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--primary-blue);
+            transition: var(--transition);
+        }
+
+        .function-type-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .function-type-card.linear { border-top-color: var(--teal); }
+        .function-type-card.quadratic { border-top-color: var(--purple); }
+        .function-type-card.hyperbolic { border-top-color: var(--orange); }
+        .function-type-card.exponential { border-top-color: var(--pink); }
+
+        .function-type-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .function-type-card h4 {
+            color: var(--gray-800);
+            margin-bottom: 0.5rem;
+        }
+
+        .function-type-card .formula {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--gray-600);
+            background: var(--gray-100);
+            padding: 0.5rem;
+            border-radius: 6px;
+        }
+
+        /* Tabs */
+        .tabs-container {
+            margin: 1.5rem 0;
+        }
+
+        .tabs-header {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            border-bottom: 2px solid var(--gray-200);
+            padding-bottom: 0.5rem;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: var(--gray-100);
+            border-radius: 25px 25px 0 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+
+        .tab-btn:hover {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+        }
+
+        .tab-btn.active {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .tab-btn.linear.active { background: var(--teal); }
+        .tab-btn.quadratic.active { background: var(--purple); }
+        .tab-btn.hyperbolic.active { background: var(--orange); }
+        .tab-btn.exponential.active { background: var(--pink); }
+
+        .tab-content {
+            display: none;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue));
+            color: var(--white);
+            padding: 1.5rem 2rem;
+            border-radius: var(--radius);
+            margin: 1.5rem 0;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .formula-box.linear { background: linear-gradient(135deg, var(--teal), #17a2b8); }
+        .formula-box.quadratic { background: linear-gradient(135deg, var(--purple), #9b59b6); }
+        .formula-box.hyperbolic { background: linear-gradient(135deg, var(--orange), #e67e22); }
+        .formula-box.exponential { background: linear-gradient(135deg, var(--pink), #c2185b); }
+
+        .formula-box h3 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .formula {
+            font-size: 1.5rem;
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            display: inline-block;
+            margin: 0.25rem;
+        }
+
+        /* Key Points */
+        .key-points {
+            background: var(--gray-100);
+            border-left: 4px solid var(--primary-blue);
+            padding: 1.25rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 1rem 0;
+        }
+
+        .key-points h4 {
+            color: var(--primary-blue);
+            margin-bottom: 0.75rem;
+        }
+
+        .key-points ul {
+            margin-left: 1.25rem;
+        }
+
+        .key-points li {
+            margin: 0.5rem 0;
+        }
+
+        .key-points.linear { border-left-color: var(--teal); }
+        .key-points.linear h4 { color: var(--teal); }
+        .key-points.quadratic { border-left-color: var(--purple); }
+        .key-points.quadratic h4 { color: var(--purple); }
+        .key-points.hyperbolic { border-left-color: var(--orange); }
+        .key-points.hyperbolic h4 { color: var(--orange); }
+        .key-points.exponential { border-left-color: var(--pink); }
+        .key-points.exponential h4 { color: var(--pink); }
+
+        /* Example Box */
+        .example-box {
+            background: var(--gray-100);
+            border-left: 5px solid var(--primary-blue);
+            padding: 1.5rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 1.5rem 0;
+        }
+
+        .example-box h4 {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .example-box h4::before {
+            content: '📝';
+        }
+
+        .solution-steps {
+            margin-top: 1rem;
+        }
+
+        .solution-steps .step {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: var(--white);
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .step-number {
+            width: 28px;
+            height: 28px;
+            background: var(--primary-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .highlight {
+            background: var(--warning);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        /* Note Box */
+        .note-box {
+            background: linear-gradient(135deg, #fff3cd, #ffeeba);
+            border: 1px solid var(--warning);
+            padding: 1.25rem;
+            border-radius: var(--radius);
+            margin: 1.5rem 0;
+        }
+
+        .note-box h4 {
+            color: #856404;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .note-box h4::before {
+            content: '💡';
+        }
+
+        /* Simulation Container */
+        .simulation-container {
+            background: var(--white);
+            border: 2px solid var(--primary-blue);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .simulation-title {
+            text-align: center;
+            color: var(--dark-blue);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .simulation-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--gray-100);
+            border-radius: 8px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .control-group label {
+            font-size: 0.85rem;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .slider {
+            width: 120px;
+            cursor: pointer;
+        }
+
+        .slider-value {
+            min-width: 40px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+
+        .canvas-container {
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+        }
+
+        canvas {
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            background: var(--white);
+            max-width: 100%;
+        }
+
+        .equation-display {
+            text-align: center;
+            font-size: 1.25rem;
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: var(--gray-100);
+            border-radius: 8px;
+        }
+
+        /* Quiz Section */
+        .quiz-section {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-header h2 {
+            color: var(--dark-blue);
+            font-size: 1.75rem;
+        }
+
+        .quiz-progress {
+            background: var(--gray-200);
+            height: 8px;
+            border-radius: 4px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .quiz-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .question-card {
+            background: var(--gray-100);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid var(--gray-600);
+            transition: var(--transition);
+        }
+
+        .question-card.answered-correct {
+            border-left-color: var(--success);
+            background: #d4edda;
+        }
+
+        .question-card.answered-incorrect {
+            border-left-color: var(--error);
+            background: #f8d7da;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            margin-bottom: 1rem;
+            color: var(--gray-800);
+        }
+
+        .question-image {
+            max-width: 300px;
+            margin: 1rem auto;
+            display: block;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--white);
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .option-label:hover:not(.disabled) {
+            border-color: var(--primary-blue);
+            background: var(--light-blue);
+        }
+
+        .option-label.disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        .option-label.selected {
+            border-color: var(--primary-blue);
+            background: var(--light-blue);
+        }
+
+        .option-label.correct {
+            border-color: var(--success);
+            background: #d4edda;
+        }
+
+        .option-label.incorrect {
+            border-color: var(--error);
+            background: #f8d7da;
+        }
+
+        .option-label input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary-blue);
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid var(--success);
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid var(--error);
+        }
+
+        /* Score Display */
+        .score-display {
+            background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue));
+            color: var(--white);
+            padding: 2rem;
+            border-radius: var(--radius);
+            text-align: center;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .score-display.show {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            border: 4px solid var(--white);
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .score-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .score-message {
+            font-size: 1.25rem;
+            margin-top: 1rem;
+        }
+
+        .submit-quiz-btn {
+            background: var(--white);
+            color: var(--primary-blue);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            margin-top: 1.5rem;
+        }
+
+        .submit-quiz-btn:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .retry-btn {
+            background: var(--warning);
+            color: var(--gray-800);
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .retry-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Navigation Buttons */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+        }
+
+        .nav-btn.prev {
+            background: var(--white);
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+
+        .nav-btn.prev:hover {
+            background: var(--light-blue);
+            transform: translateX(-5px);
+        }
+
+        .nav-btn.next {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: var(--white);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-btn.next:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue));
+            color: var(--white);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            opacity: 0.9;
+        }
+
+        /* Progress Indicator */
+        .progress-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--white);
+            padding: 1rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .progress-ring {
+            width: 50px;
+            height: 50px;
+        }
+
+        .progress-ring circle {
+            fill: none;
+            stroke-width: 4;
+        }
+
+        .progress-ring .bg {
+            stroke: var(--gray-200);
+        }
+
+        .progress-ring .progress {
+            stroke: var(--primary-blue);
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: center;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .dropdown-menu {
+                left: 50%;
+                transform: translateX(-50%) translateY(-10px);
+                width: 90vw;
+                max-width: 300px;
+            }
+
+            .dropdown-menu.active {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            main {
+                padding: 1rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .topic-header h1 {
+                font-size: 1.75rem;
+            }
+
+            .formula {
+                font-size: 1.1rem;
+                padding: 0.5rem 0.75rem;
+            }
+
+            .tabs-header {
+                justify-content: center;
+            }
+
+            .tab-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .simulation-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .slider {
+                width: 100%;
+            }
+
+            .lesson-nav {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                justify-content: center;
+            }
+
+            .progress-indicator {
+                bottom: 10px;
+                right: 10px;
+                padding: 0.75rem;
+            }
+
+            .score-circle {
+                width: 120px;
+                height: 120px;
+            }
+
+            .score-number {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">P</div>
+                <span>PassProof Academy</span>
+            </div>
+            <nav class="nav-container">
+                <button class="nav-toggle" id="navToggle">
+                    📚 Navigation
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="#">🏠 Home</a>
+                    <a href="#">📊 Dashboard</a>
+                    <a href="#">📖 Lesson 1: Introduction to Functions</a>
+                    <a href="#" class="current">📖 Lesson 2: Function Types & Graphs</a>
+                    <a href="#">📖 Lesson 3: Inverse Functions</a>
+                    <a href="#">📖 Lesson 4: Log Functions</a>
+                    <a href="#">📝 Chapter Assessment</a>
+                    <a href="#">⚙️ Settings</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Subject & Grade -->
+        <div class="card" style="animation-delay: 0.1s;">
+            <div class="subject-badge">
+                <span class="badge">📐 Mathematics</span>
+                <span class="badge outline">Grade 12</span>
+                <span class="badge outline">Term 1 - Week 4</span>
+                <span class="badge functions">📈 Functions</span>
+                <span class="badge outline">⏱️ 60 min</span>
+            </div>
+        </div>
+
+        <!-- Topic Header -->
+        <div class="card topic-header" style="animation-delay: 0.2s;">
+            <span class="lesson-number">LESSON 2</span>
+            <h1>Functions: Linear, Quadratic, Hyperbolic & Exponential</h1>
+            <p class="subtitle">Understanding and Sketching Different Function Types</p>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="card" style="animation-delay: 0.3s;">
+            <div class="section-header">
+                <div class="section-icon">🎯</div>
+                <h2>Learning Objectives</h2>
+            </div>
+            <ul class="objectives-list">
+                <li>Understand the definition of a function</li>
+                <li>Recognise and sketch linear, quadratic, hyperbolic and exponential functions</li>
+                <li>Generalise the effects of parameters a, p and q on function graphs</li>
+                <li>Understand transformations: shifts, stretches, and reflections</li>
+            </ul>
+        </div>
+
+        <!-- Overview: Function Types -->
+        <div class="card" style="animation-delay: 0.4s;">
+            <div class="section-header">
+                <div class="section-icon">📋</div>
+                <h2>The Four Function Types</h2>
+            </div>
+            <p>In Grade 12, we study four main types of algebraic functions. Each has its own unique shape, properties, and applications.</p>
+            
+            <div class="function-types-grid">
+                <div class="function-type-card linear">
+                    <div class="icon">📏</div>
+                    <h4>Linear Function</h4>
+                    <div class="formula">y = mx + c</div>
+                    <p style="font-size: 0.85rem; color: var(--gray-600); margin-top: 0.5rem;">Straight Line Graph</p>
+                </div>
+                <div class="function-type-card quadratic">
+                    <div class="icon">⌒</div>
+                    <h4>Quadratic Function</h4>
+                    <div class="formula">y = a(x+p)² + q</div>
+                    <p style="font-size: 0.85rem; color: var(--gray-600); margin-top: 0.5rem;">Parabola</p>
+                </div>
+                <div class="function-type-card hyperbolic">
+                    <div class="icon">∿</div>
+                    <h4>Hyperbolic Function</h4>
+                    <div class="formula">y = a/(x+p) + q</div>
+                    <p style="font-size: 0.85rem; color: var(--gray-600); margin-top: 0.5rem;">Hyperbola</p>
+                </div>
+                <div class="function-type-card exponential">
+                    <div class="icon">📈</div>
+                    <h4>Exponential Function</h4>
+                    <div class="formula">y = ab^(x+p) + q</div>
+                    <p style="font-size: 0.85rem; color: var(--gray-600); margin-top: 0.5rem;">Exponential Curve</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Concepts with Tabs -->
+        <div class="card" style="animation-delay: 0.5s;">
+            <div class="section-header">
+                <div class="section-icon">📚</div>
+                <h2>Function Details & Examples</h2>
+            </div>
+
+            <div class="tabs-container">
+                <div class="tabs-header">
+                    <button class="tab-btn linear active" onclick="showFunctionTab('linear')">📏 Linear</button>
+                    <button class="tab-btn quadratic" onclick="showFunctionTab('quadratic')">⌒ Quadratic</button>
+                    <button class="tab-btn hyperbolic" onclick="showFunctionTab('hyperbolic')">∿ Hyperbolic</button>
+                    <button class="tab-btn exponential" onclick="showFunctionTab('exponential')">📈 Exponential</button>
+                </div>
+
+                <!-- Linear Function Tab -->
+                <div class="tab-content active" id="tab-linear">
+                    <div class="formula-box linear">
+                        <h3>Linear Function Form</h3>
+                        <div class="formula">y = mx + c</div>
+                        <span style="margin: 0 1rem;">or</span>
+                        <div class="formula">y = ax + q</div>
+                    </div>
+
+                    <div class="key-points linear">
+                        <h4>Key Properties</h4>
+                        <ul>
+                            <li><strong>m (or a)</strong> = gradient (slope) of the line</li>
+                            <li><strong>c (or q)</strong> = y-intercept (where line crosses y-axis)</li>
+                            <li>If m > 0 → positive slope (line goes up from left to right)</li>
+                            <li>If m < 0 → negative slope (line goes down from left to right)</li>
+                            <li>If m = 0 → horizontal line</li>
+                            <li><strong>Sketching method:</strong> Dual intercept method</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>Example: Sketch f(x) = 2x - 3</h4>
+                        <div class="solution-steps">
+                            <div class="step">
+                                <span class="step-number">1</span>
+                                <span><strong>Y-intercept:</strong> Put x = 0 → y = 2(0) - 3 = <span class="highlight">-3</span> → Point: (0, -3)</span>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">2</span>
+                                <span><strong>X-intercept:</strong> Put y = 0 → 0 = 2x - 3 → x = <span class="highlight">3/2</span> → Point: (1.5, 0)</span>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">3</span>
+                                <span><strong>Sketch:</strong> Plot points (0, -3) and (1.5, 0), draw straight line through them</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="note-box">
+                        <h4>Special Cases</h4>
+                        <p><strong>Horizontal line:</strong> y = k (e.g., y = 2) - gradient is ZERO</p>
+                        <p><strong>Vertical line:</strong> x = k (e.g., x = 2) - gradient is UNDEFINED</p>
+                    </div>
+                </div>
+
+                <!-- Quadratic Function Tab -->
+                <div class="tab-content" id="tab-quadratic">
+                    <div class="formula-box quadratic">
+                        <h3>Quadratic Function Forms</h3>
+                        <div class="formula">y = ax²</div>
+                        <div class="formula">y = a(x + p)² + q</div>
+                        <div class="formula">y = ax² + bx + c</div>
+                    </div>
+
+                    <div class="key-points quadratic">
+                        <h4>Key Properties</h4>
+                        <ul>
+                            <li><strong>a > 0</strong> → "Happy face" parabola ∪ (minimum turning point)</li>
+                            <li><strong>a < 0</strong> → "Sad face" parabola ∩ (maximum turning point)</li>
+                            <li><strong>Axis of symmetry:</strong> x = -p (from turning point form) or x = -b/(2a)</li>
+                            <li><strong>Turning point:</strong> (-p, q) or calculate using axis of symmetry</li>
+                            <li><strong>|a| > 1</strong> → narrower parabola; <strong>|a| < 1</strong> → wider parabola</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>Example: Sketch f(x) = -(x - 2)² + 9</h4>
+                        <div class="solution-steps">
+                            <div class="step">
+                                <span class="step-number">1</span>
+                                <span><strong>Shape:</strong> a = -1 < 0 → Sad face (maximum) ∩</span>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">2</span>
+                                <span><strong>Turning point:</strong> (p, q) = <span class="highlight">(2, 9)</span></span>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">3</span>
+                                <span><strong>X-intercepts:</strong> 0 = -(x-2)² + 9 → (x-2)² = 9 → x = -1 or x = 5</span>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">4</span>
+                                <span><strong>Y-intercept:</strong> f(0) = -(0-2)² + 9 = -4 + 9 = <span class="highlight">5</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hyperbolic Function Tab -->
+                <div class="tab-content" id="tab-hyperbolic">
+                    <div class="formula-box hyperbolic">
+                        <h3>Hyperbolic Function Form</h3>
+                        <div class="formula">y = a/x</div>
+                        <div class="formula">y = a/(x + p) + q</div>
+                    </div>
+
+                    <div class="key-points hyperbolic">
+                        <h4>Key Properties</h4>
+                        <ul>
+                            <li><strong>a > 0</strong> → hyperbola in 1st and 3rd quadrants</li>
+                            <li><strong>a < 0</strong> → hyperbola in 2nd and 4th quadrants</li>
+                            <li><strong>Vertical asymptote:</strong> x = -p (the graph never touches this line)</li>
+                            <li><strong>Horizontal asymptote:</strong> y = q</li>
+                            <li><strong>Axes of symmetry:</strong> y = x + p + q (if a > 0) or y = -x - p + q (if a < 0)</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>Example: Sketch f(x) = 4/(x - 3) + 2</h4>
+                        <div class="solution-steps">
+                            <div class="step">
+                                <span class="step-number">1</span>
+                                <span><strong>Asymptotes:</strong> Vertical: x = 3; Horizontal: y = 2</span>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">2</span>
+                                <span><strong>X-intercept:</strong> 0 = 4/(x-3) + 2 → -2 = 4/(x-3) → x = 1</span>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">3</span>
+                                <span><strong>Y-intercept:</strong> f(0) = 4/(0-3) + 2 = -4/3 + 2 = <span class="highlight">2/3</span></span>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">4</span>
+                                <span><strong>Quadrants:</strong> a = 4 > 0 → curves in quadrants 1 & 3 (relative to asymptotes)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exponential Function Tab -->
+                <div class="tab-content" id="tab-exponential">
+                    <div class="formula-box exponential">
+                        <h3>Exponential Function Forms</h3>
+                        <div class="formula">y = bˣ</div>
+                        <div class="formula">y = ab^(x+p) + q</div>
+                    </div>
+
+                    <div class="key-points exponential">
+                        <h4>Key Properties</h4>
+                        <ul>
+                            <li><strong>b > 1</strong> → increasing function (growth)</li>
+                            <li><strong>0 < b < 1</strong> → decreasing function (decay)</li>
+                            <li><strong>Horizontal asymptote:</strong> y = q</li>
+                            <li><strong>a > 0</strong> → graph above asymptote; <strong>a < 0</strong> → graph below asymptote</li>
+                            <li><strong>Reference point:</strong> The point (0, 1) on y = bˣ moves to (-p, a + q)</li>
+                            <li>The graph never touches the asymptote</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>Example: Sketch f(x) = 2·2^(x+1) - 4</h4>
+                        <div class="solution-steps">
+                            <div class="step">
+                                <span class="step-number">1</span>
+                                <span><strong>Asymptote:</strong> y = -4 (horizontal)</span>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">2</span>
+                                <span><strong>Position:</strong> a = 2 > 0 → graph above asymptote</span>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">3</span>
+                                <span><strong>Direction:</strong> b = 2 > 1 → increasing</span>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">4</span>
+                                <span><strong>Y-intercept:</strong> f(0) = 2·2¹ - 4 = 4 - 4 = <span class="highlight">0</span></span>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">5</span>
+                                <span><strong>Reference point:</strong> Moves to (-1, 2 + (-4)) = <span class="highlight">(-1, -2)</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Effect of Parameters -->
+        <div class="card" style="animation-delay: 0.6s;">
+            <div class="section-header">
+                <div class="section-icon">⚙️</div>
+                <h2>Effect of Parameters a, p, and q</h2>
+            </div>
+
+            <div class="note-box">
+                <h4>Understanding Transformations</h4>
+                <p>The parameters a, p, and q transform the basic "mother" function in predictable ways:</p>
+            </div>
+
+            <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+                <thead>
+                    <tr style="background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue)); color: white;">
+                        <th style="padding: 1rem; text-align: left;">Parameter</th>
+                        <th style="padding: 1rem; text-align: left;">Effect</th>
+                        <th style="padding: 1rem; text-align: left;">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: var(--gray-100);">
+                        <td style="padding: 1rem; font-weight: bold;">a</td>
+                        <td style="padding: 1rem;">Vertical Stretch/Compression</td>
+                        <td style="padding: 1rem;">|a| > 1: steeper; |a| < 1: flatter; a < 0: reflection in x-axis</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem; font-weight: bold;">p</td>
+                        <td style="padding: 1rem;">Horizontal Translation</td>
+                        <td style="padding: 1rem;">(x + p): shifts p units LEFT; (x - p): shifts p units RIGHT</td>
+                    </tr>
+                    <tr style="background: var(--gray-100);">
+                        <td style="padding: 1rem; font-weight: bold;">q</td>
+                        <td style="padding: 1rem;">Vertical Translation</td>
+                        <td style="padding: 1rem;">q > 0: shifts UP; q < 0: shifts DOWN</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Interactive Simulations -->
+        <div class="card" style="animation-delay: 0.7s;">
+            <div class="section-header">
+                <div class="section-icon">🎮</div>
+                <h2>Interactive Graph Simulations</h2>
+            </div>
+
+            <!-- Linear Function Simulator -->
+            <div class="simulation-container">
+                <h3 class="simulation-title">📏 Linear Function: y = mx + c</h3>
+                <div class="simulation-controls">
+                    <div class="control-group">
+                        <label>Gradient (m)</label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="linearM" min="-5" max="5" step="0.5" value="1">
+                            <span class="slider-value" id="linearMValue">1</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label>Y-intercept (c)</label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="linearC" min="-5" max="5" step="0.5" value="0">
+                            <span class="slider-value" id="linearCValue">0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="linearCanvas" width="500" height="400"></canvas>
+                </div>
+                <div class="equation-display" id="linearEquation">y = x</div>
+            </div>
+
+            <!-- Quadratic Function Simulator -->
+            <div class="simulation-container">
+                <h3 class="simulation-title">⌒ Quadratic Function: y = a(x + p)² + q</h3>
+                <div class="simulation-controls">
+                    <div class="control-group">
+                        <label>a (shape)</label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="quadA" min="-3" max="3" step="0.25" value="1">
+                            <span class="slider-value" id="quadAValue">1</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label>p (horizontal shift)</label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="quadP" min="-5" max="5" step="0.5" value="0">
+                            <span class="slider-value" id="quadPValue">0</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label>q (vertical shift)</label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="quadQ" min="-5" max="5" step="0.5" value="0">
+                            <span class="slider-value" id="quadQValue">0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="quadCanvas" width="500" height="400"></canvas>
+                </div>
+                <div class="equation-display" id="quadEquation">y = x²</div>
+            </div>
+
+            <!-- Hyperbolic Function Simulator -->
+            <div class="simulation-container">
+                <h3 class="simulation-title">∿ Hyperbolic Function: y = a/(x + p) + q</h3>
+                <div class="simulation-controls">
+                    <div class="control-group">
+                        <label>a</label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="hypA" min="-5" max="5" step="0.5" value="1">
+                            <span class="slider-value" id="hypAValue">1</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label>p</label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="hypP" min="-5" max="5" step="0.5" value="0">
+                            <span class="slider-value" id="hypPValue">0</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label>q</label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="hypQ" min="-5" max="5" step="0.5" value="0">
+                            <span class="slider-value" id="hypQValue">0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="hypCanvas" width="500" height="400"></canvas>
+                </div>
+                <div class="equation-display" id="hypEquation">y = 1/x</div>
+            </div>
+
+            <!-- Exponential Function Simulator -->
+            <div class="simulation-container">
+                <h3 class="simulation-title">📈 Exponential Function: y = a·b^(x+p) + q</h3>
+                <div class="simulation-controls">
+                    <div class="control-group">
+                        <label>a</label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="expA" min="-3" max="3" step="0.5" value="1">
+                            <span class="slider-value" id="expAValue">1</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label>b (base)</label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="expB" min="0.25" max="3" step="0.25" value="2">
+                            <span class="slider-value" id="expBValue">2</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label>p</label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="expP" min="-3" max="3" step="0.5" value="0">
+                            <span class="slider-value" id="expPValue">0</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label>q</label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="expQ" min="-5" max="5" step="0.5" value="0">
+                            <span class="slider-value" id="expQValue">0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="expCanvas" width="500" height="400"></canvas>
+                </div>
+                <div class="equation-display" id="expEquation">y = 2ˣ</div>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="quiz-section" id="quizSection">
+            <div class="quiz-header">
+                <h2>📝 Lesson Quiz</h2>
+                <p>Test your understanding of function types and their properties</p>
+                <div class="quiz-progress">
+                    <div class="quiz-progress-bar" id="progressBar"></div>
+                </div>
+            </div>
+
+            <div id="questionsContainer"></div>
+
+            <button class="submit-quiz-btn" id="submitQuiz" onclick="submitQuiz()">
+                Submit All Answers
+            </button>
+
+            <div class="score-display" id="scoreDisplay">
+                <div class="score-circle">
+                    <span class="score-number" id="scoreNumber">0</span>
+                    <span class="score-label">/ 12</span>
+                </div>
+                <p class="score-message" id="scoreMessage"></p>
+                <p id="scorePercentage"></p>
+                <button class="retry-btn" onclick="retryQuiz()">🔄 Retry Quiz</button>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="lesson-nav">
+            <button class="nav-btn prev">
+                ← Previous Lesson
+            </button>
+            <button class="nav-btn next">
+                Next Lesson →
+            </button>
+        </div>
+    </main>
+
+    <!-- Progress Indicator -->
+    <div class="progress-indicator" id="progressIndicator">
+        <svg class="progress-ring" viewBox="0 0 50 50">
+            <circle class="bg" cx="25" cy="25" r="20"/>
+            <circle class="progress" cx="25" cy="25" r="20" 
+                stroke-dasharray="125.66" 
+                stroke-dashoffset="125.66"
+                id="progressRing"/>
+        </svg>
+        <span id="progressText">0%</span>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 PassProof Academy. All Rights Reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">
+            Empowering Students Through Interactive Learning
+        </p>
+    </footer>
+
+    <script>
+        // ========== Navigation Handling ==========
+        const navToggle = document.getElementById('navToggle');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('active');
+            dropdownMenu.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!navToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                navToggle.classList.remove('active');
+                dropdownMenu.classList.remove('active');
+            }
+        });
+
+        // ========== Tab Functionality ==========
+        function showFunctionTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+        }
+
+        // ========== Graph Drawing Utilities ==========
+        function drawGrid(ctx, width, height, scale = 40) {
+            const centerX = width / 2;
+            const centerY = height / 2;
+
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = '#fafafa';
+            ctx.fillRect(0, 0, width, height);
+
+            // Grid lines
+            ctx.strokeStyle = '#e0e0e0';
+            ctx.lineWidth = 1;
+
+            for (let x = centerX % scale; x < width; x += scale) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, height);
+                ctx.stroke();
+            }
+
+            for (let y = centerY % scale; y < height; y += scale) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(width, y);
+                ctx.stroke();
+            }
+
+            // Axes
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+
+            // X-axis
+            ctx.beginPath();
+            ctx.moveTo(0, centerY);
+            ctx.lineTo(width, centerY);
+            ctx.stroke();
+
+            // Y-axis
+            ctx.beginPath();
+            ctx.moveTo(centerX, 0);
+            ctx.lineTo(centerX, height);
+            ctx.stroke();
+
+            // Axis labels
+            ctx.fillStyle = '#666';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+
+            for (let i = -5; i <= 5; i++) {
+                if (i !== 0) {
+                    ctx.fillText(i, centerX + i * scale, centerY + 15);
+                    ctx.fillText(i, centerX - 15, centerY - i * scale + 4);
+                }
+            }
+
+            return { centerX, centerY, scale };
+        }
+
+        // ========== Linear Function Graph ==========
+        function drawLinearGraph() {
+            const canvas = document.getElementById('linearCanvas');
+            const ctx = canvas.getContext('2d');
+            const m = parseFloat(document.getElementById('linearM').value);
+            const c = parseFloat(document.getElementById('linearC').value);
+
+            document.getElementById('linearMValue').textContent = m;
+            document.getElementById('linearCValue').textContent = c;
+
+            const { centerX, centerY, scale } = drawGrid(ctx, canvas.width, canvas.height);
+
+            // Draw function
+            ctx.strokeStyle = '#20c997';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+
+            for (let px = 0; px < canvas.width; px++) {
+                const x = (px - centerX) / scale;
+                const y = m * x + c;
+                const py = centerY - y * scale;
+
+                if (px === 0) {
+                    ctx.moveTo(px, py);
+                } else {
+                    ctx.lineTo(px, py);
+                }
+            }
+            ctx.stroke();
+
+            // Update equation display
+            let equation = 'y = ';
+            if (m === 0) {
+                equation += c;
+            } else if (m === 1) {
+                equation += 'x';
+            } else if (m === -1) {
+                equation += '-x';
+            } else {
+                equation += m + 'x';
+            }
+            if (c > 0 && m !== 0) equation += ' + ' + c;
+            else if (c < 0) equation += ' - ' + Math.abs(c);
+            else if (c !== 0 && m === 0) equation = 'y = ' + c;
+
+            document.getElementById('linearEquation').textContent = equation;
+        }
+
+        // ========== Quadratic Function Graph ==========
+        function drawQuadraticGraph() {
+            const canvas = document.getElementById('quadCanvas');
+            const ctx = canvas.getContext('2d');
+            const a = parseFloat(document.getElementById('quadA').value);
+            const p = parseFloat(document.getElementById('quadP').value);
+            const q = parseFloat(document.getElementById('quadQ').value);
+
+            document.getElementById('quadAValue').textContent = a;
+            document.getElementById('quadPValue').textContent = p;
+            document.getElementById('quadQValue').textContent = q;
+
+            const { centerX, centerY, scale } = drawGrid(ctx, canvas.width, canvas.height);
+
+            if (a === 0) {
+                document.getElementById('quadEquation').textContent = 'a cannot be 0';
+                return;
+            }
+
+            // Draw function
+            ctx.strokeStyle = '#6f42c1';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+
+            let started = false;
+            for (let px = 0; px < canvas.width; px++) {
+                const x = (px - centerX) / scale;
+                const y = a * Math.pow(x + p, 2) + q;
+                const py = centerY - y * scale;
+
+                if (py >= 0 && py <= canvas.height) {
+                    if (!started) {
+                        ctx.moveTo(px, py);
+                        started = true;
+                    } else {
+                        ctx.lineTo(px, py);
+                    }
+                }
+            }
+            ctx.stroke();
+
+            // Mark turning point
+            const tpX = centerX - p * scale;
+            const tpY = centerY - q * scale;
+            ctx.fillStyle = '#6f42c1';
+            ctx.beginPath();
+            ctx.arc(tpX, tpY, 6, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Update equation
+            let equation = 'y = ';
+            if (a !== 1) equation += a;
+            equation += '(x';
+            if (p > 0) equation += ' + ' + p;
+            else if (p < 0) equation += ' - ' + Math.abs(p);
+            equation += ')²';
+            if (q > 0) equation += ' + ' + q;
+            else if (q < 0) equation += ' - ' + Math.abs(q);
+
+            document.getElementById('quadEquation').textContent = equation;
+        }
+
+        // ========== Hyperbolic Function Graph ==========
+        function drawHyperbolicGraph() {
+            const canvas = document.getElementById('hypCanvas');
+            const ctx = canvas.getContext('2d');
+            const a = parseFloat(document.getElementById('hypA').value);
+            const p = parseFloat(document.getElementById('hypP').value);
+            const q = parseFloat(document.getElementById('hypQ').value);
+
+            document.getElementById('hypAValue').textContent = a;
+            document.getElementById('hypPValue').textContent = p;
+            document.getElementById('hypQValue').textContent = q;
+
+            const { centerX, centerY, scale } = drawGrid(ctx, canvas.width, canvas.height);
+
+            if (a === 0) {
+                document.getElementById('hypEquation').textContent = 'a cannot be 0';
+                return;
+            }
+
+            // Draw asymptotes
+            ctx.strokeStyle = '#fd7e14';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 5]);
+
+            // Vertical asymptote x = -p
+            const vAsymX = centerX - p * scale;
+            ctx.beginPath();
+            ctx.moveTo(vAsymX, 0);
+            ctx.lineTo(vAsymX, canvas.height);
+            ctx.stroke();
+
+            // Horizontal asymptote y = q
+            const hAsymY = centerY - q * scale;
+            ctx.beginPath();
+            ctx.moveTo(0, hAsymY);
+            ctx.lineTo(canvas.width, hAsymY);
+            ctx.stroke();
+
+            ctx.setLineDash([]);
+
+            // Draw function (two branches)
+            ctx.strokeStyle = '#fd7e14';
+            ctx.lineWidth = 3;
+
+            // Left branch
+            ctx.beginPath();
+            let started = false;
+            for (let px = 0; px < vAsymX - 2; px++) {
+                const x = (px - centerX) / scale;
+                if (x + p === 0) continue;
+                const y = a / (x + p) + q;
+                const py = centerY - y * scale;
+
+                if (py >= -50 && py <= canvas.height + 50) {
+                    if (!started) {
+                        ctx.moveTo(px, py);
+                        started = true;
+                    } else {
+                        ctx.lineTo(px, py);
+                    }
+                }
+            }
+            ctx.stroke();
+
+            // Right branch
+            ctx.beginPath();
+            started = false;
+            for (let px = vAsymX + 2; px < canvas.width; px++) {
+                const x = (px - centerX) / scale;
+                if (x + p === 0) continue;
+                const y = a / (x + p) + q;
+                const py = centerY - y * scale;
+
+                if (py >= -50 && py <= canvas.height + 50) {
+                    if (!started) {
+                        ctx.moveTo(px, py);
+                        started = true;
+                    } else {
+                        ctx.lineTo(px, py);
+                    }
+                }
+            }
+            ctx.stroke();
+
+            // Update equation
+            let equation = 'y = ' + a + '/(x';
+            if (p > 0) equation += ' + ' + p;
+            else if (p < 0) equation += ' - ' + Math.abs(p);
+            equation += ')';
+            if (q > 0) equation += ' + ' + q;
+            else if (q < 0) equation += ' - ' + Math.abs(q);
+
+            document.getElementById('hypEquation').textContent = equation;
+        }
+
+        // ========== Exponential Function Graph ==========
+        function drawExponentialGraph() {
+            const canvas = document.getElementById('expCanvas');
+            const ctx = canvas.getContext('2d');
+            const a = parseFloat(document.getElementById('expA').value);
+            const b = parseFloat(document.getElementById('expB').value);
+            const p = parseFloat(document.getElementById('expP').value);
+            const q = parseFloat(document.getElementById('expQ').value);
+
+            document.getElementById('expAValue').textContent = a;
+            document.getElementById('expBValue').textContent = b;
+            document.getElementById('expPValue').textContent = p;
+            document.getElementById('expQValue').textContent = q;
+
+            const { centerX, centerY, scale } = drawGrid(ctx, canvas.width, canvas.height);
+
+            if (a === 0 || b <= 0 || b === 1) {
+                document.getElementById('expEquation').textContent = 'Invalid parameters';
+                return;
+            }
+
+            // Draw asymptote
+            ctx.strokeStyle = '#e83e8c';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 5]);
+            const asymY = centerY - q * scale;
+            ctx.beginPath();
+            ctx.moveTo(0, asymY);
+            ctx.lineTo(canvas.width, asymY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw function
+            ctx.strokeStyle = '#e83e8c';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+
+            let started = false;
+            for (let px = 0; px < canvas.width; px++) {
+                const x = (px - centerX) / scale;
+                const y = a * Math.pow(b, x + p) + q;
+                const py = centerY - y * scale;
+
+                if (py >= -50 && py <= canvas.height + 50) {
+                    if (!started) {
+                        ctx.moveTo(px, py);
+                        started = true;
+                    } else {
+                        ctx.lineTo(px, py);
+                    }
+                }
+            }
+            ctx.stroke();
+
+            // Update equation
+            let equation = 'y = ';
+            if (a !== 1) equation += a + '·';
+            equation += b + '^';
+            if (p === 0) {
+                equation += 'x';
+            } else {
+                equation += '(x';
+                if (p > 0) equation += ' + ' + p;
+                else equation += ' - ' + Math.abs(p);
+                equation += ')';
+            }
+            if (q > 0) equation += ' + ' + q;
+            else if (q < 0) equation += ' - ' + Math.abs(q);
+
+            document.getElementById('expEquation').textContent = equation;
+        }
+
+        // ========== Initialize Graphs and Event Listeners ==========
+        function initGraphs() {
+            // Linear
+            document.getElementById('linearM').addEventListener('input', drawLinearGraph);
+            document.getElementById('linearC').addEventListener('input', drawLinearGraph);
+            drawLinearGraph();
+
+            // Quadratic
+            document.getElementById('quadA').addEventListener('input', drawQuadraticGraph);
+            document.getElementById('quadP').addEventListener('input', drawQuadraticGraph);
+            document.getElementById('quadQ').addEventListener('input', drawQuadraticGraph);
+            drawQuadraticGraph();
+
+            // Hyperbolic
+            document.getElementById('hypA').addEventListener('input', drawHyperbolicGraph);
+            document.getElementById('hypP').addEventListener('input', drawHyperbolicGraph);
+            document.getElementById('hypQ').addEventListener('input', drawHyperbolicGraph);
+            drawHyperbolicGraph();
+
+            // Exponential
+            document.getElementById('expA').addEventListener('input', drawExponentialGraph);
+            document.getElementById('expB').addEventListener('input', drawExponentialGraph);
+            document.getElementById('expP').addEventListener('input', drawExponentialGraph);
+            document.getElementById('expQ').addEventListener('input', drawExponentialGraph);
+            drawExponentialGraph();
+        }
+
+        // ========== Quiz Questions Data ==========
+        const quizQuestions = [
+            {
+                id: 1,
+                question: "What type of function is represented by y = 3x - 5?",
+                options: ["Quadratic", "Linear", "Hyperbolic", "Exponential"],
+                correct: 1,
+                explanation: "This is a linear function in the form y = mx + c, where m = 3 and c = -5."
+            },
+            {
+                id: 2,
+                question: "For the parabola y = -2(x + 3)² + 4, what is the turning point?",
+                options: ["(3, 4)", "(-3, 4)", "(3, -4)", "(-3, -4)"],
+                correct: 1,
+                explanation: "In the form y = a(x + p)² + q, the turning point is (-p, q) = (-3, 4)."
+            },
+            {
+                id: 3,
+                question: "What is the horizontal asymptote of y = 2/(x - 1) + 3?",
+                options: ["x = 1", "y = 1", "y = 3", "x = 3"],
+                correct: 2,
+                explanation: "For hyperbola y = a/(x + p) + q, the horizontal asymptote is y = q = 3."
+            },
+            {
+                id: 4,
+                question: "If a > 0 in a quadratic function y = ax², the parabola:",
+                options: ["Opens downward", "Opens upward", "Is a straight line", "Has no turning point"],
+                correct: 1,
+                explanation: "When a > 0, the parabola opens upward ('happy face') with a minimum turning point."
+            },
+            {
+                id: 5,
+                question: "What is the gradient of a horizontal line?",
+                options: ["1", "Undefined", "0", "-1"],
+                correct: 2,
+                explanation: "A horizontal line has no rise (vertical change), so the gradient m = rise/run = 0."
+            },
+            {
+                id: 6,
+                question: "For y = 3·2^x, what happens when x = 0?",
+                options: ["y = 0", "y = 1", "y = 2", "y = 3"],
+                correct: 3,
+                explanation: "When x = 0: y = 3·2⁰ = 3·1 = 3. Any number raised to power 0 equals 1."
+            },
+            {
+                id: 7,
+                question: "In which quadrants does the hyperbola y = -4/x lie?",
+                options: ["1st and 3rd", "2nd and 4th", "1st and 2nd", "3rd and 4th"],
+                correct: 1,
+                explanation: "When a < 0 in y = a/x, the hyperbola lies in the 2nd and 4th quadrants."
+            },
+            {
+                id: 8,
+                question: "What transformation does (x + 2) cause in f(x + 2)?",
+                options: ["Shift 2 units right", "Shift 2 units left", "Shift 2 units up", "Shift 2 units down"],
+                correct: 1,
+                explanation: "(x + p) causes a horizontal shift of p units to the LEFT."
+            },
+            {
+                id: 9,
+                question: "For the exponential function y = 2^x, when b > 1 the function is:",
+                options: ["Decreasing", "Increasing", "Constant", "Undefined"],
+                correct: 1,
+                explanation: "When the base b > 1, the exponential function is increasing (grows as x increases)."
+            },
+            {
+                id: 10,
+                question: "What is the y-intercept of f(x) = x² - 4x + 3?",
+                options: ["3", "-4", "1", "0"],
+                correct: 0,
+                explanation: "To find y-intercept, set x = 0: f(0) = 0² - 4(0) + 3 = 3."
+            },
+            {
+                id: 11,
+                question: "The vertical asymptote of y = 5/(x + 2) - 1 is:",
+                options: ["x = 2", "x = -2", "y = -1", "y = 5"],
+                correct: 1,
+                explanation: "The vertical asymptote occurs where x + p = 0, so x = -2."
+            },
+            {
+                id: 12,
+                question: "What effect does a negative value of 'a' have on a parabola?",
+                options: ["Shifts it left", "Shifts it down", "Reflects it in x-axis", "Makes it wider"],
+                correct: 2,
+                explanation: "A negative 'a' reflects the parabola in the x-axis, changing from ∪ to ∩ shape."
+            }
+        ];
+
+        let answeredQuestions = {};
+        let quizSubmitted = false;
+
+        // ========== Initialize Quiz ==========
+        function initQuiz() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            quizQuestions.forEach((q, index) => {
+                const questionHTML = `
+                    <div class="question-card" id="question${q.id}">
+                        <span class="question-number">Question ${index + 1}</span>
+                        <p class="question-text">${q.question}</p>
+                        <div class="options-list">
+                            ${q.options.map((opt, i) => `
+                                <label class="option-label" id="option${q.id}_${i}">
+                                    <input type="radio" name="q${q.id}" value="${i}" 
+                                           onchange="selectAnswer(${q.id}, ${i})">
+                                    <span>${opt}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                        <div class="feedback" id="feedback${q.id}"></div>
+                    </div>
+                `;
+                container.innerHTML += questionHTML;
+            });
+
+            loadProgress();
+            updateProgressBar();
+        }
+
+        function selectAnswer(questionId, optionIndex) {
+            if (quizSubmitted) return;
+
+            answeredQuestions[questionId] = optionIndex;
+            
+            const options = document.querySelectorAll(`[name="q${questionId}"]`);
+            options.forEach((opt, i) => {
+                const label = document.getElementById(`option${questionId}_${i}`);
+                label.classList.remove('selected');
+                if (i === optionIndex) {
+                    label.classList.add('selected');
+                }
+            });
+
+            saveProgress();
+            updateProgressBar();
+        }
+
+        function updateProgressBar() {
+            const answered = Object.keys(answeredQuestions).length;
+            const total = quizQuestions.length;
+            const percentage = (answered / total) * 100;
+            
+            document.getElementById('progressBar').style.width = `${percentage}%`;
+            
+            const ring = document.getElementById('progressRing');
+            const circumference = 2 * Math.PI * 20;
+            const offset = circumference - (percentage / 100) * circumference;
+            ring.style.strokeDashoffset = offset;
+            document.getElementById('progressText').textContent = `${Math.round(percentage)}%`;
+        }
+
+        function submitQuiz() {
+            if (Object.keys(answeredQuestions).length < quizQuestions.length) {
+                alert(`Please answer all questions before submitting.\nYou have answered ${Object.keys(answeredQuestions).length} of ${quizQuestions.length} questions.`);
+                return;
+            }
+
+            quizSubmitted = true;
+            let score = 0;
+
+            quizQuestions.forEach(q => {
+                const userAnswer = answeredQuestions[q.id];
+                const isCorrect = userAnswer === q.correct;
+                
+                if (isCorrect) score++;
+
+                const questionCard = document.getElementById(`question${q.id}`);
+                const feedback = document.getElementById(`feedback${q.id}`);
+                
+                q.options.forEach((_, i) => {
+                    const label = document.getElementById(`option${q.id}_${i}`);
+                    label.classList.add('disabled');
+                    label.querySelector('input').disabled = true;
+                    
+                    if (i === q.correct) {
+                        label.classList.add('correct');
+                    } else if (i === userAnswer && !isCorrect) {
+                        label.classList.add('incorrect');
+                    }
+                });
+
+                feedback.classList.add('show');
+                if (isCorrect) {
+                    questionCard.classList.add('answered-correct');
+                    feedback.classList.add('correct');
+                    feedback.innerHTML = `<strong>✓ Correct!</strong> ${q.explanation}`;
+                } else {
+                    questionCard.classList.add('answered-incorrect');
+                    feedback.classList.add('incorrect');
+                    feedback.innerHTML = `<strong>✗ Incorrect.</strong> ${q.explanation}`;
+                }
+            });
+
+            const percentage = Math.round((score / quizQuestions.length) * 100);
+            document.getElementById('scoreNumber').textContent = score;
+            document.getElementById('scorePercentage').textContent = `${percentage}%`;
+            
+            let message = '';
+            if (percentage >= 90) message = '🌟 Outstanding! Excellent understanding of functions!';
+            else if (percentage >= 70) message = '👏 Good job! Keep practicing!';
+            else if (percentage >= 50) message = '📚 Fair effort. Review the concepts.';
+            else message = '💪 Keep studying. You can do it!';
+            
+            document.getElementById('scoreMessage').textContent = message;
+            document.getElementById('scoreDisplay').classList.add('show');
+            document.getElementById('submitQuiz').style.display = 'none';
+
+            localStorage.setItem('lesson2_functions_quiz', JSON.stringify({
+                score: score,
+                percentage: percentage,
+                date: new Date().toISOString(),
+                answers: answeredQuestions
+            }));
+        }
+
+        function retryQuiz() {
+            quizSubmitted = false;
+            answeredQuestions = {};
+            localStorage.removeItem('lesson2_functions_progress');
+            localStorage.removeItem('lesson2_functions_quiz');
+            
+            document.getElementById('scoreDisplay').classList.remove('show');
+            document.getElementById('submitQuiz').style.display = 'block';
+            
+            initQuiz();
+        }
+
+        // ========== LocalStorage Functions ==========
+        function saveProgress() {
+            localStorage.setItem('lesson2_functions_progress', JSON.stringify(answeredQuestions));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('lesson2_functions_progress');
+            if (saved) {
+                answeredQuestions = JSON.parse(saved);
+                
+                Object.entries(answeredQuestions).forEach(([qId, optIndex]) => {
+                    const radio = document.querySelector(`input[name="q${qId}"][value="${optIndex}"]`);
+                    if (radio) {
+                        radio.checked = true;
+                        document.getElementById(`option${qId}_${optIndex}`).classList.add('selected');
+                    }
+                });
+            }
+        }
+
+        // ========== Navigation ==========
+        function navigateLesson(direction) {
+            if (direction === 'prev') {
+                alert('Navigating to Lesson 1: Introduction to Functions');
+            } else {
+                alert('Navigating to Lesson 3: Inverse Functions');
+            }
+        }
+
+        // ========== Scroll Progress ==========
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            
+            const indicator = document.getElementById('progressIndicator');
+            if (scrolled > 10) {
+                indicator.style.opacity = '1';
+            } else {
+                indicator.style.opacity = '0.5';
+            }
+        });
+
+        // ========== Initialize ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            initGraphs();
+            initQuiz();
+        });
+    </script>
+
+    <script src="gr12-math-nav.js"></script>
+</body>
+</html>
+

@@ -3,1038 +3,2244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grade 12 Physical Sciences: Power and Efficiency</title>
+    <title>Power - Work, Power and Energy | PassProof Academy</title>
     <style>
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --accent-color: #e74c3c;
-            --light-color: #ecf0f1;
-            --dark-color: #34495e;
-            --success-color: #27ae60;
-            --warning-color: #f39c12;
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
+        :root {
+            --primary-blue: #1a73e8;
+            --primary-dark: #0d47a1;
+            --primary-light: #e3f2fd;
+            --accent-blue: #42a5f5;
+            --white: #ffffff;
+            --gray-light: #f8f9fa;
+            --gray: #6c757d;
+            --gray-dark: #343a40;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--white) 100%);
+            min-height: 100vh;
             line-height: 1.6;
-            color: #333;
-            background-color: #f9f9f9;
-            padding: 20px;
+            color: var(--gray-dark);
         }
-        
-        .lesson-container {
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .nav-container {
             max-width: 1200px;
             margin: 0 auto;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-        
-        .lesson-header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        
-        .lesson-title {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-        
-        .lesson-meta {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            margin-top: 15px;
-        }
-        
-        .meta-item {
-            margin: 5px 10px;
-        }
-        
-        .lesson-content {
-            padding: 20px;
-        }
-        
-        .section {
-            margin-bottom: 30px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        
-        .section-header {
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 15px;
-            cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: background-color 0.3s;
         }
-        
-        .section-header:hover {
-            background-color: var(--dark-color);
+
+        .logo {
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        
-        .section-header h2 {
-            font-size: 1.4rem;
-            margin: 0;
-        }
-        
-        .toggle-icon {
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-blue);
             font-weight: bold;
-            font-size: 1.2rem;
         }
-        
-        .section-content {
-            padding: 20px;
+
+        .nav-menu {
+            display: flex;
+            gap: 1rem;
+            list-style: none;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: var(--white);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .dropdown-content {
             display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--white);
+            min-width: 220px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            animation: fadeIn 0.3s ease;
         }
-        
-        .section.active .section-content {
+
+        .nav-item:hover .dropdown-content {
             display: block;
         }
-        
-        .objective-list, .overview-content, .main-content {
-            margin-bottom: 20px;
+
+        .dropdown-content a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--gray-dark);
+            text-decoration: none;
+            transition: var(--transition);
         }
-        
-        .objective-list li, .overview-content p, .main-content p {
-            margin-bottom: 10px;
+
+        .dropdown-content a:hover {
+            background: var(--primary-light);
+            color: var(--primary-blue);
         }
-        
-        .example-box {
-            background-color: #f8f9fa;
-            border-left: 4px solid var(--secondary-color);
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 0 5px 5px 0;
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
         }
-        
-        .example-title {
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: var(--primary-color);
+
+        /* Progress Bar */
+        .progress-bar-container {
+            background: var(--primary-dark);
+            padding: 0.5rem 2rem;
         }
-        
-        .diagram-container {
-            text-align: center;
-            margin: 20px 0;
-            padding: 15px;
-            background-color: #f5f5f5;
-            border-radius: 8px;
-        }
-        
-        .diagram {
-            max-width: 100%;
-            height: auto;
-        }
-        
-        .formula-box {
-            background-color: #e8f4f8;
-            border: 1px solid var(--secondary-color);
-            border-radius: 5px;
-            padding: 15px;
-            margin: 15px 0;
-            text-align: center;
-        }
-        
-        .formula {
-            font-size: 1.4rem;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-        
-        .calculator {
-            background-color: #f8f9fa;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        
-        .calculator h3 {
-            margin-bottom: 15px;
-            color: var(--primary-color);
-        }
-        
-        .input-group {
-            margin: 10px 0;
+
+        .progress-bar {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             align-items: center;
+            gap: 1rem;
+        }
+
+        .progress-bar span {
+            color: var(--white);
+            font-size: 0.875rem;
+        }
+
+        .progress-track {
+            flex: 1;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--success);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        /* Subject Header */
+        .subject-header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 2rem;
+            border-radius: var(--radius);
+            margin-bottom: 2rem;
+        }
+
+        .subject-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .subject-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
             flex-wrap: wrap;
         }
-        
-        .input-group label {
-            width: 200px;
-            margin-right: 10px;
+
+        .meta-item {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
         }
-        
-        .input-group input, .input-group select {
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            width: 150px;
+
+        .meta-label {
+            font-size: 0.75rem;
+            opacity: 0.9;
         }
-        
-        .question-container {
-            margin-bottom: 20px;
-            padding: 15px;
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
+
+        .meta-value {
+            font-weight: 600;
+            font-size: 1.1rem;
         }
-        
-        .question-text {
-            font-weight: bold;
-            margin-bottom: 10px;
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
-        
-        .options-container {
-            margin: 10px 0;
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
         }
-        
-        .option {
-            margin: 8px 0;
+
+        .section-title {
+            color: var(--primary-dark);
+            font-size: 1.5rem;
+        }
+
+        /* Objectives */
+        .objectives-list {
+            list-style: none;
+        }
+
+        .objectives-list li {
             display: flex;
             align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--gray-light);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            transition: var(--transition);
         }
-        
-        .option input {
-            margin-right: 10px;
-            margin-top: 5px;
+
+        .objectives-list li:hover {
+            background: var(--primary-light);
+            transform: translateX(5px);
         }
-        
-        .feedback {
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 5px;
+
+        .objective-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--primary-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: linear-gradient(135deg, var(--primary-light) 0%, #bbdefb 100%);
+            border-left: 4px solid var(--primary-blue);
+            padding: 1.5rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 1.5rem 0;
+        }
+
+        .formula {
+            font-size: 1.5rem;
+            font-family: 'Times New Roman', serif;
+            color: var(--primary-dark);
+            text-align: center;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .formula-label {
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Concept Cards */
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .concept-card {
+            background: var(--white);
+            border: 2px solid var(--primary-light);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .concept-card:hover {
+            border-color: var(--primary-blue);
+            box-shadow: var(--shadow);
+        }
+
+        .concept-card h4 {
+            color: var(--primary-blue);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Worked Examples */
+        .example-box {
+            background: var(--gray-light);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+
+        .example-header {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+        }
+
+        .example-content {
+            padding: 1.5rem;
+        }
+
+        .example-problem {
+            background: var(--white);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--warning);
+        }
+
+        .example-solution {
+            background: var(--primary-light);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .solution-step {
+            background: var(--white);
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin: 0.5rem 0;
+        }
+
+        /* Simulations */
+        .simulation-container {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            border-radius: var(--radius);
+            padding: 2rem;
+            color: var(--white);
+            margin: 2rem 0;
+        }
+
+        .simulation-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .simulation-canvas {
+            background: #0d1b2a;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .sim-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .sim-value {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .sim-value-label {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        .sim-value-number {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #4fc3f7;
+        }
+
+        .sim-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .sim-control-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .sim-control-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .sim-slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .sim-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .sim-btn {
+            background: var(--accent-blue);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .sim-btn:hover {
+            background: var(--primary-blue);
+            transform: scale(1.05);
+        }
+
+        /* Animation Canvas */
+        .animation-area {
+            position: relative;
+            height: 200px;
+            background: linear-gradient(to bottom, #87ceeb 0%, #e0f7fa 100%);
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .car {
+            position: absolute;
+            bottom: 30px;
+            width: 80px;
+            height: 40px;
+            background: #e53935;
+            border-radius: 10px 10px 5px 5px;
+            transition: left 0.1s linear;
+        }
+
+        .car::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 15px;
+            width: 50px;
+            height: 20px;
+            background: #e53935;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .car::after {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            width: 40px;
+            height: 15px;
+            background: #90caf9;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .wheel {
+            position: absolute;
+            bottom: -8px;
+            width: 20px;
+            height: 20px;
+            background: #333;
+            border-radius: 50%;
+            border: 3px solid #666;
+        }
+
+        .wheel-left { left: 8px; }
+        .wheel-right { right: 8px; }
+
+        .road {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 30px;
+            background: #424242;
+        }
+
+        .road::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: repeating-linear-gradient(90deg, #fff 0px, #fff 30px, transparent 30px, transparent 60px);
+        }
+
+        /* Efficiency Meter */
+        .efficiency-meter {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .meter-bg {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(#e0e0e0 0deg, #e0e0e0 360deg);
+        }
+
+        .meter-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(var(--success) 0deg, #e0e0e0 0deg);
+            transition: background 0.5s ease;
+        }
+
+        .meter-center {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: calc(100% - 40px);
+            height: calc(100% - 40px);
+            background: #0d1b2a;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .meter-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--success);
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .quiz-header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .quiz-progress {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .quiz-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: var(--transition);
+        }
+
+        .quiz-dot.active { background: var(--white); }
+        .quiz-dot.correct { background: var(--success); }
+        .quiz-dot.incorrect { background: var(--danger); }
+
+        .question-card {
+            padding: 2rem;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .question-number {
+            background: var(--primary-light);
+            color: var(--primary-blue);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            color: var(--gray-dark);
+        }
+
+        .options-list {
+            list-style: none;
+        }
+
+        .option-item {
+            margin: 0.5rem 0;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--gray-light);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .option-label:hover {
+            background: var(--primary-light);
+            border-color: var(--primary-blue);
+        }
+
+        .option-label.selected {
+            background: var(--primary-light);
+            border-color: var(--primary-blue);
+        }
+
+        .option-label.correct {
+            background: #d4edda;
+            border-color: var(--success);
+        }
+
+        .option-label.incorrect {
+            background: #f8d7da;
+            border-color: var(--danger);
+        }
+
+        .option-radio {
             display: none;
         }
-        
-        .correct {
-            background-color: #d4edda;
-            border: 1px solid #c3e6cb;
+
+        .option-marker {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .option-label.selected .option-marker {
+            background: var(--primary-blue);
+            border-color: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .option-label.correct .option-marker {
+            background: var(--success);
+            border-color: var(--success);
+            color: var(--white);
+        }
+
+        .option-label.incorrect .option-marker {
+            background: var(--danger);
+            border-color: var(--danger);
+            color: var(--white);
+        }
+
+        .feedback-box {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .feedback-box.correct {
+            display: block;
+            background: #d4edda;
             color: #155724;
         }
-        
-        .incorrect {
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
+
+        .feedback-box.incorrect {
+            display: block;
+            background: #f8d7da;
             color: #721c24;
         }
-        
-        .navigation {
+
+        .quiz-actions {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        /* Score Modal */
+        .score-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .score-modal.active {
+            display: flex;
+        }
+
+        .score-content {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 3rem;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            animation: slideUp 0.3s ease;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--white);
+        }
+
+        .score-circle.excellent { background: var(--success); }
+        .score-circle.good { background: var(--accent-blue); }
+        .score-circle.fair { background: var(--warning); color: var(--gray-dark); }
+        .score-circle.poor { background: var(--danger); }
+
+        /* Navigation Buttons */
+        .lesson-nav {
             display: flex;
             justify-content: space-between;
-            margin-top: 30px;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
         }
-        
-        .btn {
-            padding: 10px 20px;
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: var(--white);
+            border: 2px solid var(--primary-blue);
+            color: var(--primary-blue);
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
         }
-        
-        .btn:hover {
-            background-color: var(--dark-color);
+
+        .nav-btn:hover {
+            background: var(--primary-blue);
+            color: var(--white);
         }
-        
-        .btn:disabled {
-            background-color: #bdc3c7;
-            cursor: not-allowed;
+
+        .nav-btn.next {
+            margin-left: auto;
         }
-        
-        .btn-success {
-            background-color: var(--success-color);
-        }
-        
-        .btn-warning {
-            background-color: var(--warning-color);
-        }
-        
-        .results-container {
+
+        /* Footer */
+        footer {
+            background: var(--gray-dark);
+            color: var(--white);
             text-align: center;
-            padding: 20px;
-            margin-top: 20px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            display: none;
+            padding: 2rem;
+            margin-top: 3rem;
         }
-        
-        .score {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin: 10px 0;
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        
-        .score-percentage {
-            color: var(--accent-color);
-            font-size: 2rem;
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
         }
-        
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .lesson-meta {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--primary-dark);
                 flex-direction: column;
-                align-items: flex-start;
+                padding: 1rem;
             }
-            
-            .meta-item {
-                margin: 5px 0;
+
+            .nav-menu.active {
+                display: flex;
             }
-            
-            .section-header h2 {
+
+            .dropdown-content {
+                position: static;
+                box-shadow: none;
+                margin-top: 0.5rem;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .subject-header h1 {
+                font-size: 1.75rem;
+            }
+
+            .lesson-meta {
+                gap: 1rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .formula {
                 font-size: 1.2rem;
             }
-            
-            .input-group {
+
+            .lesson-nav {
                 flex-direction: column;
-                align-items: flex-start;
             }
-            
-            .input-group label {
-                width: 100%;
-                margin-bottom: 5px;
+
+            .nav-btn {
+                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
-    <div class="lesson-container">
-        <div class="lesson-header">
-            <h1 class="lesson-title">Power and Efficiency</h1>
-            <div class="lesson-meta">
-                <div class="meta-item"><strong>Grade:</strong> 12</div>
-                <div class="meta-item"><strong>Subject:</strong> Physical Sciences</div>
-                <div class="meta-item"><strong>Week:</strong> 7</div>
-                <div class="meta-item"><strong>Topic:</strong> Work, Power and Energy</div>
-                <div class="meta-item"><strong>Lesson:</strong> 1</div>
+    <!-- Header -->
+    <header>
+        <nav class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon">P</span>
+                PassProof Academy
+            </a>
+            <button class="mobile-toggle" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">📚 Subjects ▾</a>
+                    <div class="dropdown-content">
+                        <a href="#">Physical Sciences</a>
+                        <a href="#">Life Sciences</a>
+                        <a href="#">Mathematics</a>
+                        <a href="#">Chemistry</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">📖 Grade 12 ▾</a>
+                    <div class="dropdown-content">
+                        <a href="#">Work, Power & Energy</a>
+                        <a href="#">Electrostatics</a>
+                        <a href="#">Electric Circuits</a>
+                        <a href="#">Electromagnetism</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">📊 Progress</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">❓ Help</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar-container">
+        <div class="progress-bar">
+            <span>Lesson Progress:</span>
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
             </div>
-        </div>
-        
-        <div class="lesson-content">
-            <div class="section" id="objectives">
-                <div class="section-header">
-                    <h2>Learning Objectives</h2>
-                    <span class="toggle-icon">+</span>
-                </div>
-                <div class="section-content">
-                    <p>By the end of this lesson, learners must be able to:</p>
-                    <ul class="objective-list">
-                        <li>Define power as the rate at which work is done or energy is expended</li>
-                        <li>Calculate the power involved when work is done</li>
-                        <li>Understand the average power required to keep an object moving at constant speed</li>
-                        <li>Calculate power using P<sub>av</sub> = F·v<sub>av</sub></li>
-                        <li>Apply power concepts to real-life examples</li>
-                        <li>Calculate efficiency of systems</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="section" id="overview">
-                <div class="section-header">
-                    <h2>Overview</h2>
-                    <span class="toggle-icon">+</span>
-                </div>
-                <div class="section-content">
-                    <div class="overview-content">
-                        <p>Power is defined as the rate at which work is done or energy is transferred. It measures how quickly work is performed or energy is expended.</p>
-                        
-                        <div class="formula-box">
-                            <div class="formula">P = W / Δt = ΔE / Δt</div>
-                            <p>Where:</p>
-                            <p>P = Power (W)</p>
-                            <p>W = Work done (J)</p>
-                            <p>ΔE = Energy transferred (J)</p>
-                            <p>Δt = Time interval (s)</p>
-                        </div>
-                        
-                        <p>For constant velocity motion, power can also be calculated as:</p>
-                        
-                        <div class="formula-box">
-                            <div class="formula">P = F·v</div>
-                            <p>Where:</p>
-                            <p>F = Force applied (N)</p>
-                            <p>v = Velocity (m/s)</p>
-                        </div>
-                        
-                        <p>Efficiency measures how effectively a system converts input energy into useful work:</p>
-                        
-                        <div class="formula-box">
-                            <div class="formula">Efficiency = (Useful Output Energy / Input Energy) × 100%</div>
-                        </div>
-                        
-                        <div class="diagram-container">
-                            <h3>Power and Energy Flow</h3>
-                            <svg class="diagram" width="500" height="200" viewBox="0 0 500 200">
-                                <!-- Input energy -->
-                                <rect x="50" y="80" width="100" height="40" fill="#3498db" stroke="#2c3e50" stroke-width="2" />
-                                <text x="100" y="105" text-anchor="middle" fill="white" font-weight="bold">Input Energy</text>
-                                
-                                <!-- Arrow -->
-                                <polygon points="160,100 180,100 175,95 180,100 175,105" fill="#2c3e50" />
-                                <line x1="160" y1="100" x2="180" y2="100" stroke="#2c3e50" stroke-width="2" />
-                                
-                                <!-- System -->
-                                <rect x="200" y="80" width="100" height="40" fill="#e74c3c" stroke="#2c3e50" stroke-width="2" />
-                                <text x="250" y="105" text-anchor="middle" fill="white" font-weight="bold">System</text>
-                                
-                                <!-- Arrow -->
-                                <polygon points="310,100 330,100 325,95 330,100 325,105" fill="#2c3e50" />
-                                <line x1="310" y1="100" x2="330" y2="100" stroke="#2c3e50" stroke-width="2" />
-                                
-                                <!-- Output energy -->
-                                <rect x="350" y="80" width="100" height="40" fill="#27ae60" stroke="#2c3e50" stroke-width="2" />
-                                <text x="400" y="105" text-anchor="middle" fill="white" font-weight="bold">Useful Output</text>
-                                
-                                <!-- Power indicator -->
-                                <text x="250" y="50" text-anchor="middle" fill="#2c3e50" font-weight="bold">Power = Rate of Energy Transfer</text>
-                                <text x="250" y="150" text-anchor="middle" fill="#f39c12">Efficiency = (Output/Input) × 100%</text>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="section" id="main-body">
-                <div class="section-header">
-                    <h2>Main Body</h2>
-                    <span class="toggle-icon">+</span>
-                </div>
-                <div class="section-content">
-                    <div class="main-content">
-                        <h3>Understanding Power</h3>
-                        <p>Power measures how quickly work is done or energy is transferred. The SI unit of power is the watt (W), which equals one joule per second (J/s).</p>
-                        
-                        <div class="formula-box">
-                            <p>1 W = 1 J/s</p>
-                            <p>Power is a scalar quantity - it has magnitude but no direction</p>
-                        </div>
-                        
-                        <h3>Key Concepts:</h3>
-                        <ul>
-                            <li>Power is the rate of doing work or transferring energy</li>
-                            <li>Greater power means work is done more quickly</li>
-                            <li>For constant velocity: P = F·v (where F and v are in the same direction)</li>
-                            <li>Efficiency tells us how much input energy does useful work</li>
-                        </ul>
-                        
-                        <div class="example-box">
-                            <div class="example-title">Worked Example 1: Car Moving at Constant Speed</div>
-                            <p>A car moves at a constant speed of 20 m/s. The frictional force equals the driving force. Determine the frictional force if the car has an 88 kW motor.</p>
-                            <p><strong>Solution:</strong></p>
-                            <p>P = F·v</p>
-                            <p>88,000 W = F × 20 m/s</p>
-                            <p>F = 88,000 / 20 = 4,400 N</p>
-                            <p>The frictional force is 4,400 N.</p>
-                        </div>
-                        
-                        <div class="example-box">
-                            <div class="example-title">Worked Example 2: Electric Motor Efficiency</div>
-                            <p>A 100 W electric motor takes 1 minute to lift a 50 kg mass vertically through 6 m at constant speed. Calculate the efficiency of the motor.</p>
-                            <p><strong>Solution:</strong></p>
-                            <p>Input energy: W<sub>in</sub> = P·Δt = 100 W × 60 s = 6,000 J</p>
-                            <p>Useful output: W<sub>out</sub> = m·g·h = 50 kg × 9.8 m/s² × 6 m = 2,940 J</p>
-                            <p>Efficiency = (W<sub>out</sub> / W<sub>in</sub>) × 100% = (2,940 / 6,000) × 100% = 49%</p>
-                            <p>The motor efficiency is 49%.</p>
-                        </div>
-                        
-                        <div class="example-box">
-                            <div class="example-title">Worked Example 3: Mine Elevator</div>
-                            <p>In gold mines, an elevator lowers 14 miners (average mass 70 kg each) down a 300 m shaft in 100 seconds. If the lift mass is 1,500 kg, calculate the power the elevator engine must generate.</p>
-                            <p><strong>Solution:</strong></p>
-                            <p>Total mass: m = (14 × 70 kg) + 1,500 kg = 2,480 kg</p>
-                            <p>Work done: W = m·g·h = 2,480 kg × 9.8 m/s² × 300 m = 7,291,200 J</p>
-                            <p>Power: P = W / Δt = 7,291,200 J / 100 s = 72,912 W = 72.9 kW</p>
-                            <p>The elevator engine must generate 72.9 kW of power.</p>
-                        </div>
-                        
-                        <div class="calculator">
-                            <h3>Power and Efficiency Calculator</h3>
-                            <div class="input-group">
-                                <label for="calc-type">Calculation Type:</label>
-                                <select id="calc-type">
-                                    <option value="power-work">Power from Work and Time</option>
-                                    <option value="power-force">Power from Force and Velocity</option>
-                                    <option value="efficiency">Efficiency</option>
-                                </select>
-                            </div>
-                            
-                            <div id="power-work-inputs">
-                                <div class="input-group">
-                                    <label for="work">Work (J):</label>
-                                    <input type="number" id="work" value="1000" step="10">
-                                </div>
-                                <div class="input-group">
-                                    <label for="time">Time (s):</label>
-                                    <input type="number" id="time" value="10" step="0.1">
-                                </div>
-                            </div>
-                            
-                            <div id="power-force-inputs" style="display: none;">
-                                <div class="input-group">
-                                    <label for="force">Force (N):</label>
-                                    <input type="number" id="force" value="50" step="1">
-                                </div>
-                                <div class="input-group">
-                                    <label for="velocity">Velocity (m/s):</label>
-                                    <input type="number" id="velocity" value="5" step="0.1">
-                                </div>
-                            </div>
-                            
-                            <div id="efficiency-inputs" style="display: none;">
-                                <div class="input-group">
-                                    <label for="useful-output">Useful Output (J):</label>
-                                    <input type="number" id="useful-output" value="800" step="10">
-                                </div>
-                                <div class="input-group">
-                                    <label for="total-input">Total Input (J):</label>
-                                    <input type="number" id="total-input" value="1000" step="10">
-                                </div>
-                            </div>
-                            
-                            <button id="calculate-power" class="btn">Calculate</button>
-                            <div id="calculation-result" style="margin-top: 15px; padding: 10px; background-color: #f8f9fa; border-radius: 5px;"></div>
-                        </div>
-                        
-                        <div class="diagram-container">
-                            <h3>Power in Real-Life Applications</h3>
-                            <svg class="diagram" width="500" height="300" viewBox="0 0 500 300">
-                                <!-- Car -->
-                                <rect x="50" y="200" width="80" height="40" fill="#3498db" stroke="#2c3e50" stroke-width="2" rx="5" />
-                                <rect x="60" y="180" width="60" height="20" fill="#3498db" stroke="#2c3e50" stroke-width="2" rx="3" />
-                                <circle cx="70" cy="240" r="15" fill="#2c3e50" />
-                                <circle cx="110" cy="240" r="15" fill="#2c3e50" />
-                                <text x="100" y="195" text-anchor="middle" fill="white" font-size="12">Car</text>
-                                
-                                <!-- Force arrow -->
-                                <line x1="130" y1="220" x2="170" y2="220" stroke="#e74c3c" stroke-width="3" />
-                                <polygon points="170,220 165,215 170,220 165,225" fill="#e74c3c" />
-                                <text x="150" y="215" text-anchor="middle" fill="#e74c3c" font-size="12">F</text>
-                                
-                                <!-- Velocity arrow -->
-                                <line x1="100" y1="260" x2="140" y2="260" stroke="#27ae60" stroke-width="3" />
-                                <polygon points="140,260 135,255 140,260 135,265" fill="#27ae60" />
-                                <text x="120" y="255" text-anchor="middle" fill="#27ae60" font-size="12">v</text>
-                                
-                                <!-- Power formula -->
-                                <text x="100" y="280" text-anchor="middle" fill="#2c3e50" font-size="14">P = F·v</text>
-                                
-                                <!-- Electric motor -->
-                                <rect x="250" y="180" width="60" height="60" fill="#f39c12" stroke="#2c3e50" stroke-width="2" rx="5" />
-                                <circle cx="280" cy="210" r="15" fill="#2c3e50" />
-                                <text x="280" y="195" text-anchor="middle" fill="white" font-size="12">Motor</text>
-                                
-                                <!-- Input/output arrows -->
-                                <line x1="200" y1="210" x2="250" y2="210" stroke="#3498db" stroke-width="3" />
-                                <polygon points="250,210 245,205 250,210 245,215" fill="#3498db" />
-                                <text x="225" y="205" text-anchor="middle" fill="#3498db" font-size="12">Electrical Energy</text>
-                                
-                                <line x1="310" y1="210" x2="360" y2="210" stroke="#27ae60" stroke-width="3" />
-                                <polygon points="310,210 315,205 310,210 315,215" fill="#27ae60" />
-                                <text x="335" y="205" text-anchor="middle" fill="#27ae60" font-size="12">Mechanical Work</text>
-                                
-                                <!-- Efficiency -->
-                                <text x="280" y="250" text-anchor="middle" fill="#2c3e50" font-size="14">Efficiency = Useful Output / Input</text>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="section" id="questions">
-                <div class="section-header">
-                    <h2>End of Lesson Questions</h2>
-                    <span class="toggle-icon">+</span>
-                </div>
-                <div class="section-content">
-                    <p>Answer the following questions to test your understanding of power and efficiency:</p>
-                    
-                    <div class="question-container" id="q1">
-                        <div class="question-text">1. What is the correct definition of power?</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q1" value="a">
-                                <label>The total amount of work done</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q1" value="b">
-                                <label>The rate at which work is done or energy is transferred</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q1" value="c">
-                                <label>The force applied to an object</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q1" value="d">
-                                <label>The energy stored in an object</label>
-                            </div>
-                        </div>
-                        <div class="feedback"></div>
-                    </div>
-                    
-                    <div class="question-container" id="q2">
-                        <div class="question-text">2. What is the SI unit of power?</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q2" value="a">
-                                <label>Joule</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q2" value="b">
-                                <label>Newton</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q2" value="c">
-                                <label>Watt</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q2" value="d">
-                                <label>Pascal</label>
-                            </div>
-                        </div>
-                        <div class="feedback"></div>
-                    </div>
-                    
-                    <div class="question-container" id="q3">
-                        <div class="question-text">3. A machine does 500 J of work in 10 seconds. What is its power output?</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q3" value="a">
-                                <label>5 W</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q3" value="b">
-                                <label>50 W</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q3" value="c">
-                                <label>500 W</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q3" value="d">
-                                <label>5000 W</label>
-                            </div>
-                        </div>
-                        <div class="feedback"></div>
-                    </div>
-                    
-                    <div class="question-container" id="q4">
-                        <div class="question-text">4. A car engine produces a driving force of 2000 N to maintain a constant speed of 25 m/s. What is the power output of the engine?</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q4" value="a">
-                                <label>50 kW</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q4" value="b">
-                                <label>80 kW</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q4" value="c">
-                                <label>100 kW</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q4" value="d">
-                                <label>125 kW</label>
-                            </div>
-                        </div>
-                        <div class="feedback"></div>
-                    </div>
-                    
-                    <div class="question-container" id="q5">
-                        <div class="question-text">5. Which formula is correct for calculating power when an object moves at constant velocity?</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q5" value="a">
-                                <label>P = F·a</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q5" value="b">
-                                <label>P = m·v</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q5" value="c">
-                                <label>P = F·v</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q5" value="d">
-                                <label>P = W·t</label>
-                            </div>
-                        </div>
-                        <div class="feedback"></div>
-                    </div>
-                    
-                    <div class="question-container" id="q6">
-                        <div class="question-text">6. A motor uses 800 J of electrical energy to do 600 J of useful work. What is its efficiency?</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q6" value="a">
-                                <label>25%</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q6" value="b">
-                                <label>50%</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q6" value="c">
-                                <label>75%</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q6" value="d">
-                                <label>100%</label>
-                            </div>
-                        </div>
-                        <div class="feedback"></div>
-                    </div>
-                    
-                    <div class="question-container" id="q7">
-                        <div class="question-text">7. A 60 W light bulb is left on for 5 hours. How much energy does it use?</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q7" value="a">
-                                <label>300 J</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q7" value="b">
-                                <label>1080 J</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q7" value="c">
-                                <label>18,000 J</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q7" value="d">
-                                <label>1,080,000 J</label>
-                            </div>
-                        </div>
-                        <div class="feedback"></div>
-                    </div>
-                    
-                    <div class="question-container" id="q8">
-                        <div class="question-text">8. Which of the following is NOT a unit of power?</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q8" value="a">
-                                <label>Watt</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q8" value="b">
-                                <label>Joule/second</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q8" value="c">
-                                <label>Newton-meter/second</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q8" value="d">
-                                <label>Joule</label>
-                            </div>
-                        </div>
-                        <div class="feedback"></div>
-                    </div>
-                    
-                    <div class="question-container" id="q9">
-                        <div class="question-text">9. A pump lifts 100 kg of water to a height of 10 m in 20 seconds. What is the power of the pump? (g = 9.8 m/s²)</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q9" value="a">
-                                <label>49 W</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q9" value="b">
-                                <label>490 W</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q9" value="c">
-                                <label>980 W</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q9" value="d">
-                                <label>1960 W</label>
-                            </div>
-                        </div>
-                        <div class="feedback"></div>
-                    </div>
-                    
-                    <div class="question-container" id="q10">
-                        <div class="question-text">10. If a system has an efficiency of 80% and requires 500 J of input energy, how much useful work does it do?</div>
-                        <div class="options-container">
-                            <div class="option">
-                                <input type="radio" name="q10" value="a">
-                                <label>400 J</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q10" value="b">
-                                <label>450 J</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q10" value="c">
-                                <label>500 J</label>
-                            </div>
-                            <div class="option">
-                                <input type="radio" name="q10" value="d">
-                                <label>625 J</label>
-                            </div>
-                        </div>
-                        <div class="feedback"></div>
-                    </div>
-                    
-                    <div class="navigation">
-                        <button id="prev-btn" class="btn" disabled>Previous</button>
-                        <button id="check-btn" class="btn btn-success">Check Answers</button>
-                        <button id="next-btn" class="btn">Next</button>
-                    </div>
-                    
-                    <div class="results-container" id="results">
-                        <h2>Quiz Results</h2>
-                        <div class="score">Your score: <span id="score-value" class="score-percentage">0%</span></div>
-                        <p id="result-message"></p>
-                        <button id="retry-btn" class="btn btn-warning">Try Again</button>
-                    </div>
-                </div>
-            </div>
+            <span id="progressText">0%</span>
         </div>
     </div>
 
+    <!-- Main Content -->
+    <main>
+        <!-- Subject Header -->
+        <div class="subject-header">
+            <span class="subject-badge">📘 GRADE 12 • PHYSICAL SCIENCES</span>
+            <h1>Work, Power and Energy</h1>
+            <p style="font-size: 1.25rem; opacity: 0.9;">Power = The Rate at Which Work is Done or Energy is Transferred</p>
+            <div class="lesson-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Topic</div>
+                    <div class="meta-value">Work, Power & Energy</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Sub-topic</div>
+                    <div class="meta-value">Power</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Lesson</div>
+                    <div class="meta-value">1 of 5</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Week</div>
+                    <div class="meta-value">7</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="card" id="objectives-section">
+            <div class="section-header">
+                <div class="section-icon">🎯</div>
+                <h2 class="section-title">Learning Objectives</h2>
+            </div>
+            <p style="margin-bottom: 1rem; color: var(--gray);">By the end of this lesson, you will be able to:</p>
+            <ul class="objectives-list">
+                <li>
+                    <span class="objective-icon">1</span>
+                    <span>Define power as the rate at which work is done or energy is expended</span>
+                </li>
+                <li>
+                    <span class="objective-icon">2</span>
+                    <span>Calculate the power involved when work is done using P = W/Δt</span>
+                </li>
+                <li>
+                    <span class="objective-icon">3</span>
+                    <span>Understand and apply the formula P<sub>av</sub> = F·v<sub>av</sub> for objects moving at constant velocity</span>
+                </li>
+                <li>
+                    <span class="objective-icon">4</span>
+                    <span>Calculate efficiency using the formula: Efficiency = (Useful work output / Total work input) × 100</span>
+                </li>
+                <li>
+                    <span class="objective-icon">5</span>
+                    <span>Apply power concepts to real-life situations such as electric motors, car engines, and pumps</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Overview -->
+        <div class="card" id="overview-section">
+            <div class="section-header">
+                <div class="section-icon">📋</div>
+                <h2 class="section-title">Overview</h2>
+            </div>
+            <p>Power is a fundamental concept in physics that measures how quickly work is performed or energy is transferred. Understanding power is essential for analyzing machines, engines, and electrical devices in everyday life.</p>
+            <p style="margin-top: 1rem;">While two machines might do the same amount of work, the one that does it faster has greater power. This concept has practical applications in everything from choosing a car engine to designing efficient electrical systems.</p>
+        </div>
+
+        <!-- Main Concepts -->
+        <div class="card" id="concepts-section">
+            <div class="section-header">
+                <div class="section-icon">💡</div>
+                <h2 class="section-title">Main Concepts & Principles</h2>
+            </div>
+
+            <!-- Definition of Power -->
+            <h3 style="color: var(--primary-blue); margin: 1.5rem 0 1rem;">1. Definition of Power</h3>
+            <p><strong>Power</strong> is defined as the rate at which work is done or energy is transferred.</p>
+            
+            <div class="formula-box">
+                <div class="formula-label">Formula 1: Power from Work</div>
+                <div class="formula">P = W / Δt = ΔE / Δt</div>
+                <p style="text-align: center; font-size: 0.9rem;">Where: P = Power (W), W = Work done (J), ΔE = Energy transferred (J), Δt = Time (s)</p>
+            </div>
+
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <h4>⚡ SI Unit: Watt (W)</h4>
+                    <p>1 Watt = 1 Joule per second (J·s⁻¹)</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--gray);">One watt is the rate of working or energy transfer of one joule per second.</p>
+                </div>
+                <div class="concept-card">
+                    <h4>📐 Scalar Quantity</h4>
+                    <p>Power has magnitude only - no direction.</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--gray);">Unlike force or velocity, power doesn't have a direction associated with it.</p>
+                </div>
+                <div class="concept-card">
+                    <h4>🔋 Common Units</h4>
+                    <p>1 kW = 1000 W</p>
+                    <p>1 MW = 1,000,000 W</p>
+                    <p>1 hp ≈ 746 W</p>
+                </div>
+            </div>
+
+            <!-- Power and Velocity -->
+            <h3 style="color: var(--primary-blue); margin: 2rem 0 1rem;">2. Power and Constant Velocity</h3>
+            <p>When an object moves at constant velocity, we can derive an alternative formula for power:</p>
+            
+            <div class="formula-box">
+                <div class="formula-label">Derivation:</div>
+                <div style="background: var(--white); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                    <p>Since W = F·Δx, and we divide both sides by Δt:</p>
+                    <p style="text-align: center; margin: 0.5rem 0; font-family: 'Times New Roman', serif; font-size: 1.2rem;">P = W/Δt = F·Δx/Δt = F·v</p>
+                </div>
+                <div class="formula-label">Formula 2: Power from Force and Velocity</div>
+                <div class="formula">P<sub>av</sub> = F · v<sub>av</sub></div>
+                <p style="text-align: center; font-size: 0.9rem;">Where: P<sub>av</sub> = Average power (W), F = Force (N), v<sub>av</sub> = Average velocity (m·s⁻¹)</p>
+            </div>
+
+            <div style="background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 0 8px 8px 0; margin: 1rem 0;">
+                <strong>⚠️ Important:</strong> This formula applies when force and velocity act along the same straight line, and the velocity is either constant or an average value.
+            </div>
+
+            <!-- Efficiency -->
+            <h3 style="color: var(--primary-blue); margin: 2rem 0 1rem;">3. Efficiency</h3>
+            <p>Efficiency tells us how much of the input energy actually did useful work. The rest is typically dissipated as heat.</p>
+            
+            <div class="formula-box">
+                <div class="formula-label">Formula 3: Efficiency</div>
+                <div class="formula">Efficiency = (Useful Work Output / Total Work Input) × 100%</div>
+            </div>
+
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <h4>✅ Key Points</h4>
+                    <ul style="padding-left: 1.25rem; margin-top: 0.5rem;">
+                        <li>Efficiency is expressed as a percentage</li>
+                        <li>It's always less than 100% due to energy losses</li>
+                        <li>Energy is often "lost" as heat, sound, or friction</li>
+                    </ul>
+                </div>
+                <div class="concept-card">
+                    <h4>🔧 Real-World Examples</h4>
+                    <ul style="padding-left: 1.25rem; margin-top: 0.5rem;">
+                        <li>Electric motors: 80-95%</li>
+                        <li>Car engines: 20-35%</li>
+                        <li>LED lights: ~40-50%</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Worked Examples -->
+        <div class="card" id="examples-section">
+            <div class="section-header">
+                <div class="section-icon">✏️</div>
+                <h2 class="section-title">Worked Examples</h2>
+            </div>
+
+            <!-- Example 1 -->
+            <div class="example-box">
+                <div class="example-header">📝 Example 1: Car Acceleration</div>
+                <div class="example-content">
+                    <div class="example-problem">
+                        <strong>Problem:</strong> A car with a mass of 1 200 kg accelerates from rest at 5 m·s⁻² across a horizontal road. Calculate the average power of the engine if the car accelerates for 5 s.
+                    </div>
+                    <div class="example-solution">
+                        <strong>Solution:</strong>
+                        <div class="solution-step">
+                            <strong>Step 1:</strong> Calculate final velocity using motion equation<br>
+                            v<sub>f</sub> = v<sub>i</sub> + aΔt = 0 + (5)(5) = 25 m·s⁻¹
+                        </div>
+                        <div class="solution-step">
+                            <strong>Step 2:</strong> Calculate average velocity<br>
+                            v<sub>av</sub> = (v<sub>i</sub> + v<sub>f</sub>)/2 = (0 + 25)/2 = 12.5 m·s⁻¹
+                        </div>
+                        <div class="solution-step">
+                            <strong>Step 3:</strong> Calculate power using P = F·v = ma·v<br>
+                            P = (1 200)(5)(12.5) = <strong>75 000 W = 75 kW</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 2 -->
+            <div class="example-box">
+                <div class="example-header">📝 Example 2: Constant Speed Motion</div>
+                <div class="example-content">
+                    <div class="example-problem">
+                        <strong>Problem:</strong> A car moves at a constant speed of 20 m·s⁻¹. The frictional force equals the driving force. Determine the frictional force F if it has an 88 kW motor.
+                    </div>
+                    <div class="example-solution">
+                        <strong>Solution:</strong>
+                        <div class="solution-step">
+                            <strong>Step 1:</strong> Use P = F·v<br>
+                            88 000 = F × 20
+                        </div>
+                        <div class="solution-step">
+                            <strong>Step 2:</strong> Solve for F<br>
+                            F = 88 000 / 20 = <strong>4 400 N</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 3 -->
+            <div class="example-box">
+                <div class="example-header">📝 Example 3: Efficiency Calculation</div>
+                <div class="example-content">
+                    <div class="example-problem">
+                        <strong>Problem:</strong> A 100 W electric motor takes 1 minute to lift a 50 kg mass vertically through 6 m at constant speed. Calculate the efficiency of the motor.
+                    </div>
+                    <div class="example-solution">
+                        <strong>Solution:</strong>
+                        <div class="solution-step">
+                            <strong>Step 1:</strong> Calculate work input (electrical energy)<br>
+                            W<sub>input</sub> = P × Δt = 100 × 60 = 6 000 J
+                        </div>
+                        <div class="solution-step">
+                            <strong>Step 2:</strong> Calculate work output (useful work = gravitational PE)<br>
+                            W<sub>output</sub> = mgh = (50)(9.8)(6) = 2 940 J
+                        </div>
+                        <div class="solution-step">
+                            <strong>Step 3:</strong> Calculate efficiency<br>
+                            Efficiency = (2 940 / 6 000) × 100 = <strong>49%</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 4 -->
+            <div class="example-box">
+                <div class="example-header">📝 Example 4: Mine Elevator</div>
+                <div class="example-content">
+                    <div class="example-problem">
+                        <strong>Problem:</strong> An elevator lowers 14 miners (average mass 70 kg each) plus the lift (mass 1 500 kg) down a mine shaft of 300 m in 100 seconds. Calculate the power the elevator engine must generate.
+                    </div>
+                    <div class="example-solution">
+                        <strong>Solution:</strong>
+                        <div class="solution-step">
+                            <strong>Step 1:</strong> Calculate total mass<br>
+                            m<sub>miners</sub> = 14 × 70 = 980 kg<br>
+                            m<sub>total</sub> = 980 + 1 500 = 2 480 kg
+                        </div>
+                        <div class="solution-step">
+                            <strong>Step 2:</strong> Calculate work done against gravity<br>
+                            W = mgh = (2 480)(9.8)(300) = 7 291 200 J
+                        </div>
+                        <div class="solution-step">
+                            <strong>Step 3:</strong> Calculate power<br>
+                            P = W/Δt = 7 291 200 / 100 = <strong>72 912 W ≈ 73 kW</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Simulations -->
+        <div class="card" id="simulation-section">
+            <div class="section-header">
+                <div class="section-icon">🎮</div>
+                <h2 class="section-title">Interactive Simulations</h2>
+            </div>
+
+            <!-- Simulation 1: Power Calculator -->
+            <div class="simulation-container">
+                <div class="simulation-title">
+                    <h3>⚡ Power Calculator Simulation</h3>
+                    <p>Adjust the work done and time to see how power changes</p>
+                </div>
+                <div class="simulation-canvas">
+                    <div class="sim-display">
+                        <div class="sim-value">
+                            <div class="sim-value-label">Work Done (W)</div>
+                            <div class="sim-value-number" id="workValue">1000 J</div>
+                        </div>
+                        <div class="sim-value">
+                            <div class="sim-value-label">Time (Δt)</div>
+                            <div class="sim-value-number" id="timeValue">10 s</div>
+                        </div>
+                        <div class="sim-value">
+                            <div class="sim-value-label">Power (P)</div>
+                            <div class="sim-value-number" id="powerValue">100 W</div>
+                        </div>
+                    </div>
+                    <div class="sim-controls">
+                        <div class="sim-control-group">
+                            <label>Work Done: <span id="workSliderValue">1000</span> J</label>
+                            <input type="range" class="sim-slider" id="workSlider" min="100" max="10000" value="1000" step="100">
+                        </div>
+                        <div class="sim-control-group">
+                            <label>Time: <span id="timeSliderValue">10</span> s</label>
+                            <input type="range" class="sim-slider" id="timeSlider" min="1" max="60" value="10">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulation 2: Car Power -->
+            <div class="simulation-container" style="margin-top: 2rem;">
+                <div class="simulation-title">
+                    <h3>🚗 Car Power Simulation</h3>
+                    <p>See how force and velocity affect the power output of a car</p>
+                </div>
+                <div class="simulation-canvas">
+                    <div class="animation-area" id="carAnimation">
+                        <div class="car" id="carElement">
+                            <div class="wheel wheel-left"></div>
+                            <div class="wheel wheel-right"></div>
+                        </div>
+                        <div class="road"></div>
+                    </div>
+                    <div class="sim-display">
+                        <div class="sim-value">
+                            <div class="sim-value-label">Force (F)</div>
+                            <div class="sim-value-number" id="forceValue">500 N</div>
+                        </div>
+                        <div class="sim-value">
+                            <div class="sim-value-label">Velocity (v)</div>
+                            <div class="sim-value-number" id="velocityValue">20 m/s</div>
+                        </div>
+                        <div class="sim-value">
+                            <div class="sim-value-label">Power (P = Fv)</div>
+                            <div class="sim-value-number" id="carPowerValue">10 kW</div>
+                        </div>
+                    </div>
+                    <div class="sim-controls">
+                        <div class="sim-control-group">
+                            <label>Force: <span id="forceSliderValue">500</span> N</label>
+                            <input type="range" class="sim-slider" id="forceSlider" min="100" max="5000" value="500" step="100">
+                        </div>
+                        <div class="sim-control-group">
+                            <label>Velocity: <span id="velocitySliderValue">20</span> m/s</label>
+                            <input type="range" class="sim-slider" id="velocitySlider" min="5" max="50" value="20">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulation 3: Efficiency -->
+            <div class="simulation-container" style="margin-top: 2rem;">
+                <div class="simulation-title">
+                    <h3>⚙️ Efficiency Simulator</h3>
+                    <p>Understand how input and output energy relate to efficiency</p>
+                </div>
+                <div class="simulation-canvas">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                        <div class="efficiency-meter">
+                            <div class="meter-bg"></div>
+                            <div class="meter-fill" id="efficiencyMeterFill"></div>
+                            <div class="meter-center">
+                                <span class="meter-value" id="efficiencyMeterValue">50%</span>
+                                <span style="font-size: 0.875rem;">Efficiency</span>
+                            </div>
+                        </div>
+                        <div style="flex: 1; min-width: 250px;">
+                            <div class="sim-value" style="margin-bottom: 1rem;">
+                                <div class="sim-value-label">Energy Input</div>
+                                <div class="sim-value-number" id="inputEnergyValue">1000 J</div>
+                            </div>
+                            <div class="sim-value" style="margin-bottom: 1rem;">
+                                <div class="sim-value-label">Useful Energy Output</div>
+                                <div class="sim-value-number" id="outputEnergyValue">500 J</div>
+                            </div>
+                            <div class="sim-value">
+                                <div class="sim-value-label">Energy Lost (Heat)</div>
+                                <div class="sim-value-number" id="lostEnergyValue" style="color: #ef5350;">500 J</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sim-controls" style="margin-top: 1.5rem;">
+                        <div class="sim-control-group">
+                            <label>Energy Input: <span id="inputSliderValue">1000</span> J</label>
+                            <input type="range" class="sim-slider" id="inputSlider" min="100" max="5000" value="1000" step="100">
+                        </div>
+                        <div class="sim-control-group">
+                            <label>Energy Output: <span id="outputSliderValue">500</span> J</label>
+                            <input type="range" class="sim-slider" id="outputSlider" min="0" max="1000" value="500" step="50">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="card" id="quiz-section">
+            <div class="section-header">
+                <div class="section-icon">📝</div>
+                <h2 class="section-title">Knowledge Check</h2>
+            </div>
+            <p style="margin-bottom: 1rem; color: var(--gray);">Test your understanding with these questions. You must score at least 70% to pass.</p>
+
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <h3>End of Lesson Quiz</h3>
+                    <p>Answer all 10 questions to complete this lesson</p>
+                    <div class="quiz-progress" id="quizProgress">
+                        <!-- Dots will be generated by JS -->
+                    </div>
+                </div>
+
+                <form id="quizForm">
+                    <!-- Question 1 -->
+                    <div class="question-card" data-question="1">
+                        <span class="question-number">Question 1</span>
+                        <p class="question-text">What is the scientific definition of power?</p>
+                        <ul class="options-list">
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q1" value="a" class="option-radio">
+                                    <span class="option-marker">A</span>
+                                    <span>The total amount of work done on an object</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q1" value="b" class="option-radio">
+                                    <span class="option-marker">B</span>
+                                    <span>The rate at which work is done or energy is transferred</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q1" value="c" class="option-radio">
+                                    <span class="option-marker">C</span>
+                                    <span>The force applied over a distance</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q1" value="d" class="option-radio">
+                                    <span class="option-marker">D</span>
+                                    <span>The product of mass and acceleration</span>
+                                </label>
+                            </li>
+                        </ul>
+                        <div class="feedback-box" id="feedback1"></div>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="question-card" data-question="2">
+                        <span class="question-number">Question 2</span>
+                        <p class="question-text">What is the SI unit of power?</p>
+                        <ul class="options-list">
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q2" value="a" class="option-radio">
+                                    <span class="option-marker">A</span>
+                                    <span>Joule (J)</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q2" value="b" class="option-radio">
+                                    <span class="option-marker">B</span>
+                                    <span>Newton (N)</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q2" value="c" class="option-radio">
+                                    <span class="option-marker">C</span>
+                                    <span>Watt (W)</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q2" value="d" class="option-radio">
+                                    <span class="option-marker">D</span>
+                                    <span>Pascal (Pa)</span>
+                                </label>
+                            </li>
+                        </ul>
+                        <div class="feedback-box" id="feedback2"></div>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div class="question-card" data-question="3">
+                        <span class="question-number">Question 3</span>
+                        <p class="question-text">Is power a scalar or vector quantity?</p>
+                        <ul class="options-list">
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q3" value="a" class="option-radio">
+                                    <span class="option-marker">A</span>
+                                    <span>Vector, because it depends on the direction of force</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q3" value="b" class="option-radio">
+                                    <span class="option-marker">B</span>
+                                    <span>Scalar, because it has magnitude only</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q3" value="c" class="option-radio">
+                                    <span class="option-marker">C</span>
+                                    <span>Vector, because it has both magnitude and direction</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q3" value="d" class="option-radio">
+                                    <span class="option-marker">D</span>
+                                    <span>Neither scalar nor vector</span>
+                                </label>
+                            </li>
+                        </ul>
+                        <div class="feedback-box" id="feedback3"></div>
+                    </div>
+
+                    <!-- Question 4 -->
+                    <div class="question-card" data-question="4">
+                        <span class="question-number">Question 4</span>
+                        <p class="question-text">A machine does 5000 J of work in 20 seconds. What is its power output?</p>
+                        <ul class="options-list">
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q4" value="a" class="option-radio">
+                                    <span class="option-marker">A</span>
+                                    <span>100 W</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q4" value="b" class="option-radio">
+                                    <span class="option-marker">B</span>
+                                    <span>250 W</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q4" value="c" class="option-radio">
+                                    <span class="option-marker">C</span>
+                                    <span>500 W</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q4" value="d" class="option-radio">
+                                    <span class="option-marker">D</span>
+                                    <span>100000 W</span>
+                                </label>
+                            </li>
+                        </ul>
+                        <div class="feedback-box" id="feedback4"></div>
+                    </div>
+
+                    <!-- Question 5 -->
+                    <div class="question-card" data-question="5">
+                        <span class="question-number">Question 5</span>
+                        <p class="question-text">A force of 100 N is required to keep a canoe moving at 2 m·s⁻¹. What power must be produced?</p>
+                        <ul class="options-list">
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q5" value="a" class="option-radio">
+                                    <span class="option-marker">A</span>
+                                    <span>50 W</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q5" value="b" class="option-radio">
+                                    <span class="option-marker">B</span>
+                                    <span>100 W</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q5" value="c" class="option-radio">
+                                    <span class="option-marker">C</span>
+                                    <span>200 W</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q5" value="d" class="option-radio">
+                                    <span class="option-marker">D</span>
+                                    <span>400 W</span>
+                                </label>
+                            </li>
+                        </ul>
+                        <div class="feedback-box" id="feedback5"></div>
+                    </div>
+
+                    <!-- Question 6 -->
+                    <div class="question-card" data-question="6">
+                        <span class="question-number">Question 6</span>
+                        <p class="question-text">An electric motor pulls a 70 kg crate up a frictionless ramp inclined at 31° at constant speed. If the motor power is 1500 W, what is the speed of the crate? (Use g = 9.8 m·s⁻²)</p>
+                        <ul class="options-list">
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q6" value="a" class="option-radio">
+                                    <span class="option-marker">A</span>
+                                    <span>1.9 m·s⁻¹</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q6" value="b" class="option-radio">
+                                    <span class="option-marker">B</span>
+                                    <span>2.1 m·s⁻¹</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q6" value="c" class="option-radio">
+                                    <span class="option-marker">C</span>
+                                    <span>2.6 m·s⁻¹</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q6" value="d" class="option-radio">
+                                    <span class="option-marker">D</span>
+                                    <span>4.2 m·s⁻¹</span>
+                                </label>
+                            </li>
+                        </ul>
+                        <div class="feedback-box" id="feedback6"></div>
+                    </div>
+
+                    <!-- Question 7 -->
+                    <div class="question-card" data-question="7">
+                        <span class="question-number">Question 7</span>
+                        <p class="question-text">A motor has an input power of 800 W and produces useful work of 600 J every second. What is its efficiency?</p>
+                        <ul class="options-list">
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q7" value="a" class="option-radio">
+                                    <span class="option-marker">A</span>
+                                    <span>50%</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q7" value="b" class="option-radio">
+                                    <span class="option-marker">B</span>
+                                    <span>60%</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q7" value="c" class="option-radio">
+                                    <span class="option-marker">C</span>
+                                    <span>75%</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q7" value="d" class="option-radio">
+                                    <span class="option-marker">D</span>
+                                    <span>80%</span>
+                                </label>
+                            </li>
+                        </ul>
+                        <div class="feedback-box" id="feedback7"></div>
+                    </div>
+
+                    <!-- Question 8 -->
+                    <div class="question-card" data-question="8">
+                        <span class="question-number">Question 8</span>
+                        <p class="question-text">One Watt is equivalent to:</p>
+                        <ul class="options-list">
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q8" value="a" class="option-radio">
+                                    <span class="option-marker">A</span>
+                                    <span>1 J·s</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q8" value="b" class="option-radio">
+                                    <span class="option-marker">B</span>
+                                    <span>1 J·s⁻¹</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q8" value="c" class="option-radio">
+                                    <span class="option-marker">C</span>
+                                    <span>1 N·m</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q8" value="d" class="option-radio">
+                                    <span class="option-marker">D</span>
+                                    <span>1 kg·m·s⁻¹</span>
+                                </label>
+                            </li>
+                        </ul>
+                        <div class="feedback-box" id="feedback8"></div>
+                    </div>
+
+                    <!-- Question 9 -->
+                    <div class="question-card" data-question="9">
+                        <span class="question-number">Question 9</span>
+                        <p class="question-text">Two teams pull canoes across 70 m exerting 80 N each. Team A takes 100 s, Team B takes 95 s. Which statement is correct?</p>
+                        <ul class="options-list">
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q9" value="a" class="option-radio">
+                                    <span class="option-marker">A</span>
+                                    <span>Both teams have the same power output</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q9" value="b" class="option-radio">
+                                    <span class="option-marker">B</span>
+                                    <span>Team A has greater power output</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q9" value="c" class="option-radio">
+                                    <span class="option-marker">C</span>
+                                    <span>Team B has greater power output</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q9" value="d" class="option-radio">
+                                    <span class="option-marker">D</span>
+                                    <span>Power cannot be determined from this information</span>
+                                </label>
+                            </li>
+                        </ul>
+                        <div class="feedback-box" id="feedback9"></div>
+                    </div>
+
+                    <!-- Question 10 -->
+                    <div class="question-card" data-question="10">
+                        <span class="question-number">Question 10</span>
+                        <p class="question-text">A crane lifts a 500 kg load through a height of 20 m in 25 seconds. What is the power output of the crane? (g = 10 m·s⁻²)</p>
+                        <ul class="options-list">
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q10" value="a" class="option-radio">
+                                    <span class="option-marker">A</span>
+                                    <span>2 000 W</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q10" value="b" class="option-radio">
+                                    <span class="option-marker">B</span>
+                                    <span>4 000 W</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q10" value="c" class="option-radio">
+                                    <span class="option-marker">C</span>
+                                    <span>10 000 W</span>
+                                </label>
+                            </li>
+                            <li class="option-item">
+                                <label class="option-label">
+                                    <input type="radio" name="q10" value="d" class="option-radio">
+                                    <span class="option-marker">D</span>
+                                    <span>100 000 W</span>
+                                </label>
+                            </li>
+                        </ul>
+                        <div class="feedback-box" id="feedback10"></div>
+                    </div>
+
+                    <div class="quiz-actions">
+                        <button type="button" class="btn btn-primary" onclick="submitQuiz()">Submit Quiz</button>
+                        <button type="button" class="btn btn-success" onclick="resetQuiz()" style="display: none;" id="resetBtn">Try Again</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Lesson Navigation -->
+        <div class="lesson-nav">
+            <a href="less10.html" class="nav-btn prev">
+                ← Previous: Work-Energy Theorem
+            </a>
+            <a href="less12.html" class="nav-btn next">
+                Next: Energy Conservation →
+            </a>
+        </div>
+    </main>
+
+    <!-- Score Modal -->
+    <div class="score-modal" id="scoreModal">
+        <div class="score-content">
+            <h2 style="margin-bottom: 1rem;">Quiz Complete!</h2>
+            <div class="score-circle" id="scoreCircle">
+                <span id="scorePercent">0%</span>
+            </div>
+            <p id="scoreMessage" style="font-size: 1.1rem; margin-bottom: 1rem;"></p>
+            <p id="scoreDetails" style="color: var(--gray); margin-bottom: 1.5rem;"></p>
+            <button class="btn btn-primary" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">Home</a>
+                <a href="#">About Us</a>
+                <a href="#">Subjects</a>
+                <a href="#">Contact</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+            <p>&copy; 2026 PassProof Academy. All rights reserved.</p>
+        </div>
+    </footer>
+
     <script>
-        // Collapsible sections functionality
-        document.querySelectorAll('.section-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const section = header.parentElement;
-                section.classList.toggle('active');
-                const icon = header.querySelector('.toggle-icon');
-                icon.textContent = section.classList.contains('active') ? '−' : '+';
-            });
+        // ===== INITIALIZATION =====
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeQuiz();
+            initializeSimulations();
+            loadProgress();
+            updateProgressBar();
         });
 
-        // Open the first section by default
-        document.querySelector('.section').classList.add('active');
-        document.querySelector('.section .toggle-icon').textContent = '−';
+        // ===== NAVIGATION =====
+        function toggleMobileMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
 
-        // Calculator functionality
-        document.getElementById('calc-type').addEventListener('change', function() {
-            // Hide all input groups
-            document.getElementById('power-work-inputs').style.display = 'none';
-            document.getElementById('power-force-inputs').style.display = 'none';
-            document.getElementById('efficiency-inputs').style.display = 'none';
-            
-            // Show selected input group
-            if (this.value === 'power-work') {
-                document.getElementById('power-work-inputs').style.display = 'block';
-            } else if (this.value === 'power-force') {
-                document.getElementById('power-force-inputs').style.display = 'block';
-            } else if (this.value === 'efficiency') {
-                document.getElementById('efficiency-inputs').style.display = 'block';
-            }
-        });
-
-        document.getElementById('calculate-power').addEventListener('click', function() {
-            const calcType = document.getElementById('calc-type').value;
-            let resultHTML = '';
-            
-            if (calcType === 'power-work') {
-                const work = parseFloat(document.getElementById('work').value);
-                const time = parseFloat(document.getElementById('time').value);
-                
-                if (isNaN(work) || isNaN(time) || time === 0) {
-                    resultHTML = '<p style="color: red;">Please enter valid numbers for work and time.</p>';
-                } else {
-                    const power = work / time;
-                    resultHTML = `
-                        <p><strong>Work:</strong> ${work.toFixed(2)} J</p>
-                        <p><strong>Time:</strong> ${time.toFixed(2)} s</p>
-                        <p><strong>Power:</strong> ${power.toFixed(2)} W</p>
-                        <p><strong>Formula:</strong> P = W / t</p>
-                    `;
-                }
-            } else if (calcType === 'power-force') {
-                const force = parseFloat(document.getElementById('force').value);
-                const velocity = parseFloat(document.getElementById('velocity').value);
-                
-                if (isNaN(force) || isNaN(velocity)) {
-                    resultHTML = '<p style="color: red;">Please enter valid numbers for force and velocity.</p>';
-                } else {
-                    const power = force * velocity;
-                    resultHTML = `
-                        <p><strong>Force:</strong> ${force.toFixed(2)} N</p>
-                        <p><strong>Velocity:</strong> ${velocity.toFixed(2)} m/s</p>
-                        <p><strong>Power:</strong> ${power.toFixed(2)} W</p>
-                        <p><strong>Formula:</strong> P = F·v</p>
-                    `;
-                }
-            } else if (calcType === 'efficiency') {
-                const usefulOutput = parseFloat(document.getElementById('useful-output').value);
-                const totalInput = parseFloat(document.getElementById('total-input').value);
-                
-                if (isNaN(usefulOutput) || isNaN(totalInput) || totalInput === 0) {
-                    resultHTML = '<p style="color: red;">Please enter valid numbers for useful output and total input.</p>';
-                } else {
-                    const efficiency = (usefulOutput / totalInput) * 100;
-                    resultHTML = `
-                        <p><strong>Useful Output:</strong> ${usefulOutput.toFixed(2)} J</p>
-                        <p><strong>Total Input:</strong> ${totalInput.toFixed(2)} J</p>
-                        <p><strong>Efficiency:</strong> ${efficiency.toFixed(2)}%</p>
-                        <p><strong>Formula:</strong> Efficiency = (Useful Output / Total Input) × 100%</p>
-                    `;
-                }
-            }
-            
-            document.getElementById('calculation-result').innerHTML = resultHTML;
-        });
-
-        // Quiz functionality
+        // ===== QUIZ SYSTEM =====
         const correctAnswers = {
             q1: 'b',
             q2: 'c',
             q3: 'b',
-            q4: 'a',
+            q4: 'b',
             q5: 'c',
-            q6: 'c',
-            q7: 'd',
-            q8: 'd',
-            q9: 'b',
-            q10: 'a'
+            q6: 'd',
+            q7: 'c',
+            q8: 'b',
+            q9: 'c',
+            q10: 'b'
         };
 
-        const questionContainers = document.querySelectorAll('.question-container');
-        let currentQuestion = 0;
+        const explanations = {
+            q1: 'Power is defined as the rate at which work is done or energy is transferred (P = W/Δt).',
+            q2: 'The SI unit of power is the Watt (W), which equals one Joule per second (J·s⁻¹).',
+            q3: 'Power is a scalar quantity - it has magnitude only, no direction.',
+            q4: 'P = W/Δt = 5000 J / 20 s = 250 W',
+            q5: 'P = F·v = 100 N × 2 m·s⁻¹ = 200 W',
+            q6: 'F = mg·sin(31°) = 70 × 9.8 × 0.515 ≈ 353 N. P = Fv → v = P/F = 1500/353 ≈ 4.2 m·s⁻¹',
+            q7: 'Efficiency = (600/800) × 100 = 75%',
+            q8: 'One Watt equals one Joule per second (1 W = 1 J·s⁻¹)',
+            q9: 'Same work, less time → Team B has greater power. P_A = 56 W, P_B ≈ 58.9 W',
+            q10: 'W = mgh = 500 × 10 × 20 = 100,000 J. P = W/t = 100,000/25 = 4,000 W'
+        };
 
-        // Show first question
-        showQuestion(currentQuestion);
+        let quizSubmitted = false;
+        let score = 0;
 
-        // Navigation buttons
-        document.getElementById('prev-btn').addEventListener('click', () => {
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                showQuestion(currentQuestion);
+        function initializeQuiz() {
+            // Generate progress dots
+            const progressContainer = document.getElementById('quizProgress');
+            for (let i = 1; i <= 10; i++) {
+                const dot = document.createElement('span');
+                dot.className = 'quiz-dot';
+                dot.id = `dot${i}`;
+                progressContainer.appendChild(dot);
             }
-        });
 
-        document.getElementById('next-btn').addEventListener('click', () => {
-            if (currentQuestion < questionContainers.length - 1) {
-                currentQuestion++;
-                showQuestion(currentQuestion);
-            }
-        });
-
-        // Check answers button
-        document.getElementById('check-btn').addEventListener('click', checkAllAnswers);
-
-        // Retry button
-        document.getElementById('retry-btn').addEventListener('click', () => {
-            // Reset all answers
-            document.querySelectorAll('input[type="radio"]').forEach(radio => {
-                radio.checked = false;
-            });
-            
-            // Hide all feedback
-            document.querySelectorAll('.feedback').forEach(feedback => {
-                feedback.style.display = 'none';
-                feedback.className = 'feedback';
-            });
-            
-            // Hide results
-            document.getElementById('results').style.display = 'none';
-            
-            // Reset to first question
-            currentQuestion = 0;
-            showQuestion(currentQuestion);
-        });
-
-        function showQuestion(index) {
-            // Hide all questions
-            questionContainers.forEach(container => {
-                container.style.display = 'none';
-            });
-            
-            // Show current question
-            questionContainers[index].style.display = 'block';
-            
-            // Update navigation buttons
-            document.getElementById('prev-btn').disabled = index === 0;
-            document.getElementById('next-btn').disabled = index === questionContainers.length - 1;
-            
-            // Auto-check answer when selected
-            const radios = questionContainers[index].querySelectorAll('input[type="radio"]');
-            radios.forEach(radio => {
-                radio.addEventListener('change', function() {
-                    checkAnswer(this.name);
+            // Add click handlers to options
+            document.querySelectorAll('.option-label').forEach(label => {
+                label.addEventListener('click', function() {
+                    if (quizSubmitted) return;
+                    
+                    const questionCard = this.closest('.question-card');
+                    const questionNum = questionCard.dataset.question;
+                    
+                    // Remove selected from siblings
+                    questionCard.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    // Update progress dot
+                    document.getElementById(`dot${questionNum}`).classList.add('active');
+                    
+                    // Save to localStorage
+                    saveProgress();
                 });
             });
         }
 
-        function checkAnswer(questionName) {
-            const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
-            const questionId = questionName.replace('q', 'q');
-            const feedback = document.querySelector(`#${questionId} .feedback`);
+        function submitQuiz() {
+            if (quizSubmitted) return;
             
-            if (selectedOption) {
-                if (selectedOption.value === correctAnswers[questionId]) {
-                    feedback.textContent = 'Correct! Well done.';
-                    feedback.className = 'feedback correct';
-                } else {
-                    feedback.textContent = 'Incorrect. Try again.';
-                    feedback.className = 'feedback incorrect';
-                }
-                feedback.style.display = 'block';
-            }
-        }
-
-        function checkAllAnswers() {
-            let score = 0;
-            
+            // Check if all questions answered
+            let allAnswered = true;
             for (let i = 1; i <= 10; i++) {
-                const questionId = `q${i}`;
-                const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
-                
-                if (selectedOption && selectedOption.value === correctAnswers[questionId]) {
-                    score++;
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                if (!selected) {
+                    allAnswered = false;
+                    break;
                 }
             }
-            
-            const percentage = (score / 10) * 100;
-            document.getElementById('score-value').textContent = `${percentage}%`;
-            document.getElementById('result-message').textContent = 
-                `You got ${score} out of 10 questions correct. ${percentage >= 70 ? 'Great job!' : 'Keep practicing!'}`;
-            document.getElementById('results').style.display = 'block';
-        }
-    </script>
 
-    <!-- Shared lesson navigation (previous/next) -->
-    <script>
-    (function(){
-        const maxLessons = 19;
-        function navigateLesson(direction){
-            const m = window.location.pathname.match(/less(\d+)\.html$/i);
-            if(!m) return;
-            const current = parseInt(m[1],10);
-            const next = direction === 'next' ? current + 1 : current - 1;
-            if(next < 1 || next > maxLessons) return;
-            const newHref = window.location.pathname.replace(/less\d+\.html$/i, `less${next}.html`);
-            window.location.href = newHref;
+            if (!allAnswered) {
+                alert('Please answer all questions before submitting.');
+                return;
+            }
+
+            quizSubmitted = true;
+            score = 0;
+
+            // Check each answer
+            for (let i = 1; i <= 10; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                const feedbackBox = document.getElementById(`feedback${i}`);
+                const dot = document.getElementById(`dot${i}`);
+                const questionCard = document.querySelector(`.question-card[data-question="${i}"]`);
+                
+                if (selected.value === correctAnswers[`q${i}`]) {
+                    score++;
+                    selected.closest('.option-label').classList.add('correct');
+                    feedbackBox.className = 'feedback-box correct';
+                    feedbackBox.innerHTML = `<strong>✓ Correct!</strong> ${explanations[`q${i}`]}`;
+                    dot.classList.remove('active');
+                    dot.classList.add('correct');
+                } else {
+                    selected.closest('.option-label').classList.add('incorrect');
+                    // Show correct answer
+                    questionCard.querySelectorAll('.option-label').forEach(label => {
+                        if (label.querySelector('input').value === correctAnswers[`q${i}`]) {
+                            label.classList.add('correct');
+                        }
+                    });
+                    feedbackBox.className = 'feedback-box incorrect';
+                    feedbackBox.innerHTML = `<strong>✗ Incorrect.</strong> ${explanations[`q${i}`]}`;
+                    dot.classList.remove('active');
+                    dot.classList.add('incorrect');
+                }
+            }
+
+            // Show results
+            const percentage = (score / 10) * 100;
+            showScoreModal(score, percentage);
+
+            // Update UI
+            document.getElementById('resetBtn').style.display = 'inline-flex';
+            document.querySelector('.quiz-actions .btn-primary').style.display = 'none';
+
+            // Save completion
+            saveProgress();
+            updateProgressBar();
         }
-        [['prevBtn','nextBtn'], ['prev-btn','next-btn']].forEach(ids => {
-            const prev = document.getElementById(ids[0]);
-            const next = document.getElementById(ids[1]);
-            if(prev) prev.addEventListener('click', () => navigateLesson('prev'));
-            if(next) next.addEventListener('click', () => navigateLesson('next'));
+
+        function showScoreModal(score, percentage) {
+            const modal = document.getElementById('scoreModal');
+            const circle = document.getElementById('scoreCircle');
+            const percent = document.getElementById('scorePercent');
+            const message = document.getElementById('scoreMessage');
+            const details = document.getElementById('scoreDetails');
+
+            percent.textContent = percentage + '%';
+            details.textContent = `You got ${score} out of 10 questions correct.`;
+
+            circle.className = 'score-circle';
+            if (percentage >= 80) {
+                circle.classList.add('excellent');
+                message.textContent = 'Excellent work! 🎉';
+            } else if (percentage >= 70) {
+                circle.classList.add('good');
+                message.textContent = 'Good job! You passed! 👍';
+            } else if (percentage >= 50) {
+                circle.classList.add('fair');
+                message.textContent = 'Keep practicing! 📚';
+            } else {
+                circle.classList.add('poor');
+                message.textContent = 'Review the material and try again. 💪';
+            }
+
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('scoreModal').classList.remove('active');
+        }
+
+        function resetQuiz() {
+            quizSubmitted = false;
+            score = 0;
+
+            // Reset all selections and feedback
+            document.querySelectorAll('.option-label').forEach(label => {
+                label.classList.remove('selected', 'correct', 'incorrect');
+            });
+            document.querySelectorAll('.option-radio').forEach(radio => {
+                radio.checked = false;
+            });
+            document.querySelectorAll('.feedback-box').forEach(box => {
+                box.className = 'feedback-box';
+                box.innerHTML = '';
+            });
+            document.querySelectorAll('.quiz-dot').forEach(dot => {
+                dot.className = 'quiz-dot';
+            });
+
+            // Reset buttons
+            document.getElementById('resetBtn').style.display = 'none';
+            document.querySelector('.quiz-actions .btn-primary').style.display = 'inline-flex';
+
+            // Scroll to quiz
+            document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ===== SIMULATIONS =====
+        function initializeSimulations() {
+            // Power Calculator Simulation
+            const workSlider = document.getElementById('workSlider');
+            const timeSlider = document.getElementById('timeSlider');
+            
+            workSlider.addEventListener('input', updatePowerCalc);
+            timeSlider.addEventListener('input', updatePowerCalc);
+
+            // Car Power Simulation
+            const forceSlider = document.getElementById('forceSlider');
+            const velocitySlider = document.getElementById('velocitySlider');
+            
+            forceSlider.addEventListener('input', updateCarSim);
+            velocitySlider.addEventListener('input', updateCarSim);
+
+            // Efficiency Simulation
+            const inputSlider = document.getElementById('inputSlider');
+            const outputSlider = document.getElementById('outputSlider');
+            
+            inputSlider.addEventListener('input', updateEfficiency);
+            outputSlider.addEventListener('input', updateEfficiency);
+
+            // Initial updates
+            updatePowerCalc();
+            updateCarSim();
+            updateEfficiency();
+            animateCar();
+        }
+
+        function updatePowerCalc() {
+            const work = parseInt(document.getElementById('workSlider').value);
+            const time = parseInt(document.getElementById('timeSlider').value);
+            const power = work / time;
+
+            document.getElementById('workSliderValue').textContent = work;
+            document.getElementById('timeSliderValue').textContent = time;
+            document.getElementById('workValue').textContent = work + ' J';
+            document.getElementById('timeValue').textContent = time + ' s';
+            document.getElementById('powerValue').textContent = power.toFixed(1) + ' W';
+        }
+
+        function updateCarSim() {
+            const force = parseInt(document.getElementById('forceSlider').value);
+            const velocity = parseInt(document.getElementById('velocitySlider').value);
+            const power = (force * velocity) / 1000;
+
+            document.getElementById('forceSliderValue').textContent = force;
+            document.getElementById('velocitySliderValue').textContent = velocity;
+            document.getElementById('forceValue').textContent = force + ' N';
+            document.getElementById('velocityValue').textContent = velocity + ' m/s';
+            document.getElementById('carPowerValue').textContent = power.toFixed(1) + ' kW';
+        }
+
+        let carPosition = 0;
+        function animateCar() {
+            const car = document.getElementById('carElement');
+            const container = document.getElementById('carAnimation');
+            const velocity = parseInt(document.getElementById('velocitySlider').value);
+            
+            carPosition += velocity * 0.1;
+            if (carPosition > container.offsetWidth) {
+                carPosition = -80;
+            }
+            
+            car.style.left = carPosition + 'px';
+            requestAnimationFrame(animateCar);
+        }
+
+        function updateEfficiency() {
+            const input = parseInt(document.getElementById('inputSlider').value);
+            let output = parseInt(document.getElementById('outputSlider').value);
+            
+            // Output cannot exceed input
+            if (output > input) {
+                output = input;
+                document.getElementById('outputSlider').value = output;
+            }
+            document.getElementById('outputSlider').max = input;
+
+            const efficiency = (output / input) * 100;
+            const lost = input - output;
+
+            document.getElementById('inputSliderValue').textContent = input;
+            document.getElementById('outputSliderValue').textContent = output;
+            document.getElementById('inputEnergyValue').textContent = input + ' J';
+            document.getElementById('outputEnergyValue').textContent = output + ' J';
+            document.getElementById('lostEnergyValue').textContent = lost + ' J';
+            document.getElementById('efficiencyMeterValue').textContent = efficiency.toFixed(0) + '%';
+
+            // Update meter visual
+            const degrees = (efficiency / 100) * 360;
+            document.getElementById('efficiencyMeterFill').style.background = 
+                `conic-gradient(${getEfficiencyColor(efficiency)} 0deg ${degrees}deg, #e0e0e0 ${degrees}deg)`;
+            
+            document.getElementById('efficiencyMeterValue').style.color = getEfficiencyColor(efficiency);
+        }
+
+        function getEfficiencyColor(efficiency) {
+            if (efficiency >= 75) return '#28a745';
+            if (efficiency >= 50) return '#42a5f5';
+            if (efficiency >= 25) return '#ffc107';
+            return '#dc3545';
+        }
+
+        // ===== PROGRESS & LOCALSTORAGE =====
+        function saveProgress() {
+            const progressData = {
+                lesson: 'power-lesson-1',
+                lastAccessed: new Date().toISOString(),
+                quizCompleted: quizSubmitted,
+                quizScore: score,
+                answers: {}
+            };
+
+            // Save selected answers
+            for (let i = 1; i <= 10; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selected) {
+                    progressData.answers[`q${i}`] = selected.value;
+                }
+            }
+
+            localStorage.setItem('passproofProgress', JSON.stringify(progressData));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('passproofProgress');
+            if (!saved) return;
+
+            const data = JSON.parse(saved);
+            if (data.lesson !== 'power-lesson-1') return;
+
+            // Restore answers if quiz not yet submitted
+            if (!data.quizCompleted && data.answers) {
+                for (const [question, answer] of Object.entries(data.answers)) {
+                    const radio = document.querySelector(`input[name="${question}"][value="${answer}"]`);
+                    if (radio) {
+                        radio.checked = true;
+                        radio.closest('.option-label').classList.add('selected');
+                        const qNum = question.replace('q', '');
+                        document.getElementById(`dot${qNum}`).classList.add('active');
+                    }
+                }
+            }
+        }
+
+        function updateProgressBar() {
+            const saved = localStorage.getItem('passproofProgress');
+            let progress = 0;
+            
+            if (saved) {
+                const data = JSON.parse(saved);
+                if (data.quizCompleted) {
+                    progress = 100;
+                } else if (data.answers) {
+                    progress = Object.keys(data.answers).length * 10;
+                }
+            }
+
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = progress + '%';
+        }
+
+        // ===== SMOOTH SCROLL =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
         });
-    })();
+
+        // ===== INTERSECTION OBSERVER FOR ANIMATIONS =====
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(card);
+        });
     </script>
+    <script src="gr12-phys-nav.js"></script>
 </body>
 </html>

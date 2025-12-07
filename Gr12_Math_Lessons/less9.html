@@ -1,0 +1,2166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometric Series - Sum Formulas & Proof | Lesson 5 | PassProof Academy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1a73e8;
+            --primary-dark: #0d47a1;
+            --primary-light: #e3f2fd;
+            --accent-blue: #2196f3;
+            --white: #ffffff;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-600: #475569;
+            --gray-800: #1e293b;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --purple: #8b5cf6;
+            --teal: #14b8a6;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--gray-50) 0%, var(--primary-light) 100%);
+            min-height: 100vh;
+            color: var(--gray-800);
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .nav-dropdown {
+            position: relative;
+        }
+
+        .nav-toggle {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .nav-toggle:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .nav-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-xl);
+            min-width: 280px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .nav-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .nav-menu a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: var(--gray-800);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .nav-menu a:hover {
+            background: var(--primary-light);
+            color: var(--primary-blue);
+            padding-left: 2rem;
+        }
+
+        .nav-menu a:last-child {
+            border-bottom: none;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+
+        /* Meta Info */
+        .meta-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .badge {
+            background: var(--primary-light);
+            color: var(--primary-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .badge.subject {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .badge.lesson {
+            background: var(--purple);
+            color: var(--white);
+        }
+
+        .badge.proof {
+            background: var(--teal);
+            color: var(--white);
+        }
+
+        /* Headings */
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--primary-light);
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            color: var(--gray-800);
+            margin-bottom: 0.75rem;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Learning Objectives */
+        .objectives-list {
+            list-style: none;
+        }
+
+        .objectives-list li {
+            padding: 1rem;
+            background: var(--gray-50);
+            border-radius: var(--radius-sm);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            transition: var(--transition);
+        }
+
+        .objectives-list li:hover {
+            background: var(--primary-light);
+            transform: translateX(5px);
+        }
+
+        .obj-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--primary-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: linear-gradient(135deg, var(--primary-light) 0%, #bbdefb 100%);
+            border-left: 5px solid var(--primary-blue);
+            padding: 1.5rem 2rem;
+            border-radius: var(--radius-sm);
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .formula-box.purple {
+            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+            border-left-color: var(--purple);
+        }
+
+        .formula-box.teal {
+            background: linear-gradient(135deg, #ccfbf1 0%, #99f6e4 100%);
+            border-left-color: var(--teal);
+        }
+
+        .formula-box.gold {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left-color: var(--warning);
+        }
+
+        .formula {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            font-weight: 600;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .formula sub, .formula sup {
+            font-size: 0.7em;
+        }
+
+        .formula-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-top: 0.5rem;
+        }
+
+        .formula-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        /* Proof Section */
+        .proof-container {
+            background: var(--gray-50);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 2px solid var(--gray-200);
+        }
+
+        .proof-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px dashed var(--gray-300);
+        }
+
+        .proof-icon {
+            font-size: 1.5rem;
+        }
+
+        .proof-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        .proof-step {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .proof-step.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .proof-step:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateX(5px);
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-description {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .math-expression {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.15rem;
+            color: var(--primary-dark);
+            background: var(--primary-light);
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--radius-sm);
+            display: inline-block;
+            margin: 0.5rem 0;
+        }
+
+        .math-expression.purple {
+            background: #ede9fe;
+            color: #6d28d9;
+        }
+
+        .math-expression.teal {
+            background: #ccfbf1;
+            color: #0f766e;
+        }
+
+        .math-expression.highlight {
+            background: linear-gradient(135deg, var(--warning) 0%, #fbbf24 100%);
+            color: var(--gray-800);
+            font-weight: 700;
+        }
+
+        .note-box {
+            background: #fef3c7;
+            border-left: 4px solid var(--warning);
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            margin: 1rem 0;
+        }
+
+        .note-box.info {
+            background: var(--primary-light);
+            border-left-color: var(--primary-blue);
+        }
+
+        .note-box.success {
+            background: #d1fae5;
+            border-left-color: var(--success);
+        }
+
+        /* Convergence Table */
+        .convergence-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: var(--white);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .convergence-table th,
+        .convergence-table td {
+            padding: 0.75rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .convergence-table th {
+            background: var(--primary-blue);
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .convergence-table tr:hover {
+            background: var(--primary-light);
+        }
+
+        .convergence-table .highlight-row {
+            background: #fef3c7;
+            font-weight: 600;
+        }
+
+        /* Simulation Container */
+        .simulation-container {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border: 2px solid var(--accent-blue);
+        }
+
+        .sim-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .sim-icon {
+            font-size: 1.5rem;
+        }
+
+        .sim-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            color: var(--gray-800);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .control-value {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--gray-200);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary-blue);
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            background: var(--primary-dark);
+        }
+
+        input[type="number"] {
+            padding: 0.75rem;
+            border: 2px solid var(--gray-300);
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        input[type="number"]:focus {
+            border-color: var(--primary-blue);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
+        }
+
+        .sim-display {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            min-height: 200px;
+        }
+
+        .convergence-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .term-box {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            transition: var(--transition);
+            animation: popIn 0.3s ease forwards;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .term-box:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .term-box.partial-sum {
+            background: var(--purple);
+        }
+
+        .term-box.converging {
+            background: var(--teal);
+        }
+
+        .term-label {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            margin-bottom: 0.25rem;
+        }
+
+        .term-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .infinity-result {
+            text-align: center;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--teal) 0%, #0d9488 100%);
+            border-radius: var(--radius-md);
+            color: var(--white);
+            margin-top: 1rem;
+        }
+
+        .infinity-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .infinity-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+        }
+
+        .infinity-formula {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Animated Proof Buttons */
+        .proof-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .proof-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .proof-btn.primary {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .proof-btn.primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .proof-btn.secondary {
+            background: var(--gray-200);
+            color: var(--gray-800);
+        }
+
+        .proof-btn.secondary:hover {
+            background: var(--gray-300);
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            margin-top: 2rem;
+        }
+
+        .question-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            border: 2px solid var(--gray-200);
+            transition: var(--transition);
+        }
+
+        .question-card.answered-correct {
+            border-color: var(--success);
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        }
+
+        .question-card.answered-incorrect {
+            border-color: var(--error);
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+        }
+
+        .question-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .question-number {
+            background: var(--primary-blue);
+            color: var(--white);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .question-text {
+            flex: 1;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .options-list {
+            display: grid;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--gray-50);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .option-label:hover {
+            background: var(--primary-light);
+            border-color: var(--primary-blue);
+        }
+
+        .option-label.selected {
+            background: var(--primary-light);
+            border-color: var(--primary-blue);
+        }
+
+        .option-label.correct {
+            background: #d1fae5;
+            border-color: var(--success);
+        }
+
+        .option-label.incorrect {
+            background: #fee2e2;
+            border-color: var(--error);
+        }
+
+        .option-label input {
+            display: none;
+        }
+
+        .option-marker {
+            width: 28px;
+            height: 28px;
+            border: 2px solid var(--gray-300);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--gray-600);
+            transition: var(--transition);
+        }
+
+        .option-label:hover .option-marker,
+        .option-label.selected .option-marker {
+            border-color: var(--primary-blue);
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .option-label.correct .option-marker {
+            border-color: var(--success);
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .option-label.incorrect .option-marker {
+            border-color: var(--error);
+            background: var(--error);
+            color: var(--white);
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: #d1fae5;
+            color: #065f46;
+            border-left: 4px solid var(--success);
+        }
+
+        .feedback.incorrect {
+            background: #fee2e2;
+            color: #991b1b;
+            border-left: 4px solid var(--error);
+        }
+
+        .submit-btn {
+            background: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 0.5rem;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .submit-btn:disabled {
+            background: var(--gray-300);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Score Display */
+        .score-card {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .score-card.show {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 1.5rem auto;
+            border: 4px solid var(--white);
+        }
+
+        .score-percentage {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .score-label {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .score-message {
+            font-size: 1.25rem;
+            margin-top: 1rem;
+        }
+
+        .retry-btn {
+            background: var(--white);
+            color: var(--primary-blue);
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .retry-btn:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Navigation Buttons */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: var(--white);
+            border: 2px solid var(--primary-blue);
+            color: var(--primary-blue);
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-btn.primary {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .nav-btn.primary:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: var(--gray-200);
+            border-radius: 50px;
+            height: 8px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success) 0%, #34d399 100%);
+            border-radius: 50px;
+            transition: width 0.5s ease;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gray-800);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-copyright {
+            color: var(--gray-300);
+            font-size: 0.875rem;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .header-container {
+                padding: 0 1rem;
+            }
+
+            .logo {
+                font-size: 1.25rem;
+            }
+
+            .logo-icon {
+                width: 35px;
+                height: 35px;
+            }
+
+            .nav-toggle {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+
+            .meta-badges {
+                justify-content: center;
+            }
+
+            .formula {
+                font-size: 1.1rem;
+            }
+
+            .formula-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sim-controls {
+                grid-template-columns: 1fr;
+            }
+
+            .term-box {
+                padding: 0.75rem;
+            }
+
+            .term-value {
+                font-size: 0.9rem;
+            }
+
+            .lesson-nav {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                justify-content: center;
+            }
+
+            .proof-step {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .proof-controls {
+                flex-direction: column;
+            }
+
+            .proof-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .convergence-display {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            header, footer, .lesson-nav, .simulation-container, .proof-controls {
+                display: none;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .mt-1 { margin-top: 0.5rem; }
+        .mt-2 { margin-top: 1rem; }
+        .mt-3 { margin-top: 1.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+    <!-- Header with Dropdown Navigation -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">∞</div>
+                PassProof Academy
+            </div>
+            <nav class="nav-dropdown">
+                <button class="nav-toggle" id="navToggle">
+                    <span>☰</span> Menu
+                </button>
+                <div class="nav-menu" id="navMenu">
+                    <a href="#overview">📋 Overview</a>
+                    <a href="#objectives">🎯 Learning Objectives</a>
+                    <a href="#sum-proof">📝 Sum Formula Proof</a>
+                    <a href="#infinity-proof">∞ Sum to Infinity Proof</a>
+                    <a href="#simulation">🔬 Interactive Simulations</a>
+                    <a href="#quiz">📝 Practice Quiz</a>
+                    <a href="#progress">📊 My Progress</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Subject & Grade -->
+        <section class="card" id="overview">
+            <div class="meta-badges">
+                <span class="badge subject">Mathematics</span>
+                <span class="badge">Grade 12</span>
+                <span class="badge">Term 1 • Week 2</span>
+                <span class="badge lesson">Lesson 5</span>
+                <span class="badge proof">Proofs</span>
+                <span class="badge">⏱️ 30 min</span>
+            </div>
+
+            <!-- Topic & Lesson Title -->
+            <h1>Geometric Sequences and Series</h1>
+            <p class="subtitle">Lesson 5: Deriving the Sum Formula & Sum to Infinity</p>
+
+            <!-- Progress Indicator -->
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+            </div>
+            <p class="text-center mt-1" style="color: var(--gray-600); font-size: 0.875rem;">
+                <span id="progressText">0%</span> Complete
+            </p>
+        </section>
+
+        <!-- Learning Objectives -->
+        <section class="card" id="objectives">
+            <h2>🎯 Learning Objectives</h2>
+            <ul class="objectives-list">
+                <li>
+                    <div class="obj-icon">1</div>
+                    <span>Learn and understand the proof of the formula for the sum of a geometric series.</span>
+                </li>
+                <li>
+                    <div class="obj-icon">2</div>
+                    <span>Extend this proof to derive the formula for the sum to infinity of a convergent geometric series.</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Overview -->
+        <section class="card">
+            <h2>📖 Overview</h2>
+            <p>In previous lessons, you've been using the sum formula for geometric series. Now it's time to understand <strong>where this formula comes from</strong> and prove it mathematically. We'll also derive the famous <strong>sum to infinity</strong> formula, which is essential for convergent series.</p>
+
+            <div class="formula-grid">
+                <div class="formula-box">
+                    <div class="formula">S<sub>n</sub> = <sup>a(r<sup>n</sup> − 1)</sup>/<sub>r − 1</sub></div>
+                    <div class="formula-label">Sum Formula (r ≠ 1)</div>
+                </div>
+
+                <div class="formula-box teal">
+                    <div class="formula">S<sub>∞</sub> = <sup>a</sup>/<sub>1 − r</sub></div>
+                    <div class="formula-label">Sum to Infinity (−1 < r < 1)</div>
+                </div>
+            </div>
+
+            <div class="note-box info">
+                <strong>💡 Why Learn Proofs?</strong>
+                <p style="margin-top: 0.5rem;">Understanding proofs helps you remember formulas better, apply them correctly, and recognize when they can (or cannot) be used.</p>
+            </div>
+        </section>
+
+        <!-- Proof of Sum Formula -->
+        <section class="card" id="sum-proof">
+            <h2>📝 Proof: Sum of a Geometric Series</h2>
+            
+            <p>We want to prove that the sum of the first n terms of a geometric series is:</p>
+            
+            <div class="formula-box">
+                <div class="formula">S<sub>n</sub> = <sup>a(r<sup>n</sup> − 1)</sup>/<sub>r − 1</sub> where r ≠ 1</div>
+            </div>
+
+            <div class="proof-container" id="sumProof">
+                <div class="proof-header">
+                    <span class="proof-icon">🔍</span>
+                    <span class="proof-title">Step-by-Step Derivation</span>
+                </div>
+
+                <div class="proof-controls">
+                    <button class="proof-btn primary" id="showAllSteps">▶ Show All Steps</button>
+                    <button class="proof-btn secondary" id="resetSteps">↺ Reset</button>
+                </div>
+
+                <div class="proof-step" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-description">Write out the sum of n terms:</div>
+                        <div class="math-expression">S<sub>n</sub> = a + ar + ar² + ar³ + ... + ar<sup>n−2</sup> + ar<sup>n−1</sup></div>
+                        <p style="color: var(--gray-600); font-size: 0.85rem; margin-top: 0.5rem;">This has n terms, starting from a (which is ar⁰) to ar<sup>n−1</sup></p>
+                    </div>
+                </div>
+
+                <div class="proof-step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-description">Multiply the entire equation by r:</div>
+                        <div class="math-expression purple">r·S<sub>n</sub> = ar + ar² + ar³ + ar⁴ + ... + ar<sup>n−1</sup> + ar<sup>n</sup></div>
+                        <p style="color: var(--gray-600); font-size: 0.85rem; margin-top: 0.5rem;">Notice: Each term shifts right by one power of r</p>
+                    </div>
+                </div>
+
+                <div class="proof-step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-description">Subtract equation (1) from equation (2):</div>
+                        <div class="math-expression">r·S<sub>n</sub> − S<sub>n</sub> = ar<sup>n</sup> − a</div>
+                        <p style="color: var(--gray-600); font-size: 0.85rem; margin-top: 0.5rem;">All the middle terms cancel out! (ar − ar = 0, ar² − ar² = 0, etc.)</p>
+                    </div>
+                </div>
+
+                <div class="proof-step" data-step="4">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-description">Factor out common terms on both sides:</div>
+                        <div class="math-expression">S<sub>n</sub>(r − 1) = a(r<sup>n</sup> − 1)</div>
+                        <p style="color: var(--gray-600); font-size: 0.85rem; margin-top: 0.5rem;">Left side: factor out S<sub>n</sub>. Right side: factor out a</p>
+                    </div>
+                </div>
+
+                <div class="proof-step" data-step="5">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <div class="step-description">Divide both sides by (r − 1):</div>
+                        <div class="math-expression highlight">S<sub>n</sub> = <sup>a(r<sup>n</sup> − 1)</sup>/<sub>r − 1</sub> , r ≠ 1</div>
+                        <p style="color: var(--gray-600); font-size: 0.85rem; margin-top: 0.5rem;">This is our sum formula! ✓</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="note-box">
+                <strong>📌 Alternate Form:</strong>
+                <p style="margin-top: 0.5rem;">If we subtract (1) from (2) instead, we get:</p>
+                <div class="math-expression" style="margin-top: 0.5rem;">S<sub>n</sub> = <sup>a(1 − r<sup>n</sup>)</sup>/<sub>1 − r</sub></div>
+                <p style="margin-top: 0.5rem; color: var(--gray-600);">This form is more convenient when |r| < 1</p>
+            </div>
+        </section>
+
+        <!-- Proof of Sum to Infinity -->
+        <section class="card" id="infinity-proof">
+            <h2>∞ Proof: Sum to Infinity</h2>
+
+            <p>For certain geometric series, we can find the sum of <strong>infinitely many terms</strong>. Let's derive this formula.</p>
+
+            <div class="proof-container" id="infinityProof">
+                <div class="proof-header">
+                    <span class="proof-icon">🌌</span>
+                    <span class="proof-title">Deriving the Sum to Infinity Formula</span>
+                </div>
+
+                <div class="proof-controls">
+                    <button class="proof-btn primary" id="showInfinitySteps">▶ Show All Steps</button>
+                    <button class="proof-btn secondary" id="resetInfinitySteps">↺ Reset</button>
+                </div>
+
+                <div class="proof-step infinity-step" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-description">Start with the alternate form of the sum formula:</div>
+                        <div class="math-expression">S<sub>n</sub> = <sup>a(1 − r<sup>n</sup>)</sup>/<sub>1 − r</sub></div>
+                    </div>
+                </div>
+
+                <div class="proof-step infinity-step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-description">Expand by multiplying into the brackets:</div>
+                        <div class="math-expression">S<sub>n</sub> = <sup>a − ar<sup>n</sup></sup>/<sub>1 − r</sub></div>
+                    </div>
+                </div>
+
+                <div class="proof-step infinity-step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-description">Split into two fractions:</div>
+                        <div class="math-expression">S<sub>n</sub> = <sup>a</sup>/<sub>1 − r</sub> − <sup>ar<sup>n</sup></sup>/<sub>1 − r</sub></div>
+                    </div>
+                </div>
+
+                <div class="proof-step infinity-step" data-step="4">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-description">Consider what happens when −1 < r < 1:</div>
+                        <div class="note-box success" style="margin: 0.5rem 0;">
+                            <p><strong>Key Insight:</strong> When |r| < 1, as n gets larger, r<sup>n</sup> gets <strong>smaller and smaller</strong>, approaching 0.</p>
+                        </div>
+                        <table class="convergence-table">
+                            <thead>
+                                <tr>
+                                    <th>n</th>
+                                    <th>r = ⅓</th>
+                                    <th>r = ½</th>
+                                    <th>r = ⅔</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>0.333</td><td>0.5</td><td>0.667</td></tr>
+                                <tr><td>2</td><td>0.111</td><td>0.25</td><td>0.444</td></tr>
+                                <tr><td>3</td><td>0.037</td><td>0.125</td><td>0.296</td></tr>
+                                <tr><td>5</td><td>0.004</td><td>0.031</td><td>0.132</td></tr>
+                                <tr><td>10</td><td>0.00002</td><td>0.001</td><td>0.017</td></tr>
+                                <tr class="highlight-row"><td>∞</td><td>→ 0</td><td>→ 0</td><td>→ 0</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="proof-step infinity-step" data-step="5">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <div class="step-description">As n → ∞, r<sup>n</sup> → 0, so the second term vanishes:</div>
+                        <div class="math-expression">S<sub>n</sub> → <sup>a</sup>/<sub>1 − r</sub> − 0</div>
+                    </div>
+                </div>
+
+                <div class="proof-step infinity-step" data-step="6">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <div class="step-description">Therefore, the sum to infinity is:</div>
+                        <div class="math-expression highlight">S<sub>∞</sub> = <sup>a</sup>/<sub>1 − r</sub> , where −1 < r < 1</div>
+                        <p style="color: var(--success); font-weight: 600; margin-top: 0.5rem;">✓ This is our sum to infinity formula!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="note-box">
+                <strong>⚠️ Important Condition:</strong>
+                <p style="margin-top: 0.5rem;">The sum to infinity <strong>only exists</strong> when −1 < r < 1 (i.e., |r| < 1). This is called a <strong>convergent geometric series</strong>.</p>
+                <p style="margin-top: 0.5rem;">If |r| ≥ 1, the series <strong>diverges</strong> and has no finite sum.</p>
+            </div>
+        </section>
+
+        <!-- Interactive Simulations -->
+        <section class="card" id="simulation">
+            <h2>🔬 Interactive Simulations</h2>
+
+            <!-- Simulation 1: Convergence Visualizer -->
+            <div class="simulation-container">
+                <div class="sim-title">
+                    <span class="sim-icon">📉</span>
+                    <h3>Convergence Visualizer</h3>
+                </div>
+                <p style="margin-bottom: 1rem; color: var(--gray-600);">Watch how r<sup>n</sup> approaches zero as n increases (when |r| < 1).</p>
+
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label>
+                            Common Ratio (r):
+                            <span class="control-value" id="convRValue">0.5</span>
+                        </label>
+                        <input type="range" id="convR" min="-0.9" max="0.9" value="0.5" step="0.1">
+                    </div>
+                </div>
+
+                <div class="sim-display">
+                    <h4 style="margin-bottom: 1rem; color: var(--primary-dark);">Values of r<sup>n</sup> as n increases:</h4>
+                    <div class="convergence-display" id="convergenceDisplay">
+                        <!-- Generated by JS -->
+                    </div>
+                    <div style="text-align: center; margin-top: 1rem; padding: 1rem; background: #fef3c7; border-radius: var(--radius-sm);">
+                        <p style="font-size: 1.1rem; color: var(--gray-800);">
+                            As n → ∞, r<sup>n</sup> → <strong id="convergenceLimit">0</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulation 2: Sum to Infinity Calculator -->
+            <div class="simulation-container">
+                <div class="sim-title">
+                    <span class="sim-icon">∞</span>
+                    <h3>Sum to Infinity Calculator</h3>
+                </div>
+                <p style="margin-bottom: 1rem; color: var(--gray-600);">Enter values to see how partial sums approach the sum to infinity.</p>
+
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label>First Term (a):</label>
+                        <input type="number" id="infA" value="10" step="any">
+                    </div>
+                    <div class="control-group">
+                        <label>Common Ratio (r):</label>
+                        <input type="number" id="infR" value="0.5" step="0.1" min="-0.99" max="0.99">
+                    </div>
+                    <div class="control-group">
+                        <label>
+                            Terms to show (n):
+                            <span class="control-value" id="infNValue">10</span>
+                        </label>
+                        <input type="range" id="infN" min="3" max="20" value="10" step="1">
+                    </div>
+                </div>
+
+                <button class="submit-btn" id="calculateInfinity" style="margin-bottom: 1rem;">Calculate</button>
+
+                <div class="sim-display" id="infinityResult">
+                    <div style="text-align: center; color: var(--gray-600);">
+                        Click "Calculate" to see the partial sums approaching S<sub>∞</sub>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulation 3: Canvas Visualization -->
+            <div class="simulation-container">
+                <div class="sim-title">
+                    <span class="sim-icon">📊</span>
+                    <h3>Partial Sums Approaching Infinity</h3>
+                </div>
+                <p style="margin-bottom: 1rem; color: var(--gray-600);">Visualize how S<sub>n</sub> approaches S<sub>∞</sub> as n increases.</p>
+
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label>
+                            First Term (a):
+                            <span class="control-value" id="canvasAValue">8</span>
+                        </label>
+                        <input type="range" id="canvasA" min="1" max="20" value="8" step="1">
+                    </div>
+                    <div class="control-group">
+                        <label>
+                            Common Ratio (r):
+                            <span class="control-value" id="canvasRValue">0.5</span>
+                        </label>
+                        <input type="range" id="canvasR" min="0.1" max="0.9" value="0.5" step="0.05">
+                    </div>
+                </div>
+
+                <div class="sim-display">
+                    <canvas id="infinityCanvas" width="600" height="300" style="width: 100%; max-width: 600px; display: block; margin: 0 auto; border-radius: var(--radius-sm); background: var(--white);"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section class="card quiz-container" id="quiz">
+            <h2>📝 Practice Quiz</h2>
+            <p style="color: var(--gray-600); margin-bottom: 1.5rem;">Test your understanding of the proofs and formulas with these 12 questions.</p>
+
+            <div id="quizQuestions">
+                <!-- Questions will be generated by JavaScript -->
+            </div>
+
+            <div class="score-card" id="scoreCard">
+                <h3>🎉 Quiz Complete!</h3>
+                <div class="score-circle">
+                    <div class="score-percentage" id="scorePercentage">0%</div>
+                    <div class="score-label">Score</div>
+                </div>
+                <p id="scoreDetails"></p>
+                <p class="score-message" id="scoreMessage"></p>
+                <button class="retry-btn" id="retryBtn">Try Again</button>
+            </div>
+        </section>
+
+        <!-- Lesson Navigation -->
+        <div class="nav-buttons">
+            <button class="nav-btn prev" >
+                ← Previous Lesson
+            </button>
+            <button class="nav-btn next" >
+                Next Lesson: Arithmetic Sequences →
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">∞ PassProof Academy</div>
+            <p class="footer-copyright">© 2026 PassProof Academy. All rights reserved.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--gray-300);">
+                Empowering learners through quality mathematics education.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // ==========================================
+        // NAVIGATION HANDLING
+        // ==========================================
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        navToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navMenu.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+                navMenu.classList.remove('active');
+            }
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    navMenu.classList.remove('active');
+                }
+            });
+        });
+
+        // ==========================================
+        // ANIMATED PROOF STEPS - SUM FORMULA
+        // ==========================================
+        const proofSteps = document.querySelectorAll('#sumProof .proof-step');
+        let currentStep = 0;
+
+        function showProofSteps(steps, delay = 500) {
+            steps.forEach((step, index) => {
+                setTimeout(() => {
+                    step.classList.add('visible');
+                }, delay * index);
+            });
+        }
+
+        function resetProofSteps(steps) {
+            steps.forEach(step => step.classList.remove('visible'));
+        }
+
+        document.getElementById('showAllSteps').addEventListener('click', () => {
+            resetProofSteps(proofSteps);
+            setTimeout(() => showProofSteps(proofSteps, 600), 100);
+        });
+
+        document.getElementById('resetSteps').addEventListener('click', () => {
+            resetProofSteps(proofSteps);
+        });
+
+        // ==========================================
+        // ANIMATED PROOF STEPS - INFINITY FORMULA
+        // ==========================================
+        const infinitySteps = document.querySelectorAll('.infinity-step');
+
+        document.getElementById('showInfinitySteps').addEventListener('click', () => {
+            resetProofSteps(infinitySteps);
+            setTimeout(() => showProofSteps(infinitySteps, 700), 100);
+        });
+
+        document.getElementById('resetInfinitySteps').addEventListener('click', () => {
+            resetProofSteps(infinitySteps);
+        });
+
+        // Show first step on load
+        setTimeout(() => {
+            if (proofSteps[0]) proofSteps[0].classList.add('visible');
+            if (infinitySteps[0]) infinitySteps[0].classList.add('visible');
+        }, 500);
+
+        // ==========================================
+        // SIMULATION 1: CONVERGENCE VISUALIZER
+        // ==========================================
+        const convR = document.getElementById('convR');
+        const convergenceDisplay = document.getElementById('convergenceDisplay');
+
+        function updateConvergence() {
+            const r = parseFloat(convR.value);
+            document.getElementById('convRValue').textContent = r;
+
+            convergenceDisplay.innerHTML = '';
+            
+            const powers = [1, 2, 3, 5, 10, 15, 20];
+            powers.forEach((n, i) => {
+                const value = Math.pow(r, n);
+                const box = document.createElement('div');
+                box.className = 'term-box converging';
+                box.style.animationDelay = `${i * 0.1}s`;
+                box.innerHTML = `
+                    <div class="term-label">r<sup>${n}</sup></div>
+                    <div class="term-value">${formatNumber(value)}</div>
+                `;
+                convergenceDisplay.appendChild(box);
+            });
+
+            const limit = Math.abs(r) < 1 ? '0' : (r === 1 ? '1' : '∞ (diverges)');
+            document.getElementById('convergenceLimit').textContent = limit;
+        }
+
+        convR.addEventListener('input', updateConvergence);
+        updateConvergence();
+
+        function formatNumber(num) {
+            if (Math.abs(num) < 0.0001 && num !== 0) {
+                return num.toExponential(2);
+            }
+            if (Math.abs(num) >= 10000) {
+                return num.toExponential(2);
+            }
+            return num.toFixed(Math.abs(num) < 0.01 ? 6 : 4);
+        }
+
+        // ==========================================
+        // SIMULATION 2: SUM TO INFINITY CALCULATOR
+        // ==========================================
+        const infN = document.getElementById('infN');
+        
+        infN.addEventListener('input', () => {
+            document.getElementById('infNValue').textContent = infN.value;
+        });
+
+        document.getElementById('calculateInfinity').addEventListener('click', () => {
+            const a = parseFloat(document.getElementById('infA').value);
+            const r = parseFloat(document.getElementById('infR').value);
+            const n = parseInt(document.getElementById('infN').value);
+            const resultDiv = document.getElementById('infinityResult');
+
+            if (Math.abs(r) >= 1) {
+                resultDiv.innerHTML = `
+                    <div style="text-align: center; color: var(--error); padding: 2rem;">
+                        <p style="font-size: 1.25rem; font-weight: 600;">⚠️ Series Diverges!</p>
+                        <p style="margin-top: 0.5rem;">When |r| ≥ 1, the series does not converge to a finite sum.</p>
+                        <p style="margin-top: 0.5rem;">Please enter a value where -1 < r < 1</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Calculate S_infinity
+            const sInfinity = a / (1 - r);
+
+            // Calculate partial sums
+            let html = '<h4 style="margin-bottom: 1rem; color: var(--primary-dark);">Partial Sums:</h4>';
+            html += '<div class="convergence-display">';
+
+            for (let i = 1; i <= n; i++) {
+                const sn = a * (1 - Math.pow(r, i)) / (1 - r);
+                const boxClass = i === n ? 'term-box partial-sum' : 'term-box';
+                html += `
+                    <div class="${boxClass}" style="animation-delay: ${(i-1) * 0.05}s;">
+                        <div class="term-label">S<sub>${i}</sub></div>
+                        <div class="term-value">${formatSimple(sn)}</div>
+                    </div>
+                `;
+            }
+            html += '</div>';
+
+            html += `
+                <div class="infinity-result">
+                    <div class="infinity-label">Sum to Infinity (S<sub>∞</sub>)</div>
+                    <div class="infinity-value">${formatSimple(sInfinity)}</div>
+                    <div class="infinity-formula">S<sub>∞</sub> = ${a} / (1 - ${r}) = ${formatSimple(sInfinity)}</div>
+                </div>
+            `;
+
+            // Show how close the last partial sum is
+            const lastPartialSum = a * (1 - Math.pow(r, n)) / (1 - r);
+            const difference = Math.abs(sInfinity - lastPartialSum);
+            html += `
+                <div style="text-align: center; margin-top: 1rem; padding: 1rem; background: #d1fae5; border-radius: var(--radius-sm);">
+                    <p>S<sub>${n}</sub> is within <strong>${formatNumber(difference)}</strong> of S<sub>∞</sub></p>
+                </div>
+            `;
+
+            resultDiv.innerHTML = html;
+        });
+
+        function formatSimple(num) {
+            if (Math.abs(num) >= 10000) return num.toFixed(0);
+            if (num % 1 === 0) return num.toString();
+            return num.toFixed(4);
+        }
+
+        // ==========================================
+        // SIMULATION 3: CANVAS VISUALIZATION
+        // ==========================================
+        const canvas = document.getElementById('infinityCanvas');
+        const ctx = canvas.getContext('2d');
+        const canvasA = document.getElementById('canvasA');
+        const canvasR = document.getElementById('canvasR');
+
+        function updateCanvas() {
+            const a = parseFloat(canvasA.value);
+            const r = parseFloat(canvasR.value);
+
+            document.getElementById('canvasAValue').textContent = a;
+            document.getElementById('canvasRValue').textContent = r;
+
+            drawInfinityGraph(a, r);
+        }
+
+        function drawInfinityGraph(a, r) {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * 2;
+            canvas.height = 300 * 2;
+            ctx.scale(2, 2);
+
+            const width = rect.width;
+            const height = 300;
+
+            // Clear
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, width, height);
+
+            // Calculate S_infinity
+            const sInfinity = a / (1 - r);
+            const n = 15;
+
+            // Calculate partial sums
+            const partialSums = [];
+            for (let i = 1; i <= n; i++) {
+                partialSums.push(a * (1 - Math.pow(r, i)) / (1 - r));
+            }
+
+            // Padding
+            const padding = { left: 50, right: 30, top: 40, bottom: 50 };
+            const graphWidth = width - padding.left - padding.right;
+            const graphHeight = height - padding.top - padding.bottom;
+
+            // Max value for scaling (use S_infinity + buffer)
+            const maxVal = sInfinity * 1.1;
+
+            // Draw grid
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 5; i++) {
+                const y = padding.top + (graphHeight / 5) * i;
+                ctx.beginPath();
+                ctx.moveTo(padding.left, y);
+                ctx.lineTo(width - padding.right, y);
+                ctx.stroke();
+
+                // Y-axis labels
+                const yVal = maxVal - (maxVal / 5) * i;
+                ctx.fillStyle = '#64748b';
+                ctx.font = '10px Segoe UI';
+                ctx.textAlign = 'right';
+                ctx.fillText(yVal.toFixed(1), padding.left - 5, y + 4);
+            }
+
+            // Draw axes
+            ctx.strokeStyle = '#64748b';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding.left, height - padding.bottom);
+            ctx.lineTo(width - padding.right, height - padding.bottom);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(padding.left, padding.top);
+            ctx.lineTo(padding.left, height - padding.bottom);
+            ctx.stroke();
+
+            // Draw S_infinity line (horizontal asymptote)
+            const sInfY = padding.top + graphHeight * (1 - sInfinity / maxVal);
+            ctx.strokeStyle = '#14b8a6';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([8, 4]);
+            ctx.beginPath();
+            ctx.moveTo(padding.left, sInfY);
+            ctx.lineTo(width - padding.right, sInfY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Label for S_infinity
+            ctx.fillStyle = '#0f766e';
+            ctx.font = 'bold 12px Segoe UI';
+            ctx.textAlign = 'left';
+            ctx.fillText(`S∞ = ${sInfinity.toFixed(2)}`, width - padding.right - 80, sInfY - 8);
+
+            // Draw partial sums curve
+            ctx.strokeStyle = '#1a73e8';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+
+            const xStep = graphWidth / (n + 1);
+
+            partialSums.forEach((sum, i) => {
+                const x = padding.left + xStep * (i + 1);
+                const y = padding.top + graphHeight * (1 - sum / maxVal);
+                
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+
+            // Draw points
+            partialSums.forEach((sum, i) => {
+                const x = padding.left + xStep * (i + 1);
+                const y = padding.top + graphHeight * (1 - sum / maxVal);
+
+                ctx.fillStyle = '#1a73e8';
+                ctx.beginPath();
+                ctx.arc(x, y, 6, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.arc(x, y, 3, 0, Math.PI * 2);
+                ctx.fill();
+
+                // X-axis labels
+                if (i % 2 === 0 || i === n - 1) {
+                    ctx.fillStyle = '#64748b';
+                    ctx.font = '10px Segoe UI';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(i + 1, x, height - padding.bottom + 15);
+                }
+            });
+
+            // Title
+            ctx.fillStyle = '#0d47a1';
+            ctx.font = 'bold 14px Segoe UI';
+            ctx.textAlign = 'center';
+            ctx.fillText('Partial Sums Approaching S∞', width / 2, 20);
+
+            // X-axis label
+            ctx.fillStyle = '#64748b';
+            ctx.font = '11px Segoe UI';
+            ctx.fillText('n (number of terms)', width / 2, height - 10);
+        }
+
+        canvasA.addEventListener('input', updateCanvas);
+        canvasR.addEventListener('input', updateCanvas);
+        updateCanvas();
+
+        // ==========================================
+        // QUIZ SYSTEM
+        // ==========================================
+        const quizQuestions = [
+            {
+                question: "In the proof of the sum formula, what do we multiply S<sub>n</sub> by?",
+                options: ["a", "n", "r", "r - 1"],
+                correct: 2,
+                explanation: "We multiply by r so that most terms align and cancel when we subtract the equations."
+            },
+            {
+                question: "When we subtract S<sub>n</sub> from r·S<sub>n</sub>, what remains?",
+                options: ["ar<sup>n</sup> − a", "ar<sup>n</sup> + a", "a − ar<sup>n</sup>", "ar − ar<sup>n</sup>"],
+                correct: 0,
+                explanation: "All middle terms cancel, leaving only ar<sup>n</sup> − a."
+            },
+            {
+                question: "The sum to infinity formula S<sub>∞</sub> = a/(1−r) is valid when:",
+                options: ["r = 1", "r > 1", "−1 < r < 1", "r < −1"],
+                correct: 2,
+                explanation: "The series only converges when |r| < 1, meaning −1 < r < 1."
+            },
+            {
+                question: "If a = 12 and r = 0.5, what is S<sub>∞</sub>?",
+                options: ["6", "24", "18", "36"],
+                correct: 1,
+                explanation: "S<sub>∞</sub> = 12/(1−0.5) = 12/0.5 = 24."
+            },
+            {
+                question: "As n → ∞ and |r| < 1, what happens to r<sup>n</sup>?",
+                options: ["It approaches 1", "It approaches 0", "It approaches infinity", "It stays constant"],
+                correct: 1,
+                explanation: "When |r| < 1, raising r to higher powers makes it smaller, approaching 0."
+            },
+            {
+                question: "Why can't we use the sum to infinity formula when r = 0.5 × 3 = 1.5?",
+                options: ["The formula gives a negative answer", "Division by zero occurs", "r<sup>n</sup> doesn't approach 0", "The series has no first term"],
+                correct: 2,
+                explanation: "When r = 1.5, r<sup>n</sup> grows without bound as n increases, so the series diverges."
+            },
+            {
+                question: "In the alternate form S<sub>n</sub> = a(1−r<sup>n</sup>)/(1−r), why is this useful when r < 1?",
+                options: ["It avoids negative numbers", "The denominator is positive", "It's easier to see r<sup>n</sup> → 0", "All of the above"],
+                correct: 2,
+                explanation: "When |r| < 1, we can clearly see that r<sup>n</sup> → 0, making the limit calculation intuitive."
+            },
+            {
+                question: "Calculate S<sub>∞</sub> for the series: 8 + 4 + 2 + 1 + ...",
+                options: ["16", "15", "14", "12"],
+                correct: 0,
+                explanation: "Here a = 8 and r = 0.5. S<sub>∞</sub> = 8/(1−0.5) = 8/0.5 = 16."
+            },
+            {
+                question: "If S<sub>∞</sub> = 20 and r = 0.6, find the first term a.",
+                options: ["4", "6", "8", "12"],
+                correct: 2,
+                explanation: "20 = a/(1−0.6) = a/0.4, so a = 20 × 0.4 = 8."
+            },
+            {
+                question: "The sum 1 + 1/3 + 1/9 + 1/27 + ... equals:",
+                options: ["3/2", "2", "3", "4"],
+                correct: 0,
+                explanation: "a = 1, r = 1/3. S<sub>∞</sub> = 1/(1−1/3) = 1/(2/3) = 3/2."
+            },
+            {
+                question: "What is the factored form after subtracting the two equations in the proof?",
+                options: ["S<sub>n</sub>(1 − r) = a(r<sup>n</sup> − 1)", "S<sub>n</sub>(r − 1) = a(r<sup>n</sup> − 1)", "S<sub>n</sub>(r + 1) = a(r<sup>n</sup> + 1)", "S<sub>n</sub>r = ar<sup>n</sup>"],
+                correct: 1,
+                explanation: "After subtracting, we get rS<sub>n</sub> − S<sub>n</sub> = ar<sup>n</sup> − a, which factors to S<sub>n</sub>(r − 1) = a(r<sup>n</sup> − 1)."
+            },
+            {
+                question: "For which value of r does the series 5 + 5r + 5r² + ... converge?",
+                options: ["r = 1.2", "r = −0.8", "r = −1.5", "r = 2"],
+                correct: 1,
+                explanation: "Only r = −0.8 satisfies −1 < r < 1, making the series convergent."
+            }
+        ];
+
+        const questionsContainer = document.getElementById('quizQuestions');
+        const scoreCard = document.getElementById('scoreCard');
+        let userAnswers = new Array(quizQuestions.length).fill(null);
+        let answeredQuestions = new Set();
+
+        function renderQuiz() {
+            questionsContainer.innerHTML = '';
+            quizQuestions.forEach((q, index) => {
+                const questionCard = document.createElement('div');
+                questionCard.className = 'question-card';
+                questionCard.id = `question-${index}`;
+
+                let optionsHTML = q.options.map((opt, optIndex) => `
+                    <label class="option-label" data-question="${index}" data-option="${optIndex}">
+                        <input type="radio" name="q${index}" value="${optIndex}">
+                        <span class="option-marker">${String.fromCharCode(65 + optIndex)}</span>
+                        <span>${opt}</span>
+                    </label>
+                `).join('');
+
+                questionCard.innerHTML = `
+                    <div class="question-header">
+                        <div class="question-number">${index + 1}</div>
+                        <div class="question-text">${q.question}</div>
+                    </div>
+                    <div class="options-list">
+                        ${optionsHTML}
+                    </div>
+                    <button class="submit-btn" id="check-${index}" disabled>Check Answer</button>
+                    <div class="feedback" id="feedback-${index}"></div>
+                `;
+
+                questionsContainer.appendChild(questionCard);
+            });
+
+            // Add event listeners
+            document.querySelectorAll('.option-label').forEach(label => {
+                label.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.dataset.question);
+                    const optionIndex = parseInt(this.dataset.option);
+
+                    if (answeredQuestions.has(questionIndex)) return;
+
+                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    this.classList.add('selected');
+                    userAnswers[questionIndex] = optionIndex;
+                    
+                    document.getElementById(`check-${questionIndex}`).disabled = false;
+                });
+            });
+
+            document.querySelectorAll('.submit-btn[id^="check-"]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.id.split('-')[1]);
+                    checkAnswer(index);
+                });
+            });
+        }
+
+        function checkAnswer(index) {
+            if (answeredQuestions.has(index)) return;
+
+            const question = quizQuestions[index];
+            const userAnswer = userAnswers[index];
+            const isCorrect = userAnswer === question.correct;
+            const questionCard = document.getElementById(`question-${index}`);
+            const feedback = document.getElementById(`feedback-${index}`);
+            const checkBtn = document.getElementById(`check-${index}`);
+
+            answeredQuestions.add(index);
+
+            questionCard.classList.add(isCorrect ? 'answered-correct' : 'answered-incorrect');
+            
+            const options = document.querySelectorAll(`[data-question="${index}"]`);
+            options.forEach((opt, i) => {
+                if (i === question.correct) {
+                    opt.classList.add('correct');
+                } else if (i === userAnswer && !isCorrect) {
+                    opt.classList.add('incorrect');
+                }
+            });
+
+            feedback.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedback.innerHTML = isCorrect 
+                ? `<strong>✓ Correct!</strong> ${question.explanation}`
+                : `<strong>✗ Incorrect.</strong> The correct answer is ${String.fromCharCode(65 + question.correct)}. ${question.explanation}`;
+
+            checkBtn.disabled = true;
+            checkBtn.textContent = isCorrect ? '✓ Correct' : '✗ Incorrect';
+
+            updateProgress();
+
+            if (answeredQuestions.size === quizQuestions.length) {
+                showScore();
+            }
+        }
+
+        function updateProgress() {
+            const progress = (answeredQuestions.size / quizQuestions.length) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+            document.getElementById('progressText').textContent = `${Math.round(progress)}%`;
+            
+            saveProgress();
+        }
+
+        function showScore() {
+            const correct = quizQuestions.filter((q, i) => userAnswers[i] === q.correct).length;
+            const percentage = Math.round((correct / quizQuestions.length) * 100);
+
+            document.getElementById('scorePercentage').textContent = `${percentage}%`;
+            document.getElementById('scoreDetails').textContent = `You got ${correct} out of ${quizQuestions.length} questions correct.`;
+
+            let message = '';
+            if (percentage >= 90) message = '🌟 Brilliant! You understand the proofs perfectly!';
+            else if (percentage >= 70) message = '👍 Great work! Review the proofs once more for mastery.';
+            else if (percentage >= 50) message = '📚 Good effort! Study the step-by-step derivations again.';
+            else message = '💪 Keep at it! Work through the animated proofs carefully.';
+
+            document.getElementById('scoreMessage').textContent = message;
+            scoreCard.classList.add('show');
+
+            localStorage.setItem('lesson5_score', JSON.stringify({
+                score: correct,
+                total: quizQuestions.length,
+                percentage: percentage,
+                date: new Date().toISOString()
+            }));
+        }
+
+        document.getElementById('retryBtn').addEventListener('click', () => {
+            userAnswers = new Array(quizQuestions.length).fill(null);
+            answeredQuestions.clear();
+            scoreCard.classList.remove('show');
+            renderQuiz();
+            updateProgress();
+        });
+
+        // ==========================================
+        // LOCALSTORAGE PROGRESS
+        // ==========================================
+        function saveProgress() {
+            const progress = {
+                lessonId: 'geometric-series-lesson-5',
+                answeredQuestions: Array.from(answeredQuestions),
+                userAnswers: userAnswers,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('lesson5_progress', JSON.stringify(progress));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('lesson5_progress');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                if (progress.lessonId === 'geometric-series-lesson-5') {
+                    userAnswers = progress.userAnswers;
+                    progress.answeredQuestions.forEach(q => answeredQuestions.add(q));
+                    
+                    answeredQuestions.forEach(index => {
+                        const question = quizQuestions[index];
+                        const questionCard = document.getElementById(`question-${index}`);
+                        const isCorrect = userAnswers[index] === question.correct;
+                        
+                        if (questionCard) {
+                            questionCard.classList.add(isCorrect ? 'answered-correct' : 'answered-incorrect');
+                            
+                            const options = document.querySelectorAll(`[data-question="${index}"]`);
+                            options.forEach((opt, i) => {
+                                if (i === question.correct) opt.classList.add('correct');
+                                else if (i === userAnswers[index] && !isCorrect) opt.classList.add('incorrect');
+                                if (i === userAnswers[index]) opt.classList.add('selected');
+                            });
+
+                            const feedback = document.getElementById(`feedback-${index}`);
+                            feedback.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
+                            feedback.innerHTML = isCorrect 
+                                ? `<strong>✓ Correct!</strong> ${question.explanation}`
+                                : `<strong>✗ Incorrect.</strong> The correct answer is ${String.fromCharCode(65 + question.correct)}. ${question.explanation}`;
+
+                            const checkBtn = document.getElementById(`check-${index}`);
+                            checkBtn.disabled = true;
+                            checkBtn.textContent = isCorrect ? '✓ Correct' : '✗ Incorrect';
+                        }
+                    });
+
+                    updateProgress();
+
+                    if (answeredQuestions.size === quizQuestions.length) {
+                        showScore();
+                    }
+                }
+            }
+        }
+
+        // ==========================================
+        // LESSON NAVIGATION
+        // ==========================================
+        document.getElementById('prevLesson').addEventListener('click', () => {
+            alert('Navigating to Lesson 4: Applying General Term & Sum Formulas');
+        });
+
+        document.getElementById('nextLesson').addEventListener('click', () => {
+            alert('Navigating to Lesson 6: Applying Sum to Infinity');
+        });
+
+        // ==========================================
+        // INITIALIZE
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            renderQuiz();
+            setTimeout(loadProgress, 100);
+        });
+
+        // Initial render
+        renderQuiz();
+    </script>
+
+    <script src="gr12-math-nav.js"></script>
+</body>
+</html>
+

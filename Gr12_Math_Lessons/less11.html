@@ -1,0 +1,2272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sum to Infinity - Practical Applications | Lesson 2 Week 3 | PassProof Academy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1a73e8;
+            --primary-dark: #0d47a1;
+            --primary-light: #e3f2fd;
+            --accent-blue: #2196f3;
+            --white: #ffffff;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-600: #475569;
+            --gray-800: #1e293b;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --purple: #8b5cf6;
+            --teal: #14b8a6;
+            --emerald: #059669;
+            --amber: #d97706;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--gray-50) 0%, var(--primary-light) 100%);
+            min-height: 100vh;
+            color: var(--gray-800);
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .nav-dropdown {
+            position: relative;
+        }
+
+        .nav-toggle {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .nav-toggle:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .nav-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-xl);
+            min-width: 280px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .nav-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .nav-menu a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: var(--gray-800);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .nav-menu a:hover {
+            background: var(--primary-light);
+            color: var(--primary-blue);
+            padding-left: 2rem;
+        }
+
+        .nav-menu a:last-child {
+            border-bottom: none;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+
+        /* Meta Info */
+        .meta-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .badge {
+            background: var(--primary-light);
+            color: var(--primary-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .badge.subject {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .badge.lesson {
+            background: var(--purple);
+            color: var(--white);
+        }
+
+        .badge.practical {
+            background: var(--emerald);
+            color: var(--white);
+        }
+
+        /* Headings */
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--primary-light);
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            color: var(--gray-800);
+            margin-bottom: 0.75rem;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Learning Objectives */
+        .objectives-list {
+            list-style: none;
+        }
+
+        .objectives-list li {
+            padding: 1rem;
+            background: var(--gray-50);
+            border-radius: var(--radius-sm);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            transition: var(--transition);
+        }
+
+        .objectives-list li:hover {
+            background: var(--primary-light);
+            transform: translateX(5px);
+        }
+
+        .obj-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--primary-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: linear-gradient(135deg, var(--primary-light) 0%, #bbdefb 100%);
+            border-left: 5px solid var(--primary-blue);
+            padding: 1.5rem 2rem;
+            border-radius: var(--radius-sm);
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .formula-box.teal {
+            background: linear-gradient(135deg, #ccfbf1 0%, #99f6e4 100%);
+            border-left-color: var(--teal);
+        }
+
+        .formula-box.warning {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left-color: var(--warning);
+        }
+
+        .formula-box.emerald {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left-color: var(--emerald);
+        }
+
+        .formula {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            font-weight: 600;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .formula sub, .formula sup {
+            font-size: 0.7em;
+        }
+
+        .formula-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-top: 0.5rem;
+        }
+
+        /* Math Expression */
+        .math-expression {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.15rem;
+            color: var(--primary-dark);
+            background: var(--primary-light);
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--radius-sm);
+            display: inline-block;
+            margin: 0.5rem 0;
+        }
+
+        .math-expression.teal {
+            background: #ccfbf1;
+            color: #0f766e;
+        }
+
+        .math-expression.highlight {
+            background: linear-gradient(135deg, var(--warning) 0%, #fbbf24 100%);
+            color: var(--gray-800);
+            font-weight: 700;
+        }
+
+        .math-expression.success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        /* Worked Examples */
+        .example-box {
+            background: var(--gray-50);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 2px solid var(--gray-200);
+        }
+
+        .example-box.practical {
+            border-color: var(--emerald);
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        }
+
+        .example-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .example-number {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .example-number.practical {
+            background: var(--emerald);
+        }
+
+        .example-title {
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        .problem-scenario {
+            background: var(--white);
+            border-left: 4px solid var(--emerald);
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            margin-bottom: 1rem;
+        }
+
+        .problem-scenario .icon {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+
+        .solution-steps {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--gray-300);
+        }
+
+        .step {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: var(--accent-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        /* Note Box */
+        .note-box {
+            background: #fef3c7;
+            border-left: 4px solid var(--warning);
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            margin: 1rem 0;
+        }
+
+        .note-box.info {
+            background: var(--primary-light);
+            border-left-color: var(--primary-blue);
+        }
+
+        .note-box.success {
+            background: #d1fae5;
+            border-left-color: var(--success);
+        }
+
+        .note-box.danger {
+            background: #fee2e2;
+            border-left-color: var(--error);
+        }
+
+        /* Key Concept */
+        .key-concept {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 2px solid var(--accent-blue);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .key-concept-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        /* Checklist */
+        .checklist {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .checklist li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .checklist li::before {
+            content: "✓";
+            width: 24px;
+            height: 24px;
+            background: var(--success);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        /* Simulation Container */
+        .simulation-container {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border: 2px solid var(--accent-blue);
+        }
+
+        .simulation-container.practical {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-color: var(--emerald);
+        }
+
+        .sim-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .sim-icon {
+            font-size: 1.5rem;
+        }
+
+        .sim-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            color: var(--gray-800);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .control-value {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+        }
+
+        .control-value.emerald {
+            background: var(--emerald);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--gray-200);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary-blue);
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            background: var(--primary-dark);
+        }
+
+        input[type="number"] {
+            padding: 0.75rem;
+            border: 2px solid var(--gray-300);
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        input[type="number"]:focus {
+            border-color: var(--primary-blue);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
+        }
+
+        .sim-display {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            min-height: 200px;
+        }
+
+        /* Tree Visualization */
+        .tree-viz {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 2rem;
+            min-height: 250px;
+            padding: 1rem;
+        }
+
+        .tree-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .tree {
+            width: 60px;
+            background: linear-gradient(to top, #8b4513, #654321);
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            transition: height 0.5s ease;
+        }
+
+        .tree::before {
+            content: "";
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 40px solid transparent;
+            border-right: 40px solid transparent;
+            border-bottom: 50px solid #228b22;
+        }
+
+        .tree-label {
+            margin-top: 0.5rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            text-align: center;
+        }
+
+        .tree-height {
+            position: absolute;
+            right: -50px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.85rem;
+            color: var(--gray-600);
+        }
+
+        .growth-bar {
+            width: 100%;
+            height: 20px;
+            background: var(--gray-200);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .growth-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--emerald) 0%, var(--teal) 100%);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Result Display */
+        .result-box {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            margin-top: 1rem;
+        }
+
+        .result-box.success {
+            background: linear-gradient(135deg, var(--teal) 0%, #0d9488 100%);
+            color: var(--white);
+        }
+
+        .result-box.info {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .result-formula {
+            font-family: 'Times New Roman', serif;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+
+        /* Number Line */
+        .number-line-container {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: var(--gray-50);
+            border-radius: var(--radius-sm);
+        }
+
+        .number-line {
+            position: relative;
+            height: 60px;
+            margin: 2rem 0;
+        }
+
+        .number-line-axis {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gray-400);
+            transform: translateY(-50%);
+        }
+
+        .number-line-tick {
+            position: absolute;
+            top: 50%;
+            width: 2px;
+            height: 20px;
+            background: var(--gray-600);
+            transform: translate(-50%, -50%);
+        }
+
+        .number-line-label {
+            position: absolute;
+            top: 100%;
+            transform: translateX(-50%);
+            font-size: 0.85rem;
+            color: var(--gray-600);
+            margin-top: 5px;
+        }
+
+        .convergence-region {
+            position: absolute;
+            top: 50%;
+            height: 30px;
+            background: rgba(20, 184, 166, 0.3);
+            border: 2px solid var(--teal);
+            border-radius: 4px;
+            transform: translateY(-50%);
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            margin-top: 2rem;
+        }
+
+        .question-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            border: 2px solid var(--gray-200);
+            transition: var(--transition);
+        }
+
+        .question-card.answered-correct {
+            border-color: var(--success);
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        }
+
+        .question-card.answered-incorrect {
+            border-color: var(--error);
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+        }
+
+        .question-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .question-number {
+            background: var(--primary-blue);
+            color: var(--white);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .question-text {
+            flex: 1;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .options-list {
+            display: grid;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--gray-50);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .option-label:hover {
+            background: var(--primary-light);
+            border-color: var(--primary-blue);
+        }
+
+        .option-label.selected {
+            background: var(--primary-light);
+            border-color: var(--primary-blue);
+        }
+
+        .option-label.correct {
+            background: #d1fae5;
+            border-color: var(--success);
+        }
+
+        .option-label.incorrect {
+            background: #fee2e2;
+            border-color: var(--error);
+        }
+
+        .option-label input {
+            display: none;
+        }
+
+        .option-marker {
+            width: 28px;
+            height: 28px;
+            border: 2px solid var(--gray-300);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--gray-600);
+            transition: var(--transition);
+        }
+
+        .option-label:hover .option-marker,
+        .option-label.selected .option-marker {
+            border-color: var(--primary-blue);
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .option-label.correct .option-marker {
+            border-color: var(--success);
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .option-label.incorrect .option-marker {
+            border-color: var(--error);
+            background: var(--error);
+            color: var(--white);
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: #d1fae5;
+            color: #065f46;
+            border-left: 4px solid var(--success);
+        }
+
+        .feedback.incorrect {
+            background: #fee2e2;
+            color: #991b1b;
+            border-left: 4px solid var(--error);
+        }
+
+        .submit-btn {
+            background: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 0.5rem;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .submit-btn:disabled {
+            background: var(--gray-300);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Score Display */
+        .score-card {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .score-card.show {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 1.5rem auto;
+            border: 4px solid var(--white);
+        }
+
+        .score-percentage {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .score-label {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .score-message {
+            font-size: 1.25rem;
+            margin-top: 1rem;
+        }
+
+        .retry-btn {
+            background: var(--white);
+            color: var(--primary-blue);
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .retry-btn:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Navigation Buttons */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: var(--white);
+            border: 2px solid var(--primary-blue);
+            color: var(--primary-blue);
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-btn.primary {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .nav-btn.primary:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: var(--gray-200);
+            border-radius: 50px;
+            height: 8px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success) 0%, #34d399 100%);
+            border-radius: 50px;
+            transition: width 0.5s ease;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gray-800);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-copyright {
+            color: var(--gray-300);
+            font-size: 0.875rem;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .header-container {
+                padding: 0 1rem;
+            }
+
+            .logo {
+                font-size: 1.25rem;
+            }
+
+            .logo-icon {
+                width: 35px;
+                height: 35px;
+            }
+
+            .nav-toggle {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+
+            .meta-badges {
+                justify-content: center;
+            }
+
+            .formula {
+                font-size: 1.1rem;
+            }
+
+            .sim-controls {
+                grid-template-columns: 1fr;
+            }
+
+            .lesson-nav {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                justify-content: center;
+            }
+
+            .step {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .tree-viz {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            header, footer, .lesson-nav, .simulation-container {
+                display: none;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .mt-1 { margin-top: 0.5rem; }
+        .mt-2 { margin-top: 1rem; }
+        .mt-3 { margin-top: 1.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+    <!-- Header with Dropdown Navigation -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">🌳</div>
+                PassProof Academy
+            </div>
+            <nav class="nav-dropdown">
+                <button class="nav-toggle" id="navToggle">
+                    <span>☰</span> Menu
+                </button>
+                <div class="nav-menu" id="navMenu">
+                    <a href="#overview">📋 Overview</a>
+                    <a href="#objectives">🎯 Learning Objectives</a>
+                    <a href="#concepts">📚 Key Concepts</a>
+                    <a href="#examples">✏️ Worked Examples</a>
+                    <a href="#simulation">🔬 Interactive Simulations</a>
+                    <a href="#quiz">📝 Practice Quiz</a>
+                    <a href="#progress">📊 My Progress</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Subject & Grade -->
+        <section class="card" id="overview">
+            <div class="meta-badges">
+                <span class="badge subject">Mathematics</span>
+                <span class="badge">Grade 12</span>
+                <span class="badge">Term 1 • Week 3</span>
+                <span class="badge lesson">Lesson 2</span>
+                <span class="badge practical">Practical Applications</span>
+                <span class="badge">⏱️ 60 min</span>
+            </div>
+
+            <!-- Topic & Lesson Title -->
+            <h1>Geometric Sequences and Series</h1>
+            <p class="subtitle">Lesson 2: Practical Applications of Sum to Infinity</p>
+
+            <!-- Progress Indicator -->
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+            </div>
+            <p class="text-center mt-1" style="color: var(--gray-600); font-size: 0.875rem;">
+                <span id="progressText">0%</span> Complete
+            </p>
+        </section>
+
+        <!-- Learning Objectives -->
+        <section class="card" id="objectives">
+            <h2>🎯 Learning Objectives</h2>
+            <ul class="objectives-list">
+                <li>
+                    <div class="obj-icon">1</div>
+                    <span>Apply the formula to sum a converging geometric series in various contexts.</span>
+                </li>
+                <li>
+                    <div class="obj-icon">2</div>
+                    <span>Apply the formula to practical, real-world examples involving the sum to infinity.</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Key Concepts Review -->
+        <section class="card" id="concepts">
+            <h2>📚 Key Concepts Review</h2>
+
+            <p>In this lesson, we apply the sum to infinity formula to solve real-world problems. Remember:</p>
+
+            <div class="formula-box teal">
+                <div class="formula">S<sub>∞</sub> = <sup>a</sup>/<sub>1 − r</sub> , where −1 < r < 1</div>
+                <div class="formula-label">Sum to Infinity Formula</div>
+            </div>
+
+            <div class="key-concept">
+                <div class="key-concept-header">
+                    <span>✅</span> Before Using the Formula - Checklist
+                </div>
+                <ul class="checklist">
+                    <li>Identify the first term (a)</li>
+                    <li>Find the common ratio (r)</li>
+                    <li>Verify that −1 < r < 1 (series converges)</li>
+                    <li>Apply the formula S<sub>∞</sub> = a/(1−r)</li>
+                </ul>
+            </div>
+
+            <div class="note-box info">
+                <strong>💡 Real-World Applications:</strong>
+                <p style="margin-top: 0.5rem;">Sum to infinity appears in many contexts: population growth limits, depreciation, bouncing balls, tree growth, medicine dosages, and more!</p>
+            </div>
+
+            <h3 class="mt-3">Finding Convergence Values for Expressions</h3>
+            <p>When terms contain variables, we need to find the values of the variable for which the series converges.</p>
+
+            <div class="formula-box warning">
+                <div class="formula">For convergence: −1 < r < 1</div>
+                <div class="formula-label">Solve this inequality to find valid values of the variable</div>
+            </div>
+        </section>
+
+        <!-- Worked Examples -->
+        <section class="card" id="examples">
+            <h2>✏️ Worked Examples</h2>
+
+            <!-- Example 1: Tree Growth -->
+            <div class="example-box practical">
+                <div class="example-header">
+                    <span class="example-number practical">Example 1</span>
+                    <span class="example-title">Tree Growth Problem</span>
+                </div>
+                
+                <div class="problem-scenario">
+                    <span class="icon">🌳</span>
+                    <strong>Problem:</strong> A tree is 3 m high and its growth each year is 1/10 of its growth the previous year. What is the greatest height that it can reach, assuming it lives forever?
+                </div>
+
+                <div class="solution-steps">
+                    <h4>Solution:</h4>
+                    
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <p><strong>Understand the pattern:</strong></p>
+                            <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                                <li>Initial height: 3 m</li>
+                                <li>Year 1 growth: 3 m (the initial height)</li>
+                                <li>Year 2 growth: 3 × (1/10) = 0.3 m</li>
+                                <li>Year 3 growth: 0.3 × (1/10) = 0.03 m</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <p><strong>Write as a geometric series:</strong></p>
+                            <div class="math-expression">Total Height = 3 + 3(1/10) + 3(1/10)² + 3(1/10)³ + ...</div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <p><strong>Identify a and r:</strong></p>
+                            <div class="math-expression">a = 3 (first term)</div>
+                            <div class="math-expression">r = 1/10 = 0.1</div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <p><strong>Check convergence condition:</strong></p>
+                            <div class="math-expression teal">−1 < 0.1 < 1 ✓ Series converges!</div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <p><strong>Apply the sum to infinity formula:</strong></p>
+                            <div class="math-expression">S<sub>∞</sub> = a / (1 − r)</div>
+                            <div class="math-expression">S<sub>∞</sub> = 3 / (1 − 1/10)</div>
+                            <div class="math-expression">S<sub>∞</sub> = 3 / (9/10)</div>
+                            <div class="math-expression">S<sub>∞</sub> = 3 × (10/9) = 30/9 = 10/3</div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">6</div>
+                        <div class="step-content">
+                            <p><strong>Final Answer:</strong></p>
+                            <div class="math-expression highlight">Greatest Height = 10/3 m ≈ 3.33 m</div>
+                            <p style="margin-top: 0.5rem; color: var(--success);">✓ The tree will approach but never exceed 3.33 meters.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="note-box success">
+                    <strong>🔍 Note:</strong> If the problem states the initial height is 3 m and each subsequent year's growth is 1/10 of the previous year's growth, then the total height = 3/(1 - 0.1) = 3/0.9 = 10/3 ≈ 3.33 m. However, if interpreted as 3m being the first year's growth, then S<sub>∞</sub> = 3/(1-0.1) = 3.33 m is the total growth, and if started at 0, max height = 3.33 m.
+                </div>
+            </div>
+
+            <!-- Example 2: Convergence Range -->
+            <div class="example-box">
+                <div class="example-header">
+                    <span class="example-number">Example 2</span>
+                    <span class="example-title">Finding Convergence Values</span>
+                </div>
+                
+                <p><strong>Problem:</strong> For which values of x will the geometric series (1−x) + (1−x)² + (1−x)³ + ... converge?</p>
+
+                <div class="solution-steps">
+                    <h4>Solution:</h4>
+                    
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <p><strong>Identify the common ratio:</strong></p>
+                            <p>The first term is (1−x), the second term is (1−x)².</p>
+                            <div class="math-expression">r = (1−x)² / (1−x) = (1−x)</div>
+                            <p style="margin-top: 0.5rem;">So <strong>r = (1 − x)</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <p><strong>Apply the convergence condition:</strong></p>
+                            <div class="math-expression">For convergence: −1 < r < 1</div>
+                            <div class="math-expression">−1 < (1 − x) < 1</div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <p><strong>Solve the compound inequality:</strong></p>
+                            <p>Split into two parts:</p>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem;">
+                                <div style="background: var(--gray-50); padding: 1rem; border-radius: var(--radius-sm);">
+                                    <p><strong>Left side:</strong></p>
+                                    <div class="math-expression">−1 < 1 − x</div>
+                                    <div class="math-expression">−1 − 1 < −x</div>
+                                    <div class="math-expression">−2 < −x</div>
+                                    <div class="math-expression">x < 2</div>
+                                </div>
+                                <div style="background: var(--gray-50); padding: 1rem; border-radius: var(--radius-sm);">
+                                    <p><strong>Right side:</strong></p>
+                                    <div class="math-expression">1 − x < 1</div>
+                                    <div class="math-expression">−x < 0</div>
+                                    <div class="math-expression">x > 0</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <p><strong>Combine the results:</strong></p>
+                            <div class="math-expression highlight">0 < x < 2</div>
+                            <p style="margin-top: 0.5rem; color: var(--success);">✓ The series converges when x is between 0 and 2 (exclusive).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Simulations -->
+        <section class="card" id="simulation">
+            <h2>🔬 Interactive Simulations</h2>
+
+            <!-- Simulation 1: Tree Growth Simulator -->
+            <div class="simulation-container practical">
+                <div class="sim-title">
+                    <span class="sim-icon">🌳</span>
+                    <h3>Tree Growth Simulator</h3>
+                </div>
+                <p style="margin-bottom: 1rem; color: var(--gray-600);">See how a tree grows when each year's growth is a fraction of the previous year's growth.</p>
+
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label>
+                            Initial Height (m):
+                            <span class="control-value emerald" id="treeAValue">3</span>
+                        </label>
+                        <input type="range" id="treeA" min="1" max="10" value="3" step="0.5">
+                    </div>
+                    <div class="control-group">
+                        <label>
+                            Growth Rate (r):
+                            <span class="control-value emerald" id="treeRValue">0.1</span>
+                        </label>
+                        <input type="range" id="treeR" min="0.05" max="0.9" value="0.1" step="0.05">
+                    </div>
+                    <div class="control-group">
+                        <label>
+                            Years to Show:
+                            <span class="control-value emerald" id="treeYearsValue">10</span>
+                        </label>
+                        <input type="range" id="treeYears" min="3" max="20" value="10" step="1">
+                    </div>
+                </div>
+
+                <div class="sim-display">
+                    <div id="treeGrowthTable"></div>
+                    <div class="growth-bar">
+                        <div class="growth-fill" id="growthFill" style="width: 0%"></div>
+                    </div>
+                    <div id="treeResult"></div>
+                </div>
+            </div>
+
+            <!-- Simulation 2: Convergence Range Finder -->
+            <div class="simulation-container">
+                <div class="sim-title">
+                    <span class="sim-icon">📏</span>
+                    <h3>Convergence Range Finder</h3>
+                </div>
+                <p style="margin-bottom: 1rem; color: var(--gray-600);">Find the values of x for which a geometric series with ratio r = (k − x) converges.</p>
+
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label>Value of k in (k − x):</label>
+                        <input type="number" id="kValue" value="1" step="0.5">
+                    </div>
+                </div>
+
+                <button class="submit-btn" id="findRangeBtn" style="margin-bottom: 1rem;">Find Convergence Range</button>
+
+                <div class="sim-display" id="rangeResult">
+                    <div style="text-align: center; color: var(--gray-600);">
+                        Enter a value for k and click "Find Convergence Range"
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulation 3: Practical Problems Calculator -->
+            <div class="simulation-container practical">
+                <div class="sim-title">
+                    <span class="sim-icon">💰</span>
+                    <h3>Depreciation Calculator</h3>
+                </div>
+                <p style="margin-bottom: 1rem; color: var(--gray-600);">Calculate the total value retained over infinite time for an asset that depreciates by a fixed percentage each year.</p>
+
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label>Initial Value (R):</label>
+                        <input type="number" id="depValue" value="100000" step="1000">
+                    </div>
+                    <div class="control-group">
+                        <label>
+                            Retention Rate (%):
+                            <span class="control-value" id="depRateValue">80</span>
+                        </label>
+                        <input type="range" id="depRate" min="10" max="95" value="80" step="5">
+                    </div>
+                </div>
+
+                <button class="submit-btn" id="calcDepBtn" style="margin-bottom: 1rem;">Calculate Total Value</button>
+
+                <div class="sim-display" id="depResult">
+                    <div style="text-align: center; color: var(--gray-600);">
+                        Enter values and click "Calculate Total Value"
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulation 4: Visual Canvas -->
+            <div class="simulation-container">
+                <div class="sim-title">
+                    <span class="sim-icon">📊</span>
+                    <h3>Convergence Visualization</h3>
+                </div>
+                <p style="margin-bottom: 1rem; color: var(--gray-600);">Watch how partial sums approach the sum to infinity.</p>
+
+                <div class="sim-controls">
+                    <div class="control-group">
+                        <label>
+                            First Term (a):
+                            <span class="control-value" id="canvasAValue">5</span>
+                        </label>
+                        <input type="range" id="canvasA" min="1" max="20" value="5" step="1">
+                    </div>
+                    <div class="control-group">
+                        <label>
+                            Common Ratio (r):
+                            <span class="control-value" id="canvasRValue">0.6</span>
+                        </label>
+                        <input type="range" id="canvasR" min="0.1" max="0.9" value="0.6" step="0.05">
+                    </div>
+                </div>
+
+                <div class="sim-display">
+                    <canvas id="convergenceCanvas" width="600" height="300" style="width: 100%; max-width: 600px; display: block; margin: 0 auto; border-radius: var(--radius-sm); background: var(--white);"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section class="card quiz-container" id="quiz">
+            <h2>📝 Practice Quiz</h2>
+            <p style="color: var(--gray-600); margin-bottom: 1.5rem;">Test your understanding with these 12 questions on practical applications of sum to infinity.</p>
+
+            <div id="quizQuestions">
+                <!-- Questions will be generated by JavaScript -->
+            </div>
+
+            <div class="score-card" id="scoreCard">
+                <h3>🎉 Quiz Complete!</h3>
+                <div class="score-circle">
+                    <div class="score-percentage" id="scorePercentage">0%</div>
+                    <div class="score-label">Score</div>
+                </div>
+                <p id="scoreDetails"></p>
+                <p class="score-message" id="scoreMessage"></p>
+                <button class="retry-btn" id="retryBtn">Try Again</button>
+            </div>
+        </section>
+
+        <!-- Lesson Navigation -->
+        <div class="lesson-nav">
+            <button class="nav-btn prev">
+                ← Previous Lesson
+            </button>
+            <button class="nav-btn next">
+                Next Lesson →
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">🌳 PassProof Academy</div>
+            <p class="footer-copyright">© 2026 PassProof Academy. All rights reserved.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--gray-300);">
+                Empowering learners through quality mathematics education.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // ==========================================
+        // NAVIGATION HANDLING
+        // ==========================================
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        navToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navMenu.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+                navMenu.classList.remove('active');
+            }
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    navMenu.classList.remove('active');
+                }
+            });
+        });
+
+        // ==========================================
+        // SIMULATION 1: TREE GROWTH
+        // ==========================================
+        const treeA = document.getElementById('treeA');
+        const treeR = document.getElementById('treeR');
+        const treeYears = document.getElementById('treeYears');
+
+        function updateTreeSimulation() {
+            const a = parseFloat(treeA.value);
+            const r = parseFloat(treeR.value);
+            const years = parseInt(treeYears.value);
+
+            document.getElementById('treeAValue').textContent = a;
+            document.getElementById('treeRValue').textContent = r;
+            document.getElementById('treeYearsValue').textContent = years;
+
+            // Calculate S_infinity
+            const sInfinity = a / (1 - r);
+
+            // Build table
+            let html = '<table style="width: 100%; border-collapse: collapse; margin-bottom: 1rem;">';
+            html += '<thead><tr style="background: var(--emerald); color: white;"><th style="padding: 0.5rem;">Year</th><th style="padding: 0.5rem;">Growth (m)</th><th style="padding: 0.5rem;">Total Height (m)</th></tr></thead>';
+            html += '<tbody>';
+
+            let totalHeight = 0;
+            for (let i = 0; i < Math.min(years, 8); i++) {
+                const growth = a * Math.pow(r, i);
+                totalHeight += growth;
+                html += `<tr style="border-bottom: 1px solid var(--gray-200);">
+                    <td style="padding: 0.5rem; text-align: center;">${i + 1}</td>
+                    <td style="padding: 0.5rem; text-align: center;">${growth.toFixed(4)}</td>
+                    <td style="padding: 0.5rem; text-align: center;">${totalHeight.toFixed(4)}</td>
+                </tr>`;
+            }
+            
+            if (years > 8) {
+                html += `<tr style="border-bottom: 1px solid var(--gray-200);">
+                    <td style="padding: 0.5rem; text-align: center;" colspan="3">...</td>
+                </tr>`;
+            }
+            
+            html += '</tbody></table>';
+
+            document.getElementById('treeGrowthTable').innerHTML = html;
+
+            // Update progress bar
+            const lastSum = a * (1 - Math.pow(r, years)) / (1 - r);
+            const percentage = (lastSum / sInfinity) * 100;
+            document.getElementById('growthFill').style.width = `${Math.min(percentage, 100)}%`;
+
+            // Result
+            document.getElementById('treeResult').innerHTML = `
+                <div class="result-box success">
+                    <div class="result-label">Maximum Possible Height (S<sub>∞</sub>)</div>
+                    <div class="result-value">${sInfinity.toFixed(4)} m</div>
+                    <div class="result-formula">S<sub>∞</sub> = ${a} / (1 − ${r}) = ${sInfinity.toFixed(4)}</div>
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.9;">After ${years} years: ${lastSum.toFixed(4)} m (${percentage.toFixed(1)}% of maximum)</p>
+                </div>
+            `;
+        }
+
+        treeA.addEventListener('input', updateTreeSimulation);
+        treeR.addEventListener('input', updateTreeSimulation);
+        treeYears.addEventListener('input', updateTreeSimulation);
+
+        // ==========================================
+        // SIMULATION 2: CONVERGENCE RANGE FINDER
+        // ==========================================
+        document.getElementById('findRangeBtn').addEventListener('click', () => {
+            const k = parseFloat(document.getElementById('kValue').value);
+            const resultDiv = document.getElementById('rangeResult');
+
+            // For r = (k - x), convergence when -1 < (k - x) < 1
+            // -1 < k - x  =>  x < k + 1
+            // k - x < 1   =>  x > k - 1
+
+            const lowerBound = k - 1;
+            const upperBound = k + 1;
+
+            resultDiv.innerHTML = `
+                <div style="text-align: center;">
+                    <h4 style="color: var(--primary-dark); margin-bottom: 1rem;">For r = (${k} − x) to converge:</h4>
+                    
+                    <div style="background: var(--gray-50); padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1rem;">
+                        <p style="font-family: 'Times New Roman', serif; font-size: 1.1rem;">
+                            −1 < (${k} − x) < 1
+                        </p>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                        <div style="background: var(--primary-light); padding: 1rem; border-radius: var(--radius-sm);">
+                            <p><strong>Left side:</strong></p>
+                            <p>−1 < ${k} − x</p>
+                            <p>x < ${k} + 1</p>
+                            <p><strong>x < ${upperBound}</strong></p>
+                        </div>
+                        <div style="background: var(--primary-light); padding: 1rem; border-radius: var(--radius-sm);">
+                            <p><strong>Right side:</strong></p>
+                            <p>${k} − x < 1</p>
+                            <p>−x < 1 − ${k}</p>
+                            <p><strong>x > ${lowerBound}</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="result-box info">
+                        <div class="result-label">Convergence Range</div>
+                        <div class="result-value">${lowerBound} < x < ${upperBound}</div>
+                    </div>
+
+                    <div class="number-line-container">
+                        <p style="margin-bottom: 0.5rem; font-weight: 600;">Number Line Visualization:</p>
+                        <div style="position: relative; height: 60px; margin: 1rem 2rem;">
+                            <div style="position: absolute; top: 50%; left: 0; right: 0; height: 3px; background: var(--gray-400); transform: translateY(-50%);"></div>
+                            <!-- Convergence region -->
+                            <div style="position: absolute; top: 50%; left: 25%; right: 25%; height: 20px; background: rgba(20, 184, 166, 0.3); border: 2px solid var(--teal); border-radius: 4px; transform: translateY(-50%);"></div>
+                            <!-- Lower bound -->
+                            <div style="position: absolute; top: 50%; left: 25%; width: 3px; height: 30px; background: var(--teal); transform: translate(-50%, -50%);"></div>
+                            <div style="position: absolute; top: 100%; left: 25%; transform: translateX(-50%); font-size: 0.9rem; font-weight: 600; color: var(--teal);">${lowerBound}</div>
+                            <!-- Upper bound -->
+                            <div style="position: absolute; top: 50%; right: 25%; width: 3px; height: 30px; background: var(--teal); transform: translate(50%, -50%);"></div>
+                            <div style="position: absolute; top: 100%; right: 25%; transform: translateX(50%); font-size: 0.9rem; font-weight: 600; color: var(--teal);">${upperBound}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+
+        // ==========================================
+        // SIMULATION 3: DEPRECIATION CALCULATOR
+        // ==========================================
+        const depRate = document.getElementById('depRate');
+        depRate.addEventListener('input', () => {
+            document.getElementById('depRateValue').textContent = depRate.value;
+        });
+
+        document.getElementById('calcDepBtn').addEventListener('click', () => {
+            const initialValue = parseFloat(document.getElementById('depValue').value);
+            const retentionRate = parseFloat(depRate.value) / 100;
+            const resultDiv = document.getElementById('depResult');
+
+            if (isNaN(initialValue) || initialValue <= 0) {
+                resultDiv.innerHTML = `<div style="text-align: center; color: var(--error);">⚠️ Please enter a valid initial value.</div>`;
+                return;
+            }
+
+            // Each year, value becomes r times previous
+            // Total value over time = V + Vr + Vr² + ... = V/(1-r)
+            // But this represents total "value-years" or similar concept
+            // For depreciation context, let's show year-by-year values approaching 0
+
+            const r = retentionRate;
+            const sInfinity = initialValue / (1 - r);
+
+            let html = '<h4 style="margin-bottom: 1rem; color: var(--primary-dark);">Year-by-Year Values:</h4>';
+            html += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0.5rem; margin-bottom: 1rem;">';
+
+            for (let i = 0; i < 8; i++) {
+                const value = initialValue * Math.pow(r, i);
+                html += `
+                    <div style="background: var(--primary-light); padding: 0.75rem; border-radius: var(--radius-sm); text-align: center;">
+                        <div style="font-size: 0.75rem; color: var(--gray-600);">Year ${i}</div>
+                        <div style="font-weight: 600;">R${value.toFixed(0)}</div>
+                    </div>
+                `;
+            }
+            html += '</div>';
+
+            html += `
+                <div class="note-box info">
+                    <p><strong>Interpretation:</strong> If we sum all the values the asset holds over infinite time (like calculating total service value), we get:</p>
+                </div>
+                <div class="result-box success">
+                    <div class="result-label">Sum of All Values Over Time</div>
+                    <div class="result-value">R${sInfinity.toFixed(2)}</div>
+                    <div class="result-formula">S<sub>∞</sub> = R${initialValue} / (1 − ${r}) = R${sInfinity.toFixed(2)}</div>
+                </div>
+            `;
+
+            resultDiv.innerHTML = html;
+        });
+
+        // ==========================================
+        // SIMULATION 4: CANVAS VISUALIZATION
+        // ==========================================
+        const canvas = document.getElementById('convergenceCanvas');
+        const ctx = canvas.getContext('2d');
+        const canvasA = document.getElementById('canvasA');
+        const canvasR = document.getElementById('canvasR');
+
+        function updateCanvas() {
+            const a = parseFloat(canvasA.value);
+            const r = parseFloat(canvasR.value);
+
+            document.getElementById('canvasAValue').textContent = a;
+            document.getElementById('canvasRValue').textContent = r;
+
+            drawConvergenceGraph(a, r);
+        }
+
+        function drawConvergenceGraph(a, r) {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * 2;
+            canvas.height = 300 * 2;
+            ctx.scale(2, 2);
+
+            const width = rect.width;
+            const height = 300;
+
+            // Clear
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, width, height);
+
+            const n = 20;
+            const sInfinity = a / (1 - r);
+
+            // Calculate partial sums
+            const partialSums = [];
+            let runningSum = 0;
+            for (let i = 1; i <= n; i++) {
+                runningSum += a * Math.pow(r, i - 1);
+                partialSums.push(runningSum);
+            }
+
+            // Scale
+            const maxVal = sInfinity * 1.1;
+
+            // Padding
+            const padding = { left: 55, right: 25, top: 45, bottom: 50 };
+            const graphWidth = width - padding.left - padding.right;
+            const graphHeight = height - padding.top - padding.bottom;
+
+            // Draw grid
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 5; i++) {
+                const y = padding.top + (graphHeight / 5) * i;
+                ctx.beginPath();
+                ctx.moveTo(padding.left, y);
+                ctx.lineTo(width - padding.right, y);
+                ctx.stroke();
+            }
+
+            // Draw axes
+            ctx.strokeStyle = '#64748b';
+            ctx.lineWidth = 2;
+
+            // X-axis
+            ctx.beginPath();
+            ctx.moveTo(padding.left, height - padding.bottom);
+            ctx.lineTo(width - padding.right, height - padding.bottom);
+            ctx.stroke();
+
+            // Y-axis
+            ctx.beginPath();
+            ctx.moveTo(padding.left, padding.top);
+            ctx.lineTo(padding.left, height - padding.bottom);
+            ctx.stroke();
+
+            // Draw S_infinity line
+            const sInfY = padding.top + graphHeight * (1 - sInfinity / maxVal);
+            ctx.strokeStyle = '#14b8a6';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([8, 4]);
+            ctx.beginPath();
+            ctx.moveTo(padding.left, sInfY);
+            ctx.lineTo(width - padding.right, sInfY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Label
+            ctx.fillStyle = '#0f766e';
+            ctx.font = 'bold 11px Segoe UI';
+            ctx.textAlign = 'left';
+            ctx.fillText(`S∞ = ${sInfinity.toFixed(2)}`, padding.left + 5, sInfY - 8);
+
+            // Draw curve
+            const xStep = graphWidth / n;
+            
+            ctx.strokeStyle = '#1a73e8';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+
+            partialSums.forEach((sum, i) => {
+                const x = padding.left + xStep * (i + 0.5);
+                const y = padding.top + graphHeight * (1 - sum / maxVal);
+                
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+
+            // Draw points
+            partialSums.forEach((sum, i) => {
+                const x = padding.left + xStep * (i + 0.5);
+                const y = padding.top + graphHeight * (1 - sum / maxVal);
+
+                ctx.fillStyle = '#1a73e8';
+                ctx.beginPath();
+                ctx.arc(x, y, 5, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.arc(x, y, 2, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // X-axis labels
+            ctx.fillStyle = '#64748b';
+            ctx.font = '10px Segoe UI';
+            ctx.textAlign = 'center';
+            for (let i = 0; i < n; i += 4) {
+                const x = padding.left + xStep * (i + 0.5);
+                ctx.fillText(i + 1, x, height - padding.bottom + 15);
+            }
+
+            // Y-axis labels
+            ctx.textAlign = 'right';
+            for (let i = 0; i <= 5; i++) {
+                const y = padding.top + (graphHeight / 5) * i;
+                const val = maxVal - (maxVal / 5) * i;
+                ctx.fillText(val.toFixed(1), padding.left - 5, y + 4);
+            }
+
+            // Title
+            ctx.fillStyle = '#0d47a1';
+            ctx.font = 'bold 14px Segoe UI';
+            ctx.textAlign = 'center';
+            ctx.fillText('Partial Sums Converging to S∞', width / 2, 22);
+
+            ctx.fillStyle = '#64748b';
+            ctx.font = '11px Segoe UI';
+            ctx.fillText('n (number of terms)', width / 2, height - 10);
+        }
+
+        canvasA.addEventListener('input', updateCanvas);
+        canvasR.addEventListener('input', updateCanvas);
+
+        // ==========================================
+        // QUIZ SYSTEM
+        // ==========================================
+        const quizQuestions = [
+            {
+                question: "A ball bounces to 3/4 of its previous height each time. If dropped from 16 m, what is the total distance it travels downward?",
+                options: ["48 m", "64 m", "80 m", "Infinite"],
+                correct: 1,
+                explanation: "Total downward = 16 + 12 + 9 + ... = 16/(1 - 3/4) = 16/(1/4) = 64 m."
+            },
+            {
+                question: "For the series (2x) + (2x)² + (2x)³ + ... to converge, x must satisfy:",
+                options: ["-1 < x < 1", "-1/2 < x < 1/2", "0 < x < 2", "-2 < x < 2"],
+                correct: 1,
+                explanation: "r = 2x. For convergence: -1 < 2x < 1, so -1/2 < x < 1/2."
+            },
+            {
+                question: "If a = 8 and S<sub>∞</sub> = 20, find r.",
+                options: ["0.4", "0.5", "0.6", "0.8"],
+                correct: 2,
+                explanation: "20 = 8/(1-r), so 1-r = 8/20 = 0.4, giving r = 0.6."
+            },
+            {
+                question: "A tree grows 5 m in the first year, and 1/5 of the previous year's growth thereafter. Maximum height?",
+                options: ["5.25 m", "6 m", "6.25 m", "7.5 m"],
+                correct: 2,
+                explanation: "S∞ = 5/(1 - 1/5) = 5/(4/5) = 5 × 5/4 = 6.25 m."
+            },
+            {
+                question: "For the series (1-2x) + (1-2x)² + ... to converge, x must be:",
+                options: ["0 < x < 1", "-1 < x < 1", "0 < x < 2", "1 < x < 2"],
+                correct: 0,
+                explanation: "r = (1-2x). -1 < 1-2x < 1 gives -2 < -2x < 0, so 0 < x < 1."
+            },
+            {
+                question: "An asset worth R50,000 depreciates to 80% of its value each year. Sum of all yearly values to infinity?",
+                options: ["R200,000", "R250,000", "R300,000", "R400,000"],
+                correct: 1,
+                explanation: "S∞ = 50000/(1 - 0.8) = 50000/0.2 = R250,000."
+            },
+            {
+                question: "The series 6 + 3 + 1.5 + 0.75 + ... has a sum to infinity of:",
+                options: ["10", "11", "12", "13"],
+                correct: 2,
+                explanation: "a = 6, r = 0.5. S∞ = 6/(1 - 0.5) = 6/0.5 = 12."
+            },
+            {
+                question: "For convergence of (x+1) + (x+1)² + (x+1)³ + ..., x must satisfy:",
+                options: ["-2 < x < 0", "-1 < x < 1", "0 < x < 2", "-3 < x < 1"],
+                correct: 0,
+                explanation: "r = (x+1). -1 < x+1 < 1 gives -2 < x < 0."
+            },
+            {
+                question: "A pendulum swings 20 cm, then 90% of the previous swing each time. Total distance?",
+                options: ["180 cm", "200 cm", "220 cm", "240 cm"],
+                correct: 1,
+                explanation: "S∞ = 20/(1 - 0.9) = 20/0.1 = 200 cm."
+            },
+            {
+                question: "If S<sub>∞</sub> = 15 and r = 2/5, find the first term a.",
+                options: ["6", "7", "8", "9"],
+                correct: 3,
+                explanation: "15 = a/(1 - 2/5) = a/(3/5), so a = 15 × 3/5 = 9."
+            },
+            {
+                question: "The series 1/3 + 1/9 + 1/27 + ... sums to:",
+                options: ["1/3", "1/2", "2/3", "1"],
+                correct: 1,
+                explanation: "a = 1/3, r = 1/3. S∞ = (1/3)/(1 - 1/3) = (1/3)/(2/3) = 1/2."
+            },
+            {
+                question: "For (3-x) + (3-x)² + (3-x)³ + ... to converge, x is in the interval:",
+                options: ["(2, 4)", "(1, 3)", "(0, 6)", "(3, 5)"],
+                correct: 0,
+                explanation: "r = (3-x). -1 < 3-x < 1 gives 2 < x < 4."
+            }
+        ];
+
+        const questionsContainer = document.getElementById('quizQuestions');
+        const scoreCard = document.getElementById('scoreCard');
+        let userAnswers = new Array(quizQuestions.length).fill(null);
+        let answeredQuestions = new Set();
+
+        function renderQuiz() {
+            questionsContainer.innerHTML = '';
+            quizQuestions.forEach((q, index) => {
+                const questionCard = document.createElement('div');
+                questionCard.className = 'question-card';
+                questionCard.id = `question-${index}`;
+
+                let optionsHTML = q.options.map((opt, optIndex) => `
+                    <label class="option-label" data-question="${index}" data-option="${optIndex}">
+                        <input type="radio" name="q${index}" value="${optIndex}">
+                        <span class="option-marker">${String.fromCharCode(65 + optIndex)}</span>
+                        <span>${opt}</span>
+                    </label>
+                `).join('');
+
+                questionCard.innerHTML = `
+                    <div class="question-header">
+                        <div class="question-number">${index + 1}</div>
+                        <div class="question-text">${q.question}</div>
+                    </div>
+                    <div class="options-list">
+                        ${optionsHTML}
+                    </div>
+                    <button class="submit-btn" id="check-${index}" disabled>Check Answer</button>
+                    <div class="feedback" id="feedback-${index}"></div>
+                `;
+
+                questionsContainer.appendChild(questionCard);
+            });
+
+            // Event listeners
+            document.querySelectorAll('.option-label').forEach(label => {
+                label.addEventListener('click', function() {
+                    const questionIndex = parseInt(this.dataset.question);
+                    const optionIndex = parseInt(this.dataset.option);
+
+                    if (answeredQuestions.has(questionIndex)) return;
+
+                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    this.classList.add('selected');
+                    userAnswers[questionIndex] = optionIndex;
+                    
+                    document.getElementById(`check-${questionIndex}`).disabled = false;
+                });
+            });
+
+            document.querySelectorAll('.submit-btn[id^="check-"]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.id.split('-')[1]);
+                    checkAnswer(index);
+                });
+            });
+        }
+
+        function checkAnswer(index) {
+            if (answeredQuestions.has(index)) return;
+
+            const question = quizQuestions[index];
+            const userAnswer = userAnswers[index];
+            const isCorrect = userAnswer === question.correct;
+            const questionCard = document.getElementById(`question-${index}`);
+            const feedback = document.getElementById(`feedback-${index}`);
+            const checkBtn = document.getElementById(`check-${index}`);
+
+            answeredQuestions.add(index);
+
+            questionCard.classList.add(isCorrect ? 'answered-correct' : 'answered-incorrect');
+            
+            const options = document.querySelectorAll(`[data-question="${index}"]`);
+            options.forEach((opt, i) => {
+                if (i === question.correct) {
+                    opt.classList.add('correct');
+                } else if (i === userAnswer && !isCorrect) {
+                    opt.classList.add('incorrect');
+                }
+            });
+
+            feedback.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedback.innerHTML = isCorrect 
+                ? `<strong>✓ Correct!</strong> ${question.explanation}`
+                : `<strong>✗ Incorrect.</strong> The correct answer is ${String.fromCharCode(65 + question.correct)}. ${question.explanation}`;
+
+            checkBtn.disabled = true;
+            checkBtn.textContent = isCorrect ? '✓ Correct' : '✗ Incorrect';
+
+            updateProgress();
+
+            if (answeredQuestions.size === quizQuestions.length) {
+                showScore();
+            }
+        }
+
+        function updateProgress() {
+            const progress = (answeredQuestions.size / quizQuestions.length) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+            document.getElementById('progressText').textContent = `${Math.round(progress)}%`;
+            
+            saveProgress();
+        }
+
+        function showScore() {
+            const correct = quizQuestions.filter((q, i) => userAnswers[i] === q.correct).length;
+            const percentage = Math.round((correct / quizQuestions.length) * 100);
+
+            document.getElementById('scorePercentage').textContent = `${percentage}%`;
+            document.getElementById('scoreDetails').textContent = `You got ${correct} out of ${quizQuestions.length} questions correct.`;
+
+            let message = '';
+            if (percentage >= 90) message = '🌟 Outstanding! You can apply sum to infinity to any problem!';
+            else if (percentage >= 70) message = '👍 Great work! Practice a few more word problems.';
+            else if (percentage >= 50) message = '📚 Good effort! Review the worked examples carefully.';
+            else message = '💪 Keep practicing! Focus on identifying a and r from word problems.';
+
+            document.getElementById('scoreMessage').textContent = message;
+            scoreCard.classList.add('show');
+
+            localStorage.setItem('week3lesson2_score', JSON.stringify({
+                score: correct,
+                total: quizQuestions.length,
+                percentage: percentage,
+                date: new Date().toISOString()
+            }));
+        }
+
+        document.getElementById('retryBtn').addEventListener('click', () => {
+            userAnswers = new Array(quizQuestions.length).fill(null);
+            answeredQuestions.clear();
+            scoreCard.classList.remove('show');
+            renderQuiz();
+            updateProgress();
+        });
+
+        // ==========================================
+        // LOCALSTORAGE PROGRESS
+        // ==========================================
+        function saveProgress() {
+            const progress = {
+                lessonId: 'geometric-series-week3-lesson2',
+                answeredQuestions: Array.from(answeredQuestions),
+                userAnswers: userAnswers,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('week3lesson2_progress', JSON.stringify(progress));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('week3lesson2_progress');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                if (progress.lessonId === 'geometric-series-week3-lesson2') {
+                    userAnswers = progress.userAnswers;
+                    progress.answeredQuestions.forEach(q => answeredQuestions.add(q));
+                    
+                    answeredQuestions.forEach(index => {
+                        const question = quizQuestions[index];
+                        const questionCard = document.getElementById(`question-${index}`);
+                        const isCorrect = userAnswers[index] === question.correct;
+                        
+                        if (questionCard) {
+                            questionCard.classList.add(isCorrect ? 'answered-correct' : 'answered-incorrect');
+                            
+                            const options = document.querySelectorAll(`[data-question="${index}"]`);
+                            options.forEach((opt, i) => {
+                                if (i === question.correct) opt.classList.add('correct');
+                                else if (i === userAnswers[index] && !isCorrect) opt.classList.add('incorrect');
+                                if (i === userAnswers[index]) opt.classList.add('selected');
+                            });
+
+                            const feedback = document.getElementById(`feedback-${index}`);
+                            feedback.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
+                            feedback.innerHTML = isCorrect 
+                                ? `<strong>✓ Correct!</strong> ${question.explanation}`
+                                : `<strong>✗ Incorrect.</strong> The correct answer is ${String.fromCharCode(65 + question.correct)}. ${question.explanation}`;
+
+                            const checkBtn = document.getElementById(`check-${index}`);
+                            checkBtn.disabled = true;
+                            checkBtn.textContent = isCorrect ? '✓ Correct' : '✗ Incorrect';
+                        }
+                    });
+
+                    updateProgress();
+
+                    if (answeredQuestions.size === quizQuestions.length) {
+                        showScore();
+                    }
+                }
+            }
+        }
+
+        // ==========================================
+        // LESSON NAVIGATION
+        // ==========================================
+        document.getElementById('prevLesson').addEventListener('click', () => {
+            alert('Navigating to Week 3 Lesson 1: Convergent and Divergent Series');
+        });
+
+        document.getElementById('nextLesson').addEventListener('click', () => {
+            alert('Navigating to Week 3 Lesson 3: Mixed Problems on Geometric Series');
+        });
+
+        // ==========================================
+        // INITIALIZE
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            renderQuiz();
+            updateTreeSimulation();
+            updateCanvas();
+            setTimeout(loadProgress, 100);
+        });
+
+        // Initial render
+        renderQuiz();
+        updateTreeSimulation();
+        updateCanvas();
+    </script>
+
+    <script src="gr12-math-nav.js"></script>
+</body>
+</html>
+

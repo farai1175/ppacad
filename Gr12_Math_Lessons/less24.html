@@ -1,0 +1,2427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 1 & 2: Logarithmic Functions | PassProof Academy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1a73e8;
+            --dark-blue: #0d47a1;
+            --light-blue: #e3f2fd;
+            --accent-blue: #42a5f5;
+            --white: #ffffff;
+            --gray: #f5f5f5;
+            --dark-gray: #333;
+            --success: #4caf50;
+            --error: #f44336;
+            --warning: #ff9800;
+            --purple: #7c4dff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gray);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent-blue);
+        }
+
+        nav {
+            position: relative;
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: var(--white);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+            display: block;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--white);
+            min-width: 220px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-hover);
+            overflow: hidden;
+            animation: fadeIn 0.3s;
+        }
+
+        .nav-item:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: var(--dark-gray);
+            padding: 0.75rem 1rem;
+            display: block;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+        }
+
+        .dropdown-content a.current {
+            background: var(--light-blue);
+            border-left: 3px solid var(--primary-blue);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Subject Badge */
+        .subject-badge {
+            display: inline-flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .badge.secondary {
+            background: var(--accent-blue);
+        }
+
+        .badge.purple {
+            background: var(--purple);
+        }
+
+        /* Headings */
+        h1 {
+            color: var(--dark-blue);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-blue);
+        }
+
+        h3 {
+            color: var(--dark-blue);
+            font-size: 1.25rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        .topic-label {
+            color: var(--accent-blue);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-number {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Objectives */
+        .objectives-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .objectives-list li {
+            padding: 0.75rem 0 0.75rem 2.5rem;
+            position: relative;
+            border-bottom: 1px solid var(--light-blue);
+        }
+
+        .objectives-list li:last-child {
+            border-bottom: none;
+        }
+
+        .objectives-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 0.75rem;
+            width: 24px;
+            height: 24px;
+            background: var(--success);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        /* Math Formulas */
+        .formula {
+            background: var(--light-blue);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            display: inline-block;
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .formula-box {
+            background: linear-gradient(135deg, var(--light-blue), #bbdefb);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .formula-box .formula {
+            font-size: 1.3rem;
+            background: var(--white);
+        }
+
+        .formula-large {
+            font-size: 1.5rem;
+            padding: 1.5rem 2rem;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1.5rem;
+            border-radius: 0 10px 10px 0;
+            margin: 1.5rem 0;
+        }
+
+        .example-box h4 {
+            color: #e65100;
+            margin-bottom: 1rem;
+        }
+
+        .step {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .step::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--primary-blue);
+        }
+
+        /* Definition Box */
+        .definition-box {
+            background: #e8f5e9;
+            border-left: 4px solid var(--success);
+            padding: 1.5rem;
+            border-radius: 0 10px 10px 0;
+            margin: 1.5rem 0;
+        }
+
+        .definition-box h4 {
+            color: #2e7d32;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Note Box */
+        .note-box {
+            background: #fce4ec;
+            border-left: 4px solid #e91e63;
+            padding: 1rem 1.5rem;
+            border-radius: 0 10px 10px 0;
+            margin: 1.5rem 0;
+        }
+
+        .note-box strong {
+            color: #c2185b;
+        }
+
+        /* History Box */
+        .history-box {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: 1.5rem;
+            border-radius: 0 10px 10px 0;
+            margin: 1.5rem 0;
+        }
+
+        .history-box h4 {
+            color: #7b1fa2;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Characteristic List */
+        .characteristic-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .characteristic-list li {
+            padding: 0.75rem 0 0.75rem 2rem;
+            position: relative;
+            border-left: 2px solid var(--primary-blue);
+            margin-left: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .characteristic-list li::before {
+            content: '•';
+            position: absolute;
+            left: -0.7rem;
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .comparison-table th {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--light-blue);
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: var(--gray);
+        }
+
+        .comparison-table tr:hover {
+            background: var(--light-blue);
+        }
+
+        /* Simulation Container */
+        .simulation-container {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: var(--white);
+        }
+
+        .simulation-container h3 {
+            color: var(--white);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .graph-container {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        canvas {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .control-group {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .slider {
+            width: 150px;
+            accent-color: var(--accent-blue);
+        }
+
+        .btn {
+            background: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--dark-blue);
+            transform: translateY(-2px);
+        }
+
+        .btn.secondary {
+            background: var(--accent-blue);
+        }
+
+        .btn.success {
+            background: var(--success);
+        }
+
+        /* Converter Tool */
+        .converter-tool {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .converter-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .converter-input input {
+            width: 60px;
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: 2px solid var(--accent-blue);
+            font-size: 1.1rem;
+            text-align: center;
+            background: var(--white);
+        }
+
+        .converter-input span {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .result-display {
+            background: var(--success);
+            color: var(--white);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            min-height: 50px;
+        }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 4px;
+            border-radius: 2px;
+        }
+
+        /* Checkbox styling */
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .checkbox-label:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            accent-color: var(--accent-blue);
+            transform: scale(1.2);
+        }
+
+        /* Info Panel */
+        .info-panel {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .info-panel p {
+            margin: 0.5rem 0;
+        }
+
+        /* Quiz Section */
+        .quiz-section {
+            margin-top: 2rem;
+        }
+
+        .question-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .question-number {
+            background: var(--primary-blue);
+            color: var(--white);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: inline;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: var(--gray);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .option:hover {
+            background: var(--light-blue);
+            border-color: var(--accent-blue);
+        }
+
+        .option.selected {
+            background: var(--light-blue);
+            border-color: var(--primary-blue);
+        }
+
+        .option.correct {
+            background: #e8f5e9;
+            border-color: var(--success);
+        }
+
+        .option.incorrect {
+            background: #ffebee;
+            border-color: var(--error);
+        }
+
+        .option input {
+            margin-right: 1rem;
+            transform: scale(1.2);
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #e8f5e9;
+            color: #2e7d32;
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            color: #c62828;
+            display: block;
+        }
+
+        /* Score Display */
+        .score-display {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .score-display.show {
+            display: block;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-value {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .score-message {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.3);
+            height: 10px;
+            border-radius: 5px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--white);
+            border-radius: 5px;
+            transition: width 1s ease;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            flex: 1;
+            min-width: 150px;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-btn.prev {
+            background: var(--gray);
+            color: var(--dark-gray);
+            border: 2px solid #ddd;
+        }
+
+        .nav-btn.next {
+            background: var(--primary-blue);
+            color: var(--white);
+            border: none;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-blue);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            opacity: 0.9;
+        }
+
+        /* Math Content Styling */
+        .math {
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+            font-style: italic;
+        }
+
+        sub, sup {
+            font-size: 0.75em;
+        }
+
+        /* Key Properties Grid */
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .property-card {
+            background: var(--light-blue);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .property-card .formula {
+            display: block;
+            margin: 0.5rem 0;
+        }
+
+        .property-card .explanation {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background: var(--dark-blue);
+                flex-direction: column;
+                padding: 1rem;
+                border-radius: 8px;
+                min-width: 200px;
+                box-shadow: var(--shadow-hover);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .dropdown-content {
+                position: static;
+                box-shadow: none;
+                background: rgba(255, 255, 255, 0.1);
+                margin-top: 0.5rem;
+            }
+
+            .dropdown-content a {
+                color: var(--white);
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .simulation-container {
+                padding: 1rem;
+            }
+
+            .control-group {
+                width: 100%;
+            }
+
+            .slider {
+                width: 100%;
+            }
+
+            .converter-input {
+                flex-direction: column;
+            }
+
+            .converter-input input {
+                width: 80px;
+            }
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: var(--gray);
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .tab-btn.active {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 1.5rem;
+            background: var(--light-blue);
+            border-radius: 0 8px 8px 8px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Utility */
+        .text-center { text-align: center; }
+        .mt-1 { margin-top: 1rem; }
+        .mt-2 { margin-top: 2rem; }
+        .mb-1 { margin-bottom: 1rem; }
+        .mb-2 { margin-bottom: 2rem; }
+
+        /* Visual Diagram */
+        .visual-diagram {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
+        .diagram-equation {
+            font-size: 1.8rem;
+            font-family: 'Cambria Math', serif;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .diagram-box {
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .arrow {
+            font-size: 2rem;
+        }
+
+        .labeled {
+            position: relative;
+        }
+
+        .label-tag {
+            position: absolute;
+            font-size: 0.7rem;
+            background: #ff9800;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .label-top {
+            top: -1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .label-bottom {
+            bottom: -1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo">Pass<span>Proof</span> Academy</a>
+            <button class="nav-toggle" onclick="toggleNav()">☰</button>
+            <nav>
+                <ul class="nav-menu" id="navMenu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Subjects ▾</a>
+                        <div class="dropdown-content">
+                            <a href="#">Mathematics</a>
+                            <a href="#">Physical Science</a>
+                            <a href="#">Life Sciences</a>
+                            <a href="#">Accounting</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Grade 12 ▾</a>
+                        <div class="dropdown-content">
+                            <a href="#">Term 1</a>
+                            <a href="#">Term 2</a>
+                            <a href="#">Term 3</a>
+                            <a href="#">Term 4</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Functions ▾</a>
+                        <div class="dropdown-content">
+                            <a href="#">Lesson 1: Function Notation</a>
+                            <a href="#">Lesson 2-3: Inverse Functions</a>
+                            <a href="#">Lesson 4-5: Exponential Inverses</a>
+                            <a href="#" class="current">Lesson 1-2: Logarithmic Functions</a>
+                            <a href="#">Lesson 3: Log Laws</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Progress</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Subject & Grade Card -->
+        <div class="card">
+            <div class="subject-badge">
+                <span class="badge">Mathematics</span>
+                <span class="badge secondary">Grade 12</span>
+                <span class="badge purple">Week 6</span>
+            </div>
+        </div>
+
+        <!-- Topic & Title Card -->
+        <div class="card">
+            <p class="topic-label">Topic: Inverses</p>
+            <p class="lesson-number">Lesson 1 & 2</p>
+            <h1>Introduction to Logarithmic Functions</h1>
+            <p style="color: #666; margin-top: 0.5rem;">Understanding logarithms as inverses of exponential functions</p>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="card">
+            <h2>📚 Learning Objectives</h2>
+            <ul class="objectives-list">
+                <li>Demonstrate the ability to work with various types of functions and relations, including inverses</li>
+                <li>Investigate and generate graphs of inverse relations of functions, particularly the inverse of y = aˣ (a > 0)</li>
+                <li>Investigate how to write the inverse of an exponential function with y as the subject – the logarithmic function</li>
+                <li>Understand the definition of a logarithm</li>
+                <li>Demonstrate the ability to change from exponential form to logarithmic form and vice versa</li>
+                <li>Identify characteristics of graphs: domain, range, intercepts with axes, and asymptotes</li>
+            </ul>
+        </div>
+
+        <!-- Overview -->
+        <div class="card">
+            <h2>📋 Overview</h2>
+            <p>In our previous lessons, we found that the inverse of an exponential function leads to an equation where making y the subject seemed problematic using standard algebraic methods. For example:</p>
+            
+            <div class="example-box">
+                <p><strong>From our previous work:</strong></p>
+                <p style="margin: 0.5rem 0;">• If f(x) = 2ˣ, then the inverse gives us x = 2ʸ</p>
+                <p style="margin: 0.5rem 0;">• If f(x) = (½)ˣ, then the inverse gives us x = (½)ʸ</p>
+                <p style="margin-top: 1rem; color: #e65100;"><strong>Question:</strong> How do we solve for y in these equations?</p>
+            </div>
+
+            <p class="mt-1">In this lesson, we will discover the powerful mathematical tool called the <strong>logarithm</strong>, which allows us to solve for the exponent in exponential equations.</p>
+        </div>
+
+        <!-- Main Concepts -->
+        <div class="card">
+            <h2>📐 Main Concepts & Principles</h2>
+
+            <!-- Historical Context -->
+            <div class="history-box">
+                <h4>📜 Historical Note</h4>
+                <p>In the late 1500s to early 1600s, the Scottish mathematician <strong>John Napier</strong> devised a brilliant way to make y the subject in equations like x = aʸ. He introduced a new notation called the <strong>logarithm</strong>, creating an entirely new function called the <strong>logarithmic function</strong>: y = log<sub>a</sub>x (read as "log base a of x").</p>
+            </div>
+
+            <!-- Definition of Logarithm -->
+            <h3>1. What is a Logarithm?</h3>
+            
+            <div class="definition-box">
+                <h4>Definition of Logarithm</h4>
+                <p>The <strong>logarithm (log)</strong> of a number is based on the definitions of exponents.</p>
+                <p style="margin-top: 1rem;"><strong>The log of a number, with regard to a given base, is the exponent of that base which will give you that number.</strong></p>
+            </div>
+
+            <p>Let's understand this with numbers:</p>
+
+            <div class="visual-diagram">
+                <h4>Converting from Exponential to Logarithmic Form</h4>
+                <div class="diagram-equation">
+                    <div class="diagram-box labeled">
+                        <span class="label-tag label-top">base</span>
+                        2
+                    </div>
+                    <div class="diagram-box labeled">
+                        <span class="label-tag label-top">exponent</span>
+                        ³
+                    </div>
+                    <span>=</span>
+                    <div class="diagram-box labeled">
+                        <span class="label-tag label-top">answer</span>
+                        8
+                    </div>
+                    <span class="arrow">⟷</span>
+                    <span>log</span>
+                    <div class="diagram-box labeled">
+                        <span class="label-tag label-bottom">base</span>
+                        <sub>2</sub>
+                    </div>
+                    <div class="diagram-box labeled">
+                        <span class="label-tag label-top">answer</span>
+                        8
+                    </div>
+                    <span>=</span>
+                    <div class="diagram-box labeled">
+                        <span class="label-tag label-top">exponent</span>
+                        3
+                    </div>
+                </div>
+                <p style="margin-top: 1rem;">The exponent and the logarithm are THE SAME THING!</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>General Form</h4>
+                <p>If <span class="formula">x = aʸ</span> (exponential form)</p>
+                <p style="margin: 1rem 0;">Then <span class="formula">y = log<sub>a</sub>x</span> (logarithmic form)</p>
+                <p style="font-size: 0.9rem; color: #666;">The base stays the same in both forms!</p>
+            </div>
+
+            <!-- Formal Definition -->
+            <h3>2. Formal Definition</h3>
+
+            <div class="definition-box">
+                <h4>Definition</h4>
+                <p>For <strong>a > 0</strong> and <strong>a ≠ 1</strong> as well as <strong>x > 0</strong>:</p>
+                <p style="text-align: center; margin: 1rem 0;"><span class="formula formula-large">y = log<sub>a</sub>x means x = aʸ</span></p>
+                <p><strong>Restrictions:</strong></p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>The base (a) cannot be negative, zero, or 1</li>
+                    <li>The number inside the log (x) must be greater than zero</li>
+                </ul>
+            </div>
+
+            <!-- Key Properties -->
+            <h3>3. Key Properties of Logarithms</h3>
+
+            <div class="properties-grid">
+                <div class="property-card">
+                    <span class="formula">log<sub>a</sub>a = 1</span>
+                    <p class="explanation">Because a¹ = a</p>
+                    <p class="explanation">Example: log₂2 = 1</p>
+                </div>
+                <div class="property-card">
+                    <span class="formula">log<sub>a</sub>1 = 0</span>
+                    <p class="explanation">Because a⁰ = 1</p>
+                    <p class="explanation">Example: log₃1 = 0</p>
+                </div>
+                <div class="property-card">
+                    <span class="formula">log<sub>n</sub>0 is undefined</span>
+                    <p class="explanation">Because no power of n can equal 0</p>
+                    <p class="explanation">n^anything ≠ 0</p>
+                </div>
+                <div class="property-card">
+                    <span class="formula">log<sub>a</sub>xᵐ = m·log<sub>a</sub>x</span>
+                    <p class="explanation">Power law of logarithms</p>
+                    <p class="explanation">Example: log7² = 2·log7</p>
+                </div>
+            </div>
+
+            <!-- Examples of Conversion -->
+            <h3>4. Converting Between Forms</h3>
+
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showTab('expToLog')">Exponential → Log</button>
+                <button class="tab-btn" onclick="showTab('logToExp')">Log → Exponential</button>
+            </div>
+
+            <div id="expToLog" class="tab-content active">
+                <h4>Examples: Convert from Exponential to Logarithmic Form</h4>
+                <table class="comparison-table">
+                    <tr>
+                        <th>Exponential Form</th>
+                        <th>Logarithmic Form</th>
+                    </tr>
+                    <tr>
+                        <td>2³ = 8</td>
+                        <td>log₂8 = 3</td>
+                    </tr>
+                    <tr>
+                        <td>7² = 49</td>
+                        <td>log₇49 = 2</td>
+                    </tr>
+                    <tr>
+                        <td>10³ = 1000</td>
+                        <td>log₁₀1000 = 3</td>
+                    </tr>
+                    <tr>
+                        <td>3² = 9</td>
+                        <td>log₃9 = 2</td>
+                    </tr>
+                    <tr>
+                        <td>2⁰ = 1</td>
+                        <td>log₂1 = 0</td>
+                    </tr>
+                    <tr>
+                        <td>16 = 2⁴</td>
+                        <td>log₂16 = 4</td>
+                    </tr>
+                    <tr>
+                        <td>(½)² = ¼</td>
+                        <td>log<sub>½</sub>(¼) = 2</td>
+                    </tr>
+                    <tr>
+                        <td>5⁻³ = 1/125</td>
+                        <td>log₅(1/125) = -3</td>
+                    </tr>
+                    <tr>
+                        <td>25<sup>½</sup> = 5</td>
+                        <td>log₂₅5 = ½</td>
+                    </tr>
+                    <tr>
+                        <td>27<sup>⅓</sup> = 3</td>
+                        <td>log₂₇3 = ⅓</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="logToExp" class="tab-content">
+                <h4>Examples: Convert from Logarithmic to Exponential Form</h4>
+                <table class="comparison-table">
+                    <tr>
+                        <th>Logarithmic Form</th>
+                        <th>Exponential Form</th>
+                    </tr>
+                    <tr>
+                        <td>log₂₅5 = ½</td>
+                        <td>25<sup>½</sup> = 5</td>
+                    </tr>
+                    <tr>
+                        <td>log₅125 = 3</td>
+                        <td>5³ = 125</td>
+                    </tr>
+                    <tr>
+                        <td>log₂8 = 3</td>
+                        <td>2³ = 8</td>
+                    </tr>
+                    <tr>
+                        <td>log₈2 = ⅓</td>
+                        <td>8<sup>⅓</sup> = 2</td>
+                    </tr>
+                    <tr>
+                        <td>log₄16 = 2</td>
+                        <td>4² = 16</td>
+                    </tr>
+                    <tr>
+                        <td>log₂16 = 4</td>
+                        <td>2⁴ = 16</td>
+                    </tr>
+                    <tr>
+                        <td>log₁₆16 = 1</td>
+                        <td>16¹ = 16</td>
+                    </tr>
+                    <tr>
+                        <td>log₁₆4 = ½</td>
+                        <td>16<sup>½</sup> = 4</td>
+                    </tr>
+                    <tr>
+                        <td>log₁₆2 = ¼</td>
+                        <td>16<sup>¼</sup> = 2</td>
+                    </tr>
+                    <tr>
+                        <td>log₂4 = -2</td>
+                        <td>2⁻² = ¼</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Solving for Inverse -->
+            <h3>5. Writing the Inverse as a Logarithm</h3>
+
+            <div class="example-box">
+                <h4>Now We Can Solve Our Problem!</h4>
+                <p>With logarithms, we can now make y the subject:</p>
+                
+                <table class="comparison-table" style="margin-top: 1rem;">
+                    <tr>
+                        <th>Exponential Inverse</th>
+                        <th>Logarithmic Form</th>
+                    </tr>
+                    <tr>
+                        <td>x = 2ʸ</td>
+                        <td>y = log₂x</td>
+                    </tr>
+                    <tr>
+                        <td>x = (½)ʸ</td>
+                        <td>y = log<sub>½</sub>x</td>
+                    </tr>
+                </table>
+                
+                <p style="margin-top: 1rem; font-weight: bold; color: #e65100;">The inverse of an exponential function is a logarithmic function!</p>
+            </div>
+
+            <!-- Graphs -->
+            <h3>6. Graphs of Logarithmic Functions</h3>
+
+            <p>Since the logarithmic function is the inverse of the exponential function, they are reflections of each other in the line y = x.</p>
+
+            <div class="formula-box">
+                <p><strong>Exponential:</strong> f(x) = aˣ</p>
+                <p><strong>Inverse (Logarithmic):</strong> f⁻¹(x) = log<sub>a</sub>x</p>
+            </div>
+
+            <!-- Characteristics -->
+            <h3>7. Characteristics of y = log<sub>a</sub>x (a > 0, a ≠ 1, x > 0)</h3>
+
+            <ul class="characteristic-list">
+                <li><strong>Domain:</strong> x > 0 (only positive numbers)</li>
+                <li><strong>Range:</strong> y ∈ ℝ (all real numbers)</li>
+                <li><strong>y-intercept:</strong> None (graph never crosses y-axis)</li>
+                <li><strong>x-intercept:</strong> (1, 0) since log<sub>a</sub>1 = 0 for all valid bases</li>
+                <li><strong>Asymptote:</strong> The y-axis (x = 0) is a vertical asymptote</li>
+                <li><strong>One-to-one:</strong> The function is one-to-one</li>
+                <li><strong>Reflection:</strong> The graph of y = log<sub>a</sub>x is the reflection of y = aˣ about the line y = x</li>
+            </ul>
+
+            <div class="note-box">
+                <strong>📝 Behavior based on base:</strong>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>If <strong>a > 1</strong>: As x increases, y increases (increasing function)</li>
+                    <li>If <strong>0 < a < 1</strong>: As x increases, y decreases (decreasing function)</li>
+                    <li>As a increases, the curves become "flatter"</li>
+                </ul>
+            </div>
+
+            <!-- Comparison Table -->
+            <h3>8. Comparison: Exponential vs Logarithmic Functions</h3>
+
+            <table class="comparison-table">
+                <tr>
+                    <th>Property</th>
+                    <th>y = aˣ</th>
+                    <th>y = log<sub>a</sub>x</th>
+                </tr>
+                <tr>
+                    <td>Domain</td>
+                    <td>x ∈ ℝ</td>
+                    <td>x > 0</td>
+                </tr>
+                <tr>
+                    <td>Range</td>
+                    <td>y > 0</td>
+                    <td>y ∈ ℝ</td>
+                </tr>
+                <tr>
+                    <td>x-intercept</td>
+                    <td>None</td>
+                    <td>(1, 0)</td>
+                </tr>
+                <tr>
+                    <td>y-intercept</td>
+                    <td>(0, 1)</td>
+                    <td>None</td>
+                </tr>
+                <tr>
+                    <td>Asymptote</td>
+                    <td>y = 0 (horizontal)</td>
+                    <td>x = 0 (vertical)</td>
+                </tr>
+                <tr>
+                    <td>Key Point</td>
+                    <td>(0, 1)</td>
+                    <td>(1, 0)</td>
+                </tr>
+                <tr>
+                    <td>Behavior (a > 1)</td>
+                    <td>Increasing</td>
+                    <td>Increasing</td>
+                </tr>
+                <tr>
+                    <td>Behavior (0 < a < 1)</td>
+                    <td>Decreasing</td>
+                    <td>Decreasing</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Interactive Simulations -->
+        <div class="card">
+            <h2>🎮 Interactive Simulations</h2>
+            
+            <!-- Simulation 1: Form Converter -->
+            <div class="simulation-container">
+                <h3>Simulation 1: Exponential ⟷ Logarithm Converter</h3>
+                <p class="text-center mb-1">Enter values to convert between exponential and logarithmic forms</p>
+                
+                <div class="converter-tool">
+                    <h4 class="text-center">Exponential Form: a<sup>exponent</sup> = result</h4>
+                    <div class="converter-input">
+                        <span>Base (a):</span>
+                        <input type="number" id="convBase" value="2" min="0.1" step="0.1">
+                        <span>Exponent:</span>
+                        <input type="number" id="convExp" value="3" step="0.5">
+                        <span>=</span>
+                        <input type="number" id="convResult" value="8" readonly style="background: #e8f5e9;">
+                    </div>
+                    <button class="btn secondary" onclick="calculateExp()">Calculate Result</button>
+                    <div class="result-display" id="convDisplay">
+                        Logarithmic Form: log<sub>2</sub>8 = 3
+                    </div>
+                </div>
+
+                <div class="converter-tool mt-2">
+                    <h4 class="text-center">Find the Exponent (Logarithm)</h4>
+                    <div class="converter-input">
+                        <span>log</span>
+                        <input type="number" id="logBase" value="2" min="0.1" step="0.1">
+                        <input type="number" id="logArg" value="8" min="0.01" step="0.1">
+                        <span>= ?</span>
+                    </div>
+                    <button class="btn secondary" onclick="calculateLog()">Calculate Logarithm</button>
+                    <div class="result-display" id="logDisplay">
+                        log<sub>2</sub>8 = 3
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulation 2: Graph Explorer -->
+            <div class="simulation-container">
+                <h3>Simulation 2: Exponential & Logarithmic Graph Explorer</h3>
+                <p class="text-center mb-1">See how the exponential function and its logarithmic inverse are reflections about y = x</p>
+                
+                <div class="graph-container">
+                    <canvas id="graphCanvas" width="500" height="450"></canvas>
+                </div>
+                
+                <div class="controls">
+                    <div class="control-group">
+                        <label for="baseSlider">Base (a) = <span id="baseValue">2.00</span></label>
+                        <input type="range" id="baseSlider" class="slider" min="0.2" max="5" step="0.1" value="2">
+                    </div>
+                </div>
+
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="showExp" checked>
+                        y = aˣ (Exponential)
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="showLog" checked>
+                        y = log<sub>a</sub>x (Logarithmic)
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="showYX" checked>
+                        y = x (Line of reflection)
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="showAsymptotes" checked>
+                        Show Asymptotes
+                    </label>
+                </div>
+
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #e91e63;"></div>
+                        <span>y = aˣ</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #4caf50;"></div>
+                        <span>y = log<sub>a</sub>x</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #ff9800; border-style: dashed;"></div>
+                        <span>y = x</span>
+                    </div>
+                </div>
+
+                <div class="info-panel" id="graphInfo">
+                    <p><strong>Exponential:</strong> y = <span id="expFunc">2</span>ˣ | Domain: ℝ | Range: (0, ∞) | y-intercept: (0, 1)</p>
+                    <p><strong>Logarithmic:</strong> y = log<sub><span id="logFunc">2</span></sub>x | Domain: (0, ∞) | Range: ℝ | x-intercept: (1, 0)</p>
+                    <p><strong>Function Type:</strong> <span id="funcTypeDisplay">Increasing (a > 1)</span></p>
+                </div>
+            </div>
+
+            <!-- Simulation 3: Multiple Bases -->
+            <div class="simulation-container">
+                <h3>Simulation 3: Compare Different Bases</h3>
+                <p class="text-center mb-1">See how changing the base affects the shape of logarithmic curves</p>
+                
+                <div class="graph-container">
+                    <canvas id="compareCanvas" width="500" height="400"></canvas>
+                </div>
+
+                <div class="checkbox-group">
+                    <label class="checkbox-label" style="color: #e91e63;">
+                        <input type="checkbox" id="showLog2" checked>
+                        y = log₂x
+                    </label>
+                    <label class="checkbox-label" style="color: #2196f3;">
+                        <input type="checkbox" id="showLog3" checked>
+                        y = log₃x
+                    </label>
+                    <label class="checkbox-label" style="color: #4caf50;">
+                        <input type="checkbox" id="showLog10" checked>
+                        y = log₁₀x
+                    </label>
+                    <label class="checkbox-label" style="color: #9c27b0;">
+                        <input type="checkbox" id="showLogHalf">
+                        y = log<sub>½</sub>x
+                    </label>
+                </div>
+
+                <div class="info-panel">
+                    <p><strong>Observation:</strong> As the base increases (for a > 1), the curves become flatter.</p>
+                    <p><strong>Notice:</strong> All curves pass through the point (1, 0) because log<sub>a</sub>1 = 0 for any valid base.</p>
+                    <p><strong>Decreasing:</strong> When base is between 0 and 1 (like ½), the curve is decreasing.</p>
+                </div>
+            </div>
+
+            <!-- Simulation 4: Practice Tool -->
+            <div class="simulation-container">
+                <h3>Simulation 4: Quick Practice - Conversion Challenge</h3>
+                <p class="text-center mb-1">Test your understanding by converting between forms</p>
+                
+                <div class="converter-tool">
+                    <div id="practiceQuestion" style="font-size: 1.3rem; text-align: center; margin-bottom: 1rem;">
+                        Convert: 2⁴ = 16 to logarithmic form
+                    </div>
+                    <div class="converter-input">
+                        <span>log</span>
+                        <input type="number" id="practiceBase" placeholder="base" style="width: 70px;">
+                        <input type="number" id="practiceArg" placeholder="number" style="width: 70px;">
+                        <span>=</span>
+                        <input type="number" id="practiceAns" placeholder="answer" style="width: 70px;">
+                    </div>
+                    <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1rem;">
+                        <button class="btn success" onclick="checkPractice()">Check Answer</button>
+                        <button class="btn secondary" onclick="newPractice()">New Question</button>
+                    </div>
+                    <div class="result-display" id="practiceResult" style="background: transparent; min-height: 0;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="card quiz-section">
+            <h2>📝 Lesson Quiz</h2>
+            <p class="mb-2">Test your understanding of logarithmic functions. Select the correct answer for each question.</p>
+
+            <div id="quizContainer">
+                <!-- Question 1 -->
+                <div class="question-card" data-question="1">
+                    <span class="question-number">1</span>
+                    <span class="question-text">What is the logarithm of a number?</span>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q1" value="a">
+                            The base that gives you that number
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="b">
+                            The exponent to which the base must be raised to get that number
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="c">
+                            The result of multiplying the base by itself
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="d">
+                            The square root of the number
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback1"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question-card" data-question="2">
+                    <span class="question-number">2</span>
+                    <span class="question-text">Convert 2⁵ = 32 to logarithmic form:</span>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q2" value="a">
+                            log₃₂5 = 2
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="b">
+                            log₅32 = 2
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="c">
+                            log₂32 = 5
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="d">
+                            log₂5 = 32
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback2"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question-card" data-question="3">
+                    <span class="question-number">3</span>
+                    <span class="question-text">Convert log₃81 = 4 to exponential form:</span>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q3" value="a">
+                            4³ = 81
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="b">
+                            3⁴ = 81
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="c">
+                            81³ = 4
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="d">
+                            3⁸¹ = 4
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback3"></div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="question-card" data-question="4">
+                    <span class="question-number">4</span>
+                    <span class="question-text">What is the value of log₅5?</span>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q4" value="a">
+                            0
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="b">
+                            1
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="c">
+                            5
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="d">
+                            25
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback4"></div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="question-card" data-question="5">
+                    <span class="question-number">5</span>
+                    <span class="question-text">What is the value of log₇1?</span>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q5" value="a">
+                            1
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="b">
+                            7
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="c">
+                            0
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="d">
+                            Undefined
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback5"></div>
+                </div>
+
+                <!-- Question 6 -->
+                <div class="question-card" data-question="6">
+                    <span class="question-number">6</span>
+                    <span class="question-text">What is the domain of y = log₂x?</span>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q6" value="a">
+                            x ∈ ℝ
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q6" value="b">
+                            x > 0
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q6" value="c">
+                            x ≥ 0
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q6" value="d">
+                            x > 1
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback6"></div>
+                </div>
+
+                <!-- Question 7 -->
+                <div class="question-card" data-question="7">
+                    <span class="question-number">7</span>
+                    <span class="question-text">What is the x-intercept of y = log₃x?</span>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q7" value="a">
+                            (0, 1)
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q7" value="b">
+                            (3, 0)
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q7" value="c">
+                            (1, 0)
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q7" value="d">
+                            (0, 0)
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback7"></div>
+                </div>
+
+                <!-- Question 8 -->
+                <div class="question-card" data-question="8">
+                    <span class="question-number">8</span>
+                    <span class="question-text">What is the vertical asymptote of y = log₄x?</span>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q8" value="a">
+                            y = 0
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q8" value="b">
+                            x = 1
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q8" value="c">
+                            x = 0
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q8" value="d">
+                            y = 4
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback8"></div>
+                </div>
+
+                <!-- Question 9 -->
+                <div class="question-card" data-question="9">
+                    <span class="question-number">9</span>
+                    <span class="question-text">Why is log₅0 undefined?</span>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q9" value="a">
+                            Because 5⁰ = 1, not 0
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q9" value="b">
+                            Because no power of 5 can equal 0
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q9" value="c">
+                            Because 0 is not a positive number
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q9" value="d">
+                            Both B and C are correct
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback9"></div>
+                </div>
+
+                <!-- Question 10 -->
+                <div class="question-card" data-question="10">
+                    <span class="question-number">10</span>
+                    <span class="question-text">The inverse of y = 3ˣ is:</span>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q10" value="a">
+                            y = x³
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q10" value="b">
+                            y = 3⁻ˣ
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q10" value="c">
+                            y = log₃x
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q10" value="d">
+                            y = logₓ3
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback10"></div>
+                </div>
+
+                <!-- Question 11 -->
+                <div class="question-card" data-question="11">
+                    <span class="question-number">11</span>
+                    <span class="question-text">What is the value of log₄64?</span>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q11" value="a">
+                            2
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q11" value="b">
+                            3
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q11" value="c">
+                            4
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q11" value="d">
+                            16
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback11"></div>
+                </div>
+
+                <!-- Question 12 -->
+                <div class="question-card" data-question="12">
+                    <span class="question-number">12</span>
+                    <span class="question-text">If y = log<sub>½</sub>x, the graph is:</span>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q12" value="a">
+                            Increasing (as x increases, y increases)
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q12" value="b">
+                            Decreasing (as x increases, y decreases)
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q12" value="c">
+                            Constant
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q12" value="d">
+                            Undefined
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback12"></div>
+                </div>
+
+                <!-- Question 13 -->
+                <div class="question-card" data-question="13">
+                    <span class="question-number">13</span>
+                    <span class="question-text">Convert 10⁻² = 0.01 to logarithmic form:</span>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q13" value="a">
+                            log₁₀0.01 = -2
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q13" value="b">
+                            log₋₂0.01 = 10
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q13" value="c">
+                            log₁₀(-2) = 0.01
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q13" value="d">
+                            log₀.₀₁10 = -2
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback13"></div>
+                </div>
+
+                <!-- Question 14 -->
+                <div class="question-card" data-question="14">
+                    <span class="question-number">14</span>
+                    <span class="question-text">What is the range of y = log₅x?</span>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q14" value="a">
+                            y > 0
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q14" value="b">
+                            y ≥ 0
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q14" value="c">
+                            y ∈ ℝ (all real numbers)
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q14" value="d">
+                            y > 1
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback14"></div>
+                </div>
+            </div>
+
+            <button class="btn success" onclick="submitQuiz()" style="width: 100%; margin-top: 1rem; padding: 1rem;">
+                Submit Quiz
+            </button>
+
+            <!-- Score Display -->
+            <div class="score-display" id="scoreDisplay">
+                <h3>Quiz Complete!</h3>
+                <div class="score-value"><span id="scoreValue">0</span>/14</div>
+                <p class="score-message" id="scoreMessage"></p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+                </div>
+                <button class="btn" onclick="retryQuiz()" style="margin-top: 1.5rem;">Retry Quiz</button>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+            <a href="#" class="nav-btn prev">
+                ← Previous Lesson
+            </a>
+            <a href="#" class="nav-btn next">
+                Next Lesson →
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 PassProof Academy. All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.7;">Empowering students through quality education</p>
+    </footer>
+
+    <script>
+        // ============ NAVIGATION ============
+        function toggleNav() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+
+        // ============ TAB FUNCTIONALITY ============
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ============ CONVERTER TOOLS ============
+        function calculateExp() {
+            const base = parseFloat(document.getElementById('convBase').value);
+            const exp = parseFloat(document.getElementById('convExp').value);
+            
+            if (base <= 0 || base === 1) {
+                document.getElementById('convDisplay').innerHTML = '⚠️ Base must be positive and not equal to 1';
+                document.getElementById('convDisplay').style.background = '#f44336';
+                return;
+            }
+            
+            const result = Math.pow(base, exp);
+            document.getElementById('convResult').value = result.toFixed(4);
+            document.getElementById('convDisplay').innerHTML = 
+                `Logarithmic Form: log<sub>${base}</sub>${result.toFixed(4)} = ${exp}`;
+            document.getElementById('convDisplay').style.background = '#4caf50';
+        }
+
+        function calculateLog() {
+            const base = parseFloat(document.getElementById('logBase').value);
+            const arg = parseFloat(document.getElementById('logArg').value);
+            
+            if (base <= 0 || base === 1) {
+                document.getElementById('logDisplay').innerHTML = '⚠️ Base must be positive and not equal to 1';
+                document.getElementById('logDisplay').style.background = '#f44336';
+                return;
+            }
+            
+            if (arg <= 0) {
+                document.getElementById('logDisplay').innerHTML = '⚠️ Cannot take logarithm of zero or negative numbers';
+                document.getElementById('logDisplay').style.background = '#f44336';
+                return;
+            }
+            
+            const result = Math.log(arg) / Math.log(base);
+            document.getElementById('logDisplay').innerHTML = 
+                `log<sub>${base}</sub>${arg} = ${result.toFixed(4)}`;
+            document.getElementById('logDisplay').style.background = '#4caf50';
+        }
+
+        // ============ GRAPH SIMULATION 1 ============
+        const canvas1 = document.getElementById('graphCanvas');
+        const ctx1 = canvas1.getContext('2d');
+        const baseSlider = document.getElementById('baseSlider');
+
+        function drawGraph1() {
+            const width = canvas1.width;
+            const height = canvas1.height;
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const scale = 35;
+            const base = parseFloat(baseSlider.value);
+
+            ctx1.fillStyle = '#ffffff';
+            ctx1.fillRect(0, 0, width, height);
+
+            // Grid
+            ctx1.strokeStyle = '#e0e0e0';
+            ctx1.lineWidth = 1;
+            for (let i = -15; i <= 15; i++) {
+                ctx1.beginPath();
+                ctx1.moveTo(centerX + i * scale, 0);
+                ctx1.lineTo(centerX + i * scale, height);
+                ctx1.stroke();
+                ctx1.beginPath();
+                ctx1.moveTo(0, centerY + i * scale);
+                ctx1.lineTo(width, centerY + i * scale);
+                ctx1.stroke();
+            }
+
+            // Asymptotes
+            if (document.getElementById('showAsymptotes').checked) {
+                ctx1.strokeStyle = '#ff5722';
+                ctx1.lineWidth = 2;
+                ctx1.setLineDash([5, 5]);
+                // Horizontal asymptote for exponential (y = 0)
+                ctx1.beginPath();
+                ctx1.moveTo(0, centerY);
+                ctx1.lineTo(width, centerY);
+                ctx1.stroke();
+                // Vertical asymptote for log (x = 0)
+                ctx1.beginPath();
+                ctx1.moveTo(centerX, 0);
+                ctx1.lineTo(centerX, height);
+                ctx1.stroke();
+                ctx1.setLineDash([]);
+            }
+
+            // Axes
+            ctx1.strokeStyle = '#333';
+            ctx1.lineWidth = 2;
+            ctx1.beginPath();
+            ctx1.moveTo(0, centerY);
+            ctx1.lineTo(width, centerY);
+            ctx1.moveTo(centerX, 0);
+            ctx1.lineTo(centerX, height);
+            ctx1.stroke();
+
+            // Axis labels
+            ctx1.fillStyle = '#333';
+            ctx1.font = '12px Arial';
+            for (let i = -6; i <= 6; i++) {
+                if (i !== 0) {
+                    ctx1.fillText(i.toString(), centerX + i * scale - 5, centerY + 15);
+                    ctx1.fillText(i.toString(), centerX + 8, centerY - i * scale + 4);
+                }
+            }
+
+            // y = x line
+            if (document.getElementById('showYX').checked) {
+                ctx1.strokeStyle = '#ff9800';
+                ctx1.lineWidth = 2;
+                ctx1.setLineDash([8, 4]);
+                ctx1.beginPath();
+                ctx1.moveTo(0, height);
+                ctx1.lineTo(width, 0);
+                ctx1.stroke();
+                ctx1.setLineDash([]);
+            }
+
+            // Exponential function
+            if (document.getElementById('showExp').checked) {
+                ctx1.strokeStyle = '#e91e63';
+                ctx1.lineWidth = 3;
+                ctx1.beginPath();
+                let first = true;
+                for (let px = 0; px < width; px++) {
+                    const x = (px - centerX) / scale;
+                    const y = Math.pow(base, x);
+                    const py = centerY - y * scale;
+                    if (py > -50 && py < height + 50) {
+                        if (first) { ctx1.moveTo(px, py); first = false; }
+                        else { ctx1.lineTo(px, py); }
+                    } else { first = true; }
+                }
+                ctx1.stroke();
+
+                // y-intercept point
+                ctx1.fillStyle = '#e91e63';
+                ctx1.beginPath();
+                ctx1.arc(centerX, centerY - scale, 6, 0, Math.PI * 2);
+                ctx1.fill();
+                ctx1.fillStyle = '#333';
+                ctx1.font = '11px Arial';
+                ctx1.fillText('(0, 1)', centerX + 8, centerY - scale - 5);
+            }
+
+            // Logarithmic function
+            if (document.getElementById('showLog').checked) {
+                ctx1.strokeStyle = '#4caf50';
+                ctx1.lineWidth = 3;
+                ctx1.beginPath();
+                let first = true;
+                for (let px = 1; px < width; px++) {
+                    const x = (px - centerX) / scale;
+                    if (x > 0) {
+                        const y = Math.log(x) / Math.log(base);
+                        const py = centerY - y * scale;
+                        if (py > -50 && py < height + 50) {
+                            if (first) { ctx1.moveTo(px, py); first = false; }
+                            else { ctx1.lineTo(px, py); }
+                        } else { first = true; }
+                    }
+                }
+                ctx1.stroke();
+
+                // x-intercept point
+                ctx1.fillStyle = '#4caf50';
+                ctx1.beginPath();
+                ctx1.arc(centerX + scale, centerY, 6, 0, Math.PI * 2);
+                ctx1.fill();
+                ctx1.fillStyle = '#333';
+                ctx1.font = '11px Arial';
+                ctx1.fillText('(1, 0)', centerX + scale + 8, centerY - 8);
+            }
+
+            // Update display
+            document.getElementById('baseValue').textContent = base.toFixed(2);
+            document.getElementById('expFunc').textContent = base.toFixed(2);
+            document.getElementById('logFunc').textContent = base.toFixed(2);
+            document.getElementById('funcTypeDisplay').textContent = 
+                base > 1 ? 'Increasing (a > 1)' : (base < 1 ? 'Decreasing (0 < a < 1)' : 'Undefined (a = 1)');
+        }
+
+        baseSlider.addEventListener('input', drawGraph1);
+        document.getElementById('showExp').addEventListener('change', drawGraph1);
+        document.getElementById('showLog').addEventListener('change', drawGraph1);
+        document.getElementById('showYX').addEventListener('change', drawGraph1);
+        document.getElementById('showAsymptotes').addEventListener('change', drawGraph1);
+
+        // ============ GRAPH SIMULATION 2 - Compare Bases ============
+        const canvas2 = document.getElementById('compareCanvas');
+        const ctx2 = canvas2.getContext('2d');
+
+        function drawGraph2() {
+            const width = canvas2.width;
+            const height = canvas2.height;
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const scale = 40;
+
+            ctx2.fillStyle = '#ffffff';
+            ctx2.fillRect(0, 0, width, height);
+
+            // Grid
+            ctx2.strokeStyle = '#e0e0e0';
+            ctx2.lineWidth = 1;
+            for (let i = -15; i <= 15; i++) {
+                ctx2.beginPath();
+                ctx2.moveTo(centerX + i * scale, 0);
+                ctx2.lineTo(centerX + i * scale, height);
+                ctx2.stroke();
+                ctx2.beginPath();
+                ctx2.moveTo(0, centerY + i * scale);
+                ctx2.lineTo(width, centerY + i * scale);
+                ctx2.stroke();
+            }
+
+            // Axes
+            ctx2.strokeStyle = '#333';
+            ctx2.lineWidth = 2;
+            ctx2.beginPath();
+            ctx2.moveTo(0, centerY);
+            ctx2.lineTo(width, centerY);
+            ctx2.moveTo(centerX, 0);
+            ctx2.lineTo(centerX, height);
+            ctx2.stroke();
+
+            const logs = [
+                { id: 'showLog2', base: 2, color: '#e91e63' },
+                { id: 'showLog3', base: 3, color: '#2196f3' },
+                { id: 'showLog10', base: 10, color: '#4caf50' },
+                { id: 'showLogHalf', base: 0.5, color: '#9c27b0' }
+            ];
+
+            logs.forEach(log => {
+                if (document.getElementById(log.id).checked) {
+                    ctx2.strokeStyle = log.color;
+                    ctx2.lineWidth = 3;
+                    ctx2.beginPath();
+                    let first = true;
+                    for (let px = 1; px < width; px++) {
+                        const x = (px - centerX) / scale;
+                        if (x > 0) {
+                            const y = Math.log(x) / Math.log(log.base);
+                            const py = centerY - y * scale;
+                            if (py > -50 && py < height + 50) {
+                                if (first) { ctx2.moveTo(px, py); first = false; }
+                                else { ctx2.lineTo(px, py); }
+                            } else { first = true; }
+                        }
+                    }
+                    ctx2.stroke();
+                }
+            });
+
+            // Mark (1, 0) point
+            ctx2.fillStyle = '#333';
+            ctx2.beginPath();
+            ctx2.arc(centerX + scale, centerY, 5, 0, Math.PI * 2);
+            ctx2.fill();
+            ctx2.font = '11px Arial';
+            ctx2.fillText('(1, 0)', centerX + scale + 5, centerY + 15);
+        }
+
+        document.getElementById('showLog2').addEventListener('change', drawGraph2);
+        document.getElementById('showLog3').addEventListener('change', drawGraph2);
+        document.getElementById('showLog10').addEventListener('change', drawGraph2);
+        document.getElementById('showLogHalf').addEventListener('change', drawGraph2);
+
+        // ============ PRACTICE TOOL ============
+        let currentPractice = {};
+
+        function generatePractice() {
+            const types = ['expToLog', 'logToExp'];
+            const type = types[Math.floor(Math.random() * types.length)];
+            const bases = [2, 3, 4, 5, 10];
+            const base = bases[Math.floor(Math.random() * bases.length)];
+            const exponents = [-2, -1, 0, 1, 2, 3, 4];
+            const exp = exponents[Math.floor(Math.random() * exponents.length)];
+            const result = Math.pow(base, exp);
+
+            if (type === 'expToLog') {
+                currentPractice = {
+                    type: 'expToLog',
+                    base: base,
+                    exp: exp,
+                    result: result,
+                    question: `Convert: ${base}<sup>${exp}</sup> = ${result} to logarithmic form`
+                };
+            } else {
+                currentPractice = {
+                    type: 'logToExp',
+                    base: base,
+                    exp: exp,
+                    result: result,
+                    question: `Convert: log<sub>${base}</sub>${result} = ${exp} to exponential form`
+                };
+            }
+            return currentPractice;
+        }
+
+        function newPractice() {
+            const practice = generatePractice();
+            document.getElementById('practiceQuestion').innerHTML = practice.question;
+            document.getElementById('practiceBase').value = '';
+            document.getElementById('practiceArg').value = '';
+            document.getElementById('practiceAns').value = '';
+            document.getElementById('practiceResult').innerHTML = '';
+            document.getElementById('practiceResult').style.background = 'transparent';
+        }
+
+        function checkPractice() {
+            const userBase = parseFloat(document.getElementById('practiceBase').value);
+            const userArg = parseFloat(document.getElementById('practiceArg').value);
+            const userAns = parseFloat(document.getElementById('practiceAns').value);
+            const resultDiv = document.getElementById('practiceResult');
+
+            if (currentPractice.type === 'expToLog') {
+                if (userBase === currentPractice.base && 
+                    userArg === currentPractice.result && 
+                    userAns === currentPractice.exp) {
+                    resultDiv.innerHTML = '✓ Correct! Well done!';
+                    resultDiv.style.background = '#4caf50';
+                } else {
+                    resultDiv.innerHTML = `✗ Incorrect. The answer is: log<sub>${currentPractice.base}</sub>${currentPractice.result} = ${currentPractice.exp}`;
+                    resultDiv.style.background = '#f44336';
+                }
+            } else {
+                // For log to exp, they might enter it differently
+                // Check if base^ans = arg
+                if (Math.pow(userBase, userAns) === userArg && 
+                    userBase === currentPractice.base) {
+                    resultDiv.innerHTML = '✓ Correct! Well done!';
+                    resultDiv.style.background = '#4caf50';
+                } else {
+                    resultDiv.innerHTML = `✗ Incorrect. The answer is: ${currentPractice.base}<sup>${currentPractice.exp}</sup> = ${currentPractice.result}`;
+                    resultDiv.style.background = '#f44336';
+                }
+            }
+            resultDiv.style.color = '#fff';
+        }
+
+        // ============ QUIZ SYSTEM ============
+        const answers = {
+            q1: 'b', q2: 'c', q3: 'b', q4: 'b', q5: 'c', q6: 'b', q7: 'c',
+            q8: 'c', q9: 'd', q10: 'c', q11: 'b', q12: 'b', q13: 'a', q14: 'c'
+        };
+
+        const explanations = {
+            q1: 'A logarithm is the exponent to which a base must be raised to produce a given number. If log_a(x) = y, then a^y = x.',
+            q2: '2⁵ = 32 means the exponent is 5, the base is 2, and the result is 32. So log₂32 = 5.',
+            q3: 'log₃81 = 4 means 3⁴ = 81. The base (3) raised to the power (4) equals 81.',
+            q4: 'log₅5 = 1 because 5¹ = 5. The log of any number to its own base is always 1.',
+            q5: 'log₇1 = 0 because 7⁰ = 1. The log of 1 to any valid base is always 0.',
+            q6: 'The domain of y = log₂x is x > 0 because you can only take logarithms of positive numbers.',
+            q7: 'The x-intercept is (1, 0) because log₃1 = 0. For any valid base a, log_a(1) = 0.',
+            q8: 'The vertical asymptote is x = 0 (the y-axis) because log cannot be evaluated at x = 0.',
+            q9: 'Both B and C are correct. No power of 5 can equal 0, and 0 is not a positive number (logarithms require positive arguments).',
+            q10: 'The inverse of y = 3ˣ is y = log₃x. To find the inverse, we swap x and y: x = 3^y, which gives y = log₃x.',
+            q11: 'log₄64 = 3 because 4³ = 64. We need to find what power of 4 gives 64.',
+            q12: 'When the base is between 0 and 1 (like ½), the logarithmic function is decreasing. As x increases, y decreases.',
+            q13: '10⁻² = 0.01 converts to log₁₀0.01 = -2. The base stays 10, the result (0.01) goes inside the log, and the exponent (-2) is the answer.',
+            q14: 'The range of y = log₅x is all real numbers (y ∈ ℝ). Logarithmic functions can output any real number.'
+        };
+
+        function selectOption(element) {
+            const options = element.parentElement.querySelectorAll('.option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                selectOption(this);
+                this.querySelector('input').checked = true;
+            });
+        });
+
+        function submitQuiz() {
+            let score = 0;
+            const totalQuestions = Object.keys(answers).length;
+
+            Object.keys(answers).forEach((q, index) => {
+                const selected = document.querySelector(`input[name="${q}"]:checked`);
+                const feedbackDiv = document.getElementById(`feedback${index + 1}`);
+                const options = document.querySelectorAll(`input[name="${q}"]`);
+                
+                options.forEach(opt => {
+                    const label = opt.parentElement;
+                    label.classList.remove('correct', 'incorrect');
+                    if (opt.value === answers[q]) {
+                        label.classList.add('correct');
+                    }
+                });
+
+                if (selected) {
+                    if (selected.value === answers[q]) {
+                        score++;
+                        feedbackDiv.className = 'feedback correct';
+                        feedbackDiv.innerHTML = `<strong>✓ Correct!</strong> ${explanations[q]}`;
+                    } else {
+                        selected.parentElement.classList.add('incorrect');
+                        feedbackDiv.className = 'feedback incorrect';
+                        feedbackDiv.innerHTML = `<strong>✗ Incorrect.</strong> ${explanations[q]}`;
+                    }
+                } else {
+                    feedbackDiv.className = 'feedback incorrect';
+                    feedbackDiv.innerHTML = `<strong>Not answered.</strong> ${explanations[q]}`;
+                }
+            });
+
+            const percentage = Math.round((score / totalQuestions) * 100);
+            document.getElementById('scoreValue').textContent = score;
+            document.getElementById('progressFill').style.width = percentage + '%';
+            
+            let message = '';
+            if (percentage >= 90) message = 'Excellent! You have mastered logarithmic functions!';
+            else if (percentage >= 70) message = 'Good job! Review the questions you missed to strengthen your understanding.';
+            else if (percentage >= 50) message = 'Fair attempt. Please review the lesson content and try again.';
+            else message = 'Keep practicing! Review the lesson material and attempt the quiz again.';
+            
+            document.getElementById('scoreMessage').textContent = message;
+            document.getElementById('scoreDisplay').classList.add('show');
+
+            const progress = {
+                lessonId: 'grade12-inverses-week6-lesson1-2',
+                score: score,
+                percentage: percentage,
+                completed: true,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('lesson_progress_week6_1-2', JSON.stringify(progress));
+
+            document.getElementById('scoreDisplay').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function retryQuiz() {
+            document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected', 'correct', 'incorrect'));
+            document.querySelectorAll('.feedback').forEach(fb => { fb.className = 'feedback'; fb.innerHTML = ''; });
+            document.getElementById('scoreDisplay').classList.remove('show');
+            document.getElementById('quizContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('lesson_progress_week6_1-2');
+            if (saved) console.log('Previous attempt:', JSON.parse(saved));
+        }
+
+        // ============ INITIALIZE ============
+        window.onload = function() {
+            drawGraph1();
+            drawGraph2();
+            newPractice();
+            loadProgress();
+        };
+
+        window.addEventListener('resize', function() {
+            drawGraph1();
+            drawGraph2();
+        });
+    </script>
+
+    <script src="gr12-math-nav.js"></script>
+</body>
+</html>
+

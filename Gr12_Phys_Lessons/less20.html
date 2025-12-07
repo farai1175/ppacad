@@ -16,32 +16,37 @@
             --light-blue: #e8f0fe;
             --dark-blue: #0d47a1;
             --white: #ffffff;
-            --gray: #5f6368;
-            --light-gray: #f8f9fa;
+            --gray: #f5f5f5;
+            --dark-gray: #333;
             --success: #34a853;
             --error: #ea4335;
             --warning: #fbbc04;
+            --purple: #9c27b0;
+            --teal: #00897b;
+            --orange: #ff6d00;
+            --amber: #ffc107;
+            --deep-orange: #ff5722;
+            --electric-blue: #00bcd4;
             --shadow: 0 2px 10px rgba(0,0,0,0.1);
-            --shadow-hover: 0 4px 20px rgba(0,0,0,0.15);
+            --shadow-lg: 0 4px 20px rgba(0,0,0,0.15);
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
-            min-height: 100vh;
-            line-height: 1.6;
-            color: #333;
+            background: var(--gray);
+            color: var(--dark-gray);
+            line-height: 1.7;
         }
 
-        /* Header Styles */
+        /* Header & Navigation */
         header {
-            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            background: linear-gradient(135deg, var(--electric-blue), #006064);
             color: var(--white);
-            padding: 1rem 2rem;
+            padding: 1rem;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-lg);
         }
 
         .header-container {
@@ -55,322 +60,645 @@
         .logo {
             font-size: 1.5rem;
             font-weight: bold;
-            text-decoration: none;
-            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .logo span {
-            color: var(--warning);
-        }
-
-        /* Dropdown Navigation */
         .nav-container {
             position: relative;
         }
 
         .nav-toggle {
-            background: rgba(255,255,255,0.2);
+            background: var(--white);
+            color: var(--electric-blue);
             border: none;
-            color: var(--white);
-            padding: 0.75rem 1.5rem;
+            padding: 0.6rem 1.2rem;
             border-radius: 25px;
             cursor: pointer;
             font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            transition: all 0.3s ease;
         }
 
         .nav-toggle:hover {
-            background: rgba(255,255,255,0.3);
-        }
-
-        .nav-toggle .hamburger {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .nav-toggle .hamburger span {
-            width: 20px;
-            height: 2px;
-            background: var(--white);
-            transition: all 0.3s ease;
+            background: var(--light-blue);
+            transform: scale(1.05);
         }
 
         .dropdown-menu {
+            display: none;
             position: absolute;
-            top: 100%;
             right: 0;
+            top: calc(100% + 10px);
             background: var(--white);
+            min-width: 280px;
             border-radius: 12px;
-            box-shadow: var(--shadow-hover);
-            min-width: 250px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            margin-top: 0.5rem;
+            box-shadow: var(--shadow-lg);
             overflow: hidden;
+            animation: slideDown 0.3s ease;
         }
 
         .dropdown-menu.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-header {
+            background: #e0f7fa;
+            padding: 0.75rem 1rem;
+            font-weight: 600;
+            color: #006064;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .dropdown-menu a {
-            display: block;
-            padding: 1rem 1.5rem;
-            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.85rem 1rem;
+            color: var(--dark-gray);
             text-decoration: none;
+            border-bottom: 1px solid var(--gray);
             transition: all 0.3s ease;
-            border-bottom: 1px solid var(--light-gray);
         }
 
         .dropdown-menu a:hover {
-            background: var(--light-blue);
-            color: var(--primary-blue);
-            padding-left: 2rem;
+            background: #e0f7fa;
+            color: var(--electric-blue);
+            padding-left: 1.5rem;
         }
 
-        .dropdown-menu a:last-child {
-            border-bottom: none;
+        .dropdown-menu a.active {
+            background: var(--electric-blue);
+            color: var(--white);
         }
 
         /* Main Content */
         main {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem;
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
         }
 
-        /* Cards */
         .card {
             background: var(--white);
             border-radius: 16px;
-            box-shadow: var(--shadow);
             padding: 2rem;
-            margin-bottom: 2rem;
-            transition: all 0.3s ease;
-            animation: fadeInUp 0.5s ease;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
         }
 
-        .card:hover {
-            box-shadow: var(--shadow-hover);
-        }
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Subject Header */
-        .subject-header {
-            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
-            color: var(--white);
-            text-align: center;
-            padding: 2.5rem;
-        }
-
-        .subject-badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.2);
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
-            font-size: 0.9rem;
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
             margin-bottom: 1rem;
         }
 
-        .subject-header h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
+        .subject-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: linear-gradient(135deg, var(--electric-blue), #006064);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
         }
 
-        .subject-header h2 {
-            font-size: 1.5rem;
-            font-weight: normal;
-            opacity: 0.9;
+        .grade-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: linear-gradient(135deg, var(--amber), #ff8f00);
+            color: var(--dark-gray);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .week-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: linear-gradient(135deg, var(--deep-orange), #bf360c);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
         }
 
         .lesson-meta {
             display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .meta-item {
-            background: rgba(255,255,255,0.15);
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            font-size: 0.9rem;
-        }
-
-        /* Section Titles */
-        .section-title {
-            color: var(--primary-blue);
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 3px solid var(--primary-blue);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .section-title .icon {
-            font-size: 1.75rem;
-        }
-
-        /* Objectives */
-        .objectives-list {
-            list-style: none;
-        }
-
-        .objectives-list li {
-            padding: 1rem;
-            margin-bottom: 0.75rem;
-            background: var(--light-blue);
-            border-radius: 10px;
-            border-left: 4px solid var(--primary-blue);
-            transition: all 0.3s ease;
-        }
-
-        .objectives-list li:hover {
-            transform: translateX(5px);
-            background: #d4e4fc;
-        }
-
-        .objectives-list li::before {
-            content: "✓";
-            color: var(--success);
-            font-weight: bold;
-            margin-right: 0.75rem;
-        }
-
-        /* Concept Cards */
-        .concept-card {
-            background: linear-gradient(135deg, var(--light-blue), var(--white));
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-left: 5px solid var(--primary-blue);
-        }
-
-        .concept-card h4 {
-            color: var(--dark-blue);
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-        }
-
-        .concept-card ul {
-            margin-left: 1.5rem;
-        }
-
-        .concept-card li {
-            margin-bottom: 0.5rem;
-        }
-
-        /* Key Definition Box */
-        .definition-box {
-            background: linear-gradient(135deg, #fff3cd, #ffeeba);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border-left: 5px solid var(--warning);
-        }
-
-        .definition-box h4 {
-            color: #856404;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        /* Comparison Table */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-
-        .comparison-table th {
-            background: var(--primary-blue);
-            color: var(--white);
-            padding: 1rem;
-            text-align: left;
-        }
-
-        .comparison-table td {
-            padding: 1rem;
-            border-bottom: 1px solid var(--light-gray);
-            background: var(--white);
-        }
-
-        .comparison-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .comparison-table tr:hover td {
-            background: var(--light-blue);
-        }
-
-        /* Simulation Container */
-        .simulation-container {
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            border-radius: 16px;
-            padding: 2rem;
-            margin: 1.5rem 0;
-            color: var(--white);
-        }
-
-        .simulation-title {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            font-size: 1.3rem;
-        }
-
-        .canvas-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-        }
-
-        canvas {
-            border-radius: 12px;
-            background: #0f0f23;
-        }
-
-        .simulation-controls {
-            display: flex;
-            justify-content: center;
             gap: 1rem;
             flex-wrap: wrap;
             margin-bottom: 1rem;
         }
 
+        .meta-item {
+            background: #e0f7fa;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h1 {
+            color: #006064;
+            font-size: 2.2rem;
+            margin: 1rem 0;
+            line-height: 1.3;
+        }
+
+        h2 {
+            color: var(--electric-blue);
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #e0f7fa;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h3 {
+            color: #006064;
+            font-size: 1.25rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        h4 {
+            color: var(--dark-gray);
+            font-size: 1.1rem;
+            margin: 1rem 0 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .objective-list {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .objective-list li {
+            background: linear-gradient(135deg, #e0f7fa, var(--white));
+            padding: 1rem 1rem 1rem 3rem;
+            margin-bottom: 0.75rem;
+            border-radius: 12px;
+            position: relative;
+            border-left: 4px solid var(--electric-blue);
+        }
+
+        .objective-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 1rem;
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Machine Comparison Cards */
+        .machine-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .machine-card {
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .machine-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .machine-card.generator {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border: 2px solid #2196f3;
+        }
+
+        .machine-card.motor {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border: 2px solid #ff9800;
+        }
+
+        .machine-card h4 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .machine-card.generator h4 {
+            color: #1565c0;
+        }
+
+        .machine-card.motor h4 {
+            color: #e65100;
+        }
+
+        .machine-icon {
+            font-size: 3rem;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            opacity: 0.2;
+        }
+
+        .energy-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.7);
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-weight: 500;
+        }
+
+        .energy-flow .arrow {
+            font-size: 1.5rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .energy-box {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .energy-box.mechanical {
+            background: #4caf50;
+            color: white;
+        }
+
+        .energy-box.electrical {
+            background: #2196f3;
+            color: white;
+        }
+
+        /* Definition Boxes */
+        .definition-box {
+            background: linear-gradient(135deg, #e0f7fa, var(--white));
+            border: 2px solid var(--electric-blue);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .definition-box::before {
+            content: '📖 Definition';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--electric-blue);
+            color: var(--white);
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .concept-box {
+            background: linear-gradient(135deg, #e0f7fa, var(--white));
+            border-left: 5px solid var(--electric-blue);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+            border-left: 5px solid var(--success);
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 12px 12px 0;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .tip-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fff3e0, #fff8e1);
+            border-left: 5px solid var(--warning);
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e3f2fd, #e1f5fe);
+            border-left: 5px solid var(--primary-blue);
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .key-principle {
+            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+            border-left: 5px solid #e91e63;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        /* Faraday's Law Highlight */
+        .law-container {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .law-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--electric-blue), var(--amber), var(--deep-orange));
+        }
+
+        .law-title {
+            color: var(--amber);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .law-statement {
+            color: var(--white);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            padding: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+
+        .law-statement strong {
+            color: var(--amber);
+        }
+
+        /* Factors List */
+        .factors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .factor-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--electric-blue);
+            transition: transform 0.3s ease;
+        }
+
+        .factor-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .factor-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .factor-card h5 {
+            color: #006064;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Simulation Styles */
+        .simulation-container {
+            background: var(--white);
+            border: 2px solid var(--electric-blue);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .simulation-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .simulation-header h3 {
+            margin: 0;
+        }
+
+        .sim-badge {
+            background: var(--electric-blue);
+            color: var(--white);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .sim-canvas {
+            background: linear-gradient(135deg, #fafafa, #e0e0e0);
+            border-radius: 12px;
+            padding: 1rem;
+            position: relative;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Electromagnetic Induction Simulation */
+        .induction-sim {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .coil-container {
+            position: relative;
+            width: 200px;
+            height: 150px;
+        }
+
+        .coil {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 8px solid #795548;
+            border-radius: 20px;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 10px,
+                #a1887f 10px,
+                #a1887f 12px
+            );
+        }
+
+        .magnet {
+            position: absolute;
+            width: 80px;
+            height: 40px;
+            display: flex;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: left 0.3s ease;
+            cursor: pointer;
+        }
+
+        .magnet-pole {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .magnet-pole.north {
+            background: linear-gradient(135deg, #f44336, #c62828);
+        }
+
+        .magnet-pole.south {
+            background: linear-gradient(135deg, #2196f3, #1565c0);
+        }
+
+        .current-indicator {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .ammeter {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid #333;
+            background: #fff;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ammeter-needle {
+            width: 3px;
+            height: 30px;
+            background: #f44336;
+            position: absolute;
+            bottom: 50%;
+            transform-origin: bottom center;
+            transition: transform 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .ammeter-center {
+            width: 10px;
+            height: 10px;
+            background: #333;
+            border-radius: 50%;
+            z-index: 5;
+        }
+
+        .current-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--electric-blue);
+        }
+
+        .current-direction {
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+        }
+
+        .sim-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
         .sim-btn {
-            background: var(--primary-blue);
+            background: linear-gradient(135deg, var(--electric-blue), #006064);
             color: var(--white);
             border: none;
-            padding: 0.75rem 1.5rem;
+            padding: 0.85rem 1.75rem;
             border-radius: 25px;
             cursor: pointer;
             font-size: 1rem;
+            font-weight: 500;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
@@ -378,170 +706,218 @@
         }
 
         .sim-btn:hover {
-            background: var(--dark-blue);
-            transform: scale(1.05);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 188, 212, 0.4);
         }
 
-        .sim-btn.secondary {
-            background: rgba(255,255,255,0.2);
+        .sim-btn.success {
+            background: linear-gradient(135deg, var(--success), #2e7d32);
         }
 
-        .sim-btn.secondary:hover {
-            background: rgba(255,255,255,0.3);
+        .sim-btn.danger {
+            background: linear-gradient(135deg, var(--error), #c62828);
         }
 
-        .slider-container {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            justify-content: center;
-            margin: 1rem 0;
-            flex-wrap: wrap;
+        .sim-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
         }
 
-        .slider-container label {
-            font-size: 0.9rem;
+        /* Generator/Motor Visual */
+        .machine-visual {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            margin: 1rem auto;
         }
 
-        .slider-container input[type="range"] {
-            width: 150px;
-            accent-color: var(--primary-blue);
-        }
-
-        .simulation-info {
-            text-align: center;
-            padding: 1rem;
-            background: rgba(255,255,255,0.1);
+        .rotor {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 4px solid #795548;
             border-radius: 10px;
-            margin-top: 1rem;
+            background: linear-gradient(45deg, #ffeb3b, #ffc107);
         }
 
-        .simulation-info .value {
-            font-size: 1.5rem;
+        .rotor.spinning {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .field-magnet {
+            position: absolute;
+            width: 30px;
+            height: 80px;
+            border-radius: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .field-magnet.left {
+            left: 0;
+            background: linear-gradient(135deg, #f44336, #c62828);
+        }
+
+        .field-magnet.right {
+            right: 0;
+            background: linear-gradient(135deg, #2196f3, #1565c0);
+        }
+
+        .field-magnet span {
+            position: absolute;
+            color: white;
             font-weight: bold;
-            color: var(--warning);
+            font-size: 1.2rem;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
-        /* Quiz Section */
+        /* Quiz Styles */
         .quiz-container {
             margin-top: 2rem;
         }
 
         .question-card {
             background: var(--white);
-            border-radius: 12px;
-            padding: 1.5rem;
+            border-radius: 16px;
+            padding: 1.75rem;
             margin-bottom: 1.5rem;
             box-shadow: var(--shadow);
-            border-left: 5px solid var(--primary-blue);
-            transition: all 0.3s ease;
+            border-left: 5px solid var(--electric-blue);
         }
 
-        .question-card.correct {
-            border-left-color: var(--success);
-            background: linear-gradient(135deg, #e8f5e9, var(--white));
-        }
-
-        .question-card.incorrect {
-            border-left-color: var(--error);
-            background: linear-gradient(135deg, #ffebee, var(--white));
+        .question-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
 
         .question-number {
-            background: var(--primary-blue);
+            background: linear-gradient(135deg, var(--electric-blue), #006064);
             color: var(--white);
-            width: 35px;
-            height: 35px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            margin-bottom: 1rem;
+            flex-shrink: 0;
         }
 
         .question-text {
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-            color: #333;
+            font-size: 1.05rem;
+            color: var(--dark-gray);
         }
 
         .options-container {
-            display: grid;
+            display: flex;
+            flex-direction: column;
             gap: 0.75rem;
         }
 
         .option-label {
             display: flex;
             align-items: center;
-            padding: 1rem;
-            background: var(--light-gray);
-            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            background: var(--gray);
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
             border: 2px solid transparent;
         }
 
         .option-label:hover {
-            background: var(--light-blue);
-            border-color: var(--primary-blue);
+            background: #e0f7fa;
+            border-color: var(--electric-blue);
         }
 
         .option-label input {
             margin-right: 1rem;
-            width: 18px;
-            height: 18px;
-            accent-color: var(--primary-blue);
+            width: 20px;
+            height: 20px;
+            accent-color: var(--electric-blue);
         }
 
-        .option-label.selected {
-            background: var(--light-blue);
-            border-color: var(--primary-blue);
-        }
-
-        .option-label.correct-answer {
-            background: #c8e6c9;
+        .option-label.correct {
+            background: #e8f5e9;
             border-color: var(--success);
         }
 
-        .option-label.wrong-answer {
-            background: #ffcdd2;
+        .option-label.incorrect {
+            background: #ffebee;
             border-color: var(--error);
         }
 
         .feedback {
             margin-top: 1rem;
             padding: 1rem;
-            border-radius: 8px;
+            border-radius: 12px;
             display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         .feedback.correct {
-            background: #c8e6c9;
+            background: #e8f5e9;
             color: #2e7d32;
-            display: block;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
         }
 
         .feedback.incorrect {
-            background: #ffcdd2;
+            background: #ffebee;
             color: #c62828;
-            display: block;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
         }
 
-        /* Score Display */
-        .score-container {
-            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+        .feedback-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .submit-quiz-btn {
+            background: linear-gradient(135deg, var(--success), #2e7d32);
             color: var(--white);
-            border-radius: 16px;
-            padding: 2rem;
+            border: none;
+            padding: 1.25rem 2.5rem;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .submit-quiz-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 25px rgba(52, 168, 83, 0.4);
+        }
+
+        .score-container {
+            background: linear-gradient(135deg, var(--electric-blue), #006064);
+            color: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
             text-align: center;
-            margin: 2rem 0;
+            margin-top: 2rem;
             display: none;
         }
 
@@ -551,1409 +927,1280 @@
         }
 
         @keyframes scaleIn {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.2);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            border: 5px solid var(--white);
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         .score-value {
-            font-size: 2.5rem;
+            font-size: 4rem;
             font-weight: bold;
+            margin: 1rem 0;
         }
 
-        .score-label {
-            font-size: 0.9rem;
-            opacity: 0.9;
+        .progress-bar {
+            background: rgba(255,255,255,0.2);
+            height: 25px;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--amber), #fff);
+            border-radius: 15px;
+            transition: width 1.5s ease;
         }
 
         .score-message {
             font-size: 1.2rem;
-            margin-bottom: 1rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
         }
 
-        .submit-btn {
-            background: var(--success);
+        .score-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: rgba(255,255,255,0.2);
             color: var(--white);
             border: none;
-            padding: 1rem 3rem;
-            border-radius: 30px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 1.5rem;
-        }
-
-        .submit-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(52, 168, 83, 0.4);
-        }
-
-        .retry-btn {
-            background: var(--warning);
-            color: #333;
-            border: none;
-            padding: 0.75rem 2rem;
+            padding: 0.75rem 1.5rem;
             border-radius: 25px;
-            font-size: 1rem;
             cursor: pointer;
-            margin-top: 1rem;
+            font-size: 1rem;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .retry-btn:hover {
-            transform: scale(1.05);
-        }
-
-        /* Progress Bar */
-        .progress-container {
-            background: rgba(255,255,255,0.2);
-            border-radius: 10px;
-            height: 10px;
-            margin: 1rem 0;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: var(--success);
-            border-radius: 10px;
-            transition: width 0.5s ease;
+        .action-btn:hover {
+            background: rgba(255,255,255,0.3);
         }
 
         /* Navigation Buttons */
-        .nav-buttons {
+        .lesson-nav {
             display: flex;
             justify-content: space-between;
             gap: 1rem;
-            margin: 2rem 0;
+            margin: 2.5rem 0;
             flex-wrap: wrap;
         }
 
         .nav-btn {
-            background: var(--primary-blue);
+            background: linear-gradient(135deg, var(--electric-blue), #006064);
             color: var(--white);
             border: none;
             padding: 1rem 2rem;
             border-radius: 30px;
             font-size: 1rem;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
             text-decoration: none;
         }
 
         .nav-btn:hover {
-            background: var(--dark-blue);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 188, 212, 0.4);
         }
 
         .nav-btn.prev {
-            background: var(--gray);
-        }
-
-        .nav-btn.prev:hover {
-            background: #4a4a4a;
+            background: linear-gradient(135deg, #757575, #616161);
         }
 
         /* Footer */
         footer {
-            background: linear-gradient(135deg, var(--dark-blue), #0a2647);
+            background: linear-gradient(135deg, #006064, #00363a);
             color: var(--white);
             text-align: center;
-            padding: 2rem;
+            padding: 2.5rem 1rem;
             margin-top: 3rem;
         }
 
-        footer p {
-            opacity: 0.9;
+        .footer-content {
+            max-width: 900px;
+            margin: 0 auto;
         }
 
-        /* Responsive Design */
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .copyright {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Progress Indicator */
+        .progress-indicator {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: linear-gradient(135deg, var(--electric-blue), #006064);
+            color: var(--white);
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: var(--shadow-lg);
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .progress-indicator:hover {
+            transform: scale(1.1);
+        }
+
+        /* Mobile Responsive */
         @media (max-width: 768px) {
             .header-container {
                 flex-direction: column;
                 gap: 1rem;
             }
 
-            main {
-                padding: 1rem;
+            h1 {
+                font-size: 1.6rem;
             }
 
             .card {
                 padding: 1.5rem;
             }
 
-            .subject-header {
-                padding: 1.5rem;
+            .machine-cards {
+                grid-template-columns: 1fr;
             }
 
-            .subject-header h1 {
-                font-size: 1.5rem;
+            .factors-grid {
+                grid-template-columns: 1fr;
             }
 
-            .lesson-meta {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-
-            .comparison-table {
-                font-size: 0.9rem;
-            }
-
-            .comparison-table th,
-            .comparison-table td {
-                padding: 0.75rem 0.5rem;
-            }
-
-            canvas {
-                max-width: 100%;
-                height: auto;
-            }
-
-            .nav-buttons {
+            .lesson-nav {
                 flex-direction: column;
             }
 
             .nav-btn {
                 justify-content: center;
+                width: 100%;
             }
 
-            .dropdown-menu {
-                right: -50%;
-                min-width: 200px;
+            .score-value {
+                font-size: 3rem;
+            }
+
+            .progress-indicator {
+                width: 55px;
+                height: 55px;
+                font-size: 0.85rem;
+            }
+
+            .coil-container {
+                width: 150px;
+                height: 120px;
+            }
+
+            .magnet {
+                width: 60px;
+                height: 30px;
             }
         }
 
-        /* Utility Classes */
-        .text-center {
-            text-align: center;
-        }
-
-        .mt-1 { margin-top: 1rem; }
-        .mt-2 { margin-top: 2rem; }
-        .mb-1 { margin-bottom: 1rem; }
-        .mb-2 { margin-bottom: 2rem; }
-
-        /* Energy Flow Diagram */
-        .energy-flow {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin: 1.5rem 0;
-        }
-
-        .energy-box {
-            background: var(--primary-blue);
-            color: var(--white);
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            text-align: center;
-            min-width: 120px;
-        }
-
-        .energy-arrow {
-            font-size: 2rem;
-            color: var(--primary-blue);
-        }
-
-        .machine-box {
-            background: var(--warning);
-            color: #333;
-        }
-
-        /* Tooltip */
-        .tooltip {
-            position: relative;
-            cursor: help;
-            border-bottom: 2px dashed var(--primary-blue);
-        }
-
-        .tooltip:hover::after {
-            content: attr(data-tip);
+        /* Electric spark animation */
+        .spark {
             position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #333;
-            color: var(--white);
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            white-space: nowrap;
-            z-index: 100;
+            width: 4px;
+            height: 4px;
+            background: #ffeb3b;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ffeb3b, 0 0 20px #ff9800;
+            animation: sparkle 0.5s ease infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
+    <!-- Header with Dropdown Navigation -->
     <header>
         <div class="header-container">
-            <a href="#" class="logo">Pass<span>Proof</span> Academy</a>
+            <div class="logo">
+                <span>🎓</span>
+                <span>PassProof Academy</span>
+            </div>
             <nav class="nav-container">
-                <button class="nav-toggle" onclick="toggleDropdown()">
-                    <div class="hamburger">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                    Menu
+                <button class="nav-toggle" onclick="toggleNav()">
+                    <span>☰</span>
+                    <span>Menu</span>
                 </button>
                 <div class="dropdown-menu" id="dropdownMenu">
-                    <a href="#overview">📖 Overview</a>
-                    <a href="#objectives">🎯 Learning Objectives</a>
-                    <a href="#concepts">💡 Key Concepts</a>
-                    <a href="#simulation">🔬 Interactive Simulation</a>
-                    <a href="#quiz">✍️ Quiz</a>
-                    <a href="#" onclick="clearProgress()">🔄 Reset Progress</a>
+                    <div class="dropdown-header">Navigation</div>
+                    <a href="#" onclick="navigateTo('home')">🏠 Home</a>
+                    <a href="#" onclick="navigateTo('subjects')">📚 All Subjects</a>
+                    <a href="#" onclick="navigateTo('physics')">⚛️ Physical Sciences</a>
+                    <div class="dropdown-header">Electrical Machines</div>
+                    <a href="#" onclick="navigateTo('lesson1')" class="active">📖 Lesson 1: Introduction</a>
+                    <a href="#" onclick="navigateTo('lesson2')">📖 Lesson 2: Generators</a>
+                    <a href="#" onclick="navigateTo('lesson3')">📖 Lesson 3: Motors</a>
+                    <a href="#" onclick="navigateTo('lesson4')">📖 Lesson 4: AC vs DC</a>
+                    <div class="dropdown-header">Student</div>
+                    <a href="#" onclick="navigateTo('progress')">📊 My Progress</a>
                 </div>
             </nav>
         </div>
     </header>
 
-    <!-- Main Content -->
     <main>
-        <!-- Subject & Lesson Header -->
-        <div class="card subject-header">
-            <span class="subject-badge">Physical Sciences • Grade 12</span>
-            <h1>⚡ Electrical Machines</h1>
-            <h2>Introduction to Generators and Motors</h2>
-            <div class="lesson-meta">
-                <span class="meta-item">📚 Lesson 1</span>
-                <span class="meta-item">📅 Week 23</span>
-                <span class="meta-item">⏱️ Term 3</span>
+        <!-- Subject and Grade Section -->
+        <div class="card">
+            <div class="badge-container">
+                <span class="subject-badge">⚛️ Physical Sciences</span>
+                <span class="grade-badge">📚 Grade 12</span>
+                <span class="week-badge">📅 Week 23</span>
             </div>
+            
+            <div class="lesson-meta">
+                <span class="meta-item">📆 Term 3</span>
+                <span class="meta-item" id="lessonProgress">📈 Progress: Loading...</span>
+            </div>
+
+            <h1>⚡ Electrical Machines</h1>
+            <p style="font-size: 1.15rem; color: var(--dark-gray);"><strong>Sub-topic:</strong> Introduction to Generators and Motors</p>
+            <p style="font-size: 1.25rem; color: var(--electric-blue); font-weight: 500;"><strong>Lesson 1:</strong> Understanding Electrical Machines & Faraday's Law</p>
         </div>
 
         <!-- Learning Objectives -->
-        <div class="card" id="objectives">
-            <h3 class="section-title">
-                <span class="icon">🎯</span>
-                Learning Objectives
-            </h3>
-            <ul class="objectives-list">
+        <div class="card">
+            <h2>🎯 Learning Objectives</h2>
+            <p>At the end of this lesson, learners should be able to:</p>
+            <ul class="objective-list">
                 <li>Understand what is meant by electrical machines</li>
                 <li>State that generators convert mechanical energy to electrical energy</li>
                 <li>State that motors convert electrical energy to mechanical energy</li>
-                <li>Use Faraday's Law to explain why a current is induced in a coil that is rotated in a magnetic field</li>
+                <li>Use Faraday's Law to explain why a current is induced in a coil rotated in a magnetic field</li>
+                <li>Identify factors that affect the strength of induced current</li>
             </ul>
         </div>
 
-        <!-- Overview -->
-        <div class="card" id="overview">
-            <h3 class="section-title">
-                <span class="icon">📖</span>
-                Overview
-            </h3>
-            <p>Electrical machines are devices that convert energy between mechanical and electrical forms. They are fundamental to modern technology, powering everything from household appliances to industrial equipment. In this lesson, we'll explore the two main types of electrical machines: <strong>generators</strong> and <strong>motors</strong>, and understand the principles that make them work.</p>
-            
+        <!-- Pre-Knowledge Section -->
+        <div class="card">
+            <h2>📚 Pre-Knowledge Review</h2>
+            <p>Before we dive into electrical machines, let's review some important concepts:</p>
+
             <div class="definition-box">
-                <h4>💡 Key Concept: Electromagnetism</h4>
-                <p><strong>Electromagnetism</strong> is the study of the properties of and relationship between electric currents and magnetic fields. This principle forms the foundation of how all electrical machines operate.</p>
+                <p style="margin-top: 0.5rem;"><strong>Electromagnetism:</strong> The study of the properties of and relationship between electric currents and magnetic fields.</p>
+            </div>
+
+            <div class="definition-box">
+                <p style="margin-top: 0.5rem;"><strong>Magnetic Field:</strong> A region around a magnetic material or a moving electrical charge where the force of magnetism acts.</p>
+            </div>
+
+            <div class="definition-box">
+                <p style="margin-top: 0.5rem;"><strong>Solenoid:</strong> A large number of insulated turns forming a cylindrical coil.</p>
+            </div>
+
+            <div class="definition-box">
+                <p style="margin-top: 0.5rem;"><strong>Electromagnet:</strong> A conductor which becomes magnetic when there is current flowing through it.</p>
+            </div>
+
+            <div class="concept-box">
+                <h4>📋 Factors Affecting Electromagnet Strength:</h4>
+                <ul>
+                    <li>The current in the conductor</li>
+                    <li>The number of turns around the core</li>
+                    <li>The type of substance used in the core</li>
+                </ul>
             </div>
         </div>
 
-        <!-- Main Concepts -->
-        <div class="card" id="concepts">
-            <h3 class="section-title">
-                <span class="icon">💡</span>
-                Main Concepts & Principles
-            </h3>
+        <!-- What are Electrical Machines -->
+        <div class="card">
+            <h2>⚙️ What are Electrical Machines?</h2>
 
-            <!-- Types of Electrical Machines -->
-            <div class="concept-card">
-                <h4>Types of Rotating Electrical Machines</h4>
-                <p>Electrical machines can be divided into two main categories:</p>
-                
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Feature</th>
-                            <th>Generator</th>
-                            <th>Motor</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Energy Conversion</strong></td>
-                            <td>Mechanical → Electrical</td>
-                            <td>Electrical → Mechanical</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Principle</strong></td>
-                            <td>Faraday's Law of Electromagnetic Induction</td>
-                            <td>Fleming's Motor Rule</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Input</strong></td>
-                            <td>Rotational motion</td>
-                            <td>Electric current</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Output</strong></td>
-                            <td>Electric current (EMF)</td>
-                            <td>Rotational motion</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <p>Electrical machines are devices that convert energy from one form to another through the interaction between a <strong>magnetic field</strong> and a set of <strong>windings (coils)</strong>.</p>
 
-            <!-- Generator Energy Flow -->
-            <h4 class="mt-2">Generator Energy Flow:</h4>
-            <div class="energy-flow">
-                <div class="energy-box">Mechanical Energy</div>
-                <span class="energy-arrow">→</span>
-                <div class="energy-box machine-box">GENERATOR</div>
-                <span class="energy-arrow">→</span>
-                <div class="energy-box">Electrical Energy</div>
-            </div>
-
-            <!-- Motor Energy Flow -->
-            <h4 class="mt-2">Motor Energy Flow:</h4>
-            <div class="energy-flow">
-                <div class="energy-box">Electrical Energy</div>
-                <span class="energy-arrow">→</span>
-                <div class="energy-box machine-box">MOTOR</div>
-                <span class="energy-arrow">→</span>
-                <div class="energy-box">Mechanical Energy</div>
-            </div>
-
-            <!-- Electromagnetic Induction -->
-            <div class="concept-card mt-2">
-                <h4>Electromagnetic Induction</h4>
+            <div class="concept-box">
+                <h4>Key Principles:</h4>
                 <ul>
                     <li>A <strong>current-carrying conductor</strong> has a magnetic field induced around it</li>
-                    <li>A changing magnetic field can <strong>induce an EMF</strong>, resulting in the flow of current</li>
-                    <li>This current is called an <strong>induced current</strong></li>
-                    <li>Both generators and motors operate through the interaction between a <strong>magnetic field</strong> and a set of <strong>windings (coils)</strong></li>
+                    <li>A <strong>changing magnetic field</strong> can induce an EMF, resulting in the flow of current</li>
+                    <li>Such a current is called an <strong>induced current</strong></li>
+                    <li>Both generators and motors operate through the interaction between magnetic fields and coils</li>
                 </ul>
             </div>
 
-            <!-- Factors Affecting Induced Current -->
-            <div class="concept-card">
-                <h4>Factors That Increase Induced Current Strength</h4>
+            <h3>Two Types of Electrical Machines</h3>
+
+            <div class="machine-cards">
+                <div class="machine-card generator">
+                    <span class="machine-icon">🔌</span>
+                    <h4>⚡ Generator</h4>
+                    <p>Converts mechanical energy into electrical energy</p>
+                    <div class="energy-flow">
+                        <span class="energy-box mechanical">Mechanical</span>
+                        <span class="arrow">➡️</span>
+                        <span class="energy-box electrical">Electrical</span>
+                    </div>
+                    <p><strong>Principle:</strong> Based on Faraday's Law of Electromagnetic Induction</p>
+                    <p><em>Examples: Power stations, wind turbines, hydroelectric dams</em></p>
+                </div>
+
+                <div class="machine-card motor">
+                    <span class="machine-icon">🔧</span>
+                    <h4>🔄 Motor</h4>
+                    <p>Converts electrical energy into mechanical energy</p>
+                    <div class="energy-flow">
+                        <span class="energy-box electrical">Electrical</span>
+                        <span class="arrow">➡️</span>
+                        <span class="energy-box mechanical">Mechanical</span>
+                    </div>
+                    <p><strong>Principle:</strong> Based on Fleming's Motor Rule</p>
+                    <p><em>Examples: Electric fans, washing machines, electric vehicles</em></p>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <span class="tip-icon">💡</span>
+                <div>
+                    <strong>Easy Memory Tip:</strong> Generators <strong>Generate</strong> electricity (mechanical → electrical). Motors <strong>Move</strong> things (electrical → mechanical). They are essentially opposites!
+                </div>
+            </div>
+        </div>
+
+        <!-- Faraday's Law -->
+        <div class="card">
+            <h2>📜 Faraday's Law of Electromagnetic Induction</h2>
+
+            <div class="law-container">
+                <div class="law-title">⚡ Faraday's Law</div>
+                <div class="law-statement">
+                    Whenever there is a <strong>change in the magnetic field</strong> linked with a conductor, a <strong>potential difference (EMF) is induced</strong>, the magnitude of which is <strong>directly proportional to the rate of change</strong> of the magnetic field linked with the conductor.
+                </div>
+            </div>
+
+            <h3>Explaining Induced Current Using Faraday's Law</h3>
+
+            <div class="concept-box">
+                <h4>When a magnet moves towards a coil:</h4>
                 <ul>
-                    <li>🔄 Increasing the <strong>speed of movement</strong> of the magnet relative to the coil</li>
-                    <li>🧲 Increasing the <strong>magnetic flux linkage</strong> (using a stronger magnet)</li>
-                    <li>🔗 Increasing the <strong>number of turns</strong> in the coil</li>
+                    <li>The magnetic field through the coil <strong>increases momentarily</strong></li>
+                    <li>This change induces a <strong>current in the coil</strong></li>
+                    <li>The faster the change, the greater the induced current</li>
                 </ul>
-            </div>
 
-            <!-- Faraday's Law -->
-            <div class="definition-box">
-                <h4>📜 Faraday's Law of Electromagnetic Induction</h4>
-                <p><strong>Faraday's Law</strong> states that whenever there is a change in the magnetic field linked with a conductor, a potential difference (EMF) is induced. The magnitude of this EMF is directly proportional to the rate of change of the magnetic field linked with the conductor.</p>
-            </div>
-
-            <!-- Applying Faraday's Law -->
-            <div class="concept-card">
-                <h4>Applying Faraday's Law to Rotating Coils</h4>
-                <p>Faraday's Law explains why current is induced in a coil rotated in a magnetic field:</p>
+                <h4 style="margin-top: 1rem;">When a magnet moves away from a coil:</h4>
                 <ul>
-                    <li>✅ A current is induced when a magnet <strong>moves toward</strong> a coil (magnetic field increases)</li>
-                    <li>✅ The induced current <strong>reverses direction</strong> when the magnet moves away (magnetic field decreases)</li>
-                    <li>❌ <strong>No current</strong> is induced if the magnet does not move relative to the coil</li>
-                    <li>💡 It is <strong>relative motion</strong> that matters — the coil can move while the magnet stays stationary</li>
+                    <li>The magnetic field through the coil <strong>decreases</strong></li>
+                    <li>A current is induced, but in the <strong>opposite direction</strong></li>
+                </ul>
+
+                <h4 style="margin-top: 1rem;">When there is no relative motion:</h4>
+                <ul>
+                    <li><strong>No current is induced</strong></li>
+                    <li>It is the <strong>relative motion</strong> that matters!</li>
+                    <li>The magnet can be held steady and the coil moved – this also induces an EMF</li>
                 </ul>
             </div>
 
-            <!-- Key Terms -->
-            <div class="concept-card">
-                <h4>Essential Definitions</h4>
-                <ul>
-                    <li><strong>Magnetic Field:</strong> A region around a magnetic material or moving electrical charge where the force of magnetism acts</li>
-                    <li><strong>Solenoid:</strong> A large number of insulated turns forming a cylindrical coil</li>
-                    <li><strong>Electromagnet:</strong> A conductor which becomes magnetic when current flows through it</li>
-                </ul>
+            <div class="key-principle">
+                <strong>🔑 Key Principle:</strong> It doesn't matter whether the magnet moves or the coil moves. What matters is that there is <strong>relative motion</strong> between them, causing a <strong>change in magnetic flux</strong> through the coil.
+            </div>
+        </div>
+
+        <!-- Factors Affecting Induced Current -->
+        <div class="card">
+            <h2>📊 Factors Affecting Induced Current Strength</h2>
+
+            <p>The strength of the induced current can be increased by:</p>
+
+            <div class="factors-grid">
+                <div class="factor-card">
+                    <div class="factor-icon">⚡</div>
+                    <h5>Speed of Movement</h5>
+                    <p>Increase the speed of movement of the magnet relative to the coil</p>
+                </div>
+                <div class="factor-card">
+                    <div class="factor-icon">🧲</div>
+                    <h5>Magnetic Strength</h5>
+                    <p>Increase the magnetic flux linkage (use a stronger magnet)</p>
+                </div>
+                <div class="factor-card">
+                    <div class="factor-icon">🔄</div>
+                    <h5>Number of Turns</h5>
+                    <p>Increase the number of turns in the coil</p>
+                </div>
             </div>
 
-            <!-- Electromagnet Strength Factors -->
-            <div class="concept-card">
-                <h4>Factors Affecting Electromagnet Strength</h4>
-                <ul>
-                    <li>⚡ The <strong>current</strong> flowing through the conductor</li>
-                    <li>🔄 The <strong>number of turns</strong> around the core</li>
-                    <li>🔩 The <strong>type of substance</strong> used in the core</li>
-                </ul>
+            <div class="tip-box">
+                <span class="tip-icon">📝</span>
+                <div>
+                    <strong>Exam Tip:</strong> When asked how to increase induced current, mention ALL three factors: faster relative motion, stronger magnet, and more coil turns. Each factor independently increases the induced current!
+                </div>
             </div>
         </div>
 
         <!-- Interactive Simulations -->
-        <div class="card" id="simulation">
-            <h3 class="section-title">
-                <span class="icon">🔬</span>
-                Interactive Simulations
-            </h3>
+        <div class="card">
+            <h2>🔬 Interactive Simulations</h2>
 
-            <!-- Simulation 1: Electromagnetic Induction -->
+            <!-- Electromagnetic Induction Simulation -->
             <div class="simulation-container">
-                <h4 class="simulation-title">⚡ Electromagnetic Induction Simulator</h4>
-                <p class="text-center mb-1">Move the magnet through the coil to induce a current!</p>
-                
-                <div class="canvas-container">
-                    <canvas id="inductionCanvas" width="600" height="300"></canvas>
+                <div class="simulation-header">
+                    <h3>🧲 Electromagnetic Induction Simulator</h3>
+                    <span class="sim-badge">INTERACTIVE</span>
+                </div>
+                <p>Move the magnet towards and away from the coil to see how current is induced. Watch the ammeter needle!</p>
+
+                <div class="sim-canvas">
+                    <div class="induction-sim">
+                        <div class="coil-container">
+                            <div class="coil"></div>
+                            <div class="magnet" id="magnet" style="left: -100px; top: 55px;">
+                                <div class="magnet-pole north">N</div>
+                                <div class="magnet-pole south">S</div>
+                            </div>
+                        </div>
+                        
+                        <div class="current-indicator">
+                            <div class="ammeter">
+                                <div class="ammeter-needle" id="ammeterNeedle"></div>
+                                <div class="ammeter-center"></div>
+                            </div>
+                            <div>
+                                <div class="current-value" id="currentValue">0 A</div>
+                                <div class="current-direction" id="currentDirection">No current</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="simulation-controls">
-                    <button class="sim-btn" onclick="startInductionAnimation()">
-                        ▶️ Auto Move
+                <div class="sim-controls">
+                    <button class="sim-btn" onclick="moveMagnetTowards()">
+                        <span>➡️</span> Move Towards Coil
                     </button>
-                    <button class="sim-btn secondary" onclick="stopInductionAnimation()">
-                        ⏹️ Stop
+                    <button class="sim-btn" onclick="moveMagnetAway()">
+                        <span>⬅️</span> Move Away from Coil
                     </button>
-                    <button class="sim-btn secondary" onclick="resetInduction()">
-                        🔄 Reset
+                    <button class="sim-btn danger" onclick="resetMagnet()">
+                        <span>↺</span> Reset
                     </button>
                 </div>
 
-                <div class="slider-container">
-                    <label>Magnet Position:</label>
-                    <input type="range" id="magnetSlider" min="0" max="100" value="0" oninput="updateMagnetPosition(this.value)">
-                    <label>Speed:</label>
-                    <input type="range" id="speedSlider" min="1" max="10" value="5" oninput="updateSpeed(this.value)">
-                </div>
-
-                <div class="simulation-info">
-                    <p>Induced Current: <span class="value" id="currentValue">0.00</span> A</p>
-                    <p id="directionInfo">Move the magnet to induce current</p>
+                <div id="inductionExplanation" style="margin-top: 1rem; padding: 1rem; background: #e0f7fa; border-radius: 8px; text-align: center;">
+                    <p id="inductionExplanationText" style="margin: 0;">Click the buttons to move the magnet and observe electromagnetic induction!</p>
                 </div>
             </div>
 
-            <!-- Simulation 2: Generator vs Motor -->
+            <!-- Generator/Motor Visualization -->
             <div class="simulation-container">
-                <h4 class="simulation-title">🔄 Generator vs Motor Comparison</h4>
-                <p class="text-center mb-1">Toggle between generator and motor modes to see energy conversion!</p>
-                
-                <div class="canvas-container">
-                    <canvas id="machineCanvas" width="600" height="350"></canvas>
+                <div class="simulation-header">
+                    <h3>⚙️ Generator vs Motor Visualization</h3>
+                    <span class="sim-badge">INTERACTIVE</span>
                 </div>
+                <p>See the difference between how generators and motors work!</p>
 
-                <div class="simulation-controls">
-                    <button class="sim-btn" id="generatorBtn" onclick="setMachineMode('generator')">
-                        ⚡ Generator Mode
-                    </button>
-                    <button class="sim-btn secondary" id="motorBtn" onclick="setMachineMode('motor')">
-                        🔧 Motor Mode
-                    </button>
-                    <button class="sim-btn secondary" onclick="toggleMachineAnimation()">
-                        ▶️ Start/Stop
-                    </button>
-                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 1rem 0;">
+                    <!-- Generator -->
+                    <div style="text-align: center; padding: 1rem; background: #e3f2fd; border-radius: 12px;">
+                        <h4 style="color: #1565c0; margin-bottom: 1rem;">⚡ Generator</h4>
+                        <div class="machine-visual">
+                            <div class="field-magnet left"><span>N</span></div>
+                            <div class="field-magnet right"><span>S</span></div>
+                            <div class="rotor" id="generatorRotor"></div>
+                        </div>
+                        <p style="font-size: 0.9rem; margin: 0.5rem 0;">Mechanical rotation → Electrical current</p>
+                        <button class="sim-btn" style="margin-top: 0.5rem;" onclick="spinGenerator()">
+                            <span>🔄</span> Spin Rotor
+                        </button>
+                        <div id="generatorOutput" style="margin-top: 0.5rem; font-weight: bold; color: #1565c0;">Output: 0 V</div>
+                    </div>
 
-                <div class="slider-container">
-                    <label>Rotation Speed:</label>
-                    <input type="range" id="rotationSpeed" min="1" max="10" value="5" oninput="updateRotationSpeed(this.value)">
-                </div>
-
-                <div class="simulation-info">
-                    <p id="machineInfo">Select a mode to begin</p>
-                    <p>Rotation: <span class="value" id="rotationValue">0</span>°</p>
+                    <!-- Motor -->
+                    <div style="text-align: center; padding: 1rem; background: #fff3e0; border-radius: 12px;">
+                        <h4 style="color: #e65100; margin-bottom: 1rem;">🔄 Motor</h4>
+                        <div class="machine-visual">
+                            <div class="field-magnet left"><span>N</span></div>
+                            <div class="field-magnet right"><span>S</span></div>
+                            <div class="rotor" id="motorRotor"></div>
+                        </div>
+                        <p style="font-size: 0.9rem; margin: 0.5rem 0;">Electrical current → Mechanical rotation</p>
+                        <button class="sim-btn" style="margin-top: 0.5rem; background: linear-gradient(135deg, #ff9800, #e65100);" onclick="powerMotor()">
+                            <span>⚡</span> Apply Current
+                        </button>
+                        <div id="motorOutput" style="margin-top: 0.5rem; font-weight: bold; color: #e65100;">Speed: 0 RPM</div>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Simulation 3: Coil Turns Effect -->
-            <div class="simulation-container">
-                <h4 class="simulation-title">🔗 Effect of Coil Turns on Induced EMF</h4>
-                <p class="text-center mb-1">Adjust the number of coil turns to see how it affects the induced EMF!</p>
-                
-                <div class="canvas-container">
-                    <canvas id="coilCanvas" width="600" height="250"></canvas>
-                </div>
+        <!-- Key Concepts Summary -->
+        <div class="card">
+            <h2>📋 Key Concepts Summary</h2>
 
-                <div class="slider-container">
-                    <label>Number of Turns:</label>
-                    <input type="range" id="turnsSlider" min="1" max="20" value="5" oninput="updateCoilTurns(this.value)">
-                    <span id="turnsValue">5</span> turns
-                </div>
+            <div class="concept-box">
+                <h4>🔑 Important Points to Remember:</h4>
+                <ul>
+                    <li><strong>Generators:</strong> Convert mechanical energy → electrical energy (Faraday's Law)</li>
+                    <li><strong>Motors:</strong> Convert electrical energy → mechanical energy (Fleming's Rule)</li>
+                    <li>Both work through the interaction of <strong>magnetic fields and coils</strong></li>
+                    <li><strong>Faraday's Law:</strong> A changing magnetic field induces an EMF proportional to the rate of change</li>
+                    <li><strong>Relative motion</strong> between magnet and coil is essential for induction</li>
+                    <li>Induced current direction <strong>reverses</strong> when the direction of motion reverses</li>
+                </ul>
+            </div>
 
-                <div class="slider-container">
-                    <label>Magnet Strength:</label>
-                    <input type="range" id="strengthSlider" min="1" max="10" value="5" oninput="updateMagnetStrength(this.value)">
-                    <span id="strengthValue">5</span> T
-                </div>
+            <div class="info-box">
+                <h4>📊 Increasing Induced Current:</h4>
+                <ol>
+                    <li>Increase speed of relative motion</li>
+                    <li>Use a stronger magnet (increase magnetic flux)</li>
+                    <li>Increase number of turns in the coil</li>
+                </ol>
+            </div>
 
-                <div class="simulation-info">
-                    <p>Induced EMF: <span class="value" id="emfValue">0.00</span> V</p>
-                </div>
+            <div class="warning-box">
+                <strong>⚠️ Exam Alert:</strong> Be prepared to:
+                <ul style="margin-top: 0.5rem; margin-bottom: 0;">
+                    <li>State the energy conversions for generators and motors</li>
+                    <li>Explain Faraday's Law in your own words</li>
+                    <li>Explain why current is induced when a coil rotates in a magnetic field</li>
+                    <li>List factors that affect the strength of induced current</li>
+                </ul>
             </div>
         </div>
 
         <!-- Quiz Section -->
-        <div class="card quiz-container" id="quiz">
-            <h3 class="section-title">
-                <span class="icon">✍️</span>
-                Knowledge Check (10 Questions)
-            </h3>
-            <p class="mb-2">Test your understanding of electrical machines. Select the best answer for each question.</p>
+        <div class="card quiz-container">
+            <h2>📝 End-of-Lesson Assessment</h2>
+            <p>Test your understanding of electrical machines and electromagnetic induction.</p>
 
-            <div id="quizQuestions"></div>
+            <form id="quizForm">
+                <!-- Question 1 -->
+                <div class="question-card" id="q1">
+                    <div class="question-header">
+                        <span class="question-number">1</span>
+                        <p class="question-text">What type of energy conversion takes place in a generator?</p>
+                    </div>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q1" value="a">
+                            <span>Electrical energy to mechanical energy</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q1" value="b">
+                            <span>Mechanical energy to electrical energy</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q1" value="c">
+                            <span>Chemical energy to electrical energy</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q1" value="d">
+                            <span>Heat energy to mechanical energy</span>
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback1"></div>
+                </div>
 
-            <button class="submit-btn" onclick="submitQuiz()">
-                📝 Submit Answers
-            </button>
+                <!-- Question 2 -->
+                <div class="question-card" id="q2">
+                    <div class="question-header">
+                        <span class="question-number">2</span>
+                        <p class="question-text">What type of energy conversion takes place in an electric motor?</p>
+                    </div>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q2" value="a">
+                            <span>Mechanical energy to electrical energy</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q2" value="b">
+                            <span>Electrical energy to mechanical energy</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q2" value="c">
+                            <span>Chemical energy to mechanical energy</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q2" value="d">
+                            <span>Light energy to electrical energy</span>
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback2"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question-card" id="q3">
+                    <div class="question-header">
+                        <span class="question-number">3</span>
+                        <p class="question-text">According to Faraday's Law, when is an EMF induced in a conductor?</p>
+                    </div>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q3" value="a">
+                            <span>When the conductor is in a constant magnetic field</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q3" value="b">
+                            <span>When there is a change in the magnetic field linked with the conductor</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q3" value="c">
+                            <span>When the conductor is heated</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q3" value="d">
+                            <span>When the conductor is made of copper</span>
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback3"></div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="question-card" id="q4">
+                    <div class="question-header">
+                        <span class="question-number">4</span>
+                        <p class="question-text">What happens to the induced current when a magnet is moved AWAY from a coil?</p>
+                    </div>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q4" value="a">
+                            <span>The current flows in the same direction as before</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q4" value="b">
+                            <span>The current flows in the opposite direction</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q4" value="c">
+                            <span>No current is induced</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q4" value="d">
+                            <span>The current becomes DC</span>
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback4"></div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="question-card" id="q5">
+                    <div class="question-header">
+                        <span class="question-number">5</span>
+                        <p class="question-text">If a magnet does NOT move relative to a coil, what happens?</p>
+                    </div>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q5" value="a">
+                            <span>A constant current is induced</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q5" value="b">
+                            <span>An alternating current is induced</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q5" value="c">
+                            <span>No current is induced</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q5" value="d">
+                            <span>The coil heats up</span>
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback5"></div>
+                </div>
+
+                <!-- Question 6 -->
+                <div class="question-card" id="q6">
+                    <div class="question-header">
+                        <span class="question-number">6</span>
+                        <p class="question-text">Which of the following will INCREASE the strength of induced current?</p>
+                    </div>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q6" value="a">
+                            <span>Decrease the number of turns in the coil</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q6" value="b">
+                            <span>Move the magnet slower</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q6" value="c">
+                            <span>Increase the speed of movement of the magnet relative to the coil</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q6" value="d">
+                            <span>Use a weaker magnet</span>
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback6"></div>
+                </div>
+
+                <!-- Question 7 -->
+                <div class="question-card" id="q7">
+                    <div class="question-header">
+                        <span class="question-number">7</span>
+                        <p class="question-text">Generators operate based on which principle?</p>
+                    </div>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q7" value="a">
+                            <span>Newton's Laws</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q7" value="b">
+                            <span>Faraday's Law of Electromagnetic Induction</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q7" value="c">
+                            <span>Ohm's Law</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q7" value="d">
+                            <span>Coulomb's Law</span>
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback7"></div>
+                </div>
+
+                <!-- Question 8 -->
+                <div class="question-card" id="q8">
+                    <div class="question-header">
+                        <span class="question-number">8</span>
+                        <p class="question-text">What is a solenoid?</p>
+                    </div>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q8" value="a">
+                            <span>A type of permanent magnet</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q8" value="b">
+                            <span>A large number of insulated turns forming a cylindrical coil</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q8" value="c">
+                            <span>A device that measures current</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q8" value="d">
+                            <span>A type of battery</span>
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback8"></div>
+                </div>
+
+                <!-- Question 9 -->
+                <div class="question-card" id="q9">
+                    <div class="question-header">
+                        <span class="question-number">9</span>
+                        <p class="question-text">Both generators and motors operate through the interaction between:</p>
+                    </div>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q9" value="a">
+                            <span>Heat and light</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q9" value="b">
+                            <span>A magnetic field and a set of coils</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q9" value="c">
+                            <span>Two permanent magnets</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q9" value="d">
+                            <span>Sound waves and electricity</span>
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback9"></div>
+                </div>
+
+                <!-- Question 10 -->
+                <div class="question-card" id="q10">
+                    <div class="question-header">
+                        <span class="question-number">10</span>
+                        <p class="question-text">Motors operate based on which principle?</p>
+                    </div>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q10" value="a">
+                            <span>Faraday's Law</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q10" value="b">
+                            <span>Fleming's Motor Rule</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q10" value="c">
+                            <span>Einstein's Theory</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q10" value="d">
+                            <span>Boyle's Law</span>
+                        </label>
+                    </div>
+                    <div class="feedback" id="feedback10"></div>
+                </div>
+
+                <button type="button" class="submit-quiz-btn" onclick="submitQuiz()">
+                    <span>📊</span> Submit & Check Answers
+                </button>
+            </form>
 
             <div class="score-container" id="scoreContainer">
-                <div class="score-circle">
-                    <span class="score-value" id="scoreValue">0%</span>
-                    <span class="score-label">Score</span>
+                <div style="font-size: 1.5rem; margin-bottom: 1rem;">⚡ Your Results</div>
+                <div class="score-value" id="scoreValue">0/10</div>
+                <div id="scorePercentage" style="font-size: 1.3rem; opacity: 0.9;">0%</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="scoreFill" style="width: 0%;"></div>
                 </div>
-                <div class="progress-container">
-                    <div class="progress-bar" id="scoreProgress"></div>
+                <div class="score-message" id="scoreMessage"></div>
+                <div class="score-actions">
+                    <button class="action-btn" onclick="retryQuiz()">
+                        <span>🔄</span> Try Again
+                    </button>
+                    <button class="action-btn" onclick="scrollToTop()">
+                        <span>📚</span> Review Lesson
+                    </button>
                 </div>
-                <p class="score-message" id="scoreMessage">Well done!</p>
-                <p id="scoreDetails">You got 0 out of 10 questions correct.</p>
-                <button class="retry-btn" onclick="retryQuiz()">
-                    🔄 Try Again
-                </button>
             </div>
         </div>
 
-        <!-- Navigation Buttons -->
-        <div class="nav-buttons">
-            <button class="nav-btn prev" onclick="goToPrevious()">
-                ← Previous Lesson
-            </button>
-            <button class="nav-btn" onclick="goToNext()">
-                Next Lesson →
-            </button>
+        <!-- Lesson Navigation -->
+        <div class="lesson-nav">
+            <a href="#" class="nav-btn prev" onclick="navigateLesson('prev')">
+                <span>←</span> Previous Topic
+            </a>
+            <a href="#" class="nav-btn next" onclick="navigateLesson('next')">
+                Lesson 2: Generators <span>→</span>
+            </a>
         </div>
     </main>
 
+    <!-- Progress Indicator -->
+    <div class="progress-indicator" id="progressIndicator" onclick="scrollToTop()">
+        <span id="scrollProgress">0%</span>
+    </div>
+
     <!-- Footer -->
     <footer>
-        <p>© 2026 PassProof Academy. All rights reserved.</p>
-        <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.7;">Empowering learners with quality education</p>
+        <div class="footer-content">
+            <div class="footer-logo">🎓 PassProof Academy</div>
+            <p>Empowering learners through quality education</p>
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">Contact</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            <div class="copyright">
+                © 2026 PassProof Academy. All rights reserved.
+            </div>
+        </div>
     </footer>
 
     <script>
-        // ==================== Quiz Data ====================
-        const quizData = [
-            {
-                question: "What type of energy conversion takes place in a generator?",
-                options: [
-                    "Electrical energy to mechanical energy",
-                    "Mechanical energy to electrical energy",
-                    "Chemical energy to electrical energy",
-                    "Thermal energy to mechanical energy"
-                ],
-                correct: 1,
-                explanation: "Generators convert mechanical energy (rotation) into electrical energy based on Faraday's Law of Electromagnetic Induction."
-            },
-            {
-                question: "What type of energy conversion takes place in an electric motor?",
-                options: [
-                    "Mechanical energy to electrical energy",
-                    "Electrical energy to chemical energy",
-                    "Electrical energy to mechanical energy",
-                    "Thermal energy to electrical energy"
-                ],
-                correct: 2,
-                explanation: "Motors convert electrical energy into mechanical energy (rotation) based on Fleming's Motor Rule."
-            },
-            {
-                question: "What is electromagnetism?",
-                options: [
-                    "The study of static electricity only",
-                    "The study of magnetic materials only",
-                    "The study of the properties of and relationship between electric currents and magnetic fields",
-                    "The study of electromagnetic waves in space"
-                ],
-                correct: 2,
-                explanation: "Electromagnetism is the study of the properties of and relationship between electric currents and magnetic fields."
-            },
-            {
-                question: "According to Faraday's Law, when is an EMF induced in a conductor?",
-                options: [
-                    "When the conductor is stationary in a constant magnetic field",
-                    "When there is a change in the magnetic field linked with the conductor",
-                    "Only when the magnetic field is very strong",
-                    "Only when the conductor is made of copper"
-                ],
-                correct: 1,
-                explanation: "Faraday's Law states that an EMF is induced whenever there is a change in the magnetic field linked with the conductor."
-            },
-            {
-                question: "What is a solenoid?",
-                options: [
-                    "A single loop of wire",
-                    "A type of permanent magnet",
-                    "A large number of insulated turns forming a cylindrical coil",
-                    "A device that measures current"
-                ],
-                correct: 2,
-                explanation: "A solenoid is a large number of insulated turns forming a cylindrical coil, which produces a magnetic field when current flows through it."
-            },
-            {
-                question: "Which of the following will NOT increase the strength of an induced current?",
-                options: [
-                    "Increasing the speed of movement of the magnet relative to the coil",
-                    "Using a stronger magnet",
-                    "Increasing the number of turns in the coil",
-                    "Keeping the magnet stationary relative to the coil"
-                ],
-                correct: 3,
-                explanation: "Keeping the magnet stationary relative to the coil will result in NO induced current, as relative motion is required."
-            },
-            {
-                question: "What happens when a magnet is moved toward a coil?",
-                options: [
-                    "No current is induced",
-                    "A current is induced as the magnetic field through the coil increases",
-                    "The coil becomes permanently magnetized",
-                    "The magnetic field disappears"
-                ],
-                correct: 1,
-                explanation: "When a magnet moves toward a coil, the magnetic field through the coil increases, inducing a current."
-            },
-            {
-                question: "What is a magnetic field?",
-                options: [
-                    "A type of electric current",
-                    "A region around a magnetic material where the force of magnetism acts",
-                    "The same as an electric field",
-                    "A field that only exists in motors"
-                ],
-                correct: 1,
-                explanation: "A magnetic field is a region around a magnetic material or moving electrical charge where the force of magnetism acts."
-            },
-            {
-                question: "What principle do generators operate on?",
-                options: [
-                    "Newton's Laws of Motion",
-                    "Fleming's Motor Rule",
-                    "Faraday's Law of Electromagnetic Induction",
-                    "Ohm's Law"
-                ],
-                correct: 2,
-                explanation: "Generators operate on Faraday's Law of Electromagnetic Induction, which describes how changing magnetic fields induce EMF."
-            },
-            {
-                question: "Which factor does NOT affect the strength of an electromagnet?",
-                options: [
-                    "The current in the conductor",
-                    "The number of turns around the core",
-                    "The color of the wire used",
-                    "The type of substance used in the core"
-                ],
-                correct: 2,
-                explanation: "The color of the wire has no effect on electromagnet strength. Strength depends on current, number of turns, and core material."
+        // ==================== NAVIGATION ====================
+        function toggleNav() {
+            const menu = document.getElementById('dropdownMenu');
+            menu.classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('dropdownMenu');
+            const toggle = document.querySelector('.nav-toggle');
+            if (!menu.contains(e.target) && !toggle.contains(e.target)) {
+                menu.classList.remove('active');
             }
-        ];
+        });
 
-        // ==================== Quiz Functions ====================
-        let userAnswers = [];
-        let quizSubmitted = false;
-
-        function initializeQuiz() {
-            const container = document.getElementById('quizQuestions');
-            container.innerHTML = '';
-            userAnswers = new Array(quizData.length).fill(null);
-            quizSubmitted = false;
-
-            quizData.forEach((q, index) => {
-                const questionHTML = `
-                    <div class="question-card" id="question${index}">
-                        <div class="question-number">${index + 1}</div>
-                        <p class="question-text">${q.question}</p>
-                        <div class="options-container">
-                            ${q.options.map((opt, optIndex) => `
-                                <label class="option-label" id="option${index}_${optIndex}" onclick="selectOption(${index}, ${optIndex})">
-                                    <input type="radio" name="q${index}" value="${optIndex}">
-                                    ${opt}
-                                </label>
-                            `).join('')}
-                        </div>
-                        <div class="feedback" id="feedback${index}"></div>
-                    </div>
-                `;
-                container.innerHTML += questionHTML;
-            });
-
-            // Load saved answers
-            loadProgress();
+        function navigateTo(page) {
+            alert(`Navigating to: ${page}\n\nIn a full implementation, this would load the ${page} page.`);
+            document.getElementById('dropdownMenu').classList.remove('active');
         }
 
-        function selectOption(questionIndex, optionIndex) {
-            if (quizSubmitted) return;
+        function navigateLesson(direction) {
+            if (direction === 'prev') {
+                alert('Navigating to Previous Topic: Electric Circuits');
+            } else {
+                alert('Navigating to Lesson 2: Generators in Detail');
+            }
+        }
 
-            userAnswers[questionIndex] = optionIndex;
-            
-            // Update visual selection
-            const options = document.querySelectorAll(`[id^="option${questionIndex}_"]`);
-            options.forEach((opt, idx) => {
-                opt.classList.remove('selected');
-                if (idx === optionIndex) {
-                    opt.classList.add('selected');
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ==================== ELECTROMAGNETIC INDUCTION SIMULATION ====================
+        let magnetPosition = -100;
+        let isAnimating = false;
+
+        function moveMagnetTowards() {
+            if (isAnimating) return;
+            isAnimating = true;
+
+            const magnet = document.getElementById('magnet');
+            const needle = document.getElementById('ammeterNeedle');
+            const currentValue = document.getElementById('currentValue');
+            const currentDirection = document.getElementById('currentDirection');
+            const explanation = document.getElementById('inductionExplanationText');
+
+            // Animate magnet moving towards coil
+            let pos = -100;
+            const interval = setInterval(() => {
+                pos += 10;
+                magnet.style.left = pos + 'px';
+
+                // Update ammeter
+                if (pos > -50 && pos < 50) {
+                    const deflection = Math.min(45, (pos + 50) * 0.9);
+                    needle.style.transform = `rotate(${deflection}deg)`;
+                    currentValue.textContent = (deflection / 10).toFixed(1) + ' A';
+                    currentDirection.textContent = 'Current: Clockwise';
+                    currentDirection.style.color = '#4caf50';
                 }
-            });
 
-            // Save progress
-            saveProgress();
+                if (pos >= 20) {
+                    clearInterval(interval);
+                    isAnimating = false;
+                    magnetPosition = pos;
+                    explanation.innerHTML = '⚡ <strong>Current induced!</strong> As the magnet moves towards the coil, the magnetic field through the coil increases, inducing a current (Faraday\'s Law).';
+                }
+            }, 50);
         }
+
+        function moveMagnetAway() {
+            if (isAnimating) return;
+            isAnimating = true;
+
+            const magnet = document.getElementById('magnet');
+            const needle = document.getElementById('ammeterNeedle');
+            const currentValue = document.getElementById('currentValue');
+            const currentDirection = document.getElementById('currentDirection');
+            const explanation = document.getElementById('inductionExplanationText');
+
+            let pos = magnetPosition;
+            const interval = setInterval(() => {
+                pos -= 10;
+                magnet.style.left = pos + 'px';
+
+                // Update ammeter (opposite direction)
+                if (pos > -50 && pos < 50) {
+                    const deflection = Math.max(-45, (pos - 50) * 0.9);
+                    needle.style.transform = `rotate(${deflection}deg)`;
+                    currentValue.textContent = Math.abs(deflection / 10).toFixed(1) + ' A';
+                    currentDirection.textContent = 'Current: Counter-clockwise';
+                    currentDirection.style.color = '#f44336';
+                }
+
+                if (pos <= -100) {
+                    clearInterval(interval);
+                    isAnimating = false;
+                    magnetPosition = pos;
+                    needle.style.transform = 'rotate(0deg)';
+                    currentValue.textContent = '0 A';
+                    currentDirection.textContent = 'No current';
+                    currentDirection.style.color = '#666';
+                    explanation.innerHTML = '🔄 <strong>Opposite current!</strong> As the magnet moves away, the magnetic field decreases, inducing a current in the opposite direction.';
+                }
+            }, 50);
+        }
+
+        function resetMagnet() {
+            const magnet = document.getElementById('magnet');
+            const needle = document.getElementById('ammeterNeedle');
+            const currentValue = document.getElementById('currentValue');
+            const currentDirection = document.getElementById('currentDirection');
+            const explanation = document.getElementById('inductionExplanationText');
+
+            magnet.style.left = '-100px';
+            magnetPosition = -100;
+            needle.style.transform = 'rotate(0deg)';
+            currentValue.textContent = '0 A';
+            currentDirection.textContent = 'No current';
+            currentDirection.style.color = '#666';
+            explanation.innerHTML = 'Click the buttons to move the magnet and observe electromagnetic induction!';
+            isAnimating = false;
+        }
+
+        // ==================== GENERATOR/MOTOR SIMULATION ====================
+        let generatorSpinning = false;
+        let motorSpinning = false;
+
+        function spinGenerator() {
+            const rotor = document.getElementById('generatorRotor');
+            const output = document.getElementById('generatorOutput');
+
+            if (generatorSpinning) {
+                rotor.classList.remove('spinning');
+                output.textContent = 'Output: 0 V';
+                generatorSpinning = false;
+            } else {
+                rotor.classList.add('spinning');
+                output.textContent = 'Output: 230 V AC';
+                generatorSpinning = true;
+            }
+        }
+
+        function powerMotor() {
+            const rotor = document.getElementById('motorRotor');
+            const output = document.getElementById('motorOutput');
+
+            if (motorSpinning) {
+                rotor.classList.remove('spinning');
+                output.textContent = 'Speed: 0 RPM';
+                motorSpinning = false;
+            } else {
+                rotor.classList.add('spinning');
+                output.textContent = 'Speed: 1500 RPM';
+                motorSpinning = true;
+            }
+        }
+
+        // ==================== QUIZ SYSTEM ====================
+        const correctAnswers = {
+            q1: 'b',  // Mechanical to electrical
+            q2: 'b',  // Electrical to mechanical
+            q3: 'b',  // Change in magnetic field
+            q4: 'b',  // Opposite direction
+            q5: 'c',  // No current induced
+            q6: 'c',  // Increase speed of movement
+            q7: 'b',  // Faraday's Law
+            q8: 'b',  // Cylindrical coil
+            q9: 'b',  // Magnetic field and coils
+            q10: 'b'  // Fleming's Motor Rule
+        };
+
+        const explanations = {
+            q1: 'Generators convert mechanical energy into electrical energy. This is based on Faraday\'s Law of Electromagnetic Induction - rotating a coil in a magnetic field induces an electric current.',
+            q2: 'Electric motors convert electrical energy into mechanical energy. When current flows through a coil in a magnetic field, a force is produced that causes rotation.',
+            q3: 'According to Faraday\'s Law, an EMF is induced whenever there is a CHANGE in the magnetic field linked with the conductor. A constant magnetic field does not induce a current.',
+            q4: 'When the magnet moves away from the coil, the magnetic field decreases. This change induces a current in the OPPOSITE direction compared to when the magnet approaches.',
+            q5: 'No current is induced if there is no relative motion between the magnet and coil. It is the CHANGE in magnetic flux that induces current, not just the presence of a magnetic field.',
+            q6: 'Increasing the speed of movement increases the rate of change of magnetic flux, which according to Faraday\'s Law, increases the induced EMF and therefore the induced current.',
+            q7: 'Generators operate based on Faraday\'s Law of Electromagnetic Induction, which states that a changing magnetic field induces an EMF in a conductor.',
+            q8: 'A solenoid is a large number of insulated turns forming a cylindrical coil. When current flows through it, it creates a magnetic field similar to a bar magnet.',
+            q9: 'Both generators and motors operate through the interaction between a magnetic field and a set of coils (windings). The difference is the direction of energy conversion.',
+            q10: 'Motors operate based on Fleming\'s Motor Rule (also known as the Left-Hand Rule), which describes the direction of force on a current-carrying conductor in a magnetic field.'
+        };
 
         function submitQuiz() {
-            if (quizSubmitted) return;
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
             
-            let correctCount = 0;
-            quizSubmitted = true;
-
-            quizData.forEach((q, index) => {
-                const questionCard = document.getElementById(`question${index}`);
-                const feedback = document.getElementById(`feedback${index}`);
-                const correctOption = document.getElementById(`option${index}_${q.correct}`);
+            for (letq in correctAnswers) {
+const selected = document.querySelector(input[name="${q}"]:checked);
+const feedbackDiv = document.getElementById(feedback${q.substring(1)});
+const options = document.querySelectorAll(#${q} .option-label);            options.forEach(opt => {
+                opt.classList.remove('correct', 'incorrect');
+            });
+            
+            if (selected) {
+                const selectedLabel = selected.closest('.option-label');
                 
-                if (userAnswers[index] === q.correct) {
-                    correctCount++;
-                    questionCard.classList.add('correct');
-                    feedback.className = 'feedback correct';
-                    feedback.innerHTML = `✅ Correct! ${q.explanation}`;
+                if (selected.value === correctAnswers[q]) {
+                    score++;
+                    selectedLabel.classList.add('correct');
+                    feedbackDiv.className = 'feedback correct';
+                    feedbackDiv.innerHTML = `<span class="feedback-icon">✅</span><div><strong>Correct!</strong> ${explanations[q]}</div>`;
                 } else {
-                    questionCard.classList.add('incorrect');
-                    feedback.className = 'feedback incorrect';
-                    
-                    if (userAnswers[index] !== null) {
-                        const wrongOption = document.getElementById(`option${index}_${userAnswers[index]}`);
-                        wrongOption.classList.add('wrong-answer');
-                    }
-                    
-                    feedback.innerHTML = `❌ Incorrect. ${q.explanation}`;
-                }
-                
-                correctOption.classList.add('correct-answer');
-            });
-
-            // Show score
-            const percentage = Math.round((correctCount / quizData.length) * 100);
-            document.getElementById('scoreValue').textContent = percentage + '%';
-            document.getElementById('scoreProgress').style.width = percentage + '%';
-            document.getElementById('scoreDetails').textContent = 
-                `You got ${correctCount} out of ${quizData.length} questions correct.`;
-            
-            let message = '';
-            if (percentage >= 80) {
-                message = '🌟 Excellent! You have a great understanding of electrical machines!';
-            } else if (percentage >= 60) {
-                message = '👍 Good job! Review the concepts you missed and try again.';
-            } else if (percentage >= 40) {
-                message = '📚 Keep studying! Review the lesson content and simulations.';
-            } else {
-                message = '💪 Don\'t give up! Read through the lesson again and practice with the simulations.';
-            }
-            document.getElementById('scoreMessage').textContent = message;
-            
-            document.getElementById('scoreContainer').classList.add('visible');
-            
-            // Save final score
-            localStorage.setItem('lesson1_score', percentage);
-            localStorage.setItem('lesson1_completed', 'true');
-
-            // Scroll to score
-            document.getElementById('scoreContainer').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function retryQuiz() {
-            document.getElementById('scoreContainer').classList.remove('visible');
-            quizData.forEach((_, index) => {
-                const questionCard = document.getElementById(`question${index}`);
-                const feedback = document.getElementById(`feedback${index}`);
-                questionCard.classList.remove('correct', 'incorrect');
-                feedback.className = 'feedback';
-                feedback.innerHTML = '';
-                
-                const options = document.querySelectorAll(`[id^="option${index}_"]`);
-                options.forEach(opt => {
-                    opt.classList.remove('selected', 'correct-answer', 'wrong-answer');
-                    opt.querySelector('input').checked = false;
-                });
-            });
-            
-            userAnswers = new Array(quizData.length).fill(null);
-            quizSubmitted = false;
-            localStorage.removeItem('lesson1_answers');
-            
-            document.getElementById('quizQuestions').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // ==================== Simulation 1: Electromagnetic Induction ====================
-        let inductionCanvas, inductionCtx;
-        let magnetX = 50;
-        let lastMagnetX = 50;
-        let inductionAnimating = false;
-        let inductionAnimationId;
-        let inductionSpeed = 5;
-        let inductionDirection = 1;
-
-        function initInductionSimulation() {
-            inductionCanvas = document.getElementById('inductionCanvas');
-            inductionCtx = inductionCanvas.getContext('2d');
-            drawInductionScene();
-        }
-
-        function drawInductionScene() {
-            const ctx = inductionCtx;
-            const w = inductionCanvas.width;
-            const h = inductionCanvas.height;
-
-            // Clear canvas
-            ctx.fillStyle = '#0f0f23';
-            ctx.fillRect(0, 0, w, h);
-
-            // Draw coil (solenoid representation)
-            const coilX = w / 2 - 50;
-            const coilWidth = 100;
-            const coilY = h / 2 - 40;
-            const coilHeight = 80;
-
-            ctx.strokeStyle = '#ffc107';
-            ctx.lineWidth = 3;
-            
-            // Draw coil turns
-            for (let i = 0; i < 10; i++) {
-                ctx.beginPath();
-                ctx.ellipse(coilX + coilWidth / 2, coilY + i * 8 + 4, 50, 8, 0, 0, Math.PI * 2);
-                ctx.stroke();
-            }
-
-            // Draw coil ends (wires)
-            ctx.beginPath();
-            ctx.moveTo(coilX, coilY);
-            ctx.lineTo(coilX - 50, coilY - 30);
-            ctx.moveTo(coilX + coilWidth, coilY + coilHeight);
-            ctx.lineTo(coilX + coilWidth + 50, coilY + coilHeight + 30);
-            ctx.stroke();
-
-            // Draw ammeter
-            ctx.beginPath();
-            ctx.arc(coilX - 80, coilY - 50, 25, 0, Math.PI * 2);
-            ctx.fillStyle = '#1a1a2e';
-            ctx.fill();
-            ctx.strokeStyle = '#4CAF50';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            ctx.fillStyle = '#fff';
-            ctx.font = '10px Arial';
-            ctx.textAlign = 'center';
-            ctx.fillText('A', coilX - 80, coilY - 47);
-
-            // Calculate induced current based on velocity
-            const velocity = (magnetX - lastMagnetX);
-            const magnetInCoil = magnetX > coilX - 60 && magnetX < coilX + coilWidth + 60;
-            let current = magnetInCoil ? velocity * 0.05 : 0;
-            
-            // Draw ammeter needle
-            const needleAngle = -Math.PI / 2 + (current * Math.PI / 4);
-            ctx.beginPath();
-            ctx.moveTo(coilX - 80, coilY - 50);
-            ctx.lineTo(coilX - 80 + Math.cos(needleAngle) * 20, coilY - 50 + Math.sin(needleAngle) * 20);
-            ctx.strokeStyle = '#f44336';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-
-            // Draw magnet
-            const magnetWidth = 80;
-            const magnetHeight = 40;
-            const magnetY = h / 2 - magnetHeight / 2;
-
-            // North pole (red)
-            ctx.fillStyle = '#e53935';
-            ctx.fillRect(magnetX, magnetY, magnetWidth / 2, magnetHeight);
-            
-            // South pole (blue)
-            ctx.fillStyle = '#1e88e5';
-            ctx.fillRect(magnetX + magnetWidth / 2, magnetY, magnetWidth / 2, magnetHeight);
-
-            // Magnet labels
-            ctx.fillStyle = '#fff';
-            ctx.font = 'bold 16px Arial';
-            ctx.textAlign = 'center';
-            ctx.fillText('N', magnetX + magnetWidth / 4, magnetY + magnetHeight / 2 + 5);
-            ctx.fillText('S', magnetX + 3 * magnetWidth / 4, magnetY + magnetHeight / 2 + 5);
-
-            // Draw magnetic field lines
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
-            ctx.lineWidth = 1;
-            for (let i = 0; i < 5; i++) {
-                ctx.beginPath();
-                const offset = (i - 2) * 15;
-                ctx.moveTo(magnetX - 20, magnetY + magnetHeight / 2 + offset);
-                ctx.bezierCurveTo(
-                    magnetX - 60, magnetY + magnetHeight / 2 + offset * 2,
-                    magnetX + magnetWidth + 60, magnetY + magnetHeight / 2 + offset * 2,
-                    magnetX + magnetWidth + 20, magnetY + magnetHeight / 2 + offset
-                );
-                ctx.stroke();
-            }
-
-            // Update current display
-            document.getElementById('currentValue').textContent = Math.abs(current).toFixed(2);
-            
-            let directionText = '';
-            if (Math.abs(current) < 0.01) {
-                directionText = 'No relative motion - No induced current';
-            } else if (current > 0) {
-                directionText = '→ Current flowing (magnet moving right)';
-            } else {
-                directionText = '← Current flowing (magnet moving left)';
-            }
-            document.getElementById('directionInfo').textContent = directionText;
-
-            lastMagnetX = magnetX;
-        }
-
-        function updateMagnetPosition(value) {
-            lastMagnetX = magnetX;
-            magnetX = 50 + (value / 100) * 400;
-            drawInductionScene();
-        }
-
-        function startInductionAnimation() {
-            if (inductionAnimating) return;
-            inductionAnimating = true;
-            animateInduction();
-        }
-
-        function animateInduction() {
-            if (!inductionAnimating) return;
-
-            lastMagnetX = magnetX;
-            magnetX += inductionSpeed * inductionDirection;
-
-            if (magnetX > 450) inductionDirection = -1;
-            if (magnetX < 50) inductionDirection = 1;
-
-            document.getElementById('magnetSlider').value = ((magnetX - 50) / 400) * 100;
-            drawInductionScene();
-
-            inductionAnimationId = requestAnimationFrame(animateInduction);
-        }
-
-        function stopInductionAnimation() {
-            inductionAnimating = false;
-            cancelAnimationFrame(inductionAnimationId);
-        }
-
-        function resetInduction() {
-            stopInductionAnimation();
-            magnetX = 50;
-            lastMagnetX = 50;
-            document.getElementById('magnetSlider').value = 0;
-            drawInductionScene();
-        }
-
-        function updateSpeed(value) {
-            inductionSpeed = parseInt(value);
-        }
-
-        // ==================== Simulation 2: Generator/Motor ====================
-        let machineCanvas, machineCtx;
-        let machineMode = 'generator';
-        let machineAngle = 0;
-        let machineAnimating = false;
-        let machineAnimationId;
-        let rotationSpeedValue = 5;
-
-        function initMachineSimulation() {
-            machineCanvas = document.getElementById('machineCanvas');
-            machineCtx = machineCanvas.getContext('2d');
-            drawMachineScene();
-        }
-
-        function drawMachineScene() {
-            const ctx = machineCtx;
-            const w = machineCanvas.width;
-            const h = machineCanvas.height;
-
-            // Clear canvas
-            ctx.fillStyle = '#0f0f23';
-            ctx.fillRect(0, 0, w, h);
-
-            const centerX = w / 2;
-            const centerY = h / 2 - 20;
-
-            // Draw magnets (stator)
-            // North pole (left)
-            ctx.fillStyle = '#e53935';
-            ctx.fillRect(centerX - 150, centerY - 50, 40, 100);
-            ctx.fillStyle = '#fff';
-            ctx.font = 'bold 20px Arial';
-            ctx.textAlign = 'center';
-            ctx.fillText('N', centerX - 130, centerY + 7);
-
-            // South pole (right)
-            ctx.fillStyle = '#1e88e5';
-            ctx.fillRect(centerX + 110, centerY - 50, 40, 100);
-            ctx.fillStyle = '#fff';
-            ctx.fillText('S', centerX + 130, centerY + 7);
-
-            // Draw rotating coil (rotor)
-            ctx.save();
-            ctx.translate(centerX, centerY);
-            ctx.rotate(machineAngle * Math.PI / 180);
-
-            // Coil rectangle
-            ctx.strokeStyle = '#ffc107';
-            ctx.lineWidth = 4;
-            ctx.strokeRect(-60, -30, 120, 60);
-
-            // Coil winding lines
-            ctx.strokeStyle = '#ff9800';
-            ctx.lineWidth = 2;
-            for (let i = -50; i <= 50; i += 10) {
-                ctx.beginPath();
-                ctx.moveTo(i, -30);
-                ctx.lineTo(i, 30);
-                ctx.stroke();
-            }
-
-            ctx.restore();
-
-            // Draw axle
-            ctx.beginPath();
-            ctx.arc(centerX, centerY, 8, 0, Math.PI * 2);
-            ctx.fillStyle = '#666';
-            ctx.fill();
-
-            // Draw slip rings / commutator
-            ctx.fillStyle = '#b87333';
-            ctx.fillRect(centerX - 5, centerY + 60, 10, 30);
-
-            // Draw brushes
-            ctx.fillStyle = '#444';
-            ctx.fillRect(centerX - 20, centerY + 75, 10, 15);
-            ctx.fillRect(centerX + 10, centerY + 75, 10, 15);
-
-            // Draw mode-specific elements
-            if (machineMode === 'generator') {
-                // Draw hand crank
-                ctx.save();
-                ctx.translate(centerX, centerY);
-                ctx.rotate(machineAngle * Math.PI / 180);
-                ctx.strokeStyle = '#999';
-                ctx.lineWidth = 6;
-                ctx.beginPath();
-                ctx.moveTo(0, 0);
-                ctx.lineTo(0, -80);
-                ctx.lineTo(30, -80);
-                ctx.stroke();
-                ctx.restore();
-
-                // Draw light bulb
-                ctx.beginPath();
-                ctx.arc(centerX, centerY + 130, 20, 0, Math.PI * 2);
-                const brightness = Math.abs(Math.sin(machineAngle * Math.PI / 180)) * 255;
-                ctx.fillStyle = `rgb(${brightness}, ${brightness * 0.8}, 0)`;
-                ctx.fill();
-                ctx.strokeStyle = '#ffc107';
-                ctx.lineWidth = 2;
-                ctx.stroke();
-
-                // Bulb base
-                ctx.fillStyle = '#666';
-                ctx.fillRect(centerX - 8, centerY + 145, 16, 15);
-
-            } else {
-                // Draw power source
-                ctx.fillStyle = '#4CAF50';
-                ctx.fillRect(centerX - 30, centerY + 110, 60, 30);
-                ctx.fillStyle = '#fff';
-                ctx.font = '12px Arial';
-                ctx.fillText('POWER', centerX, centerY + 130);
-
-                // Draw motion arrows
-                ctx.save();
-                ctx.translate(centerX, centerY);
-                ctx.strokeStyle = '#4CAF50';
-                ctx.lineWidth = 3;
-                ctx.beginPath();
-                ctx.arc(0, 0, 90, -0.5, 0.5);
-                ctx.stroke();
-                // Arrow head
-                ctx.beginPath();
-                ctx.moveTo(90 * Math.cos(0.5), 90 * Math.sin(0.5));
-                ctx.lineTo(80 * Math.cos(0.5) + 5, 80 * Math.sin(0.5) + 10);
-                ctx.lineTo(80 * Math.cos(0.5) - 5, 80 * Math.sin(0.5) - 10);
-                ctx.closePath();
-                ctx.fillStyle = '#4CAF50';
-                ctx.fill();
-                ctx.restore();
-            }
-
-            // Draw labels
-            ctx.fillStyle = '#fff';
-            ctx.font = '14px Arial';
-            ctx.textAlign = 'center';
-            
-            if (machineMode === 'generator') {
-                ctx.fillText('Mechanical Input', centerX, 30);
-                ctx.fillText('↓', centerX, 45);
-                ctx.fillText('Electrical Output', centerX, h - 30);
-            } else {
-                ctx.fillText('Electrical Input', centerX, h - 15);
-                ctx.fillText('↑', centerX, h - 30);
-                ctx.fillText('Mechanical Output', centerX, 30);
-            }
-
-            // Update rotation display
-            document.getElementById('rotationValue').textContent = Math.round(machineAngle % 360);
-        }
-
-        function setMachineMode(mode) {
-            machineMode = mode;
-            document.getElementById('generatorBtn').classList.toggle('secondary', mode !== 'generator');
-            document.getElementById('motorBtn').classList.toggle('secondary', mode !== 'motor');
-            
-            if (mode === 'generator') {
-                document.getElementById('machineInfo').textContent = 
-                    '⚡ Generator: Rotating the crank converts mechanical energy to electrical energy';
-            } else {
-                document.getElementById('machineInfo').textContent = 
-                    '🔧 Motor: Electrical energy from the power source creates rotation (mechanical energy)';
-            }
-            
-            drawMachineScene();
-        }
-
-        function toggleMachineAnimation() {
-            machineAnimating = !machineAnimating;
-            if (machineAnimating) {
-                animateMachine();
-            } else {
-                cancelAnimationFrame(machineAnimationId);
-            }
-        }
-
-        function animateMachine() {
-            if (!machineAnimating) return;
-            machineAngle += rotationSpeedValue;
-            if (machineAngle >= 360) machineAngle = 0;
-            drawMachineScene();
-            machineAnimationId = requestAnimationFrame(animateMachine);
-        }
-
-        function updateRotationSpeed(value) {
-            rotationSpeedValue = parseInt(value);
-        }
-
-        // ==================== Simulation 3: Coil Turns Effect ====================
-        let coilCanvas, coilCtx;
-        let numTurns = 5;
-        let magnetStrength = 5;
-
-        function initCoilSimulation() {
-            coilCanvas = document.getElementById('coilCanvas');
-            coilCtx = coilCanvas.getContext('2d');
-            drawCoilScene();
-        }
-
-        function drawCoilScene() {
-            const ctx = coilCtx;
-            const w = coilCanvas.width;
-            const h = coilCanvas.height;
-
-            // Clear canvas
-            ctx.fillStyle = '#0f0f23';
-            ctx.fillRect(0, 0, w, h);
-
-            const centerX = w / 2;
-            const centerY = h / 2;
-
-            // Calculate EMF
-            const emf = (numTurns * magnetStrength * 0.5).toFixed(2);
-            document.getElementById('emfValue').textContent = emf;
-
-            // Draw core
-            ctx.fillStyle = '#555';
-            ctx.fillRect(centerX - 100, centerY - 30, 200, 60);
-
-            // Draw coil turns
-            ctx.strokeStyle = '#ffc107';
-            ctx.lineWidth = 3;
-            
-            const turnSpacing = Math.min(180 / numTurns, 15);
-            const startX = centerX - (numTurns * turnSpacing) / 2;
-
-            for (let i = 0; i < numTurns; i++) {
-                const x = startX + i * turnSpacing;
-                ctx.beginPath();
-                ctx.ellipse(x + turnSpacing / 2, centerY, 8, 35, 0, 0, Math.PI * 2);
-                ctx.stroke();
-            }
-
-            // Draw magnet with variable strength (size indicates strength)
-            const magnetSize = 30 + magnetStrength * 5;
-            
-            // North pole
-            ctx.fillStyle = '#e53935';
-            ctx.fillRect(centerX - 200, centerY - magnetSize / 2, magnetSize, magnetSize);
-            ctx.fillStyle = '#fff';
-            ctx.font = 'bold 16px Arial';
-            ctx.textAlign = 'center';
-            ctx.fillText('N', centerX - 200 + magnetSize / 2, centerY + 5);
-
-            // South pole
-            ctx.fillStyle = '#1e88e5';
-            ctx.fillRect(centerX + 200 - magnetSize, centerY - magnetSize / 2, magnetSize, magnetSize);
-            ctx.fillStyle = '#fff';
-            ctx.fillText('S', centerX + 200 - magnetSize / 2, centerY + 5);
-
-            // Draw magnetic field lines (more lines for stronger magnet)
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
-            ctx.lineWidth = 1;
-            const numLines = Math.floor(magnetStrength / 2) + 2;
-            for (let i = 0; i < numLines; i++) {
-                const offset = (i - numLines / 2 + 0.5) * 20;
-                ctx.beginPath();
-                ctx.moveTo(centerX - 160, centerY + offset);
-                ctx.lineTo(centerX + 160, centerY + offset);
-                ctx.stroke();
-            }
-
-            // Draw EMF meter
-            ctx.beginPath();
-            ctx.arc(centerX, h - 40, 30, 0, Math.PI * 2);
-            ctx.fillStyle = '#1a1a2e';
-            ctx.fill();
-            ctx.strokeStyle = '#4CAF50';
-            ctx.lineWidth = 3;
-            ctx.stroke();
-
-            // EMF value on meter
-            ctx.fillStyle = '#4CAF50';
-            ctx.font = 'bold 12px Arial';
-            ctx.fillText(emf + ' V', centerX, h - 35);
-
-            // Labels
-            ctx.fillStyle = '#fff';
-            ctx.font = '12px Arial';
-            ctx.fillText(`${numTurns} turns`, centerX, 25);
-            ctx.fillText(`${magnetStrength} T`, centerX - 200 + magnetSize / 2, centerY + magnetSize / 2 + 20);
-
-            // EMF equation
-            ctx.fillStyle = '#ffc107';
-            ctx.font = '14px Arial';
-            ctx.fillText(`EMF ∝ N × B × (rate of change)`, centerX, h - 10);
-        }
-
-        function updateCoilTurns(value) {
-            numTurns = parseInt(value);
-            document.getElementById('turnsValue').textContent = value;
-            drawCoilScene();
-        }
-
-        function updateMagnetStrength(value) {
-            magnetStrength = parseInt(value);
-            document.getElementById('strengthValue').textContent = value;
-            drawCoilScene();
-        }
-
-        // ==================== Navigation & Progress ====================
-        function toggleDropdown() {
-            document.getElementById('dropdownMenu').classList.toggle('active');
-        }
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-            const nav = document.querySelector('.nav-container');
-            if (!nav.contains(e.target)) {
-                document.getElementById('dropdownMenu').classList.remove('active');
-            }
-        });
-
-        function saveProgress() {
-            localStorage.setItem('lesson1_answers', JSON.stringify(userAnswers));
-            localStorage.setItem('lesson1_lastVisit', new Date().toISOString());
-        }
-
-        function loadProgress() {
-            const saved = localStorage.getItem('lesson1_answers');
-            if (saved) {
-                userAnswers = JSON.parse(saved);
-                userAnswers.forEach((answer, index) => {
-                    if (answer !== null) {
-                        const option = document.getElementById(`option${index}_${answer}`);
-                        if (option) {
-                            option.classList.add('selected');
-                            option.querySelector('input').checked = true;
+                    selectedLabel.classList.add('incorrect');
+                    options.forEach(opt => {
+                        if (opt.querySelector('input').value === correctAnswers[q]) {
+                            opt.classList.add('correct');
                         }
-                    }
-                });
-            }
-        }
-
-        function clearProgress() {
-            if (confirm('Are you sure you want to reset all progress for this lesson?')) {
-                localStorage.removeItem('lesson1_answers');
-                localStorage.removeItem('lesson1_score');
-                localStorage.removeItem('lesson1_completed');
-                location.reload();
-            }
-        }
-
-        function goToPrevious() {
-            alert('This is the first lesson in the Electrical Machines topic.\n\nIn a complete course, this would navigate to the previous topic.');
-        }
-
-        function goToNext() {
-            const completed = localStorage.getItem('lesson1_completed');
-            if (completed === 'true') {
-                alert('Great progress! Moving to Lesson 2: AC Generators\n\nIn a complete course, this would navigate to the next lesson.');
-            } else {
-                if (confirm('You haven\'t completed the quiz yet. Continue to the next lesson anyway?')) {
-                    alert('Moving to Lesson 2: AC Generators');
+                    });
+                    feedbackDiv.className = 'feedback incorrect';
+                    feedbackDiv.innerHTML = `<span class="feedback-icon">❌</span><div><strong>Incorrect.</strong> ${explanations[q]}</div>`;
                 }
-            }
-        }
-
-        // ==================== Initialization ====================
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeQuiz();
-            initInductionSimulation();
-            initMachineSimulation();
-            initCoilSimulation();
-
-            // Show last visit info
-            const lastVisit = localStorage.getItem('lesson1_lastVisit');
-            if (lastVisit) {
-                console.log('Welcome back! Last visit:', new Date(lastVisit).toLocaleString());
-            }
-
-            // Handle responsive canvas
-            function resizeCanvases() {
-                const containers = document.querySelectorAll('.canvas-container');
-                containers.forEach(container => {
-                    const canvas = container.querySelector('canvas');
-                    if (canvas && container.offsetWidth < canvas.width) {
-                        canvas.style.width = '100%';
-                        canvas.style.height = 'auto';
+            } else {
+                feedbackDiv.className = 'feedback incorrect';
+                feedbackDiv.innerHTML = `<span class="feedback-icon">⚠️</span><div><strong>Not answered.</strong> ${explanations[q]}</div>`;
+                options.forEach(opt => {
+                    if (opt.querySelector('input').value === correctAnswers[q]) {
+                        opt.classList.add('correct');
                     }
                 });
             }
+        }
+        
+        const percentage = Math.round((score / totalQuestions) * 100);
+        const scoreContainer = document.getElementById('scoreContainer');
+        
+        document.getElementById('scoreValue').textContent = `${score}/${totalQuestions}`;
+        document.getElementById('scorePercentage').textContent = `${percentage}%`;
+        
+        setTimeout(() => {
+            document.getElementById('scoreFill').style.width = percentage + '%';
+        }, 100);
+        
+        let message;
+        if (percentage >= 80) {
+            message = '⚡ <strong>Electrifying performance!</strong> You have a solid understanding of electrical machines and Faraday\'s Law!';
+        } else if (percentage >= 60) {
+            message = '👍 <strong>Good work!</strong> Review the concepts of generators, motors, and electromagnetic induction to strengthen your knowledge.';
+        } else if (percentage >= 40) {
+            message = '📚 <strong>Keep learning!</strong> Focus on understanding the energy conversions and Faraday\'s Law.';
+        } else {
+            message = '💪 <strong>Don\'t give up!</strong> Go through the lesson again, paying attention to the differences between generators and motors.';
+        }
+        document.getElementById('scoreMessage').innerHTML = message;
+        
+        scoreContainer.classList.add('visible');
+        scoreContainer.scrollIntoView({ behavior: 'smooth' });
+        
+        saveProgress(score, totalQuestions, percentage);
+    }
 
-            window.addEventListener('resize', resizeCanvases);
-            resizeCanvases();
+    function retryQuiz() {
+        document.querySelectorAll('input[type="radio"]').forEach(input => {
+            input.checked = false;
         });
-    </script>
+        
+        for (let i = 1; i <= 10; i++) {
+            const feedbackDiv = document.getElementById(`feedback${i}`);
+            feedbackDiv.className = 'feedback';
+            feedbackDiv.innerHTML = '';
+        }
+        
+        document.querySelectorAll('.option-label').forEach(opt => {
+            opt.classList.remove('correct', 'incorrect');
+        });
+        
+        const scoreContainer = document.getElementById('scoreContainer');
+        scoreContainer.classList.remove('visible');
+        document.getElementById('scoreFill').style.width = '0%';
+        
+        document.querySelector('.quiz-container').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ==================== LOCAL STORAGE ====================
+    function saveProgress(score, total, percentage) {
+        const progress = {
+            lessonId: 'electrical-machines-lesson-1',
+            lessonTitle: 'Electrical Machines - Introduction',
+            score: score,
+            total: total,
+            percentage: percentage,
+            completed: true,
+            timestamp: new Date().toISOString()
+        };
+        
+        let allProgress = JSON.parse(localStorage.getItem('passproofProgress') || '{}');
+        allProgress['electrical-machines-lesson-1'] = progress;
+        localStorage.setItem('passproofProgress', JSON.stringify(allProgress));
+        
+        updateProgressDisplay();
+    }
+
+    function loadProgress() {
+        const allProgress = JSON.parse(localStorage.getItem('passproofProgress') || '{}');
+        const lessonProgress = allProgress['electrical-machines-lesson-1'];
+        
+        if (lessonProgress) {
+            const date = new Date(lessonProgress.timestamp).toLocaleDateString();
+            document.getElementById('lessonProgress').innerHTML = 
+                `📈 Progress: <strong>${lessonProgress.percentage}%</strong> (${date})`;
+        } else {
+            document.getElementById('lessonProgress').textContent = '📈 Progress: Not started';
+        }
+    }
+
+    function updateProgressDisplay() {
+        const allProgress = JSON.parse(localStorage.getItem('passproofProgress') || '{}');
+        const lessonProgress = allProgress['electrical-machines-lesson-1'];
+        
+        if (lessonProgress) {
+            document.getElementById('lessonProgress').innerHTML = 
+                `📈 Progress: <strong>${lessonProgress.percentage}%</strong> ✓`;
+        }
+    }
+
+    // ==================== SCROLL PROGRESS ====================
+    function updateScrollProgress() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const progress = Math.round((scrollTop / scrollHeight) * 100);
+        document.getElementById('scrollProgress').textContent = progress + '%';
+    }
+
+    // ==================== INITIALIZATION ====================
+    document.addEventListener('DOMContentLoaded', function() {
+        loadProgress();
+        updateScrollProgress();
+    });
+
+    window.addEventListener('scroll', updateScrollProgress);
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.getElementById('dropdownMenu').classList.remove('active');
+        }
+    });
+
+    // Card animation observer
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animationPlayState = 'running';
+            }
+        });
+    }, observerOptions);
+
+    setTimeout(() => {
+        document.querySelectorAll('.card').forEach(card => {
+            observer.observe(card);
+        });
+    }, 100);
+</script>
+    <script src="gr12-phys-nav.js"></script>
 </body>
 </html>
