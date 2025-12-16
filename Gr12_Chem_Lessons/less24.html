@@ -1,0 +1,1941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 7: Titrations | PassProof Academy</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1e40af;
+            --secondary-blue: #3b82f6;
+            --light-blue: #dbeafe;
+            --accent-blue: #60a5fa;
+            --dark-blue: #1e3a8a;
+            --white: #ffffff;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-600: #4b5563;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --purple: #8b5cf6;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            box-shadow: 0 10px 40px rgba(30, 64, 175, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-btn {
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-btn:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            min-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: var(--dark-blue);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--light-blue);
+            padding-left: 2rem;
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08), 0 2px 10px rgba(0,0,0,0.04);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12), 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        .card-3d {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            border-left: 5px solid var(--secondary-blue);
+        }
+
+        /* Subject Header Card */
+        .subject-card {
+            background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .subject-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .subject-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .lesson-number {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark-blue);
+        }
+
+        .collapse-icon {
+            margin-left: auto;
+            font-size: 1.5rem;
+            color: var(--secondary-blue);
+            transition: transform 0.3s ease;
+        }
+
+        .section-header.collapsed .collapse-icon {
+            transform: rotate(-90deg);
+        }
+
+        .collapsible-content {
+            max-height: 8000px;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .collapsible-content.collapsed {
+            max-height: 0;
+        }
+
+        /* Learning Objectives */
+        .objective-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--light-blue);
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .objective-item:hover {
+            transform: translateX(5px);
+            background: linear-gradient(90deg, var(--light-blue) 0%, #bfdbfe 100%);
+        }
+
+        .objective-check {
+            width: 28px;
+            height: 28px;
+            background: var(--secondary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #92400e;
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.2);
+        }
+
+        .formula-box .formula {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.4rem;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border-left: 5px solid var(--success);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .example-title {
+            font-weight: 700;
+            color: #065f46;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .solution-step {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 0.75rem 0;
+            border-left: 3px solid var(--secondary-blue);
+        }
+
+        /* Indicator Table */
+        .indicator-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 1.5rem 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .indicator-table th {
+            background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+        }
+
+        .indicator-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+            text-align: center;
+        }
+
+        .indicator-table tr:nth-child(even) {
+            background: var(--light-blue);
+        }
+
+        .indicator-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Color boxes for indicators */
+        .color-box {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            margin: 0 4px;
+            vertical-align: middle;
+            border: 1px solid rgba(0,0,0,0.2);
+        }
+
+        /* Simulation Container */
+        .simulation-container {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: white;
+        }
+
+        .simulation-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        /* Titration Visualization */
+        .titration-setup {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .burette {
+            width: 40px;
+            height: 200px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 100%);
+            border: 3px solid rgba(255,255,255,0.5);
+            border-radius: 5px 5px 2px 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .burette-liquid {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
+            transition: height 0.5s ease;
+        }
+
+        .burette-tip {
+            width: 8px;
+            height: 30px;
+            background: rgba(255,255,255,0.3);
+            border: 2px solid rgba(255,255,255,0.5);
+            margin: 0 auto;
+            border-radius: 0 0 2px 2px;
+        }
+
+        .flask {
+            width: 120px;
+            height: 100px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.05) 100%);
+            border: 3px solid rgba(255,255,255,0.4);
+            border-radius: 60px 60px 20px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flask-liquid {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            transition: background-color 0.5s ease;
+            border-radius: 0 0 17px 17px;
+        }
+
+        .flask-neck {
+            width: 40px;
+            height: 25px;
+            background: rgba(255,255,255,0.2);
+            border: 3px solid rgba(255,255,255,0.4);
+            border-bottom: none;
+            margin: 0 auto -3px;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .drop {
+            width: 8px;
+            height: 12px;
+            background: #3b82f6;
+            border-radius: 50% 50% 50% 50%;
+            position: absolute;
+            animation: dropFall 0.8s ease-in infinite;
+            opacity: 0;
+        }
+
+        @keyframes dropFall {
+            0% { top: 230px; opacity: 1; }
+            100% { top: 280px; opacity: 0; }
+        }
+
+        .sim-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .sim-input-group {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+
+        .sim-input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .sim-input-group input, .sim-input-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.9);
+            color: #1e1b4b;
+            font-weight: 500;
+        }
+
+        .sim-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        .sim-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+        }
+
+        .sim-btn:disabled {
+            background: #6b7280;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .sim-result {
+            background: rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .sim-result-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #22d3ee;
+        }
+
+        /* Questions Section */
+        .question-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .question-card.correct {
+            border-color: var(--success);
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        }
+
+        .question-card.incorrect {
+            border-color: var(--error);
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+        }
+
+        .question-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
+            color: white;
+            border-radius: 50%;
+            font-weight: 700;
+            margin-right: 1rem;
+        }
+
+        .question-text {
+            font-weight: 500;
+            color: var(--dark-blue);
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: var(--gray-100);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .option-label:hover {
+            background: var(--light-blue);
+            transform: translateX(5px);
+        }
+
+        .option-label.selected {
+            background: var(--light-blue);
+            border-color: var(--secondary-blue);
+        }
+
+        .option-label.correct-answer {
+            background: #d1fae5 !important;
+            border-color: var(--success) !important;
+        }
+
+        .option-label.wrong-answer {
+            background: #fee2e2 !important;
+            border-color: var(--error) !important;
+        }
+
+        .option-label input {
+            margin-right: 1rem;
+            width: 20px;
+            height: 20px;
+            accent-color: var(--secondary-blue);
+        }
+
+        .feedback-text {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .feedback-text.correct {
+            background: #d1fae5;
+            color: #065f46;
+            display: block;
+        }
+
+        .feedback-text.incorrect {
+            background: #fee2e2;
+            color: #991b1b;
+            display: block;
+        }
+
+        /* Score Display */
+        .score-container {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            color: white;
+            margin: 2rem 0;
+            box-shadow: 0 20px 60px rgba(30, 64, 175, 0.3);
+        }
+
+        .score-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .score-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 8px solid rgba(255,255,255,0.3);
+            position: relative;
+        }
+
+        .score-percentage {
+            font-size: 3.5rem;
+            font-weight: 700;
+        }
+
+        .score-label {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .score-message {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border: none;
+            color: white;
+            padding: 1.25rem 3rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.4);
+        }
+
+        .reset-btn {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            margin-left: 1rem;
+        }
+
+        /* Navigation Buttons */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(59, 130, 246, 0.4);
+        }
+
+        .nav-btn.prev {
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+            box-shadow: 0 8px 25px rgba(107, 114, 128, 0.3);
+        }
+
+        .nav-btn.prev:hover {
+            box-shadow: 0 12px 35px rgba(107, 114, 128, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--dark-blue) 0%, #0f172a 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-text {
+            opacity: 0.8;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        /* Progress indicator */
+        .progress-bar {
+            height: 6px;
+            background: var(--gray-200);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary-blue) 0%, var(--success) 100%);
+            transition: width 0.5s ease;
+        }
+
+        /* Info boxes */
+        .info-box {
+            background: var(--light-blue);
+            padding: 1.25rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+        }
+
+        .info-box h4 {
+            color: var(--primary-blue);
+            margin-bottom: 0.75rem;
+        }
+
+        .info-box ul {
+            list-style: none;
+            line-height: 2;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Chemical equations */
+        .chemical-eq {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 1rem;
+            background: var(--gray-100);
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        /* Baseline question box */
+        .baseline-box {
+            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+            border: 2px solid var(--purple);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .baseline-box h4 {
+            color: #5b21b6;
+            margin-bottom: 1rem;
+        }
+
+        .baseline-answers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .baseline-answer {
+            background: white;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .baseline-answer span:first-child {
+            font-weight: 600;
+            color: var(--purple);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .subject-title {
+                font-size: 1.8rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .sim-controls {
+                grid-template-columns: 1fr;
+            }
+
+            .lesson-nav {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                justify-content: center;
+            }
+
+            .section-title {
+                font-size: 1.2rem;
+            }
+
+            .formula-box .formula {
+                font-size: 1.1rem;
+            }
+
+            .score-circle {
+                width: 150px;
+                height: 150px;
+            }
+
+            .score-percentage {
+                font-size: 2.5rem;
+            }
+
+            .baseline-answers {
+                grid-template-columns: 1fr;
+            }
+
+            .submit-btn, .reset-btn {
+                display: block;
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+        }
+
+        /* Volume slider */
+        .volume-display {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #22d3ee;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .volume-slider {
+            width: 100%;
+            height: 10px;
+            -webkit-appearance: none;
+            background: rgba(255,255,255,0.2);
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background: #22d3ee;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Indicator color demo */
+        .indicator-demo {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .indicator-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            min-width: 120px;
+        }
+
+        .indicator-item .color-preview {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 0 auto 0.5rem;
+            border: 3px solid rgba(255,255,255,0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">📚 PassProof Academy</div>
+            <div class="dropdown">
+                <button class="dropdown-btn" onclick="toggleDropdown()">
+                    <span>☰</span> Menu <span>▼</span>
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="#objectives">🎯 Learning Objectives</a>
+                    <a href="#overview">📋 Overview</a>
+                    <a href="#main-content">📖 Main Content</a>
+                    <a href="#simulation">🔬 Simulations</a>
+                    <a href="#questions">✍️ Questions</a>
+                    <a href="#score">📊 Score</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Subject Card -->
+        <div class="card subject-card animate-in">
+            <div class="subject-badge">Grade 12 • Physical Sciences</div>
+            <h1 class="subject-title">Acids and Bases</h1>
+            <p class="lesson-number">Lesson 7: Titrations</p>
+        </div>
+
+        <!-- Learning Objectives -->
+        <section id="objectives" class="card card-3d animate-in">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-icon">🎯</div>
+                <h2 class="section-title">Learning Objectives</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <p style="margin-bottom: 1rem; color: #64748b;">By the end of this lesson, you will be able to:</p>
+                <div class="objective-item">
+                    <div class="objective-check">✓</div>
+                    <span>Perform simple acid-base titrations</span>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-check">✓</div>
+                    <span>Select the appropriate indicator for different acid-base combinations</span>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-check">✓</div>
+                    <span>Do calculations based on titration reactions</span>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-check">✓</div>
+                    <span>Determine the concentration of an unknown solution using titration data</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Overview -->
+        <section id="overview" class="card card-3d animate-in">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-icon">📋</div>
+                <h2 class="section-title">Overview</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <p style="line-height: 1.8; color: #374151;">
+                    This lesson introduces the concept of titration — a powerful analytical technique used to determine the concentration of an unknown solution by reacting it with a solution of known concentration. We will explore how to select the correct indicator, understand the end point of neutralization, and perform calculations to find unknown concentrations.
+                </p>
+                
+                <div class="baseline-box">
+                    <h4>🧪 Baseline Questions</h4>
+                    <p style="margin-bottom: 0.75rem;">Predict the approximate pH at the end of a neutralization reaction between:</p>
+                    <div class="baseline-answers">
+                        <div class="baseline-answer">
+                            <span>a)</span> HNO₃ + Mg(OH)₂ → <strong>pH < 7</strong>
+                        </div>
+                        <div class="baseline-answer">
+                            <span>b)</span> CH₃COOH + Mg(OH)₂ → <strong>pH = 7</strong>
+                        </div>
+                        <div class="baseline-answer">
+                            <span>c)</span> CH₃COOH + KOH → <strong>pH > 7</strong>
+                        </div>
+                        <div class="baseline-answer">
+                            <span>d)</span> HNO₃ + KOH → <strong>pH = 7</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <section id="main-content" class="card card-3d animate-in">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-icon">📖</div>
+                <h2 class="section-title">Main Content</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <!-- What is Titration -->
+                <h3 style="color: var(--primary-blue); margin: 1.5rem 0 1rem; font-size: 1.3rem;">1. What is a Titration?</h3>
+                <p style="line-height: 1.8; color: #374151; margin-bottom: 1rem;">
+                    A <strong>titration</strong> is a technique where a solution of known concentration (called a <strong>standard solution</strong>) is used to determine the concentration of an unknown solution. This process involves the gradual neutralization of an acid by a base, or a base by an acid.
+                </p>
+
+                <div class="info-box">
+                    <h4>📌 Key Terms:</h4>
+                    <ul>
+                        <li>✦ <strong>Standard Solution:</strong> A solution of accurately known concentration</li>
+                        <li>✦ <strong>End Point:</strong> The point where enough acid/base has been added to bring about a colour change in the indicator</li>
+                        <li>✦ <strong>Indicator:</strong> A substance that changes colour at a specific pH, showing when neutralization is complete</li>
+                        <li>✦ <strong>Volumetric Analysis:</strong> The technique of determining concentration using titration</li>
+                    </ul>
+                </div>
+
+                <!-- Indicators Section -->
+                <h3 style="color: var(--primary-blue); margin: 2rem 0 1rem; font-size: 1.3rem;">2. Indicators and Their pH Ranges</h3>
+                <p style="line-height: 1.8; color: #374151; margin-bottom: 1rem;">
+                    An indicator is used to determine the end point of a titration. The end point may not necessarily be at pH 7, so choosing the correct indicator for your specific titration is essential.
+                </p>
+
+                <table class="indicator-table">
+                    <thead>
+                        <tr>
+                            <th>Indicator</th>
+                            <th>pH Range</th>
+                            <th>Colour Change</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Methyl Orange</strong></td>
+                            <td>3.1 – 4.4</td>
+                            <td>
+                                <span class="color-box" style="background: #ef4444;"></span>
+                                Red → Yellow
+                                <span class="color-box" style="background: #eab308;"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bromothymol Blue</strong></td>
+                            <td>6.0 – 7.6</td>
+                            <td>
+                                <span class="color-box" style="background: #eab308;"></span>
+                                Yellow → Green → Blue
+                                <span class="color-box" style="background: #3b82f6;"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phenolphthalein</strong></td>
+                            <td>8.3 – 10</td>
+                            <td>
+                                <span class="color-box" style="background: transparent; border: 1px dashed #999;"></span>
+                                Colourless → Pink/Red
+                                <span class="color-box" style="background: #ec4899;"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Choosing Indicators -->
+                <h3 style="color: var(--primary-blue); margin: 2rem 0 1rem; font-size: 1.3rem;">3. Choosing the Correct Indicator</h3>
+                
+                <div class="info-box">
+                    <h4>📌 Indicator Selection Rules:</h4>
+                    <ul>
+                        <li>🔵 <strong>Strong acid + Strong base</strong> (pH ≈ 7) → Use <strong>Bromothymol Blue</strong></li>
+                        <li>🔴 <strong>Strong acid + Weak base</strong> (pH < 7) → Use <strong>Methyl Orange</strong></li>
+                        <li>🟣 <strong>Weak acid + Strong base</strong> (pH > 7) → Use <strong>Phenolphthalein</strong></li>
+                        <li>🟢 <strong>Weak acid + Weak base</strong> (pH ≈ 7) → Use <strong>Bromothymol Blue</strong></li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <div class="example-title">📝 Practice: Indicator Selection</div>
+                    <p style="margin-bottom: 1rem;">What indicator would you use for these titrations?</p>
+                    
+                    <div class="solution-step">
+                        <strong>a) HNO₃ and NaOH</strong><br>
+                        Strong acid + Strong base → pH = 7<br>
+                        <strong style="color: var(--success);">Answer: Bromothymol Blue</strong>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <strong>b) CH₃COOH and Mg(OH)₂</strong><br>
+                        Weak acid + Weak base → pH ≈ 7<br>
+                        <strong style="color: var(--success);">Answer: Bromothymol Blue</strong>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <strong>c) CH₃COOH and KOH</strong><br>
+                        Weak acid + Strong base → pH > 7<br>
+                        <strong style="color: var(--success);">Answer: Phenolphthalein</strong>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <strong>d) H₂CO₃ and KOH</strong><br>
+                        Weak acid + Strong base → pH > 7<br>
+                        <strong style="color: var(--success);">Answer: Phenolphthalein</strong>
+                    </div>
+                </div>
+
+                <!-- Titration Calculations -->
+                <h3 style="color: var(--primary-blue); margin: 2rem 0 1rem; font-size: 1.3rem;">4. Titration Calculations</h3>
+                <p style="line-height: 1.8; color: #374151; margin-bottom: 1rem;">
+                    When one solution of known concentration is added to a solution of unknown concentration until exact neutralization, we can calculate the unknown concentration using the mole ratio from the balanced equation.
+                </p>
+
+                <div class="formula-box">
+                    <p style="margin-bottom: 0.5rem; font-size: 1rem;">Titration Formula</p>
+                    <span class="formula">
+                        n<sub>a</sub>/n<sub>b</sub> = (C<sub>a</sub> × V<sub>a</sub>) / (C<sub>b</sub> × V<sub>b</sub>)
+                    </span>
+                    <p style="margin-top: 0.75rem; font-size: 0.95rem;">
+                        Where: n = mole ratio, C = concentration (mol·dm⁻³), V = volume (dm³ or cm³)
+                    </p>
+                </div>
+
+                <div class="example-box">
+                    <div class="example-title">📝 Worked Example 1</div>
+                    <p><strong>Question:</strong> 82 cm³ of hydrochloric acid of concentration 0.2 mol·dm⁻³ is required to neutralize 60 cm³ of Ba(OH)₂ of unknown concentration. Calculate the concentration of Ba(OH)₂.</p>
+                    
+                    <div class="solution-step">
+                        <strong>Step 1:</strong> Write the balanced equation and determine the mole ratio<br>
+                        <div class="chemical-eq">
+                            2HCl + Ba(OH)₂ → BaCl₂ + 2H₂O
+                        </div>
+                        Mole ratio (acid : base) = 2 : 1
+                    </div>
+                    
+                    <div class="solution-step">
+                        <strong>Step 2:</strong> Set up the equation<br>
+                        n<sub>a</sub>/n<sub>b</sub> = (C<sub>a</sub> × V<sub>a</sub>) / (C<sub>b</sub> × V<sub>b</sub>)<br><br>
+                        2/1 = (0.2 × 82) / (C<sub>b</sub> × 60)
+                    </div>
+                    
+                    <div class="solution-step">
+                        <strong>Step 3:</strong> Solve for C<sub>b</sub><br>
+                        2 × C<sub>b</sub> × 60 = 0.2 × 82<br>
+                        120 × C<sub>b</sub> = 16.4<br>
+                        C<sub>b</sub> = 16.4 / 120 = <strong style="color: var(--success);">0.137 mol·dm⁻³</strong>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <div class="example-title">📝 Worked Example 2</div>
+                    <p><strong>Question:</strong> 32.5 cm³ of a sulphuric acid solution neutralizes exactly 25 cm³ of a potassium hydroxide solution of concentration 0.6 mol·dm⁻³. Calculate the concentration of the acid solution.</p>
+                    
+                    <div class="solution-step">
+                        <strong>Step 1:</strong> Write the balanced equation<br>
+                        <div class="chemical-eq">
+                            H₂SO₄ + 2KOH → K₂SO₄ + 2H₂O
+                        </div>
+                        Mole ratio (acid : base) = 1 : 2
+                    </div>
+                    
+                    <div class="solution-step">
+                        <strong>Step 2:</strong> Apply the formula<br>
+                        1/2 = (C<sub>a</sub> × 32.5) / (0.6 × 25)<br>
+                        1/2 = (C<sub>a</sub> × 32.5) / 15
+                    </div>
+                    
+                    <div class="solution-step">
+                        <strong>Step 3:</strong> Solve for C<sub>a</sub><br>
+                        C<sub>a</sub> × 32.5 = 15 × 0.5 = 7.5<br>
+                        C<sub>a</sub> = 7.5 / 32.5 = <strong style="color: var(--success);">0.231 mol·dm⁻³</strong>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <div class="example-title">📝 Worked Example 3</div>
+                    <p><strong>Question:</strong> 12.4 g of NaOH is dissolved in 300 cm³ of water. 57 cm³ of this solution neutralizes 30 cm³ of CH₃COOH. Calculate the concentration of the acetic acid.</p>
+                    
+                    <div class="solution-step">
+                        <strong>Step 1:</strong> Calculate the concentration of NaOH (M = 40 g/mol)<br>
+                        n = m/M = 12.4/40 = 0.31 mol<br>
+                        C = n/V = 0.31/0.3 = <strong>1.033 mol·dm⁻³</strong>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <strong>Step 2:</strong> Write the balanced equation<br>
+                        <div class="chemical-eq">
+                            NaOH + CH₃COOH → CH₃COONa + H₂O
+                        </div>
+                        Mole ratio (base : acid) = 1 : 1
+                    </div>
+                    
+                    <div class="solution-step">
+                        <strong>Step 3:</strong> Solve for C<sub>acid</sub><br>
+                        1/1 = (1.033 × 57) / (C<sub>acid</sub> × 30)<br>
+                        C<sub>acid</sub> × 30 = 58.88<br>
+                        C<sub>acid</sub> = 58.88 / 30 = <strong style="color: var(--success);">1.96 mol·dm⁻³</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Simulation -->
+        <section id="simulation" class="card animate-in">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-icon">🔬</div>
+                <h2 class="section-title">Interactive Simulations</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <!-- Titration Simulation -->
+                <div class="simulation-container">
+                    <h3 class="simulation-title">🧪 Virtual Titration Lab</h3>
+                    
+                    <div class="titration-setup">
+                        <div style="text-align: center; margin-bottom: 1rem;">
+                            <span style="opacity: 0.8;">Burette (Acid Solution)</span>
+                        </div>
+                        <div class="burette">
+                            <div class="burette-liquid" id="buretteLiquid" style="height: 90%;"></div>
+                        </div>
+                        <div class="burette-tip"></div>
+                        <div class="drop" id="drop"></div>
+                        <div class="flask-neck"></div>
+                        <div class="flask">
+                            <div class="flask-liquid" id="flaskLiquid" style="background: #22c55e;"></div>
+                        </div>
+                        <div style="text-align: center; margin-top: 0.5rem;">
+                            <span style="opacity: 0.8;">Conical Flask (Base + Indicator)</span>
+                        </div>
+                    </div>
+
+                    <div class="volume-display">
+                        Volume added: <span id="volumeAdded">0.0</span> cm³
+                    </div>
+
+                    <input type="range" class="volume-slider" id="volumeSlider" min="0" max="50" step="0.5" value="0" oninput="updateTitration()">
+
+                    <div class="sim-controls">
+                        <div class="sim-input-group">
+                            <label>Select Indicator:</label>
+                            <select id="indicatorSelect" onchange="resetTitration()">
+                                <option value="bromothymol">Bromothymol Blue</option>
+                                <option value="phenolphthalein">Phenolphthalein</option>
+                                <option value="methyl">Methyl Orange</option>
+                            </select>
+                        </div>
+                        <div class="sim-input-group">
+                            <label>End Point Volume (cm³):</label>
+                            <input type="number" id="endPointVolume" value="25" min="10" max="50" step="1" onchange="resetTitration()">
+                        </div>
+                    </div>
+                    
+                    <button class="sim-btn" onclick="resetTitration()">Reset Titration</button>
+                    
+                    <div class="sim-result" id="titrationResult" style="display: none;">
+                        <p style="opacity: 0.8;">Titration Status:</p>
+                        <div class="sim-result-value" id="titrationStatus">-</div>
+                        <p id="titrationExplanation" style="margin-top: 1rem; font-size: 0.95rem;"></p>
+                    </div>
+                </div>
+
+                <!-- Indicator Selector Simulation -->
+                <div class="simulation-container" style="background: linear-gradient(135deg, #134e4a 0%, #115e59 100%); margin-top: 1.5rem;">
+                    <h3 class="simulation-title">🎨 Indicator Selector Tool</h3>
+                    
+                    <div class="sim-controls">
+                        <div class="sim-input-group">
+                            <label>Acid Type:</label>
+                            <select id="acidType2">
+                                <option value="strong">Strong Acid (HCl, HNO₃, H₂SO₄)</option>
+                                <option value="weak">Weak Acid (CH₃COOH, H₂CO₃)</option>
+                            </select>
+                        </div>
+                        <div class="sim-input-group">
+                            <label>Base Type:</label>
+                            <select id="baseType2">
+                                <option value="strong">Strong Base (NaOH, KOH)</option>
+                                <option value="weak">Weak Base (NH₃, Mg(OH)₂)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button class="sim-btn" onclick="selectIndicator()">Find Best Indicator</button>
+                    
+                    <div class="sim-result" id="indicatorResult" style="display: none;">
+                        <p style="opacity: 0.8;">Recommended Indicator:</p>
+                        <div class="sim-result-value" id="indicatorValue" style="font-size: 1.8rem;">-</div>
+                        <div class="indicator-demo" id="indicatorDemo"></div>
+                        <p id="indicatorExplanation" style="margin-top: 1rem; font-size: 0.95rem;"></p>
+                    </div>
+                </div>
+
+                <!-- Titration Calculator -->
+                <div class="simulation-container" style="background: linear-gradient(135deg, #4c1d95 0%, #6d28d9 100%); margin-top: 1.5rem;">
+                    <h3 class="simulation-title">🔢 Titration Calculator</h3>
+                    
+                    <div class="sim-controls" style="grid-template-columns: repeat(2, 1fr);">
+                        <div class="sim-input-group">
+                            <label>Mole Ratio (Acid : Base):</label>
+                            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                <input type="number" id="moleRatioAcid" value="1" min="1" max="3" style="width: 50%;">
+                                <span>:</span>
+                                <input type="number" id="moleRatioBase" value="1" min="1" max="3" style="width: 50%;">
+                            </div>
+                        </div>
+                        <div class="sim-input-group">
+                            <label>Acid Concentration (mol·dm⁻³):</label>
+                            <input type="number" id="calcAcidConc" value="0.2" step="0.01" min="0.01">
+                        </div>
+                        <div class="sim-input-group">
+                            <label>Acid Volume (cm³):</label>
+                            <input type="number" id="calcAcidVol" value="50" step="1" min="1">
+                        </div>
+                        <div class="sim-input-group">
+                            <label>Base Volume (cm³):</label>
+                            <input type="number" id="calcBaseVol" value="25" step="1" min="1">
+                        </div>
+                    </div>
+                    
+                    <button class="sim-btn" onclick="calculateConcentration()">Calculate Base Concentration</button>
+                    
+                    <div class="sim-result" id="calcResult" style="display: none;">
+                        <p style="opacity: 0.8;">Base Concentration:</p>
+                        <div class="sim-result-value" id="calcValue">-</div>
+                        <p id="calcExplanation" style="margin-top: 1rem; font-size: 0.95rem;"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Questions Section -->
+        <section id="questions" class="card card-3d animate-in">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-icon">✍️</div>
+                <h2 class="section-title">End of Lesson Questions</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+                </div>
+                <p style="color: #64748b; margin-bottom: 1.5rem;">Answer all questions to test your understanding. You'll receive immediate feedback!</p>
+
+                <div id="questionsContainer">
+                    <!-- Questions will be generated by JavaScript -->
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="submit-btn" onclick="submitQuiz()">Submit Answers</button>
+                    <button class="submit-btn reset-btn" onclick="resetQuiz()">Reset Quiz</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Score Section -->
+        <section id="score" class="score-container animate-in" style="display: none;">
+            <h3 class="score-title">Your Results</h3>
+            <div class="score-circle">
+                <div class="score-percentage" id="scorePercentage">0%</div>
+                <div class="score-label" id="scoreLabel">0/12</div>
+            </div>
+            <p class="score-message" id="scoreMessage">Complete the quiz to see your results!</p>
+        </section>
+
+        <!-- Navigation Buttons -->
+        <div class="lesson-nav">
+            <button class="nav-btn prev" onclick="navigateLesson('prev')">
+                ← Previous Lesson
+            </button>
+            <button class="nav-btn next" onclick="navigateLesson('next')">
+                Next Lesson →
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p class="footer-text">© 2026 PassProof Academy. All rights reserved.</p>
+        <p style="opacity: 0.6; font-size: 0.9rem; margin-top: 0.5rem;">Empowering Education Through Technology</p>
+    </footer>
+
+    <script>
+        // Questions Data
+        const questions = [
+            {
+                id: 1,
+                question: "What is a titration?",
+                options: [
+                    "A technique to measure temperature of solutions",
+                    "A technique where a solution of known concentration is used to determine the concentration of an unknown solution",
+                    "A method to separate mixtures",
+                    "A process to dilute solutions"
+                ],
+                correct: 1,
+                explanation: "A titration uses a standard solution (known concentration) to determine the concentration of an unknown solution through neutralization."
+            },
+            {
+                id: 2,
+                question: "What is a standard solution?",
+                options: [
+                    "Any solution used in a lab",
+                    "A solution with unknown concentration",
+                    "A solution of accurately known concentration",
+                    "A neutral solution with pH 7"
+                ],
+                correct: 2,
+                explanation: "A standard solution is a solution of accurately known concentration, used as a reference in titrations."
+            },
+            {
+                id: 3,
+                question: "What is the pH range for Bromothymol Blue indicator?",
+                options: ["3.1 – 4.4", "6.0 – 7.6", "8.3 – 10", "1.0 – 3.0"],
+                correct: 1,
+                explanation: "Bromothymol Blue has a pH range of 6.0 – 7.6, changing from yellow to green to blue."
+            },
+            {
+                id: 4,
+                question: "Which indicator should be used for a titration between a weak acid and a strong base?",
+                options: ["Methyl Orange", "Bromothymol Blue", "Phenolphthalein", "Litmus"],
+                correct: 2,
+                explanation: "Weak acid + Strong base gives pH > 7, so Phenolphthalein (pH range 8.3-10) is the best choice."
+            },
+            {
+                id: 5,
+                question: "In a titration of HCl with NaOH, what indicator would you use?",
+                options: ["Methyl Orange", "Phenolphthalein", "Bromothymol Blue", "Universal indicator"],
+                correct: 2,
+                explanation: "HCl (strong acid) + NaOH (strong base) gives pH ≈ 7, so Bromothymol Blue is ideal."
+            },
+            {
+                id: 6,
+                question: "What is the end point in a titration?",
+                options: [
+                    "The point where all the solution has been used",
+                    "The point where a colour change in the indicator occurs",
+                    "The point where pH equals 7",
+                    "The starting point of the experiment"
+                ],
+                correct: 1,
+                explanation: "The end point is where enough acid/base has been added to cause a colour change in the indicator."
+            },
+            {
+                id: 7,
+                question: "The balanced equation for the reaction between H₂SO₄ and NaOH is:",
+                options: [
+                    "H₂SO₄ + NaOH → NaSO₄ + H₂O",
+                    "H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O",
+                    "2H₂SO₄ + NaOH → Na₂SO₄ + 2H₂O",
+                    "H₂SO₄ + NaOH → Na₂SO₄ + H₂O"
+                ],
+                correct: 1,
+                explanation: "H₂SO₄ has 2 H⁺ ions, so it reacts with 2 NaOH to form Na₂SO₄ and 2H₂O."
+            },
+            {
+                id: 8,
+                question: "25 cm³ of 0.1 mol·dm⁻³ HCl neutralizes 25 cm³ of NaOH. What is the concentration of NaOH?",
+                options: ["0.05 mol·dm⁻³", "0.1 mol·dm⁻³", "0.2 mol·dm⁻³", "0.25 mol·dm⁻³"],
+                correct: 1,
+                explanation: "HCl + NaOH has 1:1 ratio. Same volumes mean same concentrations: C(NaOH) = 0.1 mol·dm⁻³."
+            },
+            {
+                id: 9,
+                question: "What colour does Phenolphthalein turn in a basic solution?",
+                options: ["Yellow", "Blue", "Pink/Red", "Colourless"],
+                correct: 2,
+                explanation: "Phenolphthalein is colourless in acidic solutions and turns pink/red in basic solutions (pH > 8.3)."
+            },
+            {
+                id: 10,
+                question: "If 40 cm³ of H₂SO₄ neutralizes 80 cm³ of 0.5 mol·dm⁻³ KOH, what is the acid concentration?",
+                options: ["0.25 mol·dm⁻³", "0.5 mol·dm⁻³", "1.0 mol·dm⁻³", "2.0 mol·dm⁻³"],
+                correct: 1,
+                explanation: "H₂SO₄ + 2KOH → K₂SO₄ + 2H₂O. Using 1/2 = (Ca × 40)/(0.5 × 80), Ca = 0.5 mol·dm⁻³."
+            },
+            {
+                id: 11,
+                question: "Which indicator would you choose for HNO₃ reacting with NH₃?",
+                options: ["Bromothymol Blue", "Phenolphthalein", "Methyl Orange", "Universal indicator"],
+                correct: 2,
+                explanation: "HNO₃ (strong acid) + NH₃ (weak base) gives pH < 7, so Methyl Orange is best."
+            },
+            {
+                id: 12,
+                question: "In volumetric analysis, what does 'n' represent in the formula na/nb = (Ca × Va)/(Cb × Vb)?",
+                options: [
+                    "Number of moles",
+                    "Mole ratio from balanced equation",
+                    "Avogadro's number",
+                    "Number of molecules"
+                ],
+                correct: 1,
+                explanation: "In the titration formula, n represents the mole ratio from the balanced chemical equation."
+            }
+        ];
+
+        let userAnswers = {};
+        let quizSubmitted = false;
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderQuestions();
+            loadProgress();
+            resetTitration();
+        });
+
+        // Toggle dropdown menu
+        function toggleDropdown() {
+            const menu = document.getElementById('dropdownMenu');
+            menu.classList.toggle('active');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const dropdown = document.querySelector('.dropdown');
+            if (!dropdown.contains(e.target)) {
+                document.getElementById('dropdownMenu').classList.remove('active');
+            }
+        });
+
+        // Toggle collapsible sections
+        function toggleSection(header) {
+            header.classList.toggle('collapsed');
+            const content = header.nextElementSibling;
+            content.classList.toggle('collapsed');
+        }
+
+        // Render questions
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            questions.forEach((q, index) => {
+                const questionCard = document.createElement('div');
+                questionCard.className = 'question-card';
+                questionCard.id = `question-${q.id}`;
+                
+                let optionsHTML = '';
+                q.options.forEach((option, optIndex) => {
+                    optionsHTML += `
+                        <label class="option-label" id="option-${q.id}-${optIndex}">
+                            <input type="radio" name="q${q.id}" value="${optIndex}" 
+                                onchange="selectAnswer(${q.id}, ${optIndex})"
+                                ${quizSubmitted ? 'disabled' : ''}>
+                            <span>${option}</span>
+                        </label>
+                    `;
+                });
+
+                questionCard.innerHTML = `
+                    <div style="display: flex; align-items: flex-start;">
+                        <span class="question-number">${index + 1}</span>
+                        <p class="question-text">${q.question}</p>
+                    </div>
+                    <div class="options-container">
+                        ${optionsHTML}
+                    </div>
+                    <div class="feedback-text" id="feedback-${q.id}"></div>
+                `;
+
+                container.appendChild(questionCard);
+            });
+        }
+
+        // Select answer
+        function selectAnswer(questionId, optionIndex) {
+            if (quizSubmitted) return;
+            
+            userAnswers[questionId] = optionIndex;
+            
+            // Update selected styling
+            const options = document.querySelectorAll(`[name="q${questionId}"]`);
+            options.forEach((opt, idx) => {
+                const label = document.getElementById(`option-${questionId}-${idx}`);
+                label.classList.toggle('selected', idx === optionIndex);
+            });
+
+            updateProgress();
+            saveProgress();
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const answered = Object.keys(userAnswers).length;
+            const total = questions.length;
+            const percentage = (answered / total) * 100;
+            document.getElementById('progressFill').style.width = `${percentage}%`;
+        }
+
+        // Submit quiz
+        function submitQuiz() {
+            if (Object.keys(userAnswers).length < questions.length) {
+                alert('Please answer all questions before submitting!');
+                return;
+            }
+
+            quizSubmitted = true;
+            let correctCount = 0;
+
+            questions.forEach(q => {
+                const questionCard = document.getElementById(`question-${q.id}`);
+                const feedback = document.getElementById(`feedback-${q.id}`);
+                const userAnswer = userAnswers[q.id];
+                const isCorrect = userAnswer === q.correct;
+
+                if (isCorrect) {
+                    correctCount++;
+                    questionCard.classList.add('correct');
+                    feedback.className = 'feedback-text correct';
+                    feedback.innerHTML = `✓ Correct! ${q.explanation}`;
+                } else {
+                    questionCard.classList.add('incorrect');
+                    feedback.className = 'feedback-text incorrect';
+                    feedback.innerHTML = `✗ Incorrect. The correct answer is: ${q.options[q.correct]}. ${q.explanation}`;
+                }
+
+                // Highlight correct and wrong answers
+                document.getElementById(`option-${q.id}-${q.correct}`).classList.add('correct-answer');
+                if (!isCorrect && userAnswer !== undefined) {
+                    document.getElementById(`option-${q.id}-${userAnswer}`).classList.add('wrong-answer');
+                }
+
+                // Disable all inputs
+                const inputs = questionCard.querySelectorAll('input');
+                inputs.forEach(input => input.disabled = true);
+            });
+
+            // Show score
+            const percentage = Math.round((correctCount / questions.length) * 100);
+            document.getElementById('score').style.display = 'block';
+            document.getElementById('scorePercentage').textContent = `${percentage}%`;
+            document.getElementById('scoreLabel').textContent = `${correctCount}/${questions.length}`;
+
+            let message = '';
+            if (percentage >= 80) {
+                message = '🌟 Excellent! You have mastered titrations!';
+            } else if (percentage >= 60) {
+                message = '👍 Good job! Review the incorrect answers to improve.';
+            } else if (percentage >= 40) {
+                message = '📚 Keep practicing! Review the main concepts.';
+            } else {
+                message = '💪 Don\'t give up! Go through the lesson again.';
+            }
+            document.getElementById('scoreMessage').textContent = message;
+
+            // Scroll to score
+            document.getElementById('score').scrollIntoView({ behavior: 'smooth' });
+
+            saveProgress();
+        }
+
+        // Reset quiz
+        function resetQuiz() {
+            userAnswers = {};
+            quizSubmitted = false;
+            
+            // Reset all question cards
+            document.querySelectorAll('.question-card').forEach(card => {
+                card.classList.remove('correct', 'incorrect');
+            });
+            
+            document.querySelectorAll('.option-label').forEach(label => {
+                label.classList.remove('selected', 'correct-answer', 'wrong-answer');
+            });
+            
+            document.querySelectorAll('.feedback-text').forEach(fb => {
+                fb.className = 'feedback-text';
+                fb.innerHTML = '';
+            });
+            
+            document.querySelectorAll('input[type="radio"]').forEach(input => {
+                input.checked = false;
+                input.disabled = false;
+            });
+
+            document.getElementById('score').style.display = 'none';
+            document.getElementById('progressFill').style.width = '0%';
+
+            localStorage.removeItem('lesson7Progress');
+
+            document.getElementById('questions').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Titration Simulation
+        function updateTitration() {
+            const volume = parseFloat(document.getElementById('volumeSlider').value);
+            const endPoint = parseFloat(document.getElementById('endPointVolume').value);
+            const indicator = document.getElementById('indicatorSelect').value;
+            
+            document.getElementById('volumeAdded').textContent = volume.toFixed(1);
+            
+            // Update burette liquid level
+            const buretteLevel = 90 - (volume / 50) * 80;
+            document.getElementById('buretteLiquid').style.height = `${buretteLevel}%`;
+            
+            // Determine flask colour based on indicator and volume
+            const flaskLiquid = document.getElementById('flaskLiquid');
+            let color, status, explanation;
+            
+            const ratio = volume / endPoint;
+            
+            if (indicator === 'bromothymol') {
+                if (ratio < 0.9) {
+                    color = '#3b82f6'; // Blue (basic)
+                    status = 'Basic Solution';
+                    explanation = 'The solution is still basic. Add more acid.';
+                } else if (ratio >= 0.9 && ratio <= 1.1) {
+                    color = '#22c55e'; // Green (neutral)
+                    status = 'End Point Reached!';
+                    explanation = 'The indicator is green - you have reached the neutralization point!';
+                } else {
+                    color = '#eab308'; // Yellow (acidic)
+                    status = 'Exceeded End Point';
+                    explanation = 'You have added too much acid. The solution is now acidic.';
+                }
+            } else if (indicator === 'phenolphthalein') {
+                if (ratio < 0.9) {
+                    color = '#ec4899'; // Pink (basic)
+                    status = 'Basic Solution';
+                    explanation = 'The pink colour shows the solution is still basic.';
+                } else if (ratio >= 0.9 && ratio <= 1.1) {
+                    color = '#fce7f3'; // Pale pink (end point)
+                    status = 'End Point Reached!';
+                    explanation = 'The colour is fading - you have reached the neutralization point!';
+                } else {
+                    color = 'rgba(255,255,255,0.3)'; // Colourless (acidic)
+                    status = 'Exceeded End Point';
+                    explanation = 'The solution is now colourless - you have added too much acid.';
+                }
+            } else { // methyl orange
+                if (ratio < 0.9) {
+                    color = '#eab308'; // Yellow (basic)
+                    status = 'Basic Solution';
+                    explanation = 'The yellow colour shows the solution is still basic.';
+                } else if (ratio >= 0.9 && ratio <= 1.1) {
+                    color = '#f97316'; // Orange (end point)
+                    status = 'End Point Reached!';
+                    explanation = 'The orange colour indicates you have reached the neutralization point!';
+                } else {
+                    color = '#ef4444'; // Red (acidic)
+                    status = 'Exceeded End Point';
+                    explanation = 'The red colour shows you have added too much acid.';
+                }
+            }
+            
+            flaskLiquid.style.backgroundColor = color;
+            
+            // Show result
+            document.getElementById('titrationResult').style.display = 'block';
+            document.getElementById('titrationStatus').textContent = status;
+            document.getElementById('titrationStatus').style.color = status.includes('End Point') ? '#22d3ee' : '#fbbf24';
+            document.getElementById('titrationExplanation').textContent = explanation;
+        }
+
+        function resetTitration() {
+            document.getElementById('volumeSlider').value = 0;
+            document.getElementById('volumeAdded').textContent = '0.0';
+            document.getElementById('buretteLiquid').style.height = '90%';
+            document.getElementById('titrationResult').style.display = 'none';
+            
+            const indicator = document.getElementById('indicatorSelect').value;
+            let startColor;
+            
+            if (indicator === 'bromothymol') {
+                startColor = '#3b82f6'; // Blue
+            } else if (indicator === 'phenolphthalein') {
+                startColor = '#ec4899'; // Pink
+            } else {
+                startColor = '#eab308'; // Yellow
+            }
+            
+            document.getElementById('flaskLiquid').style.backgroundColor = startColor;
+        }
+
+        // Indicator Selector
+        function selectIndicator() {
+            const acidType = document.getElementById('acidType2').value;
+            const baseType = document.getElementById('baseType2').value;
+            
+            let indicator, phRange, color1, color2, explanation;
+            
+            if (acidType === 'strong' && baseType === 'strong') {
+                indicator = 'Bromothymol Blue';
+                phRange = 'pH ≈ 7';
+                color1 = '#eab308';
+                color2 = '#3b82f6';
+                explanation = 'Strong acid + Strong base produces a neutral solution (pH ≈ 7). Bromothymol Blue changes at this range.';
+            } else if (acidType === 'strong' && baseType === 'weak') {
+                indicator = 'Methyl Orange';
+                phRange = 'pH < 7';
+                color1 = '#ef4444';
+                color2 = '#eab308';
+                explanation = 'Strong acid + Weak base produces an acidic solution (pH < 7). Methyl Orange works best in this acidic range.';
+            } else if (acidType === 'weak' && baseType === 'strong') {
+                indicator = 'Phenolphthalein';
+                phRange = 'pH > 7';
+                color1 = 'transparent';
+                color2 = '#ec4899';
+                explanation = 'Weak acid + Strong base produces a basic solution (pH > 7). Phenolphthalein works best in this basic range.';
+            } else {
+                indicator = 'Bromothymol Blue';
+                phRange = 'pH ≈ 7';
+                color1 = '#eab308';
+                color2 = '#3b82f6';
+                explanation = 'Weak acid + Weak base typically produces a solution near pH 7. Bromothymol Blue is suitable for this range.';
+            }
+            
+            document.getElementById('indicatorResult').style.display = 'block';
+            document.getElementById('indicatorValue').textContent = indicator;
+            document.getElementById('indicatorExplanation').textContent = explanation;
+            
+            document.getElementById('indicatorDemo').innerHTML = `
+                <div class="indicator-item">
+                    <div class="color-preview" style="background: ${color1}; ${color1 === 'transparent' ? 'border: 2px dashed rgba(255,255,255,0.5);' : ''}"></div>
+                    <div>Before</div>
+                </div>
+                <div style="display: flex; align-items: center; font-size: 2rem;">→</div>
+                <div class="indicator-item">
+                    <div class="color-preview" style="background: ${color2};"></div>
+                    <div>After</div>
+                </div>
+            `;
+        }
+
+        // Titration Calculator
+        function calculateConcentration() {
+            const ratioAcid = parseFloat(document.getElementById('moleRatioAcid').value);
+            const ratioBase = parseFloat(document.getElementById('moleRatioBase').value);
+            const acidConc = parseFloat(document.getElementById('calcAcidConc').value);
+            const acidVol = parseFloat(document.getElementById('calcAcidVol').value);
+            const baseVol = parseFloat(document.getElementById('calcBaseVol').value);
+            
+            if (isNaN(ratioAcid) || isNaN(ratioBase) || isNaN(acidConc) || isNaN(acidVol) || isNaN(baseVol)) {
+                alert('Please enter valid numbers for all fields!');
+                return;
+            }
+            
+            // Using: na/nb = (Ca × Va) / (Cb × Vb)
+            // Rearranging: Cb = (Ca × Va × nb) / (na × Vb)
+            const baseConc = (acidConc * acidVol * ratioBase) / (ratioAcid * baseVol);
+            
+            document.getElementById('calcResult').style.display = 'block';
+            document.getElementById('calcValue').textContent = baseConc.toFixed(4) + ' mol·dm⁻³';
+            document.getElementById('calcExplanation').innerHTML = `
+                Using the formula: n<sub>a</sub>/n<sub>b</sub> = (C<sub>a</sub> × V<sub>a</sub>) / (C<sub>b</sub> × V<sub>b</sub>)<br>
+                ${ratioAcid}/${ratioBase} = (${acidConc} × ${acidVol}) / (C<sub>b</sub> × ${baseVol})<br>
+                C<sub>b</sub> = (${acidConc} × ${acidVol} × ${ratioBase}) / (${ratioAcid} × ${baseVol}) = ${baseConc.toFixed(4)} mol·dm⁻³
+            `;
+        }
+
+        // Navigation
+        function navigateLesson(direction) {
+            if (direction === 'prev') {
+                alert('Navigating to Lesson 6: pH Calculations & Salt Hydrolysis');
+            } else {
+                alert('Navigating to Lesson 8: Buffer Solutions');
+            }
+        }
+
+        // LocalStorage functions
+        function saveProgress() {
+            const progress = {
+                userAnswers: userAnswers,
+                quizSubmitted: quizSubmitted
+            };
+            localStorage.setItem('lesson7Progress', JSON.stringify(progress));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('lesson7Progress');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                userAnswers = progress.userAnswers || {};
+                quizSubmitted = progress.quizSubmitted || false;
+
+                // Restore answers
+                Object.keys(userAnswers).forEach(qId => {
+                    const optIndex = userAnswers[qId];
+                    const input = document.querySelector(`input[name="q${qId}"][value="${optIndex}"]`);
+                    if (input) {
+                        input.checked = true;
+                        selectAnswer(parseInt(qId), optIndex);
+                    }
+                });
+
+                if (quizSubmitted) {
+                    submitQuiz();
+                }
+
+                updateProgress();
+            }
+        }
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('.dropdown-menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('dropdownMenu').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

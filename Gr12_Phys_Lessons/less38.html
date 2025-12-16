@@ -1,0 +1,2329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electric Circuits - Lessons 3 & 4 | PassProof Academy</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0f7ff 0%, #e6f0fa 100%);
+            min-height: 100vh;
+            color: #1e3a5f;
+        }
+        
+        /* Header Styles */
+        .header {
+            background: linear-gradient(180deg, #1e5799 0%, #2989d8 50%, #1e5799 100%);
+            box-shadow: 0 4px 20px rgba(30, 87, 153, 0.4);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .logo span {
+            color: #ffd700;
+        }
+        
+        /* Dropdown Navigation */
+        .nav-dropdown {
+            position: relative;
+        }
+        
+        .nav-toggle {
+            background: linear-gradient(145deg, #ffffff, #e6e6e6);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            color: #1e5799;
+            cursor: pointer;
+            box-shadow: 3px 3px 8px rgba(0,0,0,0.2), -2px -2px 6px rgba(255,255,255,0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 4px 4px 12px rgba(0,0,0,0.3), -2px -2px 8px rgba(255,255,255,0.6);
+        }
+        
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 10px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            min-width: 220px;
+            overflow: hidden;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .dropdown-menu.active {
+            display: block;
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 14px 20px;
+            color: #1e3a5f;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #eef4fa;
+        }
+        
+        .dropdown-menu a:hover {
+            background: linear-gradient(90deg, #e6f0fa, #f0f7ff);
+            padding-left: 28px;
+            color: #1e5799;
+        }
+        
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+        
+        /* Main Content */
+        .main-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        /* Subject Info Card */
+        .subject-card {
+            background: linear-gradient(145deg, #ffffff, #f8fbff);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 8px 8px 20px rgba(30, 87, 153, 0.15), -8px -8px 20px rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+        
+        .subject-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #1e5799, #2989d8);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            box-shadow: 3px 3px 10px rgba(30, 87, 153, 0.3);
+        }
+        
+        .practical-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #28a745, #34c759);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            margin-left: 10px;
+            box-shadow: 3px 3px 10px rgba(40, 167, 69, 0.3);
+        }
+        
+        .topic-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e3a5f;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .lesson-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .info-tag {
+            background: #e6f0fa;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #1e5799;
+            font-weight: 500;
+        }
+        
+        .info-tag.practical {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        /* Collapsible Sections */
+        .section-card {
+            background: linear-gradient(145deg, #ffffff, #f8fbff);
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 6px 6px 16px rgba(30, 87, 153, 0.12), -6px -6px 16px rgba(255, 255, 255, 0.9);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+        
+        .section-header {
+            background: linear-gradient(135deg, #1e5799, #2989d8);
+            padding: 18px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .section-header.practical-header {
+            background: linear-gradient(135deg, #28a745, #34c759);
+        }
+        
+        .section-header:hover {
+            background: linear-gradient(135deg, #2565a0, #3a9de8);
+        }
+        
+        .section-header.practical-header:hover {
+            background: linear-gradient(135deg, #218838, #2dbc4e);
+        }
+        
+        .section-header h2 {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .section-icon {
+            font-size: 1.4rem;
+        }
+        
+        .toggle-icon {
+            color: white;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .section-header.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        
+        .section-content.active {
+            padding: 25px;
+            max-height: 10000px;
+        }
+        
+        /* Content Styles */
+        .objective-list {
+            list-style: none;
+        }
+        
+        .objective-list li {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #e6f0fa, #f0f7ff);
+            border-radius: 10px;
+            border-left: 4px solid #1e5799;
+            transition: all 0.3s ease;
+        }
+        
+        .objective-list li:hover {
+            transform: translateX(5px);
+            box-shadow: 3px 3px 10px rgba(30, 87, 153, 0.1);
+        }
+        
+        .formula-box {
+            background: linear-gradient(135deg, #1e3a5f, #2565a0);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 1.3rem;
+            font-family: 'Courier New', monospace;
+            box-shadow: 4px 4px 15px rgba(30, 58, 95, 0.3);
+        }
+        
+        .concept-card {
+            background: #f8fbff;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 1px solid #d4e5f7;
+        }
+        
+        .concept-card h4 {
+            color: #1e5799;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .experiment-card {
+            background: linear-gradient(145deg, #f0fff4, #e8f5e9);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 5px solid #28a745;
+            box-shadow: 4px 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .experiment-card h4 {
+            color: #155724;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .apparatus-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .apparatus-item {
+            background: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #155724;
+            border: 1px solid #28a745;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .method-step {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #c3e6cb;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .step-number {
+            background: linear-gradient(135deg, #28a745, #34c759);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        
+        .question-card {
+            background: linear-gradient(145deg, #fff8e1, #ffecb3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 5px solid #ffc107;
+        }
+        
+        .question-card h4 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+        
+        .question-item {
+            background: white;
+            padding: 12px 15px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: 1px solid #ffeeba;
+        }
+        
+        .answer-box {
+            background: linear-gradient(145deg, #e8f5e9, #c8e6c9);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 5px solid #28a745;
+        }
+        
+        .answer-box h4 {
+            color: #155724;
+            margin-bottom: 10px;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .data-table th, .data-table td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid #d4e5f7;
+        }
+        
+        .data-table th {
+            background: linear-gradient(135deg, #1e5799, #2989d8);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .data-table input {
+            width: 80px;
+            padding: 8px;
+            border: 2px solid #d4e5f7;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+        
+        .data-table input:focus {
+            outline: none;
+            border-color: #1e5799;
+        }
+        
+        /* Simulation Area */
+        .simulation-container {
+            background: linear-gradient(145deg, #1e3a5f, #2565a0);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: inset 2px 2px 8px rgba(0,0,0,0.3), 4px 4px 15px rgba(30, 58, 95, 0.3);
+        }
+        
+        .simulation-title {
+            color: #ffd700;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .simulation-canvas {
+            background: #0d1f33;
+            border-radius: 12px;
+            width: 100%;
+            height: 350px;
+            display: block;
+            margin-bottom: 20px;
+        }
+        
+        .sim-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .sim-control-group {
+            background: rgba(255,255,255,0.1);
+            padding: 15px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .sim-control-group label {
+            display: block;
+            color: #a8c5e8;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+        
+        .sim-control-group input[type="range"] {
+            width: 150px;
+            accent-color: #ffd700;
+        }
+        
+        .sim-value {
+            color: #ffd700;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+        
+        .sim-output {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .output-box {
+            background: linear-gradient(145deg, #ffd700, #ffec80);
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 140px;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        .output-box .label {
+            font-size: 0.8rem;
+            color: #1e3a5f;
+            margin-bottom: 5px;
+        }
+        
+        .output-box .value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1e3a5f;
+        }
+        
+        .switch-btn {
+            background: linear-gradient(145deg, #dc3545, #e04555);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+        
+        .switch-btn.closed {
+            background: linear-gradient(145deg, #28a745, #34c759);
+        }
+        
+        .switch-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .record-btn {
+            background: linear-gradient(145deg, #17a2b8, #20c997);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+        
+        .record-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 3px 3px 10px rgba(23, 162, 184, 0.4);
+        }
+        
+        .calculate-btn {
+            background: linear-gradient(145deg, #6f42c1, #8551d9);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 3px 3px 12px rgba(111, 66, 193, 0.4);
+        }
+        
+        .result-display {
+            background: linear-gradient(145deg, #28a745, #34c759);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .result-display.show {
+            display: block;
+        }
+        
+        .tab-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px 10px 0 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.2);
+            color: #a8c5e8;
+        }
+        
+        .tab-btn.active {
+            background: #ffd700;
+            color: #1e3a5f;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Quiz Styles */
+        .quiz-question {
+            background: #f8fbff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #d4e5f7;
+            transition: all 0.3s ease;
+        }
+        
+        .quiz-question.correct {
+            border-color: #28a745;
+            background: #f0fff4;
+        }
+        
+        .quiz-question.incorrect {
+            border-color: #dc3545;
+            background: #fff5f5;
+        }
+        
+        .question-number {
+            background: linear-gradient(135deg, #1e5799, #2989d8);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 12px;
+        }
+        
+        .question-text {
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: #1e3a5f;
+        }
+        
+        .options-list {
+            list-style: none;
+        }
+        
+        .option-item {
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            background: white;
+            border: 2px solid #d4e5f7;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .option-item:hover {
+            border-color: #1e5799;
+            background: #e6f0fa;
+        }
+        
+        .option-item.selected {
+            border-color: #1e5799;
+            background: #e6f0fa;
+        }
+        
+        .option-item.correct-answer {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+        
+        .option-item.wrong-answer {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+        
+        .option-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #1e5799;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .option-item.selected .option-radio::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: #1e5799;
+            border-radius: 50%;
+        }
+        
+        .feedback-text {
+            margin-top: 12px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: 500;
+            display: none;
+        }
+        
+        .feedback-text.correct {
+            display: block;
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .feedback-text.incorrect {
+            display: block;
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .submit-quiz-btn {
+            background: linear-gradient(145deg, #28a745, #34c759);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 4px 4px 15px rgba(40, 167, 69, 0.3);
+            transition: all 0.3s ease;
+            display: block;
+            margin: 20px auto 0;
+        }
+        
+        .submit-quiz-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 6px 6px 20px rgba(40, 167, 69, 0.4);
+        }
+        
+        /* Score Display */
+        .score-display {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .score-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #1e5799, #2989d8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 8px 8px 25px rgba(30, 87, 153, 0.4), inset -3px -3px 10px rgba(0,0,0,0.2), inset 3px 3px 10px rgba(255,255,255,0.1);
+        }
+        
+        .score-percent {
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .score-label {
+            color: #a8c5e8;
+            font-size: 0.9rem;
+        }
+        
+        .score-message {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .score-details {
+            color: #5a7fa8;
+        }
+        
+        /* Progress Section */
+        .progress-bar-container {
+            background: #e6f0fa;
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1e5799, #2989d8, #34c759);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        /* Lesson Navigation */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .nav-btn.prev {
+            background: linear-gradient(145deg, #6c757d, #868e96);
+            color: white;
+            box-shadow: 4px 4px 12px rgba(108, 117, 125, 0.3);
+        }
+        
+        .nav-btn.next {
+            background: linear-gradient(145deg, #1e5799, #2989d8);
+            color: white;
+            box-shadow: 4px 4px 12px rgba(30, 87, 153, 0.3);
+        }
+        
+        .nav-btn.subject-contents {
+            background: linear-gradient(145deg, #ffc107, #ffda44);
+            color: #1e3a5f;
+            box-shadow: 4px 4px 12px rgba(255, 193, 7, 0.3);
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        /* Footer */
+        .footer {
+            background: linear-gradient(180deg, #1e5799 0%, #163d6b 100%);
+            color: white;
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 40px;
+            box-shadow: 0 -4px 20px rgba(30, 87, 153, 0.3);
+        }
+        
+        .footer p {
+            opacity: 0.9;
+        }
+        
+        .key-term {
+            background: linear-gradient(90deg, #ffd700, #ffec80);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #1e3a5f;
+        }
+        
+        .warning-box {
+            background: linear-gradient(145deg, #fff3cd, #ffeeba);
+            border-left: 5px solid #ffc107;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 15px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .warning-icon {
+            font-size: 1.5rem;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header-inner {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .topic-title {
+                font-size: 1.5rem;
+            }
+            
+            .lesson-nav {
+                flex-direction: column;
+            }
+            
+            .nav-btn {
+                width: 100%;
+            }
+            
+            .sim-controls {
+                flex-direction: column;
+            }
+            
+            .simulation-canvas {
+                height: 300px;
+            }
+            
+            .dropdown-menu {
+                right: -50px;
+            }
+            
+            .tab-container {
+                flex-direction: column;
+            }
+            
+            .data-table {
+                font-size: 0.85rem;
+            }
+            
+            .data-table input {
+                width: 60px;
+                padding: 5px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-container {
+                padding: 15px 10px;
+            }
+            
+            .section-content.active {
+                padding: 15px;
+            }
+            
+            .practical-badge {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">Pass<span>Proof</span> Academy</div>
+            <nav class="nav-dropdown">
+                <button class="nav-toggle" onclick="toggleDropdown()">
+                    ☰ Navigation
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="#objectives" onclick="openSection('objectives')">📚 Learning Objectives</a>
+                    <a href="#overview" onclick="openSection('overview')">📋 Overview</a>
+                    <a href="#main-content" onclick="openSection('main-content')">📖 Main Content</a>
+                    <a href="#simulation" onclick="openSection('simulation')">🔬 Interactive Simulation</a>
+                    <a href="#quiz" onclick="openSection('quiz')">✏️ Quiz</a>
+                    <a href="#progress" onclick="openSection('progress')">📊 My Progress</a>
+                    <a href="#" onclick="alert('Subject Contents page coming soon!')">📑 Subject Contents</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Subject Info Card -->
+        <div class="subject-card">
+            <span class="subject-badge">Physical Sciences • Grade 12</span>
+            <span class="practical-badge">🔬 Practical Investigation</span>
+            <h1 class="topic-title">Electric Circuits</h1>
+            <div class="lesson-info">
+                <span class="info-tag">📘 Sub-topic: Internal Resistance & Equivalent Resistance</span>
+                <span class="info-tag">📝 Lessons 3 & 4</span>
+                <span class="info-tag">⏱️ 90 minutes</span>
+                <span class="info-tag practical">🧪 Laboratory Practical</span>
+            </div>
+        </div>
+
+        <!-- Learning Objectives Section -->
+        <section class="section-card" id="objectives">
+            <div class="section-header active" onclick="toggleSection(this)">
+                <h2><span class="section-icon">🎯</span> Learning Objectives</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content active">
+                <ul class="objective-list">
+                    <li>✓ Determine the internal resistance of a battery using experimental methods.</li>
+                    <li>✓ Determine the equivalent resistance of a series-parallel network using an ammeter and a voltmeter.</li>
+                    <li>✓ Compare experimental values with theoretical calculations.</li>
+                    <li>✓ Identify and explain sources of error in electrical measurements.</li>
+                    <li>✓ Apply circuit analysis skills to real-world laboratory situations.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Overview Section -->
+        <section class="section-card" id="overview">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="section-icon">📋</span> Overview & Pre-Knowledge</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="concept-card">
+                    <h4>📌 Pre-Knowledge Required</h4>
+                    <ul style="list-style: disc; margin-left: 20px; line-height: 2;">
+                        <li>Understanding of internal resistance and its effect on circuits</li>
+                        <li>Calculating equivalent resistance for series and parallel networks</li>
+                        <li>Using Ohm's Law: V = IR</li>
+                        <li>Difference between EMF and terminal potential difference</li>
+                    </ul>
+                </div>
+                
+                <div class="concept-card">
+                    <h4>🔑 Key Concepts Review</h4>
+                    <p><strong>EMF (ε):</strong> The voltage across a battery when there is <span class="key-term">no current</span> flowing (switch open).</p>
+                    <br>
+                    <p><strong>Terminal Potential Difference (V<sub>load</sub>):</strong> The voltage across the battery terminals when there <span class="key-term">is current</span> flowing (switch closed).</p>
+                    <div class="formula-box">ε = V<sub>load</sub> + Ir</div>
+                    <p style="margin-top: 15px; text-align: center;">Therefore: <strong>r = (ε - V<sub>load</sub>) / I</strong></p>
+                </div>
+                
+                <div class="concept-card">
+                    <h4>🧪 What You'll Do</h4>
+                    <p>In these lessons, you will perform two practical investigations:</p>
+                    <ol style="margin-left: 20px; line-height: 2;">
+                        <li><strong>Part 1:</strong> Determine the internal resistance of a battery experimentally</li>
+                        <li><strong>Part 2:</strong> Determine the equivalent resistance of a series-parallel network and compare with the theoretical value</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Section -->
+        <section class="section-card" id="main-content">
+            <div class="section-header practical-header" onclick="toggleSection(this)">
+                <h2><span class="section-icon">🧪</span> Practical Investigations</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                
+                <!-- Part 1: Internal Resistance -->
+                <div class="experiment-card">
+                    <h4>🔋 Part 1: Determining Internal Resistance of a Battery</h4>
+                    
+                    <p><strong>Aim:</strong> To determine the internal resistance of a battery using voltage and current measurements.</p>
+                    
+                    <h5 style="margin-top: 20px; color: #155724;">Apparatus Required:</h5>
+                    <div class="apparatus-list">
+                        <span class="apparatus-item">🔋 Battery</span>
+                        <span class="apparatus-item">🔌 Connecting wires</span>
+                        <span class="apparatus-item">⚡ Resistor (known value)</span>
+                        <span class="apparatus-item">📊 Voltmeter</span>
+                        <span class="apparatus-item">📏 Ammeter</span>
+                        <span class="apparatus-item">🔘 Switch</span>
+                    </div>
+                    
+                    <div class="warning-box">
+                        <span class="warning-icon">⚠️</span>
+                        <div>
+                            <strong>Safety Warning:</strong> The ammeter must be connected in series in the circuit; otherwise its fuse may burn out. Always have your circuit checked before closing the switch.
+                        </div>
+                    </div>
+                    
+                    <h5 style="margin-top: 20px; color: #155724;">Method:</h5>
+                    <div class="method-step">
+                        <span class="step-number">1</span>
+                        <span>Connect the resistor in series with the battery, ammeter and switch.</span>
+                    </div>
+                    <div class="method-step">
+                        <span class="step-number">2</span>
+                        <span>Connect the voltmeter across the battery's terminals.</span>
+                    </div>
+                    <div class="method-step">
+                        <span class="step-number">3</span>
+                        <span>Record the voltmeter reading when the switch S is <strong>open</strong>. This is the EMF (ε).</span>
+                    </div>
+                    <div class="method-step">
+                        <span class="step-number">4</span>
+                        <span>Now <strong>close</strong> the switch and record the ammeter and voltmeter readings. The voltmeter now shows V<sub>load</sub>.</span>
+                    </div>
+                    <div class="method-step">
+                        <span class="step-number">5</span>
+                        <span>Disconnect the circuit and repeat steps 1-4 until you have three sets of measurements.</span>
+                    </div>
+                    
+                    <div class="question-card">
+                        <h4>📝 Questions to Answer:</h4>
+                        <div class="question-item">1. What quantity does the voltmeter measure when the switch is open?</div>
+                        <div class="question-item">2. What quantity does the voltmeter measure when the switch is closed?</div>
+                        <div class="question-item">3. Draw up a neat table of measurements made in this experiment.</div>
+                        <div class="question-item">4. Calculate the battery's internal resistance (r). Show your working.</div>
+                        <div class="question-item">5. List two sources of error in this experiment.</div>
+                    </div>
+                    
+                    <div class="answer-box">
+                        <h4>Expected Answers:</h4>
+                        <p><strong>1.</strong> The EMF of the battery (ε)</p>
+                        <p><strong>2.</strong> The terminal potential difference (V<sub>load</sub>)</p>
+                        <p><strong>4.</strong> Using r = (ε - V<sub>load</sub>) / I</p>
+                        <p><strong>5.</strong> Sources of error: Parallax error when reading meters, zero error on meters, heating effects changing resistance</p>
+                    </div>
+                </div>
+                
+                <!-- Part 2: Equivalent Resistance -->
+                <div class="experiment-card" style="margin-top: 30px;">
+                    <h4>🔗 Part 2: Determining Equivalent Resistance of a Series-Parallel Network</h4>
+                    
+                    <p><strong>Aim:</strong> To determine the equivalent resistance of a series-parallel network experimentally and compare it with the theoretical value.</p>
+                    
+                    <h5 style="margin-top: 20px; color: #155724;">Apparatus Required:</h5>
+                    <div class="apparatus-list">
+                        <span class="apparatus-item">🔋 Battery</span>
+                        <span class="apparatus-item">🔌 Connecting wires</span>
+                        <span class="apparatus-item">⚡ Three resistors (different values)</span>
+                        <span class="apparatus-item">📊 Voltmeter</span>
+                        <span class="apparatus-item">📏 Ammeter</span>
+                        <span class="apparatus-item">🔘 Switch</span>
+                    </div>
+                    
+                    <h5 style="margin-top: 20px; color: #155724;">Method:</h5>
+                    <div class="method-step">
+                        <span class="step-number">1</span>
+                        <span>Record the value of each resistor R₁, R₂ and R₃.</span>
+                    </div>
+                    <div class="method-step">
+                        <span class="step-number">2</span>
+                        <span>Connect the series-parallel network of resistors. Ensure that the circuit is open.</span>
+                    </div>
+                    <div class="method-step">
+                        <span class="step-number">3</span>
+                        <span>Connect the ammeter in series with the network of resistors.</span>
+                    </div>
+                    <div class="method-step">
+                        <span class="step-number">4</span>
+                        <span>Connect the voltmeter across the battery's terminals.</span>
+                    </div>
+                    <div class="method-step">
+                        <span class="step-number">5</span>
+                        <span>Close the switch and record the ammeter and voltmeter readings.</span>
+                    </div>
+                    <div class="method-step">
+                        <span class="step-number">6</span>
+                        <span>Disconnect the circuit and repeat steps 1-5 until you have three sets of measurements.</span>
+                    </div>
+                    <div class="method-step">
+                        <span class="step-number">7</span>
+                        <span>Calculate the average for each measurement.</span>
+                    </div>
+                    
+                    <div class="question-card">
+                        <h4>📝 Questions to Answer:</h4>
+                        <div class="question-item">1. Draw up a neat table of your measurements.</div>
+                        <div class="question-item">2. Use the ammeter and voltmeter readings to calculate the resistance of the series-parallel network.</div>
+                        <div class="question-item">3. Calculate the theoretical value of the equivalent resistance.</div>
+                        <div class="question-item">4. Compare the experimental value (Q2) and theoretical value (Q3).</div>
+                        <div class="question-item">5. How is the ammeter reading affected when one of the parallel resistors is removed? Explain.</div>
+                    </div>
+                    
+                    <div class="answer-box">
+                        <h4>Expected Answers:</h4>
+                        <p><strong>2.</strong> R<sub>experimental</sub> = V / I</p>
+                        <p><strong>3.</strong> For parallel: 1/R<sub>p</sub> = 1/R₂ + 1/R₃, then R<sub>total</sub> = R₁ + R<sub>p</sub></p>
+                        <p><strong>5.</strong> Ammeter reading <strong>decreases</strong>. When a parallel resistor is removed, total resistance increases, which decreases the current in the circuit (I = V/R).</p>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- Interactive Simulation Section -->
+        <section class="section-card" id="simulation">
+            <div class="section-header practical-header" onclick="toggleSection(this)">
+                <h2><span class="section-icon">🔬</span> Virtual Laboratory</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <p style="margin-bottom: 20px; text-align: center; color: #5a7fa8;">Perform the experiments virtually! Switch between the two investigations using the tabs below.</p>
+                
+                <div class="simulation-container">
+                    <div class="tab-container">
+                        <button class="tab-btn active" onclick="switchTab('part1')">Part 1: Internal Resistance</button>
+                        <button class="tab-btn" onclick="switchTab('part2')">Part 2: Equivalent Resistance</button>
+                    </div>
+                    
+                    <!-- Part 1 Simulation -->
+                    <div class="tab-content active" id="part1-content">
+                        <div class="simulation-title">🔋 Experiment 1: Determining Internal Resistance</div>
+                        <canvas id="canvas1" class="simulation-canvas"></canvas>
+                        
+                        <div style="text-align: center; margin-bottom: 15px;">
+                            <button class="switch-btn" id="switch1Btn" onclick="toggleSwitch1()">Switch: OPEN</button>
+                            <button class="record-btn" onclick="recordReading1()">📝 Record Reading</button>
+                            <button class="calculate-btn" onclick="calculateInternalR()">🔢 Calculate r</button>
+                        </div>
+                        
+                        <div class="sim-controls">
+                            <div class="sim-control-group">
+                                <label>EMF (ε)</label>
+                                <input type="range" id="emf1Slider" min="6" max="24" value="12" oninput="updateSim1()">
+                                <div class="sim-value"><span id="emf1Value">12</span> V</div>
+                            </div>
+                            <div class="sim-control-group">
+                                <label>Internal Resistance (r)</label>
+                                <input type="range" id="intR1Slider" min="0.5" max="5" value="2" step="0.1" oninput="updateSim1()">
+                                <div class="sim-value"><span id="intR1Value">2.0</span> Ω</div>
+                            </div>
+                            <div class="sim-control-group">
+                                <label>External Resistor (R)</label>
+                                <input type="range" id="extR1Slider" min="5" max="50" value="10" oninput="updateSim1()">
+                                <div class="sim-value"><span id="extR1Value">10</span> Ω</div>
+                            </div>
+                        </div>
+                        
+                        <div class="sim-output">
+                            <div class="output-box">
+                                <div class="label">Voltmeter (V)</div>
+                                <div class="value"><span id="volt1Output">12.00</span> V</div>
+                            </div>
+                            <div class="output-box">
+                                <div class="label">Ammeter (A)</div>
+                                <div class="value"><span id="amp1Output">0.00</span> A</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 20px;">
+                            <h4 style="color: #ffd700; margin-bottom: 10px;">📊 Recorded Data:</h4>
+                            <table class="data-table" id="dataTable1">
+                                <tr>
+                                    <th>Reading</th>
+                                    <th>V<sub>open</sub> (EMF)</th>
+                                    <th>V<sub>closed</sub> (V<sub>load</sub>)</th>
+                                    <th>I (A)</th>
+                                </tr>
+                                <tr><td>1</td><td id="r1-vopen">-</td><td id="r1-vclosed">-</td><td id="r1-i">-</td></tr>
+                                <tr><td>2</td><td id="r2-vopen">-</td><td id="r2-vclosed">-</td><td id="r2-i">-</td></tr>
+                                <tr><td>3</td><td id="r3-vopen">-</td><td id="r3-vclosed">-</td><td id="r3-i">-</td></tr>
+                            </table>
+                        </div>
+                        
+                        <div class="result-display" id="result1">
+                            Calculated Internal Resistance: <span id="calcR">0</span> Ω
+                        </div>
+                    </div>
+                    
+                    <!-- Part 2 Simulation -->
+                    <div class="tab-content" id="part2-content">
+                        <div class="simulation-title">🔗 Experiment 2: Equivalent Resistance of Series-Parallel Network</div>
+                        <canvas id="canvas2" class="simulation-canvas"></canvas>
+                        
+                        <div style="text-align: center; margin-bottom: 15px;">
+                            <button class="switch-btn" id="switch2Btn" onclick="toggleSwitch2()">Switch: OPEN</button>
+                            <button class="record-btn" onclick="recordReading2()">📝 Record Reading</button>
+                            <button class="calculate-btn" onclick="calculateEquivR()">🔢 Calculate R<sub>eq</sub></button>
+                        </div>
+                        
+                        <div class="sim-controls">
+                            <div class="sim-control-group">
+                                <label>EMF (ε)</label>
+                                <input type="range" id="emf2Slider" min="6" max="24" value="12" oninput="updateSim2()">
+                                <div class="sim-value"><span id="emf2Value">12</span> V</div>
+                            </div>
+                            <div class="sim-control-group">
+                                <label>R₁ (Series)</label>
+                                <input type="range" id="r1Slider" min="5" max="30" value="10" oninput="updateSim2()">
+                                <div class="sim-value"><span id="r1SliderValue">10</span> Ω</div>
+                            </div>
+                            <div class="sim-control-group">
+                                <label>R₂ (Parallel)</label>
+                                <input type="range" id="r2Slider" min="5" max="30" value="20" oninput="updateSim2()">
+                                <div class="sim-value"><span id="r2SliderValue">20</span> Ω</div>
+                            </div>
+                            <div class="sim-control-group">
+                                <label>R₃ (Parallel)</label>
+                                <input type="range" id="r3Slider" min="5" max="30" value="20" oninput="updateSim2()">
+                                <div class="sim-value"><span id="r3SliderValue">20</span> Ω</div>
+                            </div>
+                        </div>
+                        
+                        <div class="sim-output">
+                            <div class="output-box">
+                                <div class="label">Voltmeter (V)</div>
+                                <div class="value"><span id="volt2Output">12.00</span> V</div>
+                            </div>
+                            <div class="output-box">
+                                <div class="label">Ammeter (A)</div>
+                                <div class="value"><span id="amp2Output">0.00</span> A</div>
+                            </div>
+                            <div class="output-box">
+                                <div class="label">Theoretical R<sub>eq</sub></div>
+                                <div class="value"><span id="theoreticalR">20.00</span> Ω</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 20px;">
+                            <h4 style="color: #ffd700; margin-bottom: 10px;">📊 Recorded Data:</h4>
+                            <table class="data-table" id="dataTable2">
+                                <tr>
+                                    <th>Reading</th>
+                                    <th>V (V)</th>
+                                    <th>I (A)</th>
+                                </tr>
+                                <tr><td>1</td><td id="p2r1-v">-</td><td id="p2r1-i">-</td></tr>
+                                <tr><td>2</td><td id="p2r2-v">-</td><td id="p2r2-i">-</td></tr>
+                                <tr><td>3</td><td id="p2r3-v">-</td><td id="p2r3-i">-</td></tr>
+                            </table>
+                        </div>
+                        
+                        <div class="result-display" id="result2">
+                            Experimental R<sub>eq</sub>: <span id="expR">0</span> Ω | Theoretical R<sub>eq</sub>: <span id="theoR">0</span> Ω
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section class="section-card" id="quiz">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="section-icon">✏️</span> End of Lesson Quiz</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div id="quizContainer"></div>
+                <button class="submit-quiz-btn" onclick="submitQuiz()">Submit Quiz</button>
+            </div>
+        </section>
+
+        <!-- Score Feedback Section -->
+        <section class="section-card" id="score">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="section-icon">🏆</span> Score Feedback</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="score-display" id="scoreDisplay">
+                    <p style="color: #5a7fa8;">Complete the quiz to see your score!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Section -->
+        <section class="section-card" id="progress">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="section-icon">📊</span> My Progress</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="concept-card">
+                    <h4>Lesson Completion</h4>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="progressBar" style="width: 0%"></div>
+                    </div>
+                    <p id="progressText">Start learning to track your progress!</p>
+                </div>
+                <div class="concept-card">
+                    <h4>📈 Statistics</h4>
+                    <p>Best Quiz Score: <strong id="bestScore">--</strong></p>
+                    <p>Attempts: <strong id="attempts">0</strong></p>
+                    <p>Last Completed: <strong id="lastCompleted">--</strong></p>
+                </div>
+                <button class="submit-quiz-btn" style="background: linear-gradient(145deg, #dc3545, #e04555);" onclick="resetProgress()">Reset Progress</button>
+            </div>
+        </section>
+
+        <!-- Lesson Navigation -->
+        <div class="lesson-nav">
+            <button class="nav-btn prev">
+                ← Previous Lesson
+            </button>
+            <button class="nav-btn subject-contents">Subject Contents</button>
+            <button class="nav-btn next">
+                Next Lesson →
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2026 PassProof Academy. All rights reserved.</p>
+        <p style="margin-top: 8px; font-size: 0.85rem; opacity: 0.7;">Empowering learners to achieve excellence in Physical Sciences</p>
+    </footer>
+
+    <script>
+        // Quiz Questions
+        const quizQuestions = [
+            {
+                question: "When the switch in a circuit is OPEN, what does the voltmeter across the battery measure?",
+                options: [
+                    "Terminal potential difference",
+                    "EMF of the battery",
+                    "Lost volts",
+                    "Zero voltage"
+                ],
+                correct: 1,
+                explanation: "When the switch is open, no current flows, so there is no voltage drop across internal resistance. The voltmeter measures the full EMF."
+            },
+            {
+                question: "When the switch is CLOSED, what does the voltmeter across the battery measure?",
+                options: [
+                    "EMF of the battery",
+                    "Internal resistance",
+                    "Terminal potential difference (V_load)",
+                    "External resistance"
+                ],
+                correct: 2,
+                explanation: "When current flows, the voltmeter measures the terminal potential difference, which is less than EMF due to voltage drop across internal resistance."
+            },
+            {
+                question: "Which formula is used to calculate internal resistance from experimental data?",
+                options: [
+                    "r = V_load × I",
+                    "r = (ε - V_load) / I",
+                    "r = ε / I",
+                    "r = V_load / ε"
+                ],
+                correct: 1,
+                explanation: "Internal resistance r = (ε - V_load) / I, where ε is EMF (switch open) and V_load is terminal PD (switch closed)."
+            },
+            {
+                question: "Why must the ammeter be connected in SERIES in the circuit?",
+                options: [
+                    "To measure voltage correctly",
+                    "To measure the same current flowing through the circuit",
+                    "To increase the resistance",
+                    "To protect the voltmeter"
+                ],
+                correct: 1,
+                explanation: "The ammeter must be in series to measure the current flowing through the circuit. If connected in parallel, its low resistance would cause a short circuit and blow its fuse."
+            },
+            {
+                question: "What is a source of error when reading meters in an experiment?",
+                options: [
+                    "Using too many resistors",
+                    "Parallax error when reading the meters",
+                    "Using a switch",
+                    "Connecting the voltmeter across the battery"
+                ],
+                correct: 1,
+                explanation: "Parallax error occurs when the meter is not read from directly in front, leading to incorrect readings."
+            },
+            {
+                question: "For a series-parallel network with R₁ in series and R₂, R₃ in parallel, the equivalent resistance is:",
+                options: [
+                    "R₁ + R₂ + R₃",
+                    "R₁ + (R₂ × R₃)/(R₂ + R₃)",
+                    "(R₁ × R₂ × R₃)/(R₁ + R₂ + R₃)",
+                    "1/R₁ + 1/R₂ + 1/R₃"
+                ],
+                correct: 1,
+                explanation: "First find parallel combination: R_p = (R₂ × R₃)/(R₂ + R₃), then add series: R_eq = R₁ + R_p"
+            },
+            {
+                question: "How do you calculate experimental equivalent resistance from ammeter and voltmeter readings?",
+                options: [
+                    "R = V × I",
+                    "R = I / V",
+                    "R = V / I",
+                    "R = V + I"
+                ],
+                correct: 2,
+                explanation: "Using Ohm's Law: R = V/I. The voltmeter gives V and the ammeter gives I."
+            },
+            {
+                question: "What happens to the ammeter reading when one of the parallel resistors is removed?",
+                options: [
+                    "It increases",
+                    "It decreases",
+                    "It stays the same",
+                    "It becomes zero"
+                ],
+                correct: 1,
+                explanation: "Removing a parallel resistor increases total resistance, which decreases current (I = V/R)."
+            },
+            {
+                question: "Why should you repeat measurements three times in an experiment?",
+                options: [
+                    "To use more equipment",
+                    "To take longer",
+                    "To calculate an average and improve reliability",
+                    "To confuse the data"
+                ],
+                correct: 2,
+                explanation: "Taking multiple readings and calculating the average reduces the effect of random errors and improves reliability."
+            },
+            {
+                question: "If EMF = 12V, V_load = 10V, and I = 1A, what is the internal resistance?",
+                options: [
+                    "12 Ω",
+                    "10 Ω",
+                    "2 Ω",
+                    "22 Ω"
+                ],
+                correct: 2,
+                explanation: "r = (ε - V_load) / I = (12 - 10) / 1 = 2 Ω"
+            },
+            {
+                question: "What is the theoretical equivalent resistance of 10Ω in series with two 20Ω resistors in parallel?",
+                options: [
+                    "50 Ω",
+                    "20 Ω",
+                    "30 Ω",
+                    "10 Ω"
+                ],
+                correct: 1,
+                explanation: "Parallel: R_p = (20 × 20)/(20 + 20) = 400/40 = 10Ω. Series: R_eq = 10 + 10 = 20Ω"
+            },
+            {
+                question: "Zero error on a meter is an example of:",
+                options: [
+                    "Random error",
+                    "Systematic error",
+                    "Human error",
+                    "No error"
+                ],
+                correct: 1,
+                explanation: "Zero error is a systematic error because it consistently affects all readings by the same amount."
+            }
+        ];
+
+        let userAnswers = {};
+        let quizSubmitted = false;
+        
+        // Simulation variables
+        let switch1Closed = false;
+        let switch2Closed = false;
+        let readings1 = { count: 0, data: [] };
+        let readings2 = { count: 0, data: [] };
+        let electrons1 = [];
+        let electrons2 = [];
+        let canvas1, ctx1, canvas2, ctx2;
+
+        // Initialize
+        window.onload = function() {
+            initQuiz();
+            loadProgress();
+            initSimulations();
+        };
+
+        // Quiz Functions
+        function initQuiz() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = '';
+            
+            quizQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                questionDiv.id = `question-${index}`;
+                
+                let optionsHTML = '';
+                q.options.forEach((opt, optIndex) => {
+                    optionsHTML += `
+                        <li class="option-item" onclick="selectOption(${index}, ${optIndex})">
+                            <span class="option-radio"></span>
+                            <span>${opt}</span>
+                        </li>
+                    `;
+                });
+                
+                questionDiv.innerHTML = `
+                    <p class="question-text">
+                        <span class="question-number">${index + 1}</span>
+                        ${q.question}
+                    </p>
+                    <ul class="options-list" id="options-${index}">
+                        ${optionsHTML}
+                    </ul>
+                    <div class="feedback-text" id="feedback-${index}"></div>
+                `;
+                
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function selectOption(questionIndex, optionIndex) {
+            if (quizSubmitted) return;
+            
+            userAnswers[questionIndex] = optionIndex;
+            
+            const optionsList = document.getElementById(`options-${questionIndex}`);
+            const options = optionsList.querySelectorAll('.option-item');
+            
+            options.forEach((opt, i) => {
+                opt.classList.remove('selected');
+                if (i === optionIndex) {
+                    opt.classList.add('selected');
+                }
+            });
+            
+            updateProgressBar();
+        }
+
+        function submitQuiz() {
+            if (Object.keys(userAnswers).length < quizQuestions.length) {
+                alert('Please answer all questions before submitting!');
+                return;
+            }
+            
+            quizSubmitted = true;
+            let correctCount = 0;
+            
+            quizQuestions.forEach((q, index) => {
+                const questionDiv = document.getElementById(`question-${index}`);
+                const feedbackDiv = document.getElementById(`feedback-${index}`);
+                const optionsList = document.getElementById(`options-${index}`);
+                const options = optionsList.querySelectorAll('.option-item');
+                
+                const isCorrect = userAnswers[index] === q.correct;
+                
+                if (isCorrect) {
+                    correctCount++;
+                    questionDiv.classList.add('correct');
+                    feedbackDiv.className = 'feedback-text correct';
+                    feedbackDiv.innerHTML = `✓ Correct! ${q.explanation}`;
+                } else {
+                    questionDiv.classList.add('incorrect');
+                    feedbackDiv.className = 'feedback-text incorrect';
+                    feedbackDiv.innerHTML = `✗ Incorrect. ${q.explanation}`;
+                }
+                
+                options.forEach((opt, i) => {
+                    if (i === q.correct) {
+                        opt.classList.add('correct-answer');
+                    } else if (i === userAnswers[index] && i !== q.correct) {
+                        opt.classList.add('wrong-answer');
+                    }
+                });
+            });
+            
+            const percentage = Math.round((correctCount / quizQuestions.length) * 100);
+            displayScore(correctCount, quizQuestions.length, percentage);
+            saveProgress(percentage);
+            openSection('score');
+        }
+
+        function displayScore(correct, total, percentage) {
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            let message = '', messageColor = '';
+            
+            if (percentage >= 80) {
+                message = '🌟 Excellent Work!';
+                messageColor = '#28a745';
+            } else if (percentage >= 60) {
+                message = '👍 Good Job!';
+                messageColor = '#17a2b8';
+            } else if (percentage >= 40) {
+                message = '📚 Keep Practicing!';
+                messageColor = '#ffc107';
+            } else {
+                message = '💪 Review and try again!';
+                messageColor = '#dc3545';
+            }
+            
+            scoreDisplay.innerHTML = `
+                <div class="score-circle">
+                    <span class="score-percent">${percentage}%</span>
+                    <span class="score-label">Score</span>
+                </div>
+                <p class="score-message" style="color: ${messageColor};">${message}</p>
+                <p class="score-details">You got ${correct} out of ${total} questions correct.</p>
+            `;
+        }
+
+        function saveProgress(percentage) {
+            const progress = JSON.parse(localStorage.getItem('passproofProgress') || '{}');
+            const lessonKey = 'physics_grade12_circuits_lesson3-4';
+            
+            if (!progress[lessonKey]) {
+                progress[lessonKey] = { attempts: 0, bestScore: 0, lastCompleted: null };
+            }
+            
+            progress[lessonKey].attempts++;
+            progress[lessonKey].bestScore = Math.max(progress[lessonKey].bestScore, percentage);
+            progress[lessonKey].lastCompleted = new Date().toLocaleDateString();
+            
+            localStorage.setItem('passproofProgress', JSON.stringify(progress));
+            loadProgress();
+        }
+
+        function loadProgress() {
+            const progress = JSON.parse(localStorage.getItem('passproofProgress') || '{}');
+            const lessonKey = 'physics_grade12_circuits_lesson3-4';
+            const lessonProgress = progress[lessonKey] || { attempts: 0, bestScore: 0, lastCompleted: '--' };
+            
+            document.getElementById('bestScore').textContent = lessonProgress.bestScore + '%';
+            document.getElementById('attempts').textContent = lessonProgress.attempts;
+            document.getElementById('lastCompleted').textContent = lessonProgress.lastCompleted || '--';
+            
+            const progressPercent = lessonProgress.bestScore;
+            document.getElementById('progressBar').style.width = progressPercent + '%';
+            document.getElementById('progressText').textContent = progressPercent > 0 
+                ? `You've achieved ${progressPercent}% in this lesson!` 
+                : 'Start learning to track your progress!';
+        }
+
+        function updateProgressBar() {
+            const answered = Object.keys(userAnswers).length;
+            const total = quizQuestions.length;
+            const percent = Math.round((answered / total) * 100);
+            document.getElementById('progressBar').style.width = percent + '%';
+            document.getElementById('progressText').textContent = `Quiz progress: ${answered}/${total} questions answered`;
+        }
+
+        function resetProgress() {
+            if (confirm('Reset all progress for this lesson?')) {
+                const progress = JSON.parse(localStorage.getItem('passproofProgress') || '{}');
+                delete progress['physics_grade12_circuits_lesson3-4'];
+                localStorage.setItem('passproofProgress', JSON.stringify(progress));
+                
+                userAnswers = {};
+                quizSubmitted = false;
+                readings1 = { count: 0, data: [] };
+                readings2 = { count: 0, data: [] };
+                
+                initQuiz();
+                loadProgress();
+                resetDataTables();
+                
+                document.getElementById('scoreDisplay').innerHTML = '<p style="color: #5a7fa8;">Complete the quiz to see your score!</p>';
+                document.getElementById('result1').classList.remove('show');
+                document.getElementById('result2').classList.remove('show');
+            }
+        }
+
+        function resetDataTables() {
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById(`r${i}-vopen`).textContent = '-';
+                document.getElementById(`r${i}-vclosed`).textContent = '-';
+                document.getElementById(`r${i}-i`).textContent = '-';
+                document.getElementById(`p2r${i}-v`).textContent = '-';
+                document.getElementById(`p2r${i}-i`).textContent = '-';
+            }
+        }
+
+        // Section Functions
+        function toggleSection(header) {
+            header.classList.toggle('active');
+            const content = header.nextElementSibling;
+            content.classList.toggle('active');
+        }
+
+        function openSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                const header = section.querySelector('.section-header');
+                const content = section.querySelector('.section-content');
+                
+                if (!content.classList.contains('active')) {
+                    header.classList.add('active');
+                    content.classList.add('active');
+                }
+                
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+            toggleDropdown();
+        }
+
+        function toggleDropdown() {
+            document.getElementById('dropdownMenu').classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(e) {
+            const dropdown = document.querySelector('.nav-dropdown');
+            if (!dropdown.contains(e.target)) {
+                document.getElementById('dropdownMenu').classList.remove('active');
+            }
+        });
+
+        // Tab Functions
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(`${tabName}-content`).classList.add('active');
+        }
+
+        // Simulation Functions
+        function initSimulations() {
+            canvas1 = document.getElementById('canvas1');
+            ctx1 = canvas1.getContext('2d');
+            canvas2 = document.getElementById('canvas2');
+            ctx2 = canvas2.getContext('2d');
+            
+            resizeCanvases();
+            window.addEventListener('resize', resizeCanvases);
+            
+            for (let i = 0; i < 12; i++) {
+                electrons1.push({ pos: Math.random(), speed: 0.003 });
+                electrons2.push({ pos: Math.random(), speed: 0.003 });
+            }
+            
+            updateSim1();
+            updateSim2();
+            animate();
+        }
+
+        function resizeCanvases() {
+            const container = canvas1.parentElement;
+            canvas1.width = container.clientWidth - 50;
+            canvas1.height = 350;
+            canvas2.width = container.clientWidth - 50;
+            canvas2.height = 350;
+        }
+
+        function toggleSwitch1() {
+            switch1Closed = !switch1Closed;
+            const btn = document.getElementById('switch1Btn');
+            btn.textContent = switch1Closed ? 'Switch: CLOSED' : 'Switch: OPEN';
+            btn.classList.toggle('closed', switch1Closed);
+            updateSim1();
+        }
+
+        function toggleSwitch2() {
+            switch2Closed = !switch2Closed;
+            const btn = document.getElementById('switch2Btn');
+            btn.textContent = switch2Closed ? 'Switch: CLOSED' : 'Switch: OPEN';
+            btn.classList.toggle('closed', switch2Closed);
+            updateSim2();
+        }
+
+        function updateSim1() {
+            const emf = parseFloat(document.getElementById('emf1Slider').value);
+            const intR = parseFloat(document.getElementById('intR1Slider').value);
+            const extR = parseFloat(document.getElementById('extR1Slider').value);
+            
+            document.getElementById('emf1Value').textContent = emf;
+            document.getElementById('intR1Value').textContent = intR.toFixed(1);
+            document.getElementById('extR1Value').textContent = extR;
+            
+            let voltage, current;
+            if (switch1Closed) {
+                current = emf / (intR + extR);
+                voltage = current * extR; // Terminal PD
+            } else {
+                current = 0;
+                voltage = emf; // EMF
+            }
+            
+            document.getElementById('volt1Output').textContent = voltage.toFixed(2);
+            document.getElementById('amp1Output').textContent = current.toFixed(2);
+            
+            electrons1.forEach(e => {
+                e.speed = switch1Closed ? 0.002 + (current / 5) * 0.005 : 0;
+            });
+        }
+
+        function updateSim2() {
+            const emf = parseFloat(document.getElementById('emf2Slider').value);
+            const r1 = parseFloat(document.getElementById('r1Slider').value);
+            const r2 = parseFloat(document.getElementById('r2Slider').value);
+            const r3 = parseFloat(document.getElementById('r3Slider').value);
+            
+            document.getElementById('emf2Value').textContent = emf;
+            document.getElementById('r1SliderValue').textContent = r1;
+            document.getElementById('r2SliderValue').textContent = r2;
+            document.getElementById('r3SliderValue').textContent = r3;
+            
+            // Calculate theoretical equivalent resistance
+            const rParallel = (r2 * r3) / (r2 + r3);
+            const rTotal = r1 + rParallel;
+            document.getElementById('theoreticalR').textContent = rTotal.toFixed(2);
+            
+            let voltage, current;
+            if (switch2Closed) {
+                current = emf / rTotal;
+                voltage = emf;
+            } else {
+                current = 0;
+                voltage = emf;
+            }
+            
+            document.getElementById('volt2Output').textContent = voltage.toFixed(2);
+            document.getElementById('amp2Output').textContent = current.toFixed(2);
+            
+            electrons2.forEach(e => {
+                e.speed = switch2Closed ? 0.002 + (current / 3) * 0.004 : 0;
+            });
+        }
+
+        function recordReading1() {
+            if (readings1.count >= 3) {
+                alert('You have already recorded 3 readings. Click Calculate to find r.');
+                return;
+            }
+            
+            const emf = parseFloat(document.getElementById('emf1Slider').value);
+            const voltage = parseFloat(document.getElementById('volt1Output').textContent);
+            const current = parseFloat(document.getElementById('amp1Output').textContent);
+            
+            readings1.count++;
+            const row = readings1.count;
+            
+            if (!switch1Closed) {
+                document.getElementById(`r${row}-vopen`).textContent = emf.toFixed(2);
+                readings1.data[row - 1] = { vopen: emf, vclosed: null, i: null };
+            } else {
+                if (!readings1.data[row - 1] || readings1.data[row - 1].vopen === null) {
+                    alert('First record with switch OPEN to get EMF!');
+                    readings1.count--;
+                    return;
+                }
+                document.getElementById(`r${row}-vclosed`).textContent = voltage.toFixed(2);
+                document.getElementById(`r${row}-i`).textContent = current.toFixed(2);
+                readings1.data[row - 1].vclosed = voltage;
+                readings1.data[row - 1].i = current;
+            }
+        }
+
+        function recordReading2() {
+            if (readings2.count >= 3) {
+                alert('You have already recorded 3 readings.');
+                return;
+            }
+            
+            if (!switch2Closed) {
+                alert('Close the switch first to take a reading!');
+                return;
+            }
+            
+            const voltage = parseFloat(document.getElementById('volt2Output').textContent);
+            const current = parseFloat(document.getElementById('amp2Output').textContent);
+            
+            readings2.count++;
+            const row = readings2.count;
+            
+            document.getElementById(`p2r${row}-v`).textContent = voltage.toFixed(2);
+            document.getElementById(`p2r${row}-i`).textContent = current.toFixed(2);
+            readings2.data.push({ v: voltage, i: current });
+        }
+
+        function calculateInternalR() {
+            const validData = readings1.data.filter(d => d && d.vopen && d.vclosed && d.i);
+            
+            if (validData.length === 0) {
+                alert('Please record complete readings first (switch open AND closed)!');
+                return;
+            }
+            
+            let totalR = 0;
+            validData.forEach(d => {
+                totalR += (d.vopen - d.vclosed) / d.i;
+            });
+            
+            const avgR = totalR / validData.length;
+            document.getElementById('calcR').textContent = avgR.toFixed(2);
+            document.getElementById('result1').classList.add('show');
+        }
+
+        function calculateEquivR() {
+            if (readings2.data.length === 0) {
+                alert('Please record some readings first!');
+                return;
+            }
+            
+            let totalR = 0;
+            readings2.data.forEach(d => {
+                totalR += d.v / d.i;
+            });
+            
+            const expR = totalR / readings2.data.length;
+            const theoR = parseFloat(document.getElementById('theoreticalR').textContent);
+            
+            document.getElementById('expR').textContent = expR.toFixed(2);
+            document.getElementById('theoR').textContent = theoR.toFixed(2);
+            document.getElementById('result2').classList.add('show');
+        }
+
+        // Drawing Functions
+        function drawCircuit1() {
+            const w = canvas1.width, h = canvas1.height;
+            ctx1.clearRect(0, 0, w, h);
+            
+            // Grid
+            ctx1.strokeStyle = '#1a3550';
+            ctx1.lineWidth = 0.5;
+            for (let i = 0; i < w; i += 30) { ctx1.beginPath(); ctx1.moveTo(i, 0); ctx1.lineTo(i, h); ctx1.stroke(); }
+            for (let i = 0; i < h; i += 30) { ctx1.beginPath(); ctx1.moveTo(0, i); ctx1.lineTo(w, i); ctx1.stroke(); }
+            
+            const p = 60, cw = w - 2*p, ch = h - 2*p;
+            
+            // Wires
+            ctx1.strokeStyle = '#4a90d9';
+            ctx1.lineWidth = 4;
+            ctx1.lineCap = 'round';
+            
+            // Battery
+            ctx1.beginPath();
+            ctx1.moveTo(p, p + ch/2 - 35);
+            ctx1.lineTo(p, p);
+            ctx1.lineTo(p + cw*0.3, p);
+            ctx1.stroke();
+            
+            ctx1.beginPath();
+            ctx1.moveTo(p, p + ch/2 + 35);
+            ctx1.lineTo(p, p + ch);
+            ctx1.lineTo(p + cw, p + ch);
+            ctx1.lineTo(p + cw, p + ch/2 + 25);
+            ctx1.stroke();
+            
+            // Battery body
+            ctx1.fillStyle = '#2d5a87';
+            ctx1.fillRect(p - 20, p + ch/2 - 35, 40, 70);
+            ctx1.strokeStyle = '#5aa0e0';
+            ctx1.lineWidth = 2;
+            ctx1.strokeRect(p - 20, p + ch/2 - 35, 40, 70);
+            ctx1.fillStyle = '#ffd700';
+            ctx1.font = 'bold 12px Inter';
+            ctx1.textAlign = 'center';
+            ctx1.fillText('ε, r', p, p + ch/2);
+            
+            // Switch
+            ctx1.strokeStyle = '#4a90d9';
+            ctx1.lineWidth = 4;
+            if (switch1Closed) {
+                ctx1.beginPath();
+                ctx1.moveTo(p + cw*0.3, p);
+                ctx1.lineTo(p + cw*0.5, p);
+                ctx1.stroke();
+            } else {
+                ctx1.beginPath();
+                ctx1.moveTo(p + cw*0.3, p);
+                ctx1.lineTo(p + cw*0.45, p - 30);
+                ctx1.stroke();
+                ctx1.beginPath();
+                ctx1.arc(p + cw*0.3, p, 5, 0, Math.PI*2);
+                ctx1.fillStyle = '#ffd700';
+                ctx1.fill();
+            }
+            ctx1.fillStyle = '#a8c5e8';
+            ctx1.font = '12px Inter';
+            ctx1.fillText('S', p + cw*0.4, p - 40);
+            
+            // Continue wire
+            ctx1.strokeStyle = '#4a90d9';
+            ctx1.lineWidth = 4;
+            ctx1.beginPath();
+            ctx1.moveTo(p + cw*0.5, p);
+            ctx1.lineTo(p + cw, p);
+            ctx1.lineTo(p + cw, p + ch/2 - 25);
+            ctx1.stroke();
+            
+            // Resistor R
+            ctx1.strokeStyle = '#ffd700';
+            ctx1.lineWidth = 3;
+            ctx1.beginPath();
+            ctx1.moveTo(p + cw, p + ch/2 - 25);
+            for (let i = 0; i < 5; i++) {
+                ctx1.lineTo(p + cw - 12, p + ch/2 - 20 + i*10);
+                ctx1.lineTo(p + cw + 12, p + ch/2 - 15 + i*10);
+            }
+            ctx1.lineTo(p + cw, p + ch/2 + 25);
+            ctx1.stroke();
+            ctx1.fillStyle = '#ffd700';
+            ctx1.font = 'bold 14px Inter';
+            ctx1.fillText('R', p + cw + 25, p + ch/2);
+            
+            // Ammeter
+            ctx1.beginPath();
+            ctx1.arc(p + cw*0.7, p, 18, 0, Math.PI*2);
+            ctx1.fillStyle = '#1e3a5f';
+            ctx1.fill();
+            ctx1.strokeStyle = '#5aa0e0';
+            ctx1.lineWidth = 2;
+            ctx1.stroke();
+            ctx1.fillStyle = '#ffd700';
+            ctx1.font = 'bold 14px Inter';
+            ctx1.fillText('A', p + cw*0.7, p + 5);
+            
+            // Voltmeter
+            ctx1.beginPath();
+            ctx1.arc(p + 60, p + ch/2, 20, 0, Math.PI*2);
+            ctx1.fillStyle = '#1e3a5f';
+            ctx1.fill();
+            ctx1.strokeStyle = '#28a745';
+            ctx1.lineWidth = 2;
+            ctx1.stroke();
+            ctx1.fillStyle = '#28a745';
+            ctx1.font = 'bold 14px Inter';
+            ctx1.fillText('V', p + 60, p + ch/2 + 5);
+            
+            // Voltmeter connections
+            ctx1.strokeStyle = '#28a745';
+            ctx1.lineWidth = 1;
+            ctx1.setLineDash([4, 4]);
+            ctx1.beginPath();
+            ctx1.moveTo(p + 45, p + ch/2 - 15);
+            ctx1.lineTo(p, p + ch/2 - 35);
+            ctx1.moveTo(p + 45, p + ch/2 + 15);
+            ctx1.lineTo(p, p + ch/2 + 35);
+            ctx1.stroke();
+            ctx1.setLineDash([]);
+            
+            // Electrons
+            if (switch1Closed) {
+                ctx1.fillStyle = '#00ffff';
+                electrons1.forEach(e => {
+                    const pathLen = 2*cw + 2*ch;
+                    const pos = e.pos * pathLen;
+                    let x, y;
+                    if (pos < cw) { x = p + pos; y = p; }
+                    else if (pos < cw + ch) { x = p + cw; y = p + (pos - cw); }
+                    else if (pos < 2*cw + ch) { x = p + cw - (pos - cw - ch); y = p + ch; }
+                    else { x = p; y = p + ch - (pos - 2*cw - ch); }
+                    
+                    ctx1.beginPath();
+                    ctx1.arc(x, y, 5, 0, Math.PI*2);
+                    ctx1.fill();
+                });
+            }
+            
+            // Labels
+            ctx1.fillStyle = '#a8c5e8';
+            ctx1.font = '11px Inter';
+            ctx1.textAlign = 'left';
+            ctx1.fillText(switch1Closed ? 'Current flowing →' : 'Switch open - No current', p + 80, p - 25);
+        }
+
+        function drawCircuit2() {
+            const w = canvas2.width, h = canvas2.height;
+            ctx2.clearRect(0, 0, w, h);
+            
+            // Grid
+            ctx2.strokeStyle = '#1a3550';
+            ctx2.lineWidth = 0.5;
+            for (let i = 0; i < w; i += 30) { ctx2.beginPath(); ctx2.moveTo(i, 0); ctx2.lineTo(i, h); ctx2.stroke(); }
+            for (let i = 0; i < h; i += 30) { ctx2.beginPath(); ctx2.moveTo(0, i); ctx2.lineTo(w, i); ctx2.stroke(); }
+            
+            const p = 60, cw = w - 2*p, ch = h - 2*p;
+            
+            // Battery
+            ctx2.strokeStyle = '#4a90d9';
+            ctx2.lineWidth = 4;
+            ctx2.beginPath();
+            ctx2.moveTo(p, p + ch/2 - 30);
+            ctx2.lineTo(p, p);
+            ctx2.stroke();
+            
+            ctx2.beginPath();
+            ctx2.moveTo(p, p + ch/2 + 30);
+            ctx2.lineTo(p, p + ch);
+            ctx2.lineTo(p + cw, p + ch);
+            ctx2.stroke();
+            
+            // Battery body
+            ctx2.fillStyle = '#2d5a87';
+            ctx2.fillRect(p - 18, p + ch/2 - 30, 36, 60);
+            ctx2.strokeStyle = '#5aa0e0';
+            ctx2.lineWidth = 2;
+            ctx2.strokeRect(p - 18, p + ch/2 - 30, 36, 60);
+            ctx2.fillStyle = '#ffd700';
+            ctx2.font = 'bold 12px Inter';
+            ctx2.textAlign = 'center';
+            ctx2.fillText('ε', p, p + ch/2);
+            
+            // Switch
+            ctx2.strokeStyle = '#4a90d9';
+            ctx2.lineWidth = 4;
+            if (switch2Closed) {
+                ctx2.beginPath();
+                ctx2.moveTo(p, p);
+                ctx2.lineTo(p + cw*0.2, p);
+                ctx2.stroke();
+            } else {
+                ctx2.beginPath();
+                ctx2.moveTo(p, p);
+                ctx2.lineTo(p + cw*0.15, p - 25);
+                ctx2.stroke();
+                ctx2.beginPath();
+                ctx2.arc(p, p, 5, 0, Math.PI*2);
+                ctx2.fillStyle = '#ffd700';
+                ctx2.fill();
+            }
+            
+            // Ammeter
+            ctx2.beginPath();
+            ctx2.arc(p + cw*0.35, p, 16, 0, Math.PI*2);
+            ctx2.fillStyle = '#1e3a5f';
+            ctx2.fill();
+            ctx2.strokeStyle = '#5aa0e0';
+            ctx2.lineWidth = 2;
+            ctx2.stroke();
+            ctx2.fillStyle = '#ffd700';
+            ctx2.font = 'bold 12px Inter';
+            ctx2.fillText('A', p + cw*0.35, p + 4);
+            
+            // Wire to R1
+            ctx2.strokeStyle = '#4a90d9';
+            ctx2.lineWidth = 4;
+            ctx2.beginPath();
+            ctx2.moveTo(p + cw*0.2, p);
+            ctx2.lineTo(p + cw*0.5, p);
+            ctx2.stroke();
+            
+            // R1 (series)
+            ctx2.strokeStyle = '#ffd700';
+            ctx2.lineWidth = 3;
+            ctx2.beginPath();
+            ctx2.moveTo(p + cw*0.5, p);
+            for (let i = 0; i < 4; i++) {
+                ctx2.lineTo(p + cw*0.5 + 10, p + 8 + i*12);
+                ctx2.lineTo(p + cw*0.5 - 10, p + 14 + i*12);
+            }
+            ctx2.lineTo(p + cw*0.5, p + 60);
+            ctx2.stroke();
+            ctx2.fillStyle = '#ffd700';
+            ctx2.font = 'bold 12px Inter';
+            ctx2.fillText('R₁', p + cw*0.5 + 20, p + 35);
+            
+            // Junction point
+            ctx2.strokeStyle = '#4a90d9';
+            ctx2.lineWidth = 4;
+            ctx2.beginPath();
+            ctx2.moveTo(p + cw*0.5, p + 60);
+            ctx2.lineTo(p + cw*0.5, p + 90);
+            ctx2.stroke();
+            
+            // Parallel branches
+            ctx2.beginPath();
+            ctx2.moveTo(p + cw*0.5, p + 90);
+            ctx2.lineTo(p + cw*0.3, p + 90);
+            ctx2.lineTo(p + cw*0.3, p + 180);
+            ctx2.stroke();
+            
+            ctx2.beginPath();
+            ctx2.moveTo(p + cw*0.5, p + 90);
+            ctx2.lineTo(p + cw*0.7, p + 90);
+            ctx2.lineTo(p + cw*0.7, p + 180);
+            ctx2.stroke();
+            
+            // R2
+            ctx2.strokeStyle = '#ffd700';
+            ctx2.lineWidth = 3;
+            ctx2.beginPath();
+            ctx2.moveTo(p + cw*0.3, p + 115);
+            for (let i = 0; i < 4; i++) {
+                ctx2.lineTo(p + cw*0.3 - 8, p + 120 + i*12);
+                ctx2.lineTo(p + cw*0.3 + 8, p + 126 + i*12);
+            }
+            ctx2.lineTo(p + cw*0.3, p + 165);
+            ctx2.stroke();
+            ctx2.fillStyle = '#ffd700';
+            ctx2.fillText('R₂', p + cw*0.3 - 25, p + 140);
+            
+            // R3
+            ctx2.beginPath();
+            ctx2.moveTo(p + cw*0.7, p + 115);
+            for (let i = 0; i < 4; i++) {
+                ctx2.lineTo(p + cw*0.7 - 8, p + 120 + i*12);
+                ctx2.lineTo(p + cw*0.7 + 8, p + 126 + i*12);
+            }
+            ctx2.lineTo(p + cw*0.7, p + 165);
+            ctx2.stroke();
+            ctx2.fillText('R₃', p + cw*0.7 + 18, p + 140);
+            
+            // Bottom junction
+            ctx2.strokeStyle = '#4a90d9';
+            ctx2.lineWidth = 4;
+            ctx2.beginPath();
+            ctx2.moveTo(p + cw*0.3, p + 180);
+            ctx2.lineTo(p + cw*0.5, p + 180);
+            ctx2.lineTo(p + cw*0.7, p + 180);
+            ctx2.stroke();
+            
+            ctx2.beginPath();
+            ctx2.moveTo(p + cw*0.5, p + 180);
+            ctx2.lineTo(p + cw*0.5, p + ch);
+            ctx2.lineTo(p + cw, p + ch);
+            ctx2.lineTo(p + cw, p);
+            ctx2.lineTo(p + cw*0.5 + 30, p);
+            ctx2.stroke();
+            
+            // Voltmeter
+            ctx2.beginPath();
+            ctx2.arc(p + cw*0.85, p + ch/2, 18, 0, Math.PI*2);
+            ctx2.fillStyle = '#1e3a5f';
+            ctx2.fill();
+            ctx2.strokeStyle = '#28a745';
+            ctx2.lineWidth = 2;
+            ctx2.stroke();
+            ctx2.fillStyle = '#28a745';
+            ctx2.font = 'bold 12px Inter';
+            ctx2.fillText('V', p + cw*0.85, p + ch/2 + 4);
+            
+            // Electrons
+            if (switch2Closed) {
+                ctx2.fillStyle = '#00ffff';
+                electrons2.forEach(e => {
+                    const pathLen = 2*cw + 2*ch;
+                    const pos = e.pos * pathLen;
+                    let x, y;
+                    if (pos < cw) { x = p + pos; y = p; }
+                    else if (pos < cw + ch) { x = p + cw; y = p + (pos - cw); }
+                    else if (pos < 2*cw + ch) { x = p + cw - (pos - cw - ch); y = p + ch; }
+                    else { x = p; y = p + ch - (pos - 2*cw - ch); }
+                    
+                    ctx2.beginPath();
+                    ctx2.arc(x, y, 5, 0, Math.PI*2);
+                    ctx2.fill();
+                });
+            }
+            
+            ctx2.fillStyle = '#a8c5e8';
+            ctx2.font = '11px Inter';
+            ctx2.textAlign = 'left';
+            ctx2.fillText(switch2Closed ? 'Current flowing' : 'Switch open', p + 20, p - 20);
+        }
+
+        function animate() {
+            if (switch1Closed) {
+                electrons1.forEach(e => { e.pos += e.speed; if (e.pos > 1) e.pos = 0; });
+            }
+            if (switch2Closed) {
+                electrons2.forEach(e => { e.pos += e.speed; if (e.pos > 1) e.pos = 0; });
+            }
+            
+            drawCircuit1();
+            drawCircuit2();
+            requestAnimationFrame(animate);
+        }
+    </script>
+</body>
+</html>

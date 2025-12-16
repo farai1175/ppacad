@@ -1,0 +1,2458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 1: Measuring Rates of Reaction | PassProof Academy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1a5fb4;
+            --secondary-blue: #3584e4;
+            --light-blue: #99c1f1;
+            --pale-blue: #dbe9f8;
+            --white: #ffffff;
+            --dark-text: #1c1c1c;
+            --gray: #6b7280;
+            --success: #2ec27e;
+            --error: #e01b24;
+            --warning: #ff7800;
+            --purple: #9141ac;
+            --shadow: 0 10px 40px rgba(26, 95, 180, 0.15);
+            --shadow-hover: 0 15px 50px rgba(26, 95, 180, 0.25);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f7ff 0%, #e8f4fc 100%);
+            color: var(--dark-text);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(26, 95, 180, 0.3);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--primary-blue);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-btn {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: var(--white);
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dropdown-btn:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 120%;
+            right: 0;
+            background: var(--white);
+            min-width: 250px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-hover);
+            overflow: hidden;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: var(--dark-text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--pale-blue);
+        }
+
+        .dropdown-content a:hover {
+            background: var(--pale-blue);
+            padding-left: 2rem;
+        }
+
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(26, 95, 180, 0.1);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-3px);
+        }
+
+        /* Subject & Grade Header */
+        .subject-header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 2rem;
+            border-radius: 25px;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 60%;
+            height: 200%;
+            background: rgba(255,255,255,0.1);
+            transform: rotate(30deg);
+        }
+
+        .subject-header::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 40%;
+            height: 150%;
+            background: rgba(255,255,255,0.05);
+            transform: rotate(-20deg);
+        }
+
+        .subject-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .subject-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .subject-header h2 {
+            font-size: 1.3rem;
+            font-weight: 400;
+            opacity: 0.9;
+            position: relative;
+        }
+
+        .lesson-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .meta-item {
+            background: rgba(255,255,255,0.15);
+            padding: 0.5rem 1.5rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid var(--light-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.2rem;
+        }
+
+        /* Objectives */
+        .objectives-list {
+            list-style: none;
+        }
+
+        .objectives-list li {
+            padding: 1rem 1rem 1rem 3.5rem;
+            margin-bottom: 0.75rem;
+            background: var(--pale-blue);
+            border-radius: 12px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .objectives-list li:hover {
+            transform: translateX(5px);
+            background: var(--light-blue);
+        }
+
+        .objectives-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 28px;
+            height: 28px;
+            background: var(--success);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        /* Concept Cards */
+        .concept-card {
+            background: linear-gradient(135deg, var(--pale-blue) 0%, #f0f7ff 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid var(--primary-blue);
+        }
+
+        .concept-card h4 {
+            color: var(--primary-blue);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .concept-card ul {
+            margin-left: 1.5rem;
+        }
+
+        .concept-card li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 15px;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            color: var(--white);
+            font-size: 1.3rem;
+            font-family: 'Georgia', serif;
+            box-shadow: 0 8px 25px rgba(26, 26, 46, 0.3);
+        }
+
+        .formula-box .formula {
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            color: var(--light-blue);
+        }
+
+        .formula-box .formula-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: #e8f5e9;
+            border-left: 5px solid var(--success);
+            padding: 1.5rem;
+            border-radius: 0 15px 15px 0;
+            margin: 1.5rem 0;
+        }
+
+        .example-box h5 {
+            color: #2e7d32;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .example-box .reaction {
+            background: var(--white);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+
+        /* Measurement Methods */
+        .methods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .method-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(26, 95, 180, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .method-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary-blue);
+            box-shadow: 0 10px 30px rgba(26, 95, 180, 0.2);
+        }
+
+        .method-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+
+        .method-card h5 {
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .method-card p {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* Interactive Simulations */
+        .simulation-container {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            color: var(--white);
+        }
+
+        .simulation-title {
+            text-align: center;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--light-blue);
+        }
+
+        .simulation-canvas {
+            background: #0f0f23;
+            border-radius: 15px;
+            width: 100%;
+            min-height: 400px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .graph-container {
+            width: 100%;
+            height: 400px;
+            padding: 20px;
+        }
+
+        .sim-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .sim-btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sim-btn-primary {
+            background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
+            color: var(--white);
+        }
+
+        .sim-btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(53, 132, 228, 0.4);
+        }
+
+        .sim-btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+            border: 2px solid var(--light-blue);
+        }
+
+        .sim-btn-secondary:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .sim-info {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+            min-height: 60px;
+        }
+
+        /* Slider Controls */
+        .slider-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.95rem;
+        }
+
+        .slider-label span:last-child {
+            color: var(--light-blue);
+            font-weight: 600;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.2);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--secondary-blue);
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Lab Equipment Simulation */
+        .lab-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 2rem;
+            padding: 2rem;
+            min-height: 350px;
+            flex-wrap: wrap;
+        }
+
+        .beaker {
+            width: 120px;
+            height: 180px;
+            background: linear-gradient(180deg, rgba(200,230,255,0.3) 0%, rgba(100,180,255,0.5) 100%);
+            border: 3px solid rgba(255,255,255,0.6);
+            border-top: none;
+            border-radius: 0 0 15px 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .beaker::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -5px;
+            right: -5px;
+            height: 15px;
+            background: rgba(255,255,255,0.4);
+            border: 3px solid rgba(255,255,255,0.6);
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .liquid {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, #4fc3f7 0%, #0288d1 100%);
+            transition: all 0.5s ease;
+            border-radius: 0 0 12px 12px;
+        }
+
+        .bubbles {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .bubble {
+            width: 10px;
+            height: 10px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 50%;
+            position: absolute;
+            animation: rise 2s infinite;
+        }
+
+        @keyframes rise {
+            0% {
+                bottom: 10px;
+                opacity: 1;
+            }
+            100% {
+                bottom: 150px;
+                opacity: 0;
+            }
+        }
+
+        .gas-syringe {
+            width: 200px;
+            height: 40px;
+            background: linear-gradient(180deg, #e0e0e0 0%, #bdbdbd 100%);
+            border-radius: 5px;
+            position: relative;
+            border: 2px solid #888;
+        }
+
+        .syringe-plunger {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 50px;
+            background: #666;
+            border-radius: 3px;
+            transition: all 0.5s ease;
+        }
+
+        .syringe-scale {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 15px;
+            font-size: 0.7rem;
+            color: #333;
+        }
+
+        .equipment-label {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--light-blue);
+        }
+
+        .timer-display {
+            background: #1a1a2e;
+            border: 3px solid var(--secondary-blue);
+            border-radius: 10px;
+            padding: 1rem 2rem;
+            font-size: 2rem;
+            font-family: 'Courier New', monospace;
+            color: #00ff00;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0,255,0,0.2);
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            margin-top: 2rem;
+        }
+
+        .question-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(26, 95, 180, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: var(--white);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: 1.25rem;
+            display: inline;
+        }
+
+        .options-list {
+            list-style: none;
+        }
+
+        .option-item {
+            margin-bottom: 0.75rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            background: var(--pale-blue);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .option-label:hover {
+            background: var(--light-blue);
+            transform: translateX(5px);
+        }
+
+        .option-label input {
+            margin-right: 1rem;
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary-blue);
+        }
+
+        .option-label.selected {
+            border-color: var(--primary-blue);
+            background: var(--light-blue);
+        }
+
+        .option-label.correct {
+            border-color: var(--success);
+            background: rgba(46, 194, 126, 0.15);
+        }
+
+        .option-label.incorrect {
+            border-color: var(--error);
+            background: rgba(224, 27, 36, 0.15);
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feedback.correct {
+            display: block;
+            background: rgba(46, 194, 126, 0.15);
+            border-left: 4px solid var(--success);
+            color: #155724;
+        }
+
+        .feedback.incorrect {
+            display: block;
+            background: rgba(224, 27, 36, 0.15);
+            border-left: 4px solid var(--error);
+            color: #721c24;
+        }
+
+        /* Submit & Score */
+        .submit-btn {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 2rem auto;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: var(--white);
+            border: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 25px rgba(26, 95, 180, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 35px rgba(26, 95, 180, 0.4);
+        }
+
+        .score-card {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 2rem;
+            border-radius: 25px;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .score-card.show {
+            display: block;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .score-value {
+            font-size: 4rem;
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+
+        .score-percentage {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+
+        .score-message {
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: rgba(255,255,255,0.2);
+            border-radius: 15px;
+            height: 15px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success) 0%, #27ae60 100%);
+            border-radius: 15px;
+            transition: width 0.5s ease;
+        }
+
+        /* Lesson Navigation */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 1rem 2rem;
+            border: 2px solid var(--primary-blue);
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .nav-btn.prev {
+            background: var(--white);
+            color: var(--primary-blue);
+        }
+
+        .nav-btn.prev:hover {
+            background: var(--pale-blue);
+            transform: translateX(-5px);
+        }
+
+        .nav-btn.next {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: var(--white);
+            border: none;
+        }
+
+        .nav-btn.next:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 25px rgba(26, 95, 180, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-copyright {
+            opacity: 0.7;
+            font-size: 0.95rem;
+        }
+
+        /* Baseline Box */
+        .baseline-box {
+            background: #fff3e0;
+            border-left: 5px solid var(--warning);
+            padding: 1.5rem;
+            border-radius: 0 15px 15px 0;
+            margin: 1.5rem 0;
+        }
+
+        .baseline-box h5 {
+            color: var(--warning);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .chemical-equation {
+            background: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            font-family: 'Georgia', serif;
+            font-size: 1.2rem;
+            margin: 1rem 0;
+            border: 2px solid var(--light-blue);
+        }
+
+        .equation-parts {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .equation-part {
+            background: var(--pale-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .equation-part strong {
+            color: var(--primary-blue);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-wrap: wrap;
+            }
+
+            .nav-menu {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                margin-top: 1rem;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .dropdown-content {
+                position: static;
+                box-shadow: none;
+                border-radius: 10px;
+                margin-top: 0.5rem;
+            }
+
+            .subject-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .lesson-meta {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .methods-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .lab-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .lesson-nav {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                width: 100%;
+            }
+
+            .score-value {
+                font-size: 3rem;
+            }
+
+            .graph-container {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 1.25rem;
+            }
+
+            .subject-header {
+                padding: 2rem 1rem;
+            }
+
+            .subject-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.2rem;
+            }
+
+            .formula-box .formula {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Graph axis labels */
+        .axis-label {
+            font-size: 12px;
+            fill: #ccc;
+        }
+
+        /* Key points highlight */
+        .key-point {
+            background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
+            color: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .key-point-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">📚</div>
+                PassProof Academy
+            </a>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+            <nav class="nav-menu" id="navMenu">
+                <div class="dropdown">
+                    <button class="dropdown-btn">📖 Lessons ▼</button>
+                    <div class="dropdown-content">
+                        <a href="#" style="background: var(--pale-blue); font-weight: 600;">Lesson 1: Measuring Reaction Rates (Current)</a>
+                        <a href="#">Lesson 2: Factors Affecting Reaction Rates</a>
+                        <a href="#">Lesson 3: Collision Theory</a>
+                        <a href="#">Lesson 4: Activation Energy</a>
+                        <a href="#">Lesson 5: Catalysts</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropdown-btn">📚 Topics ▼</button>
+                    <div class="dropdown-content">
+                        <a href="#">Mechanics</a>
+                        <a href="#">Waves & Sound</a>
+                        <a href="#">Electricity & Magnetism</a>
+                        <a href="#">Organic Chemistry</a>
+                        <a href="#" style="background: var(--pale-blue); font-weight: 600;">Rates and Extent of Reactions</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropdown-btn">⚙️ Progress ▼</button>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="viewProgress()">View My Progress</a>
+                        <a href="#" onclick="resetProgress()">Reset Progress</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Subject & Grade Header -->
+        <section class="subject-header">
+            <div class="subject-badge">GRADE 12</div>
+            <h1>Physical Sciences</h1>
+            <h2>Rates and Extent of Reactions</h2>
+            <div class="lesson-meta">
+                <span class="meta-item">📅 Week 15</span>
+                <span class="meta-item">📝 Lesson 1</span>
+                <span class="meta-item">⏱️ 60 minutes</span>
+            </div>
+        </section>
+
+        <!-- Lesson Title Card -->
+        <section class="card">
+            <h2 class="section-title">
+                <span class="section-icon">⚗️</span>
+                Measuring Rates of Reaction
+            </h2>
+            <p style="font-size: 1.1rem; color: var(--gray);">
+                In this lesson, we explore how to measure the speed at which chemical reactions occur. Understanding reaction rates is essential for controlling industrial processes, understanding biological systems, and predicting chemical behavior.
+            </p>
+        </section>
+
+        <!-- Learning Objectives -->
+        <section class="card">
+            <h3 class="section-title">
+                <span class="section-icon">🎯</span>
+                Learning Objectives
+            </h3>
+            <ul class="objectives-list">
+                <li>Define and explain what is meant by "rate of reaction"</li>
+                <li>Identify the different ways of measuring rates of reaction</li>
+                <li>Suggest suitable experimental techniques for measuring reaction rates</li>
+                <li>Measure gas volumes using appropriate apparatus</li>
+                <li>Understand changes in turbidity, colour, and mass as indicators of reaction rate</li>
+                <li>Interpret concentration vs. time graphs for reactions</li>
+            </ul>
+        </section>
+
+        <!-- Baseline Assessment -->
+        <section class="card">
+            <h3 class="section-title">
+                <span class="section-icon">📋</span>
+                Pre-Knowledge Check
+            </h3>
+            
+            <div class="baseline-box">
+                <h5>🔍 Baseline Assessment: Parts of a Chemical Equation</h5>
+                <p>Consider this hypothetical reaction:</p>
+                <div class="chemical-equation">
+                    A (s) + B (l) → C (g) + D (aq)
+                </div>
+                <p><strong>Can you identify all the different parts?</strong></p>
+                <div class="equation-parts">
+                    <div class="equation-part"><strong>A, B:</strong> Reactants</div>
+                    <div class="equation-part"><strong>C, D:</strong> Products</div>
+                    <div class="equation-part"><strong>→:</strong> Direction of reaction</div>
+                    <div class="equation-part"><strong>(s):</strong> Solid</div>
+                    <div class="equation-part"><strong>(l):</strong> Liquid</div>
+                    <div class="equation-part"><strong>(g):</strong> Gas</div>
+                    <div class="equation-part"><strong>(aq):</strong> Aqueous solution</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Concept: What is Reaction Rate? -->
+        <section class="card">
+            <h3 class="section-title">
+                <span class="section-icon">🔬</span>
+                What is Reaction Rate?
+            </h3>
+            
+            <div class="concept-card">
+                <h4>📖 Definition</h4>
+                <p><strong>Reaction rate</strong> is an indication of the chemical change that takes place in a certain time. It measures how quickly reactants are converted into products, or how quickly products are formed.</p>
+            </div>
+
+            <div class="formula-box">
+                <div>Rate of Reaction can be expressed as:</div>
+                <div class="formula">Rate = Δ[concentration] / Δt</div>
+                <div class="formula-label">Change in concentration of reactants or products per unit time</div>
+            </div>
+
+            <div class="example-box">
+                <h5>📝 Worked Example: Zinc and Sulfuric Acid Reaction</h5>
+                <div class="reaction">
+                    Zn (s) + H₂SO₄ (aq) → ZnSO₄ (aq) + H₂ (g)
+                </div>
+                <p>The rate of this reaction can be measured by:</p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>Amount of <strong>zinc used</strong> per minute (mass)</li>
+                    <li>Amount of <strong>sulfuric acid</strong> used per minute (mol)</li>
+                    <li>Amount of <strong>zinc sulphate</strong> produced per minute (mol)</li>
+                    <li><strong>Volume of hydrogen gas</strong> produced per minute</li>
+                </ul>
+            </div>
+
+            <div class="key-point">
+                <span class="key-point-icon">💡</span>
+                <div>
+                    <strong>Key Insight:</strong> The rate of reaction is the rate at which the concentration of reactants decreases OR the rate at which the concentration of products increases.
+                </div>
+            </div>
+        </section>
+
+        <!-- Concentration Changes Over Time -->
+        <section class="card">
+            <h3 class="section-title">
+                <span class="section-icon">📊</span>
+                How Concentration Changes During a Reaction
+            </h3>
+            
+            <p>During a chemical reaction (X → Y), the concentrations of reactants and products change over time:</p>
+
+            <div class="simulation-container">
+                <h4 class="simulation-title">Interactive Graph: Concentration vs Time</h4>
+                <div class="simulation-canvas">
+                    <canvas id="concentrationGraph" width="800" height="380"></canvas>
+                </div>
+                
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>Initial Concentration of X:</span>
+                        <span id="concValue">1.0 mol/dm³</span>
+                    </div>
+                    <input type="range" id="concSlider" min="0.5" max="2" step="0.1" value="1" onchange="updateGraph()">
+                </div>
+                
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>Reaction Rate Constant:</span>
+                        <span id="rateValue">0.5</span>
+                    </div>
+                    <input type="range" id="rateSlider" min="0.2" max="1" step="0.1" value="0.5" onchange="updateGraph()">
+                </div>
+                
+                <div class="sim-controls">
+                    <button class="sim-btn sim-btn-primary" onclick="animateGraph()">▶ Animate Reaction</button>
+                    <button class="sim-btn sim-btn-secondary" onclick="resetGraph()">↺ Reset</button>
+                </div>
+                
+                <div class="sim-info" id="graphInfo">
+                    Adjust the sliders to see how initial concentration and rate constant affect the reaction curves. The <span style="color: #e74c3c;">red curve</span> shows reactant [X] decreasing, while the <span style="color: #2ecc71;">green curve</span> shows product [Y] increasing.
+                </div>
+            </div>
+
+            <div class="concept-card" style="margin-top: 1.5rem;">
+                <h4>📈 Key Observations from the Graph</h4>
+                <ul>
+                    <li><strong>Reaction rate is NOT constant</strong> - it changes throughout the reaction</li>
+                    <li><strong>Rate decreases with time</strong> - as reactants are used up</li>
+                    <li><strong>Rate of reaction = slope (tangent)</strong> at a specific time on the curve</li>
+                    <li>Rate at the <strong>beginning</strong> is faster than rate near the <strong>end</strong></li>
+                    <li>As [reactants] decrease, the rate of product formation also decreases</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Measurement Methods -->
+        <section class="card">
+            <h3 class="section-title">
+                <span class="section-icon">🧪</span>
+                Methods of Measuring Reaction Rates
+            </h3>
+            
+            <p>Different reactions require different measurement techniques. Here are the main methods:</p>
+
+            <div class="methods-grid">
+                <div class="method-card">
+                    <div class="method-icon">💨</div>
+                    <h5>Gas Volume</h5>
+                    <p>Use a gas syringe or inverted measuring cylinder to collect and measure gas produced</p>
+                </div>
+                <div class="method-card">
+                    <div class="method-icon">⚖️</div>
+                    <h5>Mass Change</h5>
+                    <p>Place reaction vessel on a balance and measure mass loss as gas escapes</p>
+                </div>
+                <div class="method-card">
+                    <div class="method-icon">🌫️</div>
+                    <h5>Turbidity</h5>
+                    <p>Measure time for a precipitate to obscure a mark (e.g., cross under beaker)</p>
+                </div>
+                <div class="method-card">
+                    <div class="method-icon">🎨</div>
+                    <h5>Colour Change</h5>
+                    <p>Use a colorimeter or visual observation to track colour intensity changes</p>
+                </div>
+                <div class="method-card">
+                    <div class="method-icon">🌡️</div>
+                    <h5>Temperature</h5>
+                    <p>Monitor temperature change in exothermic or endothermic reactions</p>
+                </div>
+                <div class="method-card">
+                    <div class="method-icon">📊</div>
+                    <h5>pH Change</h5>
+                    <p>Use a pH meter or indicator to track changes in acidity/alkalinity</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Lab Simulation -->
+        <section class="card">
+            <h3 class="section-title">
+                <span class="section-icon">🔬</span>
+                Interactive Lab: Measuring Gas Production
+            </h3>
+
+            <div class="simulation-container">
+                <h4 class="simulation-title">Virtual Experiment: Zinc + Hydrochloric Acid</h4>
+                <p style="text-align: center; margin-bottom: 1rem; opacity: 0.8;">Zn (s) + 2HCl (aq) → ZnCl₂ (aq) + H₂ (g)</p>
+                
+                <div class="simulation-canvas">
+                    <div class="lab-container">
+                        <div>
+                            <div class="beaker" id="reactionBeaker">
+                                <div class="liquid" id="acidLevel" style="height: 70%;"></div>
+                                <div class="bubbles" id="bubbles"></div>
+                            </div>
+                            <div class="equipment-label">Reaction Vessel<br>(Zn + HCl)</div>
+                        </div>
+                        
+                        <div>
+                            <div class="gas-syringe">
+                                <div class="syringe-scale">
+                                    <span>0</span>
+                                    <span>20</span>
+                                    <span>40</span>
+                                    <span>60</span>
+                                    <span>80</span>
+                                    <span>100</span>
+                                </div>
+                                <div class="syringe-plunger" id="plunger" style="right: 0;"></div>
+                            </div>
+                            <div class="equipment-label">Gas Syringe</div>
+                            <div style="margin-top: 1rem; text-align: center;">
+                                <span style="font-size: 1.5rem; color: var(--light-blue);" id="gasVolume">0</span>
+                                <span style="color: var(--light-blue);"> cm³ H₂</span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="timer-display" id="timerDisplay">00:00</div>
+                            <div class="equipment-label">Time Elapsed</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>HCl Concentration:</span>
+                        <span id="hclConcValue">1.0 mol/dm³</span>
+                    </div>
+                    <input type="range" id="hclConcSlider" min="0.5" max="2" step="0.5" value="1" onchange="updateHClConc()">
+                </div>
+                
+                <div class="sim-controls">
+                    <button class="sim-btn sim-btn-primary" id="startLabBtn" onclick="startLabExperiment()">▶ Start Experiment</button>
+                    <button class="sim-btn sim-btn-secondary" onclick="resetLabExperiment()">↺ Reset</button>
+                </div>
+                
+                <div class="sim-info" id="labInfo">
+                    Adjust the acid concentration and click "Start Experiment" to observe gas production. Watch how the gas volume increases over time!
+                </div>
+            </div>
+        </section>
+
+        <!-- Worked Examples -->
+        <section class="card">
+            <h3 class="section-title">
+                <span class="section-icon">✏️</span>
+                Worked Examples: Choosing Measurement Techniques
+            </h3>
+
+            <div class="example-box">
+                <h5>Example 1: Comparing Boiling Rates</h5>
+                <p><strong>Question:</strong> Which boils faster - tap water or salt water?</p>
+                <p><strong>Measurement technique:</strong> Measure the <strong>time</strong> until large bubbles form in each sample under identical heating conditions.</p>
+            </div>
+
+            <div class="example-box">
+                <h5>Example 2: Electroplating Rate</h5>
+                <p><strong>Question:</strong> Compare different concentrations of silver solution used to electroplate a nickel bar.</p>
+                <p><strong>Measurement technique:</strong> Measure the <strong>time</strong> it takes for the object to be fully coated with a visible layer of silver.</p>
+            </div>
+
+            <div class="example-box">
+                <h5>Example 3: Corrosion Rate</h5>
+                <p><strong>Question:</strong> Compare the reaction of iron nails with tap water and salt water.</p>
+                <p><strong>Measurement technique:</strong> Measure the <strong>time</strong> it takes for visible rust to form on each nail.</p>
+            </div>
+
+            <div class="example-box">
+                <h5>Example 4: Metal Reactivity with Acid</h5>
+                <p><strong>Question:</strong> Compare the reactivity of various metals with hydrochloric acid.</p>
+                <p><strong>Measurement technique:</strong> Measure the <strong>rate at which hydrogen gas</strong> is produced using a gas syringe.</p>
+            </div>
+
+            <div class="example-box" style="background: #e3f2fd; border-color: var(--primary-blue);">
+                <h5 style="color: var(--primary-blue);">Example 5: Copper + Nitric Acid (Multiple Indicators)</h5>
+                <p><strong>Reaction:</strong> Copper shavings react with concentrated nitric acid (exothermic). Products include NO₂(g) (brown gas) and copper(II) nitrate (blue solution).</p>
+                <p><strong>Possible measurement techniques:</strong></p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>Rate of <strong>brown gas formation</strong> (gas syringe)</li>
+                    <li>Rate of <strong>mass decrease</strong> (balance)</li>
+                    <li>Rate at which <strong>copper is used up</strong> (mass of copper)</li>
+                    <li><strong>Change in colour</strong> (blue solution formation)</li>
+                    <li><strong>Temperature increase</strong> (thermometer)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="card">
+            <h3 class="section-title">
+                <span class="section-icon">📝</span>
+                Lesson Summary
+            </h3>
+            
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+                    <thead>
+                        <tr style="background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue)); color: white;">
+                            <th style="padding: 1rem; text-align: left; border-radius: 10px 0 0 0;">Observable Change</th>
+                            <th style="padding: 1rem; text-align: left;">Measurement Tool</th>
+                            <th style="padding: 1rem; text-align: left; border-radius: 0 10px 0 0;">Example Reaction</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: var(--pale-blue);">
+                            <td style="padding: 1rem;">Gas produced</td>
+                            <td style="padding: 1rem;">Gas syringe, inverted burette</td>
+                            <td style="padding: 1rem;">Zn + HCl → H₂</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 1rem;">Mass decrease</td>
+                            <td style="padding: 1rem;">Electronic balance</td>
+                            <td style="padding: 1rem;">CaCO₃ + HCl → CO₂ escapes</td>
+                        </tr>
+                        <tr style="background: var(--pale-blue);">
+                            <td style="padding: 1rem;">Precipitate forms (turbidity)</td>
+                            <td style="padding: 1rem;">Timer + cross under flask</td>
+                            <td style="padding: 1rem;">Na₂S₂O₃ + HCl → S precipitate</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 1rem;">Colour change</td>
+                            <td style="padding: 1rem;">Colorimeter, visual observation</td>
+                            <td style="padding: 1rem;">Bleaching of dye</td>
+                        </tr>
+                        <tr style="background: var(--pale-blue);">
+                            <td style="padding: 1rem; border-radius: 0 0 0 10px;">Temperature change</td>
+                            <td style="padding: 1rem;">Thermometer</td>
+                            <td style="padding: 1rem; border-radius: 0 0 10px 0;">Exothermic neutralization</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="key-point" style="margin-top: 1.5rem;">
+                <span class="key-point-icon">🎯</span>
+                <div>
+                    <strong>Remember:</strong> When choosing a measurement technique, consider what changes during the reaction (gas, mass, colour, etc.) and select the most practical and accurate method for that specific reaction.
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section class="card quiz-container">
+            <h3 class="section-title">
+                <span class="section-icon">✍️</span>
+                End-of-Lesson Assessment
+            </h3>
+            <p style="margin-bottom: 2rem; color: var(--gray);">Test your understanding with these 12 questions. Select the best answer for each question.</p>
+            
+            <form id="quizForm">
+                <!-- Question 1 -->
+                <div class="question-card" id="q1">
+                    <span class="question-number">1</span>
+                    <span class="question-text">What is the definition of reaction rate?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q1" value="a">
+                                The total amount of products formed
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q1" value="b">
+                                The change in concentration of reactants or products per unit time
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q1" value="c">
+                                The temperature at which a reaction occurs
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q1" value="d">
+                                The amount of energy released during a reaction
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback1"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question-card" id="q2">
+                    <span class="question-number">2</span>
+                    <span class="question-text">In the reaction Zn + H₂SO₄ → ZnSO₄ + H₂, which of the following could be used to measure the rate of reaction?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q2" value="a">
+                                Only the volume of hydrogen gas produced
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q2" value="b">
+                                Only the mass of zinc used
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q2" value="c">
+                                All of the above: mass of Zn, volume of H₂, amount of ZnSO₄ formed
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q2" value="d">
+                                The colour change of the solution only
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback2"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question-card" id="q3">
+                    <span class="question-number">3</span>
+                    <span class="question-text">What happens to the rate of reaction as the reaction proceeds?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q3" value="a">
+                                It stays constant throughout
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q3" value="b">
+                                It increases as products form
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q3" value="c">
+                                It decreases as reactants are used up
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q3" value="d">
+                                It oscillates between fast and slow
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback3"></div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="question-card" id="q4">
+                    <span class="question-number">4</span>
+                    <span class="question-text">On a concentration vs time graph, how is the instantaneous rate of reaction determined?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q4" value="a">
+                                By reading the y-intercept
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q4" value="b">
+                                By calculating the slope (tangent) at a specific point
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q4" value="c">
+                                By finding the area under the curve
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q4" value="d">
+                                By measuring the x-intercept
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback4"></div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="question-card" id="q5">
+                    <span class="question-number">5</span>
+                    <span class="question-text">Which apparatus is most suitable for measuring the volume of gas produced during a reaction?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q5" value="a">
+                                Thermometer
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q5" value="b">
+                                Gas syringe
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q5" value="c">
+                                pH meter
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q5" value="d">
+                                Voltmeter
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback5"></div>
+                </div>
+
+                <!-- Question 6 -->
+                <div class="question-card" id="q6">
+                    <span class="question-number">6</span>
+                    <span class="question-text">In the sodium thiosulfate and hydrochloric acid reaction, what is typically measured to determine rate?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q6" value="a">
+                                Volume of gas produced
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q6" value="b">
+                                Time for a cross to become obscured by precipitate (turbidity)
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q6" value="c">
+                                Change in mass
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q6" value="d">
+                                Change in pH
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback6"></div>
+                </div>
+
+                <!-- Question 7 -->
+                <div class="question-card" id="q7">
+                    <span class="question-number">7</span>
+                    <span class="question-text">What does (aq) represent in a chemical equation?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q7" value="a">
+                                Solid state
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q7" value="b">
+                                Gaseous state
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q7" value="c">
+                                Dissolved in water (aqueous solution)
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q7" value="d">
+                                Liquid state
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback7"></div>
+                </div>
+
+                <!-- Question 8 -->
+                <div class="question-card" id="q8">
+                    <span class="question-number">8</span>
+                    <span class="question-text">When calcium carbonate reacts with hydrochloric acid and gas escapes, which measurement technique is most appropriate?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q8" value="a">
+                                Measure colour change
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q8" value="b">
+                                Measure mass loss on a balance
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q8" value="c">
+                                Measure pH change
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q8" value="d">
+                                Measure turbidity
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback8"></div>
+                </div>
+
+                <!-- Question 9 -->
+                <div class="question-card" id="q9">
+                    <span class="question-number">9</span>
+                    <span class="question-text">For an exothermic reaction, which change could indicate reaction rate?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q9" value="a">
+                                Decrease in temperature
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q9" value="b">
+                                Increase in temperature
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q9" value="c">
+                                No temperature change
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q9" value="d">
+                                Pressure decrease
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback9"></div>
+                </div>
+
+                <!-- Question 10 -->
+                <div class="question-card" id="q10">
+                    <span class="question-number">10</span>
+                    <span class="question-text">At which point during a reaction is the rate typically fastest?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q10" value="a">
+                                At the beginning when reactant concentration is highest
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q10" value="b">
+                                In the middle of the reaction
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q10" value="c">
+                                At the end when products are forming
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q10" value="d">
+                                Rate is the same throughout
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback10"></div>
+                </div>
+
+                <!-- Question 11 -->
+                <div class="question-card" id="q11">
+                    <span class="question-number">11</span>
+                    <span class="question-text">Which symbol indicates that a substance is in the liquid state in a chemical equation?</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q11" value="a">
+                                (s)
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q11" value="b">
+                                (g)
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q11" value="c">
+                                (l)
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q11" value="d">
+                                (aq)
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback11"></div>
+                </div>
+
+                <!-- Question 12 -->
+                <div class="question-card" id="q12">
+                    <span class="question-number">12</span>
+                    <span class="question-text">A colorimeter would be most useful for measuring rate in a reaction that involves:</span>
+                    <ul class="options-list">
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q12" value="a">
+                                Production of a gas
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q12" value="b">
+                                Change in colour intensity
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q12" value="c">
+                                Formation of a solid precipitate
+                            </label>
+                        </li>
+                        <li class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q12" value="d">
+                                Temperature increase
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback12"></div>
+                </div>
+            </form>
+
+            <button class="submit-btn" onclick="submitQuiz()">Submit Answers</button>
+
+            <!-- Score Card -->
+            <div class="score-card" id="scoreCard">
+                <h3 class="score-title">🎉 Quiz Complete!</h3>
+                <div class="progress-container">
+                    <div class="progress-bar" id="scoreProgressBar"></div>
+                </div>
+                <div class="score-value" id="scoreValue">0/12</div>
+                <div class="score-percentage" id="scorePercentage">0%</div>
+                <div class="score-message" id="scoreMessage"></div>
+            </div>
+        </section>
+
+        <!-- Lesson Navigation -->
+        <div class="lesson-nav">
+            <button class="nav-btn prev">
+                ← Previous Lesson
+            </button>
+            <button class="nav-btn next">
+                Next Lesson →
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">📚 PassProof Academy</div>
+            <p class="footer-copyright">© 2026 PassProof Academy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== NAVIGATION ====================
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+
+        // ==================== CONCENTRATION GRAPH SIMULATION ====================
+        let graphAnimation = null;
+        let animationProgress = 0;
+
+        function drawGraph(progress = 1) {
+            const canvas = document.getElementById('concentrationGraph');
+            const ctx = canvas.getContext('2d');
+            
+            // Get slider values
+            const initialConc = parseFloat(document.getElementById('concSlider').value);
+            const rateConstant = parseFloat(document.getElementById('rateSlider').value);
+            
+            // Update display values
+            document.getElementById('concValue').textContent = initialConc.toFixed(1) + ' mol/dm³';
+            document.getElementById('rateValue').textContent = rateConstant.toFixed(1);
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Set up dimensions
+            const padding = 60;
+            const graphWidth = canvas.width - padding * 2;
+            const graphHeight = canvas.height - padding * 2;
+            
+            // Draw background
+            ctx.fillStyle = '#0f0f23';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw grid
+            ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+            ctx.lineWidth = 1;
+            
+            for (let i = 0; i <= 10; i++) {
+                // Vertical lines
+                const x = padding + (graphWidth / 10) * i;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, canvas.height - padding);
+                ctx.stroke();
+                
+                // Horizontal lines
+                const y = padding + (graphHeight / 10) * i;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(canvas.width - padding, y);
+                ctx.stroke();
+            }
+            
+            // Draw axes
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = 2;
+            
+            // Y-axis
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.stroke();
+            
+            // X-axis
+            ctx.beginPath();
+            ctx.moveTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.stroke();
+            
+            // Axis labels
+            ctx.fillStyle = '#ccc';
+            ctx.font = '14px Segoe UI';
+            ctx.textAlign = 'center';
+            
+            // X-axis label
+            ctx.fillText('Time (minutes)', canvas.width / 2, canvas.height - 15);
+            
+            // Y-axis label
+            ctx.save();
+            ctx.translate(20, canvas.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('Concentration (mol/dm³)', 0, 0);
+            ctx.restore();
+            
+            // X-axis numbers
+            for (let i = 0; i <= 10; i++) {
+                const x = padding + (graphWidth / 10) * i;
+                ctx.fillText(i.toString(), x, canvas.height - padding + 20);
+            }
+            
+            // Y-axis numbers
+            ctx.textAlign = 'right';
+            for (let i = 0; i <= 10; i++) {
+                const y = canvas.height - padding - (graphHeight / 10) * i;
+                const value = (initialConc / 10 * i).toFixed(1);
+                ctx.fillText(value, padding - 10, y + 5);
+            }
+            
+            // Draw curves
+            const maxTime = 10;
+            const points = 100;
+            
+            // Reactant curve (X) - exponential decay
+            ctx.beginPath();
+            ctx.strokeStyle = '#e74c3c';
+            ctx.lineWidth = 3;
+            
+            for (let i = 0; i <= points * progress; i++) {
+                const t = (i / points) * maxTime;
+                const concX = initialConc * Math.exp(-rateConstant * t);
+                
+                const x = padding + (t / maxTime) * graphWidth;
+                const y = canvas.height - padding - (concX / initialConc) * graphHeight;
+                
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+            
+            // Product curve (Y) - inverse of decay
+            ctx.beginPath();
+            ctx.strokeStyle = '#2ecc71';
+            ctx.lineWidth = 3;
+            
+            for (let i = 0; i <= points * progress; i++) {
+                const t = (i / points) * maxTime;
+                const concY = initialConc * (1 - Math.exp(-rateConstant * t));
+                
+                const x = padding + (t / maxTime) * graphWidth;
+                const y = canvas.height - padding - (concY / initialConc) * graphHeight;
+                
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+            
+            // Legend
+            ctx.font = '14px Segoe UI';
+            ctx.textAlign = 'left';
+            
+            ctx.fillStyle = '#e74c3c';
+            ctx.fillRect(canvas.width - 150, 30, 20, 15);
+            ctx.fillStyle = '#fff';
+            ctx.fillText('[X] Reactant', canvas.width - 120, 42);
+            
+            ctx.fillStyle = '#2ecc71';
+            ctx.fillRect(canvas.width - 150, 55, 20, 15);
+            ctx.fillStyle = '#fff';
+            ctx.fillText('[Y] Product', canvas.width - 120, 67);
+        }
+
+        function updateGraph() {
+            animationProgress = 1;
+            drawGraph(1);
+        }
+
+        function animateGraph() {
+            if (graphAnimation) {
+                cancelAnimationFrame(graphAnimation);
+            }
+            
+            animationProgress = 0;
+            const duration = 3000; // 3 seconds
+            const startTime = performance.now();
+            
+            function animate(currentTime) {
+                const elapsed = currentTime - startTime;
+                animationProgress = Math.min(elapsed / duration, 1);
+                
+                drawGraph(animationProgress);
+                
+                if (animationProgress < 1) {
+                    graphAnimation = requestAnimationFrame(animate);
+                }
+            }
+            
+            graphAnimation = requestAnimationFrame(animate);
+            
+            document.getElementById('graphInfo').innerHTML = '⏳ <strong>Reaction in progress...</strong> Watch how [X] decreases while [Y] increases!';
+            
+            setTimeout(() => {
+                document.getElementById('graphInfo').innerHTML = '✅ <strong>Reaction complete!</strong> Notice how the rate (slope) decreases as the reaction progresses. The steeper the curve, the faster the reaction.';
+            }, 3000);
+        }
+
+        function resetGraph() {
+            if (graphAnimation) {
+                cancelAnimationFrame(graphAnimation);
+            }
+            document.getElementById('concSlider').value = 1;
+            document.getElementById('rateSlider').value = 0.5;
+            animationProgress = 1;
+            updateGraph();
+            document.getElementById('graphInfo').innerHTML = 'Adjust the sliders to see how initial concentration and rate constant affect the reaction curves. The <span style="color: #e74c3c;">red curve</span> shows reactant [X] decreasing, while the <span style="color: #2ecc71;">green curve</span> shows product [Y] increasing.';
+        }
+
+        // ==================== LAB EXPERIMENT SIMULATION ====================
+        let labRunning = false;
+        let labInterval = null;
+        let labTime = 0;
+        let gasVolume = 0;
+
+        function updateHClConc() {
+            const conc = document.getElementById('hclConcSlider').value;
+            document.getElementById('hclConcValue').textContent = conc + ' mol/dm³';
+        }
+
+        function startLabExperiment() {
+            if (labRunning) return;
+            labRunning = true;
+            
+            const conc = parseFloat(document.getElementById('hclConcSlider').value);
+            const rateMultiplier = conc; // Higher concentration = faster rate
+            
+            document.getElementById('startLabBtn').textContent = '⏸ Running...';
+            document.getElementById('startLabBtn').disabled = true;
+            
+            // Create bubbles
+            const bubblesContainer = document.getElementById('bubbles');
+            
+            function createBubble() {
+                if (!labRunning) return;
+                
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                bubble.style.left = (Math.random() * 40 - 20) + 'px';
+                bubble.style.animationDuration = (1.5 + Math.random()) + 's';
+                bubble.style.width = (8 + Math.random() * 6) + 'px';
+                bubble.style.height = bubble.style.width;
+                bubblesContainer.appendChild(bubble);
+                
+                setTimeout(() => {
+                    if (bubble.parentNode) {
+                        bubble.remove();
+                    }
+                }, 2000);
+            }
+            
+            const bubbleInterval = setInterval(() => {
+                if (!labRunning) {
+                    clearInterval(bubbleInterval);
+                    return;
+                }
+                for (let i = 0; i < Math.ceil(rateMultiplier * 2); i++) {
+                    createBubble();
+                }
+            }, 200);
+            
+            // Update timer and gas volume
+            labInterval = setInterval(() => {
+                if (!labRunning) return;
+                
+                labTime += 0.1;
+                
+                // Exponential approach to maximum (simulating first-order kinetics)
+                const maxGas = 100;
+                const k = 0.05 * rateMultiplier;
+                gasVolume = maxGas * (1 - Math.exp(-k * labTime));
+                
+                // Update displays
+                const minutes = Math.floor(labTime / 60);
+                const seconds = Math.floor(labTime % 60);
+                document.getElementById('timerDisplay').textContent = 
+                    String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+                
+                document.getElementById('gasVolume').textContent = Math.round(gasVolume);
+                
+                // Move plunger
+                const plungerPos = (gasVolume / 100) * 160;
+                document.getElementById('plunger').style.right = plungerPos + 'px';
+                
+                // Decrease acid level slightly
+                const acidLevel = 70 - (gasVolume / 100) * 20;
+                document.getElementById('acidLevel').style.height = acidLevel + '%';
+                
+                // Update info
+                const rate = k * maxGas * Math.exp(-k * labTime);
+                document.getElementById('labInfo').innerHTML = 
+                    `<strong>Time:</strong> ${labTime.toFixed(1)}s | <strong>Gas Volume:</strong> ${Math.round(gasVolume)} cm³ | <strong>Current Rate:</strong> ${rate.toFixed(2)} cm³/s`;
+                
+                // Stop when nearly complete
+                if (gasVolume >= 99) {
+                    stopLabExperiment();
+                    document.getElementById('labInfo').innerHTML = 
+                        '✅ <strong>Reaction complete!</strong> All the zinc has reacted. Notice how the gas production slowed down as the reaction progressed (reactants used up).';
+                }
+            }, 100);
+        }
+
+        function stopLabExperiment() {
+            labRunning = false;
+            if (labInterval) {
+                clearInterval(labInterval);
+            }
+            document.getElementById('startLabBtn').textContent = '▶ Start Experiment';
+            document.getElementById('startLabBtn').disabled = false;
+        }
+
+        function resetLabExperiment() {
+            stopLabExperiment();
+            labTime = 0;
+            gasVolume = 0;
+            
+            document.getElementById('timerDisplay').textContent = '00:00';
+            document.getElementById('gasVolume').textContent = '0';
+            document.getElementById('plunger').style.right = '0px';
+            document.getElementById('acidLevel').style.height = '70%';
+            document.getElementById('bubbles').innerHTML = '';
+            document.getElementById('labInfo').innerHTML = 
+                'Adjust the acid concentration and click "Start Experiment" to observe gas production. Watch how the gas volume increases over time!';
+        }
+
+        // ==================== QUIZ SYSTEM ====================
+        const correctAnswers = {
+            q1: 'b',
+            q2: 'c',
+            q3: 'c',
+            q4: 'b',
+            q5: 'b',
+            q6: 'b',
+            q7: 'c',
+            q8: 'b',
+            q9: 'b',
+            q10: 'a',
+            q11: 'c',
+            q12: 'b'
+        };
+
+        const explanations = {
+            q1: 'Reaction rate is defined as the change in concentration of reactants or products per unit time. It measures how fast a reaction occurs.',
+            q2: 'The rate can be measured by any of these: mass of zinc used, volume of H₂ produced, or amount of ZnSO₄ formed - all change as the reaction proceeds.',
+            q3: 'As reactants are consumed, their concentration decreases, which causes the rate of reaction to decrease over time.',
+            q4: 'The instantaneous rate at any point is found by calculating the slope (gradient) of the tangent line at that specific point on the curve.',
+            q5: 'A gas syringe is specifically designed to collect and measure the volume of gas produced during a reaction.',
+            q6: 'The sodium thiosulfate + HCl reaction produces sulfur precipitate. Rate is measured by timing how long it takes for the precipitate to obscure a cross viewed through the solution.',
+            q7: '(aq) stands for "aqueous" which means the substance is dissolved in water.',
+            q8: 'When gas escapes from a reaction, placing the vessel on a balance allows you to measure the rate of mass loss as gas is released.',
+            q9: 'In exothermic reactions, heat is released, causing the temperature to increase. The rate of temperature increase can indicate reaction rate.',
+            q10: 'At the start of a reaction, reactant concentration is at its maximum, so collision frequency is highest, resulting in the fastest rate.',
+            q11: '(l) indicates the liquid state. (s) = solid, (g) = gas, (aq) = aqueous solution.',
+            q12: 'A colorimeter measures light absorption/transmission and is ideal for tracking changes in colour intensity during a reaction.'
+        };
+
+        function submitQuiz() {
+            let score = 0;
+            const totalQuestions = 12;
+            
+            for (let i = 1; i <= totalQuestions; i++) {
+                const questionName = `q${i}`;
+                const selected = document.querySelector(`input[name="${questionName}"]:checked`);
+                const feedbackDiv = document.getElementById(`feedback${i}`);
+                const options = document.querySelectorAll(`#q${i} .option-label`);
+                
+                // Reset styles
+                options.forEach(opt => {
+                    opt.classList.remove('correct', 'incorrect', 'selected');
+                });
+                
+                if (selected) {
+                    const selectedLabel = selected.parentElement;
+                    selectedLabel.classList.add('selected');
+                    
+                    if (selected.value === correctAnswers[questionName]) {
+                        score++;
+                        selectedLabel.classList.add('correct');
+                        feedbackDiv.className = 'feedback correct';
+                        feedbackDiv.innerHTML = `✓ Correct! ${explanations[questionName]}`;
+                    } else {
+                        selectedLabel.classList.add('incorrect');
+                        // Highlight correct answer
+                        options.forEach(opt => {
+                            const input = opt.querySelector('input');
+                            if (input.value === correctAnswers[questionName]) {
+                                opt.classList.add('correct');
+                            }
+                        });
+                        feedbackDiv.className = 'feedback incorrect';
+                        feedbackDiv.innerHTML = `✗ Incorrect. ${explanations[questionName]}`;
+                    }
+                } else {
+                    feedbackDiv.className = 'feedback incorrect';
+                    feedbackDiv.innerHTML = `✗ No answer selected. ${explanations[questionName]}`;
+                    // Highlight correct answer
+                    options.forEach(opt => {
+                        const input = opt.querySelector('input');
+                        if (input.value === correctAnswers[questionName]) {
+                            opt.classList.add('correct');
+                        }
+                    });
+                }
+            }
+            
+            // Show score card
+            const percentage = Math.round((score / totalQuestions) * 100);
+            document.getElementById('scoreValue').textContent = `${score}/${totalQuestions}`;
+            document.getElementById('scorePercentage').textContent = `${percentage}%`;
+            document.getElementById('scoreProgressBar').style.width = `${percentage}%`;
+            
+            let message = '';
+            if (percentage >= 80) {
+                message = '🌟 Excellent! You have mastered measuring reaction rates!';
+            } else if (percentage >= 60) {
+                message = '👍 Good work! Review the concepts you missed.';
+            } else if (percentage >= 40) {
+                message = '📚 Keep studying! Review the lesson content and try again.';
+            } else {
+                message = '💪 Don\'t give up! Re-read the lesson carefully and practice more.';
+            }
+            document.getElementById('scoreMessage').textContent = message;
+            
+            document.getElementById('scoreCard').classList.add('show');
+            document.getElementById('scoreCard').scrollIntoView({ behavior: 'smooth' });
+            
+            // Save progress to localStorage
+            saveProgress(score, percentage);
+        }
+
+        // ==================== LOCAL STORAGE ====================
+        function saveProgress(score, percentage) {
+            const progress = {
+                lessonId: 'reaction-rates-lesson-1',
+                lessonTitle: 'Measuring Rates of Reaction',
+                score: score,
+                totalQuestions: 12,
+                percentage: percentage,
+                completedAt: new Date().toISOString(),
+                attempts: getAttempts() + 1
+            };
+            
+            localStorage.setItem('reactionRates_lesson1_progress', JSON.stringify(progress));
+            
+            // Update overall progress
+            let allProgress = JSON.parse(localStorage.getItem('passproofProgress') || '{}');
+            allProgress['reactionRates_lesson1'] = progress;
+            localStorage.setItem('passproofProgress', JSON.stringify(allProgress));
+        }
+
+        function getAttempts() {
+            const saved = localStorage.getItem('reactionRates_lesson1_progress');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                return progress.attempts || 0;
+            }
+            return 0;
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('reactionRates_lesson1_progress');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                console.log('Previous progress loaded:', progress);
+            }
+        }
+
+        function viewProgress() {
+            const allProgress = JSON.parse(localStorage.getItem('passproofProgress') || '{}');
+            let message = 'Your Progress:\n\n';
+            
+            if (Object.keys(allProgress).length === 0) {
+                message += 'No progress saved yet.';
+            } else {
+                for (const [lesson, data] of Object.entries(allProgress)) {
+                    message += `${data.lessonTitle}: ${data.percentage}% (${data.attempts} attempt${data.attempts > 1 ? 's' : ''})\n`;
+                }
+            }
+            
+            alert(message);
+        }
+
+        function resetProgress() {
+            if (confirm('Are you sure you want to reset all progress?')) {
+                localStorage.removeItem('passproofProgress');
+                localStorage.removeItem('reactionRates_lesson1_progress');
+                alert('Progress has been reset.');
+            }
+        }
+
+        // ==================== OPTION SELECTION STYLING ====================
+        document.querySelectorAll('.option-label').forEach(label => {
+            label.addEventListener('click', function() {
+                const questionCard = this.closest('.question-card');
+                questionCard.querySelectorAll('.option-label').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+            });
+        });
+
+        // ==================== NAVIGATION BUTTONS ====================
+        document.querySelector('.nav-btn.prev').addEventListener('click', function() {
+            alert('This is the first lesson in this topic. Navigate to Topic menu for other topics.');
+        });
+
+        document.querySelector('.nav-btn.next').addEventListener('click', function() {
+            alert('Navigating to Lesson 2: Factors Affecting Reaction Rates');
+            // In production: window.location.href = 'lesson2.html';
+        });
+
+        // ==================== INITIALIZATION ====================
+        window.onload = function() {
+            loadProgress();
+            updateGraph();
+        };
+    </script>
+</body>
+</html>

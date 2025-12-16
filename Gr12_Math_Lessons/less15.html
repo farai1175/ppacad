@@ -3,2446 +3,1386 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lesson 1: Introduction to Functions | PassProof Academy</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-blue: #1a73e8;
-            --secondary-blue: #4285f4;
-            --light-blue: #e8f0fe;
-            --dark-blue: #0d47a1;
-            --white: #ffffff;
-            --gray-100: #f8f9fa;
-            --gray-200: #e9ecef;
-            --gray-300: #dee2e6;
-            --gray-600: #6c757d;
-            --gray-800: #343a40;
-            --success: #28a745;
-            --error: #dc3545;
-            --warning: #ffc107;
-            --purple: #6f42c1;
-            --teal: #20c997;
-            --orange: #fd7e14;
-            --pink: #e83e8c;
-            --indigo: #6610f2;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
-            --radius: 12px;
-            --transition: all 0.3s ease;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
-            min-height: 100vh;
-            line-height: 1.6;
-            color: var(--gray-800);
-        }
-
-        /* Header & Navigation */
-        header {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
-            color: var(--white);
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-blue);
-            font-weight: bold;
-        }
-
-        /* Dropdown Navigation */
-        .nav-container {
-            position: relative;
-        }
-
-        .nav-toggle {
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: var(--white);
-            padding: 0.75rem 1.5rem;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: var(--transition);
-        }
-
-        .nav-toggle:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .nav-toggle::after {
-            content: '▼';
-            font-size: 0.7rem;
-            transition: var(--transition);
-        }
-
-        .nav-toggle.active::after {
-            transform: rotate(180deg);
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            min-width: 300px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: var(--transition);
-            margin-top: 0.5rem;
-            overflow: hidden;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .dropdown-menu.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-menu a {
-            display: block;
-            padding: 1rem 1.5rem;
-            color: var(--gray-800);
-            text-decoration: none;
-            transition: var(--transition);
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .dropdown-menu a:last-child {
-            border-bottom: none;
-        }
-
-        .dropdown-menu a:hover {
-            background: var(--light-blue);
-            color: var(--primary-blue);
-            padding-left: 2rem;
-        }
-
-        .dropdown-menu a.current {
-            background: var(--primary-blue);
-            color: var(--white);
-        }
-
-        /* Main Content */
-        main {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        /* Cards */
-        .card {
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 2rem;
-            margin-bottom: 2rem;
-            transition: var(--transition);
-            animation: fadeInUp 0.6s ease;
-        }
-
-        .card:hover {
-            box-shadow: var(--shadow-lg);
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Subject & Grade Badge */
-        .subject-badge {
-            display: inline-flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-            margin-bottom: 1rem;
-        }
-
-        .badge {
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            color: var(--white);
-            padding: 0.5rem 1.25rem;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            box-shadow: var(--shadow);
-        }
-
-        .badge.outline {
-            background: transparent;
-            border: 2px solid var(--primary-blue);
-            color: var(--primary-blue);
-        }
-
-        .badge.functions {
-            background: linear-gradient(135deg, var(--teal), #17a2b8);
-        }
-
-        /* Topic Header */
-        .topic-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .topic-header h1 {
-            color: var(--dark-blue);
-            font-size: 2.25rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .topic-header .subtitle {
-            color: var(--gray-600);
-            font-size: 1.2rem;
-        }
-
-        .lesson-number {
-            display: inline-block;
-            background: var(--teal);
-            color: var(--white);
-            padding: 0.25rem 1rem;
-            border-radius: 15px;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        /* Section Headers */
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 3px solid var(--primary-blue);
-        }
-
-        .section-icon {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 1.25rem;
-        }
-
-        .section-header h2 {
-            color: var(--dark-blue);
-            font-size: 1.5rem;
-        }
-
-        /* Objectives List */
-        .objectives-list {
-            list-style: none;
-        }
-
-        .objectives-list li {
-            padding: 0.75rem 1rem;
-            margin-bottom: 0.5rem;
-            background: var(--light-blue);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            transition: var(--transition);
-        }
-
-        .objectives-list li:hover {
-            transform: translateX(5px);
-            background: var(--gray-200);
-        }
-
-        .objectives-list li::before {
-            content: '✓';
-            color: var(--success);
-            font-weight: bold;
-            font-size: 1.25rem;
-        }
-
-        /* Definition Box */
-        .definition-box {
-            background: linear-gradient(135deg, #d1ecf1, #bee5eb);
-            border: 2px solid #17a2b8;
-            padding: 1.5rem;
-            border-radius: var(--radius);
-            margin: 1.5rem 0;
-        }
-
-        .definition-box h4 {
-            color: #0c5460;
-            margin-bottom: 0.75rem;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .definition-box p {
-            color: #0c5460;
-        }
-
-        .definition-box.relation {
-            background: linear-gradient(135deg, #fff3cd, #ffeeba);
-            border-color: var(--warning);
-        }
-
-        .definition-box.relation h4,
-        .definition-box.relation p {
-            color: #856404;
-        }
-
-        .definition-box.function {
-            background: linear-gradient(135deg, #d4edda, #c3e6cb);
-            border-color: var(--success);
-        }
-
-        .definition-box.function h4,
-        .definition-box.function p {
-            color: #155724;
-        }
-
-        /* Comparison Cards */
-        .comparison-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .comparison-card {
-            background: var(--white);
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .comparison-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .comparison-card .card-header {
-            padding: 1rem 1.5rem;
-            color: var(--white);
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .comparison-card.one-to-one .card-header {
-            background: linear-gradient(135deg, var(--teal), #17a2b8);
-        }
-
-        .comparison-card.many-to-one .card-header {
-            background: linear-gradient(135deg, var(--purple), #9b59b6);
-        }
-
-        .comparison-card.one-to-many .card-header {
-            background: linear-gradient(135deg, var(--error), #c82333);
-        }
-
-        .comparison-card .card-body {
-            padding: 1.5rem;
-        }
-
-        .comparison-card .mapping-visual {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2rem;
-            margin: 1rem 0;
-        }
-
-        .domain-set, .range-set {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .set-item {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            color: var(--white);
-        }
-
-        .domain-set .set-item {
-            background: var(--primary-blue);
-        }
-
-        .range-set .set-item {
-            background: var(--orange);
-        }
-
-        .arrows-container {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-
-        .arrow {
-            color: var(--gray-600);
-            font-size: 1.25rem;
-        }
-
-        /* Example Box */
-        .example-box {
-            background: var(--gray-100);
-            border-left: 5px solid var(--primary-blue);
-            padding: 1.5rem;
-            border-radius: 0 var(--radius) var(--radius) 0;
-            margin: 1.5rem 0;
-        }
-
-        .example-box h4 {
-            color: var(--primary-blue);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .example-box h4::before {
-            content: '📝';
-        }
-
-        .ordered-pairs {
-            font-family: 'Courier New', monospace;
-            font-size: 1.1rem;
-            background: var(--white);
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 0.5rem 0;
-            border: 1px solid var(--gray-300);
-        }
-
-        .solution-steps {
-            margin-top: 1rem;
-        }
-
-        .solution-steps .step {
-            padding: 0.75rem;
-            margin-bottom: 0.5rem;
-            background: var(--white);
-            border-radius: 8px;
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-
-        .step-number {
-            width: 28px;
-            height: 28px;
-            background: var(--primary-blue);
-            color: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 0.85rem;
-            flex-shrink: 0;
-        }
-
-        .highlight {
-            background: var(--warning);
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-
-        .final-answer {
-            background: linear-gradient(135deg, var(--success), var(--teal));
-            color: var(--white);
-            padding: 1rem;
-            border-radius: 8px;
-            text-align: center;
-            font-weight: 600;
-            margin-top: 1rem;
-        }
-
-        /* Note Box */
-        .note-box {
-            background: linear-gradient(135deg, #fff3cd, #ffeeba);
-            border: 1px solid var(--warning);
-            padding: 1.25rem;
-            border-radius: var(--radius);
-            margin: 1.5rem 0;
-        }
-
-        .note-box h4 {
-            color: #856404;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .note-box h4::before {
-            content: '💡';
-        }
-
-        /* Test Cards */
-        .test-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .test-card {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-            border-top: 4px solid var(--primary-blue);
-        }
-
-        .test-card.vertical {
-            border-top-color: var(--purple);
-        }
-
-        .test-card.horizontal {
-            border-top-color: var(--teal);
-        }
-
-        .test-card h4 {
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .test-card.vertical h4 {
-            color: var(--purple);
-        }
-
-        .test-card.horizontal h4 {
-            color: var(--teal);
-        }
-
-        .test-card ul {
-            margin-left: 1.25rem;
-        }
-
-        .test-card li {
-            margin: 0.5rem 0;
-        }
-
-        /* Formula Box */
-        .formula-box {
-            background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue));
-            color: var(--white);
-            padding: 1.5rem 2rem;
-            border-radius: var(--radius);
-            margin: 1.5rem 0;
-            text-align: center;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .formula-box h3 {
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        .formula {
-            font-size: 1.4rem;
-            font-family: 'Times New Roman', serif;
-            font-style: italic;
-            background: rgba(255, 255, 255, 0.15);
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            display: inline-block;
-            margin: 0.25rem;
-        }
-
-        /* Notation Comparison */
-        .notation-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .notation-card {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-            text-align: center;
-        }
-
-        .notation-card h4 {
-            color: var(--dark-blue);
-            margin-bottom: 1rem;
-        }
-
-        .notation-display {
-            font-size: 1.5rem;
-            font-family: 'Times New Roman', serif;
-            font-style: italic;
-            color: var(--primary-blue);
-            background: var(--light-blue);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
-
-        .notation-read {
-            font-style: italic;
-            color: var(--gray-600);
-            margin-bottom: 0.5rem;
-        }
-
-        /* Simulation Container */
-        .simulation-container {
-            background: var(--white);
-            border: 2px solid var(--primary-blue);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .simulation-title {
-            text-align: center;
-            color: var(--dark-blue);
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-        }
-
-        .simulation-controls {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: center;
-            margin-bottom: 1rem;
-            padding: 1rem;
-            background: var(--gray-100);
-            border-radius: 8px;
-        }
-
-        .control-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.25rem;
-        }
-
-        .control-group label {
-            font-size: 0.85rem;
-            color: var(--gray-600);
-            font-weight: 500;
-        }
-
-        .sim-input {
-            padding: 0.5rem;
-            border: 2px solid var(--gray-300);
-            border-radius: 8px;
-            font-size: 1rem;
-            width: 150px;
-            text-align: center;
-            transition: var(--transition);
-        }
-
-        .sim-input:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
-        }
-
-        .sim-btn {
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            color: var(--white);
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 25px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
-            box-shadow: var(--shadow);
-        }
-
-        .sim-btn:hover {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .sim-btn.purple {
-            background: linear-gradient(135deg, var(--purple), #9b59b6);
-        }
-
-        .sim-btn.teal {
-            background: linear-gradient(135deg, var(--teal), #17a2b8);
-        }
-
-        .canvas-container {
-            display: flex;
-            justify-content: center;
-            overflow-x: auto;
-        }
-
-        canvas {
-            border: 1px solid var(--gray-300);
-            border-radius: 8px;
-            background: var(--white);
-            max-width: 100%;
-        }
-
-        .result-display {
-            background: var(--gray-100);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-top: 1rem;
-            text-align: center;
-        }
-
-        .result-display.success {
-            background: #d4edda;
-            border: 1px solid var(--success);
-            color: #155724;
-        }
-
-        .result-display.error {
-            background: #f8d7da;
-            border: 1px solid var(--error);
-            color: #721c24;
-        }
-
-        /* Graph Examples Grid */
-        .graph-examples {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-
-        .graph-example {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 1rem;
-            text-align: center;
-            box-shadow: var(--shadow);
-        }
-
-        .graph-example canvas {
-            margin-bottom: 0.5rem;
-        }
-
-        .graph-example .label {
-            font-weight: 600;
-            padding: 0.5rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-        }
-
-        .graph-example .label.function {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .graph-example .label.not-function {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        /* Quiz Section */
-        .quiz-section {
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            padding: 2rem;
-            margin: 2rem 0;
-        }
-
-        .quiz-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .quiz-header h2 {
-            color: var(--dark-blue);
-            font-size: 1.75rem;
-        }
-
-        .quiz-progress {
-            background: var(--gray-200);
-            height: 8px;
-            border-radius: 4px;
-            margin-top: 1rem;
-            overflow: hidden;
-        }
-
-        .quiz-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue));
-            border-radius: 4px;
-            transition: width 0.5s ease;
-            width: 0%;
-        }
-
-        .question-card {
-            background: var(--gray-100);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-left: 5px solid var(--gray-600);
-            transition: var(--transition);
-        }
-
-        .question-card.answered-correct {
-            border-left-color: var(--success);
-            background: #d4edda;
-        }
-
-        .question-card.answered-incorrect {
-            border-left-color: var(--error);
-            background: #f8d7da;
-        }
-
-        .question-number {
-            display: inline-block;
-            background: var(--primary-blue);
-            color: var(--white);
-            padding: 0.25rem 0.75rem;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-        }
-
-        .question-text {
-            font-size: 1.05rem;
-            margin-bottom: 1rem;
-            color: var(--gray-800);
-        }
-
-        .options-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .option-label {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem;
-            background: var(--white);
-            border: 2px solid var(--gray-200);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .option-label:hover:not(.disabled) {
-            border-color: var(--primary-blue);
-            background: var(--light-blue);
-        }
-
-        .option-label.disabled {
-            cursor: not-allowed;
-            opacity: 0.8;
-        }
-
-        .option-label.selected {
-            border-color: var(--primary-blue);
-            background: var(--light-blue);
-        }
-
-        .option-label.correct {
-            border-color: var(--success);
-            background: #d4edda;
-        }
-
-        .option-label.incorrect {
-            border-color: var(--error);
-            background: #f8d7da;
-        }
-
-        .option-label input[type="radio"] {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--primary-blue);
-        }
-
-        .feedback {
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 8px;
-            display: none;
-            animation: fadeInUp 0.3s ease;
-        }
-
-        .feedback.show {
-            display: block;
-        }
-
-        .feedback.correct {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid var(--success);
-        }
-
-        .feedback.incorrect {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid var(--error);
-        }
-
-        /* Score Display */
-        .score-display {
-            background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue));
-            color: var(--white);
-            padding: 2rem;
-            border-radius: var(--radius);
-            text-align: center;
-            margin-top: 2rem;
-            display: none;
-        }
-
-        .score-display.show {
-            display: block;
-            animation: fadeInUp 0.5s ease;
-        }
-
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-            border: 4px solid var(--white);
-        }
-
-        .score-number {
-            font-size: 3rem;
-            font-weight: 700;
-        }
-
-        .score-label {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-
-        .score-message {
-            font-size: 1.25rem;
-            margin-top: 1rem;
-        }
-
-        .submit-quiz-btn {
-            background: var(--white);
-            color: var(--primary-blue);
-            border: none;
-            padding: 1rem 3rem;
-            border-radius: 25px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
-            box-shadow: var(--shadow);
-            margin-top: 1.5rem;
-        }
-
-        .submit-quiz-btn:hover {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .retry-btn {
-            background: var(--warning);
-            color: var(--gray-800);
-            border: none;
-            padding: 0.75rem 2rem;
-            border-radius: 25px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
-            margin-top: 1rem;
-        }
-
-        .retry-btn:hover {
-            transform: scale(1.05);
-        }
-
-        /* Navigation Buttons */
-        .lesson-nav {
-            display: flex;
-            justify-content: space-between;
-            gap: 1rem;
-            margin: 2rem 0;
-            flex-wrap: wrap;
-        }
-
-        .nav-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
-            border-radius: 25px;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: var(--transition);
-            cursor: pointer;
-            border: none;
-        }
-
-        .nav-btn.prev {
-            background: var(--white);
-            color: var(--primary-blue);
-            border: 2px solid var(--primary-blue);
-        }
-
-        .nav-btn.prev:hover {
-            background: var(--light-blue);
-            transform: translateX(-5px);
-        }
-
-        .nav-btn.next {
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            color: var(--white);
-            box-shadow: var(--shadow);
-        }
-
-        .nav-btn.next:hover {
-            transform: translateX(5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue));
-            color: var(--white);
-            padding: 2rem;
-            text-align: center;
-            margin-top: 3rem;
-        }
-
-        footer p {
-            opacity: 0.9;
-        }
-
-        /* Progress Indicator */
-        .progress-indicator {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--white);
-            padding: 1rem;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .progress-ring {
-            width: 50px;
-            height: 50px;
-        }
-
-        .progress-ring circle {
-            fill: none;
-            stroke-width: 4;
-        }
-
-        .progress-ring .bg {
-            stroke: var(--gray-200);
-        }
-
-        .progress-ring .progress {
-            stroke: var(--primary-blue);
-            stroke-linecap: round;
-            transform: rotate(-90deg);
-            transform-origin: center;
-            transition: stroke-dashoffset 0.5s ease;
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            header {
-                padding: 1rem;
-            }
-
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .dropdown-menu {
-                left: 50%;
-                transform: translateX(-50%) translateY(-10px);
-                width: 90vw;
-                max-width: 300px;
-            }
-
-            .dropdown-menu.active {
-                transform: translateX(-50%) translateY(0);
-            }
-
-            main {
-                padding: 1rem;
-            }
-
-            .card {
-                padding: 1.5rem;
-            }
-
-            .topic-header h1 {
-                font-size: 1.75rem;
-            }
-
-            .formula {
-                font-size: 1.1rem;
-                padding: 0.5rem 0.75rem;
-            }
-
-            .simulation-controls {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .sim-input {
-                width: 100%;
-            }
-
-            .lesson-nav {
-                flex-direction: column;
-            }
-
-            .nav-btn {
-                justify-content: center;
-            }
-
-            .progress-indicator {
-                bottom: 10px;
-                right: 10px;
-                padding: 0.75rem;
-            }
-
-            .score-circle {
-                width: 120px;
-                height: 120px;
-            }
-
-            .score-number {
-                font-size: 2.5rem;
-            }
-
-            .mapping-visual {
-                flex-direction: column;
-                gap: 1rem !important;
-            }
-
-            .arrows-container {
-                transform: rotate(90deg);
-            }
-        }
-    </style>
+    <title>Grade 12 Maths | Functions and Graphs | PassProof Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="math-lessons.css">
 </head>
 <body>
-    <!-- Header -->
+    <!-- ===== HEADER ===== -->
     <header>
-        <div class="header-content">
-            <div class="logo">
-                <div class="logo-icon">P</div>
-                <span>PassProof Academy</span>
-            </div>
-            <nav class="nav-container">
-                <button class="nav-toggle" id="navToggle">
-                    📚 Navigation
-                </button>
-                <div class="dropdown-menu" id="dropdownMenu">
-                    <a href="#">🏠 Home</a>
-                    <a href="#">📊 Dashboard</a>
-                    <a href="#" class="current">📖 Lesson 1: Introduction to Functions</a>
-                    <a href="#">📖 Lesson 2: Function Types & Graphs</a>
-                    <a href="#">📖 Lesson 3: Finding Equations</a>
-                    <a href="#">📖 Lesson 4: Inverse Functions</a>
-                    <a href="#">📖 Lesson 5: Logarithmic Functions</a>
-                    <a href="#">📝 Chapter Assessment</a>
-                    <a href="#">⚙️ Settings</a>
-                </div>
-            </nav>
-        </div>
+        <a href="index.html" class="logo">
+            <img src="../logo_tick.jpg" alt="PassProof Academy Logo">
+        </a>
+        <nav style="flex: 1; text-align: right;">
+            <span style="font-size: 2.2rem; color: #0f0909;"><img src="../favicon-32x32.png" alt="PassProof Academy Logo">Grade 12 Mathematics</span>
+        </nav>
     </header>
 
-    <!-- Main Content -->
+    <!-- ===== STICKY LESSON MAP ===== -->
+    <nav class="sticky-nav">
+        <ul class="lesson-map">
+            <li><a href="#objectives" class="nav-link">🎯 Objectives</a></li>
+            <li><a href="#pre-knowledge" class="nav-link">🧠 Pre-Knowledge</a></li>
+            <li><a href="#baseline" class="nav-link">📝 Baseline</a></li>
+            <li><a href="#linear" class="nav-link">📈 Linear Functions</a></li>
+            <li><a href="#quadratic" class="nav-link">📊 Quadratic Functions</a></li>
+            <li><a href="#hyperbolic" class="nav-link">🔄 Hyperbolic Functions</a></li>
+            <li><a href="#exponential" class="nav-link">📈 Exponential Functions</a></li>
+            <li><a href="#lab" class="nav-link">🧪 Graph Explorer</a></li>
+            <li><a href="#quiz" class="nav-link">✓ Quiz</a></li>
+            <li><a href="#video" class="nav-link">📹 Video</a></li>
+            <li><a href="#tutor" class="nav-link">👨‍🏫 Live Tutor</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===== MAIN CONTENT ===== -->
     <main>
-        <!-- Subject & Grade -->
-        <div class="card" style="animation-delay: 0.1s;">
-            <div class="subject-badge">
-                <span class="badge">📐 Mathematics</span>
-                <span class="badge outline">Grade 12</span>
-                <span class="badge outline">Term 1 - Week 4</span>
-                <span class="badge functions">📈 Functions</span>
-                <span class="badge outline">⏱️ 60 min</span>
+        <!-- Lesson Header -->
+        <section style="background: linear-gradient(135deg, var(--navy), var(--navy-light)); color: var(--white); padding: 1.5rem; border-radius: var(--radius-lg); margin-bottom: 1.5rem;">
+            <h1 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Functions and Graphs</h1>
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem;">
+                <div style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: var(--radius-md);">
+                    <strong>Grade:</strong> 12
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: var(--radius-md);">
+                    <strong>Week:</strong> Term 1 Week 4
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: var(--radius-md);">
+                    <strong>Time:</strong> 60 minutes
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: var(--radius-md);">
+                    <strong>Topic:</strong> Functions - Linear, Quadratic, Hyperbolic & Exponential
+                </div>
             </div>
-        </div>
+            <p style="margin-top: 1rem; color: var(--gray-300);">
+                Master four types of algebraic functions: linear (straight lines), quadratic (parabolas), hyperbolic (hyperbolas), and exponential functions. Understand how parameters transform graphs.
+            </p>
+        </section>
 
-        <!-- Topic Header -->
-        <div class="card topic-header" style="animation-delay: 0.2s;">
-            <span class="lesson-number">LESSON 1</span>
-            <h1>Introduction to Functions</h1>
-            <p class="subtitle">Relations, Functions & Function Notation</p>
-        </div>
-
-        <!-- Learning Objectives -->
-        <div class="card" style="animation-delay: 0.3s;">
-            <div class="section-header">
-                <div class="section-icon">🎯</div>
-                <h2>Learning Objectives</h2>
+        <!-- Section: Objectives -->
+        <section id="objectives">
+            <div class="section-header" data-toggle="objectives-content">
+                <h2>🎯 Lesson Objectives</h2>
+                <span class="toggle-icon">▼</span>
             </div>
-            <ul class="objectives-list">
-                <li>Define a function and distinguish it from a relation</li>
-                <li>Identify functions in ordered pairs and from graphs</li>
-                <li>Use the vertical line test and horizontal line test</li>
-                <li>Understand types of notation for functions and use these to determine function values</li>
-            </ul>
-        </div>
-
-        <!-- Relations vs Functions -->
-        <div class="card" style="animation-delay: 0.4s;">
-            <div class="section-header">
-                <div class="section-icon">🔗</div>
-                <h2>Relations and Functions</h2>
+            <div class="section-content" id="objectives-content">
+                <p>This lesson explores four types of algebraic functions. By the end of this lesson, you will be able to:</p>
+                <ul>
+                    <li>Understand the definition of a function and function notation</li>
+                    <li>Recognise and sketch linear, quadratic, hyperbolic, and exponential functions</li>
+                    <li>Identify the effects of parameters (a, p, q) on each type of graph</li>
+                    <li>Apply the dual intercept method for sketching linear functions</li>
+                    <li>Determine turning points, axes of symmetry, and asymptotes for various functions</li>
+                    <li>Interpret transformations including translations, stretches, and reflections</li>
+                </ul>
             </div>
+        </section>
 
-            <div class="definition-box relation">
-                <h4>📌 Relation</h4>
-                <p>A <strong>relation</strong> is a rule by means of which each element of the first set is associated with <strong>at least one</strong> element of the second set. Any set of ordered pairs is a relation.</p>
+        <!-- Section: Pre-Knowledge -->
+        <section id="pre-knowledge">
+            <div class="section-header" data-toggle="pre-knowledge-content">
+                <h2>🧠 Pre-Knowledge Required</h2>
+                <span class="toggle-icon">▼</span>
             </div>
-
-            <div class="definition-box function">
-                <h4>📌 Function</h4>
-                <p>A <strong>function</strong> is a special type of relation where each element of the first set (domain) is associated with <strong>exactly one</strong> element of the second set (range). Every input has only ONE output.</p>
+            <div class="section-content" id="pre-knowledge-content">
+                <p>Before starting this lesson, you should be familiar with:</p>
+                <ul class="knowledge-list">
+                    <li>Basic algebra and solving equations</li>
+                    <li>Cartesian coordinate system (x and y axes)</li>
+                    <li>Plotting points on a graph</li>
+                    <li>Concept of slope/gradient</li>
+                    <li>Exponential notation (e.g., 2³ = 8)</li>
+                    <li>Solving quadratic equations (factorization)</li>
+                </ul>
             </div>
+        </section>
 
-            <div class="note-box">
-                <h4>Key Difference</h4>
-                <p><strong>All functions are relations, but not all relations are functions!</strong></p>
-                <p>In a function, an x-value can NEVER be paired with more than one y-value.</p>
+        <!-- Section: Baseline Questions -->
+        <section id="baseline">
+            <div class="section-header" data-toggle="baseline-content">
+                <h2>📝 Baseline Questions</h2>
+                <span class="toggle-icon">▼</span>
             </div>
-        </div>
-
-        <!-- Types of Functions -->
-        <div class="card" style="animation-delay: 0.5s;">
-            <div class="section-header">
-                <div class="section-icon">📊</div>
-                <h2>Types of Mappings</h2>
+            <div class="section-content" id="baseline-content">
+                <p>Test your foundational knowledge before we begin:</p>
+                <ul class="baseline-list">
+                    <li>What is the gradient of the line y = 3x + 2?</li>
+                    <li>Solve for x: x² - 4x + 3 = 0</li>
+                    <li>What is the y-intercept of the line y = 2x - 5?</li>
+                    <li>Evaluate: 2³ and 2⁰</li>
+                    <li>What does f(x) notation mean?</li>
+                    <li>How would you plot the point (2, -3) on a graph?</li>
+                </ul>
             </div>
+        </section>
 
-            <div class="comparison-grid">
-                <div class="comparison-card one-to-one">
-                    <div class="card-header">✅ One-to-One Function</div>
-                    <div class="card-body">
-                        <p>Each x-value maps to a <strong>unique</strong> y-value, and each y-value comes from only one x-value.</p>
-                        <div class="mapping-visual">
-                            <div class="domain-set">
-                                <div class="set-item">1</div>
-                                <div class="set-item">2</div>
-                                <div class="set-item">3</div>
-                            </div>
-                            <div class="arrows-container">
-                                <span class="arrow">→</span>
-                                <span class="arrow">→</span>
-                                <span class="arrow">→</span>
-                            </div>
-                            <div class="range-set">
-                                <div class="set-item">2</div>
-                                <div class="set-item">4</div>
-                                <div class="set-item">6</div>
-                            </div>
-                        </div>
-                        <p style="text-align: center; color: var(--success);"><strong>IS a function ✓</strong></p>
+        <!-- Section: Linear Functions -->
+        <section id="linear">
+            <div class="section-header" data-toggle="linear-content">
+                <h2>📈 Linear Functions (Straight Line Graphs)</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content theory-content" id="linear-content">
+                <h3><span class="key-term">General Form: y = mx + c or y = ax + q</span></h3>
+                <p>In linear functions, <strong>m</strong> (or <strong>a</strong>) represents the gradient, and <strong>c</strong> (or <strong>q</strong>) represents the y-intercept.</p>
+
+                <div class="graph-grid">
+                    <div class="graph-card" onclick="selectFunctionType('linear', 2, 3)">
+                        <div class="graph-icon">↗️</div>
+                        <div class="graph-title">Positive Gradient</div>
+                        <div class="graph-formula">y = 2x + 3</div>
+                        <div class="graph-desc">a > 0, positive slope</div>
+                    </div>
+                    <div class="graph-card" onclick="selectFunctionType('linear', -1, 2)">
+                        <div class="graph-icon">↘️</div>
+                        <div class="graph-title">Negative Gradient</div>
+                        <div class="graph-formula">y = -x + 2</div>
+                        <div class="graph-desc">a < 0, negative slope</div>
                     </div>
                 </div>
 
-                <div class="comparison-card many-to-one">
-                    <div class="card-header">✅ Many-to-One Function</div>
-                    <div class="card-body">
-                        <p>Multiple x-values can map to the <strong>same</strong> y-value. Still a valid function!</p>
-                        <div class="mapping-visual">
-                            <div class="domain-set">
-                                <div class="set-item">-2</div>
-                                <div class="set-item">2</div>
-                                <div class="set-item">3</div>
-                            </div>
-                            <div class="arrows-container">
-                                <span class="arrow">↘</span>
-                                <span class="arrow">→</span>
-                                <span class="arrow">→</span>
-                            </div>
-                            <div class="range-set">
-                                <div class="set-item">4</div>
-                                <div class="set-item">4</div>
-                                <div class="set-item">9</div>
-                            </div>
-                        </div>
-                        <p style="text-align: center; color: var(--success);"><strong>IS a function ✓</strong></p>
-                    </div>
+                <div class="formula-box">
+                    <strong>Dual Intercept Method for Sketching</strong><br>
+                    1. X-intercept: Set y = 0, solve for x<br>
+                    2. Y-intercept: Set x = 0, solve for y<br>
+                    3. Plot both points and draw the line
                 </div>
 
-                <div class="comparison-card one-to-many">
-                    <div class="card-header">❌ One-to-Many Relation</div>
-                    <div class="card-body">
-                        <p>One x-value maps to <strong>multiple</strong> y-values. This is NOT a function!</p>
-                        <div class="mapping-visual">
-                            <div class="domain-set">
-                                <div class="set-item">1</div>
-                                <div class="set-item">4</div>
-                                <div class="set-item">4</div>
+                <div class="worked-example">
+                    <strong>Example 1: Sketch f(x) = 2x - 3</strong>
+                    <ul class="step-list">
+                        <li>
+                            <div>
+                                <strong>X-intercept (y = 0):</strong><br>
+                                0 = 2x - 3<br>
+                                2x = 3<br>
+                                x = 1.5 → Point (1.5, 0)
                             </div>
-                            <div class="arrows-container">
-                                <span class="arrow">→</span>
-                                <span class="arrow">↗</span>
-                                <span class="arrow">↘</span>
+                        </li>
+                        <li>
+                            <div>
+                                <strong>Y-intercept (x = 0):</strong><br>
+                                y = 2(0) - 3<br>
+                                y = -3 → Point (0, -3)
                             </div>
-                            <div class="range-set">
-                                <div class="set-item">8</div>
-                                <div class="set-item">2</div>
-                                <div class="set-item">6</div>
+                        </li>
+                        <li>
+                            <div>
+                                <strong>Sketch:</strong><br>
+                                Plot (1.5, 0) and (0, -3)<br>
+                                Draw a straight line through both points
                             </div>
-                        </div>
-                        <p style="text-align: center; color: var(--error);"><strong>NOT a function ✗</strong></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Domain and Range -->
-        <div class="card" style="animation-delay: 0.6s;">
-            <div class="section-header">
-                <div class="section-icon">📏</div>
-                <h2>Domain and Range</h2>
-            </div>
-
-            <div class="definition-box">
-                <h4>📌 Domain</h4>
-                <p>The <strong>domain</strong> is the set of all input values (x-values) for which the function is defined. These are the elements of the first set.</p>
-            </div>
-
-            <div class="definition-box">
-                <h4>📌 Range</h4>
-                <p>The <strong>range</strong> is the set of all output values (y-values) that result from the function. These are also called the <em>images</em> or <em>function values</em>.</p>
-            </div>
-
-            <div class="example-box">
-                <h4>Example: Identify Domain and Range</h4>
-                <div class="ordered-pairs">{(1, 2), (2, 4), (3, 6), (4, 8)}</div>
-                <div class="solution-steps">
-                    <div class="step">
-                        <span class="step-number">D</span>
-                        <span><strong>Domain:</strong> x ∈ {1, 2, 3, 4}</span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">R</span>
-                        <span><strong>Range:</strong> y ∈ {2, 4, 6, 8}</span>
-                    </div>
-                </div>
-                <div class="final-answer">This is a ONE-TO-ONE FUNCTION ✓</div>
-            </div>
-
-            <div class="note-box">
-                <h4>Remember</h4>
-                <p>When working with functions and the domain is not given, assume the domain to be the set of all real numbers: <strong>x ∈ ℝ</strong></p>
-            </div>
-        </div>
-
-        <!-- Vertical and Horizontal Line Tests -->
-        <div class="card" style="animation-delay: 0.7s;">
-            <div class="section-header">
-                <div class="section-icon">📐</div>
-                <h2>Vertical & Horizontal Line Tests</h2>
-            </div>
-
-            <div class="test-cards">
-                <div class="test-card vertical">
-                    <h4>📏 Vertical Line Test</h4>
-                    <p><strong>Purpose:</strong> Determines if a graph is a function</p>
-                    <ul>
-                        <li>Hold a ruler parallel to the y-axis</li>
-                        <li>Move it from left to right across the graph</li>
-                        <li>If the line <strong>ever</strong> cuts the graph in MORE than one place → <strong>NOT a function</strong></li>
-                        <li>If it only cuts in ONE place everywhere → <strong>IS a function</strong></li>
+                        </li>
                     </ul>
                 </div>
 
-                <div class="test-card horizontal">
-                    <h4>📏 Horizontal Line Test</h4>
-                    <p><strong>Purpose:</strong> Determines the TYPE of function (only after vertical test passes!)</p>
-                    <ul>
-                        <li>Hold a ruler parallel to the x-axis</li>
-                        <li>Move it up and down across the graph</li>
-                        <li>If line cuts in ONE place → <strong>One-to-one function</strong></li>
-                        <li>If line cuts in MORE than one place → <strong>Many-to-one function</strong></li>
+                <div class="info-box">
+                    <h4>📌 Special Cases: Horizontal and Vertical Lines</h4>
+                    <p><strong>Horizontal line:</strong> y = k (gradient = 0)</p>
+                    <p><strong>Vertical line:</strong> x = k (gradient = undefined)</p>
+                    <p>Example: y = 2 is horizontal, x = 3 is vertical</p>
+                </div>
+
+                <div class="note-box">
+                    <h4>💡 Effect of Parameters</h4>
+                    <p><strong>a (gradient):</strong> Controls steepness and direction</p>
+                    <p><strong>q (y-intercept):</strong> Controls vertical position</p>
+                    <p>• If q > 0: Graph shifts q units upwards</p>
+                    <p>• If q < 0: Graph shifts |q| units downwards</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Quadratic Functions -->
+        <section id="quadratic">
+            <div class="section-header" data-toggle="quadratic-content">
+                <h2>📊 Quadratic Functions (Parabolas)</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content theory-content" id="quadratic-content">
+                <h3><span class="key-term">Standard Forms</span></h3>
+                <p>Quadratic functions can be written in several forms:</p>
+                <ul>
+                    <li>f(x) = ax²</li>
+                    <li>f(x) = ax² + q</li>
+                    <li>f(x) = a(x - p)² + q</li>
+                    <li>f(x) = ax² + bx + c</li>
+                </ul>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Shape</th>
+                            <th>Condition</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>😊 Happy face</td>
+                            <td class="positive">a > 0</td>
+                            <td>Minimum turning point (opens upwards)</td>
+                        </tr>
+                        <tr>
+                            <td>☹️ Sad face</td>
+                            <td class="negative">a < 0</td>
+                            <td>Maximum turning point (opens downwards)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="worked-example">
+                    <strong>Example 2: Sketch f(x) = (x - 2)² - 9</strong>
+                    <ul class="step-list">
+                        <li>
+                            <div>
+                                <strong>Shape:</strong><br>
+                                a = 1 > 0 → Happy face (minimum)
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <strong>Turning Point:</strong><br>
+                                From f(x) = a(x - p)² + q<br>
+                                p = 2, q = -9 → Turning point: (2, -9)
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <strong>X-intercepts (y = 0):</strong><br>
+                                0 = (x - 2)² - 9<br>
+                                (x - 2)² = 9<br>
+                                x - 2 = ±3<br>
+                                x = 5 or x = -1 → Points (5, 0) and (-1, 0)
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <strong>Y-intercept (x = 0):</strong><br>
+                                y = (0 - 2)² - 9 = 4 - 9 = -5 → Point (0, -5)
+                            </div>
+                        </li>
                     </ul>
                 </div>
-            </div>
 
-            <div class="note-box">
-                <h4>Important Order!</h4>
-                <p>Always apply the <strong>Vertical Line Test FIRST</strong> to determine if it's a function. Only then use the Horizontal Line Test to determine what <em>type</em> of function it is.</p>
-            </div>
-        </div>
+                <div class="formula-box">
+                    <strong>Key Formulas</strong><br>
+                    Axis of symmetry: x = -b/(2a) or x = p<br>
+                    Turning point: (p, q) or (-b/(2a), f(-b/(2a)))<br>
+                    X-intercepts: Solve ax² + bx + c = 0
+                </div>
 
-        <!-- Interactive Line Test Simulation -->
-        <div class="card" style="animation-delay: 0.8s;">
-            <div class="section-header">
-                <div class="section-icon">🎮</div>
-                <h2>Interactive Simulations</h2>
+                <div class="note-box">
+                    <h4>💡 Parameter Effects</h4>
+                    <p><strong>a:</strong> Vertical stretch/compression and reflection</p>
+                    <p><strong>p:</strong> Horizontal translation (x + p shifts left, x - p shifts right)</p>
+                    <p><strong>q:</strong> Vertical translation (up if q > 0, down if q < 0)</p>
+                </div>
             </div>
+        </section>
 
-            <!-- Vertical Line Test Simulator -->
-            <div class="simulation-container">
-                <h3 class="simulation-title">📏 Vertical Line Test Simulator</h3>
-                <div class="simulation-controls">
-                    <div class="control-group">
-                        <label>Select Graph Type</label>
-                        <select id="graphType" class="sim-input" onchange="drawSelectedGraph()">
-                            <option value="parabola">Parabola (y = x²)</option>
-                            <option value="line">Line (y = 2x + 1)</option>
-                            <option value="circle">Circle (x² + y² = 16)</option>
-                            <option value="hyperbola">Hyperbola (y = 1/x)</option>
-                            <option value="sideways">Sideways Parabola (y² = x)</option>
-                        </select>
+        <!-- Section: Hyperbolic Functions -->
+        <section id="hyperbolic">
+            <div class="section-header" data-toggle="hyperbolic-content">
+                <h2>🔄 Hyperbolic Functions (Hyperbolas)</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content theory-content" id="hyperbolic-content">
+                <h3><span class="key-term">Standard Form: f(x) = a/(x + p) + q</span></h3>
+                <p>Hyperbolic functions have two asymptotes and exist in two branches.</p>
+
+                <div class="info-box">
+                    <h4>📌 Key Features</h4>
+                    <p><strong>Vertical asymptote:</strong> x = -p (denominator = 0)</p>
+                    <p><strong>Horizontal asymptote:</strong> y = q</p>
+                    <p><strong>Quadrants:</strong> a > 0 → 1st & 3rd quadrants; a < 0 → 2nd & 4th quadrants</p>
+                </div>
+
+                <div class="worked-example">
+                    <strong>Example 3: Sketch f(x) = 4/(x + 3) - 2</strong>
+                    <ul class="step-list">
+                        <li>
+                            <div>
+                                <strong>Asymptotes:</strong><br>
+                                Vertical: x + 3 = 0 → x = -3<br>
+                                Horizontal: y = -2
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <strong>X-intercept (y = 0):</strong><br>
+                                0 = 4/(x + 3) - 2<br>
+                                2 = 4/(x + 3)<br>
+                                2(x + 3) = 4<br>
+                                x + 3 = 2 → x = -1 → Point (-1, 0)
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <strong>Y-intercept (x = 0):</strong><br>
+                                y = 4/(0 + 3) - 2 = 4/3 - 2 = -2/3 → Point (0, -2/3)
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="note-box">
+                    <h4>💡 Transformation from "Mother" Graph</h4>
+                    <p>Starting from y = 1/x (the basic hyperbola):</p>
+                    <p>1. y = 4/x → Vertical stretch by factor 4</p>
+                    <p>2. y = 4/(x + 3) → Shift 3 units left</p>
+                    <p>3. y = 4/(x + 3) - 2 → Shift 2 units down</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Exponential Functions -->
+        <section id="exponential">
+            <div class="section-header" data-toggle="exponential-content">
+                <h2>📈 Exponential Functions</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content theory-content" id="exponential-content">
+                <h3><span class="key-term">Standard Form: f(x) = ab^(x + p) + q</span></h3>
+                <p>Exponential functions always have a horizontal asymptote and either increase or decrease.</p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Base (b)</th>
+                            <th>Behavior</th>
+                            <th>Graph Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>b > 1</td>
+                            <td class="positive">Increasing</td>
+                            <td>Growth function</td>
+                        </tr>
+                        <tr>
+                            <td>0 < b < 1</td>
+                            <td class="negative">Decreasing</td>
+                            <td>Decay function</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="worked-example">
+                    <strong>Example 4: Sketch f(x) = 2·2^(x + 1) - 4</strong>
+                    <ul class="step-list">
+                        <li>
+                            <div>
+                                <strong>Behavior:</strong><br>
+                                a = 2 > 0 → Above asymptote<br>
+                                b = 2 > 1 → Increasing function
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <strong>Asymptote:</strong><br>
+                                Horizontal asymptote: y = -4
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <strong>Y-intercept (x = 0):</strong><br>
+                                y = 2·2^(0 + 1) - 4 = 2·2 - 4 = 0 → Point (0, 0)
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <strong>Reference point movement:</strong><br>
+                                From (0, 1) in y = 2^x to (-1, 2 - 4) = (-1, -2)
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="formula-box">
+                    <strong>Key Characteristics</strong><br>
+                    • Horizontal asymptote: y = q<br>
+                    • Y-intercept: f(0) = ab^p + q<br>
+                    • Domain: All real numbers<br>
+                    • Range: y > q if a > 0; y < q if a < 0
+                </div>
+
+                <div class="note-box">
+                    <h4>💡 Important Notes</h4>
+                    <p>1. When x = 0, b^0 = 1 (any base to power 0 equals 1)</p>
+                    <p>2. The point (0, 1) in y = b^x moves to (-p, a + q) in the transformed function</p>
+                    <p>3. Exponential functions never touch their asymptotes</p>
+                </div>
+
+                <div class="practice-problems">
+                    <h4>📝 Homework Practice</h4>
+                    <p><strong>1.</strong> Sketch: f(x) = 3·2^x</p>
+                    <p><strong>2.</strong> Sketch: f(x) = -1/(x + 2)</p>
+                    <p><strong>3.</strong> Sketch: g(x) = (x - 2)²</p>
+                    <p><strong>4.</strong> Sketch: y = -2^(x + 1) - 4</p>
+                    <p><strong>5.</strong> Sketch: f(x) = x² + x - 6</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Virtual Lab -->
+        <section id="lab">
+            <div class="section-header" data-toggle="lab-content">
+                <h2>🧪 Graph Explorer Lab</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content" id="lab-content">
+                <p style="margin-bottom: 1.5rem;">Explore how changing parameters affects different function graphs. Select a function type and adjust parameters to see transformations in real-time.</p>
+                
+                <div class="lab-zone">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1rem; width: 100%;">
+                        <div class="slider-container">
+                            <label>Function Type: <span id="funcTypeDisplay">Linear</span></label>
+                            <select id="functionType" style="width: 100%; padding: 0.5rem; border-radius: var(--radius-md); background: var(--navy-light); color: white; border: 1px solid var(--gray-400);">
+                                <option value="linear">Linear: y = ax + q</option>
+                                <option value="quadratic">Quadratic: y = a(x-p)² + q</option>
+                                <option value="hyperbolic">Hyperbolic: y = a/(x+p) + q</option>
+                                <option value="exponential">Exponential: y = ab^(x+p) + q</option>
+                            </select>
+                        </div>
+                        <div class="slider-container">
+                            <label>Parameter a: <span id="aValue">2</span></label>
+                            <input type="range" id="aSlider" min="-5" max="5" value="2" step="0.5">
+                        </div>
+                        <div class="slider-container">
+                            <label>Parameter p: <span id="pValue">0</span></label>
+                            <input type="range" id="pSlider" min="-5" max="5" value="0" step="0.5">
+                        </div>
+                        <div class="slider-container">
+                            <label>Parameter q: <span id="qValue">0</span></label>
+                            <input type="range" id="qSlider" min="-5" max="5" value="0" step="0.5">
+                        </div>
                     </div>
-                    <button class="sim-btn purple" onclick="animateVerticalLine()">Run Vertical Test</button>
-                    <button class="sim-btn teal" onclick="animateHorizontalLine()">Run Horizontal Test</button>
-                </div>
-                <div class="canvas-container">
-                    <canvas id="lineTestCanvas" width="500" height="400"></canvas>
-                </div>
-                <div class="result-display" id="lineTestResult">
-                    Select a graph and run the tests to see results!
-                </div>
-            </div>
-
-            <!-- Function Evaluator -->
-            <div class="simulation-container">
-                <h3 class="simulation-title">🧮 Function Evaluator</h3>
-                <div class="simulation-controls">
-                    <div class="control-group">
-                        <label>Function f(x) =</label>
-                        <select id="functionSelect" class="sim-input">
-                            <option value="linear">2x + 3</option>
-                            <option value="quadratic">x² - 2x + 1</option>
-                            <option value="cubic">x³ - 4x</option>
-                            <option value="reciprocal">1/x</option>
-                        </select>
+                    
+                    <div id="typeIndicator" class="type-indicator linear">
+                        📈 Linear Function: y = 2x
                     </div>
-                    <div class="control-group">
-                        <label>x =</label>
-                        <input type="number" id="xValue" class="sim-input" value="2" step="0.5">
+                    
+                    <div class="lab-canvas">
+                        <canvas id="graphCanvas" class="graph-canvas" width="600" height="300"></canvas>
                     </div>
-                    <button class="sim-btn" onclick="evaluateFunction()">Calculate f(x)</button>
-                </div>
-                <div class="result-display" id="functionResult">
-                    Enter an x-value and click Calculate to find f(x)
-                </div>
-            </div>
-
-            <!-- Ordered Pairs Checker -->
-            <div class="simulation-container">
-                <h3 class="simulation-title">🔍 Is This a Function?</h3>
-                <div class="simulation-controls">
-                    <div class="control-group">
-                        <label>Enter Ordered Pairs (e.g., (1,2),(2,4),(3,6))</label>
-                        <input type="text" id="orderedPairs" class="sim-input" style="width: 250px;" placeholder="(1,2),(2,4),(3,6)">
+                    
+                    <div class="function-display">
+                        Current Function: <span class="function-value" id="currentFunction">y = 2x</span>
                     </div>
-                    <button class="sim-btn" onclick="checkFunction()">Check</button>
-                </div>
-                <div class="result-display" id="pairsResult">
-                    Enter ordered pairs to check if they form a function
-                </div>
-            </div>
-        </div>
-
-        <!-- Function Notation -->
-        <div class="card" style="animation-delay: 0.9s;">
-            <div class="section-header">
-                <div class="section-icon">✏️</div>
-                <h2>Function Notation</h2>
-            </div>
-
-            <p>Since functions are special relations, we use specific notation for them:</p>
-
-            <div class="notation-grid">
-                <div class="notation-card">
-                    <h4>Mapping Notation</h4>
-                    <div class="notation-display">f : x → 2x</div>
-                    <p class="notation-read">"f maps x onto 2x"</p>
-                    <p>If x = 3, then 3 maps to 2(3) = 6</p>
-                    <p>We say <strong>6 is the image of 3</strong></p>
-                </div>
-
-                <div class="notation-card">
-                    <h4>Functional Notation</h4>
-                    <div class="notation-display">f(x) = 2x</div>
-                    <p class="notation-read">"f of x equals 2x"</p>
-                    <p>The symbol f(x) denotes the y-value</p>
-                    <p>y = f(x), so if x = 3, then f(3) = 6</p>
-                </div>
-            </div>
-
-            <div class="example-box">
-                <h4>Example 1: Evaluate f(x) = x² - 2x + 1</h4>
-                <p>Find: a) f(1) &nbsp; b) f(-2) &nbsp; c) f(0) &nbsp; d) f(a)</p>
-                <div class="solution-steps">
-                    <div class="step">
-                        <span class="step-number">a</span>
-                        <span>f(1) = (1)² - 2(1) + 1 = 1 - 2 + 1 = <span class="highlight">0</span></span>
+                    
+                    <div class="lab-controls">
+                        <button class="btn-primary" id="resetGraphBtn">🔄 Reset Graph</button>
+                        <button class="btn-primary" id="showAsymptotesBtn">📐 Toggle Asymptotes</button>
+                        <button class="btn-secondary" id="showGridBtn">📊 Toggle Grid</button>
                     </div>
-                    <div class="step">
-                        <span class="step-number">b</span>
-                        <span>f(-2) = (-2)² - 2(-2) + 1 = 4 + 4 + 1 = <span class="highlight">9</span></span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">c</span>
-                        <span>f(0) = (0)² - 2(0) + 1 = 0 - 0 + 1 = <span class="highlight">1</span></span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">d</span>
-                        <span>f(a) = (a)² - 2(a) + 1 = <span class="highlight">a² - 2a + 1</span></span>
+                    
+                    <div style="color: var(--gray-300); font-size: 0.9rem; margin-top: 1rem; text-align: center;">
+                        <strong>Experiment:</strong> Try negative a values, adjust p for horizontal shifts, and q for vertical shifts.
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div class="example-box">
-                <h4>Example 2: If f : x → -2x + 3, find f(1), f(0), f(-½)</h4>
-                <div class="solution-steps">
-                    <div class="step">
-                        <span class="step-number">1</span>
-                        <span>f(1) = -2(1) + 3 = -2 + 3 = <span class="highlight">1</span></span>
+        <!-- Section: Quiz -->
+        <section id="quiz">
+            <div class="section-header" data-toggle="quiz-content">
+                <h2>✓ Comprehensive Quiz (12 Questions)</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content quiz-container" id="quiz-content">
+                <p>Test your understanding of functions and graphs. Select an option and get instant feedback.</p>
+
+                <!-- Question 1 -->
+                <div class="quiz-question" data-question="1">
+                    <h4>Question 1: What is the gradient of the line y = -3x + 5?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="true">A) -3</div>
+                        <div class="quiz-option" data-answer="false">B) 3</div>
+                        <div class="quiz-option" data-answer="false">C) 5</div>
+                        <div class="quiz-option" data-answer="false">D) -5</div>
                     </div>
-                    <div class="step">
-                        <span class="step-number">2</span>
-                        <span>f(0) = -2(0) + 3 = 0 + 3 = <span class="highlight">3</span></span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">3</span>
-                        <span>f(-½) = -2(-½) + 3 = 1 + 3 = <span class="highlight">4</span></span>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> In the form y = mx + c, m is the gradient. Here m = -3.
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Quiz Section -->
-        <div class="quiz-section" id="quizSection">
-            <div class="quiz-header">
-                <h2>📝 Lesson Quiz</h2>
-                <p>Test your understanding of functions, relations, and notation</p>
-                <div class="quiz-progress">
-                    <div class="quiz-progress-bar" id="progressBar"></div>
+                <!-- Question 2 -->
+                <div class="quiz-question" data-question="2">
+                    <h4>Question 2: Which function represents a parabola with a minimum turning point?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="false">A) y = -x² + 3</div>
+                        <div class="quiz-option" data-answer="true">B) y = 2x² - 4</div>
+                        <div class="quiz-option" data-answer="false">C) y = -3(x - 1)²</div>
+                        <div class="quiz-option" data-answer="false">D) y = -½x² + 2</div>
+                    </div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> A parabola has a minimum turning point when a > 0. Only option B has a = 2 > 0.
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="quiz-question" data-question="3">
+                    <h4>Question 3: What are the asymptotes of y = 4/(x + 2) - 3?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="false">A) x = 4, y = -3</div>
+                        <div class="quiz-option" data-answer="true">B) x = -2, y = -3</div>
+                        <div class="quiz-option" data-answer="false">C) x = 2, y = 3</div>
+                        <div class="quiz-option" data-answer="false">D) x = -4, y = 3</div>
+                    </div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> Vertical asymptote: x + 2 = 0 → x = -2. Horizontal asymptote: y = -3.
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="quiz-question" data-question="4">
+                    <h4>Question 4: For the exponential function y = 3·2^x, what is the y-intercept?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="false">A) 2</div>
+                        <div class="quiz-option" data-answer="true">B) 3</div>
+                        <div class="quiz-option" data-answer="false">C) 6</div>
+                        <div class="quiz-option" data-answer="false">D) 0</div>
+                    </div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> When x = 0, y = 3·2⁰ = 3×1 = 3.
+                    </div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="quiz-question" data-question="5">
+                    <h4>Question 5: What is the turning point of y = (x - 3)² + 4?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="true">A) (3, 4)</div>
+                        <div class="quiz-option" data-answer="false">B) (-3, 4)</div>
+                        <div class="quiz-option" data-answer="false">C) (3, -4)</div>
+                        <div class="quiz-option" data-answer="false">D) (-3, -4)</div>
+                    </div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> In the form y = a(x - p)² + q, the turning point is (p, q). Here p = 3, q = 4.
+                    </div>
+                </div>
+
+                <!-- Question 6 -->
+                <div class="quiz-question" data-question="6">
+                    <h4>Question 6: Which function represents exponential decay?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="false">A) y = 3·4^x</div>
+                        <div class="quiz-option" data-answer="true">B) y = 2·(½)^x</div>
+                        <div class="quiz-option" data-answer="false">C) y = 5·2^x</div>
+                        <div class="quiz-option" data-answer="false">D) y = 0.5·3^x</div>
+                    </div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> Exponential decay occurs when 0 < b < 1. Only option B has b = ½.
+                    </div>
+                </div>
+
+                <!-- Question 7 -->
+                <div class="quiz-question" data-question="7">
+                    <h4>Question 7: What is the gradient of a horizontal line?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="true">A) 0</div>
+                        <div class="quiz-option" data-answer="false">B) 1</div>
+                        <div class="quiz-option" data-answer="false">C) Undefined</div>
+                        <div class="quiz-option" data-answer="false">D) ∞</div>
+                    </div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> Horizontal lines have zero gradient (no vertical change).
+                    </div>
+                </div>
+
+                <!-- Question 8 -->
+                <div class="quiz-question" data-question="8">
+                    <h4>Question 8: The graph of y = f(x) + 2 is obtained by:</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="false">A) Shifting 2 units left</div>
+                        <div class="quiz-option" data-answer="false">B) Shifting 2 units right</div>
+                        <div class="quiz-option" data-answer="true">C) Shifting 2 units up</div>
+                        <div class="quiz-option" data-answer="false">D) Shifting 2 units down</div>
+                    </div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> Adding to the function (f(x) + q) causes a vertical shift. q > 0 shifts up.
+                    </div>
+                </div>
+
+                <!-- Question 9 -->
+                <div class="quiz-question" data-question="9">
+                    <h4>Question 9: Which is NOT a function?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="false">A) y = 2x + 3</div>
+                        <div class="quiz-option" data-answer="false">B) y = x²</div>
+                        <div class="quiz-option" data-answer="true">C) x = y²</div>
+                        <div class="quiz-option" data-answer="false">D) y = 3^x</div>
+                    </div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> x = y² is not a function because for some x values (x > 0), there are two y values.
+                    </div>
+                </div>
+
+                <!-- Question 10 -->
+                <div class="quiz-question" data-question="10">
+                    <h4>Question 10: What is the axis of symmetry for y = x² - 4x + 3?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="false">A) x = -2</div>
+                        <div class="quiz-option" data-answer="true">B) x = 2</div>
+                        <div class="quiz-option" data-answer="false">C) x = 4</div>
+                        <div class="quiz-option" data-answer="false">D) x = -4</div>
+                    </div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> Axis of symmetry: x = -b/(2a) = -(-4)/(2×1) = 4/2 = 2.
+                    </div>
+                </div>
+
+                <!-- Question 11 -->
+                <div class="quiz-question" data-question="11">
+                    <h4>Question 11: The hyperbola y = -2/(x - 1) is located in which quadrants?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="false">A) 1st and 3rd</div>
+                        <div class="quiz-option" data-answer="true">B) 2nd and 4th</div>
+                        <div class="quiz-option" data-answer="false">C) 1st and 2nd</div>
+                        <div class="quiz-option" data-answer="false">D) 3rd and 4th</div>
+                    </div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> When a < 0, the hyperbola is in the 2nd and 4th quadrants.
+                    </div>
+                </div>
+
+                <!-- Question 12 -->
+                <div class="quiz-question" data-question="12">
+                    <h4>Question 12: What transformation turns y = x² into y = (x + 3)²?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="true">A) Shift 3 units left</div>
+                        <div class="quiz-option" data-answer="false">B) Shift 3 units right</div>
+                        <div class="quiz-option" data-answer="false">C) Shift 3 units up</div>
+                        <div class="quiz-option" data-answer="false">D) Shift 3 units down</div>
+                    </div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> Replacing x with (x + p) causes horizontal shift. x + 3 means shift 3 units left.
+                    </div>
+                </div>
+
+                <div class="quiz-reset">
+                    <button class="btn-secondary" id="resetQuizBtn">↻ Retry Quiz</button>
                 </div>
             </div>
+        </section>
 
-            <div id="questionsContainer"></div>
-
-            <button class="submit-quiz-btn" id="submitQuiz" onclick="submitQuiz()">
-                Submit All Answers
-            </button>
-
-            <div class="score-display" id="scoreDisplay">
-                <div class="score-circle">
-                    <span class="score-number" id="scoreNumber">0</span>
-                    <span class="score-label">/ 12</span>
-                </div>
-                <p class="score-message" id="scoreMessage"></p>
-                <p id="scorePercentage"></p>
-                <button class="retry-btn" onclick="retryQuiz()">🔄 Retry Quiz</button>
+        <!-- Section: Video Tutorial -->
+        <section id="video">
+            <div class="section-header" data-toggle="video-content">
+                <h2>📹 Video Tutorial</h2>
+                <span class="toggle-icon">▼</span>
             </div>
-        </div>
+            <div class="section-content" id="video-content">
+                <p style="color: var(--gray-600); margin-bottom: 1rem;">Watch this comprehensive tutorial on functions and graphs covering all four function types!</p>
+                <div class="video-container">
+                    <div class="video-placeholder" id="videoPlaceholder">
+                        <div class="play-btn" id="playVideoBtn">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="var(--navy)">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </div>
+                        <p>Click to play: Functions & Graphs Masterclass</p>
+                    </div>
+                </div>
+                <p style="font-size: 0.9rem; color: var(--gray-500); margin-top: 1rem;">
+                    Duration: 25 minutes | Covers: Linear, Quadratic, Hyperbolic, and Exponential functions with sketching techniques
+                </p>
+            </div>
+        </section>
 
-        <!-- Navigation Buttons -->
-        <div class="lesson-nav">
-            <button class="nav-btn prev">
-                ← Previous Topic
-            </button>
-            <button class="nav-btn next">
-                Next Lesson →
-            </button>
-        </div>
+        <!-- Section: Live Tutor CTA -->
+        <section id="tutor">
+            <div class="section-header" data-toggle="tutor-content">
+                <h2>👨‍🏫 Live Tutoring Support</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content" id="tutor-content">
+                <div class="tutor-cta">
+                    <h3>Struggling with Function Graphs?</h3>
+                    <p style="margin-bottom: 1.5rem;">
+                        Our expert mathematics tutors can help you master sketching techniques, understand transformations, and identify key features of each function type. Get personalized help with homework and exam preparation!
+                    </p>
+                    <button class="btn-primary" id="openTutorModal">💬 Book a Session Now</button>
+                    <p style="margin-top: 1rem; font-size: 0.95rem;">
+                        Quick questions? WhatsApp us at <a href="tel:0670957879">067 095 7879</a>
+                    </p>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <!-- Progress Indicator -->
-    <div class="progress-indicator" id="progressIndicator">
-        <svg class="progress-ring" viewBox="0 0 50 50">
-            <circle class="bg" cx="25" cy="25" r="20"/>
-            <circle class="progress" cx="25" cy="25" r="20" 
-                stroke-dasharray="125.66" 
-                stroke-dashoffset="125.66"
-                id="progressRing"/>
-        </svg>
-        <span id="progressText">0%</span>
+    <!-- ===== FLOATING TUTOR BUTTON ===== -->
+    <div class="floating-tutor" id="floatingTutor" title="Chat with a tutor">💬</div>
+
+    <!-- ===== MODAL ===== -->
+    <div id="tutorModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Live Tutoring Session</h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <p style="margin-bottom: 1rem; color: var(--gray-600);">
+                Book a session with an expert Grade 12 Mathematics tutor specializing in functions and graphs.
+            </p>
+            <form id="tutorForm" style="display: flex; flex-direction: column; gap: 1rem;">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="What specific topics do you need help with? (Linear functions, Parabolas, Hyperbolas, Exponential, etc.)" rows="4"></textarea>
+                <select style="padding: 0.75rem; border: 2px solid var(--gray-200); border-radius: var(--radius-md);">
+                    <option>Select session type</option>
+                    <option>Quick 30-minute session</option>
+                    <option>1-hour comprehensive session</option>
+                    <option>Exam preparation</option>
+                    <option>Homework help - Functions & Graphs</option>
+                </select>
+                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 0.5rem;">Book Session</button>
+            </form>
+        </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 PassProof Academy. All Rights Reserved.</p>
-        <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">
-            Empowering Students Through Interactive Learning
-        </p>
+    <!-- ===== FOOTER NAVIGATION ===== -->
+    <footer class="lesson-nav">
+        <a href="contents.html" class="nav-btn">← Subject Contents</a>
+        <div class="nav-center">
+            <a href="less1-6.html" class="nav-btn"><span>📚</span> Previous Lesson</a>
+        </div>
+        <a href="less1-8.html" class="nav-btn primary">Next Lesson (1.8) →</a>
     </footer>
 
+    <!-- ===== JAVASCRIPT ===== -->
     <script>
-        // ========== Navigation Handling ==========
-        const navToggle = document.getElementById('navToggle');
-        const dropdownMenu = document.getElementById('dropdownMenu');
-
-        navToggle.addEventListener('click', () => {
-            navToggle.classList.toggle('active');
-            dropdownMenu.classList.toggle('active');
+        // ==========================================
+        // COLLAPSIBLE SECTIONS
+        // Toggles section visibility when header is clicked
+        // ==========================================
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-toggle');
+                const content = document.getElementById(targetId);
+                this.classList.toggle('collapsed');
+                content.classList.toggle('collapsed');
+            });
         });
 
-        document.addEventListener('click', (e) => {
-            if (!navToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
-                navToggle.classList.remove('active');
-                dropdownMenu.classList.remove('active');
+        // ==========================================
+        // SMOOTH SCROLL & ACTIVE NAV HIGHLIGHTING
+        // ==========================================
+        const sections = document.querySelectorAll('main section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 160) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // ==========================================
+        // GRAPH EXPLORER LAB
+        // Interactive visualization of function graphs
+        // ==========================================
+        const canvas = document.getElementById('graphCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Lab state
+        let labState = {
+            type: 'linear',
+            a: 2,
+            p: 0,
+            q: 0,
+            showGrid: true,
+            showAsymptotes: true
+        };
+        
+        // DOM elements
+        const funcTypeSelect = document.getElementById('functionType');
+        const aSlider = document.getElementById('aSlider');
+        const pSlider = document.getElementById('pSlider');
+        const qSlider = document.getElementById('qSlider');
+        const aValueDisplay = document.getElementById('aValue');
+        const pValueDisplay = document.getElementById('pValue');
+        const qValueDisplay = document.getElementById('qValue');
+        const funcTypeDisplay = document.getElementById('funcTypeDisplay');
+        const typeIndicator = document.getElementById('typeIndicator');
+        const currentFunctionDisplay = document.getElementById('currentFunction');
+        
+        // Initialize the lab
+        function initGraphLab() {
+            updateLabFromControls();
+            drawGraph();
+        }
+        
+        // Update lab state from controls
+        function updateLabFromControls() {
+            labState.type = funcTypeSelect.value;
+            labState.a = parseFloat(aSlider.value);
+            labState.p = parseFloat(pSlider.value);
+            labState.q = parseFloat(qSlider.value);
+            
+            aValueDisplay.textContent = labState.a;
+            pValueDisplay.textContent = labState.p;
+            qValueDisplay.textContent = labState.q;
+            funcTypeDisplay.textContent = labState.type.charAt(0).toUpperCase() + labState.type.slice(1);
+            
+            updateFunctionDisplay();
+            updateTypeIndicator();
+        }
+        
+        // Update the function display
+        function updateFunctionDisplay() {
+            let functionStr = '';
+            switch(labState.type) {
+                case 'linear':
+                    functionStr = `y = ${labState.a}x ${labState.q >= 0 ? '+' : ''}${labState.q}`;
+                    break;
+                case 'quadratic':
+                    functionStr = `y = ${labState.a}(x ${labState.p >= 0 ? '-' : '+'}${Math.abs(labState.p)})² ${labState.q >= 0 ? '+' : ''}${labState.q}`;
+                    break;
+                case 'hyperbolic':
+                    functionStr = `y = ${labState.a}/(x ${labState.p >= 0 ? '+' : ''}${labState.p}) ${labState.q >= 0 ? '+' : ''}${labState.q}`;
+                    break;
+                case 'exponential':
+                    functionStr = `y = ${labState.a}·2^(x ${labState.p >= 0 ? '+' : ''}${labState.p}) ${labState.q >= 0 ? '+' : ''}${labState.q}`;
+                    break;
             }
-        });
-
-        // ========== Graph Drawing ==========
-        let currentGraphType = 'parabola';
-        let animationId = null;
-
-        function drawGrid(ctx, width, height, scale = 40) {
+            currentFunctionDisplay.textContent = functionStr;
+        }
+        
+        // Update the type indicator
+        function updateTypeIndicator() {
+            const indicators = {
+                linear: { class: 'linear', text: '📈 Linear Function' },
+                quadratic: { class: 'quadratic', text: '📊 Quadratic Function (Parabola)' },
+                hyperbolic: { class: 'hyperbolic', text: '🔄 Hyperbolic Function' },
+                exponential: { class: 'exponential', text: '📈 Exponential Function' }
+            };
+            
+            const indicator = indicators[labState.type];
+            typeIndicator.className = `type-indicator ${indicator.class}`;
+            typeIndicator.textContent = indicator.text;
+        }
+        
+        // Draw the coordinate grid
+        function drawGrid() {
+            if (!labState.showGrid) return;
+            
+            const width = canvas.width;
+            const height = canvas.height;
             const centerX = width / 2;
             const centerY = height / 2;
-
-            ctx.clearRect(0, 0, width, height);
-            ctx.fillStyle = '#fafafa';
-            ctx.fillRect(0, 0, width, height);
-
-            ctx.strokeStyle = '#e0e0e0';
-            ctx.lineWidth = 1;
-
-            for (let x = centerX % scale; x < width; x += scale) {
+            
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.lineWidth = 0.5;
+            
+            // Vertical grid lines
+            for (let x = 0; x <= width; x += 40) {
                 ctx.beginPath();
                 ctx.moveTo(x, 0);
                 ctx.lineTo(x, height);
                 ctx.stroke();
             }
-
-            for (let y = centerY % scale; y < height; y += scale) {
+            
+            // Horizontal grid lines
+            for (let y = 0; y <= height; y += 40) {
                 ctx.beginPath();
                 ctx.moveTo(0, y);
                 ctx.lineTo(width, y);
                 ctx.stroke();
             }
-
-            ctx.strokeStyle = '#333';
+            
+            // Axes
+            ctx.strokeStyle = '#334155';
             ctx.lineWidth = 2;
-
+            
+            // X-axis
             ctx.beginPath();
             ctx.moveTo(0, centerY);
             ctx.lineTo(width, centerY);
             ctx.stroke();
-
+            
+            // Y-axis
             ctx.beginPath();
             ctx.moveTo(centerX, 0);
             ctx.lineTo(centerX, height);
             ctx.stroke();
-
-            ctx.fillStyle = '#666';
-            ctx.font = '11px Arial';
+            
+            // Axis labels
+            ctx.fillStyle = '#334155';
+            ctx.font = '12px Inter';
             ctx.textAlign = 'center';
-
+            ctx.textBaseline = 'top';
+            
+            // X-axis numbers
+            for (let i = -6; i <= 6; i++) {
+                if (i === 0) continue;
+                const x = centerX + i * 40;
+                ctx.fillText(i.toString(), x, centerY + 5);
+                // Tick mark
+                ctx.beginPath();
+                ctx.moveTo(x, centerY - 5);
+                ctx.lineTo(x, centerY + 5);
+                ctx.stroke();
+            }
+            
+            // Y-axis numbers
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
             for (let i = -5; i <= 5; i++) {
-                if (i !== 0) {
-                    ctx.fillText(i, centerX + i * scale, centerY + 14);
-                    ctx.fillText(i, centerX - 14, centerY - i * scale + 4);
-                }
-            }
-
-            return { centerX, centerY, scale };
-        }
-
-        function drawSelectedGraph() {
-            const canvas = document.getElementById('lineTestCanvas');
-            const ctx = canvas.getContext('2d');
-            currentGraphType = document.getElementById('graphType').value;
-            
-            const { centerX, centerY, scale } = drawGrid(ctx, canvas.width, canvas.height);
-
-            ctx.strokeStyle = '#1a73e8';
-            ctx.lineWidth = 3;
-
-            switch(currentGraphType) {
-                case 'parabola':
-                    drawParabola(ctx, centerX, centerY, scale);
-                    break;
-                case 'line':
-                    drawLine(ctx, centerX, centerY, scale);
-                    break;
-                case 'circle':
-                    drawCircle(ctx, centerX, centerY, scale);
-                    break;
-                case 'hyperbola':
-                    drawHyperbola(ctx, centerX, centerY, scale);
-                    break;
-                case 'sideways':
-                    drawSidewaysParabola(ctx, centerX, centerY, scale);
-                    break;
-            }
-
-            document.getElementById('lineTestResult').className = 'result-display';
-            document.getElementById('lineTestResult').textContent = 'Select a test to run!';
-        }
-
-        function drawParabola(ctx, centerX, centerY, scale) {
-            ctx.beginPath();
-            for (let px = 0; px < 500; px++) {
-                const x = (px - centerX) / scale;
-                const y = x * x;
-                const py = centerY - y * scale;
-                if (py >= 0 && py <= 400) {
-                    if (px === 0 || py < 0) ctx.moveTo(px, py);
-                    else ctx.lineTo(px, py);
-                }
-            }
-            ctx.stroke();
-        }
-
-        function drawLine(ctx, centerX, centerY, scale) {
-            ctx.beginPath();
-            for (let px = 0; px < 500; px++) {
-                const x = (px - centerX) / scale;
-                const y = 2 * x + 1;
-                const py = centerY - y * scale;
-                if (px === 0) ctx.moveTo(px, py);
-                else ctx.lineTo(px, py);
-            }
-            ctx.stroke();
-        }
-
-        function drawCircle(ctx, centerX, centerY, scale) {
-            ctx.beginPath();
-            ctx.arc(centerX, centerY, 4 * scale, 0, Math.PI * 2);
-            ctx.stroke();
-        }
-
-        function drawHyperbola(ctx, centerX, centerY, scale) {
-            // Right branch
-            ctx.beginPath();
-            let started = false;
-            for (let px = centerX + 5; px < 500; px++) {
-                const x = (px - centerX) / scale;
-                if (x === 0) continue;
-                const y = 1 / x;
-                const py = centerY - y * scale;
-                if (py >= 0 && py <= 400) {
-                    if (!started) { ctx.moveTo(px, py); started = true; }
-                    else ctx.lineTo(px, py);
-                }
-            }
-            ctx.stroke();
-
-            // Left branch
-            ctx.beginPath();
-            started = false;
-            for (let px = centerX - 5; px >= 0; px--) {
-                const x = (px - centerX) / scale;
-                if (x === 0) continue;
-                const y = 1 / x;
-                const py = centerY - y * scale;
-                if (py >= 0 && py <= 400) {
-                    if (!started) { ctx.moveTo(px, py); started = true; }
-                    else ctx.lineTo(px, py);
-                }
-            }
-            ctx.stroke();
-        }
-
-        function drawSidewaysParabola(ctx, centerX, centerY, scale) {
-            // Top half
-            ctx.beginPath();
-            let started = false;
-            for (let px = centerX; px < 500; px++) {
-                const x = (px - centerX) / scale;
-                const y = Math.sqrt(x);
-                const py = centerY - y * scale;
-                if (!started) { ctx.moveTo(px, py); started = true; }
-                else ctx.lineTo(px, py);
-            }
-            ctx.stroke();
-
-            // Bottom half
-            ctx.beginPath();
-            started = false;
-            for (let px = centerX; px < 500; px++) {
-                const x = (px - centerX) / scale;
-                const y = -Math.sqrt(x);
-                const py = centerY - y * scale;
-                if (!started) { ctx.moveTo(px, py); started = true; }
-                else ctx.lineTo(px, py);
-            }
-            ctx.stroke();
-        }
-
-        function animateVerticalLine() {
-            if (animationId) cancelAnimationFrame(animationId);
-            
-            const canvas = document.getElementById('lineTestCanvas');
-            const ctx = canvas.getContext('2d');
-            let lineX = 0;
-            let intersections = 0;
-            let maxIntersections = 0;
-
-            function animate() {
-                drawSelectedGraph();
-                
-                const centerY = canvas.height / 2;
-                const scale = 40;
-                const centerX = canvas.width / 2;
-
-                // Draw vertical line
-                ctx.strokeStyle = '#6f42c1';
-                ctx.lineWidth = 2;
-                ctx.setLineDash([5, 5]);
+                if (i === 0) continue;
+                const y = centerY - i * 40;
+                ctx.fillText(i.toString(), centerX - 10, y);
+                // Tick mark
                 ctx.beginPath();
-                ctx.moveTo(lineX, 0);
-                ctx.lineTo(lineX, canvas.height);
+                ctx.moveTo(centerX - 5, y);
+                ctx.lineTo(centerX + 5, y);
                 ctx.stroke();
-                ctx.setLineDash([]);
-
-                // Count intersections
-                intersections = countIntersections(lineX, centerX, centerY, scale);
-                if (intersections > maxIntersections) maxIntersections = intersections;
-
-                // Draw intersection points
-                drawIntersectionPoints(ctx, lineX, centerX, centerY, scale);
-
-                lineX += 3;
-                if (lineX < canvas.width) {
-                    animationId = requestAnimationFrame(animate);
-                } else {
-                    // Show result
-                    const resultDiv = document.getElementById('lineTestResult');
-                    if (maxIntersections > 1) {
-                        resultDiv.className = 'result-display error';
-                        resultDiv.innerHTML = `<strong>NOT a Function!</strong> The vertical line intersected the graph at more than one point.`;
-                    } else {
-                        resultDiv.className = 'result-display success';
-                        resultDiv.innerHTML = `<strong>IS a Function!</strong> The vertical line never intersected the graph more than once.`;
-                    }
-                }
             }
-
-            animate();
-        }
-
-        function countIntersections(lineX, centerX, centerY, scale) {
-            const x = (lineX - centerX) / scale;
-            let count = 0;
-
-            switch(currentGraphType) {
-                case 'parabola':
-                    if (x * x <= 5) count = 1;
-                    break;
-                case 'line':
-                    count = 1;
-                    break;
-                case 'circle':
-                    if (Math.abs(x) <= 4) count = 2;
-                    break;
-                case 'hyperbola':
-                    if (x !== 0) count = 1;
-                    break;
-                case 'sideways':
-                    if (x >= 0) count = 2;
-                    break;
-            }
-            return count;
-        }
-
-        function drawIntersectionPoints(ctx, lineX, centerX, centerY, scale) {
-            const x = (lineX - centerX) / scale;
-            ctx.fillStyle = '#e83e8c';
-
-            switch(currentGraphType) {
-                case 'parabola':
-                    const y1 = x * x;
-                    const py1 = centerY - y1 * scale;
-                    if (py1 >= 0 && py1 <= 400) {
-                        ctx.beginPath();
-                        ctx.arc(lineX, py1, 6, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-                    break;
-                case 'circle':
-                    if (Math.abs(x) <= 4) {
-                        const yCircle = Math.sqrt(16 - x * x);
-                        ctx.beginPath();
-                        ctx.arc(lineX, centerY - yCircle * scale, 6, 0, Math.PI * 2);
-                        ctx.fill();
-                        ctx.beginPath();
-                        ctx.arc(lineX, centerY + yCircle * scale, 6, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-                    break;
-                case 'sideways':
-                    if (x >= 0) {
-                        const ySide = Math.sqrt(x);
-                        ctx.beginPath();
-                        ctx.arc(lineX, centerY - ySide * scale, 6, 0, Math.PI * 2);
-                        ctx.fill();
-                        ctx.beginPath();
-                        ctx.arc(lineX, centerY + ySide * scale, 6, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-                    break;
-            }
-        }
-
-        function animateHorizontalLine() {
-            if (animationId) cancelAnimationFrame(animationId);
             
-            const canvas = document.getElementById('lineTestCanvas');
-            const ctx = canvas.getContext('2d');
-            let lineY = 0;
-            let maxIntersections = 0;
-
-            function animate() {
-                drawSelectedGraph();
-                
-                const centerY = canvas.height / 2;
-                const scale = 40;
-                const centerX = canvas.width / 2;
-
-                // Draw horizontal line
-                ctx.strokeStyle = '#20c997';
-                ctx.lineWidth = 2;
-                ctx.setLineDash([5, 5]);
-                ctx.beginPath();
-                ctx.moveTo(0, lineY);
-                ctx.lineTo(canvas.width, lineY);
-                ctx.stroke();
-                ctx.setLineDash([]);
-
-                // Count horizontal intersections
-                const y = (centerY - lineY) / scale;
-                let intersections = countHorizontalIntersections(y);
-                if (intersections > maxIntersections) maxIntersections = intersections;
-
-                lineY += 3;
-                if (lineY < canvas.height) {
-                    animationId = requestAnimationFrame(animate);
-                } else {
-                    const resultDiv = document.getElementById('lineTestResult');
-                    const isFunction = currentGraphType !== 'circle' && currentGraphType !== 'sideways';
-                    
-                    if (!isFunction) {
-                        resultDiv.className = 'result-display error';
-                        resultDiv.innerHTML = `<strong>Cannot apply Horizontal Test!</strong> This graph is not a function.`;
-                    } else if (maxIntersections > 1) {
-                        resultDiv.className = 'result-display';
-                        resultDiv.innerHTML = `<strong>Many-to-One Function</strong> - Multiple x-values map to the same y-value.`;
-                    } else {
-                        resultDiv.className = 'result-display success';
-                        resultDiv.innerHTML = `<strong>One-to-One Function</strong> - Each y-value comes from exactly one x-value.`;
-                    }
-                }
-            }
-
-            animate();
+            // Origin label
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'top';
+            ctx.fillText('0', centerX - 10, centerY + 5);
         }
-
-        function countHorizontalIntersections(y) {
-            switch(currentGraphType) {
-                case 'parabola':
-                    return y >= 0 ? 2 : 0;
-                case 'line':
-                    return 1;
-                case 'hyperbola':
-                    return y !== 0 ? 1 : 0;
+        
+        // Draw asymptotes for hyperbolic functions
+        function drawAsymptotes() {
+            if (!labState.showAsymptotes || labState.type !== 'hyperbolic') return;
+            
+            const width = canvas.width;
+            const height = canvas.height;
+            const centerX = width / 2;
+            const centerY = height / 2;
+            
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            
+            // Vertical asymptote: x = -p
+            const asymptoteX = centerX + labState.p * 40;
+            ctx.beginPath();
+            ctx.moveTo(asymptoteX, 0);
+            ctx.lineTo(asymptoteX, height);
+            ctx.stroke();
+            
+            // Horizontal asymptote: y = q
+            const asymptoteY = centerY - labState.q * 40;
+            ctx.beginPath();
+            ctx.moveTo(0, asymptoteY);
+            ctx.lineTo(width, asymptoteY);
+            ctx.stroke();
+            
+            ctx.setLineDash([]);
+            
+            // Labels
+            ctx.fillStyle = '#ef4444';
+            ctx.font = '12px Inter';
+            ctx.textAlign = 'center';
+            
+            // Vertical asymptote label
+            ctx.fillText(`x = ${-labState.p}`, asymptoteX, 20);
+            
+            // Horizontal asymptote label
+            ctx.textAlign = 'left';
+            ctx.fillText(`y = ${labState.q}`, width - 60, asymptoteY - 5);
+        }
+        
+        // Calculate function value
+        function calculateFunction(x) {
+            const scaledX = (x - canvas.width/2) / 40;
+            
+            switch(labState.type) {
+                case 'linear':
+                    return labState.a * scaledX + labState.q;
+                case 'quadratic':
+                    return labState.a * Math.pow(scaledX - labState.p, 2) + labState.q;
+                case 'hyperbolic':
+                    // Avoid division by zero
+                    if (Math.abs(scaledX + labState.p) < 0.1) return NaN;
+                    return labState.a / (scaledX + labState.p) + labState.q;
+                case 'exponential':
+                    return labState.a * Math.pow(2, scaledX + labState.p) + labState.q;
                 default:
                     return 0;
             }
         }
-
-        // ========== Function Evaluator ==========
-        function evaluateFunction() {
-            const funcType = document.getElementById('functionSelect').value;
-            const x = parseFloat(document.getElementById('xValue').value);
+        
+        // Draw the function graph
+        function drawFunction() {
+            const width = canvas.width;
+            const height = canvas.height;
+            const centerY = height / 2;
             
-            if (isNaN(x)) {
-                document.getElementById('functionResult').textContent = 'Please enter a valid number';
-                return;
-            }
-
-            let result, expression;
+            ctx.strokeStyle = '#00d4aa';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
             
-            switch(funcType) {
-                case 'linear':
-                    result = 2 * x + 3;
-                    expression = `f(${x}) = 2(${x}) + 3 = ${2*x} + 3 = ${result}`;
-                    break;
-                case 'quadratic':
-                    result = x * x - 2 * x + 1;
-                    expression = `f(${x}) = (${x})² - 2(${x}) + 1 = ${x*x} - ${2*x} + 1 = ${result}`;
-                    break;
-                case 'cubic':
-                    result = x * x * x - 4 * x;
-                    expression = `f(${x}) = (${x})³ - 4(${x}) = ${x*x*x} - ${4*x} = ${result}`;
-                    break;
-                case 'reciprocal':
-                    if (x === 0) {
-                        document.getElementById('functionResult').innerHTML = `<strong>Undefined!</strong> Cannot divide by zero.`;
-                        return;
-                    }
-                    result = 1 / x;
-                    expression = `f(${x}) = 1/${x} = ${Math.round(result * 1000) / 1000}`;
-                    break;
-            }
-
-            document.getElementById('functionResult').innerHTML = `<strong>${expression}</strong>`;
-        }
-
-        // ========== Ordered Pairs Checker ==========
-        function checkFunction() {
-            const input = document.getElementById('orderedPairs').value;
-            const resultDiv = document.getElementById('pairsResult');
+            let isFirstPoint = true;
             
-            // Parse ordered pairs
-            const pairRegex = /\((-?\d+\.?\d*),\s*(-?\d+\.?\d*)\)/g;
-            const pairs = [];
-            let match;
-            
-            while ((match = pairRegex.exec(input)) !== null) {
-                pairs.push({ x: parseFloat(match[1]), y: parseFloat(match[2]) });
-            }
-
-            if (pairs.length === 0) {
-                resultDiv.textContent = 'Please enter valid ordered pairs like (1,2),(2,4),(3,6)';
-                resultDiv.className = 'result-display';
-                return;
-            }
-
-            // Check for repeated x-values with different y-values
-            const xValues = {};
-            let isFunction = true;
-            let problematicX = null;
-
-            for (const pair of pairs) {
-                if (xValues[pair.x] !== undefined && xValues[pair.x] !== pair.y) {
-                    isFunction = false;
-                    problematicX = pair.x;
-                    break;
-                }
-                xValues[pair.x] = pair.y;
-            }
-
-            // Determine domain and range
-            const domain = [...new Set(pairs.map(p => p.x))].sort((a, b) => a - b);
-            const range = [...new Set(pairs.map(p => p.y))].sort((a, b) => a - b);
-
-            if (isFunction) {
-                const isOneToOne = domain.length === range.length;
-                resultDiv.className = 'result-display success';
-                resultDiv.innerHTML = `
-                    <strong>✓ This IS a function!</strong><br>
-                    <strong>Type:</strong> ${isOneToOne ? 'One-to-One' : 'Many-to-One'}<br>
-                    <strong>Domain:</strong> {${domain.join(', ')}}<br>
-                    <strong>Range:</strong> {${range.join(', ')}}
-                `;
-            } else {
-                resultDiv.className = 'result-display error';
-                resultDiv.innerHTML = `<strong>✗ This is NOT a function!</strong><br>The x-value ${problematicX} is paired with multiple y-values.`;
-            }
-        }
-
-        // ========== Quiz Questions Data ==========
-        const quizQuestions = [
-            {
-                id: 1,
-                question: "What is a function?",
-                options: [
-                    "Any set of ordered pairs",
-                    "A relation where each x-value maps to exactly one y-value",
-                    "A relation where each y-value maps to exactly one x-value",
-                    "A graph that passes the horizontal line test"
-                ],
-                correct: 1,
-                explanation: "A function is a special relation where each element of the domain (x-value) is associated with exactly one element of the range (y-value)."
-            },
-            {
-                id: 2,
-                question: "Which set of ordered pairs represents a function?",
-                options: [
-                    "{(1, 2), (1, 3), (2, 4)}",
-                    "{(1, 2), (2, 2), (3, 4)}",
-                    "{(1, 2), (2, 3), (1, 4)}",
-                    "{(2, 1), (2, 3), (2, 5)}"
-                ],
-                correct: 1,
-                explanation: "{(1, 2), (2, 2), (3, 4)} is a function because no x-value is repeated with different y-values. It's a many-to-one function since 1 and 2 both map to 2."
-            },
-            {
-                id: 3,
-                question: "What does the vertical line test determine?",
-                options: [
-                    "If the graph is one-to-one",
-                    "If the relation is a function",
-                    "The domain of the function",
-                    "The range of the function"
-                ],
-                correct: 1,
-                explanation: "The vertical line test determines if a graph represents a function. If any vertical line intersects the graph more than once, it's not a function."
-            },
-            {
-                id: 4,
-                question: "A circle is:",
-                options: [
-                    "A one-to-one function",
-                    "A many-to-one function",
-                    "Not a function",
-                    "Both a and b"
-                ],
-                correct: 2,
-                explanation: "A circle fails the vertical line test because vertical lines through the circle intersect it at two points, so it's not a function."
-            },
-            {
-                id: 5,
-                question: "If f(x) = 3x - 5, what is f(2)?",
-                options: ["1", "6", "-1", "11"],
-                correct: 0,
-                explanation: "f(2) = 3(2) - 5 = 6 - 5 = 1"
-            },
-            {
-                id: 6,
-                question: "What does the horizontal line test determine?",
-                options: [
-                    "If the graph is a function",
-                    "If the function is one-to-one or many-to-one",
-                    "The x-intercepts",
-                    "The y-intercepts"
-                ],
-                correct: 1,
-                explanation: "The horizontal line test determines the type of function. If horizontal lines only intersect once, it's one-to-one. If they intersect multiple times, it's many-to-one."
-            },
-            {
-                id: 7,
-                question: "The notation 'f : x → 2x + 1' means:",
-                options: [
-                    "f equals x times 2x + 1",
-                    "f maps x onto 2x + 1",
-                    "x equals 2x + 1",
-                    "f is less than 2x + 1"
-                ],
-                correct: 1,
-                explanation: "This is mapping notation. 'f : x → 2x + 1' is read as 'f maps x onto 2x + 1'."
-            },
-            {
-                id: 8,
-                question: "For the relation {(-1, 8), (0, 2), (1, 2), (2, 5)}, what is the domain?",
-                options: [
-                    "{8, 2, 5}",
-                    "{-1, 0, 1, 2}",
-                    "{-1, 0, 1, 2, 5, 8}",
-                    "{2}"
-                ],
-                correct: 1,
-                explanation: "The domain is the set of all x-values (first elements): {-1, 0, 1, 2}."
-            },
-            {
-                id: 9,
-                question: "A parabola y = x² is what type of function?",
-                options: [
-                    "One-to-one",
-                    "Many-to-one",
-                    "One-to-many",
-                    "Not a function"
-                ],
-                correct: 1,
-                explanation: "y = x² is a many-to-one function because multiple x-values (like 2 and -2) give the same y-value (4). It passes the vertical line test but not the horizontal line test."
-            },
-            {
-                id: 10,
-                question: "If g(x) = x² - 4x + 3, find g(-1).",
-                options: ["0", "8", "6", "-2"],
-                correct: 1,
-                explanation: "g(-1) = (-1)² - 4(-1) + 3 = 1 + 4 + 3 = 8"
-            },
-            {
-                id: 11,
-                question: "Which statement is TRUE about functions?",
-                options: [
-                    "All relations are functions",
-                    "All functions are relations",
-                    "Functions and relations are the same thing",
-                    "A function can have the same x-value paired with different y-values"
-                ],
-                correct: 1,
-                explanation: "All functions are relations (they are a special subset), but not all relations are functions."
-            },
-            {
-                id: 12,
-                question: "The range of a function is:",
-                options: [
-                    "The set of all input values",
-                    "The set of all x-values",
-                    "The set of all output values (y-values)",
-                    "The horizontal asymptote"
-                ],
-                correct: 2,
-                explanation: "The range is the set of all output values or y-values that result from the function."
-            }
-        ];
-
-        let answeredQuestions = {};
-        let quizSubmitted = false;
-
-        // ========== Initialize Quiz ==========
-        function initQuiz() {
-            const container = document.getElementById('questionsContainer');
-            container.innerHTML = '';
-
-            quizQuestions.forEach((q, index) => {
-                const questionHTML = `
-                    <div class="question-card" id="question${q.id}">
-                        <span class="question-number">Question ${index + 1}</span>
-                        <p class="question-text">${q.question}</p>
-                        <div class="options-list">
-                            ${q.options.map((opt, i) => `
-                                <label class="option-label" id="option${q.id}_${i}">
-                                    <input type="radio" name="q${q.id}" value="${i}" 
-                                           onchange="selectAnswer(${q.id}, ${i})">
-                                    <span>${opt}</span>
-                                </label>
-                            `).join('')}
-                        </div>
-                        <div class="feedback" id="feedback${q.id}"></div>
-                    </div>
-                `;
-                container.innerHTML += questionHTML;
-            });
-
-            loadProgress();
-            updateProgressBar();
-        }
-
-        function selectAnswer(questionId, optionIndex) {
-            if (quizSubmitted) return;
-
-            answeredQuestions[questionId] = optionIndex;
-            
-            const options = document.querySelectorAll(`[name="q${questionId}"]`);
-            options.forEach((opt, i) => {
-                const label = document.getElementById(`option${questionId}_${i}`);
-                label.classList.remove('selected');
-                if (i === optionIndex) {
-                    label.classList.add('selected');
-                }
-            });
-
-            saveProgress();
-            updateProgressBar();
-        }
-
-        function updateProgressBar() {
-            const answered = Object.keys(answeredQuestions).length;
-            const total = quizQuestions.length;
-            const percentage = (answered / total) * 100;
-            
-            document.getElementById('progressBar').style.width = `${percentage}%`;
-            
-            const ring = document.getElementById('progressRing');
-            const circumference = 2 * Math.PI * 20;
-            const offset = circumference - (percentage / 100) * circumference;
-            ring.style.strokeDashoffset = offset;
-            document.getElementById('progressText').textContent = `${Math.round(percentage)}%`;
-        }
-
-        function submitQuiz() {
-            if (Object.keys(answeredQuestions).length < quizQuestions.length) {
-                alert(`Please answer all questions before submitting.\nYou have answered ${Object.keys(answeredQuestions).length} of ${quizQuestions.length} questions.`);
-                return;
-            }
-
-            quizSubmitted = true;
-            let score = 0;
-
-            quizQuestions.forEach(q => {
-                const userAnswer = answeredQuestions[q.id];
-                const isCorrect = userAnswer === q.correct;
+            for (let x = 0; x <= width; x += 0.5) {
+                const yValue = calculateFunction(x);
                 
-                if (isCorrect) score++;
-
-                const questionCard = document.getElementById(`question${q.id}`);
-                const feedback = document.getElementById(`feedback${q.id}`);
+                if (isNaN(yValue) || Math.abs(yValue) > 100) {
+                    isFirstPoint = true;
+                    continue;
+                }
                 
-                q.options.forEach((_, i) => {
-                    const label = document.getElementById(`option${q.id}_${i}`);
-                    label.classList.add('disabled');
-                    label.querySelector('input').disabled = true;
-                    
-                    if (i === q.correct) {
-                        label.classList.add('correct');
-                    } else if (i === userAnswer && !isCorrect) {
-                        label.classList.add('incorrect');
-                    }
-                });
-
-                feedback.classList.add('show');
-                if (isCorrect) {
-                    questionCard.classList.add('answered-correct');
-                    feedback.classList.add('correct');
-                    feedback.innerHTML = `<strong>✓ Correct!</strong> ${q.explanation}`;
+                const y = centerY - yValue * 40;
+                
+                if (y < -100 || y > height + 100) {
+                    isFirstPoint = true;
+                    continue;
+                }
+                
+                if (isFirstPoint) {
+                    ctx.moveTo(x, y);
+                    isFirstPoint = false;
                 } else {
-                    questionCard.classList.add('answered-incorrect');
-                    feedback.classList.add('incorrect');
-                    feedback.innerHTML = `<strong>✗ Incorrect.</strong> ${q.explanation}`;
+                    ctx.lineTo(x, y);
                 }
-            });
-
-            const percentage = Math.round((score / quizQuestions.length) * 100);
-            document.getElementById('scoreNumber').textContent = score;
-            document.getElementById('scorePercentage').textContent = `${percentage}%`;
+            }
             
-            let message = '';
-            if (percentage >= 90) message = '🌟 Outstanding! You really understand functions!';
-            else if (percentage >= 70) message = '👏 Good job! Keep practicing!';
-            else if (percentage >= 50) message = '📚 Fair effort. Review the concepts.';
-            else message = '💪 Keep studying. You can do it!';
+            ctx.stroke();
             
-            document.getElementById('scoreMessage').textContent = message;
-            document.getElementById('scoreDisplay').classList.add('show');
-            document.getElementById('submitQuiz').style.display = 'none';
-
-            localStorage.setItem('lesson1_functions_quiz', JSON.stringify({
-                score: score,
-                percentage: percentage,
-                date: new Date().toISOString(),
-                answers: answeredQuestions
-            }));
-        }
-
-        function retryQuiz() {
-            quizSubmitted = false;
-            answeredQuestions = {};
-            localStorage.removeItem('lesson1_functions_progress');
-            localStorage.removeItem('lesson1_functions_quiz');
-            
-            document.getElementById('scoreDisplay').classList.remove('show');
-            document.getElementById('submitQuiz').style.display = 'block';
-            
-            initQuiz();
-        }
-
-        // ========== LocalStorage Functions ==========
-        function saveProgress() {
-            localStorage.setItem('lesson1_functions_progress', JSON.stringify(answeredQuestions));
-        }
-
-        function loadProgress() {
-            const saved = localStorage.getItem('lesson1_functions_progress');
-            if (saved) {
-                answeredQuestions = JSON.parse(saved);
+            // Plot some key points
+            ctx.fillStyle = '#1a2744';
+            for (let x = -6; x <= 6; x++) {
+                const pixelX = width/2 + x * 40;
+                const yValue = calculateFunction(pixelX);
                 
-                Object.entries(answeredQuestions).forEach(([qId, optIndex]) => {
-                    const radio = document.querySelector(`input[name="q${qId}"][value="${optIndex}"]`);
-                    if (radio) {
-                        radio.checked = true;
-                        document.getElementById(`option${qId}_${optIndex}`).classList.add('selected');
-                    }
-                });
+                if (!isNaN(yValue) && Math.abs(yValue) <= 5) {
+                    const y = centerY - yValue * 40;
+                    ctx.beginPath();
+                    ctx.arc(pixelX, y, 4, 0, Math.PI * 2);
+                    ctx.fill();
+                }
             }
         }
-
-        // ========== Navigation ==========
-        function navigateLesson(direction) {
-            if (direction === 'prev') {
-                alert('Navigating to Previous Topic: Series & Sequences');
-            } else {
-                alert('Navigating to Lesson 2: Function Types & Graphs');
-            }
-        }
-
-        // ========== Scroll Progress ==========
-        window.addEventListener('scroll', () => {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
+        
+        // Main drawing function
+        function drawGraph() {
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            const indicator = document.getElementById('progressIndicator');
-            if (scrolled > 10) {
-                indicator.style.opacity = '1';
-            } else {
-                indicator.style.opacity = '0.5';
+            drawGrid();
+            drawAsymptotes();
+            drawFunction();
+        }
+        
+        // Select function type from graph cards
+        function selectFunctionType(type, a, p, q) {
+            labState.type = type;
+            labState.a = a;
+            labState.p = p;
+            labState.q = q || 0;
+            
+            funcTypeSelect.value = type;
+            aSlider.value = a;
+            pSlider.value = p;
+            qSlider.value = labState.q;
+            
+            updateLabFromControls();
+            drawGraph();
+        }
+        
+        // Event listeners for controls
+        funcTypeSelect.addEventListener('change', () => {
+            updateLabFromControls();
+            drawGraph();
+        });
+        
+        aSlider.addEventListener('input', () => {
+            updateLabFromControls();
+            drawGraph();
+        });
+        
+        pSlider.addEventListener('input', () => {
+            updateLabFromControls();
+            drawGraph();
+        });
+        
+        qSlider.addEventListener('input', () => {
+            updateLabFromControls();
+            drawGraph();
+        });
+        
+        // Control buttons
+        document.getElementById('resetGraphBtn').addEventListener('click', () => {
+            labState = {
+                type: 'linear',
+                a: 2,
+                p: 0,
+                q: 0,
+                showGrid: true,
+                showAsymptotes: true
+            };
+            
+            funcTypeSelect.value = 'linear';
+            aSlider.value = 2;
+            pSlider.value = 0;
+            qSlider.value = 0;
+            
+            updateLabFromControls();
+            drawGraph();
+        });
+        
+        document.getElementById('showAsymptotesBtn').addEventListener('click', () => {
+            labState.showAsymptotes = !labState.showAsymptotes;
+            drawGraph();
+        });
+        
+        document.getElementById('showGridBtn').addEventListener('click', () => {
+            labState.showGrid = !labState.showGrid;
+            drawGraph();
+        });
+        
+        // Initialize on page load
+        window.addEventListener('load', initGraphLab);
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            drawGraph();
+        });
+
+        // ==========================================
+        // QUIZ FUNCTIONALITY
+        // ==========================================
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const question = this.closest('.quiz-question');
+                if (question.classList.contains('answered')) return;
+                
+                question.classList.add('answered');
+                const options = question.querySelectorAll('.quiz-option');
+                const feedback = question.querySelector('.quiz-feedback');
+                const isCorrect = this.dataset.answer === 'true';
+                
+                options.forEach(opt => opt.classList.add('disabled'));
+                
+                if (isCorrect) {
+                    this.classList.add('correct');
+                } else {
+                    this.classList.add('incorrect');
+                    options.forEach(opt => {
+                        if (opt.dataset.answer === 'true') {
+                            opt.classList.add('correct');
+                        }
+                    });
+                }
+                
+                feedback.classList.add('show');
+            });
+        });
+        
+        // Reset Quiz
+        document.getElementById('resetQuizBtn').addEventListener('click', () => {
+            document.querySelectorAll('.quiz-question').forEach(question => {
+                question.classList.remove('answered');
+                question.classList.remove('scored');
+                question.querySelectorAll('.quiz-option').forEach(opt => {
+                    opt.classList.remove('correct', 'incorrect', 'disabled');
+                });
+                question.querySelector('.quiz-feedback').classList.remove('show');
+            });
+            quizScore = 0;
+            const floatingTutor = document.getElementById('floatingTutor');
+            floatingTutor.textContent = '💬';
+            floatingTutor.title = 'Chat with a tutor';
+        });
+
+        // ==========================================
+        // VIDEO PLAYER
+        // ==========================================
+        document.getElementById('playVideoBtn').addEventListener('click', () => {
+            const placeholder = document.getElementById('videoPlaceholder');
+            placeholder.innerHTML = `
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" title="Functions and Graphs" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                </iframe>
+            `;
+        });
+
+        // ==========================================
+        // MODAL FUNCTIONALITY
+        // ==========================================
+        const modal = document.getElementById('tutorModal');
+        const openModalBtns = [
+            document.getElementById('openTutorModal'),
+            document.getElementById('floatingTutor')
+        ];
+        const closeModalBtn = document.getElementById('closeModal');
+        
+        openModalBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        closeModalBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+        
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Handle form submission
+        document.getElementById('tutorForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you! Your session has been booked. We will send confirmation details to your email.');
+            closeModal();
+            e.target.reset();
+        });
+
+        // ==========================================
+        // QUIZ SCORE TRACKER
+        // ==========================================
+        let quizScore = 0;
+        const totalQuestions = 12;
+        
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('quiz-option')) {
+                const question = e.target.closest('.quiz-question');
+                if (!question.classList.contains('scored')) {
+                    question.classList.add('scored');
+                    if (e.target.dataset.answer === 'true') {
+                        quizScore++;
+                    }
+                    
+                    const floatingTutor = document.getElementById('floatingTutor');
+                    floatingTutor.textContent = `✓ ${quizScore}/${totalQuestions}`;
+                    floatingTutor.title = `Quiz Score: ${quizScore}/${totalQuestions}`;
+                    
+                    if (document.querySelectorAll('.quiz-question.scored').length === totalQuestions) {
+                        setTimeout(() => {
+                            const percentage = Math.round((quizScore / totalQuestions) * 100);
+                            let message = `Quiz Complete! You scored ${quizScore}/${totalQuestions} (${percentage}%)`;
+                            if (percentage >= 80) message += " 🎉 Excellent understanding of functions!";
+                            else if (percentage >= 60) message += " 👍 Good work! Review the graph transformations.";
+                            else message += " 📚 Review the lesson material and try again!";
+                            alert(message);
+                        }, 500);
+                    }
+                }
             }
         });
 
-        // ========== Initialize ==========
-        document.addEventListener('DOMContentLoaded', () => {
-            initQuiz();
-            drawSelectedGraph();
+        // ==========================================
+        // CHEAT SHEET PRINT BUTTON
+        // ==========================================
+        const printBtn = document.createElement('button');
+        printBtn.className = 'btn-secondary';
+        printBtn.style.position = 'fixed';
+        printBtn.style.bottom = '90px';
+        printBtn.style.left = '1.5rem';
+        printBtn.style.zIndex = '998';
+        printBtn.innerHTML = '📋 Cheat Sheet';
+        printBtn.title = 'Print functions cheat sheet';
+        
+        document.body.appendChild(printBtn);
+        
+        printBtn.addEventListener('click', () => {
+            const printContent = `
+                <html>
+                <head>
+                    <title>Functions and Graphs Cheat Sheet</title>
+                    
+                </head>
+                <body>
+                    <h1>Functions and Graphs Cheat Sheet</h1>
+                    
+                    <div class="section">
+                        <h2>1. Linear Functions (Straight Lines)</h2>
+                        <div class="formula">y = ax + q or y = mx + c</div>
+                        <p><strong>a/m:</strong> Gradient/slope</p>
+                        <p><strong>q/c:</strong> y-intercept</p>
+                        <div class="note">
+                            <strong>Sketching method:</strong> Dual intercept (find x-intercept and y-intercept)
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h2>2. Quadratic Functions (Parabolas)</h2>
+                        <div class="formula">y = a(x - p)² + q or y = ax² + bx + c</div>
+                        <table>
+                            <tr><th>Parameter</th><th>Effect</th></tr>
+                            <tr><td class="quadratic">a > 0</td><td>Minimum turning point (😊)</td></tr>
+                            <tr><td class="quadratic">a < 0</td><td>Maximum turning point (☹️)</td></tr>
+                            <tr><td>p</td><td>Horizontal translation</td></tr>
+                            <tr><td>q</td><td>Vertical translation</td></tr>
+                        </table>
+                        <p><strong>Turning point:</strong> (p, q)</p>
+                        <p><strong>Axis of symmetry:</strong> x = p</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h2>3. Hyperbolic Functions (Hyperbolas)</h2>
+                        <div class="formula">y = a/(x + p) + q</div>
+                        <p><strong>Vertical asymptote:</strong> x = -p</p>
+                        <p><strong>Horizontal asymptote:</strong> y = q</p>
+                        <table>
+                            <tr><th>Parameter a</th><th>Quadrants</th></tr>
+                            <tr><td class="hyperbolic">a > 0</td><td>1st & 3rd</td></tr>
+                            <tr><td class="hyperbolic">a < 0</td><td>2nd & 4th</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div class="section">
+                        <h2>4. Exponential Functions</h2>
+                        <div class="formula">y = ab^(x + p) + q</div>
+                        <p><strong>Horizontal asymptote:</strong> y = q</p>
+                        <table>
+                            <tr><th>Base b</th><th>Behavior</th></tr>
+                            <tr><td class="exponential">b > 1</td><td>Increasing (Growth)</td></tr>
+                            <tr><td class="exponential">0 < b < 1</td><td>Decreasing (Decay)</td></tr>
+                        </table>
+                        <p><strong>Y-intercept:</strong> (0, ab^p + q)</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h2>Key Transformations</h2>
+                        <table>
+                            <tr><th>Transformation</th><th>Effect on Graph</th></tr>
+                            <tr><td>y = f(x) + q</td><td>Vertical shift (up if q > 0)</td></tr>
+                            <tr><td>y = f(x + p)</td><td>Horizontal shift (left if p > 0)</td></tr>
+                            <tr><td>y = a·f(x)</td><td>Vertical stretch/compression</td></tr>
+                            <tr><td>y = -f(x)</td><td>Reflection in x-axis</td></tr>
+                        </table>
+                    </div>
+                    
+                    <p style="margin-top: 30px; font-style: italic; color: #666;">
+                        PassProof Academy - Grade 12 Mathematics - Functions and Graphs
+                    </p>
+                </body>
+                </html>
+            `;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(printContent);
+            printWindow.document.close();
+            printWindow.print();
         });
     </script>
-
-    <script src="gr12-math-nav.js"></script>
 </body>
 </html>
+
+
+
 

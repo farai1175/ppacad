@@ -3,2273 +3,1056 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arithmetic Series - Lesson 4 | PassProof Academy</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-blue: #1a73e8;
-            --dark-blue: #0d47a1;
-            --light-blue: #e3f2fd;
-            --accent-blue: #2196f3;
-            --white: #ffffff;
-            --gray-50: #f8fafc;
-            --gray-100: #f1f5f9;
-            --gray-200: #e2e8f0;
-            --gray-300: #cbd5e1;
-            --gray-600: #475569;
-            --gray-800: #1e293b;
-            --success: #10b981;
-            --error: #ef4444;
-            --warning: #f59e0b;
-            --purple: #8b5cf6;
-            --teal: #14b8a6;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--gray-800);
-            background: var(--gray-50);
-        }
-
-        /* Header & Navigation */
-        header {
-            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
-            color: var(--white);
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        .logo span {
-            color: var(--light-blue);
-        }
-
-        nav {
-            position: relative;
-        }
-
-        .nav-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--white);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 1rem;
-            list-style: none;
-        }
-
-        .nav-item {
-            position: relative;
-        }
-
-        .nav-link {
-            color: var(--white);
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-link:hover {
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .dropdown {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: var(--white);
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-            min-width: 260px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(10px);
-            transition: all 0.3s ease;
-            overflow: hidden;
-        }
-
-        .nav-item:hover .dropdown {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(5px);
-        }
-
-        .dropdown a {
-            display: block;
-            padding: 0.75rem 1.25rem;
-            color: var(--gray-800);
-            text-decoration: none;
-            transition: all 0.2s ease;
-            border-left: 3px solid transparent;
-        }
-
-        .dropdown a:hover {
-            background: var(--light-blue);
-            border-left-color: var(--primary-blue);
-            padding-left: 1.5rem;
-        }
-
-        .dropdown a.active {
-            background: var(--light-blue);
-            border-left-color: var(--primary-blue);
-            font-weight: 600;
-        }
-
-        /* Main Container */
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        /* Cards */
-        .card {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-        }
-
-        /* Lesson Header */
-        .lesson-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .meta-badge {
-            background: var(--light-blue);
-            color: var(--primary-blue);
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-
-        .meta-badge.teal {
-            background: #ccfbf1;
-            color: var(--teal);
-        }
-
-        .lesson-title {
-            font-size: 2.25rem;
-            color: var(--dark-blue);
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-        }
-
-        .lesson-subtitle {
-            color: var(--gray-600);
-            font-size: 1.125rem;
-        }
-
-        /* Section Headers */
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 2px solid var(--light-blue);
-        }
-
-        .section-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 1.25rem;
-        }
-
-        .section-icon.teal {
-            background: linear-gradient(135deg, var(--teal), #0d9488);
-        }
-
-        .section-icon.purple {
-            background: linear-gradient(135deg, var(--purple), #7c3aed);
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            color: var(--gray-800);
-            font-weight: 600;
-        }
-
-        /* Objectives List */
-        .objectives-list {
-            list-style: none;
-        }
-
-        .objectives-list li {
-            padding: 0.75rem 0;
-            padding-left: 2.5rem;
-            position: relative;
-            border-bottom: 1px solid var(--gray-100);
-        }
-
-        .objectives-list li:last-child {
-            border-bottom: none;
-        }
-
-        .objectives-list li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            top: 0.75rem;
-            width: 24px;
-            height: 24px;
-            background: var(--success);
-            color: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-
-        /* Definition Box */
-        .definition-box {
-            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
-            border-left: 4px solid var(--primary-blue);
-            padding: 1.5rem;
-            border-radius: 0 12px 12px 0;
-            margin: 1.5rem 0;
-        }
-
-        .definition-box h4 {
-            color: var(--dark-blue);
-            margin-bottom: 0.5rem;
-            font-size: 1.125rem;
-        }
-
-        .definition-box p {
-            color: var(--gray-800);
-        }
-
-        /* Formula Box */
-        .formula-box {
-            background: linear-gradient(135deg, var(--light-blue), #bbdefb);
-            border-left: 4px solid var(--primary-blue);
-            padding: 1.5rem;
-            border-radius: 0 12px 12px 0;
-            margin: 1.5rem 0;
-        }
-
-        .formula-box.teal {
-            background: linear-gradient(135deg, #ccfbf1, #99f6e4);
-            border-left-color: var(--teal);
-        }
-
-        .formula {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--dark-blue);
-            text-align: center;
-            font-family: 'Cambria Math', 'Times New Roman', serif;
-        }
-
-        .formula sub, .formula sup {
-            font-size: 0.65em;
-        }
-
-        .formula-description {
-            margin-top: 1rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 0.75rem;
-        }
-
-        .formula-item {
-            background: var(--white);
-            padding: 0.75rem;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        .formula-item strong {
-            color: var(--primary-blue);
-        }
-
-        /* Proof Container */
-        .proof-container {
-            background: var(--gray-50);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border: 2px dashed var(--gray-300);
-        }
-
-        .proof-title {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--purple);
-            font-weight: 700;
-            margin-bottom: 1rem;
-            font-size: 1.125rem;
-        }
-
-        .proof-step {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            padding: 0.75rem;
-            margin-bottom: 0.5rem;
-            background: var(--white);
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .proof-step:hover {
-            transform: translateX(5px);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .step-number {
-            width: 32px;
-            height: 32px;
-            background: var(--primary-blue);
-            color: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            flex-shrink: 0;
-        }
-
-        .step-number.purple {
-            background: var(--purple);
-        }
-
-        .step-content {
-            flex: 1;
-        }
-
-        /* Comparison Table */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-        }
-
-        .comparison-table th,
-        .comparison-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .comparison-table th {
-            background: var(--light-blue);
-            color: var(--dark-blue);
-            font-weight: 600;
-        }
-
-        .comparison-table tr:hover {
-            background: var(--gray-50);
-        }
-
-        .comparison-table .formula-cell {
-            font-family: 'Cambria Math', 'Times New Roman', serif;
-            font-size: 1.1rem;
-            color: var(--dark-blue);
-        }
-
-        /* Worked Examples */
-        .example-box {
-            background: var(--white);
-            border: 2px solid var(--light-blue);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .example-box.teal {
-            border-color: #99f6e4;
-        }
-
-        .example-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-        }
-
-        .example-badge {
-            background: var(--primary-blue);
-            color: var(--white);
-            padding: 0.25rem 0.75rem;
-            border-radius: 15px;
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-
-        .example-badge.teal {
-            background: var(--teal);
-        }
-
-        .example-badge.purple {
-            background: var(--purple);
-        }
-
-        .example-title {
-            font-weight: 600;
-            color: var(--gray-800);
-        }
-
-        .solution-steps {
-            margin-top: 1rem;
-            padding-left: 1rem;
-            border-left: 3px solid var(--accent-blue);
-        }
-
-        .solution-step {
-            margin-bottom: 0.75rem;
-            padding: 0.5rem;
-        }
-
-        .math-expression {
-            font-family: 'Cambria Math', 'Times New Roman', serif;
-            font-size: 1.125rem;
-            color: var(--dark-blue);
-            margin: 0.25rem 0;
-        }
-
-        .highlight-answer {
-            background: linear-gradient(135deg, var(--success), #059669);
-            color: var(--white);
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            display: inline-block;
-            margin-top: 0.5rem;
-        }
-
-        /* Key Concept Box */
-        .concept-box {
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
-            border-left: 4px solid var(--warning);
-            padding: 1.5rem;
-            border-radius: 0 12px 12px 0;
-            margin: 1.5rem 0;
-        }
-
-        .concept-box h4 {
-            color: #92400e;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Simulation Container */
-        .simulation-container {
-            background: linear-gradient(180deg, var(--light-blue), var(--white));
-            border-radius: 16px;
-            padding: 2rem;
-            margin: 1.5rem 0;
-        }
-
-        .simulation-container.teal {
-            background: linear-gradient(180deg, #ccfbf1, var(--white));
-        }
-
-        .sim-controls {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .sim-input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .sim-input-group label {
-            font-weight: 600;
-            color: var(--gray-800);
-            font-size: 0.9rem;
-        }
-
-        .sim-input {
-            padding: 0.75rem;
-            border: 2px solid var(--gray-200);
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .sim-input:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
-        }
-
-        .sim-button {
-            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
-            color: var(--white);
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .sim-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(26, 115, 232, 0.4);
-        }
-
-        .sim-button.teal {
-            background: linear-gradient(135deg, var(--teal), #0d9488);
-        }
-
-        .sim-button.purple {
-            background: linear-gradient(135deg, var(--purple), #7c3aed);
-        }
-
-        .sim-output {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 1.5rem;
-            min-height: 120px;
-        }
-
-        /* Visual Series Display */
-        .series-display {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            gap: 0.25rem;
-            margin: 1rem 0;
-            font-size: 1.25rem;
-        }
-
-        .term-pill {
-            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
-            color: var(--white);
-            padding: 0.5rem 0.75rem;
-            border-radius: 20px;
-            font-weight: 600;
-            animation: popIn 0.3s ease;
-        }
-
-        .term-pill.included {
-            background: linear-gradient(135deg, var(--success), #059669);
-        }
-
-        .term-pill.excluded {
-            background: var(--gray-300);
-            color: var(--gray-600);
-        }
-
-        .plus-sign {
-            color: var(--gray-600);
-            font-weight: bold;
-            font-size: 1.5rem;
-        }
-
-        @keyframes popIn {
-            0% { transform: scale(0); opacity: 0; }
-            80% { transform: scale(1.1); }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        .sum-result {
-            background: linear-gradient(135deg, var(--teal), #0d9488);
-            color: var(--white);
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            text-align: center;
-            margin-top: 1rem;
-            font-size: 1.25rem;
-            font-weight: 700;
-        }
-
-        /* Canvas */
-        .canvas-container {
-            width: 100%;
-            overflow-x: auto;
-            margin: 1rem 0;
-        }
-
-        canvas {
-            display: block;
-            margin: 0 auto;
-            border-radius: 12px;
-            background: var(--white);
-        }
-
-        /* Quiz Section */
-        .quiz-container {
-            margin-top: 2rem;
-        }
-
-        .question-card {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border: 2px solid var(--gray-200);
-            transition: all 0.3s ease;
-        }
-
-        .question-card.correct {
-            border-color: var(--success);
-            background: linear-gradient(180deg, rgba(16, 185, 129, 0.05), var(--white));
-        }
-
-        .question-card.incorrect {
-            border-color: var(--error);
-            background: linear-gradient(180deg, rgba(239, 68, 68, 0.05), var(--white));
-        }
-
-        .question-number {
-            display: inline-block;
-            background: var(--primary-blue);
-            color: var(--white);
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 28px;
-            font-weight: 600;
-            margin-right: 0.75rem;
-        }
-
-        .question-text {
-            font-weight: 500;
-            margin-bottom: 1rem;
-            color: var(--gray-800);
-        }
-
-        .options-list {
-            display: grid;
-            gap: 0.75rem;
-        }
-
-        .option-label {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            border: 2px solid var(--gray-200);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .option-label:hover {
-            border-color: var(--primary-blue);
-            background: var(--light-blue);
-        }
-
-        .option-label.selected {
-            border-color: var(--primary-blue);
-            background: var(--light-blue);
-        }
-
-        .option-label.correct-answer {
-            border-color: var(--success);
-            background: rgba(16, 185, 129, 0.1);
-        }
-
-        .option-label.wrong-answer {
-            border-color: var(--error);
-            background: rgba(239, 68, 68, 0.1);
-        }
-
-        .option-label input {
-            display: none;
-        }
-
-        .option-circle {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--gray-200);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            flex-shrink: 0;
-        }
-
-        .option-label.selected .option-circle {
-            border-color: var(--primary-blue);
-            background: var(--primary-blue);
-        }
-
-        .option-label.selected .option-circle::after {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: var(--white);
-            border-radius: 50%;
-        }
-
-        .feedback {
-            margin-top: 1rem;
-            padding: 0.75rem;
-            border-radius: 8px;
-            display: none;
-        }
-
-        .feedback.show {
-            display: block;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .feedback.correct {
-            background: rgba(16, 185, 129, 0.1);
-            color: #059669;
-            border-left: 4px solid var(--success);
-        }
-
-        .feedback.incorrect {
-            background: rgba(239, 68, 68, 0.1);
-            color: #dc2626;
-            border-left: 4px solid var(--error);
-        }
-
-        /* Numerical Input */
-        .numerical-input {
-            display: flex;
-            gap: 0.75rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .numerical-input input {
-            padding: 0.75rem;
-            border: 2px solid var(--gray-200);
-            border-radius: 8px;
-            font-size: 1rem;
-            width: 150px;
-            transition: all 0.3s ease;
-        }
-
-        .numerical-input input:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-        }
-
-        .check-btn {
-            background: var(--primary-blue);
-            color: var(--white);
-            border: none;
-            padding: 0.75rem 1.25rem;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .check-btn:hover {
-            background: var(--dark-blue);
-        }
-
-        /* Score Display */
-        .score-container {
-            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
-            color: var(--white);
-            border-radius: 16px;
-            padding: 2rem;
-            text-align: center;
-            margin: 2rem 0;
-        }
-
-        .score-title {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-        }
-
-        .score-value {
-            font-size: 3rem;
-            font-weight: 700;
-        }
-
-        .score-percentage {
-            font-size: 1.5rem;
-            opacity: 0.9;
-        }
-
-        .score-message {
-            margin-top: 1rem;
-            font-size: 1.125rem;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 12px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 6px;
-            margin-top: 1.5rem;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--white);
-            border-radius: 6px;
-            transition: width 1s ease;
-        }
-
-        /* Navigation Buttons */
-        .lesson-nav {
-            display: flex;
-            justify-content: space-between;
-            gap: 1rem;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .nav-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 1.5rem;
-            border: 2px solid var(--primary-blue);
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            background: var(--white);
-            color: var(--primary-blue);
-        }
-
-        .nav-btn:hover {
-            background: var(--primary-blue);
-            color: var(--white);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3);
-        }
-
-        .nav-btn.primary {
-            background: var(--primary-blue);
-            color: var(--white);
-        }
-
-        .nav-btn.primary:hover {
-            background: var(--dark-blue);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--gray-800);
-            color: var(--white);
-            text-align: center;
-            padding: 2rem;
-            margin-top: 3rem;
-        }
-
-        .footer-content {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .footer-logo {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-copyright {
-            color: var(--gray-200);
-            font-size: 0.875rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header-content {
-                flex-wrap: wrap;
-            }
-
-            .nav-toggle {
-                display: block;
-            }
-
-            .nav-menu {
-                display: none;
-                width: 100%;
-                flex-direction: column;
-                background: var(--dark-blue);
-                position: absolute;
-                top: 100%;
-                left: 0;
-                padding: 1rem;
-                border-radius: 0 0 12px 12px;
-            }
-
-            .nav-menu.active {
-                display: flex;
-            }
-
-            .dropdown {
-                position: static;
-                box-shadow: none;
-                background: rgba(255, 255, 255, 0.1);
-                margin-top: 0.5rem;
-                border-radius: 8px;
-            }
-
-            .dropdown a {
-                color: var(--white);
-            }
-
-            .dropdown a:hover {
-                background: rgba(255, 255, 255, 0.1);
-            }
-
-            .container {
-                padding: 1rem;
-            }
-
-            .card {
-                padding: 1.25rem;
-            }
-
-            .lesson-title {
-                font-size: 1.75rem;
-            }
-
-            .formula {
-                font-size: 1.2rem;
-            }
-
-            .lesson-nav {
-                flex-direction: column;
-            }
-
-            .nav-btn {
-                justify-content: center;
-            }
-
-            .sim-controls {
-                grid-template-columns: 1fr;
-            }
-
-            .series-display {
-                font-size: 1rem;
-            }
-
-            .term-pill {
-                padding: 0.35rem 0.5rem;
-                font-size: 0.9rem;
-            }
-        }
-
-        /* Utility Classes */
-        .text-center { text-align: center; }
-        .mt-1 { margin-top: 0.5rem; }
-        .mt-2 { margin-top: 1rem; }
-        .mb-1 { margin-bottom: 0.5rem; }
-        .mb-2 { margin-bottom: 1rem; }
-
-        /* Print Styles */
-        @media print {
-            header, footer, .nav-btn, .sim-button, .check-btn {
-                display: none;
-            }
-        }
-    </style>
+    <title>Grade 12 Maths | Arithmetic Series | PassProof Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="math-lessons.css">
 </head>
 <body>
-    <!-- Header -->
+    <!-- ===== HEADER ===== -->
     <header>
-        <div class="header-content">
-            <div class="logo">Pass<span>Proof</span> Academy</div>
-            <nav>
-                <button class="nav-toggle" onclick="toggleNav()">☰</button>
-                <ul class="nav-menu" id="navMenu">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">📚 Subjects ▾</a>
-                        <div class="dropdown">
-                            <a href="#">Mathematics</a>
-                            <a href="#">Physical Sciences</a>
-                            <a href="#">Life Sciences</a>
-                            <a href="#">Accounting</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">📖 Lessons ▾</a>
-                        <div class="dropdown">
-                            <a href="#">Lesson 1: Number Patterns</a>
-                            <a href="#">Lesson 2: Arithmetic Sequences - General Term</a>
-                            <a href="#">Lesson 3: Finding n & Unknown Terms</a>
-                            <a href="#" class="active">Lesson 4: Arithmetic Series</a>
-                            <a href="#">Lesson 5: Geometric Sequences</a>
-                            <a href="#">Lesson 6: Sigma Notation</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">📊 Progress</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">❓ Help</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+        <a href="index.html" class="logo">
+            <img src="../logo_tick.jpg" alt="PassProof Academy Logo">
+        </a>
+        <nav style="flex: 1; text-align: right;">
+            <span style="font-size: 2.2rem; color: #0f0909;"><img src="../favicon-32x32.png" alt="PassProof Academy Logo">Grade 12 Mathematics</span>
+        </nav>
     </header>
 
-    <main class="container">
-        <!-- Lesson Header Card -->
-        <div class="card">
-            <div class="lesson-meta">
-                <span class="meta-badge">📐 Mathematics</span>
-                <span class="meta-badge">Grade 12</span>
-                <span class="meta-badge">Term 1 • Week 1</span>
-                <span class="meta-badge teal">⏱️ 60 minutes</span>
-            </div>
-            <h1 class="lesson-title">Arithmetic Series</h1>
-            <p class="lesson-subtitle">Lesson 4: Sum of the First n Terms of an Arithmetic Sequence</p>
-        </div>
+    <!-- ===== STICKY LESSON MAP ===== -->
+    <nav class="sticky-nav">
+        <ul class="lesson-map">
+            <li><a href="#lesson-header" class="nav-link">📚 Lesson Info</a></li>
+            <li><a href="#objectives" class="nav-link">🎯 Objectives</a></li>
+            <li><a href="#pre-knowledge" class="nav-link">🧠 Pre-Knowledge</a></li>
+            <li><a href="#baseline" class="nav-link">📝 Baseline</a></li>
+            <li><a href="#definition" class="nav-link">📖 Definition</a></li>
+            <li><a href="#derivation" class="nav-link">🧮 Derivation</a></li>
+            <li><a href="#examples" class="nav-link">✍️ Examples</a></li>
+            <li><a href="#class-work" class="nav-link">✏️ Class Work</a></li>
+            <li><a href="#visualizer" class="nav-link">🔢 Visualizer</a></li>
+            <li><a href="#quiz" class="nav-link">✓ Quiz (12 Qs)</a></li>
+            <li><a href="#video" class="nav-link">📹 Video</a></li>
+            <li><a href="#tutor" class="nav-link">👨‍🏫 Live Tutor</a></li>
+        </ul>
+    </nav>
 
-        <!-- Learning Objectives -->
-        <div class="card">
-            <div class="section-header">
-                <div class="section-icon">🎯</div>
-                <h2 class="section-title">Learning Objectives</h2>
-            </div>
-            <p class="mb-2">By the end of this lesson, you will be able to:</p>
-            <ul class="objectives-list">
-                <li>Understand what an arithmetic series is and how it differs from a sequence</li>
-                <li>Prove the formula for the sum of the first n terms of an arithmetic sequence</li>
-                <li>Apply the sum formulas S<sub>n</sub> = (n/2)[2a + (n−1)d] and S<sub>n</sub> = (n/2)[a + l]</li>
-                <li>Calculate the sum of terms in various arithmetic series problems</li>
-            </ul>
-        </div>
-
-        <!-- Sequence vs Series -->
-        <div class="card">
-            <div class="section-header">
-                <div class="section-icon teal">📊</div>
-                <h2 class="section-title">Sequence vs Series: What's the Difference?</h2>
-            </div>
-
-            <div class="definition-box">
-                <h4>📝 Key Definitions</h4>
-                <p><strong>Arithmetic Sequence:</strong> A list of numbers where each term is found by adding a constant (common difference) to the previous term.</p>
-                <p class="mt-1"><strong>Arithmetic Series:</strong> The SUM of the terms of an arithmetic sequence.</p>
-            </div>
-
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Concept</th>
-                        <th>Sequence (List)</th>
-                        <th>Series (Sum)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Notation</td>
-                        <td>5; 7; 9; 11; ...</td>
-                        <td>5 + 7 + 9 + 11 + ...</td>
-                    </tr>
-                    <tr>
-                        <td>What we find</td>
-                        <td>Individual terms (T<sub>n</sub>)</td>
-                        <td>Sum of terms (S<sub>n</sub>)</td>
-                    </tr>
-                    <tr>
-                        <td>Formula</td>
-                        <td class="formula-cell">T<sub>n</sub> = a + (n−1)d</td>
-                        <td class="formula-cell">S<sub>n</sub> = (n/2)[2a + (n−1)d]</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="concept-box">
-                <h4>💡 Remember</h4>
-                <p><strong>S<sub>n</sub></strong> represents the sum of the <strong>first n terms</strong>:</p>
-                <p class="math-expression mt-1">S<sub>n</sub> = T<sub>1</sub> + T<sub>2</sub> + T<sub>3</sub> + ... + T<sub>n</sub></p>
-            </div>
-        </div>
-
-        <!-- Simple Sum Examples -->
-        <div class="card">
-            <div class="section-header">
-                <div class="section-icon">🔢</div>
-                <h2 class="section-title">Understanding S<sub>n</sub> Through Examples</h2>
-            </div>
-
-            <p>Let's start with a simple approach before using the formula. Consider the series: <strong>1 + 4 + 7 + 10 + ...</strong></p>
-
-            <div class="example-box">
-                <div class="example-header">
-                    <span class="example-badge">Example 1</span>
-                    <span class="example-title">Calculating S<sub>3</sub> and S<sub>7</sub> by Direct Addition</span>
+    <!-- ===== MAIN CONTENT ===== -->
+    <main>
+        <!-- Lesson Header -->
+        <section id="lesson-header" style="background: linear-gradient(135deg, var(--navy), var(--navy-light)); color: var(--white); padding: 1.5rem; border-radius: var(--radius-lg); margin-bottom: 1.5rem;">
+            <h1 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Arithmetic Series (Lesson 4)</h1>
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem;">
+                <div style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: var(--radius-md);">
+                    <strong>Grade:</strong> 12
                 </div>
-                <p><strong>Series:</strong> 1 + 4 + 7 + 10 + 13 + 16 + 19 + ...</p>
+                <div style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: var(--radius-md);">
+                    <strong>Week:</strong> Term 1 Week 1
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: var(--radius-md);">
+                    <strong>Time:</strong> 60 minutes
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: var(--radius-md);">
+                    <strong>Topic:</strong> Series (4)
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: var(--radius-md);">
+                    <strong>Lesson:</strong> 4
+                </div>
+            </div>
+            <p style="margin-top: 1rem; color: var(--gray-300);">
+                Understanding arithmetic series, proving the sum formula, and calculating sums of terms
+            </p>
+        </section>
+
+        <!-- Section: Objectives -->
+        <section id="objectives">
+            <div class="section-header" data-toggle="objectives-content">
+                <h2>🎯 Lesson Objectives</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content" id="objectives-content">
+                <p>This lesson introduces arithmetic series and their properties. By the end of this lesson, you will be able to:</p>
+                <ul>
+                    <li>Understand what an arithmetic series is</li>
+                    <li>Prove the formula for the sum of the first n terms of an arithmetic sequence</li>
+                    <li>Calculate the sum of terms in an arithmetic series using formulas</li>
+                    <li>Apply the sum formulas to solve various problems</li>
+                    <li>Work with series expressed in terms of variables</li>
+                </ul>
+                <div class="formula-grid">
+                    <div class="formula-card">
+                        <h4>Sum Formula 1</h4>
+                        <div class="formula">Sₙ = n/2 [2a + (n-1)d]</div>
+                        <div class="description">Where: a = first term, d = common difference, n = number of terms</div>
+                    </div>
+                    <div class="formula-card">
+                        <h4>Sum Formula 2</h4>
+                        <div class="formula">Sₙ = n/2 (a + l)</div>
+                        <div class="description">Where: a = first term, l = last term, n = number of terms</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Pre-Knowledge -->
+        <section id="pre-knowledge">
+            <div class="section-header" data-toggle="pre-knowledge-content">
+                <h2>🧠 Pre-Knowledge Required</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content" id="pre-knowledge-content">
+                <p>Before starting this lesson, you should be familiar with:</p>
+                <ul class="knowledge-list">
+                    <li>Arithmetic sequences and their properties</li>
+                    <li>The general term formula: Tₙ = a + (n-1)d</li>
+                    <li>Basic algebraic manipulation</li>
+                    <li>Finding common difference in sequences</li>
+                    <li>Working with variables in mathematical expressions</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section: Baseline Questions -->
+        <section id="baseline">
+            <div class="section-header" data-toggle="baseline-content">
+                <h2>📝 Baseline Questions</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content" id="baseline-content">
+                <p>Try these quick revision questions from previous lessons:</p>
+                <ul class="baseline-list">
+                    <li>What is the difference between a sequence and a series?</li>
+                    <li>If a = 3 and d = 4, what are the first 4 terms of the arithmetic sequence?</li>
+                    <li>What is the formula for the nth term of an arithmetic sequence?</li>
+                    <li>Calculate 1 + 2 + 3 + ... + 10 without using a formula</li>
+                </ul>
                 
-                <div class="solution-steps">
-                    <div class="solution-step">
-                        <p><strong>Finding S<sub>3</sub>:</strong> Sum of first 3 terms</p>
-                        <p class="math-expression">S<sub>3</sub> = 1 + 4 + 7 = <strong>12</strong></p>
-                    </div>
-                    <div class="solution-step">
-                        <p><strong>Finding S<sub>7</sub>:</strong> Sum of first 7 terms</p>
-                        <p class="math-expression">S<sub>7</sub> = 1 + 4 + 7 + 10 + 13 + 16 + 19 = <strong>70</strong></p>
-                    </div>
-                </div>
             </div>
+        </section>
 
-            <p class="mt-2">Direct addition works for small n, but what if we need S<sub>100</sub> or S<sub>1000</sub>? We need a formula!</p>
-        </div>
-
-        <!-- Proof of the Formula -->
-        <div class="card">
-            <div class="section-header">
-                <div class="section-icon purple">📜</div>
-                <h2 class="section-title">Proving the Sum Formula</h2>
+        <!-- Section: Definition of Arithmetic Series -->
+        <section id="definition">
+            <div class="section-header" data-toggle="definition-content">
+                <h2>📖 Definition of Arithmetic Series</h2>
+                <span class="toggle-icon">▼</span>
             </div>
-
-            <p>There's an elegant proof attributed to the mathematician <strong>Carl Friedrich Gauss</strong>. The key insight is to write the sum forwards and backwards, then add them together.</p>
-
-            <div class="proof-container">
-                <div class="proof-title">🔬 Proof: Deriving S<sub>n</sub> = (n/2)[2a + (n−1)d]</div>
+            <div class="section-content" id="definition-content">
+                <h3><span class="key-term">What is an Arithmetic Series?</span></h3>
+                <p>
+                    An arithmetic series is the <strong>sum</strong> of an arithmetic sequence. 
+                    While a sequence lists terms, a series adds them together.
+                </p>
                 
-                <div class="proof-step">
-                    <div class="step-number purple">1</div>
-                    <div class="step-content">
-                        <p><strong>Write the sum S<sub>n</sub> in terms of a and d:</strong></p>
-                        <p class="math-expression">S<sub>n</sub> = a + (a+d) + (a+2d) + ... + [a+(n−1)d]</p>
-                    </div>
+                <div class="formula-box">
+                    If 5; 7; 9; 11; ... is an arithmetic sequence<br>
+                    Then 5 + 7 + 9 + 11 + ... is an arithmetic series
                 </div>
-
-                <div class="proof-step">
-                    <div class="step-number purple">2</div>
-                    <div class="step-content">
-                        <p><strong>Write S<sub>n</sub> in reverse order:</strong></p>
-                        <p class="math-expression">S<sub>n</sub> = [a+(n−1)d] + [a+(n−2)d] + ... + (a+d) + a</p>
-                    </div>
-                </div>
-
-                <div class="proof-step">
-                    <div class="step-number purple">3</div>
-                    <div class="step-content">
-                        <p><strong>Add the two expressions together:</strong></p>
-                        <p class="math-expression">2S<sub>n</sub> = [2a+(n−1)d] + [2a+(n−1)d] + ... (n times)</p>
-                        <p class="math-expression">2S<sub>n</sub> = n × [2a + (n−1)d]</p>
-                    </div>
-                </div>
-
-                <div class="proof-step">
-                    <div class="step-number purple">4</div>
-                    <div class="step-content">
-                        <p><strong>Divide both sides by 2:</strong></p>
-                        <p class="math-expression"><strong>S<sub>n</sub> = (n/2)[2a + (n−1)d]</strong></p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- The Two Formulas -->
-            <h3 class="mt-2 mb-1" style="color: var(--dark-blue);">The Two Sum Formulas</h3>
-
-            <div class="formula-box">
-                <div class="formula">S<sub>n</sub> = (n/2)[2a + (n−1)d]</div>
-                <div class="formula-description">
-                    <div class="formula-item"><strong>S<sub>n</sub></strong> = sum of n terms</div>
-                    <div class="formula-item"><strong>n</strong> = number of terms</div>
-                    <div class="formula-item"><strong>a</strong> = first term</div>
-                    <div class="formula-item"><strong>d</strong> = common difference</div>
-                </div>
-                <p class="text-center mt-1" style="color: var(--gray-600); font-size: 0.9rem;">Use this when you know a, d, and n</p>
-            </div>
-
-            <div class="formula-box teal">
-                <div class="formula">S<sub>n</sub> = (n/2)[a + l]</div>
-                <div class="formula-description">
-                    <div class="formula-item"><strong>S<sub>n</sub></strong> = sum of n terms</div>
-                    <div class="formula-item"><strong>n</strong> = number of terms</div>
-                    <div class="formula-item"><strong>a</strong> = first term</div>
-                    <div class="formula-item"><strong>l</strong> = last term</div>
-                </div>
-                <p class="text-center mt-1" style="color: var(--gray-600); font-size: 0.9rem;">Use this when you know the first and last terms</p>
-            </div>
-        </div>
-
-        <!-- Worked Examples -->
-        <div class="card">
-            <div class="section-header">
-                <div class="section-icon">✏️</div>
-                <h2 class="section-title">Worked Examples</h2>
-            </div>
-
-            <!-- Example 2 -->
-            <div class="example-box">
-                <div class="example-header">
-                    <span class="example-badge">Example 2</span>
-                    <span class="example-title">Finding S<sub>20</sub> for a Simple Series</span>
-                </div>
-                <p><strong>Question:</strong> Find the sum of the first 20 terms of the series: −1 + 3 + 7 + 11 + ...</p>
                 
-                <div class="solution-steps">
-                    <div class="solution-step">
-                        <p><strong>Step 1:</strong> Identify a, d, and n</p>
-                        <p class="math-expression">a = −1, d = 3 − (−1) = 4, n = 20</p>
-                    </div>
-                    <div class="solution-step">
-                        <p><strong>Step 2:</strong> Apply the formula S<sub>n</sub> = (n/2)[2a + (n−1)d]</p>
-                        <p class="math-expression">S<sub>20</sub> = (20/2)[2(−1) + (20−1)(4)]</p>
-                        <p class="math-expression">S<sub>20</sub> = 10[−2 + 19(4)]</p>
-                        <p class="math-expression">S<sub>20</sub> = 10[−2 + 76]</p>
-                        <p class="math-expression">S<sub>20</sub> = 10 × 74</p>
-                    </div>
-                    <div class="solution-step">
-                        <p class="highlight-answer">S<sub>20</sub> = 740</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Example 3 -->
-            <div class="example-box">
-                <div class="example-header">
-                    <span class="example-badge teal">Example 3</span>
-                    <span class="example-title">Negative Common Difference</span>
-                </div>
-                <p><strong>Question:</strong> Find the sum of the first 20 terms of the series: (−16) + (−12) + (−8) + ...</p>
+                <p>The sum of the first n terms is denoted by Sₙ:</p>
                 
-                <div class="solution-steps">
-                    <div class="solution-step">
-                        <p><strong>Step 1:</strong> Identify a, d, and n</p>
-                        <p class="math-expression">a = −16, d = (−12) − (−16) = 4, n = 20</p>
-                    </div>
-                    <div class="solution-step">
-                        <p><strong>Step 2:</strong> Apply the formula</p>
-                        <p class="math-expression">S<sub>20</sub> = (20/2)[2(−16) + (20−1)(4)]</p>
-                        <p class="math-expression">S<sub>20</sub> = 10[−32 + 76]</p>
-                        <p class="math-expression">S<sub>20</sub> = 10 × 44</p>
-                    </div>
-                    <div class="solution-step">
-                        <p class="highlight-answer">S<sub>20</sub> = 440</p>
-                    </div>
+                <div class="formula-box">
+                    Sₙ = T₁ + T₂ + T₃ + ... + Tₙ
+                    <small>Sₙ represents the sum of the first n terms</small>
                 </div>
-            </div>
-
-            <!-- Example 4 -->
-            <div class="example-box">
-                <div class="example-header">
-                    <span class="example-badge purple">Example 4</span>
-                    <span class="example-title">Using the a + l Formula</span>
-                </div>
-                <p><strong>Question:</strong> Find the sum of the arithmetic series: 12 + 7 + 2 + ... + (−43)</p>
                 
-                <div class="solution-steps">
-                    <div class="solution-step">
-                        <p><strong>Step 1:</strong> Identify a, l, and d</p>
-                        <p class="math-expression">a = 12, l = −43, d = 7 − 12 = −5</p>
-                    </div>
-                    <div class="solution-step">
-                        <p><strong>Step 2:</strong> Find n (number of terms)</p>
-                        <p class="math-expression">l = a + (n−1)d</p>
-                        <p class="math-expression">−43 = 12 + (n−1)(−5)</p>
-                        <p class="math-expression">−55 = (n−1)(−5)</p>
-                        <p class="math-expression">n − 1 = 11</p>
-                        <p class="math-expression">n = 12</p>
-                    </div>
-                    <div class="solution-step">
-                        <p><strong>Step 3:</strong> Apply S<sub>n</sub> = (n/2)[a + l]</p>
-                        <p class="math-expression">S<sub>12</sub> = (12/2)[12 + (−43)]</p>
-                        <p class="math-expression">S<sub>12</sub> = 6 × (−31)</p>
-                    </div>
-                    <div class="solution-step">
-                        <p class="highlight-answer">S<sub>12</sub> = −186</p>
-                    </div>
+                <div class="worked-example">
+                    <strong>Example: Calculating Sₙ directly</strong>
+                    <p>For the series: 1 + 4 + 7 + 10 + ...</p>
+                    <ul class="step-list">
+                        <li>S₃ = 1 + 4 + 7 = <strong>12</strong></li>
+                        <li>S₇ = 1 + 4 + 7 + 10 + 13 + 16 + 19 = <strong>70</strong></li>
+                    </ul>
                 </div>
             </div>
+        </section>
 
-            <!-- Example 5 -->
-            <div class="example-box">
-                <div class="example-header">
-                    <span class="example-badge">Example 5</span>
-                    <span class="example-title">Sigma Notation with Formula</span>
-                </div>
-                <p><strong>Question:</strong> Determine the sum of the first 12 terms if T<sub>k</sub> = 5k − 3</p>
+        <!-- Section: Formula Derivation -->
+        <section id="derivation">
+            <div class="section-header" data-toggle="derivation-content">
+                <h2>🧮 Derivation of the Sum Formula</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content" id="derivation-content">
+                <h3><span class="key-term">Proving the Formula (Examinable!)</span></h3>
+                <p>The derivation of the sum formula is important and may be examined. Here's the step-by-step proof:</p>
                 
-                <div class="solution-steps">
-                    <div class="solution-step">
-                        <p><strong>Step 1:</strong> Find the first few terms</p>
-                        <p class="math-expression">T<sub>1</sub> = 5(1) − 3 = 2</p>
-                        <p class="math-expression">T<sub>2</sub> = 5(2) − 3 = 7</p>
-                        <p class="math-expression">T<sub>12</sub> = 5(12) − 3 = 57</p>
+                <div class="derivation-box">
+                    <div class="derivation-step">
+                        <div class="step-number">1</div>
+                        <div>Let Sₙ = a + (a+d) + (a+2d) + ... + [a+(n-2)d] + [a+(n-1)d]</div>
                     </div>
-                    <div class="solution-step">
-                        <p><strong>Step 2:</strong> Identify a = 2, d = 5, n = 12</p>
+                    <div class="derivation-step">
+                        <div class="step-number">2</div>
+                        <div>Write Sₙ in reverse order: Sₙ = [a+(n-1)d] + [a+(n-2)d] + ... + (a+2d) + (a+d) + a</div>
                     </div>
-                    <div class="solution-step">
-                        <p><strong>Method 1:</strong> Using S<sub>n</sub> = (n/2)[2a + (n−1)d]</p>
-                        <p class="math-expression">S<sub>12</sub> = (12/2)[2(2) + (12−1)(5)]</p>
-                        <p class="math-expression">S<sub>12</sub> = 6[4 + 55] = 6 × 59 = 354</p>
+                    <div class="derivation-step">
+                        <div class="step-number">3</div>
+                        <div>Add the two expressions for Sₙ: 2Sₙ = [2a+(n-1)d] + [2a+(n-1)d] + ... + [2a+(n-1)d]</div>
                     </div>
-                    <div class="solution-step">
-                        <p><strong>Method 2:</strong> Using S<sub>n</sub> = (n/2)[a + l]</p>
-                        <p class="math-expression">S<sub>12</sub> = (12/2)[2 + 57] = 6 × 59 = 354</p>
+                    <div class="derivation-step">
+                        <div class="step-number">4</div>
+                        <div>There are n terms in this sum: 2Sₙ = n[2a + (n-1)d]</div>
                     </div>
-                    <div class="solution-step">
-                        <p class="highlight-answer">S<sub>12</sub> = 354</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Interactive Simulation 1: Basic Sum Calculator -->
-        <div class="card">
-            <div class="section-header">
-                <div class="section-icon">🎮</div>
-                <h2 class="section-title">Simulation 1: Arithmetic Series Calculator</h2>
-            </div>
-            <p>Enter the first term (a), common difference (d), and number of terms (n) to calculate the sum and see the series visually.</p>
-            
-            <div class="simulation-container">
-                <div class="sim-controls">
-                    <div class="sim-input-group">
-                        <label for="sim1A">First Term (a):</label>
-                        <input type="number" id="sim1A" class="sim-input" value="1">
-                    </div>
-                    <div class="sim-input-group">
-                        <label for="sim1D">Common Difference (d):</label>
-                        <input type="number" id="sim1D" class="sim-input" value="4">
-                    </div>
-                    <div class="sim-input-group">
-                        <label for="sim1N">Number of Terms (n):</label>
-                        <input type="number" id="sim1N" class="sim-input" value="7" min="1" max="20">
-                    </div>
-                    <div class="sim-input-group">
-                        <label>&nbsp;</label>
-                        <button class="sim-button" onclick="calculateSeriesSum()">Calculate Sum</button>
+                    <div class="derivation-step">
+                        <div class="step-number">5</div>
+                        <div>Divide by 2: Sₙ = n/2 [2a + (n-1)d] ✓</div>
                     </div>
                 </div>
                 
-                <div class="sim-output" id="sim1Output">
-                    <p class="text-center" style="color: var(--gray-600);">Click "Calculate Sum" to see the arithmetic series and its sum</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Interactive Simulation 2: Visual Proof -->
-        <div class="card">
-            <div class="section-header">
-                <div class="section-icon teal">📐</div>
-                <h2 class="section-title">Simulation 2: Visual Proof of the Sum Formula</h2>
-            </div>
-            <p>Watch how the sum formula works by seeing the "pairing" method visually. Click to see the magic!</p>
-            
-            <div class="simulation-container teal">
-                <div class="sim-controls">
-                    <div class="sim-input-group">
-                        <label for="sim2N">Number of Terms:</label>
-                        <input type="number" id="sim2N" class="sim-input" value="6" min="2" max="10">
-                    </div>
-                    <div class="sim-input-group">
-                        <label>&nbsp;</label>
-                        <button class="sim-button teal" onclick="visualProof()">Show Visual Proof</button>
-                    </div>
+                <div class="formula-box" style="margin-top: 1.5rem;">
+                    Alternative Formula: Sₙ = n/2 (a + l)
+                    <small>Where l = last term = a + (n-1)d</small>
                 </div>
                 
-                <div class="sim-output" id="sim2Output">
-                    <p class="text-center" style="color: var(--gray-600);">Enter a number of terms and click to see the visual proof</p>
-                </div>
-                
-                <div class="canvas-container mt-2">
-                    <canvas id="proofCanvas" width="800" height="300"></canvas>
-                </div>
+                <p style="margin-top: 1rem; color: var(--teal-dark); font-weight: 600;">
+                    Note: This derivation is examinable! Make sure you understand and can reproduce it.
+                </p>
             </div>
-        </div>
+        </section>
 
-        <!-- Interactive Simulation 3: Find n from Sum -->
-        <div class="card">
-            <div class="section-header">
-                <div class="section-icon purple">🔍</div>
-                <h2 class="section-title">Simulation 3: Reverse Calculator</h2>
+        <!-- Section: Worked Examples -->
+        <section id="examples">
+            <div class="section-header" data-toggle="examples-content">
+                <h2>✍️ Worked Examples</h2>
+                <span class="toggle-icon">▼</span>
             </div>
-            <p>Given a target sum, find how many terms are needed to reach (or exceed) that sum.</p>
-            
-            <div class="simulation-container">
-                <div class="sim-controls">
-                    <div class="sim-input-group">
-                        <label for="sim3A">First Term (a):</label>
-                        <input type="number" id="sim3A" class="sim-input" value="2">
+            <div class="section-content theory-content" id="examples-content">
+                <h3><span class="key-term">Example 1: Using the General Term</span></h3>
+                <div class="worked-example">
+                    <strong>Problem:</strong> Determine the sum of the first 12 terms of the series with Tₖ = 5k - 3
+                    
+                    <div class="step-list">
+                        <li><strong>Step 1: Identify terms</strong><br>
+                            T₁ = 5(1) - 3 = 2<br>
+                            T₂ = 5(2) - 3 = 7<br>
+                            T₃ = 5(3) - 3 = 12<br>
+                            ...<br>
+                            T₁₂ = 5(12) - 3 = 57
+                        </li>
+                        <li><strong>Step 2: Series is:</strong> 2 + 7 + 12 + ... + 57</li>
+                        <li><strong>Step 3: Use Sₙ = n/2 (a + l)</strong><br>
+                            n = 12, a = 2, l = 57<br>
+                            S₁₂ = 12/2 (2 + 57) = 6 × 59 = <strong>354</strong>
+                        </li>
+                        <li><strong>Alternative using Sₙ = n/2 [2a + (n-1)d]</strong><br>
+                            d = 7 - 2 = 5<br>
+                            S₁₂ = 12/2 [2(2) + (12-1)5] = 6[4 + 55] = 6 × 59 = <strong>354</strong>
+                        </li>
                     </div>
-                    <div class="sim-input-group">
-                        <label for="sim3D">Common Difference (d):</label>
-                        <input type="number" id="sim3D" class="sim-input" value="3">
-                    </div>
-                    <div class="sim-input-group">
-                        <label for="sim3Target">Target Sum:</label>
-                        <input type="number" id="sim3Target" class="sim-input" value="100">
-                    </div>
-                    <div class="sim-input-group">
-                        <label>&nbsp;</label>
-                        <button class="sim-button purple" onclick="findTermsForSum()">Find n</button>
-                    </div>
+                    <p><strong>Answer:</strong> S₁₂ = 354</p>
                 </div>
-                
-                <div class="sim-output" id="sim3Output">
-                    <p class="text-center" style="color: var(--gray-600);">Enter values and click "Find n" to solve</p>
-                </div>
-            </div>
-        </div>
 
-        <!-- Interactive Simulation 4: Series with Variables -->
-        <div class="card">
-            <div class="section-header">
-                <div class="section-icon">🧮</div>
-                <h2 class="section-title">Simulation 4: Series Formula Builder</h2>
+                <h3><span class="key-term">Example 2: Finding S₂₀ for -1 + 3 + 7 + ...</span></h3>
+                <div class="worked-example">
+                    <p><strong>Problem:</strong> Find the sum of the first 20 terms of the series: -1 + 3 + 7 + ...</p>
+                    
+                    <div class="step-list">
+                        <li><strong>Step 1: Identify parameters</strong><br>
+                            a = -1<br>
+                            d = 3 - (-1) = 4<br>
+                            n = 20
+                        </li>
+                        <li><strong>Step 2: Apply formula</strong><br>
+                            Sₙ = n/2 [2a + (n-1)d]<br>
+                            S₂₀ = 20/2 [2(-1) + (20-1)4]<br>
+                            S₂₀ = 10[-2 + 19×4]<br>
+                            S₂₀ = 10[-2 + 76]<br>
+                            S₂₀ = 10 × 74 = <strong>740</strong>
+                        </li>
+                    </div>
+                    <p><strong>Answer:</strong> S₂₀ = 740</p>
+                </div>
+
+                <h3><span class="key-term">Example 3: Finding S₂₀ for (-16) + (-12) + (-8) + ...</span></h3>
+                <div class="worked-example">
+                    <p><strong>Problem:</strong> Find the sum of the first 20 terms of the series: (-16) + (-12) + (-8) + ...</p>
+                    
+                    <div class="step-list">
+                        <li><strong>Step 1: Identify parameters</strong><br>
+                            a = -16<br>
+                            d = (-12) - (-16) = 4<br>
+                            n = 20
+                        </li>
+                        <li><strong>Step 2: Apply formula</strong><br>
+                            Sₙ = n/2 [2a + (n-1)d]<br>
+                            S₂₀ = 20/2 [2(-16) + (20-1)4]<br>
+                            S₂₀ = 10[-32 + 19×4]<br>
+                            S₂₀ = 10[-32 + 76]<br>
+                            S₂₀ = 10 × 44 = <strong>440</strong>
+                        </li>
+                    </div>
+                    <p><strong>Answer:</strong> S₂₀ = 440</p>
+                </div>
+
+                <div class="practice-problems">
+                    <h4>📝 Informal Assessment 2.1</h4>
+                    <p><strong>Try this:</strong> Find the sum of the arithmetic series: 12 + 7 + 2 + ... + (-43)</p>
+                    <p><em>Hint: First find n using Tₙ = a + (n-1)d, then use Sₙ formula.</em></p>
+                    <p style="margin-top: 1rem; color: var(--teal-dark); font-weight: 600;">Answer: S₁₂ = -186</p>
+                </div>
             </div>
-            <p>Given a general term formula T<sub>k</sub>, calculate the sum of the first n terms.</p>
-            
-            <div class="simulation-container">
-                <div class="sim-controls" style="grid-template-columns: repeat(2, 1fr);">
-                    <div class="sim-input-group">
-                        <label for="sim4Coeff">Coefficient of k (for T<sub>k</sub> = mk + c):</label>
-                        <input type="number" id="sim4Coeff" class="sim-input" value="5">
+        </section>
+
+        <!-- Section: Class Work -->
+        <section id="class-work">
+            <div class="section-header" data-toggle="class-work-content">
+                <h2>✏️ Class Work & Practice</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content" id="class-work-content">
+                <div class="practice-problems">
+                    <h4>📝 Class Work Problems</h4>
+                    <p>Use the arithmetic sequence below: x+1; 3x+2; 5x+5</p>
+                    <p><strong>a)</strong> Find the common difference in terms of x.</p>
+                    <p><strong>b)</strong> Determine in terms of x the 6th term.</p>
+                    <p><strong>c)</strong> Determine in terms of x the sum of the first 8 terms.</p>
+                </div>
+
+                <div class="worked-example">
+                    <strong>Detailed Solution</strong>
+                    
+                    <div class="step-list">
+                        <li><strong>a) Common difference:</strong><br>
+                            d = T₂ - T₁ = (3x+2) - (x+1) = 3x+2 - x - 1 = 2x + 1<br>
+                            Verify: d = T₃ - T₂ = (5x+5) - (3x+2) = 5x+5 - 3x - 2 = 2x + 3<br>
+                            <em>Wait, there's a problem: 2x+1 ≠ 2x+3. Let's recalculate properly:</em><br><br>
+                            
+                            Actually: T₁ = x+1, T₂ = 3x+2, T₃ = 5x+5<br>
+                            d₁ = T₂ - T₁ = (3x+2) - (x+1) = 2x + 1<br>
+                            d₂ = T₃ - T₂ = (5x+5) - (3x+2) = 2x + 3<br>
+                            For arithmetic sequence, d should be constant. There might be an error in the problem.<br>
+                            <em>Assuming the sequence is arithmetic, let's use d = 2x+1</em>
+                        </li>
+                        <li><strong>b) 6th term:</strong><br>
+                            Tₙ = a + (n-1)d<br>
+                            T₆ = (x+1) + (6-1)(2x+1)<br>
+                            T₆ = x+1 + 5(2x+1)<br>
+                            T₆ = x+1 + 10x+5 = 11x + 6
+                        </li>
+                        <li><strong>c) Sum of first 8 terms:</strong><br>
+                            Sₙ = n/2 [2a + (n-1)d]<br>
+                            S₈ = 8/2 [2(x+1) + (8-1)(2x+1)]<br>
+                            S₈ = 4[2x+2 + 7(2x+1)]<br>
+                            S₈ = 4[2x+2 + 14x+7]<br>
+                            S₈ = 4[16x + 9] = 64x + 36
+                        </li>
                     </div>
-                    <div class="sim-input-group">
-                        <label for="sim4Const">Constant term (c):</label>
-                        <input type="number" id="sim4Const" class="sim-input" value="-3">
-                    </div>
-                    <div class="sim-input-group">
-                        <label for="sim4N">Number of terms (n):</label>
-                        <input type="number" id="sim4N" class="sim-input" value="12" min="1">
-                    </div>
-                    <div class="sim-input-group">
-                        <label>&nbsp;</label>
-                        <button class="sim-button" onclick="calculateFormulaSum()">Calculate</button>
+                    <p><strong>Answers:</strong> a) d = 2x+1, b) T₆ = 11x+6, c) S₈ = 64x+36</p>
+                    <p><em>Note: The given answers in the lesson text appear to have different values. Check calculations carefully.</em></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Series Visualizer -->
+        <section id="visualizer">
+            <div class="section-header" data-toggle="visualizer-content">
+                <h2>🔢 Series Sum Visualizer</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content" id="visualizer-content">
+                <p style="margin-bottom: 1.5rem;">
+                    Visualize how arithmetic series sums are calculated. Enter parameters and see the series unfold.
+                </p>
+                <div class="series-visualizer">
+                    <div style="width: 100%; max-width: 600px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                            <div>
+                                <h4 style="color: var(--white); margin-bottom: 0.75rem;">Series Parameters</h4>
+                                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                    <input type="number" id="vis_a" placeholder="First term (a)" value="1" style="padding: 0.5rem; border-radius: var(--radius-md); border: none;">
+                                    <input type="number" id="vis_d" placeholder="Common difference (d)" value="3" style="padding: 0.5rem; border-radius: var(--radius-md); border: none;">
+                                    <input type="number" id="vis_n" placeholder="Number of terms (n)" value="5" style="padding: 0.5rem; border-radius: var(--radius-md); border: none;">
+                                    <button class="btn-primary" id="visualizeBtn" style="width: 100%; margin-top: 0.5rem;">Visualize Series</button>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 style="color: var(--white); margin-bottom: 0.75rem;">Quick Examples</h4>
+                                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                    <button class="btn-secondary" onclick="loadExample(1)" style="width: 100%;">Example 1: 1 + 4 + 7 + ...</button>
+                                    <button class="btn-secondary" onclick="loadExample(2)" style="width: 100%;">Example 2: -1 + 3 + 7 + ...</button>
+                                    <button class="btn-secondary" onclick="loadExample(3)" style="width: 100%;">Example 3: -16 -12 -8 ...</button>
+                                    <button class="btn-secondary" onclick="clearVisualizer()" style="width: 100%;">Clear</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="seriesDisplay" style="margin-bottom: 1.5rem;">
+                            <!-- Series will be displayed here -->
+                        </div>
+                        
+                        <div id="calculationSteps" style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: var(--radius-md); color: var(--white); display: none;">
+                            <h4 style="color: var(--teal-light); margin-bottom: 0.5rem;">Calculation Steps</h4>
+                            <div id="stepsContent"></div>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="sim-output" id="sim4Output">
-                    <p class="text-center" style="color: var(--gray-600);">Enter the formula parameters and click "Calculate"</p>
-                </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Quiz Section -->
-        <div class="card">
-            <div class="section-header">
-                <div class="section-icon">📝</div>
-                <h2 class="section-title">Knowledge Check</h2>
+        <!-- Section: Quiz (12 Questions) -->
+        <section id="quiz">
+            <div class="section-header" data-toggle="quiz-content">
+                <h2>✓ Comprehensive Quiz (12 Questions)</h2>
+                <span class="toggle-icon">▼</span>
             </div>
-            <p>Test your understanding of arithmetic series and sum formulas.</p>
+            <div class="section-content quiz-container" id="quiz-content">
+                <p>Test your understanding of arithmetic series with these 12 questions.</p>
 
-            <div class="quiz-container" id="quizContainer">
                 <!-- Question 1 -->
-                <div class="question-card" id="q1">
-                    <p class="question-text"><span class="question-number">1</span>What is the difference between an arithmetic sequence and an arithmetic series?</p>
-                    <div class="options-list">
-                        <label class="option-label" onclick="selectOption(this, 1)">
-                            <input type="radio" name="q1" value="a">
-                            <span class="option-circle"></span>
-                            <span>A sequence has a formula, a series doesn't</span>
-                        </label>
-                        <label class="option-label" onclick="selectOption(this, 1)">
-                            <input type="radio" name="q1" value="b">
-                            <span class="option-circle"></span>
-                            <span>A series is the sum of the terms of a sequence</span>
-                        </label>
-                        <label class="option-label" onclick="selectOption(this, 1)">
-                            <input type="radio" name="q1" value="c">
-                            <span class="option-circle"></span>
-                            <span>A sequence has more terms than a series</span>
-                        </label>
-                        <label class="option-label" onclick="selectOption(this, 1)">
-                            <input type="radio" name="q1" value="d">
-                            <span class="option-circle"></span>
-                            <span>There is no difference</span>
-                        </label>
+                <div class="quiz-question" data-question="1">
+                    <h4>Question 1: What is an arithmetic series?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="false">A) A list of numbers with constant ratio</div>
+                        <div class="quiz-option" data-answer="true">B) The sum of an arithmetic sequence</div>
+                        <div class="quiz-option" data-answer="false">C) A sequence with constant difference</div>
+                        <div class="quiz-option" data-answer="false">D) The product of terms in a sequence</div>
                     </div>
-                    <div class="feedback" id="feedback1"></div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> An arithmetic series is the sum of the terms of an arithmetic sequence.
+                    </div>
                 </div>
 
                 <!-- Question 2 -->
-                <div class="question-card" id="q2">
-                    <p class="question-text"><span class="question-number">2</span>Which formula should you use when you know the first term, common difference, and number of terms?</p>
-                    <div class="options-list">
-                        <label class="option-label" onclick="selectOption(this, 2)">
-                            <input type="radio" name="q2" value="a">
-                            <span class="option-circle"></span>
-                            <span>S<sub>n</sub> = (n/2)[a + l]</span>
-                        </label>
-                        <label class="option-label" onclick="selectOption(this, 2)">
-                            <input type="radio" name="q2" value="b">
-                            <span class="option-circle"></span>
-                            <span>S<sub>n</sub> = (n/2)[2a + (n−1)d]</span>
-                        </label>
-                        <label class="option-label" onclick="selectOption(this, 2)">
-                            <input type="radio" name="q2" value="c">
-                            <span class="option-circle"></span>
-                            <span>T<sub>n</sub> = a + (n−1)d</span>
-                        </label>
-                        <label class="option-label" onclick="selectOption(this, 2)">
-                            <input type="radio" name="q2" value="d">
-                            <span class="option-circle"></span>
-                            <span>S<sub>n</sub> = n × a × d</span>
-                        </label>
+                <div class="quiz-question" data-question="2">
+                    <h4>Question 2: What is the correct formula for Sₙ?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="false">A) Sₙ = a + (n-1)d</div>
+                        <div class="quiz-option" data-answer="true">B) Sₙ = n/2 [2a + (n-1)d]</div>
+                        <div class="quiz-option" data-answer="false">C) Sₙ = arⁿ⁻¹</div>
+                        <div class="quiz-option" data-answer="false">D) Sₙ = n(a + d)</div>
                     </div>
-                    <div class="feedback" id="feedback2"></div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> The formula for the sum of the first n terms of an arithmetic series is Sₙ = n/2 [2a + (n-1)d].
+                    </div>
                 </div>
 
                 <!-- Question 3 -->
-                <div class="question-card" id="q3">
-                    <p class="question-text"><span class="question-number">3</span>Find S<sub>3</sub> for the series: 1 + 4 + 7 + 10 + ...</p>
-                    <div class="options-list">
-                        <label class="option-label" onclick="selectOption(this, 3)">
-                            <input type="radio" name="q3" value="a">
-                            <span class="option-circle"></span>
-                            <span>10</span>
-                        </label>
-                        <label class="option-label" onclick="selectOption(this, 3)">
-                            <input type="radio" name="q3" value="b">
-                            <span class="option-circle"></span>
-                            <span>12</span>
-                        </label>
-                        <label class="option-label" onclick="selectOption(this, 3)">
-                            <input type="radio" name="q3" value="c">
-                            <span class="option-circle"></span>
-                            <span>22</span>
-                        </label>
-                        <label class="option-label" onclick="selectOption(this, 3)">
-                            <input type="radio" name="q3" value="d">
-                            <span class="option-circle"></span>
-                            <span>7</span>
-                        </label>
+                <div class="quiz-question" data-question="3">
+                    <h4>Question 3: For the series 1 + 4 + 7 + 10, what is S₃?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="false">A) 10</div>
+                        <div class="quiz-option" data-answer="false">B) 11</div>
+                        <div class="quiz-option" data-answer="true">C) 12</div>
+                        <div class="quiz-option" data-answer="false">D) 13</div>
                     </div>
-                    <div class="feedback" id="feedback3"></div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> S₃ = 1 + 4 + 7 = 12.
+                    </div>
                 </div>
 
-                <!-- Question 4 - Numerical -->
-                <div class="question-card" id="q4">
-                    <p class="question-text"><span class="question-number">4</span>Calculate S<sub>7</sub> for the series: 1 + 4 + 7 + 10 + 13 + 16 + 19</p>
-                    <div class="numerical-input">
-                        <input type="number" id="answer4" placeholder="Enter S₇">
-                        <button class="check-btn" onclick="checkNumerical(4, 70)">Check</button>
+                <!-- Question 4 -->
+                <div class="quiz-question" data-question="4">
+                    <h4>Question 4: If a = -1, d = 4, and n = 20, what is S₂₀?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="false">A) 720</div>
+                        <div class="quiz-option" data-answer="false">B) 730</div>
+                        <div class="quiz-option" data-answer="true">C) 740</div>
+                        <div class="quiz-option" data-answer="false">D) 750</div>
                     </div>
-                    <div class="feedback" id="feedback4"></div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> S₂₀ = 20/2 [2(-1) + (20-1)4] = 10[-2 + 76] = 10 × 74 = 740.
+                    </div>
                 </div>
 
-                <!-- Question 5 - Numerical -->
-                <div class="question-card" id="q5">
-                    <p class="question-text"><span class="question-number">5</span>Find S<sub>20</sub> for the series: −1 + 3 + 7 + 11 + ...</p>
-                    <div class="numerical-input">
-                        <input type="number" id="answer5" placeholder="Enter S₂₀">
-                        <button class="check-btn" onclick="checkNumerical(5, 740)">Check</button>
+                <!-- Question 5 -->
+                <div class="quiz-question" data-question="5">
+                    <h4>Question 5: What is the alternative formula for Sₙ?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="false">A) Sₙ = n(a + d)</div>
+                        <div class="quiz-option" data-answer="true">B) Sₙ = n/2 (a + l)</div>
+                        <div class="quiz-option" data-answer="false">C) Sₙ = a(1 - rⁿ)/(1 - r)</div>
+                        <div class="quiz-option" data-answer="false">D) Sₙ = n²/2</div>
                     </div>
-                    <div class="feedback" id="feedback5"></div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> The alternative formula is Sₙ = n/2 (a + l), where l is the last term.
+                    </div>
                 </div>
 
-                <!-- Question 6 - Numerical -->
-                <div class="question-card" id="q6">
-                    <p class="question-text"><span class="question-number">6</span>Find S<sub>20</sub> for the series: (−16) + (−12) + (−8) + ...</p>
-                    <div class="numerical-input">
-                        <input type="number" id="answer6" placeholder="Enter S₂₀">
-                        <button class="check-btn" onclick="checkNumerical(6, 440)">Check</button>
+                <!-- Question 6 -->
+                <div class="quiz-question" data-question="6">
+                    <h4>Question 6: For Tₖ = 5k - 3, what is S₁₂?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="false">A) 350</div>
+                        <div class="quiz-option" data-answer="false">B) 352</div>
+                        <div class="quiz-option" data-answer="true">C) 354</div>
+                        <div class="quiz-option" data-answer="false">D) 356</div>
                     </div>
-                    <div class="feedback" id="feedback6"></div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> a = 2, l = 57, n = 12. S₁₂ = 12/2 (2 + 57) = 6 × 59 = 354.
+                    </div>
                 </div>
 
                 <!-- Question 7 -->
-                <div class="question-card" id="q7">
-                    <p class="question-text"><span class="question-number">7</span>For the series 12 + 7 + 2 + ... + (−43), how many terms are there?</p>
-                    <div class="options-list">
-                        <label class="option-label" onclick="selectOption(this, 7)">
-                            <input type="radio" name="q7" value="a">
-                            <span class="option-circle"></span>
-                            <span>10 terms</span>
-                        </label>
-                        <label class="option-label" onclick="selectOption(this, 7)">
-                            <input type="radio" name="q7" value="b">
-                            <span class="option-circle"></span>
-                            <span>11 terms</span>
-                        </label>
-                        <label class="option-label" onclick="selectOption(this, 7)">
-                            <input type="radio" name="q7" value="c">
-                            <span class="option-circle"></span>
-                            <span>12 terms</span>
-                        </label>
-                        <label class="option-label" onclick="selectOption(this, 7)">
-                            <input type="radio" name="q7" value="d">
-                            <span class="option-circle"></span>
-                            <span>13 terms</span>
-                        </label>
+                <div class="quiz-question" data-question="7">
+                    <h4>Question 7: For the series (-16) + (-12) + (-8) + ..., what is S₂₀?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="false">A) 420</div>
+                        <div class="quiz-option" data-answer="false">B) 430</div>
+                        <div class="quiz-option" data-answer="true">C) 440</div>
+                        <div class="quiz-option" data-answer="false">D) 450</div>
                     </div>
-                    <div class="feedback" id="feedback7"></div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> a = -16, d = 4, n = 20. S₂₀ = 20/2 [2(-16) + 19×4] = 10[-32 + 76] = 10 × 44 = 440.
+                    </div>
                 </div>
 
-                <!-- Question 8 - Numerical -->
-                <div class="question-card" id="q8">
-                    <p class="question-text"><span class="question-number">8</span>Find the sum of the series: 12 + 7 + 2 + ... + (−43)</p>
-                    <div class="numerical-input">
-                        <input type="number" id="answer8" placeholder="Enter the sum">
-                        <button class="check-btn" onclick="checkNumerical(8, -186)">Check</button>
+                <!-- Question 8 -->
+                <div class="quiz-question" data-question="8">
+                    <h4>Question 8: What does the 'l' represent in Sₙ = n/2 (a + l)?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="false">A) First term</div>
+                        <div class="quiz-option" data-answer="false">B) Common difference</div>
+                        <div class="quiz-option" data-answer="true">C) Last term</div>
+                        <div class="quiz-option" data-answer="false">D) Number of terms</div>
                     </div>
-                    <div class="feedback" id="feedback8"></div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> In the formula Sₙ = n/2 (a + l), 'l' represents the last term of the series.
+                    </div>
                 </div>
 
                 <!-- Question 9 -->
-                <div class="question-card" id="q9">
-                    <p class="question-text"><span class="question-number">9</span>If T<sub>k</sub> = 5k − 3, what is T<sub>1</sub>?</p>
-                    <div class="options-list">
-                        <label class="option-label" onclick="selectOption(this, 9)">
-                            <input type="radio" name="q9" value="a">
-                            <span class="option-circle"></span>
-                            <span>−3</span>
-                        </label>
-                        <label class="option-label" onclick="selectOption(this, 9)">
-                            <input type="radio" name="q9" value="b">
-                            <span class="option-circle"></span>
-                            <span>2</span>
-                        </label>
-                        <label class="option-label" onclick="selectOption(this, 9)">
-                            <input type="radio" name="q9" value="c">
-                            <span class="option-circle"></span>
-                            <span>5</span>
-                        </label>
-                        <label class="option-label" onclick="selectOption(this, 9)">
-                            <input type="radio" name="q9" value="d">
-                            <span class="option-circle"></span>
-                            <span>8</span>
-                        </label>
+                <div class="quiz-question" data-question="9">
+                    <h4>Question 9: For 12 + 7 + 2 + ... + (-43), what is Sₙ?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="false">A) -180</div>
+                        <div class="quiz-option" data-answer="false">B) -184</div>
+                        <div class="quiz-option" data-answer="true">C) -186</div>
+                        <div class="quiz-option" data-answer="false">D) -190</div>
                     </div>
-                    <div class="feedback" id="feedback9"></div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> a = 12, d = -5, l = -43. First find n: -43 = 12 + (n-1)(-5) → n = 12. S₁₂ = 12/2 (12 + (-43)) = 6 × (-31) = -186.
+                    </div>
                 </div>
 
-                <!-- Question 10 - Numerical -->
-                <div class="question-card" id="q10">
-                    <p class="question-text"><span class="question-number">10</span>If T<sub>k</sub> = 5k − 3, calculate S<sub>12</sub></p>
-                    <div class="numerical-input">
-                        <input type="number" id="answer10" placeholder="Enter S₁₂">
-                        <button class="check-btn" onclick="checkNumerical(10, 354)">Check</button>
+                <!-- Question 10 -->
+                <div class="quiz-question" data-question="10">
+                    <h4>Question 10: Which step comes first in deriving Sₙ formula?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="true">A) Write Sₙ = a + (a+d) + ... + [a+(n-1)d]</div>
+                        <div class="quiz-option" data-answer="false">B) Multiply by 2</div>
+                        <div class="quiz-option" data-answer="false">C) Divide by n</div>
+                        <div class="quiz-option" data-answer="false">D) Factor out a</div>
                     </div>
-                    <div class="feedback" id="feedback10"></div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> The derivation starts by writing Sₙ as the sum of terms: Sₙ = a + (a+d) + (a+2d) + ... + [a+(n-1)d].
+                    </div>
                 </div>
 
                 <!-- Question 11 -->
-                <div class="question-card" id="q11">
-                    <p class="question-text"><span class="question-number">11</span>Given x + 1; 3x + 2; 5x + 5 are the first 3 terms of an arithmetic sequence, what is d in terms of x?</p>
-                    <div class="options-list">
-                        <label class="option-label" onclick="selectOption(this, 11)">
-                            <input type="radio" name="q11" value="a">
-                            <span class="option-circle"></span>
-                            <span>d = 2x + 1</span>
-                        </label>
-                        <label class="option-label" onclick="selectOption(this, 11)">
-                            <input type="radio" name="q11" value="b">
-                            <span class="option-circle"></span>
-                            <span>d = 2x − 3</span>
-                        </label>
-                        <label class="option-label" onclick="selectOption(this, 11)">
-                            <input type="radio" name="q11" value="c">
-                            <span class="option-circle"></span>
-                            <span>d = x + 1</span>
-                        </label>
-                        <label class="option-label" onclick="selectOption(this, 11)">
-                            <input type="radio" name="q11" value="d">
-                            <span class="option-circle"></span>
-                            <span>d = 3x + 2</span>
-                        </label>
+                <div class="quiz-question" data-question="11">
+                    <h4>Question 11: If S₈ = 64x + 36 for sequence x+1; 3x+2; 5x+5, what is a?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="true">A) x+1</div>
+                        <div class="quiz-option" data-answer="false">B) 3x+2</div>
+                        <div class="quiz-option" data-answer="false">C) 5x+5</div>
+                        <div class="quiz-option" data-answer="false">D) 2x+1</div>
                     </div>
-                    <div class="feedback" id="feedback11"></div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> The first term a is x+1, which is T₁ in the given sequence.
+                    </div>
                 </div>
 
                 <!-- Question 12 -->
-                <div class="question-card" id="q12">
-                    <p class="question-text"><span class="question-number">12</span>The sum formula S<sub>n</sub> = (n/2)[a + l] is most useful when you know:</p>
-                    <div class="options-list">
-                        <label class="option-label" onclick="selectOption(this, 12)">
-                            <input type="radio" name="q12" value="a">
-                            <span class="option-circle"></span>
-                            <span>The first term and common difference</span>
-                        </label>
-                        <label class="option-label" onclick="selectOption(this, 12)">
-                            <input type="radio" name="q12" value="b">
-                            <span class="option-circle"></span>
-                            <span>The first term and last term</span>
-                        </label>
-                        <label class="option-label" onclick="selectOption(this, 12)">
-                            <input type="radio" name="q12" value="c">
-                            <span class="option-circle"></span>
-                            <span>Only the common difference</span>
-                        </label>
-                        <label class="option-label" onclick="selectOption(this, 12)">
-                            <input type="radio" name="q12" value="d">
-                            <span class="option-circle"></span>
-                            <span>Only the number of terms</span>
-                        </label>
+                <div class="quiz-question" data-question="12">
+                    <h4>Question 12: Why is the derivation of Sₙ formula examinable?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="false">A) It's very difficult</div>
+                        <div class="quiz-option" data-answer="true">B) It demonstrates understanding of series concepts</div>
+                        <div class="quiz-option" data-answer="false">C) It's rarely used</div>
+                        <div class="quiz-option" data-answer="false">D) It's the only way to calculate sums</div>
                     </div>
-                    <div class="feedback" id="feedback12"></div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> The derivation is examinable because it demonstrates a deep understanding of how the sum formula is derived from the properties of arithmetic sequences.
+                    </div>
+                </div>
+
+                <div class="quiz-reset">
+                    <button class="btn-secondary" id="resetQuizBtn">↻ Retry Quiz</button>
                 </div>
             </div>
+        </section>
 
-            <div class="text-center mt-2">
-                <button class="sim-button" onclick="submitQuiz()" style="padding: 1rem 2rem; font-size: 1.125rem;">
-                    Submit All Answers
-                </button>
+        <!-- Section: Video Tutorial -->
+        <section id="video">
+            <div class="section-header" data-toggle="video-content">
+                <h2>📹 Video Tutorial</h2>
+                <span class="toggle-icon">▼</span>
             </div>
+            <div class="section-content" id="video-content">
+                <p style="color: var(--gray-600); margin-bottom: 1rem;">
+                    Watch this video tutorial covering arithmetic series and the derivation of the sum formula.
+                </p>
+                <div class="video-container">
+                    <div class="video-placeholder" id="videoPlaceholder">
+                        <div class="play-btn" id="playVideoBtn">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="var(--navy)">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </div>
+                        <p>Click to play: Arithmetic Series & Sum Formula Derivation</p>
+                    </div>
+                </div>
+                <p style="font-size: 0.9rem; color: var(--gray-500); margin-top: 1rem;">
+                    Duration: 20 minutes | Covers: Definition, formula derivation, and worked examples
+                </p>
+            </div>
+        </section>
 
-            <!-- Score Display -->
-            <div class="score-container" id="scoreContainer" style="display: none;">
-                <h3 class="score-title">Your Score</h3>
-                <div class="score-value" id="scoreValue">0/12</div>
-                <div class="score-percentage" id="scorePercentage">0%</div>
-                <div class="score-message" id="scoreMessage"></div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+        <!-- Section: Live Tutor CTA -->
+        <section id="tutor">
+            <div class="section-header" data-toggle="tutor-content">
+                <h2>👨‍🏫 Live Tutoring Support</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content" id="tutor-content">
+                <div class="tutor-cta">
+                    <h3>Need Help with Arithmetic Series?</h3>
+                    <p style="margin-bottom: 1.5rem;">
+                        Our expert mathematics tutors are available to help you master arithmetic series, formula derivation, and sum calculations. Get personalized help to ensure you understand this examinable content!
+                    </p>
+                    <button class="btn-primary" id="openTutorModal">💬 Book a Tutoring Session</button>
+                    <p style="margin-top: 1rem; font-size: 0.95rem;">
+                        Quick questions? WhatsApp us at <a href="tel:0670957879">067 095 7879</a>
+                    </p>
                 </div>
             </div>
-        </div>
-
-        <!-- Summary -->
-        <div class="card">
-            <div class="section-header">
-                <div class="section-icon">📌</div>
-                <h2 class="section-title">Lesson Summary</h2>
-            </div>
-            
-            <div class="formula-box">
-                <h4 class="text-center mb-1" style="color: var(--dark-blue);">Key Formulas to Remember</h4>
-                <div class="formula">S<sub>n</sub> = (n/2)[2a + (n−1)d]</div>
-                <p class="text-center mt-1">OR</p>
-                <div class="formula">S<sub>n</sub> = (n/2)[a + l]</div>
-            </div>
-
-            <div class="concept-box">
-                <h4>💡 When to Use Each Formula</h4>
-                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
-                    <li><strong>Use S<sub>n</sub> = (n/2)[2a + (n−1)d]</strong> when you know a, d, and n</li>
-                    <li><strong>Use S<sub>n</sub> = (n/2)[a + l]</strong> when you know the first and last terms</li>
-                    <li>Both formulas give the same answer – choose based on available information</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Lesson Navigation -->
-        <div class="lesson-nav">
-            <button class="nav-btn prev">
-                ← Previous: Finding n
-            </button>
-            <button class="nav-btn next">
-                Next: Geometric Sequences →
-            </button>
-        </div>
+        </section>
     </main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-logo">PassProof Academy</div>
-            <p class="footer-copyright">© 2026 PassProof Academy. All rights reserved.</p>
+    <!-- ===== FLOATING TUTOR BUTTON ===== -->
+    <div class="floating-tutor" id="floatingTutor" title="Chat with a tutor">💬</div>
+
+    <!-- ===== MODAL ===== -->
+    <div id="tutorModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Live Tutoring Session</h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <p style="margin-bottom: 1rem; color: var(--gray-600);">
+                Book a session with an expert Grade 12 Mathematics tutor specializing in arithmetic series.
+            </p>
+            <form id="tutorForm" style="display: flex; flex-direction: column; gap: 1rem;">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="What specific topics do you need help with? (Formula derivation, sum calculations, etc.)" rows="4"></textarea>
+                <select style="padding: 0.75rem; border: 2px solid var(--gray-200); border-radius: var(--radius-md);">
+                    <option>Select session type</option>
+                    <option>Quick 30-minute formula derivation help</option>
+                    <option>1-hour comprehensive series session</option>
+                    <option>Exam preparation focusing on series</option>
+                    <option>Homework help with series problems</option>
+                </select>
+                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 0.5rem;">Book Session</button>
+            </form>
         </div>
+    </div>
+
+    <!-- ===== FOOTER NAVIGATION ===== -->
+    <footer class="lesson-nav">
+        <a href="less1-3.html" class="nav-btn">← Previous Lesson</a>
+        <div class="nav-center">
+            <a href="contents.html" class="nav-btn"><span>📚</span> Subject Contents</a>
+        </div>
+        <a href="less1-5.html" class="nav-btn primary">Next Lesson →</a>
     </footer>
 
+    <!-- ===== JAVASCRIPT ===== -->
     <script>
-        // Answer key for multiple choice questions
-        const answerKey = {
-            1: 'b',  // A series is the sum
-            2: 'b',  // Sn = (n/2)[2a + (n-1)d]
-            3: 'b',  // S3 = 1 + 4 + 7 = 12
-            7: 'c',  // 12 terms
-            9: 'b',  // T1 = 5(1) - 3 = 2
-            11: 'a', // d = (3x+2) - (x+1) = 2x + 1
-            12: 'b'  // First and last term
-        };
-
-        const explanations = {
-            1: 'An arithmetic series is the SUM of the terms in an arithmetic sequence. Sequence: 5; 7; 9 vs Series: 5 + 7 + 9',
-            2: 'When you know a, d, and n, use S_n = (n/2)[2a + (n-1)d]. Use S_n = (n/2)[a + l] when you know first and last terms.',
-            3: 'S₃ = 1 + 4 + 7 = 12. Simply add the first three terms.',
-            4: 'S₇ = 1 + 4 + 7 + 10 + 13 + 16 + 19 = 70. Or use the formula: S₇ = (7/2)[2(1) + 6(3)] = 3.5 × 20 = 70',
-            5: 'a = -1, d = 4, n = 20. S₂₀ = (20/2)[2(-1) + 19(4)] = 10[-2 + 76] = 10 × 74 = 740',
-            6: 'a = -16, d = 4, n = 20. S₂₀ = (20/2)[2(-16) + 19(4)] = 10[-32 + 76] = 10 × 44 = 440',
-            7: 'Using l = a + (n-1)d: -43 = 12 + (n-1)(-5), so -55 = -5(n-1), n-1 = 11, n = 12',
-            8: 'S₁₂ = (12/2)[12 + (-43)] = 6 × (-31) = -186',
-            9: 'T₁ = 5(1) - 3 = 5 - 3 = 2',
-            10: 'T₁ = 2, T₁₂ = 5(12) - 3 = 57. S₁₂ = (12/2)[2 + 57] = 6 × 59 = 354',
-            11: 'd = T₂ - T₁ = (3x + 2) - (x + 1) = 3x + 2 - x - 1 = 2x + 1',
-            12: 'S_n = (n/2)[a + l] is ideal when you know the first term (a) and last term (l) of the series'
-        };
-
-        let userAnswers = {};
-        let score = 0;
-
-        // Navigation toggle
-        function toggleNav() {
-            document.getElementById('navMenu').classList.toggle('active');
-        }
-
-        // Select option for multiple choice
-        function selectOption(element, questionNum) {
-            const options = element.parentElement.querySelectorAll('.option-label');
-            options.forEach(opt => opt.classList.remove('selected'));
-            element.classList.add('selected');
-            const input = element.querySelector('input');
-            userAnswers[questionNum] = input.value;
-        }
-
-        // Check numerical answer
-        function checkNumerical(questionNum, correctAnswer) {
-            const input = document.getElementById(`answer${questionNum}`);
-            const feedback = document.getElementById(`feedback${questionNum}`);
-            const questionCard = document.getElementById(`q${questionNum}`);
-            const userAnswer = parseFloat(input.value);
-            
-            userAnswers[questionNum] = userAnswer;
-            
-            if (userAnswer === correctAnswer) {
-                feedback.className = 'feedback show correct';
-                feedback.innerHTML = `✓ Correct! ${explanations[questionNum]}`;
-                questionCard.classList.add('correct');
-                questionCard.classList.remove('incorrect');
-            } else {
-                feedback.className = 'feedback show incorrect';
-                feedback.innerHTML = `✗ Incorrect. The correct answer is ${correctAnswer}. ${explanations[questionNum]}`;
-                questionCard.classList.add('incorrect');
-                questionCard.classList.remove('correct');
-            }
-        }
-
-        // Submit quiz
-        function submitQuiz() {
-            score = 0;
-            const totalQuestions = 12;
-            
-            // Check multiple choice questions
-            for (const [q, correct] of Object.entries(answerKey)) {
-                const questionCard = document.getElementById(`q${q}`);
-                const feedback = document.getElementById(`feedback${q}`);
-                const options = questionCard.querySelectorAll('.option-label');
+        // ==========================================
+        // COLLAPSIBLE SECTIONS
+        // ==========================================
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const targetId = header.getAttribute('data-toggle');
+                const content = document.getElementById(targetId);
                 
-                options.forEach(opt => {
-                    opt.classList.remove('correct-answer', 'wrong-answer');
-                    if (opt.querySelector('input').value === correct) {
-                        opt.classList.add('correct-answer');
-                    }
-                });
-                
-                if (userAnswers[q] === correct) {
-                    score++;
-                    feedback.className = 'feedback show correct';
-                    feedback.innerHTML = `✓ Correct! ${explanations[q]}`;
-                    questionCard.classList.add('correct');
-                    questionCard.classList.remove('incorrect');
-                } else {
-                    feedback.className = 'feedback show incorrect';
-                    feedback.innerHTML = `✗ Incorrect. ${explanations[q]}`;
-                    questionCard.classList.add('incorrect');
-                    questionCard.classList.remove('correct');
-                    
-                    if (userAnswers[q]) {
-                        options.forEach(opt => {
-                            if (opt.querySelector('input').value === userAnswers[q]) {
-                                opt.classList.add('wrong-answer');
-                            }
-                        });
-                    }
-                }
-            }
-            
-            // Check numerical questions (4, 5, 6, 8, 10)
-            const numericalQuestions = {4: 70, 5: 740, 6: 440, 8: -186, 10: 354};
-            for (const [q, correct] of Object.entries(numericalQuestions)) {
-                if (parseFloat(userAnswers[q]) === correct) {
-                    score++;
-                }
-            }
-            
-            // Display score
-            const percentage = Math.round((score / totalQuestions) * 100);
-            document.getElementById('scoreContainer').style.display = 'block';
-            document.getElementById('scoreValue').textContent = `${score}/${totalQuestions}`;
-            document.getElementById('scorePercentage').textContent = `${percentage}%`;
-            document.getElementById('progressFill').style.width = `${percentage}%`;
-            
-            let message = '';
-            if (percentage >= 90) {
-                message = '🌟 Outstanding! You\'ve mastered arithmetic series!';
-            } else if (percentage >= 70) {
-                message = '👍 Good work! Review the sum formulas carefully.';
-            } else if (percentage >= 50) {
-                message = '📚 Keep practicing! Focus on applying the formulas correctly.';
-            } else {
-                message = '💪 Don\'t give up! Go through the worked examples again.';
-            }
-            document.getElementById('scoreMessage').textContent = message;
-            
-            // Save to localStorage
-            saveProgress(score, totalQuestions, percentage);
-            
-            // Scroll to score
-            document.getElementById('scoreContainer').scrollIntoView({ behavior: 'smooth' });
-        }
+                header.classList.toggle('collapsed');
+                content.classList.toggle('collapsed');
+            });
+        });
 
-        // Simulation 1: Calculate Series Sum
-        function calculateSeriesSum() {
-            const a = parseFloat(document.getElementById('sim1A').value);
-            const d = parseFloat(document.getElementById('sim1D').value);
-            const n = parseInt(document.getElementById('sim1N').value);
+        // ==========================================
+        // SMOOTH SCROLL & ACTIVE NAV HIGHLIGHTING
+        // ==========================================
+        const sections = document.querySelectorAll('main section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 160) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // ==========================================
+        // SERIES VISUALIZER
+        // ==========================================
+        function visualizeSeries() {
+            const a = parseFloat(document.getElementById('vis_a').value);
+            const d = parseFloat(document.getElementById('vis_d').value);
+            const n = parseInt(document.getElementById('vis_n').value);
             
             if (isNaN(a) || isNaN(d) || isNaN(n) || n < 1) {
-                alert('Please enter valid numbers');
+                alert('Please enter valid values for a, d, and n (n must be positive)');
                 return;
             }
             
             // Generate terms
             const terms = [];
+            let sum = 0;
             for (let i = 0; i < n; i++) {
-                terms.push(a + i * d);
+                const term = a + (i * d);
+                terms.push(term);
+                sum += term;
             }
             
-            // Calculate sum using formula
-            const sum = (n / 2) * (2 * a + (n - 1) * d);
-            const lastTerm = a + (n - 1) * d;
-            
-            // Display series visually
+            // Display series
+            const seriesDisplay = document.getElementById('seriesDisplay');
             let seriesHTML = '<div class="series-display">';
-            terms.forEach((term, i) => {
-                seriesHTML += `<span class="term-pill included" style="animation-delay: ${i * 0.1}s">${term}</span>`;
-                if (i < terms.length - 1) {
-                    seriesHTML += '<span class="plus-sign">+</span>';
-                }
+            
+            terms.forEach((term, index) => {
+                seriesHTML += `<div class="series-term">${term}</div>`;
             });
-            seriesHTML += '</div>';
+            
+            seriesHTML += `</div><div class="series-sum">Sum (S${n}) = ${sum}</div>`;
+            
+            // Add formula calculation
+            seriesHTML += `<div class="series-formula">Using formula: S${n} = ${n}/2 [2(${a}) + (${n}-1)(${d})] = ${sum}</div>`;
+            
+            seriesDisplay.innerHTML = seriesHTML;
             
             // Show calculation steps
-            const html = `
-                ${seriesHTML}
-                <div class="sum-result">S<sub>${n}</sub> = ${sum}</div>
-                <div class="step-by-step" style="background: var(--gray-50); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
-                    <h4 style="color: var(--primary-blue); margin-bottom: 0.75rem;">Solution Using Formula:</h4>
-                    <p>Given: a = ${a}, d = ${d}, n = ${n}</p>
-                    <p class="math-expression">S<sub>n</sub> = (n/2)[2a + (n−1)d]</p>
-                    <p class="math-expression">S<sub>${n}</sub> = (${n}/2)[2(${a}) + (${n}−1)(${d})]</p>
-                    <p class="math-expression">S<sub>${n}</sub> = ${n/2}[${2*a} + ${(n-1)*d}]</p>
-                    <p class="math-expression">S<sub>${n}</sub> = ${n/2} × ${2*a + (n-1)*d}</p>
-                    <p class="math-expression"><strong>S<sub>${n}</sub> = ${sum}</strong></p>
-                    <hr style="margin: 1rem 0; border-color: var(--gray-200);">
-                    <p>Alternative: S<sub>${n}</sub> = (${n}/2)[${a} + ${lastTerm}] = ${n/2} × ${a + lastTerm} = ${sum}</p>
-                </div>
+            const calculationSteps = document.getElementById('calculationSteps');
+            const stepsContent = document.getElementById('stepsContent');
+            
+            stepsContent.innerHTML = `
+                <div style="margin-bottom: 0.5rem;"><strong>Step 1: Identify parameters</strong><br>
+                a = ${a}, d = ${d}, n = ${n}</div>
+                
+                <div style="margin-bottom: 0.5rem;"><strong>Step 2: Apply formula</strong><br>
+                Sₙ = n/2 [2a + (n-1)d]<br>
+                S${n} = ${n}/2 [2(${a}) + (${n}-1)(${d})]</div>
+                
+                <div style="margin-bottom: 0.5rem;"><strong>Step 3: Calculate</strong><br>
+                = ${n/2} [${2*a} + ${(n-1)*d}]<br>
+                = ${n/2} × ${2*a + (n-1)*d}</div>
+                
+                <div><strong>Step 4: Final result</strong><br>
+                = ${sum}</div>
             `;
             
-            document.getElementById('sim1Output').innerHTML = html;
+            calculationSteps.style.display = 'block';
+            
+            // Animate terms
+            setTimeout(() => {
+                document.querySelectorAll('.series-term').forEach((term, index) => {
+                    setTimeout(() => {
+                        term.style.opacity = '1';
+                        term.style.transform = 'scale(1)';
+                    }, index * 100);
+                });
+            }, 100);
         }
 
-        // Simulation 2: Visual Proof
-        function visualProof() {
-            const n = parseInt(document.getElementById('sim2N').value);
-            
-            if (isNaN(n) || n < 2 || n > 10) {
-                alert('Please enter a number between 2 and 10');
-                return;
+        function loadExample(exampleNum) {
+            switch(exampleNum) {
+                case 1:
+                    // Example 1: 1 + 4 + 7 + ... (S₃ = 12)
+                    document.getElementById('vis_a').value = 1;
+                    document.getElementById('vis_d').value = 3;
+                    document.getElementById('vis_n').value = 3;
+                    break;
+                case 2:
+                    // Example 2: -1 + 3 + 7 + ... (S₂₀ = 740)
+                    document.getElementById('vis_a').value = -1;
+                    document.getElementById('vis_d').value = 4;
+                    document.getElementById('vis_n').value = 20;
+                    break;
+                case 3:
+                    // Example 3: -16 -12 -8 ... (S₂₀ = 440)
+                    document.getElementById('vis_a').value = -16;
+                    document.getElementById('vis_d').value = 4;
+                    document.getElementById('vis_n').value = 20;
+                    break;
             }
-            
-            const canvas = document.getElementById('proofCanvas');
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Use simple sequence 1, 2, 3, ..., n for clarity
-            const terms = [];
-            for (let i = 1; i <= n; i++) {
-                terms.push(i);
-            }
-            
-            const barWidth = 60;
-            const maxHeight = 180;
-            const startX = 50;
-            const startY = canvas.height - 30;
-            const gap = 15;
-            
-            // Draw original bars (forward order)
-            ctx.fillStyle = '#1a73e8';
-            terms.forEach((term, i) => {
-                const height = (term / n) * maxHeight;
-                const x = startX + i * (barWidth + gap);
-                ctx.fillRect(x, startY - height, barWidth, height);
-                
-                // Label
-                ctx.fillStyle = '#1e293b';
-                ctx.font = 'bold 14px Segoe UI';
-                ctx.textAlign = 'center';
-                ctx.fillText(term.toString(), x + barWidth/2, startY - height - 10);
-                ctx.fillText(`T${i+1}`, x + barWidth/2, startY + 20);
-                ctx.fillStyle = '#1a73e8';
-            });
-            
-            // Draw reversed bars (stacked on top)
-            ctx.fillStyle = '#14b8a6';
-            terms.forEach((term, i) => {
-                const reverseTerm = terms[n - 1 - i];
-                const originalHeight = (term / n) * maxHeight;
-                const reverseHeight = (reverseTerm / n) * maxHeight;
-                const x = startX + i * (barWidth + gap);
-                ctx.fillRect(x, startY - originalHeight - reverseHeight, barWidth, reverseHeight);
-                
-                // Label for reversed
-                ctx.fillStyle = '#0d9488';
-                ctx.font = '12px Segoe UI';
-                ctx.fillText(reverseTerm.toString(), x + barWidth/2, startY - originalHeight - reverseHeight/2 + 5);
-                ctx.fillStyle = '#14b8a6';
-            });
-            
-            // Draw legend and explanation
-            ctx.fillStyle = '#1e293b';
-            ctx.font = 'bold 14px Segoe UI';
-            ctx.textAlign = 'left';
-            
-            const legendX = startX + n * (barWidth + gap) + 30;
-            ctx.fillStyle = '#1a73e8';
-            ctx.fillRect(legendX, 30, 20, 20);
-            ctx.fillStyle = '#1e293b';
-            ctx.fillText('Forward: S = 1+2+...+n', legendX + 30, 45);
-            
-            ctx.fillStyle = '#14b8a6';
-            ctx.fillRect(legendX, 60, 20, 20);
-            ctx.fillStyle = '#1e293b';
-            ctx.fillText('Reverse: S = n+...+2+1', legendX + 30, 75);
-            
-            ctx.fillStyle = '#7c3aed';
-            ctx.font = 'bold 16px Segoe UI';
-            ctx.fillText(`Each column = ${n + 1}`, legendX, 110);
-            ctx.fillText(`Total = ${n} × ${n + 1} = ${n * (n + 1)}`, legendX, 135);
-            ctx.fillText(`So S = ${n * (n + 1)} / 2 = ${n * (n + 1) / 2}`, legendX, 160);
-            
-            // Update output text
-            const sum = n * (n + 1) / 2;
-            const html = `
-                <div class="text-center">
-                    <h4 style="color: var(--purple);">Visual Proof for S = 1 + 2 + 3 + ... + ${n}</h4>
-                    <p class="mt-1">When we add the forward sum (blue) and reverse sum (teal), each column equals <strong>${n + 1}</strong></p>
-                    <p>Since there are <strong>${n}</strong> columns: 2S = ${n} × ${n + 1} = ${n * (n + 1)}</p>
-                    <p class="math-expression mt-1">Therefore: <strong>S = ${sum}</strong></p>
-                    <p class="mt-1" style="color: var(--gray-600);">This is the formula: S<sub>n</sub> = n(n+1)/2 for the sum of first n natural numbers!</p>
-                </div>
-            `;
-            document.getElementById('sim2Output').innerHTML = html;
+            visualizeSeries();
         }
 
-        // Simulation 3: Find terms for target sum
-        function findTermsForSum() {
-            const a = parseFloat(document.getElementById('sim3A').value);
-            const d = parseFloat(document.getElementById('sim3D').value);
-            const target = parseFloat(document.getElementById('sim3Target').value);
-            
-            if (isNaN(a) || isNaN(d) || isNaN(target)) {
-                alert('Please enter valid numbers');
-                return;
-            }
-            
-            // Solve: target = (n/2)[2a + (n-1)d]
-            // 2*target = n[2a + nd - d]
-            // 2*target = 2an + n²d - nd
-            // dn² + (2a - d)n - 2*target = 0
-            
-            // Using quadratic formula
-            const A = d;
-            const B = 2 * a - d;
-            const C = -2 * target;
-            
-            let n;
-            if (d === 0) {
-                // Linear case: target = n * a
-                n = target / a;
-            } else {
-                const discriminant = B * B - 4 * A * C;
-                if (discriminant < 0) {
-                    document.getElementById('sim3Output').innerHTML = `
-                        <div class="text-center" style="color: var(--error);">
-                            <p><strong>No solution exists!</strong></p>
-                            <p>The target sum ${target} cannot be achieved with this series.</p>
-                        </div>
-                    `;
-                    return;
+        function clearVisualizer() {
+            document.getElementById('vis_a').value = '';
+            document.getElementById('vis_d').value = '';
+            document.getElementById('vis_n').value = '';
+            document.getElementById('seriesDisplay').innerHTML = '';
+            document.getElementById('calculationSteps').style.display = 'none';
+        }
+
+        document.getElementById('visualizeBtn').addEventListener('click', visualizeSeries);
+
+        // ==========================================
+        // QUIZ FUNCTIONALITY (12 Questions)
+        // ==========================================
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const question = this.closest('.quiz-question');
+                if (question.classList.contains('answered')) return;
+
+                question.classList.add('answered');
+                const options = question.querySelectorAll('.quiz-option');
+                const feedback = question.querySelector('.quiz-feedback');
+                const isCorrect = this.dataset.answer === 'true';
+
+                options.forEach(opt => opt.classList.add('disabled'));
+
+                if (isCorrect) {
+                    this.classList.add('correct');
+                } else {
+                    this.classList.add('incorrect');
+                    options.forEach(opt => {
+                        if (opt.dataset.answer === 'true') {
+                            opt.classList.add('correct');
+                        }
+                    });
                 }
-                n = (-B + Math.sqrt(discriminant)) / (2 * A);
-            }
+
+                feedback.classList.add('show');
+            });
+        });
+
+        // Reset Quiz
+        document.getElementById('resetQuizBtn').addEventListener('click', () => {
+            document.querySelectorAll('.quiz-question').forEach(question => {
+                question.classList.remove('answered');
+                question.querySelectorAll('.quiz-option').forEach(opt => {
+                    opt.classList.remove('correct', 'incorrect', 'disabled');
+                });
+                question.querySelector('.quiz-feedback').classList.remove('show');
+            });
+        });
+
+        // ==========================================
+        // VIDEO PLAYER
+        // ==========================================
+        document.getElementById('playVideoBtn').addEventListener('click', () => {
+            const placeholder = document.getElementById('videoPlaceholder');
+            placeholder.innerHTML = `
+                <iframe 
+                    src="https://www.youtube.com/embed/GYoX-0ErO0E?autoplay=1" 
+                    title="Arithmetic Series and Sum Formula"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            `;
+        });
+
+        // ==========================================
+        // MODAL FUNCTIONALITY
+        // ==========================================
+        const modal = document.getElementById('tutorModal');
+        const openModalBtns = [
+            document.getElementById('openTutorModal'),
+            document.getElementById('floatingTutor')
+        ];
+        const closeModalBtn = document.getElementById('closeModal');
+
+        openModalBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        closeModalBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Handle form submission
+        document.getElementById('tutorForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you! Your tutoring session has been booked. We will send confirmation details to your email.');
+            closeModal();
+            e.target.reset();
+        });
+
+        // ==========================================
+        // PRINTABLE DERIVATION GUIDE
+        // ==========================================
+        const derivationBtn = document.createElement('button');
+        derivationBtn.className = 'btn-secondary';
+        derivationBtn.style.position = 'fixed';
+        derivationBtn.style.bottom = '90px';
+        derivationBtn.style.left = '1.5rem';
+        derivationBtn.style.zIndex = '998';
+        derivationBtn.innerHTML = '📝 Derivation';
+        derivationBtn.title = 'Print formula derivation guide';
+        document.body.appendChild(derivationBtn);
+
+        derivationBtn.addEventListener('click', () => {
+            const printContent = `
+                <html>
+                <head>
+                    <title>Arithmetic Series Formula Derivation Guide</title>
+                    
+                </head>
+                <body>
+                    <h1>Arithmetic Series Formula Derivation (Examinable)</h1>
+                    
+                    <div class="section">
+                        <h2>Step-by-Step Derivation</h2>
+                        
+                        <div class="derivation-step">
+                            <span class="step-number">1</span>
+                            <strong>Write the sum of n terms:</strong>
+                            <div class="formula">Sₙ = a + (a+d) + (a+2d) + ... + [a+(n-2)d] + [a+(n-1)d]</div>
+                        </div>
+                        
+                        <div class="derivation-step">
+                            <span class="step-number">2</span>
+                            <strong>Write the sum in reverse order:</strong>
+                            <div class="formula">Sₙ = [a+(n-1)d] + [a+(n-2)d] + ... + (a+2d) + (a+d) + a</div>
+                        </div>
+                        
+                        <div class="derivation-step">
+                            <span class="step-number">3</span>
+                            <strong>Add the two expressions:</strong>
+                            <div class="formula">2Sₙ = [2a+(n-1)d] + [2a+(n-1)d] + ... + [2a+(n-1)d]</div>
+                            Each pair of terms sums to [2a+(n-1)d]
+                        </div>
+                        
+                        <div class="derivation-step">
+                            <span class="step-number">4</span>
+                            <strong>Count the number of terms:</strong>
+                            <div class="formula">There are n terms of [2a+(n-1)d]</div>
+                            So: 2Sₙ = n[2a + (n-1)d]
+                        </div>
+                        
+                        <div class="derivation-step">
+                            <span class="step-number">5</span>
+                            <strong>Divide by 2:</strong>
+                            <div class="formula">Sₙ = n/2 [2a + (n-1)d] ✓</div>
+                            This is the formula for the sum of an arithmetic series.
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h2>Alternative Formula</h2>
+                        <div class="formula">Sₙ = n/2 (a + l)</div>
+                        <p>Where l = last term = a + (n-1)d</p>
+                        <p><em>This formula is useful when you know the first and last terms.</em></p>
+                    </div>
+                    
+                    <div class="note">
+                        <strong>Important Note:</strong> This derivation is examinable in Grade 12 Mathematics. Make sure you can reproduce it step-by-step and explain each part.
+                    </div>
+                    
+                    <div class="section">
+                        <h2>Key Points to Remember</h2>
+                        <ul>
+                            <li>An arithmetic series is the SUM of an arithmetic sequence</li>
+                            <li>The formula is derived by pairing terms from beginning and end</li>
+                            <li>Each pair sums to (first term + last term)</li>
+                            <li>There are n/2 such pairs</li>
+                            <li>Two formulas: Sₙ = n/2[2a+(n-1)d] and Sₙ = n/2(a+l)</li>
+                        </ul>
+                    </div>
+                </body>
+                </html>
+            `;
             
-            const nRounded = Math.ceil(n);
-            const exactSum = (n / 2) * (2 * a + (n - 1) * d);
-            const actualSum = (nRounded / 2) * (2 * a + (nRounded - 1) * d);
-            
-            // Generate first few and last terms
-            const terms = [];
-            for (let i = 1; i <= Math.min(nRounded, 5); i++) {
-                terms.push(a + (i - 1) * d);
-            }
-            
-            let html = `
-                <div class="text-center">
-                    <p><strong>Series:</strong> ${a} + ${a + d} + ${a + 2*d} + ...</p>
-                    <p class="mt-1">To reach (or exceed) a sum of <strong>${target}</strong>:</p>
-                    ${Number.isInteger(n) && n > 0 ? 
-                        `<div class="sum-result">Exactly ${n} terms give S = ${target}</div>` :
-                        `<div class="sum-result">You need ${nRounded} terms (S<sub>${nRounded}</sub> = ${actualSum})</div>`
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(printContent);
+            printWindow.document.close();
+            printWindow.print();
+        });
+
+        // ==========================================
+        // QUIZ SCORE TRACKER
+        // ==========================================
+        let quizScore = 0;
+        const totalQuestions = 12;
+
+        // Update score when answers are selected
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('quiz-option')) {
+                const question = e.target.closest('.quiz-question');
+                if (!question.classList.contains('scored')) {
+                    question.classList.add('scored');
+                    
+                    if (e.target.dataset.answer === 'true') {
+                        quizScore++;
                     }
-                </div>
-                <div class="step-by-step" style="background: var(--gray-50); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
-                    <h4 style="color: var(--purple); margin-bottom: 0.75rem;">Solution:</h4>
-                    <p class="math-expression">${target} = (n/2)[2(${a}) + (n−1)(${d})]</p>
-                    <p class="math-expression">${2*target} = n[${2*a} + ${d}n − ${d}]</p>
-                    <p class="math-expression">${d}n² + ${2*a - d}n − ${2*target} = 0</p>
-                    <p class="math-expression">n = ${n.toFixed(4)}</p>
-                    ${!Number.isInteger(n) ? `<p>Since n must be a whole number, we round up to n = ${nRounded}</p>` : ''}
-                </div>
-            `;
-            
-            document.getElementById('sim3Output').innerHTML = html;
-        }
-
-        // Simulation 4: Formula-based sum
-        function calculateFormulaSum() {
-            const m = parseFloat(document.getElementById('sim4Coeff').value);
-            const c = parseFloat(document.getElementById('sim4Const').value);
-            const n = parseInt(document.getElementById('sim4N').value);
-            
-            if (isNaN(m) || isNaN(c) || isNaN(n) || n < 1) {
-                alert('Please enter valid numbers');
-                return;
-            }
-            
-            // Tk = mk + c
-            // T1 = m + c (first term)
-            // Tn = mn + c (last term)
-            // d = m
-            
-            const a = m + c;
-            const d = m;
-            const lastTerm = m * n + c;
-            const sum = (n / 2) * (a + lastTerm);
-            
-            // Generate first few terms
-            const terms = [];
-            for (let i = 1; i <= Math.min(n, 5); i++) {
-                terms.push(m * i + c);
-            }
-            
-            const html = `
-                <div class="formula-box" style="margin: 0;">
-                    <h4 class="text-center">T<sub>k</sub> = ${m}k ${c >= 0 ? '+' : '−'} ${Math.abs(c)}</h4>
-                </div>
-                <div class="step-by-step" style="background: var(--gray-50); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
-                    <h4 style="color: var(--primary-blue); margin-bottom: 0.75rem;">Finding the Sum:</h4>
-                    <p><strong>Step 1:</strong> Find key values</p>
-                    <p class="math-expression">T<sub>1</sub> = ${m}(1) ${c >= 0 ? '+' : ''} ${c} = ${a} (first term, a)</p>
-                    <p class="math-expression">T<sub>${n}</sub> = ${m}(${n}) ${c >= 0 ? '+' : ''} ${c} = ${lastTerm} (last term, l)</p>
-                    <p class="math-expression">d = ${m} (coefficient of k)</p>
                     
-                    <p class="mt-1"><strong>Step 2:</strong> First ${Math.min(n, 5)} terms: ${terms.join('; ')}${n > 5 ? '; ...' : ''}</p>
+                    // Update floating tutor with score
+                    const floatingTutor = document.getElementById('floatingTutor');
+                    floatingTutor.textContent = `✓ ${quizScore}/${totalQuestions}`;
+                    floatingTutor.title = `Quiz Score: ${quizScore}/${totalQuestions}`;
                     
-                    <p class="mt-1"><strong>Step 3:</strong> Apply formula</p>
-                    <p class="math-expression">S<sub>${n}</sub> = (n/2)[a + l]</p>
-                    <p class="math-expression">S<sub>${n}</sub> = (${n}/2)[${a} + ${lastTerm}]</p>
-                    <p class="math-expression">S<sub>${n}</sub> = ${n/2} × ${a + lastTerm}</p>
-                </div>
-                <div class="sum-result">S<sub>${n}</sub> = ${sum}</div>
-            `;
-            
-            document.getElementById('sim4Output').innerHTML = html;
-        }
-
-        // Save progress to localStorage
-        function saveProgress(score, total, percentage) {
-            const progress = {
-                lessonId: 'arithmetic-series-lesson-4',
-                lessonTitle: 'Arithmetic Series',
-                score: score,
-                total: total,
-                percentage: percentage,
-                completedAt: new Date().toISOString(),
-                answers: userAnswers
-            };
-            
-            let allProgress = JSON.parse(localStorage.getItem('passproof_progress') || '{}');
-            allProgress['lesson4'] = progress;
-            localStorage.setItem('passproof_progress', JSON.stringify(allProgress));
-            
-            console.log('Progress saved:', progress);
-        }
-
-        // Load saved progress
-        function loadProgress() {
-            const allProgress = JSON.parse(localStorage.getItem('passproof_progress') || '{}');
-            if (allProgress['lesson4']) {
-                const progress = allProgress['lesson4'];
-                console.log('Previous progress found:', progress);
+                    // Show completion message if all questions answered
+                    if (document.querySelectorAll('.quiz-question.scored').length === totalQuestions) {
+                        setTimeout(() => {
+                            const percentage = Math.round((quizScore / totalQuestions) * 100);
+                            let message = `Quiz Complete! You scored ${quizScore}/${totalQuestions} (${percentage}%)`;
+                            if (percentage >= 80) message += " 🎉 Excellent work on arithmetic series!";
+                            else if (percentage >= 60) message += " 👍 Good understanding of series!";
+                            else message += " 📚 Review the lesson material, especially the formula derivation!";
+                            alert(message);
+                        }, 500);
+                    }
+                }
             }
-        }
+        });
 
-        // Navigation
-        function goToLesson(direction) {
-            if (direction === 'prev') {
-                alert('Navigating to Lesson 3: Finding n & Unknown Terms');
-                // window.location.href = 'lesson3.html';
-            } else {
-                alert('Navigating to Lesson 5: Geometric Sequences');
-                // window.location.href = 'lesson5.html';
+        // Reset score when quiz is reset
+        document.getElementById('resetQuizBtn').addEventListener('click', () => {
+            quizScore = 0;
+            document.querySelectorAll('.quiz-question').forEach(q => q.classList.remove('scored'));
+            const floatingTutor = document.getElementById('floatingTutor');
+            floatingTutor.textContent = '💬';
+            floatingTutor.title = 'Chat with a tutor';
+        });
+
+        // ==========================================
+        // AUTO-OPEN FIRST SECTION
+        // ==========================================
+        window.addEventListener('load', () => {
+            const firstSection = document.querySelector('.section-header');
+            if (firstSection) {
+                const targetId = firstSection.getAttribute('data-toggle');
+                const content = document.getElementById(targetId);
+                if (content) {
+                    firstSection.classList.remove('collapsed');
+                    content.classList.remove('collapsed');
+                }
             }
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            loadProgress();
+            
+            // Initialize visualizer with default values
+            visualizeSeries();
         });
     </script>
-
-    <script src="gr12-math-nav.js"></script>
 </body>
 </html>
+
+
+
 

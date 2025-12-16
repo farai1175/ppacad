@@ -1,0 +1,2004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ka and Kb Values - PassProof Academy</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e6fffa 0%, #f0fdf4 100%);
+            min-height: 100vh;
+            color: #134e4a;
+        }
+
+        /* Header & Navigation */
+        .header {
+            background: linear-gradient(135deg, #0d9488 0%, #14b8a6 50%, #2dd4bf 100%);
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 20px rgba(13, 148, 136, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .nav-dropdown {
+            position: relative;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            min-width: 280px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            padding: 1rem 1.5rem;
+            color: #134e4a;
+            text-decoration: none;
+            display: block;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .dropdown-item:hover {
+            background: #f0fdfa;
+            padding-left: 2rem;
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 40px rgba(13, 148, 136, 0.1),
+                        0 4px 6px rgba(13, 148, 136, 0.05);
+            transform: translateZ(0);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(13, 148, 136, 0.15),
+                        0 8px 12px rgba(13, 148, 136, 0.1);
+        }
+
+        /* Subject Header Card */
+        .subject-card {
+            background: linear-gradient(135deg, #0d9488 0%, #14b8a6 50%, #2dd4bf 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .subject-card h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subject-card .grade {
+            font-size: 1.25rem;
+            opacity: 0.9;
+        }
+
+        .topic-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #14b8a6, #0d9488);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(20, 184, 166, 0.4);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #0d9488;
+            font-weight: 700;
+        }
+
+        .collapse-icon {
+            margin-left: auto;
+            font-size: 1.5rem;
+            color: #14b8a6;
+            transition: transform 0.3s ease;
+        }
+
+        .section-content {
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .section-content.collapsed {
+            max-height: 0 !important;
+        }
+
+        /* Learning Objectives */
+        .objective-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .objective-list li {
+            padding: 1rem;
+            background: linear-gradient(135deg, #ccfbf1, #d1fae5);
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            border-left: 4px solid #14b8a6;
+        }
+
+        .objective-list li::before {
+            content: "✓";
+            color: #0d9488;
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        /* Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 1rem 0;
+        }
+
+        .data-table th {
+            background: linear-gradient(135deg, #0d9488, #14b8a6);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            background: white;
+        }
+
+        .data-table tr:nth-child(even) td {
+            background: #f0fdfa;
+        }
+
+        .data-table tr:hover td {
+            background: #ccfbf1;
+        }
+
+        /* Definition Boxes */
+        .definition-box {
+            background: linear-gradient(135deg, #fef3c7, #fef9c3);
+            border: 2px solid #f59e0b;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .definition-box.ka {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border-color: #ef4444;
+        }
+
+        .definition-box.kb {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            border-color: #3b82f6;
+        }
+
+        .definition-box.equilibrium {
+            background: linear-gradient(135deg, #ccfbf1, #d1fae5);
+            border-color: #14b8a6;
+        }
+
+        .definition-box h4 {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .note-box {
+            background: linear-gradient(135deg, #ccfbf1, #d1fae5);
+            border: 2px solid #14b8a6;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .note-box h4 {
+            color: #0d9488;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Chemical Equations */
+        .equation-box {
+            background: #1e1e2e;
+            color: #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            font-size: 1.1rem;
+            overflow-x: auto;
+        }
+
+        .equation-box .arrow {
+            color: #14b8a6;
+            margin: 0 0.5rem;
+        }
+
+        .equation-box .reversible {
+            color: #f59e0b;
+        }
+
+        /* Ka/Kb Expression Box */
+        .expression-box {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            color: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .expression-box h4 {
+            margin-bottom: 1rem;
+            color: #2dd4bf;
+        }
+
+        .fraction {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            margin: 0 0.5rem;
+        }
+
+        .fraction .numerator {
+            border-bottom: 2px solid white;
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+        }
+
+        .fraction .denominator {
+            padding-top: 5px;
+        }
+
+        .expression-large {
+            font-size: 1.3rem;
+            font-family: 'Times New Roman', serif;
+            line-height: 2.5;
+        }
+
+        /* Comparison Cards */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .comparison-card {
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .comparison-card.strong {
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+            border: 2px solid #22c55e;
+        }
+
+        .comparison-card.weak {
+            background: linear-gradient(135deg, #fef9c3, #fef08a);
+            border: 2px solid #eab308;
+        }
+
+        .comparison-card.high-k {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border: 2px solid #ef4444;
+        }
+
+        .comparison-card.low-k {
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+            border: 2px solid #0ea5e9;
+        }
+
+        .comparison-card h4 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Simulation */
+        .simulation-container {
+            background: linear-gradient(135deg, #1e1e2e, #2d2d44);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .simulation-title {
+            color: white;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .simulation-canvas {
+            background: #0f0f1a;
+            border-radius: 12px;
+            width: 100%;
+            height: 400px;
+            margin-bottom: 1rem;
+        }
+
+        .simulation-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+
+        .sim-btn {
+            background: linear-gradient(135deg, #14b8a6, #0d9488);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(20, 184, 166, 0.4);
+        }
+
+        .sim-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(20, 184, 166, 0.5);
+        }
+
+        .sim-btn.active {
+            background: linear-gradient(135deg, #10b981, #047857);
+        }
+
+        .sim-btn.acid-btn {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+
+        .sim-btn.base-btn {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
+
+        /* K Value Display */
+        .k-value-display {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .k-display-box {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .k-display-box h5 {
+            color: #2dd4bf;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .k-display-box .value {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+
+        .k-display-box .label {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .question-card {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .question-card.correct {
+            border-color: #10b981;
+            background: #d1fae5;
+        }
+
+        .question-card.incorrect {
+            border-color: #ef4444;
+            background: #fee2e2;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #14b8a6, #0d9488);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: 700;
+            margin-right: 1rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            color: #134e4a;
+            margin-bottom: 1rem;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-label:hover {
+            border-color: #14b8a6;
+            background: #f0fdfa;
+        }
+
+        .option-label input {
+            margin-right: 1rem;
+            width: 20px;
+            height: 20px;
+            accent-color: #0d9488;
+        }
+
+        .option-label.selected {
+            border-color: #14b8a6;
+            background: #ccfbf1;
+        }
+
+        .option-label.correct-answer {
+            border-color: #10b981;
+            background: #d1fae5;
+        }
+
+        .option-label.wrong-answer {
+            border-color: #ef4444;
+            background: #fee2e2;
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            display: none;
+            font-weight: 600;
+        }
+
+        .feedback.correct {
+            display: block;
+            background: #d1fae5;
+            color: #047857;
+        }
+
+        .feedback.incorrect {
+            display: block;
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        /* Score Display */
+        .score-container {
+            background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .score-container.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: white;
+            margin: 0 auto 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .score-percentage {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #0d9488;
+        }
+
+        .score-label {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .submit-quiz-btn {
+            background: linear-gradient(135deg, #10b981, #047857);
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .submit-quiz-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+        }
+
+        /* Lesson Navigation */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn.prev, .nav-btn.next {
+            background: linear-gradient(135deg, #0d9488, #14b8a6);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(13, 148, 136, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn.prev:hover, .nav-btn.next:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(13, 148, 136, 0.4);
+        }
+
+        /* Class Exercise */
+        .exercise-box {
+            background: linear-gradient(135deg, #f0fdfa, #ccfbf1);
+            border: 2px solid #14b8a6;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .exercise-box h4 {
+            color: #0d9488;
+            margin-bottom: 1rem;
+        }
+
+        .show-answer-btn {
+            background: linear-gradient(135deg, #14b8a6, #0d9488);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .show-answer-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .answer-box {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border: 2px solid #10b981;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .answer-box.show {
+            display: block;
+        }
+
+        .answer-box h5 {
+            color: #047857;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0d9488, #14b8a6);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            opacity: 0.9;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: #e5e7eb;
+            border-radius: 10px;
+            height: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #10b981, #14b8a6);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .subject-card h1 {
+                font-size: 1.75rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .section-header {
+                flex-wrap: wrap;
+            }
+
+            .lesson-nav {
+                flex-direction: column;
+            }
+
+            .nav-btn.prev, .nav-btn.next {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .simulation-canvas {
+                height: 320px;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .expression-large {
+                font-size: 1rem;
+            }
+
+            .k-value-display {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .card:nth-child(2) { animation-delay: 0.1s; }
+        .card:nth-child(3) { animation-delay: 0.2s; }
+        .card:nth-child(4) { animation-delay: 0.3s; }
+
+        /* Subscript/Superscript styling */
+        sub, sup {
+            font-size: 0.75em;
+        }
+
+        /* Baseline Question Styling */
+        .baseline-question {
+            background: linear-gradient(135deg, #fef3c7, #fef9c3);
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.5rem;
+            margin: 0.75rem 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .baseline-answer {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-left: 4px solid #10b981;
+            padding: 1rem 1.5rem;
+            margin: 0.5rem 0 0.5rem 1rem;
+            border-radius: 0 12px 12px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Visual K comparison */
+        .k-comparison-visual {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .k-bar-container {
+            text-align: center;
+        }
+
+        .k-bar {
+            width: 60px;
+            background: #e5e7eb;
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto 0.5rem;
+        }
+
+        .k-bar-fill {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            border-radius: 0 0 30px 30px;
+            transition: height 0.8s ease;
+        }
+
+        .k-bar-fill.high {
+            background: linear-gradient(to top, #ef4444, #f87171);
+        }
+
+        .k-bar-fill.low {
+            background: linear-gradient(to top, #3b82f6, #60a5fa);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">🎓 PassProof Academy</div>
+            <div class="nav-dropdown">
+                <button class="nav-btn" onclick="toggleDropdown()">
+                    📚 Navigation <span id="dropdownArrow">▼</span>
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="#objectives" class="dropdown-item">📌 Learning Objectives</a>
+                    <a href="#overview" class="dropdown-item">📖 Overview & Baseline</a>
+                    <a href="#main-content" class="dropdown-item">📝 Main Content</a>
+                    <a href="#simulation" class="dropdown-item">🔬 Interactive Simulation</a>
+                    <a href="#exercises" class="dropdown-item">✏️ Class Exercises</a>
+                    <a href="#quiz" class="dropdown-item">❓ Quiz Questions</a>
+                    <a href="#score" class="dropdown-item">📊 Your Score</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Subject & Grade Card -->
+        <div class="card subject-card">
+            <h1>⚗️ Physical Sciences</h1>
+            <p class="grade">Grade 12</p>
+            <div class="topic-badge">🧪 Acids and Bases</div>
+        </div>
+
+        <!-- Topic & Lesson Info -->
+        <div class="card">
+            <div style="text-align: center;">
+                <p style="color: #64748b; margin-bottom: 0.5rem;">Sub-topic</p>
+                <h2 style="color: #0d9488; font-size: 1.75rem; margin-bottom: 1rem;">Ionisation Equilibria of Acids and Bases</h2>
+                <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                    <div>
+                        <p style="color: #64748b; font-size: 0.9rem;">Lesson Number</p>
+                        <p style="font-size: 1.5rem; font-weight: 700; color: #14b8a6;">Lesson 3</p>
+                    </div>
+                    <div>
+                        <p style="color: #64748b; font-size: 0.9rem;">Lesson Title</p>
+                        <p style="font-size: 1.5rem; font-weight: 700; color: #14b8a6;">K<sub>a</sub> and K<sub>b</sub> Values</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress -->
+        <div class="card">
+            <p style="margin-bottom: 0.5rem; font-weight: 600;">📈 Your Progress</p>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+            </div>
+            <p id="progressText" style="color: #64748b; font-size: 0.9rem;">0% Complete</p>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="card" id="objectives">
+            <div class="section-header" onclick="toggleSection('objectivesContent')">
+                <div class="section-icon">🎯</div>
+                <h3 class="section-title">Learning Objectives</h3>
+                <span class="collapse-icon" id="objectivesIcon">▼</span>
+            </div>
+            <div class="section-content" id="objectivesContent">
+                <p style="color: #64748b; margin-bottom: 1rem;">By the end of this lesson, learners must be able to:</p>
+                <ul class="objective-list">
+                    <li>Understand the meaning of K<sub>a</sub> (ionisation constant) for acids</li>
+                    <li>Understand the meaning of K<sub>b</sub> (dissociation constant) for bases</li>
+                    <li>Compare K<sub>a</sub> and K<sub>b</sub> values of strong and weak acids and bases</li>
+                    <li>Relate the magnitude of K<sub>a</sub>/K<sub>b</sub> to the strength of acids and bases</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Overview with Baseline Questions -->
+        <div class="card" id="overview">
+            <div class="section-header" onclick="toggleSection('overviewContent')">
+                <div class="section-icon">📖</div>
+                <h3 class="section-title">Overview - Baseline Knowledge</h3>
+                <span class="collapse-icon" id="overviewIcon">▼</span>
+            </div>
+            <div class="section-content" id="overviewContent">
+                <div class="note-box">
+                    <h4>🔑 Prerequisite Knowledge Review</h4>
+                    <p style="margin-bottom: 1rem;"><strong>Before we begin, let's review equilibrium constants:</strong></p>
+                </div>
+
+                <h4 style="color: #0d9488; margin: 1.5rem 0 1rem;">Baseline Questions</h4>
+                
+                <div class="baseline-question">
+                    <strong>1. Write down an expression for the equilibrium constant for each reaction:</strong>
+                    <p style="margin-top: 0.5rem;">1.1 &nbsp; 2H<sub>2</sub>O<sub>2</sub>(aq) ⇌ 2H<sub>2</sub>O(l) + O<sub>2</sub>(g)</p>
+                    <p>1.2 &nbsp; 2HCl(aq) + CaCO<sub>3</sub>(s) ⇌ CaCl<sub>2</sub>(aq) + H<sub>2</sub>O(l) + CO<sub>2</sub>(g)</p>
+                </div>
+                
+                <div class="baseline-answer">
+                    <strong>Answers:</strong><br>
+                    1.1 &nbsp; K<sub>c</sub> = [O<sub>2</sub>] / [H<sub>2</sub>O<sub>2</sub>]²<br>
+                    1.2 &nbsp; K<sub>c</sub> = [CO<sub>2</sub>][CaCl<sub>2</sub>] / [HCl]²
+                </div>
+
+                <div class="baseline-question">
+                    <strong>2. In which reaction will [products] > [reactants] at equilibrium?</strong>
+                    <p style="margin-top: 0.5rem;">2.1 &nbsp; H<sub>2</sub>(g) + F<sub>2</sub>(g) ⇌ 2HF(g) &nbsp;&nbsp;&nbsp; K<sub>c</sub> = 1 × 10<sup>8</sup></p>
+                    <p>2.2 &nbsp; SO<sub>2</sub>(g) + NO<sub>2</sub>(g) ⇌ NO(g) + SO<sub>3</sub>(g) &nbsp;&nbsp;&nbsp; K<sub>c</sub> = 1 × 10<sup>2</sup></p>
+                </div>
+
+                <div class="baseline-answer">
+                    <strong>Answers:</strong><br>
+                    2.1 &nbsp; [products] > [reactants] ✓ (K<sub>c</sub> >> 1)<br>
+                    2.2 &nbsp; [products] > [reactants] ✓ (K<sub>c</sub> > 1)
+                </div>
+
+                <div class="note-box" style="margin-top: 1.5rem;">
+                    <h4>💡 Key Principle</h4>
+                    <p>When K<sub>c</sub> > 1, the equilibrium favours <strong>products</strong> (equilibrium lies to the right).</p>
+                    <p>When K<sub>c</sub> < 1, the equilibrium favours <strong>reactants</strong> (equilibrium lies to the left).</p>
+                    <p style="margin-top: 0.5rem;"><em>The larger the K value, the more products are formed!</em></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="card" id="main-content">
+            <div class="section-header" onclick="toggleSection('mainContent')">
+                <div class="section-icon">📝</div>
+                <h3 class="section-title">Main Content: K<sub>a</sub> and K<sub>b</sub> Values</h3>
+                <span class="collapse-icon" id="mainContentIcon">▼</span>
+            </div>
+            <div class="section-content" id="mainContent">
+                
+                <!-- Introduction -->
+                <div class="definition-box equilibrium">
+                    <h4 style="color: #0d9488;">⚖️ Connecting Equilibrium to Acid-Base Strength</h4>
+                    <p>The strengths of acids and bases can be compared by using their <strong>equilibrium constants (K<sub>c</sub>)</strong> for the reaction when the acid or base dissolves in water.</p>
+                </div>
+
+                <!-- Ka Section -->
+                <h4 style="color: #ef4444; margin: 2rem 0 1rem; font-size: 1.4rem;">🔴 K<sub>a</sub> - The Ionisation Constant of Acids</h4>
+                
+                <p style="line-height: 1.8; margin-bottom: 1rem;">
+                    When dealing with the equilibrium constant for pure acids, we use the symbol <strong>K<sub>a</sub></strong> instead of K<sub>c</sub>.
+                </p>
+
+                <div class="equation-box">
+                    HCl<sub>(aq)</sub> + H<sub>2</sub>O<sub>(l)</sub> <span class="reversible">⇌</span> H<sub>3</sub>O<sup>+</sup><sub>(aq)</sub> + Cl<sup>-</sup><sub>(aq)</sub>
+                </div>
+
+                <div class="expression-box">
+                    <h4>K<sub>a</sub> Expression for this Reaction:</h4>
+                    <p class="expression-large">
+                        K<sub>a</sub> = 
+                        <span class="fraction">
+                            <span class="numerator">[H<sub>3</sub>O<sup>+</sup>][Cl<sup>-</sup>]</span>
+                            <span class="denominator">[HCl]</span>
+                        </span>
+                    </p>
+                    <p style="color: #94a3b8; margin-top: 1rem; font-size: 0.9rem;">
+                        Note: Water is a pure liquid, so it is not included in the expression.
+                    </p>
+                </div>
+
+                <div class="definition-box ka">
+                    <h4 style="color: #dc2626;">📌 Definition</h4>
+                    <p><strong>K<sub>a</sub></strong> is called the <strong>ionisation constant of the acid</strong>. It measures the extent to which an acid ionises in water.</p>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card high-k">
+                        <h4>💪 Strong Acids</h4>
+                        <p>Ionise <strong>completely</strong></p>
+                        <p style="margin-top: 0.5rem;">→ High [products]</p>
+                        <p style="margin-top: 0.5rem;"><strong>→ HIGH K<sub>a</sub> values</strong></p>
+                        <p style="margin-top: 0.75rem; font-size: 0.9rem; color: #991b1b;">K<sub>a</sub> >> 1</p>
+                    </div>
+                    <div class="comparison-card low-k">
+                        <h4>😐 Weak Acids</h4>
+                        <p>Ionise <strong>partially</strong></p>
+                        <p style="margin-top: 0.5rem;">→ Low [products]</p>
+                        <p style="margin-top: 0.5rem;"><strong>→ LOW K<sub>a</sub> values</strong></p>
+                        <p style="margin-top: 0.75rem; font-size: 0.9rem; color: #1e40af;">K<sub>a</sub> << 1</p>
+                    </div>
+                </div>
+
+                <div class="note-box">
+                    <h4>📊 Example K<sub>a</sub> Values</h4>
+                    <table class="data-table" style="margin-top: 1rem;">
+                        <thead>
+                            <tr>
+                                <th>Acid</th>
+                                <th>Type</th>
+                                <th>K<sub>a</sub> Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>HCl (Hydrochloric acid)</td>
+                                <td>Strong</td>
+                                <td>~10<sup>7</sup> (very large)</td>
+                            </tr>
+                            <tr>
+                                <td>HNO<sub>3</sub> (Nitric acid)</td>
+                                <td>Strong</td>
+                                <td>~10<sup>1</sup> (large)</td>
+                            </tr>
+                            <tr>
+                                <td>CH<sub>3</sub>COOH (Acetic acid)</td>
+                                <td>Weak</td>
+                                <td>1.8 × 10<sup>-5</sup></td>
+                            </tr>
+                            <tr>
+                                <td>H<sub>2</sub>CO<sub>3</sub> (Carbonic acid)</td>
+                                <td>Weak</td>
+                                <td>4.3 × 10<sup>-7</sup></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Kb Section -->
+                <h4 style="color: #3b82f6; margin: 2.5rem 0 1rem; font-size: 1.4rem;">🔵 K<sub>b</sub> - The Dissociation Constant of Bases</h4>
+                
+                <p style="line-height: 1.8; margin-bottom: 1rem;">
+                    When dealing with the equilibrium constant for pure bases, we use the symbol <strong>K<sub>b</sub></strong> instead of K<sub>c</sub>.
+                </p>
+
+                <div class="equation-box">
+                    NH<sub>3</sub><sub>(aq)</sub> + H<sub>2</sub>O<sub>(l)</sub> <span class="reversible">⇌</span> NH<sub>4</sub><sup>+</sup><sub>(aq)</sub> + OH<sup>-</sup><sub>(aq)</sub>
+                </div>
+
+                <div class="expression-box">
+                    <h4>K<sub>b</sub> Expression for this Reaction:</h4>
+                    <p class="expression-large">
+                        K<sub>b</sub> = 
+                        <span class="fraction">
+                            <span class="numerator">[NH<sub>4</sub><sup>+</sup>][OH<sup>-</sup>]</span>
+                            <span class="denominator">[NH<sub>3</sub>]</span>
+                        </span>
+                    </p>
+                    <p style="color: #94a3b8; margin-top: 1rem; font-size: 0.9rem;">
+                        Note: Water is a pure liquid, so it is not included in the expression.
+                    </p>
+                </div>
+
+                <div class="definition-box kb">
+                    <h4 style="color: #1d4ed8;">📌 Definition</h4>
+                    <p><strong>K<sub>b</sub></strong> is called the <strong>dissociation constant of the base</strong>. It measures the extent to which a base dissociates in water to produce OH<sup>-</sup> ions.</p>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card high-k">
+                        <h4>💪 Strong Bases</h4>
+                        <p>Dissociate <strong>completely</strong></p>
+                        <p style="margin-top: 0.5rem;">→ High [products]</p>
+                        <p style="margin-top: 0.5rem;"><strong>→ HIGH K<sub>b</sub> values</strong></p>
+                        <p style="margin-top: 0.75rem; font-size: 0.9rem; color: #991b1b;">K<sub>b</sub> >> 1</p>
+                    </div>
+                    <div class="comparison-card low-k">
+                        <h4>😐 Weak Bases</h4>
+                        <p>Dissociate <strong>partially</strong></p>
+                        <p style="margin-top: 0.5rem;">→ Low [products]</p>
+                        <p style="margin-top: 0.5rem;"><strong>→ LOW K<sub>b</sub> values</strong></p>
+                        <p style="margin-top: 0.75rem; font-size: 0.9rem; color: #1e40af;">K<sub>b</sub> << 1</p>
+                    </div>
+                </div>
+
+                <div class="note-box">
+                    <h4>📊 Example K<sub>b</sub> Values</h4>
+                    <table class="data-table" style="margin-top: 1rem;">
+                        <thead>
+                            <tr>
+                                <th>Base</th>
+                                <th>Type</th>
+                                <th>K<sub>b</sub> Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>NaOH (Sodium hydroxide)</td>
+                                <td>Strong</td>
+                                <td>Very large (>>1)</td>
+                            </tr>
+                            <tr>
+                                <td>KOH (Potassium hydroxide)</td>
+                                <td>Strong</td>
+                                <td>Very large (>>1)</td>
+                            </tr>
+                            <tr>
+                                <td>NH<sub>3</sub> (Ammonia)</td>
+                                <td>Weak</td>
+                                <td>1.8 × 10<sup>-5</sup></td>
+                            </tr>
+                            <tr>
+                                <td>Ca(OH)<sub>2</sub> (Calcium hydroxide)</td>
+                                <td>Weak</td>
+                                <td>~10<sup>-3</sup></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Summary Box -->
+                <div class="definition-box" style="background: linear-gradient(135deg, #fef3c7, #fef9c3); border-color: #f59e0b; margin-top: 2rem;">
+                    <h4 style="color: #b45309;">⭐ Key Summary</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+                        <div>
+                            <p><strong>For Acids:</strong></p>
+                            <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                                <li>Strong acid → High K<sub>a</sub></li>
+                                <li>Weak acid → Low K<sub>a</sub></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p><strong>For Bases:</strong></p>
+                            <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                                <li>Strong base → High K<sub>b</sub></li>
+                                <li>Weak base → Low K<sub>b</sub></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p style="margin-top: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.5); border-radius: 8px;">
+                        <strong>Remember:</strong> The larger the K value, the stronger the acid or base, because more products (ions) are formed at equilibrium.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Simulation -->
+        <div class="card" id="simulation">
+            <div class="section-header" onclick="toggleSection('simulationContent')">
+                <div class="section-icon">🔬</div>
+                <h3 class="section-title">Interactive Simulation</h3>
+                <span class="collapse-icon" id="simulationIcon">▼</span>
+            </div>
+            <div class="section-content" id="simulationContent">
+                <div class="simulation-container">
+                    <h4 class="simulation-title">⚖️ K<sub>a</sub> and K<sub>b</sub> Equilibrium Visualizer</h4>
+                    <p style="color: #94a3b8; text-align: center; margin-bottom: 1rem;">
+                        Compare how different acids and bases reach equilibrium and their relative K values.
+                    </p>
+                    <canvas id="equilibriumCanvas" class="simulation-canvas"></canvas>
+                    
+                    <div class="simulation-controls" style="margin-bottom: 1.5rem;">
+                        <button class="sim-btn acid-btn" onclick="showEquilibrium('strong-acid')">Strong Acid (HCl)</button>
+                        <button class="sim-btn acid-btn" onclick="showEquilibrium('weak-acid')">Weak Acid (CH₃COOH)</button>
+                        <button class="sim-btn base-btn" onclick="showEquilibrium('strong-base')">Strong Base (NaOH)</button>
+                        <button class="sim-btn base-btn" onclick="showEquilibrium('weak-base')">Weak Base (NH₃)</button>
+                    </div>
+
+                    <div class="k-value-display" id="kValueDisplay">
+                        <div class="k-display-box">
+                            <h5>K Value</h5>
+                            <div class="value" id="kValue">-</div>
+                            <div class="label" id="kType">Select an option</div>
+                        </div>
+                        <div class="k-display-box">
+                            <h5>Strength</h5>
+                            <div class="value" id="strengthValue">-</div>
+                            <div class="label" id="strengthLabel">-</div>
+                        </div>
+                        <div class="k-display-box">
+                            <h5>Ionisation</h5>
+                            <div class="value" id="ionisationValue">-</div>
+                            <div class="label" id="ionisationLabel">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Class Exercises -->
+        <div class="card" id="exercises">
+            <div class="section-header" onclick="toggleSection('exercisesContent')">
+                <div class="section-icon">✏️</div>
+                <h3 class="section-title">Class Exercises</h3>
+                <span class="collapse-icon" id="exercisesIcon">▼</span>
+            </div>
+            <div class="section-content" id="exercisesContent">
+                
+                <div class="exercise-box">
+                    <h4>📝 Exercise 1</h4>
+                    <p>Determine whether the following acids and bases are strong or weak. Then explain how their ionisation/dissociation constants compare.</p>
+                    
+                    <div style="background: white; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                        <p><strong>a) CH<sub>3</sub>COOH and HNO<sub>3</sub></strong></p>
+                    </div>
+                    
+                    <button class="show-answer-btn" onclick="toggleAnswer('answer1a')">Show Answer</button>
+                    <div class="answer-box" id="answer1a">
+                        <h5>✅ Answer:</h5>
+                        <p><strong>CH<sub>3</sub>COOH</strong> is a <strong>weak acid</strong> and <strong>HNO<sub>3</sub></strong> is a <strong>strong acid</strong>.</p>
+                        <p style="margin-top: 0.5rem;">HNO<sub>3</sub> will have a <strong>higher ionisation constant (K<sub>a</sub>)</strong> than CH<sub>3</sub>COOH, as it ionises to a greater degree.</p>
+                        <p style="margin-top: 0.5rem; color: #047857;"><em>K<sub>a</sub>(HNO<sub>3</sub>) >> K<sub>a</sub>(CH<sub>3</sub>COOH)</em></p>
+                    </div>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>📝 Exercise 2</h4>
+                    
+                    <div style="background: white; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                        <p><strong>b) NaOH and Ca(OH)<sub>2</sub></strong></p>
+                    </div>
+                    
+                    <button class="show-answer-btn" onclick="toggleAnswer('answer1b')">Show Answer</button>
+                    <div class="answer-box" id="answer1b">
+                        <h5>✅ Answer:</h5>
+                        <p><strong>NaOH</strong> is a <strong>strong base</strong> and <strong>Ca(OH)<sub>2</sub></strong> is a <strong>weak base</strong>.</p>
+                        <p style="margin-top: 0.5rem;">NaOH will have a <strong>higher dissociation constant (K<sub>b</sub>)</strong> than Ca(OH)<sub>2</sub>, as it dissociates to a greater degree.</p>
+                        <p style="margin-top: 0.5rem; color: #047857;"><em>K<sub>b</sub>(NaOH) >> K<sub>b</sub>(Ca(OH)<sub>2</sub>)</em></p>
+                    </div>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>📝 Exercise 3 - Practice</h4>
+                    <p>Rank the following acids from strongest to weakest based on their K<sub>a</sub> values:</p>
+                    
+                    <div style="background: white; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                        <p>• Acid A: K<sub>a</sub> = 1.5 × 10<sup>-3</sup></p>
+                        <p>• Acid B: K<sub>a</sub> = 6.8 × 10<sup>-10</sup></p>
+                        <p>• Acid C: K<sub>a</sub> = 2.1 × 10<sup>5</sup></p>
+                        <p>• Acid D: K<sub>a</sub> = 4.5 × 10<sup>-5</sup></p>
+                    </div>
+                    
+                    <button class="show-answer-btn" onclick="toggleAnswer('answer3')">Show Answer</button>
+                    <div class="answer-box" id="answer3">
+                        <h5>✅ Answer:</h5>
+                        <p><strong>Strongest to Weakest: C > A > D > B</strong></p>
+                        <p style="margin-top: 0.5rem;">Explanation:</p>
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>Acid C (K<sub>a</sub> = 2.1 × 10<sup>5</sup>) - Strongest (K<sub>a</sub> >> 1, strong acid)</li>
+                            <li>Acid A (K<sub>a</sub> = 1.5 × 10<sup>-3</sup>) - Moderate weak acid</li>
+                            <li>Acid D (K<sub>a</sub> = 4.5 × 10<sup>-5</sup>) - Weaker acid</li>
+                            <li>Acid B (K<sub>a</sub> = 6.8 × 10<sup>-10</sup>) - Weakest (very low K<sub>a</sub>)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="card" id="quiz">
+            <div class="section-header" onclick="toggleSection('quizContent')">
+                <div class="section-icon">❓</div>
+                <h3 class="section-title">End of Lesson Questions</h3>
+                <span class="collapse-icon" id="quizIcon">▼</span>
+            </div>
+            <div class="section-content" id="quizContent">
+                <div class="quiz-container" id="quizContainer">
+                    <!-- Questions will be generated by JavaScript -->
+                </div>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="submit-quiz-btn" onclick="submitQuiz()">📝 Submit Answers</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Score Display -->
+        <div class="score-container" id="score">
+            <h3 style="margin-bottom: 1rem; font-size: 1.5rem;">🎉 Quiz Results</h3>
+            <div class="score-circle">
+                <span class="score-percentage" id="scorePercentage">0%</span>
+                <span class="score-label">Score</span>
+            </div>
+            <p id="scoreMessage" style="font-size: 1.1rem; margin-top: 1rem;"></p>
+            <p id="scoreDetails" style="opacity: 0.8; margin-top: 0.5rem;"></p>
+            <button class="sim-btn" style="margin-top: 1.5rem;" onclick="resetQuiz()">🔄 Try Again</button>
+        </div>
+
+        <!-- Lesson Navigation -->
+        <div class="lesson-nav">
+            <button class="nav-btn prev">
+                ← Previous Lesson
+            </button>
+            <button class="nav-btn next">
+                Next Lesson →
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>PassProof Academy</strong></p>
+        <p style="margin-top: 0.5rem;">© 2026 PassProof Academy. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Quiz Questions Data
+        const quizQuestions = [
+            {
+                id: 1,
+                question: "What does K<sub>a</sub> represent?",
+                options: [
+                    "The dissociation constant of a base",
+                    "The ionisation constant of an acid",
+                    "The concentration of hydrogen ions",
+                    "The equilibrium constant of any reaction"
+                ],
+                correct: 1
+            },
+            {
+                id: 2,
+                question: "A strong acid will have:",
+                options: [
+                    "A low K<sub>a</sub> value",
+                    "A K<sub>a</sub> value equal to 1",
+                    "A high K<sub>a</sub> value",
+                    "No K<sub>a</sub> value"
+                ],
+                correct: 2
+            },
+            {
+                id: 3,
+                question: "What does K<sub>b</sub> represent?",
+                options: [
+                    "The ionisation constant of an acid",
+                    "The dissociation constant of a base",
+                    "The concentration of hydroxide ions",
+                    "The pH of a base"
+                ],
+                correct: 1
+            },
+            {
+                id: 4,
+                question: "If K<sub>a</sub> = 1.8 × 10<sup>-5</sup>, the acid is:",
+                options: [
+                    "A strong acid",
+                    "A weak acid",
+                    "Neither strong nor weak",
+                    "A base"
+                ],
+                correct: 1
+            },
+            {
+                id: 5,
+                question: "Which of the following K<sub>a</sub> values represents the strongest acid?",
+                options: [
+                    "K<sub>a</sub> = 1.5 × 10<sup>-5</sup>",
+                    "K<sub>a</sub> = 6.3 × 10<sup>-3</sup>",
+                    "K<sub>a</sub> = 4.2 × 10<sup>7</sup>",
+                    "K<sub>a</sub> = 2.1 × 10<sup>-9</sup>"
+                ],
+                correct: 2
+            },
+            {
+                id: 6,
+                question: "For the reaction: HF + H<sub>2</sub>O ⇌ H<sub>3</sub>O<sup>+</sup> + F<sup>-</sup>, the K<sub>a</sub> expression is:",
+                options: [
+                    "K<sub>a</sub> = [HF]/[H<sub>3</sub>O<sup>+</sup>][F<sup>-</sup>]",
+                    "K<sub>a</sub> = [H<sub>3</sub>O<sup>+</sup>][F<sup>-</sup>]/[HF]",
+                    "K<sub>a</sub> = [H<sub>3</sub>O<sup>+</sup>][F<sup>-</sup>]/[HF][H<sub>2</sub>O]",
+                    "K<sub>a</sub> = [HF][H<sub>2</sub>O]/[H<sub>3</sub>O<sup>+</sup>][F<sup>-</sup>]"
+                ],
+                correct: 1
+            },
+            {
+                id: 7,
+                question: "A weak base will have:",
+                options: [
+                    "A high K<sub>b</sub> value",
+                    "A low K<sub>b</sub> value",
+                    "K<sub>b</sub> = 0",
+                    "K<sub>b</sub> = infinity"
+                ],
+                correct: 1
+            },
+            {
+                id: 8,
+                question: "Why is water not included in K<sub>a</sub> or K<sub>b</sub> expressions?",
+                options: [
+                    "Water does not participate in the reaction",
+                    "Water is a pure liquid with constant concentration",
+                    "Water evaporates during the reaction",
+                    "Water concentration is too low to measure"
+                ],
+                correct: 1
+            },
+            {
+                id: 9,
+                question: "If HNO<sub>3</sub> has K<sub>a</sub> >> 1 and CH<sub>3</sub>COOH has K<sub>a</sub> = 1.8 × 10<sup>-5</sup>, which statement is TRUE?",
+                options: [
+                    "CH<sub>3</sub>COOH ionises more than HNO<sub>3</sub>",
+                    "HNO<sub>3</sub> ionises more than CH<sub>3</sub>COOH",
+                    "Both ionise to the same extent",
+                    "Neither ionises in water"
+                ],
+                correct: 1
+            },
+            {
+                id: 10,
+                question: "For a base with K<sub>b</sub> = 1.8 × 10<sup>-5</sup>, the equilibrium position lies:",
+                options: [
+                    "Far to the right (products favoured)",
+                    "Far to the left (reactants favoured)",
+                    "Exactly in the middle",
+                    "Cannot be determined"
+                ],
+                correct: 1
+            },
+            {
+                id: 11,
+                question: "Which comparison is correct for NaOH and NH<sub>3</sub>?",
+                options: [
+                    "K<sub>b</sub>(NaOH) < K<sub>b</sub>(NH<sub>3</sub>)",
+                    "K<sub>b</sub>(NaOH) = K<sub>b</sub>(NH<sub>3</sub>)",
+                    "K<sub>b</sub>(NaOH) > K<sub>b</sub>(NH<sub>3</sub>)",
+                    "Neither has a K<sub>b</sub> value"
+                ],
+                correct: 2
+            },
+            {
+                id: 12,
+                question: "A large K<sub>a</sub> value indicates that at equilibrium:",
+                options: [
+                    "The concentration of reactants is high",
+                    "The concentration of products is high",
+                    "The reaction does not proceed",
+                    "The acid does not ionise"
+                ],
+                correct: 1
+            },
+            {
+                id: 13,
+                question: "For the equilibrium: NH<sub>3</sub> + H<sub>2</sub>O ⇌ NH<sub>4</sub><sup>+</sup> + OH<sup>-</sup>, K<sub>b</sub> = 1.8 × 10<sup>-5</sup>. This means:",
+                options: [
+                    "Most NH<sub>3</sub> molecules are ionised",
+                    "Very few NH<sub>3</sub> molecules are ionised",
+                    "All NH<sub>3</sub> molecules are ionised",
+                    "NH<sub>3</sub> does not react with water"
+                ],
+                correct: 1
+            },
+            {
+                id: 14,
+                question: "If Acid X has K<sub>a</sub> = 10<sup>-2</sup> and Acid Y has K<sub>a</sub> = 10<sup>-7</sup>, which is more reactive?",
+                options: [
+                    "Acid Y, because it has a smaller K<sub>a</sub>",
+                    "Acid X, because it has a larger K<sub>a</sub>",
+                    "Both are equally reactive",
+                    "Neither is reactive"
+                ],
+                correct: 1
+            }
+        ];
+
+        let userAnswers = {};
+        let quizSubmitted = false;
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            generateQuiz();
+            loadProgress();
+            initSimulation();
+        });
+
+        // Generate Quiz Questions
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = '';
+
+            quizQuestions.forEach((q, index) => {
+                const questionHTML = `
+                    <div class="question-card" id="question${q.id}">
+                        <div class="question-text">
+                            <span class="question-number">${q.id}</span>
+                            ${q.question}
+                        </div>
+                        <div class="options-container">
+                            ${q.options.map((opt, i) => `
+                                <label class="option-label" id="q${q.id}opt${i}">
+                                    <input type="radio" name="q${q.id}" value="${i}" onchange="selectAnswer(${q.id}, ${i})">
+                                    ${opt}
+                                </label>
+                            `).join('')}
+                        </div>
+                        <div class="feedback" id="feedback${q.id}"></div>
+                    </div>
+                `;
+                container.innerHTML += questionHTML;
+            });
+        }
+
+        // Select Answer
+        function selectAnswer(questionId, optionIndex) {
+            userAnswers[questionId] = optionIndex;
+            
+            const options = document.querySelectorAll(`[name="q${questionId}"]`);
+            options.forEach((opt, i) => {
+                const label = document.getElementById(`q${questionId}opt${i}`);
+                label.classList.remove('selected');
+                if (i === optionIndex) {
+                    label.classList.add('selected');
+                }
+            });
+
+            saveProgress();
+            updateProgressBar();
+        }
+
+        // Submit Quiz
+        function submitQuiz() {
+            if (Object.keys(userAnswers).length < quizQuestions.length) {
+                alert('Please answer all questions before submitting!');
+                return;
+            }
+
+            quizSubmitted = true;
+            let correctCount = 0;
+
+            quizQuestions.forEach(q => {
+                const questionCard = document.getElementById(`question${q.id}`);
+                const feedback = document.getElementById(`feedback${q.id}`);
+                const userAnswer = userAnswers[q.id];
+
+                const options = document.querySelectorAll(`[name="q${q.id}"]`);
+                options.forEach(opt => opt.disabled = true);
+
+                const correctLabel = document.getElementById(`q${q.id}opt${q.correct}`);
+                correctLabel.classList.add('correct-answer');
+
+                if (userAnswer === q.correct) {
+                    correctCount++;
+                    questionCard.classList.add('correct');
+                    feedback.className = 'feedback correct';
+                    feedback.innerHTML = '✅ Correct! Well done!';
+                } else {
+                    questionCard.classList.add('incorrect');
+                    const wrongLabel = document.getElementById(`q${q.id}opt${userAnswer}`);
+                    wrongLabel.classList.add('wrong-answer');
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = `❌ Incorrect. The correct answer is: ${q.options[q.correct]}`;
+                }
+            });
+
+            const percentage = Math.round((correctCount / quizQuestions.length) * 100);
+            displayScore(correctCount, quizQuestions.length, percentage);
+            saveProgress();
+        }
+
+        // Display Score
+        function displayScore(correct, total, percentage) {
+            const scoreContainer = document.getElementById('score');
+            const scorePercentage = document.getElementById('scorePercentage');
+            const scoreMessage = document.getElementById('scoreMessage');
+            const scoreDetails = document.getElementById('scoreDetails');
+
+            scorePercentage.textContent = percentage + '%';
+            scoreDetails.textContent = `You got ${correct} out of ${total} questions correct.`;
+
+            if (percentage >= 80) {
+                scoreMessage.textContent = '🌟 Excellent! You have mastered K values!';
+            } else if (percentage >= 60) {
+                scoreMessage.textContent = '👍 Good job! Keep practicing to improve!';
+            } else if (percentage >= 40) {
+                scoreMessage.textContent = '📚 Fair attempt. Review the lesson and try again!';
+            } else {
+                scoreMessage.textContent = '💪 Keep studying! You can do better!';
+            }
+
+            scoreContainer.classList.add('show');
+            scoreContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Reset Quiz
+        function resetQuiz() {
+            userAnswers = {};
+            quizSubmitted = false;
+            generateQuiz();
+            document.getElementById('score').classList.remove('show');
+            updateProgressBar();
+            localStorage.removeItem('kaKbProgress');
+        }
+
+        // Toggle Section
+        function toggleSection(sectionId) {
+            const content = document.getElementById(sectionId);
+            const icon = document.getElementById(sectionId.replace('Content', 'Icon'));
+            
+            content.classList.toggle('collapsed');
+            if (content.classList.contains('collapsed')) {
+                icon.textContent = '▶';
+            } else {
+                icon.textContent = '▼';
+            }
+        }
+
+        // Toggle Dropdown
+        function toggleDropdown() {
+            const menu = document.getElementById('dropdownMenu');
+            menu.classList.toggle('active');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const dropdown = document.querySelector('.nav-dropdown');
+            if (!dropdown.contains(e.target)) {
+                document.getElementById('dropdownMenu').classList.remove('active');
+            }
+        });
+
+        // Toggle Answer
+        function toggleAnswer(id) {
+            const answerBox = document.getElementById(id);
+            answerBox.classList.toggle('show');
+        }
+
+        // Save Progress
+        function saveProgress() {
+            const progress = {
+                answers: userAnswers,
+                submitted: quizSubmitted,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('kaKbProgress', JSON.stringify(progress));
+        }
+
+        // Load Progress
+        function loadProgress() {
+            const saved = localStorage.getItem('kaKbProgress');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                userAnswers = progress.answers || {};
+                
+                Object.keys(userAnswers).forEach(qId => {
+                    const optIndex = userAnswers[qId];
+                    const radio = document.querySelector(`input[name="q${qId}"][value="${optIndex}"]`);
+                    if (radio) {
+                        radio.checked = true;
+                        selectAnswer(parseInt(qId), optIndex);
+                    }
+                });
+
+                updateProgressBar();
+            }
+        }
+
+        // Update Progress Bar
+        function updateProgressBar() {
+            const answered = Object.keys(userAnswers).length;
+            const total = quizQuestions.length;
+            const percentage = Math.round((answered / total) * 100);
+            
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = 
+                `${percentage}% Complete (${answered}/${total} questions answered)`;
+        }
+
+        // Simulation Variables
+        let canvas, ctx;
+        let particles = [];
+        let animationId;
+
+        function initSimulation() {
+            canvas = document.getElementById('equilibriumCanvas');
+            ctx = canvas.getContext('2d');
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+        }
+
+        function resizeCanvas() {
+            const container = canvas.parentElement;
+            canvas.width = container.clientWidth - 40;
+            canvas.height = 400;
+            drawInitialState();
+        }
+
+        function drawInitialState() {
+            ctx.fillStyle = '#0f0f1a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw dividing line
+            ctx.strokeStyle = '#2dd4bf';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([10, 5]);
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 2, 50);
+            ctx.lineTo(canvas.width / 2, canvas.height - 30);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Labels
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = 'bold 16px Segoe UI';
+            ctx.textAlign = 'center';
+            ctx.fillText('REACTANTS', canvas.width / 4, 35);
+            ctx.fillText('PRODUCTS', (3 * canvas.width) / 4, 35);
+            ctx.fillText('Click a button above to see the equilibrium!', canvas.width / 2, canvas.height / 2);
+        }
+
+        function showEquilibrium(type) {
+            cancelAnimationFrame(animationId);
+            particles = [];
+
+            document.querySelectorAll('.sim-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const configs = {
+                'strong-acid': {
+                    name: 'Strong Acid (HCl)',
+                    kValue: '~10⁷',
+                    kType: 'Ka',
+                    strength: 'STRONG',
+                    strengthLabel: 'High Ionisation',
+                    ionisation: '~100%',
+                    ionisationLabel: 'Complete',
+                    reactants: 3,
+                    products: 35,
+                    reactantColor: '#ef4444',
+                    productColors: ['#fca5a5', '#93c5fd'],
+                    productLabels: ['H₃O⁺', 'Cl⁻']
+                },
+                'weak-acid': {
+                    name: 'Weak Acid (CH₃COOH)',
+                    kValue: '1.8×10⁻⁵',
+                    kType: 'Ka',
+                    strength: 'WEAK',
+                    strengthLabel: 'Low Ionisation',
+                    ionisation: '~1%',
+                    ionisationLabel: 'Partial',
+                    reactants: 35,
+                    products: 5,
+                    reactantColor: '#f59e0b',
+                    productColors: ['#fcd34d', '#93c5fd'],
+                    productLabels: ['H₃O⁺', 'CH₃COO⁻']
+                },
+                'strong-base': {
+                    name: 'Strong Base (NaOH)',
+                    kValue: '>>1',
+                    kType: 'Kb',
+                    strength: 'STRONG',
+                    strengthLabel: 'High Dissociation',
+                    ionisation: '~100%',
+                    ionisationLabel: 'Complete',
+                    reactants: 3,
+                    products: 35,
+                    reactantColor: '#3b82f6',
+                    productColors: ['#93c5fd', '#86efac'],
+                    productLabels: ['Na⁺', 'OH⁻']
+                },
+                'weak-base': {
+                    name: 'Weak Base (NH₃)',
+                    kValue: '1.8×10⁻⁵',
+                    kType: 'Kb',
+                    strength: 'WEAK',
+                    strengthLabel: 'Low Dissociation',
+                    ionisation: '~1%',
+                    ionisationLabel: 'Partial',
+                    reactants: 35,
+                    products: 5,
+                    reactantColor: '#06b6d4',
+                    productColors: ['#67e8f9', '#86efac'],
+                    productLabels: ['NH₄⁺', 'OH⁻']
+                }
+            };
+
+            const config = configs[type];
+
+            // Update display values
+            document.getElementById('kValue').textContent = config.kValue;
+            document.getElementById('kType').textContent = config.kType;
+            document.getElementById('strengthValue').textContent = config.strength;
+            document.getElementById('strengthLabel').textContent = config.strengthLabel;
+            document.getElementById('ionisationValue').textContent = config.ionisation;
+            document.getElementById('ionisationLabel').textContent = config.ionisationLabel;
+
+            const leftZone = canvas.width / 2 - 50;
+            const rightZone = canvas.width / 2 + 50;
+
+            // Create reactant particles (left side)
+            for (let i = 0; i < config.reactants; i++) {
+                particles.push({
+                    x: Math.random() * (leftZone - 80) + 40,
+                    y: Math.random() * (canvas.height - 120) + 60,
+                    vx: (Math.random() - 0.5) * 2,
+                    vy: (Math.random() - 0.5) * 2,
+                    radius: 12,
+                    color: config.reactantColor,
+                    zone: 'left',
+                    label: type.includes('acid') ? 'HA' : 'B'
+                });
+            }
+
+            // Create product particles (right side)
+            for (let i = 0; i < config.products; i++) {
+                const isFirst = i % 2 === 0;
+                particles.push({
+                    x: Math.random() * (canvas.width - rightZone - 80) + rightZone + 40,
+                    y: Math.random() * (canvas.height - 120) + 60,
+                    vx: (Math.random() - 0.5) * 2.5,
+                    vy: (Math.random() - 0.5) * 2.5,
+                    radius: 8,
+                    color: config.productColors[isFirst ? 0 : 1],
+                    zone: 'right',
+                    label: isFirst ? '+' : '-'
+                });
+            }
+
+            animate(config.name);
+        }
+
+        function animate(title) {
+            ctx.fillStyle = 'rgba(15, 15, 26, 0.3)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Title
+            ctx.fillStyle = '#e2e8f0';
+            ctx.font = 'bold 18px Segoe UI';
+            ctx.textAlign = 'center';
+            ctx.fillText(title, canvas.width / 2, 25);
+
+            // Zone labels
+            ctx.fillStyle = '#64748b';
+            ctx.font = '14px Segoe UI';
+            ctx.fillText('REACTANTS', canvas.width / 4, 45);
+            ctx.fillText('PRODUCTS (Ions)', (3 * canvas.width) / 4, 45);
+
+            // Dividing line
+            ctx.strokeStyle = '#2dd4bf';
+            ctx.lineWidth = 3;
+            ctx.setLineDash([10, 5]);
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 2, 55);
+            ctx.lineTo(canvas.width / 2, canvas.height - 30);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Arrow indicating equilibrium direction
+            const leftCount = particles.filter(p => p.zone === 'left').length;
+            const rightCount = particles.filter(p => p.zone === 'right').length;
+            
+            ctx.fillStyle = '#2dd4bf';
+            ctx.font = 'bold 24px Segoe UI';
+            if (rightCount > leftCount) {
+                ctx.fillText('→→→', canvas.width / 2, canvas.height - 10);
+            } else {
+                ctx.fillText('←←←', canvas.width / 2, canvas.height - 10);
+            }
+
+            // Update and draw particles
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                // Boundary logic
+                const leftBound = p.zone === 'left' ? 20 : canvas.width / 2 + 20;
+                const rightBound = p.zone === 'left' ? canvas.width / 2 - 20 : canvas.width - 20;
+
+                if (p.x <= leftBound + p.radius || p.x >= rightBound - p.radius) p.vx *= -1;
+                if (p.y <= 55 + p.radius || p.y >= canvas.height - 40 - p.radius) p.vy *= -1;
+
+                p.x = Math.max(leftBound + p.radius, Math.min(rightBound - p.radius, p.x));
+                p.y = Math.max(55 + p.radius, Math.min(canvas.height - 40 - p.radius, p.y));
+
+                // Draw
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.fill();
+                ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Label
+                ctx.fillStyle = '#000';
+                ctx.font = p.zone === 'left' ? 'bold 9px Arial' : 'bold 10px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(p.label, p.x, p.y);
+            });
+
+            animationId = requestAnimationFrame(() => animate(title));
+        }
+
+        // Navigation button handlers
+        document.querySelector('.nav-btn.prev').addEventListener('click', () => {
+            alert('This would navigate to Lesson 2: Strong and Weak Acids & Bases');
+        });
+
+        document.querySelector('.nav-btn.next').addEventListener('click', () => {
+            alert('This would navigate to Lesson 4: Acid-Base Reactions');
+        });
+
+        // Smooth scroll for dropdown links
+        document.querySelectorAll('.dropdown-item').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const target = document.getElementById(targetId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+                document.getElementById('dropdownMenu').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

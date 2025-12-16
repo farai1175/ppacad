@@ -1,0 +1,2615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemical Equilibrium - Lesson 3: Equilibrium Constant Calculations | PassProof Academy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1a73e8;
+            --primary-dark: #0d47a1;
+            --primary-light: #e3f2fd;
+            --white: #ffffff;
+            --gray-light: #f5f7fa;
+            --gray: #6c757d;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            --shadow-3d: 0 8px 25px rgba(0, 0, 0, 0.15);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e3f2fd 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-3d);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-container {
+            position: relative;
+        }
+
+        .nav-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .nav-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 120%;
+            right: 0;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-3d);
+            min-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+        }
+
+        .dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: #333;
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--primary-light);
+            color: var(--primary-blue);
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-3d);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transform: translateY(0);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
+        }
+
+        /* Subject & Grade Banner */
+        .subject-banner {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+
+        .subject-banner h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .subject-banner .meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .meta-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header h2 {
+            color: var(--primary-dark);
+            font-size: 1.5rem;
+        }
+
+        /* Objectives List */
+        .objectives-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .objectives-list li {
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            background: var(--primary-light);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-blue);
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            transition: var(--transition);
+        }
+
+        .objectives-list li:hover {
+            transform: translateX(5px);
+            background: #d4e9fc;
+        }
+
+        .objectives-list .check {
+            color: var(--primary-blue);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Chemical Equations */
+        .equation-box {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            color: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            text-align: center;
+            font-size: 1.3rem;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            box-shadow: var(--shadow-3d);
+        }
+
+        .equation-box.formula {
+            background: linear-gradient(135deg, #00695c 0%, #00897b 100%);
+            font-size: 1.5rem;
+        }
+
+        /* ICE Table Styles */
+        .ice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .ice-table th,
+        .ice-table td {
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            text-align: center;
+        }
+
+        .ice-table th {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .ice-table th:first-child {
+            background: linear-gradient(135deg, #7b1fa2 0%, #9c27b0 100%);
+        }
+
+        .ice-table tr:nth-child(1) td:first-child {
+            background: #e8f5e9;
+            font-weight: 600;
+            color: #2e7d32;
+        }
+
+        .ice-table tr:nth-child(2) td:first-child {
+            background: #fff3e0;
+            font-weight: 600;
+            color: #ef6c00;
+        }
+
+        .ice-table tr:nth-child(3) td:first-child {
+            background: #e3f2fd;
+            font-weight: 600;
+            color: #1565c0;
+        }
+
+        .ice-table tr:nth-child(4) td:first-child {
+            background: #fce4ec;
+            font-weight: 600;
+            color: #c2185b;
+        }
+
+        .ice-table td {
+            background: var(--white);
+        }
+
+        .ice-table tr:hover td {
+            background: var(--primary-light);
+        }
+
+        /* Method Steps */
+        .method-container {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid #4caf50;
+        }
+
+        .method-container h3 {
+            color: #2e7d32;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .method-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #4caf50;
+        }
+
+        .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            color: #2e7d32;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Worked Example */
+        .worked-example {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid #9c27b0;
+        }
+
+        .worked-example h3 {
+            color: #7b1fa2;
+            margin-bottom: 1rem;
+        }
+
+        .solution-step {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #9c27b0;
+        }
+
+        .solution-step .step-num {
+            display: inline-block;
+            background: #9c27b0;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 25px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+        }
+
+        /* Info Boxes */
+        .info-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-left: 5px solid var(--primary-blue);
+            padding: 1.5rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 1.5rem 0;
+        }
+
+        .info-box.warning {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left-color: #ff9800;
+        }
+
+        .info-box.success {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-left-color: #4caf50;
+        }
+
+        .info-box.tip {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            border-left-color: #9c27b0;
+        }
+
+        /* Simulation Container */
+        .simulation-container {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e8f4fd 100%);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--primary-light);
+        }
+
+        .simulation-canvas {
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 1rem 0;
+        }
+
+        .simulation-controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .sim-btn {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .sim-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-3d);
+        }
+
+        .sim-btn.secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+        }
+
+        /* Input Controls */
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .input-group label {
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        .input-group input, .input-group select {
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
+        }
+
+        /* Calculator Display */
+        .calculator-display {
+            background: #1a1a2e;
+            color: #4ecca3;
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .calculator-display .result {
+            font-size: 1.3rem;
+            color: #ffd700;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #4ecca3;
+        }
+
+        .calculator-display .step-line {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: rgba(78, 204, 163, 0.1);
+            border-radius: 4px;
+        }
+
+        /* Interactive ICE Table */
+        .interactive-ice {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .interactive-ice input {
+            width: 80px;
+            padding: 0.5rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .interactive-ice input:focus {
+            border-color: var(--primary-blue);
+            outline: none;
+        }
+
+        .interactive-ice input.correct {
+            border-color: #4caf50;
+            background: #e8f5e9;
+        }
+
+        .interactive-ice input.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+
+        /* Quiz Section */
+        .quiz-section {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+        }
+
+        .question-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid #e0e0e0;
+            transition: var(--transition);
+        }
+
+        .question-card.correct {
+            border-color: #4caf50;
+            background: #e8f5e9;
+        }
+
+        .question-card.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: var(--primary-blue);
+            color: var(--white);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: var(--gray-light);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .option-item:hover {
+            background: var(--primary-light);
+            transform: translateX(5px);
+        }
+
+        .option-item.selected {
+            background: var(--primary-light);
+            border: 2px solid var(--primary-blue);
+        }
+
+        .option-item.correct-answer {
+            background: #c8e6c9;
+            border: 2px solid #4caf50;
+        }
+
+        .option-item.wrong-answer {
+            background: #ffcdd2;
+            border: 2px solid #f44336;
+        }
+
+        .option-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .option-radio.checked {
+            border-color: var(--primary-blue);
+            background: var(--primary-blue);
+        }
+
+        .option-radio.checked::after {
+            content: '✓';
+            color: var(--white);
+            font-size: 12px;
+        }
+
+        .feedback {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .feedback.correct {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #4caf50;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #f44336;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+            color: var(--white);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: block;
+            margin: 2rem auto;
+            transition: var(--transition);
+            box-shadow: var(--shadow-3d);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4);
+        }
+
+        /* Score Display */
+        .score-container {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 2rem;
+            border-radius: var(--radius);
+            text-align: center;
+            margin: 2rem 0;
+            display: none;
+            animation: scaleIn 0.5s ease;
+        }
+
+        .score-container.show {
+            display: block;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 5px solid var(--white);
+        }
+
+        .score-value {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .score-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Lesson Navigation */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            flex: 1;
+            min-width: 150px;
+            max-width: 200px;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-3d);
+        }
+
+        .nav-btn.prev {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: var(--gray-light);
+            border-radius: 50px;
+            height: 10px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-blue) 0%, #4caf50 100%);
+            border-radius: 50px;
+            transition: width 0.5s ease;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #0a2540 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            opacity: 0.9;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .subject-banner h1 {
+                font-size: 1.8rem;
+            }
+
+            .subject-banner .meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .lesson-nav {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                max-width: 100%;
+            }
+
+            .score-circle {
+                width: 120px;
+                height: 120px;
+            }
+
+            .score-value {
+                font-size: 2.5rem;
+            }
+
+            .ice-table {
+                font-size: 0.8rem;
+            }
+
+            .ice-table th,
+            .ice-table td {
+                padding: 0.5rem;
+            }
+
+            .equation-box {
+                font-size: 1rem;
+                padding: 1rem;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .slide-up {
+            animation: slideUp 0.5s ease forwards;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Subscript and Superscript */
+        sub {
+            font-size: 0.7em;
+            vertical-align: sub;
+        }
+
+        sup {
+            font-size: 0.7em;
+            vertical-align: super;
+        }
+
+        /* Highlight text */
+        .highlight {
+            background: linear-gradient(120deg, #ffd54f 0%, #ffeb3b 100%);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        /* Formula display */
+        .formula-box {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            text-align: center;
+            margin: 1rem 0;
+            border: 2px solid #4caf50;
+            font-size: 1.3rem;
+            font-family: 'Times New Roman', serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="header-content">
+            <div class="logo">🎓 PassProof Academy</div>
+            <nav class="nav-container">
+                <button class="nav-toggle" onclick="toggleDropdown()">
+                    <span>☰</span> Menu
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="#objectives">📎 Learning Objectives</a>
+                    <a href="#overview">📖 Overview</a>
+                    <a href="#method">📋 ICE Table Method</a>
+                    <a href="#examples">📝 Worked Examples</a>
+                    <a href="#simulation">🔬 Simulations</a>
+                    <a href="#quiz">✍️ Quiz</a>
+                    <a href="#progress">📊 My Progress</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Subject & Grade Banner -->
+        <div class="subject-banner slide-up">
+            <h1>Physical Sciences</h1>
+            <div class="meta">
+                <span class="meta-item">📚 Grade 12</span>
+                <span class="meta-item">📅 Week 16</span>
+                <span class="meta-item">🧪 Term 2</span>
+            </div>
+        </div>
+
+        <!-- Topic & Lesson Info -->
+        <div class="card fade-in">
+            <div class="section-header">
+                <div class="section-icon">🔬</div>
+                <div>
+                    <h2>Chemical Equilibrium</h2>
+                    <p style="color: var(--gray);">Lesson 3 of Chemical Equilibrium Series</p>
+                </div>
+            </div>
+            <h3 style="color: var(--primary-blue); font-size: 1.4rem; margin-top: 1rem;">
+                Equilibrium Constant Calculations Using ICE Tables
+            </h3>
+            <p style="margin-top: 0.5rem; color: var(--gray);">
+                Master the systematic approach to calculating K<sub>c</sub> using Initial-Change-Equilibrium tables
+            </p>
+            
+            <!-- Progress Bar -->
+            <div class="progress-container" style="margin-top: 1.5rem;">
+                <div class="progress-bar" id="lessonProgress" style="width: 0%"></div>
+            </div>
+            <p style="text-align: center; color: var(--gray); font-size: 0.9rem;">
+                Lesson Progress: <span id="progressText">0%</span>
+            </p>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="card fade-in" id="objectives">
+            <div class="section-header">
+                <div class="section-icon">🎯</div>
+                <h2>Learning Objectives</h2>
+            </div>
+            <p style="margin-bottom: 1rem; color: var(--gray);">By the end of this lesson, you will be able to:</p>
+            <ul class="objectives-list">
+                <li>
+                    <span class="check">✓</span>
+                    <span>Understand the meaning of the equilibrium constant (K<sub>c</sub>)</span>
+                </li>
+                <li>
+                    <span class="check">✓</span>
+                    <span>List the factors affecting the equilibrium constant</span>
+                </li>
+                <li>
+                    <span class="check">✓</span>
+                    <span>Write the expression of the equilibrium constant given the reaction equation</span>
+                </li>
+                <li>
+                    <span class="check">✓</span>
+                    <span>Calculate the equilibrium constant using ICE tables and stoichiometry</span>
+                </li>
+                <li>
+                    <span class="check">✓</span>
+                    <span>Explain the significance of high and low values of the equilibrium constant</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Overview -->
+        <div class="card fade-in" id="overview">
+            <div class="section-header">
+                <div class="section-icon">📖</div>
+                <h2>Lesson Overview</h2>
+            </div>
+            <p>
+                In this lesson, we will focus on <strong>calculating the equilibrium constant (K<sub>c</sub>)</strong> 
+                using a systematic approach called the <strong>ICE table method</strong>. ICE stands for 
+                <span class="highlight">Initial</span>, <span class="highlight">Change</span>, and 
+                <span class="highlight">Equilibrium</span>. This method helps organize the information given in 
+                a problem and systematically solve for unknown concentrations and K<sub>c</sub>.
+            </p>
+            
+            <div class="info-box" style="margin-top: 1.5rem;">
+                <strong>📝 Pre-Knowledge Required:</strong>
+                <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                    <li>Dynamic equilibrium concepts</li>
+                    <li>Le Chatelier's principle and factors affecting equilibrium</li>
+                    <li>Equilibrium constant expressions (K<sub>c</sub>)</li>
+                    <li>Stoichiometry and molar ratios</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ICE Table Method -->
+        <div class="card fade-in" id="method">
+            <div class="section-header">
+                <div class="section-icon">📋</div>
+                <h2>The ICE Table Method</h2>
+            </div>
+            
+            <p>
+                The ICE table is a systematic way to organize equilibrium calculations. Most K<sub>c</sub> problems 
+                give you some information (usually moles) and ask you to find missing values and calculate K<sub>c</sub>.
+            </p>
+
+            <div class="method-container">
+                <h3>📊 Step-by-Step ICE Table Method</h3>
+                
+                <div class="method-step">
+                    <div class="step-number">I</div>
+                    <div class="step-content">
+                        <h4>INITIAL (Start)</h4>
+                        <p>Record the moles of the starting substances. <strong>Products usually start at 0</strong> 
+                        unless otherwise stated.</p>
+                    </div>
+                </div>
+                
+                <div class="method-step">
+                    <div class="step-number">C</div>
+                    <div class="step-content">
+                        <h4>CHANGE (Reacted/Formed)</h4>
+                        <p><strong>"Reacted"</strong> applies to reactants (negative change).<br>
+                        <strong>"Formed"</strong> applies to products (positive change).<br>
+                        Use <strong>molar ratios</strong> from the balanced equation in this step!</p>
+                    </div>
+                </div>
+                
+                <div class="method-step">
+                    <div class="step-number">E</div>
+                    <div class="step-content">
+                        <h4>EQUILIBRIUM</h4>
+                        <p><strong>Reactants:</strong> Initial − Change (moles reacted)<br>
+                        <strong>Products:</strong> Initial + Change (moles formed)</p>
+                    </div>
+                </div>
+                
+                <div class="method-step">
+                    <div class="step-number">+</div>
+                    <div class="step-content">
+                        <h4>EQUILIBRIUM CONCENTRATION</h4>
+                        <p>If values are in moles, calculate concentration using: 
+                        <strong>c = n/V</strong> (concentration = moles ÷ volume)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box tip">
+                <strong>💡 Key Tip:</strong> Molar ratios from the balanced equation are used in the 
+                <strong>Change</strong> row, NOT in the Initial row. The coefficients tell you how many 
+                moles react or form relative to each other.
+            </div>
+        </div>
+
+        <!-- Worked Examples -->
+        <div class="card fade-in" id="examples">
+            <div class="section-header">
+                <div class="section-icon">📝</div>
+                <h2>Worked Examples</h2>
+            </div>
+
+            <!-- Example 1: SO2 + O2 ⇌ SO3 -->
+            <div class="worked-example">
+                <h3>Example 1: SO<sub>2</sub> + O<sub>2</sub> ⇌ SO<sub>3</sub> Equilibrium</h3>
+                
+                <div class="equation-box">
+                    2SO<sub>2</sub>(g) + O<sub>2</sub>(g) ⇌ 2SO<sub>3</sub>(g)
+                </div>
+                
+                <p style="margin: 1rem 0;">
+                    <strong>Problem:</strong> 7 mol SO<sub>2</sub> and 6 mol O<sub>2</sub> are placed in a container 
+                    of volume 2 dm³ at 600 K. At equilibrium, 4 mol SO<sub>3</sub> have formed. Determine K<sub>c</sub>.
+                </p>
+
+                <div class="solution-step">
+                    <span class="step-num">1</span>
+                    <strong>Analyze the molar ratios:</strong>
+                    <p style="margin-top: 0.5rem;">
+                        From the equation: 2 mol SO<sub>2</sub> : 1 mol O<sub>2</sub> : 2 mol SO<sub>3</sub><br>
+                        If 4 mol SO<sub>3</sub> forms → 4 mol SO<sub>2</sub> reacts → 2 mol O<sub>2</sub> reacts
+                    </p>
+                </div>
+
+                <div class="solution-step">
+                    <span class="step-num">2</span>
+                    <strong>Set up the ICE table:</strong>
+                </div>
+
+                <table class="ice-table">
+                    <tr>
+                        <th>Stage</th>
+                        <th>SO<sub>2</sub></th>
+                        <th>O<sub>2</sub></th>
+                        <th>SO<sub>3</sub></th>
+                    </tr>
+                    <tr>
+                        <td>Initial (mol)</td>
+                        <td>7</td>
+                        <td>6</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>Change (mol)</td>
+                        <td>−4</td>
+                        <td>−2</td>
+                        <td>+4</td>
+                    </tr>
+                    <tr>
+                        <td>Equilibrium (mol)</td>
+                        <td>7 − 4 = 3</td>
+                        <td>6 − 2 = 4</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>Concentration (mol·dm<sup>−3</sup>)</td>
+                        <td>3/2 = 1.5</td>
+                        <td>4/2 = 2</td>
+                        <td>4/2 = 2</td>
+                    </tr>
+                </table>
+
+                <div class="solution-step">
+                    <span class="step-num">3</span>
+                    <strong>Calculate K<sub>c</sub>:</strong>
+                    <div class="formula-box" style="margin-top: 0.5rem;">
+                        K<sub>c</sub> = [SO<sub>3</sub>]² / [SO<sub>2</sub>]²[O<sub>2</sub>] = (2)² / (1.5)²(2) = 4 / 4.5 = <strong style="color: #4caf50;">0.889</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 2: H2 + I2 ⇌ HI -->
+            <div class="worked-example">
+                <h3>Example 2: H<sub>2</sub> + I<sub>2</sub> ⇌ HI Equilibrium</h3>
+                
+                <div class="equation-box">
+                    H<sub>2</sub>(g) + I<sub>2</sub>(g) ⇌ 2HI(g)
+                </div>
+                
+                <p style="margin: 1rem 0;">
+                    <strong>Problem:</strong> 1 mol of H<sub>2</sub> and 1 mol of I<sub>2</sub> are placed in a 
+                    1 dm³ closed container at 30°C. Analysis shows that 0.8 mol of HI are present at equilibrium. 
+                    Calculate K<sub>c</sub>.
+                </p>
+
+                <div class="solution-step">
+                    <span class="step-num">1</span>
+                    <strong>Analyze the molar ratios:</strong>
+                    <p style="margin-top: 0.5rem;">
+                        From the equation: 1 mol H<sub>2</sub> : 1 mol I<sub>2</sub> : 2 mol HI<br>
+                        If 0.8 mol HI forms → 0.4 mol H<sub>2</sub> reacts → 0.4 mol I<sub>2</sub> reacts
+                    </p>
+                </div>
+
+                <div class="solution-step">
+                    <span class="step-num">2</span>
+                    <strong>Set up the ICE table:</strong>
+                </div>
+
+                <table class="ice-table">
+                    <tr>
+                        <th>Stage</th>
+                        <th>H<sub>2</sub></th>
+                        <th>I<sub>2</sub></th>
+                        <th>HI</th>
+                    </tr>
+                    <tr>
+                        <td>Initial (mol)</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>Change (mol)</td>
+                        <td>−0.4</td>
+                        <td>−0.4</td>
+                        <td>+0.8</td>
+                    </tr>
+                    <tr>
+                        <td>Equilibrium (mol)</td>
+                        <td>0.6</td>
+                        <td>0.6</td>
+                        <td>0.8</td>
+                    </tr>
+                    <tr>
+                        <td>Concentration (mol·dm<sup>−3</sup>)</td>
+                        <td>0.6</td>
+                        <td>0.6</td>
+                        <td>0.8</td>
+                    </tr>
+                </table>
+
+                <div class="solution-step">
+                    <span class="step-num">3</span>
+                    <strong>Calculate K<sub>c</sub>:</strong>
+                    <div class="formula-box" style="margin-top: 0.5rem;">
+                        K<sub>c</sub> = [HI]² / [H<sub>2</sub>][I<sub>2</sub>] = (0.8)² / (0.6)(0.6) = 0.64 / 0.36 = <strong style="color: #4caf50;">1.78</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 3: PCl5 Decomposition -->
+            <div class="worked-example">
+                <h3>Example 3: PCl<sub>5</sub> Decomposition</h3>
+                
+                <div class="equation-box">
+                    PCl<sub>5</sub>(g) ⇌ PCl<sub>3</sub>(g) + Cl<sub>2</sub>(g)
+                </div>
+                
+                <p style="margin: 1rem 0;">
+                    <strong>Problem:</strong> 0.375 mol of PCl<sub>5</sub> is heated in a closed 1 dm³ container. 
+                    The equilibrium mixture contains 0.125 mol of chlorine. Calculate K<sub>c</sub>.
+                </p>
+
+                <div class="solution-step">
+                    <span class="step-num">1</span>
+                    <strong>Analyze the molar ratios:</strong>
+                    <p style="margin-top: 0.5rem;">
+                        From the equation: 1 mol PCl<sub>5</sub> : 1 mol PCl<sub>3</sub> : 1 mol Cl<sub>2</sub><br>
+                        If 0.125 mol Cl<sub>2</sub> forms → 0.125 mol PCl<sub>5</sub> decomposes → 0.125 mol PCl<sub>3</sub> forms
+                    </p>
+                </div>
+
+                <div class="solution-step">
+                    <span class="step-num">2</span>
+                    <strong>Set up the ICE table:</strong>
+                </div>
+
+                <table class="ice-table">
+                    <tr>
+                        <th>Stage</th>
+                        <th>PCl<sub>5</sub></th>
+                        <th>PCl<sub>3</sub></th>
+                        <th>Cl<sub>2</sub></th>
+                    </tr>
+                    <tr>
+                        <td>Initial (mol)</td>
+                        <td>0.375</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>Change (mol)</td>
+                        <td>−0.125</td>
+                        <td>+0.125</td>
+                        <td>+0.125</td>
+                    </tr>
+                    <tr>
+                        <td>Equilibrium (mol)</td>
+                        <td>0.25</td>
+                        <td>0.125</td>
+                        <td>0.125</td>
+                    </tr>
+                    <tr>
+                        <td>Concentration (mol·dm<sup>−3</sup>)</td>
+                        <td>0.25</td>
+                        <td>0.125</td>
+                        <td>0.125</td>
+                    </tr>
+                </table>
+
+                <div class="solution-step">
+                    <span class="step-num">3</span>
+                    <strong>Calculate K<sub>c</sub>:</strong>
+                    <div class="formula-box" style="margin-top: 0.5rem;">
+                        K<sub>c</sub> = [PCl<sub>3</sub>][Cl<sub>2</sub>] / [PCl<sub>5</sub>] = (0.125)(0.125) / (0.25) = 0.015625 / 0.25 = <strong style="color: #4caf50;">6.25 × 10<sup>−2</sup></strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 4: N2 + O2 ⇌ NO -->
+            <div class="worked-example">
+                <h3>Example 4: Formation of Nitric Oxide</h3>
+                
+                <div class="equation-box">
+                    N<sub>2</sub>(g) + O<sub>2</sub>(g) ⇌ 2NO(g)
+                </div>
+                
+                <p style="margin: 1rem 0;">
+                    <strong>Problem:</strong> 1 mol of N<sub>2</sub> and 1 mol of O<sub>2</sub> are placed in a 
+                    2 dm³ closed container at 300 K. At equilibrium, the concentration of NO is 0.1 mol·dm<sup>−3</sup>. 
+                    Calculate K<sub>c</sub>.
+                </p>
+
+                <div class="solution-step">
+                    <span class="step-num">1</span>
+                    <strong>First, calculate moles of NO at equilibrium:</strong>
+                    <p style="margin-top: 0.5rem;">
+                        n<sub>NO</sub> = c × V = 0.1 × 2 = 0.2 mol
+                    </p>
+                </div>
+
+                <div class="solution-step">
+                    <span class="step-num">2</span>
+                    <strong>Analyze the molar ratios:</strong>
+                    <p style="margin-top: 0.5rem;">
+                        From the equation: 1 mol N<sub>2</sub> : 1 mol O<sub>2</sub> : 2 mol NO<br>
+                        If 0.2 mol NO forms → 0.1 mol N<sub>2</sub> reacts → 0.1 mol O<sub>2</sub> reacts
+                    </p>
+                </div>
+
+                <div class="solution-step">
+                    <span class="step-num">3</span>
+                    <strong>Set up the ICE table:</strong>
+                </div>
+
+                <table class="ice-table">
+                    <tr>
+                        <th>Stage</th>
+                        <th>N<sub>2</sub></th>
+                        <th>O<sub>2</sub></th>
+                        <th>NO</th>
+                    </tr>
+                    <tr>
+                        <td>Initial (mol)</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>Change (mol)</td>
+                        <td>−0.1</td>
+                        <td>−0.1</td>
+                        <td>+0.2</td>
+                    </tr>
+                    <tr>
+                        <td>Equilibrium (mol)</td>
+                        <td>0.9</td>
+                        <td>0.9</td>
+                        <td>0.2</td>
+                    </tr>
+                    <tr>
+                        <td>Concentration (mol·dm<sup>−3</sup>)</td>
+                        <td>0.9/2 = 0.45</td>
+                        <td>0.9/2 = 0.45</td>
+                        <td>0.1</td>
+                    </tr>
+                </table>
+
+                <div class="solution-step">
+                    <span class="step-num">4</span>
+                    <strong>Calculate K<sub>c</sub>:</strong>
+                    <div class="formula-box" style="margin-top: 0.5rem;">
+                        K<sub>c</sub> = [NO]² / [N<sub>2</sub>][O<sub>2</sub>] = (0.1)² / (0.45)(0.45) = 0.01 / 0.2025 = <strong style="color: #4caf50;">0.049</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Simulations -->
+        <div class="card fade-in" id="simulation">
+            <div class="section-header">
+                <div class="section-icon">🔬</div>
+                <h2>Interactive Simulations</h2>
+            </div>
+
+            <!-- Simulation 1: ICE Table Calculator -->
+            <div class="simulation-container">
+                <h3 style="text-align: center; color: var(--primary-dark); margin-bottom: 1rem;">
+                    Simulation 1: Interactive ICE Table Calculator
+                </h3>
+                <p style="text-align: center; color: var(--gray); margin-bottom: 1rem;">
+                    For the reaction: H<sub>2</sub>(g) + I<sub>2</sub>(g) ⇌ 2HI(g)
+                </p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                    <div class="input-group">
+                        <label>Initial H<sub>2</sub> (mol)</label>
+                        <input type="number" id="initH2" value="1" min="0" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label>Initial I<sub>2</sub> (mol)</label>
+                        <input type="number" id="initI2" value="1" min="0" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label>HI at Equilibrium (mol)</label>
+                        <input type="number" id="eqHI" value="0.8" min="0" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label>Volume (dm³)</label>
+                        <input type="number" id="volume1" value="1" min="0.1" step="0.1">
+                    </div>
+                </div>
+                
+                <div class="calculator-display" id="iceCalcDisplay">
+                    <p><strong>ICE Table Results:</strong></p>
+                    <div class="step-line" id="iceStep1">Click "Calculate" to see results...</div>
+                    <div class="step-line" id="iceStep2"></div>
+                    <div class="step-line" id="iceStep3"></div>
+                    <div class="result" id="iceResult">K<sub>c</sub> = —</div>
+                </div>
+                
+                <div class="simulation-controls">
+                    <button class="sim-btn" onclick="calculateICE()">Calculate K<sub>c</sub></button>
+                    <button class="sim-btn secondary" onclick="resetICE()">Reset</button>
+                </div>
+            </div>
+
+            <!-- Simulation 2: Step-by-Step Solver -->
+            <div class="simulation-container">
+                <h3 style="text-align: center; color: var(--primary-dark); margin-bottom: 1rem;">
+                    Simulation 2: Step-by-Step K<sub>c</sub> Solver
+                </h3>
+                <p style="text-align: center; color: var(--gray); margin-bottom: 1rem;">
+                    Choose a reaction and follow the guided solution process
+                </p>
+                
+                <div class="input-group">
+                    <label>Select Reaction:</label>
+                    <select id="reactionSelect" onchange="loadReaction()">
+                        <option value="0">2SO₂(g) + O₂(g) ⇌ 2SO₃(g)</option>
+                        <option value="1">PCl₅(g) ⇌ PCl₃(g) + Cl₂(g)</option>
+                        <option value="2">N₂(g) + O₂(g) ⇌ 2NO(g)</option>
+                        <option value="3">N₂(g) + 3H₂(g) ⇌ 2NH₃(g)</option>
+                    </select>
+                </div>
+                
+                <div id="reactionProblem" style="background: var(--primary-light); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                    <strong>Problem:</strong> <span id="problemText"></span>
+                </div>
+                
+                <div id="stepByStepSolution" style="display: none;">
+                    <div id="solutionSteps"></div>
+                </div>
+                
+                <div class="simulation-controls">
+                    <button class="sim-btn" onclick="showNextStep()">Show Next Step</button>
+                    <button class="sim-btn secondary" onclick="resetStepSolver()">Start Over</button>
+                </div>
+            </div>
+
+            <!-- Simulation 3: Molar Ratio Visualizer -->
+            <div class="simulation-container">
+                <h3 style="text-align: center; color: var(--primary-dark); margin-bottom: 1rem;">
+                    Simulation 3: Molar Ratio Visualizer
+                </h3>
+                <p style="text-align: center; color: var(--gray); margin-bottom: 1rem;">
+                    See how molar ratios determine the changes in an ICE table
+                </p>
+                
+                <canvas id="ratioCanvas" class="simulation-canvas" width="600" height="300"></canvas>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                    <div class="input-group">
+                        <label>Product Formed (mol)</label>
+                        <input type="range" id="productFormed" min="0" max="2" step="0.1" value="0" oninput="updateRatioVisual()">
+                        <div style="text-align: center; font-weight: bold; color: var(--primary-blue);">
+                            <span id="productValue">0</span> mol SO₃
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="ratioExplanation" style="background: var(--primary-light); padding: 1rem; border-radius: 8px; margin-top: 1rem; text-align: center;">
+                    Move the slider to see how reactant consumption relates to product formation
+                </div>
+            </div>
+
+            <!-- Simulation 4: Practice Problem Generator -->
+            <div class="simulation-container">
+                <h3 style="text-align: center; color: var(--primary-dark); margin-bottom: 1rem;">
+                    Simulation 4: Practice Problem Generator
+                </h3>
+                <p style="text-align: center; color: var(--gray); margin-bottom: 1rem;">
+                    Generate random practice problems and check your answers
+                </p>
+                
+                <div id="practiceQuestion" style="background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem;">
+                    <div class="equation-box" id="practiceEquation" style="margin-bottom: 1rem;">
+                        Click "New Problem" to start
+                    </div>
+                    <p id="practiceProblemText"></p>
+                </div>
+                
+                <div class="input-group">
+                    <label>Your Answer for K<sub>c</sub>:</label>
+                    <input type="number" id="practiceAnswer" step="0.01" placeholder="Enter your calculated Kc">
+                </div>
+                
+                <div id="practiceFeedback" style="display: none; padding: 1rem; border-radius: 8px; margin: 1rem 0;"></div>
+                
+                <div class="simulation-controls">
+                    <button class="sim-btn" onclick="generatePractice()">New Problem</button>
+                    <button class="sim-btn" onclick="checkPracticeAnswer()" style="background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);">Check Answer</button>
+                    <button class="sim-btn secondary" onclick="showPracticeSolution()">Show Solution</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="card quiz-section fade-in" id="quiz">
+            <div class="section-header">
+                <div class="section-icon">✍️</div>
+                <h2>End of Lesson Quiz</h2>
+            </div>
+            <p style="color: var(--gray); margin-bottom: 2rem;">
+                Test your understanding of equilibrium constant calculations using ICE tables.
+            </p>
+
+            <div id="quizContainer">
+                <!-- Question 1 -->
+                <div class="question-card" data-question="1">
+                    <span class="question-number">1</span>
+                    <span class="question-text">In an ICE table, what does the "C" represent?</span>
+                    <ul class="options-list">
+                        <li class="option-item" data-option="a" onclick="selectOption(1, 'a')">
+                            <div class="option-radio"></div>
+                            <span>Concentration at equilibrium</span>
+                        </li>
+                        <li class="option-item" data-option="b" onclick="selectOption(1, 'b')">
+                            <div class="option-radio"></div>
+                            <span>Change in moles (reacted or formed)</span>
+                        </li>
+                        <li class="option-item" data-option="c" onclick="selectOption(1, 'c')">
+                            <div class="option-radio"></div>
+                            <span>Catalyst effect</span>
+                        </li>
+                        <li class="option-item" data-option="d" onclick="selectOption(1, 'd')">
+                            <div class="option-radio"></div>
+                            <span>Constant temperature</span>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback1"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question-card" data-question="2">
+                    <span class="question-text">
+                        <span class="question-number">2</span>
+                        For 2SO<sub>2</sub> + O<sub>2</sub> ⇌ 2SO<sub>3</sub>, if 4 mol of SO<sub>3</sub> forms, how many moles of O<sub>2</sub> are consumed?
+                    </span>
+                    <ul class="options-list">
+                        <li class="option-item" data-option="a" onclick="selectOption(2, 'a')">
+                            <div class="option-radio"></div>
+                            <span>1 mol</span>
+                        </li>
+                        <li class="option-item" data-option="b" onclick="selectOption(2, 'b')">
+                            <div class="option-radio"></div>
+                            <span>2 mol</span>
+                        </li>
+                        <li class="option-item" data-option="c" onclick="selectOption(2, 'c')">
+                            <div class="option-radio"></div>
+                            <span>4 mol</span>
+                        </li>
+                        <li class="option-item" data-option="d" onclick="selectOption(2, 'd')">
+                            <div class="option-radio"></div>
+                            <span>8 mol</span>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback2"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question-card" data-question="3">
+                    <span class="question-text">
+                        <span class="question-number">3</span>
+                        If 3 mol of a gas is in a 2 dm³ container, what is its concentration?
+                    </span>
+                    <ul class="options-list">
+                        <li class="option-item" data-option="a" onclick="selectOption(3, 'a')">
+                            <div class="option-radio"></div>
+                            <span>6 mol·dm<sup>−3</sup></span>
+                        </li>
+                        <li class="option-item" data-option="b" onclick="selectOption(3, 'b')">
+                            <div class="option-radio"></div>
+                            <span>1.5 mol·dm<sup>−3</sup></span>
+                        </li>
+                        <li class="option-item" data-option="c" onclick="selectOption(3, 'c')">
+                            <div class="option-radio"></div>
+                            <span>0.67 mol·dm<sup>−3</sup></span>
+                        </li>
+                        <li class="option-item" data-option="d" onclick="selectOption(3, 'd')">
+                            <div class="option-radio"></div>
+                            <span>5 mol·dm<sup>−3</sup></span>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback3"></div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="question-card" data-question="4">
+                    <span class="question-text">
+                        <span class="question-number">4</span>
+                        For H<sub>2</sub> + I<sub>2</sub> ⇌ 2HI, if we start with 1 mol H<sub>2</sub> and 1 mol I<sub>2</sub>, and 0.8 mol HI forms, how many moles of H<sub>2</sub> remain at equilibrium?
+                    </span>
+                    <ul class="options-list">
+                        <li class="option-item" data-option="a" onclick="selectOption(4, 'a')">
+                            <div class="option-radio"></div>
+                            <span>0.2 mol</span>
+                        </li>
+                        <li class="option-item" data-option="b" onclick="selectOption(4, 'b')">
+                            <div class="option-radio"></div>
+                            <span>0.4 mol</span>
+                        </li>
+                        <li class="option-item" data-option="c" onclick="selectOption(4, 'c')">
+                            <div class="option-radio"></div>
+                            <span>0.6 mol</span>
+                        </li>
+                        <li class="option-item" data-option="d" onclick="selectOption(4, 'd')">
+                            <div class="option-radio"></div>
+                            <span>0.8 mol</span>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback4"></div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="question-card" data-question="5">
+                    <span class="question-text">
+                        <span class="question-number">5</span>
+                        In an ICE table, where are molar ratios used?
+                    </span>
+                    <ul class="options-list">
+                        <li class="option-item" data-option="a" onclick="selectOption(5, 'a')">
+                            <div class="option-radio"></div>
+                            <span>In the Initial row</span>
+                        </li>
+                        <li class="option-item" data-option="b" onclick="selectOption(5, 'b')">
+                            <div class="option-radio"></div>
+                            <span>In the Change row</span>
+                        </li>
+                        <li class="option-item" data-option="c" onclick="selectOption(5, 'c')">
+                            <div class="option-radio"></div>
+                            <span>In the Equilibrium row</span>
+                        </li>
+                        <li class="option-item" data-option="d" onclick="selectOption(5, 'd')">
+                            <div class="option-radio"></div>
+                            <span>In all rows equally</span>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback5"></div>
+                </div>
+
+                <!-- Question 6 -->
+                <div class="question-card" data-question="6">
+                    <span class="question-text">
+                        <span class="question-number">6</span>
+                        For PCl<sub>5</sub> ⇌ PCl<sub>3</sub> + Cl<sub>2</sub>, if we start with 0.375 mol PCl<sub>5</sub> and 0.125 mol Cl<sub>2</sub> forms, what is [PCl<sub>5</sub>] at equilibrium in a 1 dm³ container?
+                    </span>
+                    <ul class="options-list">
+                        <li class="option-item" data-option="a" onclick="selectOption(6, 'a')">
+                            <div class="option-radio"></div>
+                            <span>0.375 mol·dm<sup>−3</sup></span>
+                        </li>
+                        <li class="option-item" data-option="b" onclick="selectOption(6, 'b')">
+                            <div class="option-radio"></div>
+                            <span>0.25 mol·dm<sup>−3</sup></span>
+                        </li>
+                        <li class="option-item" data-option="c" onclick="selectOption(6, 'c')">
+                            <div class="option-radio"></div>
+                            <span>0.125 mol·dm<sup>−3</sup></span>
+                        </li>
+                        <li class="option-item" data-option="d" onclick="selectOption(6, 'd')">
+                            <div class="option-radio"></div>
+                            <span>0.5 mol·dm<sup>−3</sup></span>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback6"></div>
+                </div>
+
+                <!-- Question 7 -->
+                <div class="question-card" data-question="7">
+                    <span class="question-text">
+                        <span class="question-number">7</span>
+                        What is the K<sub>c</sub> expression for 2SO<sub>2</sub>(g) + O<sub>2</sub>(g) ⇌ 2SO<sub>3</sub>(g)?
+                    </span>
+                    <ul class="options-list">
+                        <li class="option-item" data-option="a" onclick="selectOption(7, 'a')">
+                            <div class="option-radio"></div>
+                            <span>K<sub>c</sub> = [SO<sub>3</sub>]² / [SO<sub>2</sub>]²[O<sub>2</sub>]</span>
+                        </li>
+                        <li class="option-item" data-option="b" onclick="selectOption(7, 'b')">
+                            <div class="option-radio"></div>
+                            <span>K<sub>c</sub> = [SO<sub>2</sub>]²[O<sub>2</sub>] / [SO<sub>3</sub>]²</span>
+                        </li>
+                        <li class="option-item" data-option="c" onclick="selectOption(7, 'c')">
+                            <div class="option-radio"></div>
+                            <span>K<sub>c</sub> = 2[SO<sub>3</sub>] / 2[SO<sub>2</sub>] + [O<sub>2</sub>]</span>
+                        </li>
+                        <li class="option-item" data-option="d" onclick="selectOption(7, 'd')">
+                            <div class="option-radio"></div>
+                            <span>K<sub>c</sub> = [SO<sub>3</sub>] / [SO<sub>2</sub>][O<sub>2</sub>]</span>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback7"></div>
+                </div>
+
+                <!-- Question 8 -->
+                <div class="question-card" data-question="8">
+                    <span class="question-text">
+                        <span class="question-number">8</span>
+                        If [HI] = 0.8 mol·dm<sup>−3</sup>, [H<sub>2</sub>] = 0.6 mol·dm<sup>−3</sup>, and [I<sub>2</sub>] = 0.6 mol·dm<sup>−3</sup>, what is K<sub>c</sub> for H<sub>2</sub> + I<sub>2</sub> ⇌ 2HI?
+                    </span>
+                    <ul class="options-list">
+                        <li class="option-item" data-option="a" onclick="selectOption(8, 'a')">
+                            <div class="option-radio"></div>
+                            <span>0.56</span>
+                        </li>
+                        <li class="option-item" data-option="b" onclick="selectOption(8, 'b')">
+                            <div class="option-radio"></div>
+                            <span>1.78</span>
+                        </li>
+                        <li class="option-item" data-option="c" onclick="selectOption(8, 'c')">
+                            <div class="option-radio"></div>
+                            <span>2.22</span>
+                        </li>
+                        <li class="option-item" data-option="d" onclick="selectOption(8, 'd')">
+                            <div class="option-radio"></div>
+                            <span>0.45</span>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback8"></div>
+                </div>
+
+                <!-- Question 9 -->
+                <div class="question-card" data-question="9">
+                    <span class="question-text">
+                        <span class="question-number">9</span>
+                        For N<sub>2</sub> + O<sub>2</sub> ⇌ 2NO, if 0.2 mol NO forms from 1 mol each of N<sub>2</sub> and O<sub>2</sub>, how many moles of N<sub>2</sub> reacted?
+                    </span>
+                    <ul class="options-list">
+                        <li class="option-item" data-option="a" onclick="selectOption(9, 'a')">
+                            <div class="option-radio"></div>
+                            <span>0.2 mol</span>
+                        </li>
+                        <li class="option-item" data-option="b" onclick="selectOption(9, 'b')">
+                            <div class="option-radio"></div>
+                            <span>0.1 mol</span>
+                        </li>
+                        <li class="option-item" data-option="c" onclick="selectOption(9, 'c')">
+                            <div class="option-radio"></div>
+                            <span>0.4 mol</span>
+                        </li>
+                        <li class="option-item" data-option="d" onclick="selectOption(9, 'd')">
+                            <div class="option-radio"></div>
+                            <span>0.05 mol</span>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback9"></div>
+                </div>
+
+                <!-- Question 10 -->
+                <div class="question-card" data-question="10">
+                    <span class="question-text">
+                        <span class="question-number">10</span>
+                        For the reaction 2SO<sub>2</sub> + O<sub>2</sub> ⇌ 2SO<sub>3</sub>, what is the molar ratio of SO<sub>2</sub> to O<sub>2</sub>?
+                    </span>
+                    <ul class="options-list">
+                        <li class="option-item" data-option="a" onclick="selectOption(10, 'a')">
+                            <div class="option-radio"></div>
+                            <span>1:1</span>
+                        </li>
+                        <li class="option-item" data-option="b" onclick="selectOption(10, 'b')">
+                            <div class="option-radio"></div>
+                            <span>2:1</span>
+                        </li>
+                        <li class="option-item" data-option="c" onclick="selectOption(10, 'c')">
+                            <div class="option-radio"></div>
+                            <span>1:2</span>
+                        </li>
+                        <li class="option-item" data-option="d" onclick="selectOption(10, 'd')">
+                            <div class="option-radio"></div>
+                            <span>2:2</span>
+                        </li                    </ul>
+                    <div class="feedback" id="feedback10"></div>
+                </div>
+
+                <!-- Question 11 -->
+                <div class="question-card" data-question="11">
+                    <span class="question-text">
+                        <span class="question-number">11</span>
+                        For PCl<sub>5</sub> ⇌ PCl<sub>3</sub> + Cl<sub>2</sub>, if [PCl<sub>5</sub>] = 0.25 mol·dm<sup>−3</sup>, [PCl<sub>3</sub>] = 0.125 mol·dm<sup>−3</sup>, and [Cl<sub>2</sub>] = 0.125 mol·dm<sup>−3</sup>, what is K<sub>c</sub>?
+                    </span>
+                    <ul class="options-list">
+                        <li class="option-item" data-option="a" onclick="selectOption(11, 'a')">
+                            <div class="option-radio"></div>
+                            <span>0.25</span>
+                        </li>
+                        <li class="option-item" data-option="b" onclick="selectOption(11, 'b')">
+                            <div class="option-radio"></div>
+                            <span>0.0625</span>
+                        </li>
+                        <li class="option-item" data-option="c" onclick="selectOption(11, 'c')">
+                            <div class="option-radio"></div>
+                            <span>0.125</span>
+                        </li>
+                        <li class="option-item" data-option="d" onclick="selectOption(11, 'd')">
+                            <div class="option-radio"></div>
+                            <span>0.5</span>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback11"></div>
+                </div>
+
+                <!-- Question 12 -->
+                <div class="question-card" data-question="12">
+                    <span class="question-text">
+                        <span class="question-number">12</span>
+                        In an ICE table for a reaction where products start at 0, how is the equilibrium amount of product calculated?
+                    </span>
+                    <ul class="options-list">
+                        <li class="option-item" data-option="a" onclick="selectOption(12, 'a')">
+                            <div class="option-radio"></div>
+                            <span>Initial − Change</span>
+                        </li>
+                        <li class="option-item" data-option="b" onclick="selectOption(12, 'b')">
+                            <div class="option-radio"></div>
+                            <span>Initial + Change</span>
+                        </li>
+                        <li class="option-item" data-option="c" onclick="selectOption(12, 'c')">
+                            <div class="option-radio"></div>
+                            <span>Initial × Change</span>
+                        </li>
+                        <li class="option-item" data-option="d" onclick="selectOption(12, 'd')">
+                            <div class="option-radio"></div>
+                            <span>Initial ÷ Change</span>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback12"></div>
+                </div>
+            </div>
+
+            <button class="submit-btn" onclick="submitQuiz()">Submit Answers</button>
+
+            <!-- Score Display -->
+            <div class="score-container" id="scoreContainer">
+                <div class="score-circle">
+                    <span class="score-value" id="scoreValue">0</span>
+                    <span class="score-label">out of 12</span>
+                </div>
+                <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;" id="scoreMessage">Well Done!</h3>
+                <p id="scorePercentage">You scored 0%</p>
+                <button class="sim-btn" onclick="retryQuiz()" style="margin-top: 1rem;">Try Again</button>
+            </div>
+        </div>
+
+        <!-- Lesson Navigation -->
+        <div class="lesson-nav">
+            <button class="nav-btn prev" onclick="previousLesson()">
+                ← Previous Lesson
+            </button>
+            <button class="nav-btn next" onclick="nextLesson()">
+                Next Lesson →
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 PassProof Academy. All rights reserved.</p>
+        <p style="margin-top: 0.5rem; opacity: 0.7; font-size: 0.9rem;">
+            Empowering students to achieve academic excellence.
+        </p>
+    </footer>
+
+    <script>
+        // =====================
+        // NAVIGATION HANDLING
+        // =====================
+        function toggleDropdown() {
+            const menu = document.getElementById('dropdownMenu');
+            menu.classList.toggle('active');
+        }
+
+        document.addEventListener('click', (e) => {
+            const navContainer = document.querySelector('.nav-container');
+            const menu = document.getElementById('dropdownMenu');
+            if (!navContainer.contains(e.target)) {
+                menu.classList.remove('active');
+            }
+        });
+
+        function previousLesson() {
+            saveProgress();
+            alert('Going back to Lesson 2: The Equilibrium Constant (Kc)');
+        }
+
+        function nextLesson() {
+            saveProgress();
+            alert('Proceeding to Lesson 4: Le Chatelier\'s Principle Applications (Coming Soon)');
+        }
+
+        // =====================
+        // QUIZ SYSTEM
+        // =====================
+        const correctAnswers = {
+            1: 'b',
+            2: 'b',
+            3: 'b',
+            4: 'c',
+            5: 'b',
+            6: 'b',
+            7: 'a',
+            8: 'b',
+            9: 'b',
+            10: 'b',
+            11: 'b',
+            12: 'b'
+        };
+
+        const explanations = {
+            1: 'ICE stands for Initial, Change, and Equilibrium. The "C" represents the Change in moles - moles reacted for reactants and moles formed for products.',
+            2: 'From the ratio 2SO₂ : 1O₂ : 2SO₃, if 4 mol SO₃ forms, then 2 mol O₂ is consumed (4 ÷ 2 = 2).',
+            3: 'Concentration c = n/V = 3 mol ÷ 2 dm³ = 1.5 mol·dm⁻³',
+            4: 'From the ratio 1H₂ : 1I₂ : 2HI, if 0.8 mol HI forms, then 0.4 mol H₂ reacts. Remaining H₂ = 1 - 0.4 = 0.6 mol',
+            5: 'Molar ratios from the balanced equation are used in the Change row to relate how much of each substance reacts or forms.',
+            6: 'If 0.125 mol Cl₂ forms, then 0.125 mol PCl₅ decomposes. Remaining PCl₅ = 0.375 - 0.125 = 0.25 mol. In 1 dm³, [PCl₅] = 0.25 mol·dm⁻³',
+            7: 'Products go in numerator, reactants in denominator, with coefficients as exponents: Kc = [SO₃]² / [SO₂]²[O₂]',
+            8: 'Kc = [HI]² / [H₂][I₂] = (0.8)² / (0.6)(0.6) = 0.64 / 0.36 = 1.78',
+            9: 'From the ratio 1N₂ : 1O₂ : 2NO, if 0.2 mol NO forms, then 0.1 mol N₂ reacts (0.2 ÷ 2 = 0.1).',
+            10: 'From the equation 2SO₂ + O₂ ⇌ 2SO₃, the molar ratio of SO₂ to O₂ is 2:1.',
+            11: 'Kc = [PCl₃][Cl₂] / [PCl₅] = (0.125)(0.125) / (0.25) = 0.015625 / 0.25 = 0.0625',
+            12: 'For products starting at 0, equilibrium amount = Initial + Change = 0 + moles formed = moles formed.'
+        };
+
+        let userAnswers = {};
+        let quizSubmitted = false;
+
+        function selectOption(questionNum, option) {
+            if (quizSubmitted) return;
+
+            const questionCard = document.querySelector(`[data-question="${questionNum}"]`);
+            const options = questionCard.querySelectorAll('.option-item');
+            
+            options.forEach(opt => {
+                opt.classList.remove('selected');
+                opt.querySelector('.option-radio').classList.remove('checked');
+            });
+
+            const selectedOption = questionCard.querySelector(`[data-option="${option}"]`);
+            selectedOption.classList.add('selected');
+            selectedOption.querySelector('.option-radio').classList.add('checked');
+            
+            userAnswers[questionNum] = option;
+            updateProgress();
+        }
+
+        function submitQuiz() {
+            if (Object.keys(userAnswers).length < 12) {
+                alert('Please answer all questions before submitting.');
+                return;
+            }
+
+            quizSubmitted = true;
+            let score = 0;
+
+            for (let i = 1; i <= 12; i++) {
+                const questionCard = document.querySelector(`[data-question="${i}"]`);
+                const feedback = document.getElementById(`feedback${i}`);
+                const isCorrect = userAnswers[i] === correctAnswers[i];
+
+                if (isCorrect) {
+                    score++;
+                    questionCard.classList.add('correct');
+                    feedback.className = 'feedback correct show';
+                    feedback.innerHTML = `✓ Correct! ${explanations[i]}`;
+                } else {
+                    questionCard.classList.add('incorrect');
+                    feedback.className = 'feedback incorrect show';
+                    feedback.innerHTML = `✗ Incorrect. The correct answer is ${correctAnswers[i].toUpperCase()}. ${explanations[i]}`;
+                }
+
+                const options = questionCard.querySelectorAll('.option-item');
+                options.forEach(opt => {
+                    const optValue = opt.getAttribute('data-option');
+                    if (optValue === correctAnswers[i]) {
+                        opt.classList.add('correct-answer');
+                    } else if (optValue === userAnswers[i] && !isCorrect) {
+                        opt.classList.add('wrong-answer');
+                    }
+                });
+            }
+
+            const percentage = Math.round((score / 12) * 100);
+            document.getElementById('scoreValue').textContent = score;
+            document.getElementById('scorePercentage').textContent = `You scored ${percentage}%`;
+            
+            let message = '';
+            if (percentage >= 80) {
+                message = '🌟 Excellent Work!';
+            } else if (percentage >= 60) {
+                message = '👍 Good Job!';
+            } else if (percentage >= 40) {
+                message = '📚 Keep Practicing!';
+            } else {
+                message = '💪 Review the material and try again!';
+            }
+            document.getElementById('scoreMessage').textContent = message;
+            
+            document.getElementById('scoreContainer').classList.add('show');
+            saveQuizResult(score, percentage);
+            updateProgress(100);
+            
+            document.getElementById('scoreContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function retryQuiz() {
+            quizSubmitted = false;
+            userAnswers = {};
+            
+            document.querySelectorAll('.question-card').forEach(card => {
+                card.classList.remove('correct', 'incorrect');
+            });
+            
+            document.querySelectorAll('.option-item').forEach(opt => {
+                opt.classList.remove('selected', 'correct-answer', 'wrong-answer');
+                opt.querySelector('.option-radio').classList.remove('checked');
+            });
+            
+            document.querySelectorAll('.feedback').forEach(fb => {
+                fb.classList.remove('show');
+            });
+            
+            document.getElementById('scoreContainer').classList.remove('show');
+            updateProgress();
+            
+            document.getElementById('quiz').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // =====================
+        // PROGRESS TRACKING
+        // =====================
+        function updateProgress(override = null) {
+            const answeredCount = Object.keys(userAnswers).length;
+            const progress = override !== null ? override : Math.round((answeredCount / 12) * 100);
+            document.getElementById('lessonProgress').style.width = `${progress}%`;
+            document.getElementById('progressText').textContent = `${progress}%`;
+        }
+
+        function saveProgress() {
+            const progressData = {
+                lesson: 'chemical-equilibrium-3',
+                progress: document.getElementById('progressText').textContent,
+                lastVisited: new Date().toISOString(),
+                answers: userAnswers
+            };
+            localStorage.setItem('passproofProgress_lesson3', JSON.stringify(progressData));
+        }
+
+        function saveQuizResult(score, percentage) {
+            const quizData = {
+                lesson: 'chemical-equilibrium-3',
+                score: score,
+                total: 12,
+                percentage: percentage,
+                completedAt: new Date().toISOString()
+            };
+            localStorage.setItem('passproofQuizResult_lesson3', JSON.stringify(quizData));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('passproofProgress_lesson3');
+            if (saved) {
+                const data = JSON.parse(saved);
+                if (data.lesson === 'chemical-equilibrium-3' && data.answers) {
+                    userAnswers = data.answers;
+                    Object.keys(userAnswers).forEach(q => {
+                        selectOption(parseInt(q), userAnswers[q]);
+                    });
+                }
+            }
+        }
+
+        // =====================
+        // SIMULATION 1: ICE TABLE CALCULATOR
+        // =====================
+        function calculateICE() {
+            const initH2 = parseFloat(document.getElementById('initH2').value);
+            const initI2 = parseFloat(document.getElementById('initI2').value);
+            const eqHI = parseFloat(document.getElementById('eqHI').value);
+            const volume = parseFloat(document.getElementById('volume1').value);
+            
+            if (isNaN(initH2) || isNaN(initI2) || isNaN(eqHI) || isNaN(volume)) {
+                alert('Please enter valid numbers for all fields.');
+                return;
+            }
+            
+            // Calculate changes using molar ratios (1:1:2)
+            const changeHI = eqHI; // HI formed
+            const changeH2 = changeHI / 2; // H2 reacted
+            const changeI2 = changeHI / 2; // I2 reacted
+            
+            // Check if valid
+            if (changeH2 > initH2 || changeI2 > initI2) {
+                alert('Error: More reactant consumed than initially present. Please check your values.');
+                return;
+            }
+            
+            // Calculate equilibrium moles
+            const eqH2 = initH2 - changeH2;
+            const eqI2 = initI2 - changeI2;
+            
+            // Calculate concentrations
+            const concH2 = eqH2 / volume;
+            const concI2 = eqI2 / volume;
+            const concHI = eqHI / volume;
+            
+            // Calculate Kc
+            const kc = Math.pow(concHI, 2) / (concH2 * concI2);
+            
+            // Display results
+            document.getElementById('iceStep1').innerHTML = `
+                <strong>Change:</strong> H₂ reacted = ${changeH2.toFixed(3)} mol, I₂ reacted = ${changeI2.toFixed(3)} mol, HI formed = ${changeHI.toFixed(3)} mol
+            `;
+            document.getElementById('iceStep2').innerHTML = `
+                <strong>Equilibrium (mol):</strong> [H₂] = ${eqH2.toFixed(3)}, [I₂] = ${eqI2.toFixed(3)}, [HI] = ${eqHI.toFixed(3)}
+            `;
+            document.getElementById('iceStep3').innerHTML = `
+                <strong>Concentrations (mol·dm⁻³):</strong> [H₂] = ${concH2.toFixed(3)}, [I₂] = ${concI2.toFixed(3)}, [HI] = ${concHI.toFixed(3)}
+            `;
+            document.getElementById('iceResult').innerHTML = `
+                K<sub>c</sub> = [HI]² / [H₂][I₂] = (${concHI.toFixed(3)})² / (${concH2.toFixed(3)})(${concI2.toFixed(3)}) = <strong>${kc.toFixed(3)}</strong>
+            `;
+        }
+
+        function resetICE() {
+            document.getElementById('initH2').value = '1';
+            document.getElementById('initI2').value = '1';
+            document.getElementById('eqHI').value = '0.8';
+            document.getElementById('volume1').value = '1';
+            document.getElementById('iceStep1').innerHTML = 'Click "Calculate" to see results...';
+            document.getElementById('iceStep2').innerHTML = '';
+            document.getElementById('iceStep3').innerHTML = '';
+            document.getElementById('iceResult').innerHTML = 'K<sub>c</sub> = —';
+        }
+
+        // =====================
+        // SIMULATION 2: STEP-BY-STEP SOLVER
+        // =====================
+        const reactionProblems = [
+            {
+                equation: '2SO₂(g) + O₂(g) ⇌ 2SO₃(g)',
+                problem: '7 mol SO₂ and 6 mol O₂ are placed in a 2 dm³ container at 600 K. At equilibrium, 4 mol SO₃ have formed.',
+                steps: [
+                    {
+                        title: 'Step 1: Identify molar ratios',
+                        content: 'From the equation: 2 mol SO₂ : 1 mol O₂ : 2 mol SO₃'
+                    },
+                    {
+                        title: 'Step 2: Calculate changes',
+                        content: 'If 4 mol SO₃ forms:<br>• SO₂ reacted = 4 mol (same ratio as SO₃)<br>• O₂ reacted = 4 ÷ 2 = 2 mol'
+                    },
+                    {
+                        title: 'Step 3: Calculate equilibrium moles',
+                        content: '• SO₂ at eq = 7 - 4 = 3 mol<br>• O₂ at eq = 6 - 2 = 4 mol<br>• SO₃ at eq = 4 mol'
+                    },
+                    {
+                        title: 'Step 4: Calculate concentrations (c = n/V)',
+                        content: '• [SO₂] = 3/2 = 1.5 mol·dm⁻³<br>• [O₂] = 4/2 = 2 mol·dm⁻³<br>• [SO₃] = 4/2 = 2 mol·dm⁻³'
+                    },
+                    {
+                        title: 'Step 5: Calculate Kc',
+                        content: 'K<sub>c</sub> = [SO₃]² / [SO₂]²[O₂]<br>K<sub>c</sub> = (2)² / (1.5)²(2)<br>K<sub>c</sub> = 4 / 4.5 = <strong>0.889</strong>'
+                    }
+                ]
+            },
+            {
+                equation: 'PCl₅(g) ⇌ PCl₃(g) + Cl₂(g)',
+                problem: '0.375 mol of PCl₅ is heated in a 1 dm³ container. The equilibrium mixture contains 0.125 mol of chlorine.',
+                steps: [
+                    {
+                        title: 'Step 1: Identify molar ratios',
+                        content: 'From the equation: 1 mol PCl₅ : 1 mol PCl₃ : 1 mol Cl₂'
+                    },
+                    {
+                        title: 'Step 2: Calculate changes',
+                        content: 'If 0.125 mol Cl₂ forms:<br>• PCl₅ decomposed = 0.125 mol<br>• PCl₃ formed = 0.125 mol'
+                    },
+                    {
+                        title: 'Step 3: Calculate equilibrium moles',
+                        content: '• PCl₅ at eq = 0.375 - 0.125 = 0.25 mol<br>• PCl₃ at eq = 0.125 mol<br>• Cl₂ at eq = 0.125 mol'
+                    },
+                    {
+                        title: 'Step 4: Calculate concentrations (V = 1 dm³)',
+                        content: '• [PCl₅] = 0.25 mol·dm⁻³<br>• [PCl₃] = 0.125 mol·dm⁻³<br>• [Cl₂] = 0.125 mol·dm⁻³'
+                    },
+                    {
+                        title: 'Step 5: Calculate Kc',
+                        content: 'K<sub>c</sub> = [PCl₃][Cl₂] / [PCl₅]<br>K<sub>c</sub> = (0.125)(0.125) / (0.25)<br>K<sub>c</sub> = 0.015625 / 0.25 = <strong>6.25 × 10⁻²</strong>'
+                    }
+                ]
+            },
+            {
+                equation: 'N₂(g) + O₂(g) ⇌ 2NO(g)',
+                problem: '1 mol N₂ and 1 mol O₂ are placed in a 2 dm³ container at 300 K. At equilibrium, [NO] = 0.1 mol·dm⁻³.',
+                steps: [
+                    {
+                        title: 'Step 1: Calculate moles of NO at equilibrium',
+                        content: 'n = c × V = 0.1 × 2 = 0.2 mol NO'
+                    },
+                    {
+                        title: 'Step 2: Identify molar ratios',
+                        content: 'From the equation: 1 mol N₂ : 1 mol O₂ : 2 mol NO'
+                    },
+                    {
+                        title: 'Step 3: Calculate changes',
+                        content: 'If 0.2 mol NO forms:<br>• N₂ reacted = 0.2 ÷ 2 = 0.1 mol<br>• O₂ reacted = 0.1 mol'
+                    },
+                    {
+                        title: 'Step 4: Calculate equilibrium moles and concentrations',
+                        content: '• N₂ at eq = 1 - 0.1 = 0.9 mol → [N₂] = 0.9/2 = 0.45 mol·dm⁻³<br>• O₂ at eq = 0.9 mol → [O₂] = 0.45 mol·dm⁻³<br>• [NO] = 0.1 mol·dm⁻³ (given)'
+                    },
+                    {
+                        title: 'Step 5: Calculate Kc',
+                        content: 'K<sub>c</sub> = [NO]² / [N₂][O₂]<br>K<sub>c</sub> = (0.1)² / (0.45)(0.45)<br>K<sub>c</sub> = 0.01 / 0.2025 = <strong>0.049</strong>'
+                    }
+                ]
+            },
+            {
+                equation: 'N₂(g) + 3H₂(g) ⇌ 2NH₃(g)',
+                problem: '2 mol N₂ and 6 mol H₂ are placed in a 2 dm³ container. At equilibrium, 2 mol NH₃ have formed.',
+                steps: [
+                    {
+                        title: 'Step 1: Identify molar ratios',
+                        content: 'From the equation: 1 mol N₂ : 3 mol H₂ : 2 mol NH₃'
+                    },
+                    {
+                        title: 'Step 2: Calculate changes',
+                        content: 'If 2 mol NH₃ forms:<br>• N₂ reacted = 2 ÷ 2 = 1 mol<br>• H₂ reacted = 3 × 1 = 3 mol'
+                    },
+                    {
+                        title: 'Step 3: Calculate equilibrium moles',
+                        content: '• N₂ at eq = 2 - 1 = 1 mol<br>• H₂ at eq = 6 - 3 = 3 mol<br>• NH₃ at eq = 2 mol'
+                    },
+                    {
+                        title: 'Step 4: Calculate concentrations (V = 2 dm³)',
+                        content: '• [N₂] = 1/2 = 0.5 mol·dm⁻³<br>• [H₂] = 3/2 = 1.5 mol·dm⁻³<br>• [NH₃] = 2/2 = 1 mol·dm⁻³'
+                    },
+                    {
+                        title: 'Step 5: Calculate Kc',
+                        content: 'K<sub>c</sub> = [NH₃]² / [N₂][H₂]³<br>K<sub>c</sub> = (1)² / (0.5)(1.5)³<br>K<sub>c</sub> = 1 / (0.5 × 3.375) = 1 / 1.6875 = <strong>0.593</strong>'
+                    }
+                ]
+            }
+        ];
+
+        let currentReaction = 0;
+        let currentStep = 0;
+
+        function loadReaction() {
+            currentReaction = parseInt(document.getElementById('reactionSelect').value);
+            currentStep = 0;
+            document.getElementById('problemText').textContent = reactionProblems[currentReaction].problem;
+            document.getElementById('stepByStepSolution').style.display = 'none';
+            document.getElementById('solutionSteps').innerHTML = '';
+        }
+
+        function showNextStep() {
+            const problem = reactionProblems[currentReaction];
+            
+            if (currentStep < problem.steps.length) {
+                document.getElementById('stepByStepSolution').style.display = 'block';
+                const step = problem.steps[currentStep];
+                
+                const stepDiv = document.createElement('div');
+                stepDiv.className = 'solution-step';
+                stepDiv.style.animation = 'fadeIn 0.5s ease';
+                stepDiv.innerHTML = `
+                    <span class="step-num">${currentStep + 1}</span>
+                    <strong>${step.title}</strong>
+                    <p style="margin-top: 0.5rem;">${step.content}</p>
+                `;
+                
+                document.getElementById('solutionSteps').appendChild(stepDiv);
+                currentStep++;
+                
+                stepDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                alert('All steps have been shown! Click "Start Over" to try again or select a new reaction.');
+            }
+        }
+
+        function resetStepSolver() {
+            currentStep = 0;
+            document.getElementById('stepByStepSolution').style.display = 'none';
+            document.getElementById('solutionSteps').innerHTML = '';
+        }
+
+        // =====================
+        // SIMULATION 3: MOLAR RATIO VISUALIZER
+        // =====================
+        const ratioCanvas = document.getElementById('ratioCanvas');
+        const ratioCtx = ratioCanvas.getContext('2d');
+
+        function updateRatioVisual() {
+            const productFormed = parseFloat(document.getElementById('productFormed').value);
+            document.getElementById('productValue').textContent = productFormed.toFixed(1);
+            
+            // For 2SO₂ + O₂ ⇌ 2SO₃
+            const so2Reacted = productFormed; // 2:2 ratio
+            const o2Reacted = productFormed / 2; // 2:1 ratio
+            
+            drawRatioChart(productFormed, so2Reacted, o2Reacted);
+            
+            // Update explanation
+            document.getElementById('ratioExplanation').innerHTML = `
+                <strong>Molar Ratios Applied:</strong><br>
+                If ${productFormed.toFixed(1)} mol SO₃ forms → 
+                ${so2Reacted.toFixed(1)} mol SO₂ reacts (2:2 ratio) → 
+                ${o2Reacted.toFixed(1)} mol O₂ reacts (2:1 ratio)
+            `;
+        }
+
+        function drawRatioChart(so3, so2, o2) {
+            ratioCtx.clearRect(0, 0, ratioCanvas.width, ratioCanvas.height);
+            
+            const barWidth = 100;
+            const maxHeight = 200;
+            const startY = 250;
+            const scale = maxHeight / 2;
+            
+            // Draw axes
+            ratioCtx.strokeStyle = '#333';
+            ratioCtx.lineWidth = 2;
+            ratioCtx.beginPath();
+            ratioCtx.moveTo(50, 30);
+            ratioCtx.lineTo(50, startY);
+            ratioCtx.lineTo(550, startY);
+            ratioCtx.stroke();
+            
+            // Y-axis label
+            ratioCtx.save();
+            ratioCtx.translate(20, 150);
+            ratioCtx.rotate(-Math.PI / 2);
+            ratioCtx.fillStyle = '#333';
+            ratioCtx.font = '14px Segoe UI';
+            ratioCtx.textAlign = 'center';
+            ratioCtx.fillText('Moles Changed', 0, 0);
+            ratioCtx.restore();
+            
+            // Draw bars
+            const bars = [
+                { x: 100, value: so2, label: 'SO₂ Reacted', color: '#f44336' },
+                { x: 250, value: o2, label: 'O₂ Reacted', color: '#ff9800' },
+                { x: 400, value: so3, label: 'SO₃ Formed', color: '#4caf50' }
+            ];
+            
+            bars.forEach(bar => {
+                const height = bar.value * scale;
+                
+                // Draw bar
+                ratioCtx.fillStyle = bar.color;
+                ratioCtx.fillRect(bar.x, startY - height, barWidth, height);
+                
+                // 3D effect
+                ratioCtx.fillStyle = bar.color + '80';
+                ratioCtx.beginPath();
+                ratioCtx.moveTo(bar.x + barWidth, startY - height);
+                ratioCtx.lineTo(bar.x + barWidth + 15, startY - height - 10);
+                ratioCtx.lineTo(bar.x + barWidth + 15, startY - 10);
+                ratioCtx.lineTo(bar.x + barWidth, startY);
+                ratioCtx.closePath();
+                ratioCtx.fill();
+                
+                // Value label
+                ratioCtx.fillStyle = '#fff';
+                ratioCtx.font = 'bold 16px Segoe UI';
+                ratioCtx.textAlign = 'center';
+                if (height > 20) {
+                    ratioCtx.fillText(bar.value.toFixed(1), bar.x + barWidth/2, startY - height/2 + 5);
+                }
+                
+                // Bar label
+                ratioCtx.fillStyle = '#333';
+                ratioCtx.font = '12px Segoe UI';
+                ratioCtx.fillText(bar.label, bar.x + barWidth/2, startY + 20);
+            });
+            
+            // Title
+            ratioCtx.fillStyle = '#1a73e8';
+            ratioCtx.font = 'bold 14px Segoe UI';
+            ratioCtx.textAlign = 'center';
+            ratioCtx.fillText('2SO₂ + O₂ ⇌ 2SO₃', ratioCanvas.width/2, 20);
+        }
+
+        // =====================
+        // SIMULATION 4: PRACTICE PROBLEM GENERATOR
+        // =====================
+        let currentPractice = null;
+
+        const practiceProblems = [
+            {
+                equation: 'H₂(g) + I₂(g) ⇌ 2HI(g)',
+                initReactant1: 2,
+                initReactant2: 2,
+                productFormed: 1.6,
+                volume: 1,
+                species: ['H₂', 'I₂', 'HI'],
+                coefficients: [1, 1, 2],
+                solve: function() {
+                    const change = this.productFormed / 2;
+                    const eqR1 = this.initReactant1 - change;
+                    const eqR2 = this.initReactant2 - change;
+                    const concR1 = eqR1 / this.volume;
+                    const concR2 = eqR2 / this.volume;
+                    const concP = this.productFormed / this.volume;
+                    return Math.pow(concP, 2) / (concR1 * concR2);
+                }
+            },
+            {
+                equation: 'PCl₅(g) ⇌ PCl₃(g) + Cl₂(g)',
+                initReactant1: 0.5,
+                productFormed: 0.2,
+                volume: 1,
+                species: ['PCl₅', 'PCl₃', 'Cl₂'],
+                coefficients: [1, 1, 1],
+                solve: function() {
+                    const eqPCl5 = this.initReactant1 - this.productFormed;
+                    const concPCl5 = eqPCl5 / this.volume;
+                    const concPCl3 = this.productFormed / this.volume;
+                    const concCl2 = this.productFormed / this.volume;
+                    return (concPCl3 * concCl2) / concPCl5;
+                }
+            },
+            {
+                equation: 'N₂(g) + O₂(g) ⇌ 2NO(g)',
+                initReactant1: 1.5,
+                initReactant2: 1.5,
+                productFormed: 0.4,
+                volume: 2,
+                species: ['N₂', 'O₂', 'NO'],
+                coefficients: [1, 1, 2],
+                solve: function() {
+                    const change = this.productFormed / 2;
+                    const eqN2 = this.initReactant1 - change;
+                    const eqO2 = this.initReactant2 - change;
+                    const concN2 = eqN2 / this.volume;
+                    const concO2 = eqO2 / this.volume;
+                    const concNO = this.productFormed / this.volume;
+                    return Math.pow(concNO, 2) / (concN2 * concO2);
+                }
+            }
+        ];
+
+        function generatePractice() {
+            const index = Math.floor(Math.random() * practiceProblems.length);
+            currentPractice = {...practiceProblems[index]};
+            
+            // Randomize values slightly
+            currentPractice.initReactant1 = (Math.random() * 1.5 + 0.5).toFixed(2);
+            if (currentPractice.initReactant2 !== undefined) {
+                currentPractice.initReactant2 = (Math.random() * 1.5 + 0.5).toFixed(2);
+            }
+            currentPractice.productFormed = (Math.random() * 0.8 + 0.2).toFixed(2);
+            currentPractice.volume = Math.ceil(Math.random() * 2);
+            
+            // Update solve function with new values
+            currentPractice.correctAnswer = practiceProblems[index].solve.call(currentPractice);
+            
+            document.getElementById('practiceEquation').innerHTML = currentPractice.equation;
+            
+            let problemText = '';
+            if (currentPractice.initReactant2 !== undefined) {
+                problemText = `${currentPractice.initReactant1} mol of ${currentPractice.species[0]} and ${currentPractice.initReactant2} mol of ${currentPractice.species[1]} are placed in a ${currentPractice.volume} dm³ container. At equilibrium, ${currentPractice.productFormed} mol of ${currentPractice.species[2]} have formed. Calculate K<sub>c</sub>.`;
+            } else {
+                problemText = `${currentPractice.initReactant1} mol of ${currentPractice.species[0]} is placed in a ${currentPractice.volume} dm³ container. At equilibrium, ${currentPractice.productFormed} mol of ${currentPractice.species[1]} have formed. Calculate K<sub>c</sub>.`;
+            }
+            
+            document.getElementById('practiceProblemText').innerHTML = problemText;
+            document.getElementById('practiceAnswer').value = '';
+            document.getElementById('practiceFeedback').style.display = 'none';
+        }
+
+        function checkPracticeAnswer() {
+            if (!currentPractice) {
+                alert('Please generate a problem first!');
+                return;
+            }
+            
+            const userAnswer = parseFloat(document.getElementById('practiceAnswer').value);
+            const feedback = document.getElementById('practiceFeedback');
+            
+            if (isNaN(userAnswer)) {
+                alert('Please enter a valid number.');
+                return;
+            }
+            
+            const tolerance = currentPractice.correctAnswer * 0.1; // 10% tolerance
+            const isCorrect = Math.abs(userAnswer - currentPractice.correctAnswer) <= tolerance;
+            
+            feedback.style.display = 'block';
+            
+            if (isCorrect) {
+                feedback.style.background = '#e8f5e9';
+                feedback.style.border = '1px solid #4caf50';
+                feedback.style.color = '#2e7d32';
+                feedback.innerHTML = `✓ Correct! K<sub>c</sub> = ${currentPractice.correctAnswer.toFixed(3)}`;
+            } else {
+                feedback.style.background = '#ffebee';
+                feedback.style.border = '1px solid #f44336';
+                feedback.style.color = '#c62828';
+                feedback.innerHTML = `✗ Not quite. Your answer: ${userAnswer.toFixed(3)}. The correct answer is K<sub>c</sub> = ${currentPractice.correctAnswer.toFixed(3)}`;
+            }
+        }
+
+        function showPracticeSolution() {
+            if (!currentPractice) {
+                alert('Please generate a problem first!');
+                return;
+            }
+            
+            const feedback = document.getElementById('practiceFeedback');
+            feedback.style.display = 'block';
+            feedback.style.background = '#e3f2fd';
+            feedback.style.border = '1px solid #1a73e8';
+            feedback.style.color = '#333';
+            
+            feedback.innerHTML = `
+                <strong>Solution:</strong><br>
+                K<sub>c</sub> = ${currentPractice.correctAnswer.toFixed(3)}<br>
+                <small>Use the ICE table method to verify this answer.</small>
+            `;
+        }
+
+        // =====================
+        // INITIALIZATION
+        // =====================
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize simulations
+            loadReaction();
+            updateRatioVisual();
+            
+            // Load saved progress
+            loadProgress();
+            
+            // Smooth scroll for navigation links
+            document.querySelectorAll('.dropdown-menu a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href').substring(1);
+                    const target = document.getElementById(targetId);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        document.getElementById('dropdownMenu').classList.remove('active');
+                    }
+                });
+            });
+            
+            // Card animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+            
+            setTimeout(() => {
+                document.querySelectorAll('.card').forEach((card, index) => {
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, index * 100);
+                });
+            }, 100);
+        });
+
+        // Save progress when leaving page
+        window.addEventListener('beforeunload', saveProgress);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                previousLesson();
+            } else if (e.key === 'ArrowRight') {
+                nextLesson();
+            }
+        });
+    </script>
+</body>
+</html>

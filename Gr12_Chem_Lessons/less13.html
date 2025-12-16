@@ -1,0 +1,2195 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemical Equilibrium - Lesson 1 | PassProof Academy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1a73e8;
+            --primary-dark: #0d47a1;
+            --primary-light: #e3f2fd;
+            --white: #ffffff;
+            --gray-light: #f5f7fa;
+            --gray: #6c757d;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            --shadow-3d: 0 8px 25px rgba(0, 0, 0, 0.15);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e3f2fd 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-3d);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-container {
+            position: relative;
+        }
+
+        .nav-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .nav-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 120%;
+            right: 0;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-3d);
+            min-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+        }
+
+        .dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: #333;
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--primary-light);
+            color: var(--primary-blue);
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-3d);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transform: translateY(0);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
+        }
+
+        /* Subject & Grade Banner */
+        .subject-banner {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+
+        .subject-banner h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .subject-banner .meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .meta-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header h2 {
+            color: var(--primary-dark);
+            font-size: 1.5rem;
+        }
+
+        /* Objectives List */
+        .objectives-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .objectives-list li {
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            background: var(--primary-light);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-blue);
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            transition: var(--transition);
+        }
+
+        .objectives-list li:hover {
+            transform: translateX(5px);
+            background: #d4e9fc;
+        }
+
+        .objectives-list .check {
+            color: var(--primary-blue);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Concept Cards */
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .concept-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f0f7ff 100%);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            border: 1px solid #e0e0e0;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .concept-card:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-3d);
+        }
+
+        .concept-card h3 {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        /* Chemical Equations */
+        .equation-box {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            color: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            text-align: center;
+            font-size: 1.3rem;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            box-shadow: var(--shadow-3d);
+        }
+
+        /* Simulation Container */
+        .simulation-container {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e8f4fd 100%);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--primary-light);
+        }
+
+        .simulation-canvas {
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 1rem 0;
+        }
+
+        .simulation-controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .sim-btn {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .sim-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-3d);
+        }
+
+        .sim-btn.secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+        }
+
+        /* Graph Display */
+        .graph-container {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        #equilibriumGraph {
+            max-width: 100%;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        /* Quiz Section */
+        .quiz-section {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+        }
+
+        .question-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid #e0e0e0;
+            transition: var(--transition);
+        }
+
+        .question-card.correct {
+            border-color: #4caf50;
+            background: #e8f5e9;
+        }
+
+        .question-card.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: var(--primary-blue);
+            color: var(--white);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: var(--gray-light);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .option-item:hover {
+            background: var(--primary-light);
+            transform: translateX(5px);
+        }
+
+        .option-item.selected {
+            background: var(--primary-light);
+            border: 2px solid var(--primary-blue);
+        }
+
+        .option-item.correct-answer {
+            background: #c8e6c9;
+            border: 2px solid #4caf50;
+        }
+
+        .option-item.wrong-answer {
+            background: #ffcdd2;
+            border: 2px solid #f44336;
+        }
+
+        .option-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .option-radio.checked {
+            border-color: var(--primary-blue);
+            background: var(--primary-blue);
+        }
+
+        .option-radio.checked::after {
+            content: '✓';
+            color: var(--white);
+            font-size: 12px;
+        }
+
+        .feedback {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .feedback.correct {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #4caf50;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #f44336;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+            color: var(--white);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: block;
+            margin: 2rem auto;
+            transition: var(--transition);
+            box-shadow: var(--shadow-3d);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4);
+        }
+
+        /* Score Display */
+        .score-container {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 2rem;
+            border-radius: var(--radius);
+            text-align: center;
+            margin: 2rem 0;
+            display: none;
+            animation: scaleIn 0.5s ease;
+        }
+
+        .score-container.show {
+            display: block;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 5px solid var(--white);
+        }
+
+        .score-value {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .score-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Lesson Navigation */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            flex: 1;
+            min-width: 150px;
+            max-width: 200px;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-3d);
+        }
+
+        .nav-btn.prev {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: var(--gray-light);
+            border-radius: 50px;
+            height: 10px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-blue) 0%, #4caf50 100%);
+            border-radius: 50px;
+            transition: width 0.5s ease;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #0a2540 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            opacity: 0.9;
+        }
+
+        /* Info Boxes */
+        .info-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-left: 5px solid var(--primary-blue);
+            padding: 1.5rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 1.5rem 0;
+        }
+
+        .info-box.warning {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left-color: #ff9800;
+        }
+
+        .info-box.success {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-left-color: #4caf50;
+        }
+
+        /* Worked Example */
+        .worked-example {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid #9c27b0;
+        }
+
+        .worked-example h3 {
+            color: #7b1fa2;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .subject-banner h1 {
+                font-size: 1.8rem;
+            }
+
+            .subject-banner .meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .concept-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .lesson-nav {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                max-width: 100%;
+            }
+
+            .score-circle {
+                width: 120px;
+                height: 120px;
+            }
+
+            .score-value {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .slide-up {
+            animation: slideUp 0.5s ease forwards;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Particle Animation for Simulation */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            border: 1px solid #e0e0e0;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: var(--primary-light);
+        }
+
+        /* Rate Info Display */
+        .rate-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .rate-box {
+            background: var(--white);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .rate-box .value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+        }
+
+        .rate-box .label {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="header-content">
+            <div class="logo">🎓 PassProof Academy</div>
+            <nav class="nav-container">
+                <button class="nav-toggle" onclick="toggleDropdown()">
+                    <span>☰</span> Menu
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="#objectives">📎 Learning Objectives</a>
+                    <a href="#overview">📖 Overview</a>
+                    <a href="#concepts">💡 Main Concepts</a>
+                    <a href="#simulation">🔬 Simulations</a>
+                    <a href="#quiz">✍️ Quiz</a>
+                    <a href="#progress">📊 My Progress</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Subject & Grade Banner -->
+        <div class="subject-banner slide-up">
+            <h1>Physical Sciences</h1>
+            <div class="meta">
+                <span class="meta-item">📚 Grade 12</span>
+                <span class="meta-item">📅 Week 16</span>
+                <span class="meta-item">🧪 Term 2</span>
+            </div>
+        </div>
+
+        <!-- Topic & Lesson Info -->
+        <div class="card fade-in">
+            <div class="section-header">
+                <div class="section-icon">🔬</div>
+                <div>
+                    <h2>Chemical Equilibrium</h2>
+                    <p style="color: var(--gray);">Lesson 1 of Chemical Equilibrium Series</p>
+                </div>
+            </div>
+            <h3 style="color: var(--primary-blue); font-size: 1.4rem; margin-top: 1rem;">
+                Introduction to Chemical Equilibrium
+            </h3>
+            <p style="margin-top: 0.5rem; color: var(--gray);">
+                Understanding open and closed systems, reversible reactions, and dynamic equilibrium
+            </p>
+            
+            <!-- Progress Bar -->
+            <div class="progress-container" style="margin-top: 1.5rem;">
+                <div class="progress-bar" id="lessonProgress" style="width: 0%"></div>
+            </div>
+            <p style="text-align: center; color: var(--gray); font-size: 0.9rem;">
+                Lesson Progress: <span id="progressText">0%</span>
+            </p>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="card fade-in" id="objectives">
+            <div class="section-header">
+                <div class="section-icon">🎯</div>
+                <h2>Learning Objectives</h2>
+            </div>
+            <p style="margin-bottom: 1rem; color: var(--gray);">By the end of this lesson, you will be able to:</p>
+            <ul class="objectives-list">
+                <li>
+                    <span class="check">✓</span>
+                    <span>Understand the meaning of chemical equilibrium and the factors affecting it</span>
+                </li>
+                <li>
+                    <span class="check">✓</span>
+                    <span>Explain the difference between open and closed systems</span>
+                </li>
+                <li>
+                    <span class="check">✓</span>
+                    <span>Define and describe reversible reactions</span>
+                </li>
+                <li>
+                    <span class="check">✓</span>
+                    <span>Explain what is meant by dynamic equilibrium</span>
+                </li>
+                <li>
+                    <span class="check">✓</span>
+                    <span>List the factors which influence the position of an equilibrium</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Overview -->
+        <div class="card fade-in" id="overview">
+            <div class="section-header">
+                <div class="section-icon">📖</div>
+                <h2>Lesson Overview</h2>
+            </div>
+            <p>
+                Chemical equilibrium is a fundamental concept in chemistry that describes the state of a reversible 
+                reaction when the rates of the forward and reverse reactions are equal. In this lesson, we will explore 
+                the foundational concepts necessary to understand equilibrium, including the difference between open and 
+                closed systems, the nature of reversible reactions, and what it means for a system to be in dynamic equilibrium.
+            </p>
+            
+            <div class="info-box" style="margin-top: 1.5rem;">
+                <strong>📝 Pre-Knowledge Required:</strong>
+                <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                    <li>Rates of reaction</li>
+                    <li>Factors affecting reaction rates (surface area, concentration, pressure, temperature, catalysts)</li>
+                    <li>Nature of reactants</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Concepts -->
+        <div class="card fade-in" id="concepts">
+            <div class="section-header">
+                <div class="section-icon">💡</div>
+                <h2>Main Concepts & Principles</h2>
+            </div>
+
+            <!-- Open and Closed Systems -->
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <h3>🔓 Open System</h3>
+                    <p>A system where <strong>matter can enter or leave</strong> the system freely.</p>
+                    <p style="margin-top: 0.5rem; color: var(--gray); font-size: 0.9rem;">
+                        Example: A pot of boiling water without a lid - water vapor escapes into the atmosphere.
+                    </p>
+                </div>
+                <div class="concept-card">
+                    <h3>🔒 Closed System</h3>
+                    <p>A system that is <strong>covered</strong> - no particles can enter or leave the system.</p>
+                    <p style="margin-top: 0.5rem; color: var(--gray); font-size: 0.9rem;">
+                        Example: A sealed container with reactants - all products remain inside.
+                    </p>
+                </div>
+            </div>
+
+            <div class="info-box warning" style="margin-top: 1.5rem;">
+                <strong>⚠️ Important:</strong> For chemical equilibrium to be established and maintained, 
+                the reaction must occur in a <strong>closed system</strong>. If it's an open system, 
+                gaseous products may escape, preventing equilibrium from being reached.
+            </div>
+
+            <!-- Reversible Reactions -->
+            <h3 style="color: var(--primary-dark); margin-top: 2rem; margin-bottom: 1rem;">
+                ⟷ Reversible Reactions
+            </h3>
+            <p>
+                Many chemical reactions are <strong>reversible</strong> in closed systems. Reversible reactions 
+                do not go to completion - they occur in <strong>both the forward and reverse directions</strong>.
+            </p>
+            
+            <div class="equation-box">
+                H₂(g) + I₂(g) ⇌ 2HI(g)
+            </div>
+            
+            <ul style="margin: 1rem 0 1rem 1.5rem;">
+                <li>The double arrow (⇌) indicates a reversible reaction</li>
+                <li>Reactants form products (forward reaction)</li>
+                <li>Products react to reform the original reactants (reverse reaction)</li>
+                <li>Hydrogen iodide (HI) is not very stable and dissociates back into hydrogen and iodine</li>
+            </ul>
+
+            <!-- Static vs Dynamic Equilibrium -->
+            <h3 style="color: var(--primary-dark); margin-top: 2rem; margin-bottom: 1rem;">
+                ⚖️ Types of Equilibrium
+            </h3>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Static Equilibrium</th>
+                    <th>Dynamic Equilibrium</th>
+                </tr>
+                <tr>
+                    <td>Reaction stops completely</td>
+                    <td>Both forward and reverse reactions continue</td>
+                </tr>
+                <tr>
+                    <td>No further change occurs</td>
+                    <td>Changes occur, but at equal rates</td>
+                </tr>
+                <tr>
+                    <td>No molecular activity</td>
+                    <td>Constant molecular activity</td>
+                </tr>
+                <tr>
+                    <td>Example: A book on a table</td>
+                    <td>Example: Evaporation-condensation equilibrium</td>
+                </tr>
+            </table>
+
+            <!-- Dynamic Equilibrium -->
+            <h3 style="color: var(--primary-dark); margin-top: 2rem; margin-bottom: 1rem;">
+                🔄 Dynamic Equilibrium
+            </h3>
+            
+            <div class="info-box success">
+                <strong>Definition:</strong> Dynamic equilibrium occurs when two opposing reactions happen 
+                <strong>simultaneously</strong> and at the <strong>same rate</strong>, resulting in no 
+                visible or net change in the system.
+            </div>
+
+            <h4 style="margin-top: 1.5rem; color: var(--primary-blue);">Dynamic Phase Equilibrium Example:</h4>
+            
+            <div class="equation-box">
+                H₂O(l) ⇌ H₂O(g)
+            </div>
+            
+            <ul style="margin: 1rem 0 1rem 1.5rem;">
+                <li>Rate of evaporation = Rate of condensation</li>
+                <li>The equilibrium is represented by ⇌</li>
+                <li>No net change in the amount of liquid or vapor</li>
+            </ul>
+
+            <!-- Factors Affecting Equilibrium -->
+            <h3 style="color: var(--primary-dark); margin-top: 2rem; margin-bottom: 1rem;">
+                📋 Factors Affecting the Position of Equilibrium
+            </h3>
+            
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <h3>🌡️ Temperature</h3>
+                    <p>Changes in temperature affect the equilibrium position by favoring either the endothermic or exothermic reaction.</p>
+                </div>
+                <div class="concept-card">
+                    <h3>📊 Concentration</h3>
+                    <p>Changing the concentration of reactants or products shifts the equilibrium to counteract the change.</p>
+                </div>
+                <div class="concept-card">
+                    <h3>💨 Pressure</h3>
+                    <p>For reactions involving gases, changing pressure affects the equilibrium position based on moles of gas.</p>
+                </div>
+                <div class="concept-card">
+                    <h3>⚗️ Catalyst</h3>
+                    <p>A catalyst speeds up both forward and reverse reactions equally but does not change the equilibrium position.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Worked Example -->
+        <div class="worked-example">
+            <h3>📝 Worked Example: Sodium Chloride Equilibrium</h3>
+            <p style="margin-bottom: 1rem;">
+                A saturated solution of sodium chloride in water is prepared. NaCl is dissolved in water until 
+                a small amount remains at the bottom. The following dynamic equilibrium applies:
+            </p>
+            
+            <div class="equation-box" style="background: linear-gradient(135deg, #7b1fa2 0%, #9c27b0 100%);">
+                NaCl(aq) ⇌ Na⁺(aq) + Cl⁻(aq)
+            </div>
+
+            <div style="margin-top: 1.5rem;">
+                <p><strong>Q1: What is the meaning of the double arrows in the reaction?</strong></p>
+                <p style="color: #2e7d32; margin-left: 1rem;">
+                    ✓ The double arrow indicates that dynamic equilibrium has been reached.
+                </p>
+            </div>
+
+            <div style="margin-top: 1rem;">
+                <p><strong>Q2: Explain what is meant by "dynamic equilibrium"?</strong></p>
+                <p style="color: #2e7d32; margin-left: 1rem;">
+                    ✓ Two opposing reactions happen simultaneously and at the same rate, thus equally so fast 
+                    that no external changes can be noticed.
+                </p>
+            </div>
+
+            <div style="margin-top: 1rem;">
+                <p><strong>Q3: Compare the concentration of sodium ion and chloride ion at equilibrium.</strong></p>
+                <p style="color: #2e7d32; margin-left: 1rem;">
+                    ✓ [Na⁺] = [Cl⁻] (They are equal in concentration)
+                </p>
+            </div>
+
+            <div style="margin-top: 1rem;">
+                <p><strong>Q4: How do you know equilibrium has been reached?</strong></p>
+                <p style="color: #2e7d32; margin-left: 1rem;">
+                    ✓ The amount of NaCl not dissolved at the bottom remains the same (constant).
+                </p>
+            </div>
+        </div>
+
+        <!-- Interactive Simulations -->
+        <div class="card fade-in" id="simulation">
+            <div class="section-header">
+                <div class="section-icon">🔬</div>
+                <h2>Interactive Simulations</h2>
+            </div>
+
+            <!-- Simulation 1: Dynamic Equilibrium Particle Simulation -->
+            <div class="simulation-container">
+                <h3 style="text-align: center; color: var(--primary-dark); margin-bottom: 1rem;">
+                    Simulation 1: Dynamic Equilibrium - Particle Movement
+                </h3>
+                <p style="text-align: center; color: var(--gray); margin-bottom: 1rem;">
+                    Watch how particles behave in a reversible reaction. Blue particles represent reactants, 
+                    and orange particles represent products.
+                </p>
+                
+                <canvas id="particleCanvas" class="simulation-canvas" width="600" height="300"></canvas>
+                
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #1a73e8;"></div>
+                        <span>Reactants (A + B)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #ff9800;"></div>
+                        <span>Products (C)</span>
+                    </div>
+                </div>
+                
+                <div class="rate-display">
+                    <div class="rate-box">
+                        <div class="value" id="forwardRate">0</div>
+                        <div class="label">Forward Rate</div>
+                    </div>
+                    <div class="rate-box">
+                        <div class="value" id="reverseRate">0</div>
+                        <div class="label">Reverse Rate</div>
+                    </div>
+                    <div class="rate-box">
+                        <div class="value" id="equilibriumStatus">Not at Equilibrium</div>
+                        <div class="label">Status</div>
+                    </div>
+                </div>
+                
+                <div class="simulation-controls">
+                    <button class="sim-btn" onclick="startParticleSimulation()">▶ Start Simulation</button>
+                    <button class="sim-btn secondary" onclick="resetParticleSimulation()">↺ Reset</button>
+                </div>
+            </div>
+
+            <!-- Simulation 2: Reaction Rate Graph -->
+            <div class="simulation-container">
+                <h3 style="text-align: center; color: var(--primary-dark); margin-bottom: 1rem;">
+                    Simulation 2: Reaction Rate vs Time Graph
+                </h3>
+                <p style="text-align: center; color: var(--gray); margin-bottom: 1rem;">
+                    Observe how the forward and reverse reaction rates change over time until equilibrium is reached.
+                </p>
+                
+                <div class="graph-container">
+                    <canvas id="equilibriumGraph" width="600" height="350"></canvas>
+                </div>
+                
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #1a73e8;"></div>
+                        <span>Forward Reaction Rate</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #f44336;"></div>
+                        <span>Reverse Reaction Rate</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #4caf50;"></div>
+                        <span>Equilibrium Point</span>
+                    </div>
+                </div>
+                
+                <div class="simulation-controls">
+                    <button class="sim-btn" onclick="startGraphSimulation()">▶ Animate Graph</button>
+                    <button class="sim-btn secondary" onclick="resetGraphSimulation()">↺ Reset</button>
+                </div>
+            </div>
+
+            <!-- Simulation 3: Open vs Closed System -->
+            <div class="simulation-container">
+                <h3 style="text-align: center; color: var(--primary-dark); margin-bottom: 1rem;">
+                    Simulation 3: Open vs Closed System Comparison
+                </h3>
+                <p style="text-align: center; color: var(--gray); margin-bottom: 1rem;">
+                    Compare how particles behave in open and closed systems. Notice that equilibrium can only 
+                    be reached in a closed system.
+                </p>
+                
+                <canvas id="systemCanvas" class="simulation-canvas" width="600" height="300"></canvas>
+                
+                <div class="rate-display">
+                    <div class="rate-box">
+                        <div class="value" id="openParticles">10</div>
+                        <div class="label">Open System Particles</div>
+                    </div>
+                    <div class="rate-box">
+                        <div class="value" id="closedParticles">10</div>
+                        <div class="label">Closed System Particles</div>
+                    </div>
+                </div>
+                
+                <div class="simulation-controls">
+                    <button class="sim-btn" onclick="startSystemSimulation()">▶ Start Comparison</button>
+                    <button class="sim-btn secondary" onclick="resetSystemSimulation()">↺ Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="card quiz-section fade-in" id="quiz">
+            <div class="section-header">
+                <div class="section-icon">✍️</div>
+                <h2>End of Lesson Quiz</h2>
+            </div>
+            <p style="color: var(--gray); margin-bottom: 2rem;">
+                Test your understanding of chemical equilibrium concepts. Select the best answer for each question.
+            </p>
+
+            <div id="quizContainer">
+                <!-- Question 1 -->
+                <div class="question-card" data-question="1">
+                    <span class="question-number">1</span>
+                    <span class="question-text">What defines a closed system?</span>
+                    <ul class="options-list">
+                        <li class="option-item" data-option="a" onclick="selectOption(1, 'a')">
+                            <div class="option-radio"></div>
+                            <span>A system where energy can enter or leave</span>
+                        </li>
+                        <li class="option-item" data-option="b" onclick="selectOption(1, 'b')">
+                            <div class="option-radio"></div>
+                            <span>A system where no particles can enter or leave</span>
+                        </li>
+                        <li class="option-item" data-option="c" onclick="selectOption(1, 'c')">
+                            <div class="option-radio"></div>
+                            <span>A system where reactions cannot occur</span>
+                        </li>
+                        <li class="option-item" data-option="d" onclick="selectOption(1, 'd')">
+                            <div class="option-radio"></div>
+                            <span>A system that is at absolute zero temperature</span>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback1"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question-card" data-question="2">
+                    <span class="question-number">2</span>
+                    <span class="question-text">What does the symbol ⇌ represent in a chemical equation?</span>
+                    <ul class="options-list">
+                        <li class="option-item" data-option="a" onclick="selectOption(2, 'a')">
+                            <div class="option-radio"></div>
+                            <span>The reaction is complete</span>
+                        </li>
+                        <li class="option-item" data-option="b" onclick="selectOption(2, 'b')">
+                            <div class="option-radio"></div>
+                            <span>The reaction is irreversible</span>
+                        </li>
+                        <li class="option-item" data-option="c" onclick="selectOption(2, 'c')">
+                            <div class="option-radio"></div>
+                            <span>The reaction is reversible and can reach equilibrium</span>
+                        </li>
+                        <li class="option-item" data-option="d" onclick="selectOption(2, 'd')">
+                            <div class="option-radio"></div>
+                            <span>The reaction requires a catalyst</span>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback2"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question-card" data-question="3">
+                    <span class="question-number">3</span>
+                    <span class="question-text">At dynamic equilibrium, which statement is TRUE?</span>
+                    <ul class="options-list">
+                        <li class="option-item" data-option="a" onclick="selectOption(3, 'a')">
+                            <div class="option-radio"></div>
+                            <span>All reactions have stopped</span>
+                        </li>
+                        <li class="option-item" data-option="b" onclick="selectOption(3, 'b')">
+                            <div class="option-radio"></div>
+                            <span>The rate of the forward reaction equals the rate of the reverse reaction</span>
+                        </li>
+                        <li class="option-item" data-option="c" onclick="selectOption(3, 'c')">
+                            <div class="option-radio"></div>
+                            <span>Only the forward reaction is occurring</span>
+                        </li>
+                        <li class="option-item" data-option="d" onclick="selectOption(3, 'd')">
+                            <div class="option-radio"></div>
+                            <span>The concentration of products is always greater than reactants</span>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback3"></div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="question-card" data-question="4">
+                    <span class="question-number">4</span>
+                    <span class="question-text">Which of the following is NOT a factor that affects the position of equilibrium?</span>
+                    <ul class="options-list">
+                        <li class="option-item" data-option="a" onclick="selectOption(4, 'a')">
+                            <div class="option-radio"></div>
+                            <span>Temperature</span>
+                        </li>
+                        <li class="option-item" data-option="b" onclick="selectOption(4, 'b')">
+                            <div class="option-radio"></div>
+                            <span>The presence of a catalyst</span>
+                        </li>
+                        <li class="option-item" data-option="c" onclick="selectOption(4, 'c')">
+                            <div class="option-radio"></div>
+                            <span>Concentration of reactants or products</span>
+                        </li>
+                        <li class="option-item" data-option="d" onclick="selectOption(4, 'd')">
+                            <div class="option-radio"></div>
+                            <span>Pressure (for gaseous reactions)</span>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback4"></div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="question-card" data-question="5">
+                    <span class="question-number">5</span>
+                    <span class="question-text">In the reaction H₂(g) + I₂(g) ⇌ 2HI(g), what happens to HI molecules?</span>
+                    <ul class="options-list">
+                        <li class="option-item" data-option="a" onclick="selectOption(5, 'a')">
+                            <div class="option-radio"></div>
+                            <span>They remain stable forever</span>
+                        </li>
+                        <li class="option-item" data-option="b" onclick="selectOption(5, 'b')">
+                            <div class="option-radio"></div>
+                            <span>They dissociate back into H₂ and I₂</span>
+                        </li>
+                        <li class="option-item" data-option="c" onclick="selectOption(5, 'c')">
+                            <div class="option-radio"></div>
+                            <span>They escape from the system</span>
+                        </li>
+                        <li class="option-item" data-option="d" onclick="selectOption(5, 'd')">
+                            <div class="option-radio"></div>
+                            <span>They combine to form H₂I₂</span>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback5"></div>
+                </div>
+
+                <!-- Question 6 -->
+                <div class="question-card" data-question="6">
+                    <span class="question-number">6</span>
+                    <span class="question-text">Why must the reaction NH₄Cl(g) ⇌ NH₃(g) + HCl(g) occur in a closed system?</span>
+                    <ul class="options-list">
+                        <li class="option-item" data-option="a" onclick="selectOption(6, 'a')">
+                            <div class="option-radio"></div>
+                            <span>To prevent the solid from melting</span>
+                        </li>
+                        <li class="option-item" data-option="b" onclick="selectOption(6, 'b')">
+                            <div class="option-radio"></div>
+                            <span>To prevent gaseous products from escaping and allow equilibrium to be reached</span>
+                        </li>
+                        <li class="option-item" data-option="c" onclick="selectOption(6, 'c')">
+                            <div class="option-radio"></div>
+                            <span>To make the reaction go faster</span>
+                        </li>
+                        <li class="option-item" data-option="d" onclick="selectOption(6, 'd')">
+                            <div class="option-radio"></div>
+                            <span>To increase the temperature</span>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback6"></div>
+                </div>
+
+                <!-- Question 7 -->
+                <div class="question-card" data-question="7">
+                    <span class="question-number">7</span>
+                    <span class="question-text">What is the difference between static equilibrium and dynamic equilibrium?</span>
+                    <ul class="options-list">
+                        <li class="option-item" data-option="a" onclick="selectOption(7, 'a')">
+                            <div class="option-radio"></div>
+                            <span>In static equilibrium reactions continue; in dynamic they stop</span>
+                        </li>
+                        <li class="option-item" data-option="b" onclick="selectOption(7, 'b')">
+                            <div class="option-radio"></div>
+                            <span>In static equilibrium all reactions stop; in dynamic equilibrium forward and reverse reactions continue at equal rates</span>
+                        </li>
+                        <li class="option-item" data-option="c" onclick="selectOption(7, 'c')">
+                            <div class="option-radio"></div>
+                            <span>There is no difference between them</span>
+                        </li>
+                        <li class="option-item" data-option="d" onclick="selectOption(7, 'd')">
+                            <div class="option-radio"></div>
+                            <span>Static equilibrium only occurs in liquids</span>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback7"></div>
+                </div>
+
+                <!-- Question 8 -->
+                <div class="question-card" data-question="8">
+                    <span class="question-number">8</span>
+                    <span class="question-text">For the equilibrium H₂O(l) ⇌ H₂O(g), what is true at equilibrium?</span>
+                    <ul class="options-list">
+                        <li class="option-item" data-option="a" onclick="selectOption(8, 'a')">
+                            <div class="option-radio"></div>
+                            <span>All the water has evaporated</span>
+                        </li>
+                        <li class="option-item" data-option="b" onclick="selectOption(8, 'b')">
+                            <div class="option-radio"></div>
+                            <span>Rate of evaporation equals rate of condensation</span>
+                        </li>
+                        <li class="option-item" data-option="c" onclick="selectOption(8, 'c')">
+                            <div class="option-radio"></div>
+                            <span>No more evaporation or condensation occurs</span>
+                        </li>
+                        <li class="option-item" data-option="d" onclick="selectOption(8, 'd')">
+                            <div class="option-radio"></div>
+                            <span>The water is boiling</span>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback8"></div>
+                </div>
+
+                <!-- Question 9 -->
+                <div class="question-card" data-question="9">
+                    <span class="question-number">9</span>
+                    <span class="question-text">Looking at the graph of reaction rates over time, what indicates that equilibrium has been reached?</span>
+                    <ul class="options-list">
+                        <li class="option-item" data-option="a" onclick="selectOption(9, 'a')">
+                            <div class="option-radio"></div>
+                            <span>The forward reaction rate drops to zero</span>
+                        </li>
+                        <li class="option-item" data-option="b" onclick="selectOption(9, 'b')">
+                            <div class="option-radio"></div>
+                            <span>Both rate curves become horizontal and equal</span>
+                        </li>
+                        <li class="option-item" data-option="c" onclick="selectOption(9, 'c')">
+                            <div class="option-radio"></div>
+                            <span>The reverse reaction rate exceeds the forward rate</span>
+                        </li>
+                        <li class="option-item" data-option="d" onclick="selectOption(9, 'd')">
+                            <div class="option-radio"></div>
+                            <span>The graph shows a peak</span>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback9"></div>
+                </div>
+
+                <!-- Question 10 -->
+                <div class="question-card" data-question="10">
+                    <span class="question-number">10</span>
+                    <span class="question-text">For the saturated NaCl solution equilibrium: NaCl(aq) ⇌ Na⁺(aq) + Cl⁻(aq), how do you know equilibrium has been reached?</span>
+                    <ul class="options-list">
+                        <li class="option-item" data-option="a" onclick="selectOption(10, 'a')">
+                            <div class="option-radio"></div>
+                            <span>All the NaCl dissolves completely</span>
+                        </li>
+                        <li class="option-item" data-option="b" onclick="selectOption(10, 'b')">
+                            <div class="option-radio"></div>
+                            <span>The amount of undissolved NaCl at the bottom remains constant</span>
+                        </li>
+                        <li class="option-item" data-option="c" onclick="selectOption(10, 'c')">
+                            <div class="option-radio"></div>
+                            <span>The water evaporates</span>
+                        </li>
+                        <li class="option-item" data-option="d" onclick="selectOption(10, 'd')">
+                            <div class="option-radio"></div>
+                            <span>The solution changes color</span>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback10"></div>
+                </div>
+
+                <!-- Question 11 -->
+                <div class="question-card" data-question="11">
+                    <span class="question-number">11</span>
+                    <span class="question-text">What happens to the forward reaction rate as products accumulate in a closed system?</span>
+                    <ul class="options-list">
+                        <li class="option-item" data-option="a" onclick="selectOption(11, 'a')">
+                            <div class="option-radio"></div>
+                            <span>It increases continuously</span>
+                        </li>
+                        <li class="option-item" data-option="b" onclick="selectOption(11, 'b')">
+                            <div class="option-radio"></div>
+                            <span>It decreases as reactant concentration decreases</span>
+                        </li>
+                        <li class="option-item" data-option="c" onclick="selectOption(11, 'c')">
+                            <div class="option-radio"></div>
+                            <span>It remains constant throughout</span>
+                        </li>
+                        <li class="option-item" data-option="d" onclick="selectOption(11, 'd')">
+                            <div class="option-radio"></div>
+                            <span>It drops to zero immediately</span>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback11"></div>
+                </div>
+
+                <!-- Question 12 -->
+                <div class="question-card" data-question="12">
+                    <span class="question-number">12</span>
+                    <span class="question-text">Which reaction must occur in a closed system to reach equilibrium?</span>
+                    <ul class="options-list">
+                        <li class="option-item" data-option="a" onclick="selectOption(12, 'a')">
+                            <div class="option-radio"></div>
+                            <span>HCl(aq) + NaOH(aq) → NaCl(aq) + H₂O(l)</span>
+                        </li>
+                        <li class="option-item" data-option="b" onclick="selectOption(12, 'b')">
+                            <div class="option-radio"></div>
+                            <span>NH₄Cl(g) ⇌ NH₃(g) + HCl(g)</span>
+                        </li>
+                        <li class="option-item" data-option="c" onclick="selectOption(12, 'c')">
+                            <div class="option-radio"></div>
+                            <span>2Cu(s) + O₂(g) → 2CuO(s)</span>
+                        </li>
+                        <li class="option-item" data-option="d" onclick="selectOption(12, 'd')">
+                            <div class="option-radio"></div>
+                            <span>All of the above require closed systems</span>
+                        </li>
+                    </ul>
+                    <div class="feedback" id="feedback12"></div>
+                </div>
+            </div>
+
+            <button class="submit-btn" onclick="submitQuiz()">Submit Answers</button>
+
+            <!-- Score Display -->
+            <div class="score-container" id="scoreContainer">
+                <div class="score-circle">
+                    <span class="score-value" id="scoreValue">0</span>
+                    <span class="score-label">out of 12</span>
+                </div>
+                <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;" id="scoreMessage">Well Done!</h3>
+                <p id="scorePercentage">You scored 0%</p>
+                <button class="sim-btn" onclick="retryQuiz()" style="margin-top: 1rem;">Try Again</button>
+            </div>
+        </div>
+
+        <!-- Lesson Navigation -->
+        <div class="lesson-nav">
+            <button class="nav-btn prev" onclick="previousLesson()">
+                ← Previous Lesson
+            </button>
+            <button class="nav-btn next" onclick="nextLesson()">
+                Next Lesson →
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 PassProof Academy. All rights reserved.</p>
+        <p style="margin-top: 0.5rem; opacity: 0.7; font-size: 0.9rem;">
+            Empowering students to achieve academic excellence.
+        </p>
+    </footer>
+
+    <script>
+        // =====================
+        // NAVIGATION HANDLING
+        // =====================
+        function toggleDropdown() {
+            const menu = document.getElementById('dropdownMenu');
+            menu.classList.toggle('active');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const navContainer = document.querySelector('.nav-container');
+            const menu = document.getElementById('dropdownMenu');
+            if (!navContainer.contains(e.target)) {
+                menu.classList.remove('active');
+            }
+        });
+
+        function previousLesson() {
+            alert('This is the first lesson in the Chemical Equilibrium series. There is no previous lesson.');
+        }
+
+        function nextLesson() {
+            saveProgress();
+            alert('Proceeding to Lesson 2: Le Chatelier\'s Principle (Coming Soon)');
+        }
+
+        // =====================
+        // QUIZ SYSTEM
+        // =====================
+        const correctAnswers = {
+            1: 'b',
+            2: 'c',
+            3: 'b',
+            4: 'b',
+            5: 'b',
+            6: 'b',
+            7: 'b',
+            8: 'b',
+            9: 'b',
+            10: 'b',
+            11: 'b',
+            12: 'b'
+        };
+
+        const explanations = {
+            1: 'A closed system is defined as one where no particles (matter) can enter or leave the system.',
+            2: 'The double arrow (⇌) indicates a reversible reaction that can reach dynamic equilibrium.',
+            3: 'At dynamic equilibrium, both forward and reverse reactions continue but at equal rates, resulting in no net change.',
+            4: 'A catalyst speeds up both forward and reverse reactions equally and does NOT change the equilibrium position.',
+            5: 'HI is not very stable and dissociates back into H₂ and I₂, which is why the reaction is reversible.',
+            6: 'Since NH₃ and HCl are gases, they would escape in an open system, preventing equilibrium from being established.',
+            7: 'Static equilibrium means no reactions occur. Dynamic equilibrium means both reactions continue at equal rates.',
+            8: 'At phase equilibrium, the rate of evaporation equals the rate of condensation.',
+            9: 'Equilibrium is reached when both reaction rate curves become horizontal (constant) and equal to each other.',
+            10: 'When the amount of undissolved salt at the bottom remains constant, equilibrium has been reached.',
+            11: 'As reactants are consumed, their concentration decreases, causing the forward reaction rate to decrease.',
+            12: 'Reaction (ii) involves gases in a reversible reaction, so it must occur in a closed system to reach equilibrium.'
+        };
+
+        let userAnswers = {};
+        let quizSubmitted = false;
+
+        function selectOption(questionNum, option) {
+            if (quizSubmitted) return;
+
+            const questionCard = document.querySelector(`[data-question="${questionNum}"]`);
+            const options = questionCard.querySelectorAll('.option-item');
+            
+            options.forEach(opt => {
+                opt.classList.remove('selected');
+                opt.querySelector('.option-radio').classList.remove('checked');
+            });
+
+            const selectedOption = questionCard.querySelector(`[data-option="${option}"]`);
+            selectedOption.classList.add('selected');
+            selectedOption.querySelector('.option-radio').classList.add('checked');
+            
+            userAnswers[questionNum] = option;
+            updateProgress();
+        }
+
+        function submitQuiz() {
+            if (Object.keys(userAnswers).length < 12) {
+                alert('Please answer all questions before submitting.');
+                return;
+            }
+
+            quizSubmitted = true;
+            let score = 0;
+
+            for (let i = 1; i <= 12; i++) {
+                const questionCard = document.querySelector(`[data-question="${i}"]`);
+                const feedback = document.getElementById(`feedback${i}`);
+                const isCorrect = userAnswers[i] === correctAnswers[i];
+
+                if (isCorrect) {
+                    score++;
+                    questionCard.classList.add('correct');
+                    feedback.className = 'feedback correct show';
+                    feedback.innerHTML = `✓ Correct! ${explanations[i]}`;
+                } else {
+                    questionCard.classList.add('incorrect');
+                    feedback.className = 'feedback incorrect show';
+                    feedback.innerHTML = `✗ Incorrect. The correct answer is ${correctAnswers[i].toUpperCase()}. ${explanations[i]}`;
+                }
+
+                // Highlight correct and wrong answers
+                const options = questionCard.querySelectorAll('.option-item');
+                options.forEach(opt => {
+                    const optValue = opt.getAttribute('data-option');
+                    if (optValue === correctAnswers[i]) {
+                        opt.classList.add('correct-answer');
+                    } else if (optValue === userAnswers[i] && !isCorrect) {
+                        opt.classList.add('wrong-answer');
+                    }
+                });
+            }
+
+            // Display score
+            const percentage = Math.round((score / 12) * 100);
+            document.getElementById('scoreValue').textContent = score;
+            document.getElementById('scorePercentage').textContent = `You scored ${percentage}%`;
+            
+            let message = '';
+            if (percentage >= 80) {
+                message = '🌟 Excellent Work!';
+            } else if (percentage >= 60) {
+                message = '👍 Good Job!';
+            } else if (percentage >= 40) {
+                message = '📚 Keep Practicing!';
+            } else {
+                message = '💪 Review the material and try again!';
+            }
+            document.getElementById('scoreMessage').textContent = message;
+            
+            document.getElementById('scoreContainer').classList.add('show');
+            
+            // Save to localStorage
+            saveQuizResult(score, percentage);
+            updateProgress(100);
+        }
+
+        function retryQuiz() {
+            quizSubmitted = false;
+            userAnswers = {};
+            
+            document.querySelectorAll('.question-card').forEach(card => {
+                card.classList.remove('correct', 'incorrect');
+            });
+            
+            document.querySelectorAll('.option-item').forEach(opt => {
+                opt.classList.remove('selected', 'correct-answer', 'wrong-answer');
+                opt.querySelector('.option-radio').classList.remove('checked');
+            });
+            
+            document.querySelectorAll('.feedback').forEach(fb => {
+                fb.classList.remove('show');
+            });
+            
+            document.getElementById('scoreContainer').classList.remove('show');
+            updateProgress();
+        }
+
+        // =====================
+        // PROGRESS TRACKING
+        // =====================
+        function updateProgress(override = null) {
+            const answeredCount = Object.keys(userAnswers).length;
+            const progress = override !== null ? override : Math.round((answeredCount / 12) * 100);
+            document.getElementById('lessonProgress').style.width = `${progress}%`;
+            document.getElementById('progressText').textContent = `${progress}%`;
+        }
+
+        function saveProgress() {
+            const progressData = {
+                lesson: 'chemical-equilibrium-1',
+                progress: document.getElementById('progressText').textContent,
+                lastVisited: new Date().toISOString(),
+                answers: userAnswers
+            };
+            localStorage.setItem('passproofProgress', JSON.stringify(progressData));
+        }
+
+        function saveQuizResult(score, percentage) {
+            const quizData = {
+                lesson: 'chemical-equilibrium-1',
+                score: score,
+                total: 12,
+                percentage: percentage,
+                completedAt: new Date().toISOString()
+            };
+            localStorage.setItem('passproofQuizResult', JSON.stringify(quizData));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('passproofProgress');
+            if (saved) {
+                const data = JSON.parse(saved);
+                if (data.lesson === 'chemical-equilibrium-1' && data.answers) {
+                    userAnswers = data.answers;
+                    Object.keys(userAnswers).forEach(q => {
+                        selectOption(parseInt(q), userAnswers[q]);
+                    });
+                }
+            }
+        }
+
+        // =====================
+        // SIMULATION 1: PARTICLE ANIMATION
+        // =====================
+        let particleAnimationId = null;
+        let particles = [];
+        const particleCanvas = document.getElementById('particleCanvas');
+        const pCtx = particleCanvas.getContext('2d');
+
+        function initParticles() {
+            particles = [];
+            // Create reactant particles (blue)
+            for (let i = 0; i < 20; i++) {
+                particles.push({
+                    x: Math.random() * particleCanvas.width,
+                    y: Math.random() * particleCanvas.height,
+                    vx: (Math.random() - 0.5) * 3,
+                    vy: (Math.random() - 0.5) * 3,
+                    type: 'reactant',
+                    radius: 8
+                });
+            }
+        }
+
+        function drawParticles() {
+            pCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+            
+            particles.forEach(p => {
+                pCtx.beginPath();
+                pCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                pCtx.fillStyle = p.type === 'reactant' ? '#1a73e8' : '#ff9800';
+                pCtx.fill();
+                pCtx.closePath();
+            });
+        }
+
+        function updateParticles(time) {
+            const equilibriumTime = 5000;
+            const progress = Math.min(time / equilibriumTime, 1);
+            
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                
+                if (p.x < p.radius || p.x > particleCanvas.width - p.radius) p.vx *= -1;
+                if (p.y < p.radius || p.y > particleCanvas.height - p.radius) p.vy *= -1;
+                
+                // Random conversion based on progress
+                if (Math.random() < 0.01) {
+                    const reactantCount = particles.filter(pt => pt.type === 'reactant').length;
+                    const productCount = particles.filter(pt => pt.type === 'product').length;
+                    
+                    if (progress < 1) {
+                        if (p.type === 'reactant' && reactantCount > 10) {
+                            p.type = 'product';
+                        } else if (p.type === 'product' && productCount > 10) {
+                            p.type = 'reactant';
+                        }
+                    }
+                }
+            });
+            
+            // Update rate display
+            const reactantCount = particles.filter(p => p.type === 'reactant').length;
+            const productCount = particles.filter(p => p.type === 'product').length;
+            const forwardRate = Math.round((1 - progress) * 100);
+            const reverseRate = Math.round(progress * 60);
+            
+            document.getElementById('forwardRate').textContent = forwardRate;
+            document.getElementById('reverseRate').textContent = reverseRate;
+            
+            if (progress >= 0.95) {
+                document.getElementById('equilibriumStatus').textContent = 'At Equilibrium!';
+                document.getElementById('equilibriumStatus').style.color = '#4caf50';
+            } else {
+                document.getElementById('equilibriumStatus').textContent = 'Approaching...';
+                document.getElementById('equilibriumStatus').style.color = '#ff9800';
+            }
+        }
+
+        let particleStartTime = null;
+        function animateParticles(timestamp) {
+            if (!particleStartTime) particleStartTime = timestamp;
+            const elapsed = timestamp - particleStartTime;
+            
+            updateParticles(elapsed);
+            drawParticles();
+            particleAnimationId = requestAnimationFrame(animateParticles);
+        }
+
+        function startParticleSimulation() {
+            if (particleAnimationId) cancelAnimationFrame(particleAnimationId);
+            initParticles();
+            particleStartTime = null;
+            particleAnimationId = requestAnimationFrame(animateParticles);
+        }
+
+        function resetParticleSimulation() {
+            if (particleAnimationId) cancelAnimationFrame(particleAnimationId);
+            particleAnimationId = null;
+            initParticles();
+            drawParticles();
+            document.getElementById('forwardRate').textContent = '0';
+            document.getElementById('reverseRate').textContent = '0';
+            document.getElementById('equilibriumStatus').textContent = 'Not at Equilibrium';
+            document.getElementById('equilibriumStatus').style.color = '#333';
+        }
+
+        // =====================
+        // SIMULATION 2: REACTION RATE GRAPH
+        // =====================
+        const graphCanvas = document.getElementById('equilibriumGraph');
+        const gCtx = graphCanvas.getContext('2d');
+        let graphAnimationId = null;
+        let graphProgress = 0;
+
+        function drawGraph(progress) {
+            gCtx.clearRect(0, 0, graphCanvas.width, graphCanvas.height);
+            
+            const padding = 50;
+            const width = graphCanvas.width - padding * 2;
+            const height = graphCanvas.height - padding * 2;
+            
+            // Draw axes
+            gCtx.strokeStyle = '#333';
+            gCtx.lineWidth = 2;
+            gCtx.beginPath();
+            gCtx.moveTo(padding, padding);
+            gCtx.lineTo(padding, graphCanvas.height - padding);
+            gCtx.lineTo(graphCanvas.width - padding, graphCanvas.height - padding);
+            gCtx.stroke();
+            
+            // Axis labels
+            gCtx.fillStyle = '#333';
+            gCtx.font = '14px Segoe UI';
+            gCtx.textAlign = 'center';
+            gCtx.fillText('Time', graphCanvas.width / 2, graphCanvas.height - 15);
+            
+            gCtx.save();
+            gCtx.translate(15, graphCanvas.height / 2);
+            gCtx.rotate(-Math.PI / 2);
+            gCtx.fillText('Reaction Rate', 0, 0);
+            gCtx.restore();
+            
+            // Draw forward reaction rate (decreasing curve)
+            gCtx.strokeStyle = '#1a73e8';
+            gCtx.lineWidth = 3;
+            gCtx.beginPath();
+            for (let i = 0; i <= progress; i++) {
+                const x = padding + (i / 100) * width;
+                const y = graphCanvas.height - padding - (0.9 - 0.4 * (1 - Math.exp(-i / 30))) * height;
+                if (i === 0) gCtx.moveTo(x, y);
+                else gCtx.lineTo(x, y);
+            }
+            gCtx.stroke();
+            
+            // Draw reverse reaction rate (increasing curve)
+            gCtx.strokeStyle = '#f44336';
+            gCtx.lineWidth = 3;
+            gCtx.beginPath();
+            for (let i = 0; i <= progress; i++) {
+                const x = padding + (i / 100) * width;
+                const y = graphCanvas.height - padding - (0.4 * (1 - Math.exp(-i / 30)) + 0.1) * height;
+                if (i === 0) gCtx.moveTo(x, y);
+                else gCtx.lineTo(x, y);
+            }
+            gCtx.stroke();
+            
+            // Draw equilibrium point
+            if (progress >= 70) {
+                const eqX = padding + 0.7 * width;
+                const eqY = graphCanvas.height -                padding - 0.5 * height;
+                
+                gCtx.fillStyle = '#4caf50';
+                gCtx.beginPath();
+                gCtx.arc(eqX, eqY, 8, 0, Math.PI * 2);
+                gCtx.fill();
+                
+                gCtx.fillStyle = '#4caf50';
+                gCtx.font = 'bold 12px Segoe UI';
+                gCtx.fillText('Equilibrium', eqX, eqY - 15);
+                
+                // Draw horizontal equilibrium line
+                gCtx.strokeStyle = '#4caf50';
+                gCtx.lineWidth = 2;
+                gCtx.setLineDash([5, 5]);
+                gCtx.beginPath();
+                gCtx.moveTo(eqX, eqY);
+                gCtx.lineTo(graphCanvas.width - padding, eqY);
+                gCtx.stroke();
+                gCtx.setLineDash([]);
+            }
+            
+            // Labels for curves
+            if (progress > 20) {
+                gCtx.fillStyle = '#1a73e8';
+                gCtx.font = 'bold 12px Segoe UI';
+                gCtx.fillText('Forward Reaction', padding + 80, padding + 30);
+                
+                gCtx.fillStyle = '#f44336';
+                gCtx.fillText('Reverse Reaction', padding + 80, graphCanvas.height - padding - 30);
+            }
+        }
+
+        function animateGraph() {
+            if (graphProgress <= 100) {
+                drawGraph(graphProgress);
+                graphProgress += 0.5;
+                graphAnimationId = requestAnimationFrame(animateGraph);
+            }
+        }
+
+        function startGraphSimulation() {
+            if (graphAnimationId) cancelAnimationFrame(graphAnimationId);
+            graphProgress = 0;
+            graphAnimationId = requestAnimationFrame(animateGraph);
+        }
+
+        function resetGraphSimulation() {
+            if (graphAnimationId) cancelAnimationFrame(graphAnimationId);
+            graphAnimationId = null;
+            graphProgress = 0;
+            gCtx.clearRect(0, 0, graphCanvas.width, graphCanvas.height);
+            drawGraph(0);
+        }
+
+        // =====================
+        // SIMULATION 3: OPEN VS CLOSED SYSTEM
+        // =====================
+        const systemCanvas = document.getElementById('systemCanvas');
+        const sCtx = systemCanvas.getContext('2d');
+        let systemAnimationId = null;
+        let openParticles = [];
+        let closedParticles = [];
+
+        function initSystemParticles() {
+            openParticles = [];
+            closedParticles = [];
+            
+            for (let i = 0; i < 15; i++) {
+                // Open system particles (left side)
+                openParticles.push({
+                    x: 50 + Math.random() * 200,
+                    y: 50 + Math.random() * 200,
+                    vx: (Math.random() - 0.5) * 4,
+                    vy: (Math.random() - 0.5) * 4,
+                    radius: 6,
+                    escaped: false
+                });
+                
+                // Closed system particles (right side)
+                closedParticles.push({
+                    x: 350 + Math.random() * 200,
+                    y: 50 + Math.random() * 200,
+                    vx: (Math.random() - 0.5) * 4,
+                    vy: (Math.random() - 0.5) * 4,
+                    radius: 6
+                });
+            }
+        }
+
+        function drawSystemSimulation() {
+            sCtx.clearRect(0, 0, systemCanvas.width, systemCanvas.height);
+            
+            // Draw open system container (left) - with opening at top
+            sCtx.strokeStyle = '#f44336';
+            sCtx.lineWidth = 3;
+            sCtx.beginPath();
+            sCtx.moveTo(30, 30);
+            sCtx.lineTo(30, 270);
+            sCtx.lineTo(270, 270);
+            sCtx.lineTo(270, 30);
+            // Gap at top for "open" system
+            sCtx.stroke();
+            
+            // Label
+            sCtx.fillStyle = '#f44336';
+            sCtx.font = 'bold 14px Segoe UI';
+            sCtx.textAlign = 'center';
+            sCtx.fillText('OPEN SYSTEM', 150, 290);
+            sCtx.font = '11px Segoe UI';
+            sCtx.fillText('(Particles escape)', 150, 20);
+            
+            // Draw closed system container (right) - fully enclosed
+            sCtx.strokeStyle = '#4caf50';
+            sCtx.lineWidth = 3;
+            sCtx.beginPath();
+            sCtx.rect(330, 30, 240, 240);
+            sCtx.stroke();
+            
+            // Lid indication
+            sCtx.fillStyle = '#4caf50';
+            sCtx.fillRect(330, 25, 240, 8);
+            
+            // Label
+            sCtx.fillStyle = '#4caf50';
+            sCtx.font = 'bold 14px Segoe UI';
+            sCtx.fillText('CLOSED SYSTEM', 450, 290);
+            sCtx.font = '11px Segoe UI';
+            sCtx.fillText('(Particles contained)', 450, 20);
+            
+            // Draw open system particles
+            openParticles.forEach(p => {
+                if (!p.escaped) {
+                    sCtx.beginPath();
+                    sCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    sCtx.fillStyle = '#1a73e8';
+                    sCtx.fill();
+                    sCtx.closePath();
+                }
+            });
+            
+            // Draw closed system particles
+            closedParticles.forEach(p => {
+                sCtx.beginPath();
+                sCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                sCtx.fillStyle = '#1a73e8';
+                sCtx.fill();
+                sCtx.closePath();
+            });
+        }
+
+        function updateSystemParticles() {
+            // Update open system particles
+            openParticles.forEach(p => {
+                if (!p.escaped) {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    
+                    // Bounce off walls (except top)
+                    if (p.x < 36) { p.x = 36; p.vx *= -1; }
+                    if (p.x > 264) { p.x = 264; p.vx *= -1; }
+                    if (p.y > 264) { p.y = 264; p.vy *= -1; }
+                    
+                    // Escape through top
+                    if (p.y < 30) {
+                        p.escaped = true;
+                    }
+                }
+            });
+            
+            // Update closed system particles
+            closedParticles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                
+                // Bounce off all walls
+                if (p.x < 336) { p.x = 336; p.vx *= -1; }
+                if (p.x > 564) { p.x = 564; p.vx *= -1; }
+                if (p.y < 36) { p.y = 36; p.vy *= -1; }
+                if (p.y > 264) { p.y = 264; p.vy *= -1; }
+            });
+            
+            // Update displays
+            const remainingOpen = openParticles.filter(p => !p.escaped).length;
+            document.getElementById('openParticles').textContent = remainingOpen;
+            document.getElementById('closedParticles').textContent = closedParticles.length;
+        }
+
+        function animateSystem() {
+            updateSystemParticles();
+            drawSystemSimulation();
+            systemAnimationId = requestAnimationFrame(animateSystem);
+        }
+
+        function startSystemSimulation() {
+            if (systemAnimationId) cancelAnimationFrame(systemAnimationId);
+            initSystemParticles();
+            systemAnimationId = requestAnimationFrame(animateSystem);
+        }
+
+        function resetSystemSimulation() {
+            if (systemAnimationId) cancelAnimationFrame(systemAnimationId);
+            systemAnimationId = null;
+            initSystemParticles();
+            drawSystemSimulation();
+            document.getElementById('openParticles').textContent = '15';
+            document.getElementById('closedParticles').textContent = '15';
+        }
+
+        // =====================
+        // CANVAS RESPONSIVENESS
+        // =====================
+        function resizeCanvases() {
+            const containers = document.querySelectorAll('.simulation-container');
+            containers.forEach(container => {
+                const canvas = container.querySelector('canvas');
+                if (canvas) {
+                    const maxWidth = container.clientWidth - 40;
+                    if (maxWidth < canvas.width) {
+                        const ratio = canvas.height / canvas.width;
+                        canvas.style.width = maxWidth + 'px';
+                        canvas.style.height = (maxWidth * ratio) + 'px';
+                    }
+                }
+            });
+        }
+
+        // =====================
+        // INITIALIZATION
+        // =====================
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize simulations
+            initParticles();
+            drawParticles();
+            drawGraph(0);
+            initSystemParticles();
+            drawSystemSimulation();
+            
+            // Load saved progress
+            loadProgress();
+            
+            // Handle responsive canvases
+            resizeCanvases();
+            window.addEventListener('resize', resizeCanvases);
+            
+            // Smooth scroll for navigation links
+            document.querySelectorAll('.dropdown-menu a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href').substring(1);
+                    const target = document.getElementById(targetId);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        document.getElementById('dropdownMenu').classList.remove('active');
+                    }
+                });
+            });
+            
+            // Add scroll animation for cards
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+            
+            // Trigger first cards to show immediately
+            setTimeout(() => {
+                document.querySelectorAll('.card').forEach((card, index) => {
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, index * 100);
+                });
+            }, 100);
+        });
+
+        // Save progress when leaving page
+        window.addEventListener('beforeunload', saveProgress);
+
+        // =====================
+        // KEYBOARD NAVIGATION
+        // =====================
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                previousLesson();
+            } else if (e.key === 'ArrowRight') {
+                nextLesson();
+            }
+        });
+    </script>
+</body>
+</html>

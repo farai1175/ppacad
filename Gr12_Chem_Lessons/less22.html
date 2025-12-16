@@ -1,0 +1,1928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pH Scale and Calculations - PassProof Academy</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 50%, #e0f7fa 100%);
+            min-height: 100vh;
+            color: #0c4a6e;
+        }
+
+        /* Header & Navigation */
+        .header {
+            background: linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #0ea5e9 100%);
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 20px rgba(3, 105, 161, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .nav-dropdown {
+            position: relative;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            min-width: 280px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            padding: 1rem 1.5rem;
+            color: #0369a1;
+            text-decoration: none;
+            display: block;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .dropdown-item:hover {
+            background: #e0f2fe;
+            padding-left: 2rem;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 40px rgba(3, 105, 161, 0.1),
+                        0 4px 6px rgba(3, 105, 161, 0.05);
+            transform: translateZ(0);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(3, 105, 161, 0.15),
+                        0 8px 12px rgba(3, 105, 161, 0.1);
+        }
+
+        /* Subject Header Card */
+        .subject-card {
+            background: linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #0ea5e9 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .subject-card h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subject-card .grade {
+            font-size: 1.25rem;
+            opacity: 0.9;
+        }
+
+        .topic-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #0369a1;
+            font-weight: 700;
+        }
+
+        .collapse-icon {
+            margin-left: auto;
+            font-size: 1.5rem;
+            color: #0284c7;
+            transition: transform 0.3s ease;
+        }
+
+        .section-content {
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .section-content.collapsed {
+            max-height: 0 !important;
+        }
+
+        /* Learning Objectives */
+        .objective-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .objective-list li {
+            padding: 1rem;
+            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            border-left: 4px solid #0284c7;
+        }
+
+        .objective-list li::before {
+            content: "✓";
+            color: #0369a1;
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        /* Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 1rem 0;
+        }
+
+        .data-table th {
+            background: linear-gradient(135deg, #0369a1, #0284c7);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            background: white;
+        }
+
+        .data-table tr:nth-child(even) td {
+            background: #f0f9ff;
+        }
+
+        .data-table tr:hover td {
+            background: #e0f2fe;
+        }
+
+        /* Definition Boxes */
+        .definition-box {
+            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+            border: 2px solid #0284c7;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .definition-box.acid {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border-color: #ef4444;
+        }
+
+        .definition-box.base {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            border-color: #3b82f6;
+        }
+
+        .definition-box.neutral {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-color: #10b981;
+        }
+
+        .definition-box h4 {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .note-box {
+            background: linear-gradient(135deg, #fef3c7, #fef9c3);
+            border: 2px solid #f59e0b;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .note-box h4 {
+            color: #d97706;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background: linear-gradient(135deg, #1e1e2e, #2d2d44);
+            color: #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+
+        .formula-box .formula {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.5rem;
+            color: #60a5fa;
+        }
+
+        .formula-box .fraction {
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .formula-box .numerator {
+            display: block;
+            border-bottom: 2px solid #60a5fa;
+            padding-bottom: 3px;
+        }
+
+        .formula-box .denominator {
+            display: block;
+            padding-top: 3px;
+        }
+
+        /* pH Scale */
+        .ph-scale-container {
+            margin: 2rem 0;
+        }
+
+        .ph-scale {
+            display: flex;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 60px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .ph-segment {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            transition: transform 0.2s ease;
+        }
+
+        .ph-segment:hover {
+            transform: scaleY(1.1);
+        }
+
+        .ph-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+
+        .ph-labels span:first-child { color: #dc2626; }
+        .ph-labels span:nth-child(2) { color: #16a34a; }
+        .ph-labels span:last-child { color: #7c3aed; }
+
+        /* Indicator Table Colors */
+        .indicator-acid { background: #ef4444; color: white; padding: 0.5rem; border-radius: 8px; text-align: center; }
+        .indicator-base { background: #3b82f6; color: white; padding: 0.5rem; border-radius: 8px; text-align: center; }
+        .indicator-yellow { background: #eab308; color: black; padding: 0.5rem; border-radius: 8px; text-align: center; }
+        .indicator-pink { background: #ec4899; color: white; padding: 0.5rem; border-radius: 8px; text-align: center; }
+        .indicator-colorless { background: linear-gradient(45deg, #fff 25%, #e5e7eb 25%, #e5e7eb 50%, #fff 50%, #fff 75%, #e5e7eb 75%); background-size: 10px 10px; color: #374151; padding: 0.5rem; border-radius: 8px; text-align: center; border: 1px solid #d1d5db; }
+        .indicator-purple { background: #7c3aed; color: white; padding: 0.5rem; border-radius: 8px; text-align: center; }
+
+        /* Worked Example */
+        .example-box {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border: 2px solid #0284c7;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .example-box h4 {
+            color: #0369a1;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .step {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 0.75rem 0;
+            border-left: 4px solid #0284c7;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: #0284c7;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 25px;
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+        }
+
+        /* Calculator Simulation */
+        .simulation-container {
+            background: linear-gradient(135deg, #1e1e2e, #2d2d44);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .simulation-title {
+            color: white;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .calc-box {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+
+        .calc-box h5 {
+            color: #60a5fa;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .calc-input-group {
+            margin-bottom: 1rem;
+        }
+
+        .calc-input-group label {
+            display: block;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .calc-input-group input, .calc-input-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.9);
+            color: #0c4a6e;
+        }
+
+        .calc-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
+        }
+
+        .calc-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.5);
+        }
+
+        .calc-result {
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            min-height: 50px;
+        }
+
+        /* Indicator Simulator */
+        .indicator-sim {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .indicator-sim h5 {
+            color: #60a5fa;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .beaker-display {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .test-tube {
+            width: 60px;
+            height: 150px;
+            border: 4px solid #64748b;
+            border-top: none;
+            border-radius: 0 0 30px 30px;
+            position: relative;
+            overflow: hidden;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .test-tube-liquid {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 70%;
+            transition: all 0.5s ease;
+            border-radius: 0 0 26px 26px;
+        }
+
+        .test-tube-label {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .ph-display {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .ph-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #60a5fa;
+        }
+
+        .ph-type {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            margin-top: 0.5rem;
+        }
+
+        /* Exercise Box */
+        .exercise-box {
+            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+            border: 2px solid #0284c7;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .exercise-box h4 {
+            color: #0369a1;
+            margin-bottom: 1rem;
+        }
+
+        .show-answer-btn {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .show-answer-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .answer-box {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border: 2px solid #10b981;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .answer-box.show {
+            display: block;
+        }
+
+        .answer-box h5 {
+            color: #047857;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .question-card {
+            background: #f0f9ff;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid #bae6fd;
+            transition: all 0.3s ease;
+        }
+
+        .question-card.correct {
+            border-color: #10b981;
+            background: #d1fae5;
+        }
+
+        .question-card.incorrect {
+            border-color: #ef4444;
+            background: #fee2e2;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: 700;
+            margin-right: 1rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            color: #0c4a6e;
+            margin-bottom: 1rem;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            border: 2px solid #bae6fd;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-label:hover {
+            border-color: #0284c7;
+            background: #e0f2fe;
+        }
+
+        .option-label input {
+            margin-right: 1rem;
+            width: 20px;
+            height: 20px;
+            accent-color: #0369a1;
+        }
+
+        .option-label.selected {
+            border-color: #0284c7;
+            background: #e0f2fe;
+        }
+
+        .option-label.correct-answer {
+            border-color: #10b981;
+            background: #d1fae5;
+        }
+
+        .option-label.wrong-answer {
+            border-color: #ef4444;
+            background: #fee2e2;
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            display: none;
+            font-weight: 600;
+        }
+
+        .feedback.correct {
+            display: block;
+            background: #d1fae5;
+            color: #047857;
+        }
+
+        .feedback.incorrect {
+            display: block;
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        /* Score Display */
+        .score-container {
+            background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .score-container.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: white;
+            margin: 0 auto 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .score-percentage {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #0369a1;
+        }
+
+        .score-label {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .submit-quiz-btn {
+            background: linear-gradient(135deg, #10b981, #047857);
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .submit-quiz-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+        }
+
+        /* Lesson Navigation */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn.prev, .nav-btn.next {
+            background: linear-gradient(135deg, #0369a1, #0284c7);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(3, 105, 161, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn.prev:hover, .nav-btn.next:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(3, 105, 161, 0.4);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: #bae6fd;
+            border-radius: 10px;
+            height: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #0369a1, #0284c7);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0369a1, #0284c7);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            opacity: 0.9;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .subject-card h1 {
+                font-size: 1.75rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .section-header {
+                flex-wrap: wrap;
+            }
+
+            .lesson-nav {
+                flex-direction: column;
+            }
+
+            .nav-btn.prev, .nav-btn.next {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ph-segment {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .card:nth-child(2) { animation-delay: 0.1s; }
+        .card:nth-child(3) { animation-delay: 0.2s; }
+        .card:nth-child(4) { animation-delay: 0.3s; }
+
+        sub, sup {
+            font-size: 0.75em;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">🎓 PassProof Academy</div>
+            <div class="nav-dropdown">
+                <button class="nav-btn" onclick="toggleDropdown()">
+                    📚 Navigation <span id="dropdownArrow">▼</span>
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="#objectives" class="dropdown-item">📌 Learning Objectives</a>
+                    <a href="#overview" class="dropdown-item">📖 Overview & Baseline</a>
+                    <a href="#main-content" class="dropdown-item">📝 Main Content</a>
+                    <a href="#indicators" class="dropdown-item">🎨 Indicators</a>
+                    <a href="#calculations" class="dropdown-item">🔢 pH Calculations</a>
+                    <a href="#simulation" class="dropdown-item">🧮 pH Calculator</a>
+                    <a href="#exercises" class="dropdown-item">✏️ Class Exercises</a>
+                    <a href="#quiz" class="dropdown-item">❓ Quiz Questions</a>
+                    <a href="#score" class="dropdown-item">📊 Your Score</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Subject & Grade Card -->
+        <div class="card subject-card">
+            <h1>⚗️ Physical Sciences</h1>
+            <p class="grade">Grade 12</p>
+            <div class="topic-badge">🧪 Acids and Bases</div>
+        </div>
+
+        <!-- Topic & Lesson Info -->
+        <div class="card">
+            <div style="text-align: center;">
+                <p style="color: #64748b; margin-bottom: 0.5rem;">Sub-topic</p>
+                <h2 style="color: #0369a1; font-size: 1.75rem; margin-bottom: 1rem;">The pH Scale and pH Calculations</h2>
+                <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                    <div>
+                        <p style="color: #64748b; font-size: 0.9rem;">Lesson Number</p>
+                        <p style="font-size: 1.5rem; font-weight: 700; color: #0284c7;">Lesson 5</p>
+                    </div>
+                    <div>
+                        <p style="color: #64748b; font-size: 0.9rem;">Lesson Title</p>
+                        <p style="font-size: 1.5rem; font-weight: 700; color: #0284c7;">pH Scale & Calculations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress -->
+        <div class="card">
+            <p style="margin-bottom: 0.5rem; font-weight: 600;">📈 Your Progress</p>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+            </div>
+            <p id="progressText" style="color: #64748b; font-size: 0.9rem;">0% Complete</p>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="card" id="objectives">
+            <div class="section-header" onclick="toggleSection('objectivesContent')">
+                <div class="section-icon">🎯</div>
+                <h3 class="section-title">Learning Objectives</h3>
+                <span class="collapse-icon" id="objectivesIcon">▼</span>
+            </div>
+            <div class="section-content" id="objectivesContent">
+                <p style="color: #64748b; margin-bottom: 1rem;">By the end of this lesson, learners must be able to:</p>
+                <ul class="objective-list">
+                    <li>Understand how indicators work and their color changes</li>
+                    <li>Know the range of methyl orange, bromothymol blue and phenolphthalein indicators</li>
+                    <li>Explain the pH scale and its significance</li>
+                    <li>Calculate the pH values of strong acids using the pH formula</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Overview & Baseline Questions -->
+        <div class="card" id="overview">
+            <div class="section-header" onclick="toggleSection('overviewContent')">
+                <div class="section-icon">📖</div>
+                <h3 class="section-title">Overview & Baseline Questions</h3>
+                <span class="collapse-icon" id="overviewIcon">▼</span>
+            </div>
+            <div class="section-content" id="overviewContent">
+                <div class="note-box">
+                    <h4>🔑 Baseline Questions - What do you already know?</h4>
+                    <ol style="margin-left: 1.5rem; margin-top: 0.5rem; line-height: 2;">
+                        <li>What is the purpose of the pH scale?</li>
+                        <li>What is the pH range of acids and bases?</li>
+                        <li>What is the pH of distilled water?</li>
+                        <li>What is an indicator?</li>
+                    </ol>
+                </div>
+
+                <h4 style="color: #0369a1; margin: 1.5rem 0 1rem;">✅ Answers to Baseline Questions</h4>
+
+                <div class="definition-box">
+                    <h4 style="color: #0369a1;">📏 The pH Scale</h4>
+                    <p>The <strong>pH scale</strong> is used to measure how acidic or basic a liquid is. It ranges from 0 to 14.</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0;">
+                    <div class="definition-box acid">
+                        <h4 style="color: #dc2626;">🔴 Acids</h4>
+                        <p>pH range: <strong>less than 7</strong></p>
+                        <p>Lower pH = stronger acid</p>
+                    </div>
+                    <div class="definition-box neutral">
+                        <h4 style="color: #047857;">🟢 Neutral</h4>
+                        <p>pH = <strong>exactly 7</strong></p>
+                        <p>Distilled water has pH 7</p>
+                    </div>
+                    <div class="definition-box base">
+                        <h4 style="color: #2563eb;">🔵 Bases</h4>
+                        <p>pH range: <strong>greater than 7</strong></p>
+                        <p>Higher pH = stronger base</p>
+                    </div>
+                </div>
+
+                <div class="definition-box">
+                    <h4 style="color: #0369a1;">🧪 What is an Indicator?</h4>
+                    <p>An <strong>indicator</strong> is usually a weak organic dye that changes colour at definite pH values. Different indicators change colour at various pH values.</p>
+                    <p style="margin-top: 0.5rem;">Common laboratory indicators include: <strong>methyl orange, bromothymol blue, phenolphthalein</strong> and <strong>universal indicator</strong>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content: Indicators -->
+        <div class="card" id="indicators">
+            <div class="section-header" onclick="toggleSection('indicatorsContent')">
+                <div class="section-icon">🎨</div>
+                <h3 class="section-title">Indicators and Their Colour Changes</h3>
+                <span class="collapse-icon" id="indicatorsIcon">▼</span>
+            </div>
+            <div class="section-content" id="indicatorsContent">
+                
+                <p style="line-height: 1.8; margin-bottom: 1.5rem;">
+                    Indicators help us determine whether a solution is acidic or basic by changing color. The table below shows common indicators and their colors in acidic and basic solutions.
+                </p>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Indicator</th>
+                            <th>Colour in Acid (pH ≈ 2)</th>
+                            <th>Colour in Base (pH ≈ 12)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Methyl Orange</strong></td>
+                            <td><div class="indicator-acid">Red</div></td>
+                            <td><div class="indicator-yellow">Yellow</div></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bromothymol Blue</strong></td>
+                            <td><div class="indicator-yellow">Yellow</div></td>
+                            <td><div class="indicator-base">Blue</div></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phenolphthalein</strong></td>
+                            <td><div class="indicator-colorless">Colourless</div></td>
+                            <td><div class="indicator-pink">Pink</div></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Universal Indicator</strong></td>
+                            <td><div class="indicator-acid">Red</div></td>
+                            <td><div class="indicator-purple">Purple</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- pH Scale Visualization -->
+                <h4 style="color: #0369a1; margin: 2rem 0 1rem;">📊 The pH Scale Visualized</h4>
+                
+                <div class="ph-scale-container">
+                    <div class="ph-scale">
+                        <div class="ph-segment" style="background: #dc2626;">0</div>
+                        <div class="ph-segment" style="background: #ef4444;">1</div>
+                        <div class="ph-segment" style="background: #f97316;">2</div>
+                        <div class="ph-segment" style="background: #fb923c;">3</div>
+                        <div class="ph-segment" style="background: #fbbf24;">4</div>
+                        <div class="ph-segment" style="background: #facc15;">5</div>
+                        <div class="ph-segment" style="background: #a3e635;">6</div>
+                        <div class="ph-segment" style="background: #22c55e;">7</div>
+                        <div class="ph-segment" style="background: #10b981;">8</div>
+                        <div class="ph-segment" style="background: #14b8a6;">9</div>
+                        <div class="ph-segment" style="background: #06b6d4;">10</div>
+                        <div class="ph-segment" style="background: #0ea5e9;">11</div>
+                        <div class="ph-segment" style="background: #3b82f6;">12</div>
+                        <div class="ph-segment" style="background: #6366f1;">13</div>
+                        <div class="ph-segment" style="background: #7c3aed;">14</div>
+                    </div>
+                    <div class="ph-labels">
+                        <span>← ACIDIC</span>
+                        <span>NEUTRAL</span>
+                        <span>BASIC →</span>
+                    </div>
+                </div>
+
+                <div class="note-box">
+                    <h4>⚠️ Important Notes</h4>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem; line-height: 1.8;">
+                        <li>The pH scale is <strong>logarithmic</strong> - each pH unit represents a 10-fold change in H<sub>3</sub>O<sup>+</sup> concentration</li>
+                        <li>A solution with pH 3 is 10 times more acidic than one with pH 4</li>
+                        <li>Universal indicator gives a <strong>range of colors</strong> across the entire pH scale</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content: Calculations -->
+        <div class="card" id="calculations">
+            <div class="section-header" onclick="toggleSection('calculationsContent')">
+                <div class="section-icon">🔢</div>
+                <h3 class="section-title">pH Calculations</h3>
+                <span class="collapse-icon" id="calculationsIcon">▼</span>
+            </div>
+            <div class="section-content" id="calculationsContent">
+                
+                <!-- Concentration Formula -->
+                <h4 style="color: #0369a1; margin-bottom: 1rem;">📐 Calculating Concentration</h4>
+                
+                <p style="line-height: 1.8; margin-bottom: 1rem;">
+                    Concentration is measured in the units <strong>mol·dm<sup>-3</sup></strong>. The equation used to calculate concentration is:
+                </p>
+
+                <div class="formula-box">
+                    <span class="formula">c = </span>
+                    <span class="fraction">
+                        <span class="numerator">n</span>
+                        <span class="denominator">V</span>
+                    </span>
+                    <p style="margin-top: 1rem; font-size: 1rem; color: #94a3b8;">
+                        where c = concentration (mol·dm<sup>-3</sup>), n = number of moles, V = volume (dm<sup>3</sup>)
+                    </p>
+                </div>
+
+                <p style="line-height: 1.8; margin: 1rem 0;">
+                    It may be necessary to calculate the number of moles first, using the equation:
+                </p>
+
+                <div class="formula-box">
+                    <span class="formula">n = </span>
+                    <span class="fraction">
+                        <span class="numerator">m</span>
+                        <span class="denominator">M</span>
+                    </span>
+                    <p style="margin-top: 1rem; font-size: 1rem; color: #94a3b8;">
+                        where n = number of moles, m = mass (g), M = molar mass (g·mol<sup>-1</sup>)
+                    </p>
+                </div>
+
+                <!-- Example: Concentration -->
+                <div class="example-box">
+                    <h4>📝 Worked Example: Calculating Concentration</h4>
+                    <p style="margin-bottom: 1rem;"><strong>Problem:</strong> If 25 g of HCl is mixed with water to produce 375 cm³ of solution, what is the concentration of the solution?</p>
+                    
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <strong>Find the molar mass of HCl:</strong>
+                        <p style="margin-top: 0.5rem;">M(HCl) = 1 + 35.5 = 36.5 g·mol<sup>-1</sup></p>
+                    </div>
+
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <strong>Calculate the number of moles:</strong>
+                        <p style="margin-top: 0.5rem;">n = m/M = 25/36.5 = 0.685 mol</p>
+                    </div>
+
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <strong>Convert volume to dm³:</strong>
+                        <p style="margin-top: 0.5rem;">V = 375 cm³ = 375/1000 = 0.375 dm³</p>
+                    </div>
+
+                    <div class="step">
+                        <span class="step-number">4</span>
+                        <strong>Calculate concentration:</strong>
+                        <p style="margin-top: 0.5rem;">c = n/V = 0.685/0.375 = <strong>1.83 mol·dm<sup>-3</sup></strong></p>
+                    </div>
+                </div>
+
+                <!-- pH Formula -->
+                <h4 style="color: #0369a1; margin: 2rem 0 1rem;">🧮 Calculating pH</h4>
+
+                <p style="line-height: 1.8; margin-bottom: 1rem;">
+                    The pH of a solution can be calculated using the equation:
+                </p>
+
+                <div class="formula-box">
+                    <span class="formula" style="font-size: 2rem;">pH = -log[H<sub>3</sub>O<sup>+</sup>]</span>
+                    <p style="margin-top: 1rem; font-size: 1rem; color: #94a3b8;">
+                        where [H<sub>3</sub>O<sup>+</sup>] is the concentration of hydronium ions in mol·dm<sup>-3</sup>
+                    </p>
+                </div>
+
+                <div class="note-box">
+                    <h4>💡 Key Point for Strong Acids</h4>
+                    <p>For <strong>strong acids</strong> that ionise completely:</p>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem; line-height: 1.8;">
+                        <li><strong>Monoprotic acids</strong> (HCl, HNO<sub>3</sub>): [H<sub>3</sub>O<sup>+</sup>] = concentration of acid</li>
+                        <li><strong>Diprotic acids</strong> (H<sub>2</sub>SO<sub>4</sub>): [H<sub>3</sub>O<sup>+</sup>] = 2 × concentration of acid</li>
+                    </ul>
+                </div>
+
+                <!-- Example 1: pH Calculation -->
+                <div class="example-box">
+                    <h4>📝 Worked Example 1: pH of HNO<sub>3</sub></h4>
+                    <p style="margin-bottom: 1rem;"><strong>Problem:</strong> Calculate the pH of a solution of HNO<sub>3</sub> with a concentration of 1 × 10<sup>-2</sup> mol·dm<sup>-3</sup>.</p>
+                    
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <strong>Write the ionisation equation:</strong>
+                        <p style="margin-top: 0.5rem;">HNO<sub>3</sub>(l) + H<sub>2</sub>O(l) ⇌ H<sub>3</sub>O<sup>+</sup>(aq) + NO<sub>3</sub><sup>-</sup>(aq)</p>
+                    </div>
+
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <strong>Determine [H<sub>3</sub>O<sup>+</sup>]:</strong>
+                        <p style="margin-top: 0.5rem;">Since HNO<sub>3</sub> is a strong acid, it ionises completely. 1 molecule of HNO<sub>3</sub> forms 1 H<sub>3</sub>O<sup>+</sup> ion.</p>
+                        <p>[H<sub>3</sub>O<sup>+</sup>] = 1 × 10<sup>-2</sup> mol·dm<sup>-3</sup></p>
+                    </div>
+
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <strong>Calculate pH:</strong>
+                        <p style="margin-top: 0.5rem;">pH = -log[H<sub>3</sub>O<sup>+</sup>] = -log(1 × 10<sup>-2</sup>) = <strong>2</strong></p>
+                    </div>
+                </div>
+
+                <!-- Example 2: pH with mass given -->
+                <div class="example-box">
+                    <h4>📝 Worked Example 2: pH from Mass of HCl</h4>
+                    <p style="margin-bottom: 1rem;"><strong>Problem:</strong> 0.18 g of HCl is dissolved in 5 dm³ of water. Calculate the pH of the solution.</p>
+                    
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <strong>Calculate the number of moles:</strong>
+                        <p style="margin-top: 0.5rem;">M(HCl) = 1 + 35.5 = 36.5 g·mol<sup>-1</sup></p>
+                        <p>n = m/M = 0.18/36.5 = 4.93 × 10<sup>-3</sup> mol</p>
+                    </div>
+
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <strong>Calculate concentration:</strong>
+                        <p style="margin-top: 0.5rem;">c = n/V = 4.93 × 10<sup>-3</sup>/5 = 9.86 × 10<sup>-4</sup> mol·dm<sup>-3</sup></p>
+                    </div>
+
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <strong>Determine [H<sub>3</sub>O<sup>+</sup>]:</strong>
+                        <p style="margin-top: 0.5rem;">[H<sub>3</sub>O<sup>+</sup>] = 9.86 × 10<sup>-4</sup> mol·dm<sup>-3</sup> (HCl ionises completely)</p>
+                    </div>
+
+                    <div class="step">
+                        <span class="step-number">4</span>
+                        <strong>Calculate pH:</strong>
+                        <p style="margin-top: 0.5rem;">pH = -log(9.86 × 10<sup>-4</sup>) = <strong>3.01</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Simulation -->
+        <div class="card" id="simulation">
+            <div class="section-header" onclick="toggleSection('simulationContent')">
+                <div class="section-icon">🧮</div>
+                <h3 class="section-title">Interactive pH Calculator & Indicator Simulator</h3>
+                <span class="collapse-icon" id="simulationIcon">▼</span>
+            </div>
+            <div class="section-content" id="simulationContent">
+                <div class="simulation-container">
+                    <h4 class="simulation-title">⚗️ pH Calculation Tools</h4>
+                    
+                    <div class="calculator-grid">
+                        <!-- pH from Concentration Calculator -->
+                        <div class="calc-box">
+                            <h5>🔢 Calculate pH from Concentration</h5>
+                            <div class="calc-input-group">
+                                <label>Select Acid Type:</label>
+                                <select id="acidType">
+                                    <option value="1">Monoprotic (HCl, HNO₃)</option>
+                                    <option value="2">Diprotic (H₂SO₄)</option>
+                                </select>
+                            </div>
+                            <div class="calc-input-group">
+                                <label>Concentration (mol·dm⁻³):</label>
+                                <input type="number" id="concInput" placeholder="e.g., 0.01" step="any">
+                            </div>
+                            <button class="calc-btn" onclick="calculatePH()">Calculate pH</button>
+                            <div class="calc-result" id="phResult">Enter values and click calculate</div>
+                        </div>
+
+                        <!-- pH from Mass Calculator -->
+                        <div class="calc-box">
+                            <h5>⚖️ Calculate pH from Mass</h5>
+                            <div class="calc-input-group">
+                                <label>Select Acid:</label>
+                                <select id="acidSelect">
+                                    <option value="36.5,1">HCl (M = 36.5)</option>
+                                    <option value="63,1">HNO₃ (M = 63)</option>
+                                    <option value="98,2">H₂SO₄ (M = 98)</option>
+                                </select>
+                            </div>
+                            <div class="calc-input-group">
+                                <label>Mass of acid (g):</label>
+                                <input type="number" id="massInput" placeholder="e.g., 0.18" step="any">
+                            </div>
+                            <div class="calc-input-group">
+                                <label>Volume of solution (dm³):</label>
+                                <input type="number" id="volumeInput" placeholder="e.g., 5" step="any">
+                            </div>
+                            <button class="calc-btn" onclick="calculatePHFromMass()">Calculate pH</button>
+                            <div class="calc-result" id="phMassResult">Enter values and click calculate</div>
+                        </div>
+                    </div>
+
+                    <!-- Indicator Simulator -->
+                    <div class="indicator-sim">
+                        <h5>🎨 Indicator Colour Simulator</h5>
+                        <p style="color: #94a3b8; text-align: center; margin-bottom: 1rem;">
+                            Adjust the pH to see how different indicators change colour
+                        </p>
+                        
+                        <div class="calc-input-group" style="max-width: 400px; margin: 0 auto;">
+                            <label style="text-align: center; display: block;">pH Value: <span id="phSliderValue">7</span></label>
+                            <input type="range" id="phSlider" min="0" max="14" value="7" step="0.5" 
+                                   style="width: 100%; height: 30px; cursor: pointer;"
+                                   oninput="updateIndicators()">
+                        </div>
+
+                        <div class="beaker-display">
+                            <div>
+                                <div class="test-tube" id="tube1">
+                                    <div class="test-tube-liquid" id="liquid1"></div>
+                                </div>
+                                <p class="test-tube-label">Methyl<br>Orange</p>
+                            </div>
+                            <div>
+                                <div class="test-tube" id="tube2">
+                                    <div class="test-tube-liquid" id="liquid2"></div>
+                                </div>
+                                <p class="test-tube-label">Bromothymol<br>Blue</p>
+                            </div>
+                            <div>
+                                <div class="test-tube" id="tube3">
+                                    <div class="test-tube-liquid" id="liquid3"></div>
+                                </div>
+                                <p class="test-tube-label">Phenol-<br>phthalein</p>
+                            </div>
+                            <div>
+                                <div class="test-tube" id="tube4">
+                                    <div class="test-tube-liquid" id="liquid4"></div>
+                                </div>
+                                <p class="test-tube-label">Universal<br>Indicator</p>
+                            </div>
+                        </div>
+
+                        <div class="ph-display">
+                            <p class="ph-value" id="phDisplayValue">pH 7</p>
+                            <p class="ph-type" id="phDisplayType">Neutral</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Class Exercises -->
+        <div class="card" id="exercises">
+            <div class="section-header" onclick="toggleSection('exercisesContent')">
+                <div class="section-icon">✏️</div>
+                <h3 class="section-title">Class Exercises</h3>
+                <span class="collapse-icon" id="exercisesIcon">▼</span>
+            </div>
+            <div class="section-content" id="exercisesContent">
+                <p style="margin-bottom: 1.5rem; color: #64748b;">Practice these pH calculation problems:</p>
+                
+                <div class="exercise-box">
+                    <h4>📝 Exercise 1</h4>
+                    <p>4.5 g of HNO<sub>3</sub> is dissolved in 500 cm³ of water. Calculate the pH of the solution.</p>
+                    <p style="color: #64748b; font-size: 0.9rem;">(M of HNO<sub>3</sub> = 63 g·mol<sup>-1</sup>)</p>
+                    
+                    <button class="show-answer-btn" onclick="toggleAnswer('answer1')">Show Solution</button>
+                    <div class="answer-box" id="answer1">
+                        <h5>✅ Solution:</h5>
+                        <p><strong>Step 1:</strong> Ionisation equation:</p>
+                        <p style="margin-left: 1rem;">HNO<sub>3</sub>(l) + H<sub>2</sub>O(l) ⇌ H<sub>3</sub>O<sup>+</sup>(aq) + NO<sub>3</sub><sup>-</sup>(aq)</p>
+                        <p style="margin-top: 0.5rem;"><strong>Step 2:</strong> Calculate moles: n = m/M = 4.5/63 = 0.0714 mol</p>
+                        <p style="margin-top: 0.5rem;"><strong>Step 3:</strong> Convert volume: V = 500/1000 = 0.5 dm³</p>
+                        <p style="margin-top: 0.5rem;"><strong>Step 4:</strong> Calculate concentration: c = n/V = 0.0714/0.5 = 0.143 mol·dm<sup>-3</sup></p>
+                        <p style="margin-top: 0.5rem;"><strong>Step 5:</strong> Calculate pH: pH = -log(0.143) = <strong>0.85</strong></p>
+                    </div>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>📝 Exercise 2</h4>
+                    <p>Calculate the pH of H<sub>2</sub>SO<sub>4</sub> of concentration 1.2 × 10<sup>-4</sup> mol·dm<sup>-3</sup>, assuming complete ionisation of the acid occurs.</p>
+                    
+                    <button class="show-answer-btn" onclick="toggleAnswer('answer2')">Show Solution</button>
+                    <div class="answer-box" id="answer2">
+                        <h5>✅ Solution:</h5>
+                        <p><strong>Step 1:</strong> Ionisation equation:</p>
+                        <p style="margin-left: 1rem;">H<sub>2</sub>SO<sub>4</sub>(l) + 2H<sub>2</sub>O(l) ⇌ 2H<sub>3</sub>O<sup>+</sup>(aq) + SO<sub>4</sub><sup>2-</sup>(aq)</p>
+                        <p style="margin-top: 0.5rem;"><strong>Step 2:</strong> Since H<sub>2</sub>SO<sub>4</sub> is diprotic:</p>
+                        <p style="margin-left: 1rem;">[H<sub>3</sub>O<sup>+</sup>] = 2 × 1.2 × 10<sup>-4</sup> = 2.4 × 10<sup>-4</sup> mol·dm<sup>-3</sup></p>
+                        <p style="margin-top: 0.5rem;"><strong>Step 3:</strong> Calculate pH: pH = -log(2.4 × 10<sup>-4</sup>) = <strong>3.62</strong></p>
+                    </div>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>📝 Exercise 3</h4>
+                    <p>Calculate the pH of HCl of concentration 1 × 10<sup>-2</sup> mol·dm<sup>-3</sup>.</p>
+                    
+                    <button class="show-answer-btn" onclick="toggleAnswer('answer3')">Show Solution</button>
+                    <div class="answer-box" id="answer3">
+                        <h5>✅ Solution:</h5>
+                        <p><strong>Step 1:</strong> Ionisation equation:</p>
+                        <p style="margin-left: 1rem;">HCl(l) + H<sub>2</sub>O(l) ⇌ H<sub>3</sub>O<sup>+</sup>(aq) + Cl<sup>-</sup>(aq)</p>
+                        <p style="margin-top: 0.5rem;"><strong>Step 2:</strong> Since HCl is monoprotic and ionises completely:</p>
+                        <p style="margin-left: 1rem;">[H<sub>3</sub>O<sup>+</sup>] = 1 × 10<sup>-2</sup> mol·dm<sup>-3</sup></p>
+                        <p style="margin-top: 0.5rem;"><strong>Step 3:</strong> Calculate pH: pH = -log(1 × 10<sup>-2</sup>) = <strong>2</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="card" id="quiz">
+            <div class="section-header" onclick="toggleSection('quizContent')">
+                <div class="section-icon">❓</div>
+                <h3 class="section-title">End of Lesson Questions</h3>
+                <span class="collapse-icon" id="quizIcon">▼</span>
+            </div>
+            <div class="section-content" id="quizContent">
+                <div class="quiz-container" id="quizContainer">
+                    <!-- Questions will be generated by JavaScript -->
+                </div>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="submit-quiz-btn" onclick="submitQuiz()">📝 Submit Answers</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Score Display -->
+        <div class="score-container" id="score">
+            <h3 style="margin-bottom: 1rem; font-size: 1.5rem;">🎉 Quiz Results</h3>
+            <div class="score-circle">
+                <span class="score-percentage" id="scorePercentage">0%</span>
+                <span class="score-label">Score</span>
+            </div>
+            <p id="scoreMessage" style="font-size: 1.1rem; margin-top: 1rem;"></p>
+            <p id="scoreDetails" style="opacity: 0.8; margin-top: 0.5rem;"></p>
+            <button class="calc-btn" style="margin-top: 1.5rem;" onclick="resetQuiz()">🔄 Try Again</button>
+        </div>
+
+        <!-- Lesson Navigation -->
+        <div class="lesson-nav">
+            <button class="nav-btn prev">
+                ← Previous Lesson
+            </button>
+            <button class="nav-btn next">
+                Next Lesson →
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>PassProof Academy</strong></p>
+        <p style="margin-top: 0.5rem;">© 2026 PassProof Academy. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Quiz Questions Data
+        const quizQuestions = [
+            {
+                id: 1,
+                question: "What is the pH range of acidic solutions?",
+                options: ["0 to 7", "Less than 7", "Greater than 7", "Exactly 7"],
+                correct: 1
+            },
+            {
+                id: 2,
+                question: "What colour does methyl orange turn in an acidic solution?",
+                options: ["Yellow", "Blue", "Red", "Colourless"],
+                correct: 2
+            },
+            {
+                id: 3,
+                question: "What is the pH of distilled water?",
+                options: ["0", "1", "7", "14"],
+                correct: 2
+            },
+            {
+                id: 4,
+                question: "What colour does phenolphthalein turn in a basic solution?",
+                options: ["Yellow", "Blue", "Colourless", "Pink"],
+                correct: 3
+            },
+            {
+                id: 5,
+                question: "What is the formula for calculating pH?",
+                options: ["pH = log[H₃O⁺]", "pH = -log[H₃O⁺]", "pH = [H₃O⁺]/10", "pH = 14 - [H₃O⁺]"],
+                correct: 1
+            },
+            {
+                id: 6,
+                question: "If [H₃O⁺] = 1 × 10⁻³ mol·dm⁻³, what is the pH?",
+                options: ["1", "2", "3", "4"],
+                correct: 2
+            },
+            {
+                id: 7,
+                question: "For H₂SO₄ (diprotic acid), if the concentration is 0.01 mol·dm⁻³, what is [H₃O⁺]?",
+                options: ["0.01 mol·dm⁻³", "0.02 mol·dm⁻³", "0.005 mol·dm⁻³", "0.1 mol·dm⁻³"],
+                correct: 1
+            },
+            {
+                id: 8,
+                question: "What colour does bromothymol blue turn in a basic solution?",
+                options: ["Yellow", "Blue", "Green", "Red"],
+                correct: 1
+            },
+            {
+                id: 9,
+                question: "What is an indicator?",
+                options: [
+                    "A strong acid",
+                    "A weak organic dye that changes colour at definite pH values",
+                    "A neutral solution",
+                    "A type of base"
+                ],
+                correct: 1
+            },
+            {
+                id: 10,
+                question: "If 0.365 g of HCl is dissolved in 1 dm³ of water, what is the concentration? (M of HCl = 36.5)",
+                options: ["0.1 mol·dm⁻³", "0.01 mol·dm⁻³", "1 mol·dm⁻³", "0.001 mol·dm⁻³"],
+                correct: 1
+            },
+            {
+                id: 11,
+                question: "What colour does universal indicator turn in a strongly basic solution (pH 14)?",
+                options: ["Red", "Yellow", "Green", "Purple"],
+                correct: 3
+            },
+            {
+                id: 12,
+                question: "Calculate the pH of a HNO₃ solution with concentration 0.001 mol·dm⁻³.",
+                options: ["1", "2", "3", "4"],
+                correct: 2
+            },
+            {
+                id: 13,
+                question: "Which indicator is colourless in acidic solutions?",
+                options: ["Methyl orange", "Bromothymol blue", "Phenolphthalein", "Universal indicator"],
+                correct: 2
+            },
+            {
+                id: 14,
+                question: "The formula c = n/V is used to calculate:",
+                options: ["pH", "Molar mass", "Concentration", "Number of moles"],
+                correct: 2
+            },
+            {
+                id: 15,
+                question: "A solution with pH 2 is how many times more acidic than a solution with pH 4?",
+                options: ["2 times", "10 times", "100 times", "4 times"],
+                correct: 2
+            }
+        ];
+
+        let userAnswers = {};
+        let quizSubmitted = false;
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            generateQuiz();
+            loadProgress();
+            updateIndicators();
+        });
+
+        // Generate Quiz Questions
+        function generateQuiz() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = '';
+
+            quizQuestions.forEach((q, index) => {
+                const questionHTML = `
+                    <div class="question-card" id="question${q.id}">
+                        <div class="question-text">
+                            <span class="question-number">${q.id}</span>
+                            ${q.question}
+                        </div>
+                        <div class="options-container">
+                            ${q.options.map((opt, i) => `
+                                <label class="option-label" id="q${q.id}opt${i}">
+                                    <input type="radio" name="q${q.id}" value="${i}" onchange="selectAnswer(${q.id}, ${i})">
+                                    ${opt}
+                                </label>
+                            `).join('')}
+                        </div>
+                        <div class="feedback" id="feedback${q.id}"></div>
+                    </div>
+                `;
+                container.innerHTML += questionHTML;
+            });
+        }
+
+        // Select Answer
+        function selectAnswer(questionId, optionIndex) {
+            userAnswers[questionId] = optionIndex;
+            
+            const options = document.querySelectorAll(`[name="q${questionId}"]`);
+            options.forEach((opt, i) => {
+                const label = document.getElementById(`q${questionId}opt${i}`);
+                label.classList.remove('selected');
+                if (i === optionIndex) {
+                    label.classList.add('selected');
+                }
+            });
+
+            saveProgress();
+            updateProgressBar();
+        }
+
+        // Submit Quiz
+        function submitQuiz() {
+            if (Object.keys(userAnswers).length < quizQuestions.length) {
+                alert('Please answer all questions before submitting!');
+                return;
+            }
+
+            quizSubmitted = true;
+            let correctCount = 0;
+
+            quizQuestions.forEach(q => {
+                const questionCard = document.getElementById(`question${q.id}`);
+                const feedback = document.getElementById(`feedback${q.id}`);
+                const userAnswer = userAnswers[q.id];
+
+                const options = document.querySelectorAll(`[name="q${q.id}"]`);
+                options.forEach(opt => opt.disabled = true);
+
+                const correctLabel = document.getElementById(`q${q.id}opt${q.correct}`);
+                correctLabel.classList.add('correct-answer');
+
+                if (userAnswer === q.correct) {
+                    correctCount++;
+                    questionCard.classList.add('correct');
+                    feedback.className = 'feedback correct';
+                    feedback.innerHTML = '✅ Correct! Well done!';
+                } else {
+                    questionCard.classList.add('incorrect');
+                    const wrongLabel = document.getElementById(`q${q.id}opt${userAnswer}`);
+                    wrongLabel.classList.add('wrong-answer');
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = `❌ Incorrect. The correct answer is: ${q.options[q.correct]}`;
+                }
+            });
+
+            const percentage = Math.round((correctCount / quizQuestions.length) * 100);
+            displayScore(correctCount, quizQuestions.length, percentage);
+            saveProgress();
+        }
+
+        // Display Score
+        function displayScore(correct, total, percentage) {
+            const scoreContainer = document.getElementById('score');
+            const scorePercentage = document.getElementById('scorePercentage');
+            const scoreMessage = document.getElementById('scoreMessage');
+            const scoreDetails = document.getElementById('scoreDetails');
+
+            scorePercentage.textContent = percentage + '%';
+            scoreDetails.textContent = `You got ${correct} out of ${total} questions correct.`;
+
+            if (percentage >= 80) {
+                scoreMessage.textContent = '🌟 Excellent! You have mastered pH calculations!';
+            } else if (percentage >= 60) {
+                scoreMessage.textContent = '👍 Good job! Keep practicing to improve!';
+            } else if (percentage >= 40) {
+                scoreMessage.textContent = '📚 Fair attempt. Review the lesson and try again!';
+            } else {
+                scoreMessage.textContent = '💪 Keep studying! You can do better!';
+            }
+
+            scoreContainer.classList.add('show');
+            scoreContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Reset Quiz
+        function resetQuiz() {
+            userAnswers = {};
+            quizSubmitted = false;
+            generateQuiz();
+            document.getElementById('score').classList.remove('show');
+            updateProgressBar();
+            localStorage.removeItem('phScaleProgress');
+        }
+
+        // Toggle Section
+        function toggleSection(sectionId) {
+            const content = document.getElementById(sectionId);
+            const icon = document.getElementById(sectionId.replace('Content', 'Icon'));
+            
+            content.classList.toggle('collapsed');
+            if (content.classList.contains('collapsed')) {
+                icon.textContent = '▶';
+            } else {
+                icon.textContent = '▼';
+            }
+        }
+
+        // Toggle Dropdown
+        function toggleDropdown() {
+            const menu = document.getElementById('dropdownMenu');
+            menu.classList.toggle('active');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const dropdown = document.querySelector('.nav-dropdown');
+            if (!dropdown.contains(e.target)) {
+                document.getElementById('dropdownMenu').classList.remove('active');
+            }
+        });
+
+        // Toggle Answer
+        function toggleAnswer(id) {
+            const answerBox = document.getElementById(id);
+            answerBox.classList.toggle('show');
+        }
+
+        // Save Progress
+        function saveProgress() {
+            const progress = {
+                answers: userAnswers,
+                submitted: quizSubmitted,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('phScaleProgress', JSON.stringify(progress));
+        }
+
+        // Load Progress
+        function loadProgress() {
+            const saved = localStorage.getItem('phScaleProgress');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                userAnswers = progress.answers || {};
+                
+                Object.keys(userAnswers).forEach(qId => {
+                    const optIndex = userAnswers[qId];
+                    const radio = document.querySelector(`input[name="q${qId}"][value="${optIndex}"]`);
+                    if (radio) {
+                        radio.checked = true;
+                        selectAnswer(parseInt(qId), optIndex);
+                    }
+                });
+
+                updateProgressBar();
+            }
+        }
+
+        // Update Progress Bar
+        function updateProgressBar() {
+            const answered = Object.keys(userAnswers).length;
+            const total = quizQuestions.length;
+            const percentage = Math.round((answered / total) * 100);
+            
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = 
+                `${percentage}% Complete (${answered}/${total} questions answered)`;
+        }
+
+        // pH Calculator from Concentration
+        function calculatePH() {
+            const acidType = parseInt(document.getElementById('acidType').value);
+            const concentration = parseFloat(document.getElementById('concInput').value);
+            const result = document.getElementById('phResult');
+
+            if (isNaN(concentration) || concentration <= 0) {
+                result.innerHTML = '⚠️ Please enter a valid positive concentration';
+                result.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+                return;
+            }
+
+            const h3oConc = concentration * acidType;
+            const pH = -Math.log10(h3oConc);
+
+            result.style.background = 'linear-gradient(135deg, #059669, #10b981)';
+            result.innerHTML = `
+                [H₃O⁺] = ${h3oConc.toExponential(2)} mol·dm⁻³<br>
+                <strong>pH = ${pH.toFixed(2)}</strong>
+            `;
+        }
+
+        // pH Calculator from Mass
+        function calculatePHFromMass() {
+            const acidData = document.getElementById('acidSelect').value.split(',');
+            const molarMass = parseFloat(acidData[0]);
+            const protons = parseInt(acidData[1]);
+            const mass = parseFloat(document.getElementById('massInput').value);
+            const volume = parseFloat(document.getElementById('volumeInput').value);
+            const result = document.getElementById('phMassResult');
+
+            if (isNaN(mass) || isNaN(volume) || mass <= 0 || volume <= 0) {
+                result.innerHTML = '⚠️ Please enter valid positive values';
+                result.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+                return;
+            }
+
+            const moles = mass / molarMass;
+            const concentration = moles / volume;
+            const h3oConc = concentration * protons;
+            const pH = -Math.log10(h3oConc);
+
+            result.style.background = 'linear-gradient(135deg, #059669, #10b981)';
+            result.innerHTML = `
+                n = ${moles.toExponential(3)} mol<br>
+                c = ${concentration.toExponential(3)} mol·dm⁻³<br>
+                [H₃O⁺] = ${h3oConc.toExponential(3)} mol·dm⁻³<br>
+                <strong>pH = ${pH.toFixed(2)}</strong>
+            `;
+        }
+
+        // Indicator Simulator
+        function updateIndicators() {
+            const pH = parseFloat(document.getElementById('phSlider').value);
+            document.getElementById('phSliderValue').textContent = pH;
+            document.getElementById('phDisplayValue').textContent = `pH ${pH}`;
+
+            // Determine type
+            let type, typeColor;
+            if (pH < 7) {
+                type = 'Acidic';
+                typeColor = '#ef4444';
+            } else if (pH > 7) {
+                type = 'Basic (Alkaline)';
+                typeColor = '#3b82f6';
+            } else {
+                type = 'Neutral';
+                typeColor = '#10b981';
+            }
+            document.getElementById('phDisplayType').textContent = type;
+            document.getElementById('phDisplayType').style.color = typeColor;
+
+            // Methyl Orange: Red (pH < 3.1) to Yellow (pH > 4.4)
+            const liquid1 = document.getElementById('liquid1');
+            if (pH < 3.1) {
+                liquid1.style.background = 'linear-gradient(to top, #dc2626, #ef4444)';
+            } else if (pH > 4.4) {
+                liquid1.style.background = 'linear-gradient(to top, #ca8a04, #eab308)';
+            } else {
+                liquid1.style.background = 'linear-gradient(to top, #ea580c, #f97316)';
+            }
+
+            // Bromothymol Blue: Yellow (pH < 6) to Blue (pH > 7.6)
+            const liquid2 = document.getElementById('liquid2');
+            if (pH < 6) {
+                liquid2.style.background = 'linear-gradient(to top, #ca8a04, #eab308)';
+            } else if (pH > 7.6) {
+                liquid2.style.background = 'linear-gradient(to top, #1d4ed8, #3b82f6)';
+            } else {
+                liquid2.style.background = 'linear-gradient(to top, #047857, #10b981)';
+            }
+
+            // Phenolphthalein: Colorless (pH < 8.2) to Pink (pH > 10)
+            const liquid3 = document.getElementById('liquid3');
+            if (pH < 8.2) {
+                liquid3.style.background = 'linear-gradient(to top, rgba(200,200,200,0.3), rgba(230,230,230,0.5))';
+            } else if (pH > 10) {
+                liquid3.style.background = 'linear-gradient(to top, #be185d, #ec4899)';
+            } else {
+                liquid3.style.background = 'linear-gradient(to top, #f472b6, #fbcfe8)';
+            }
+
+            // Universal Indicator: Full spectrum
+            const liquid4 = document.getElementById('liquid4');
+            const colors = [
+                '#dc2626', '#ef4444', '#f97316', '#fb923c', '#fbbf24',
+                '#facc15', '#a3e635', '#22c55e', '#10b981', '#14b8a6',
+                '#06b6d4', '#0ea5e9', '#3b82f6', '#6366f1', '#7c3aed'
+            ];
+            const colorIndex = Math.round(pH);
+            liquid4.style.background = `linear-gradient(to top, ${colors[colorIndex]}, ${colors[Math.min(colorIndex + 1, 14)]})`;
+        }
+
+        // Navigation button handlers
+        document.querySelector('.nav-btn.prev').addEventListener('click', () => {
+            alert('This would navigate to Lesson 4: Neutralisation Reactions');
+        });
+
+        document.querySelector('.nav-btn.next').addEventListener('click', () => {
+            alert('This would navigate to Lesson 6: Titrations');
+        });
+
+        // Smooth scroll for dropdown links
+        document.querySelectorAll('.dropdown-item').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const target = document.getElementById(targetId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+                document.getElementById('dropdownMenu').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

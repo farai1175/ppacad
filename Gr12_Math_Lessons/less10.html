@@ -3,2297 +3,734 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Convergent & Divergent Series | Lesson 1 Week 3 | PassProof Academy</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-blue: #1a73e8;
-            --primary-dark: #0d47a1;
-            --primary-light: #e3f2fd;
-            --accent-blue: #2196f3;
-            --white: #ffffff;
-            --gray-50: #f8fafc;
-            --gray-100: #f1f5f9;
-            --gray-200: #e2e8f0;
-            --gray-300: #cbd5e1;
-            --gray-600: #475569;
-            --gray-800: #1e293b;
-            --success: #10b981;
-            --error: #ef4444;
-            --warning: #f59e0b;
-            --purple: #8b5cf6;
-            --teal: #14b8a6;
-            --rose: #f43f5e;
-            --orange: #f97316;
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 16px;
-            --transition: all 0.3s ease;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--gray-50) 0%, var(--primary-light) 100%);
-            min-height: 100vh;
-            color: var(--gray-800);
-            line-height: 1.6;
-        }
-
-        /* Header & Navigation */
-        header {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
-            color: var(--white);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-        }
-
-        .nav-dropdown {
-            position: relative;
-        }
-
-        .nav-toggle {
-            background: rgba(255,255,255,0.1);
-            border: 2px solid rgba(255,255,255,0.3);
-            color: var(--white);
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: var(--transition);
-        }
-
-        .nav-toggle:hover {
-            background: rgba(255,255,255,0.2);
-            border-color: rgba(255,255,255,0.5);
-        }
-
-        .nav-menu {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: var(--white);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-xl);
-            min-width: 280px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: var(--transition);
-            margin-top: 0.5rem;
-            overflow: hidden;
-        }
-
-        .nav-menu.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .nav-menu a {
-            display: block;
-            padding: 1rem 1.5rem;
-            color: var(--gray-800);
-            text-decoration: none;
-            transition: var(--transition);
-            border-bottom: 1px solid var(--gray-100);
-        }
-
-        .nav-menu a:hover {
-            background: var(--primary-light);
-            color: var(--primary-blue);
-            padding-left: 2rem;
-        }
-
-        .nav-menu a:last-child {
-            border-bottom: none;
-        }
-
-        /* Main Content */
-        main {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem;
-        }
-
-        /* Cards */
-        .card {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
-            padding: 2rem;
-            margin-bottom: 2rem;
-            transition: var(--transition);
-            animation: fadeInUp 0.5s ease forwards;
-            opacity: 0;
-        }
-
-        .card:hover {
-            box-shadow: var(--shadow-lg);
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .card:nth-child(1) { animation-delay: 0.1s; }
-        .card:nth-child(2) { animation-delay: 0.2s; }
-        .card:nth-child(3) { animation-delay: 0.3s; }
-        .card:nth-child(4) { animation-delay: 0.4s; }
-        .card:nth-child(5) { animation-delay: 0.5s; }
-
-        /* Meta Info */
-        .meta-badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .badge {
-            background: var(--primary-light);
-            color: var(--primary-blue);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-
-        .badge.subject {
-            background: var(--primary-blue);
-            color: var(--white);
-        }
-
-        .badge.lesson {
-            background: var(--purple);
-            color: var(--white);
-        }
-
-        .badge.converge {
-            background: var(--teal);
-            color: var(--white);
-        }
-
-        .badge.diverge {
-            background: var(--rose);
-            color: var(--white);
-        }
-
-        /* Headings */
-        h1 {
-            font-size: 2.5rem;
-            color: var(--primary-dark);
-            margin-bottom: 0.5rem;
-            line-height: 1.2;
-        }
-
-        h2 {
-            font-size: 1.75rem;
-            color: var(--primary-dark);
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 3px solid var(--primary-light);
-        }
-
-        h3 {
-            font-size: 1.25rem;
-            color: var(--gray-800);
-            margin-bottom: 0.75rem;
-        }
-
-        .subtitle {
-            font-size: 1.25rem;
-            color: var(--gray-600);
-            margin-bottom: 1.5rem;
-        }
-
-        /* Learning Objectives */
-        .objectives-list {
-            list-style: none;
-        }
-
-        .objectives-list li {
-            padding: 1rem;
-            background: var(--gray-50);
-            border-radius: var(--radius-sm);
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            transition: var(--transition);
-        }
-
-        .objectives-list li:hover {
-            background: var(--primary-light);
-            transform: translateX(5px);
-        }
-
-        .obj-icon {
-            width: 28px;
-            height: 28px;
-            background: var(--primary-blue);
-            color: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.875rem;
-            flex-shrink: 0;
-        }
-
-        /* Formula Box */
-        .formula-box {
-            background: linear-gradient(135deg, var(--primary-light) 0%, #bbdefb 100%);
-            border-left: 5px solid var(--primary-blue);
-            padding: 1.5rem 2rem;
-            border-radius: var(--radius-sm);
-            margin: 1.5rem 0;
-            text-align: center;
-        }
-
-        .formula-box.teal {
-            background: linear-gradient(135deg, #ccfbf1 0%, #99f6e4 100%);
-            border-left-color: var(--teal);
-        }
-
-        .formula-box.rose {
-            background: linear-gradient(135deg, #ffe4e6 0%, #fecdd3 100%);
-            border-left-color: var(--rose);
-        }
-
-        .formula-box.gold {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            border-left-color: var(--warning);
-        }
-
-        .formula {
-            font-size: 1.5rem;
-            color: var(--primary-dark);
-            font-weight: 600;
-            font-family: 'Times New Roman', serif;
-        }
-
-        .formula sub, .formula sup {
-            font-size: 0.7em;
-        }
-
-        .formula-label {
-            font-size: 0.875rem;
-            color: var(--gray-600);
-            margin-top: 0.5rem;
-        }
-
-        .formula-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-
-        /* Series Examples */
-        .series-examples {
-            display: grid;
-            gap: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .series-card {
-            background: var(--white);
-            border-radius: var(--radius-md);
-            padding: 1.5rem;
-            border: 2px solid var(--gray-200);
-            transition: var(--transition);
-        }
-
-        .series-card:hover {
-            box-shadow: var(--shadow-md);
-        }
-
-        .series-card.divergent {
-            border-color: var(--rose);
-            background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);
-        }
-
-        .series-card.convergent {
-            border-color: var(--teal);
-            background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
-        }
-
-        .series-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .series-number {
-            font-weight: 700;
-            color: var(--gray-600);
-        }
-
-        .series-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .series-badge.divergent {
-            background: var(--rose);
-            color: var(--white);
-        }
-
-        .series-badge.convergent {
-            background: var(--teal);
-            color: var(--white);
-        }
-
-        .series-expression {
-            font-family: 'Times New Roman', serif;
-            font-size: 1.25rem;
-            color: var(--gray-800);
-            margin-bottom: 0.75rem;
-            padding: 0.75rem;
-            background: rgba(255,255,255,0.7);
-            border-radius: var(--radius-sm);
-        }
-
-        .series-info {
-            font-size: 0.9rem;
-            color: var(--gray-600);
-        }
-
-        .series-info strong {
-            color: var(--gray-800);
-        }
-
-        /* Math Expression */
-        .math-expression {
-            font-family: 'Times New Roman', serif;
-            font-size: 1.15rem;
-            color: var(--primary-dark);
-            background: var(--primary-light);
-            padding: 0.75rem 1.25rem;
-            border-radius: var(--radius-sm);
-            display: inline-block;
-            margin: 0.5rem 0;
-        }
-
-        .math-expression.teal {
-            background: #ccfbf1;
-            color: #0f766e;
-        }
-
-        .math-expression.rose {
-            background: #ffe4e6;
-            color: #be123c;
-        }
-
-        .math-expression.highlight {
-            background: linear-gradient(135deg, var(--warning) 0%, #fbbf24 100%);
-            color: var(--gray-800);
-            font-weight: 700;
-        }
-
-        /* Worked Examples */
-        .example-box {
-            background: var(--gray-50);
-            border-radius: var(--radius-md);
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border: 2px solid var(--gray-200);
-        }
-
-        .example-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-        }
-
-        .example-number {
-            background: var(--primary-blue);
-            color: var(--white);
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.875rem;
-        }
-
-        .example-title {
-            font-weight: 600;
-            color: var(--gray-800);
-        }
-
-        .solution-steps {
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px dashed var(--gray-300);
-        }
-
-        .step {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            padding: 1rem;
-            background: var(--white);
-            border-radius: var(--radius-sm);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .step-number {
-            width: 32px;
-            height: 32px;
-            background: var(--accent-blue);
-            color: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            flex-shrink: 0;
-        }
-
-        .step-content {
-            flex: 1;
-        }
-
-        /* Note Box */
-        .note-box {
-            background: #fef3c7;
-            border-left: 4px solid var(--warning);
-            padding: 1rem;
-            border-radius: var(--radius-sm);
-            margin: 1rem 0;
-        }
-
-        .note-box.info {
-            background: var(--primary-light);
-            border-left-color: var(--primary-blue);
-        }
-
-        .note-box.success {
-            background: #d1fae5;
-            border-left-color: var(--success);
-        }
-
-        .note-box.danger {
-            background: #fee2e2;
-            border-left-color: var(--error);
-        }
-
-        /* Key Concept Box */
-        .key-concept {
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            border: 2px solid var(--accent-blue);
-            border-radius: var(--radius-md);
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .key-concept-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
-            color: var(--primary-dark);
-        }
-
-        /* Comparison Table */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-            background: var(--white);
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .comparison-table th,
-        .comparison-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .comparison-table th {
-            background: var(--primary-blue);
-            color: var(--white);
-            font-weight: 600;
-        }
-
-        .comparison-table tr:hover {
-            background: var(--gray-50);
-        }
-
-        .comparison-table .diverge-cell {
-            background: #fff1f2;
-        }
-
-        .comparison-table .converge-cell {
-            background: #f0fdfa;
-        }
-
-        /* Simulation Container */
-        .simulation-container {
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            margin: 1.5rem 0;
-            border: 2px solid var(--accent-blue);
-        }
-
-        .sim-title {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary-dark);
-        }
-
-        .sim-icon {
-            font-size: 1.5rem;
-        }
-
-        .sim-controls {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .control-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .control-group label {
-            font-weight: 600;
-            color: var(--gray-800);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .control-value {
-            background: var(--primary-blue);
-            color: var(--white);
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.875rem;
-        }
-
-        .control-value.converge {
-            background: var(--teal);
-        }
-
-        .control-value.diverge {
-            background: var(--rose);
-        }
-
-        input[type="range"] {
-            width: 100%;
-            height: 8px;
-            border-radius: 4px;
-            background: var(--gray-200);
-            outline: none;
-            -webkit-appearance: none;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: var(--primary-blue);
-            cursor: pointer;
-            box-shadow: var(--shadow-md);
-            transition: var(--transition);
-        }
-
-        input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.1);
-            background: var(--primary-dark);
-        }
-
-        input[type="number"] {
-            padding: 0.75rem;
-            border: 2px solid var(--gray-300);
-            border-radius: var(--radius-sm);
-            font-size: 1rem;
-            transition: var(--transition);
-            width: 100%;
-        }
-
-        input[type="number"]:focus {
-            border-color: var(--primary-blue);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
-        }
-
-        .sim-display {
-            background: var(--white);
-            border-radius: var(--radius-md);
-            padding: 1.5rem;
-            min-height: 200px;
-        }
-
-        .partial-sums-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .sum-box {
-            padding: 0.75rem;
-            border-radius: var(--radius-sm);
-            text-align: center;
-            transition: var(--transition);
-            animation: popIn 0.3s ease forwards;
-        }
-
-        @keyframes popIn {
-            from {
-                transform: scale(0);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        .sum-box.converge {
-            background: var(--teal);
-            color: var(--white);
-        }
-
-        .sum-box.diverge {
-            background: var(--rose);
-            color: var(--white);
-        }
-
-        .sum-box:hover {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-md);
-        }
-
-        .sum-label {
-            font-size: 0.7rem;
-            opacity: 0.9;
-        }
-
-        .sum-value {
-            font-size: 0.9rem;
-            font-weight: 700;
-        }
-
-        .result-box {
-            text-align: center;
-            padding: 1.5rem;
-            border-radius: var(--radius-md);
-            margin-top: 1rem;
-        }
-
-        .result-box.converge {
-            background: linear-gradient(135deg, var(--teal) 0%, #0d9488 100%);
-            color: var(--white);
-        }
-
-        .result-box.diverge {
-            background: linear-gradient(135deg, var(--rose) 0%, #e11d48 100%);
-            color: var(--white);
-        }
-
-        .result-label {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            margin-bottom: 0.5rem;
-        }
-
-        .result-value {
-            font-size: 2rem;
-            font-weight: 700;
-        }
-
-        .result-formula {
-            font-family: 'Times New Roman', serif;
-            margin-top: 0.5rem;
-            opacity: 0.9;
-        }
-
-        /* Quiz Section */
-        .quiz-container {
-            margin-top: 2rem;
-        }
-
-        .question-card {
-            background: var(--white);
-            border-radius: var(--radius-md);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: var(--shadow-sm);
-            border: 2px solid var(--gray-200);
-            transition: var(--transition);
-        }
-
-        .question-card.answered-correct {
-            border-color: var(--success);
-            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-        }
-
-        .question-card.answered-incorrect {
-            border-color: var(--error);
-            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
-        }
-
-        .question-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .question-number {
-            background: var(--primary-blue);
-            color: var(--white);
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-        }
-
-        .question-text {
-            flex: 1;
-            font-weight: 500;
-            font-size: 1.1rem;
-        }
-
-        .options-list {
-            display: grid;
-            gap: 0.75rem;
-            margin-top: 1rem;
-        }
-
-        .option-label {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: var(--gray-50);
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: var(--transition);
-            border: 2px solid transparent;
-        }
-
-        .option-label:hover {
-            background: var(--primary-light);
-            border-color: var(--primary-blue);
-        }
-
-        .option-label.selected {
-            background: var(--primary-light);
-            border-color: var(--primary-blue);
-        }
-
-        .option-label.correct {
-            background: #d1fae5;
-            border-color: var(--success);
-        }
-
-        .option-label.incorrect {
-            background: #fee2e2;
-            border-color: var(--error);
-        }
-
-        .option-label input {
-            display: none;
-        }
-
-        .option-marker {
-            width: 28px;
-            height: 28px;
-            border: 2px solid var(--gray-300);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            color: var(--gray-600);
-            transition: var(--transition);
-        }
-
-        .option-label:hover .option-marker,
-        .option-label.selected .option-marker {
-            border-color: var(--primary-blue);
-            background: var(--primary-blue);
-            color: var(--white);
-        }
-
-        .option-label.correct .option-marker {
-            border-color: var(--success);
-            background: var(--success);
-            color: var(--white);
-        }
-
-        .option-label.incorrect .option-marker {
-            border-color: var(--error);
-            background: var(--error);
-            color: var(--white);
-        }
-
-        .feedback {
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: var(--radius-sm);
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .feedback.show {
-            display: block;
-        }
-
-        .feedback.correct {
-            background: #d1fae5;
-            color: #065f46;
-            border-left: 4px solid var(--success);
-        }
-
-        .feedback.incorrect {
-            background: #fee2e2;
-            color: #991b1b;
-            border-left: 4px solid var(--error);
-        }
-
-        .submit-btn {
-            background: var(--primary-blue);
-            color: var(--white);
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--radius-sm);
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            margin-top: 0.5rem;
-        }
-
-        .submit-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .submit-btn:disabled {
-            background: var(--gray-300);
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* Score Display */
-        .score-card {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
-            color: var(--white);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            text-align: center;
-            margin-top: 2rem;
-            display: none;
-        }
-
-        .score-card.show {
-            display: block;
-            animation: fadeInUp 0.5s ease;
-        }
-
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 1.5rem auto;
-            border: 4px solid var(--white);
-        }
-
-        .score-percentage {
-            font-size: 2.5rem;
-            font-weight: 700;
-        }
-
-        .score-label {
-            font-size: 0.875rem;
-            opacity: 0.9;
-        }
-
-        .score-message {
-            font-size: 1.25rem;
-            margin-top: 1rem;
-        }
-
-        .retry-btn {
-            background: var(--white);
-            color: var(--primary-blue);
-            border: none;
-            padding: 0.75rem 2rem;
-            border-radius: var(--radius-sm);
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 1.5rem;
-            transition: var(--transition);
-        }
-
-        .retry-btn:hover {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-lg);
-        }
-
-        /* Navigation Buttons */
-        .lesson-nav {
-            display: flex;
-            justify-content: space-between;
-            gap: 1rem;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .nav-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem 2rem;
-            background: var(--white);
-            border: 2px solid var(--primary-blue);
-            color: var(--primary-blue);
-            border-radius: var(--radius-sm);
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .nav-btn:hover {
-            background: var(--primary-blue);
-            color: var(--white);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .nav-btn.primary {
-            background: var(--primary-blue);
-            color: var(--white);
-        }
-
-        .nav-btn.primary:hover {
-            background: var(--primary-dark);
-        }
-
-        /* Progress Bar */
-        .progress-container {
-            background: var(--gray-200);
-            border-radius: 50px;
-            height: 8px;
-            margin-top: 1rem;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--success) 0%, #34d399 100%);
-            border-radius: 50px;
-            transition: width 0.5s ease;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--gray-800);
-            color: var(--white);
-            text-align: center;
-            padding: 2rem;
-            margin-top: 3rem;
-        }
-
-        .footer-content {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .footer-logo {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-copyright {
-            color: var(--gray-300);
-            font-size: 0.875rem;
-        }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 1.75rem;
-            }
-
-            h2 {
-                font-size: 1.5rem;
-            }
-
-            .card {
-                padding: 1.5rem;
-            }
-
-            .header-container {
-                padding: 0 1rem;
-            }
-
-            .logo {
-                font-size: 1.25rem;
-            }
-
-            .logo-icon {
-                width: 35px;
-                height: 35px;
-            }
-
-            .nav-toggle {
-                padding: 0.5rem 1rem;
-                font-size: 0.875rem;
-            }
-
-            .meta-badges {
-                justify-content: center;
-            }
-
-            .formula {
-                font-size: 1.1rem;
-            }
-
-            .formula-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .sim-controls {
-                grid-template-columns: 1fr;
-            }
-
-            .lesson-nav {
-                flex-direction: column;
-            }
-
-            .nav-btn {
-                justify-content: center;
-            }
-
-            .step {
-                flex-direction: column;
-                gap: 0.75rem;
-            }
-
-            .partial-sums-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-
-            .comparison-table {
-                font-size: 0.85rem;
-            }
-
-            .comparison-table th,
-            .comparison-table td {
-                padding: 0.75rem 0.5rem;
-            }
-        }
-
-        /* Print Styles */
-        @media print {
-            header, footer, .lesson-nav, .simulation-container {
-                display: none;
-            }
-        }
-
-        /* Utility Classes */
-        .text-center { text-align: center; }
-        .mt-1 { margin-top: 0.5rem; }
-        .mt-2 { margin-top: 1rem; }
-        .mt-3 { margin-top: 1.5rem; }
-        .mb-2 { margin-bottom: 1rem; }
-    </style>
+    <title>Grade 12 Maths | Geometric Series Proofs | PassProof Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="math-lessons.css">
 </head>
 <body>
-    <!-- Header with Dropdown Navigation -->
+    <!-- ===== HEADER ===== -->
     <header>
-        <div class="header-container">
-            <div class="logo">
-                <div class="logo-icon">∞</div>
-                PassProof Academy
-            </div>
-            <nav class="nav-dropdown">
-                <button class="nav-toggle" id="navToggle">
-                    <span>☰</span> Menu
-                </button>
-                <div class="nav-menu" id="navMenu">
-                    <a href="#overview">📋 Overview</a>
-                    <a href="#objectives">🎯 Learning Objectives</a>
-                    <a href="#concepts">📚 Key Concepts</a>
-                    <a href="#examples">✏️ Worked Examples</a>
-                    <a href="#simulation">🔬 Interactive Simulations</a>
-                    <a href="#quiz">📝 Practice Quiz</a>
-                    <a href="#progress">📊 My Progress</a>
-                </div>
-            </nav>
-        </div>
+        <a href="index.html" class="logo">
+            <img src="logo_tick.jpg" alt="PassProof Academy Logo" onerror="this.style.display='none'">
+        </a>
+        <nav style="flex: 1; text-align: right;">
+            <span style="font-size: 1.75rem; color: var(--navy);">
+                <img src="favicon-32x32.png" alt="" onerror="this.style.display='none'">
+                Grade 12 Mathematics
+            </span>
+        </nav>
     </header>
 
+    <!-- ===== STICKY LESSON MAP ===== -->
+    <nav class="sticky-nav">
+        <ul class="lesson-map">
+            <li><a href="#objectives" class="nav-link">🎯 Objectives</a></li>
+            <li><a href="#pre-knowledge" class="nav-link">🧠 Pre-Knowledge</a></li>
+            <li><a href="#baseline" class="nav-link">📝 Baseline</a></li>
+            <li><a href="#theory" class="nav-link">📚 Key Theory</a></li>
+            <li><a href="#lab" class="nav-link">🧪 Virtual Lab</a></li>
+            <li><a href="#quiz" class="nav-link">✓ Quiz</a></li>
+            <li><a href="#video" class="nav-link">📹 Video</a></li>
+            <li><a href="#tutor" class="nav-link">👨‍🏫 Live Tutor</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===== MAIN CONTENT ===== -->
     <main>
-        <!-- Subject & Grade -->
-        <section class="card" id="overview">
-            <div class="meta-badges">
-                <span class="badge subject">Mathematics</span>
-                <span class="badge">Grade 12</span>
-                <span class="badge">Term 1 • Week 3</span>
-                <span class="badge lesson">Lesson 1</span>
-                <span class="badge converge">Convergence</span>
-                <span class="badge diverge">Divergence</span>
-                <span class="badge">⏱️ 60 min</span>
+        <!-- Section: Objectives -->
+        <section id="objectives">
+            <div class="section-header" data-toggle="objectives-content">
+                <h2>🎯 Lesson Objectives</h2>
+                <span class="toggle-icon">▼</span>
             </div>
-
-            <!-- Topic & Lesson Title -->
-            <h1>Geometric Sequences and Series</h1>
-            <p class="subtitle">Lesson 1: Convergent and Divergent Series & Sum to Infinity</p>
-
-            <!-- Progress Indicator -->
-            <div class="progress-container">
-                <div class="progress-bar" id="progressBar" style="width: 0%"></div>
-            </div>
-            <p class="text-center mt-1" style="color: var(--gray-600); font-size: 0.875rem;">
-                <span id="progressText">0%</span> Complete
-            </p>
-        </section>
-
-        <!-- Learning Objectives -->
-        <section class="card" id="objectives">
-            <h2>🎯 Learning Objectives</h2>
-            <ul class="objectives-list">
-                <li>
-                    <div class="obj-icon">1</div>
-                    <span>Distinguish between diverging and converging geometric series.</span>
-                </li>
-                <li>
-                    <div class="obj-icon">2</div>
-                    <span>Investigate the sum of an infinite geometric series.</span>
-                </li>
-                <li>
-                    <div class="obj-icon">3</div>
-                    <span>Learn to identify a converging geometric series and understand the condition for r.</span>
-                </li>
-                <li>
-                    <div class="obj-icon">4</div>
-                    <span>Apply the formula to sum a converging geometric series to infinity.</span>
-                </li>
-            </ul>
-        </section>
-
-        <!-- Key Concepts -->
-        <section class="card" id="concepts">
-            <h2>📚 Key Concepts</h2>
-
-            <p>So far, we've been finding the sum of a <strong>finite number</strong> of terms using:</p>
-            
-            <div class="formula-box">
-                <div class="formula">S<sub>n</sub> = <sup>a(r<sup>n</sup> − 1)</sup>/<sub>r − 1</sub> , r ≠ 1</div>
-                <div class="formula-label">Sum of n terms</div>
-            </div>
-
-            <p>Now we investigate: <strong>What happens when a series has infinitely many terms?</strong></p>
-
-            <div class="key-concept">
-                <div class="key-concept-header">
-                    <span>🔑</span> The Big Question
-                </div>
-                <p>Can we add up infinitely many numbers and get a finite answer?</p>
-                <p style="margin-top: 0.5rem;">The answer is: <strong>Sometimes yes!</strong> It depends on the value of r.</p>
-            </div>
-
-            <h3 class="mt-3">Divergent vs Convergent Series</h3>
-
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Type</th>
-                        <th>Condition</th>
-                        <th>Behavior</th>
-                        <th>Sum to ∞</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="diverge-cell">
-                        <td><strong>Divergent</strong></td>
-                        <td>r ≥ 1 or r ≤ −1</td>
-                        <td>Sum grows without bound or oscillates</td>
-                        <td>Does NOT exist</td>
-                    </tr>
-                    <tr class="converge-cell">
-                        <td><strong>Convergent</strong></td>
-                        <td>−1 < r < 1</td>
-                        <td>Sum approaches a fixed value</td>
-                        <td>S<sub>∞</sub> = a/(1−r)</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3 class="mt-3">Examples of Series Behavior</h3>
-
-            <div class="series-examples">
-                <div class="series-card divergent">
-                    <div class="series-header">
-                        <span class="series-number">Example 1</span>
-                        <span class="series-badge divergent">Diverges</span>
-                    </div>
-                    <div class="series-expression">1 + 3 + 9 + 27 + ...</div>
-                    <div class="series-info">
-                        <strong>r = 3</strong> (r > 1)<br>
-                        The sum gets bigger and bigger without limit.
-                    </div>
-                </div>
-
-                <div class="series-card divergent">
-                    <div class="series-header">
-                        <span class="series-number">Example 2</span>
-                        <span class="series-badge divergent">Diverges</span>
-                    </div>
-                    <div class="series-expression">1 − 2 + 4 − 8 + ...</div>
-                    <div class="series-info">
-                        <strong>r = −2</strong> (r < −1)<br>
-                        The sum alternates between positive and negative, never settling.
-                    </div>
-                </div>
-
-                <div class="series-card divergent">
-                    <div class="series-header">
-                        <span class="series-number">Example 3</span>
-                        <span class="series-badge divergent">Diverges</span>
-                    </div>
-                    <div class="series-expression">2 + 2 + 2 + 2 + ...</div>
-                    <div class="series-info">
-                        <strong>r = 1</strong><br>
-                        The sum keeps growing: 2, 4, 6, 8, ...
-                    </div>
-                </div>
-
-                <div class="series-card divergent">
-                    <div class="series-header">
-                        <span class="series-number">Example 4</span>
-                        <span class="series-badge divergent">Diverges</span>
-                    </div>
-                    <div class="series-expression">2 − 2 + 2 − 2 + ...</div>
-                    <div class="series-info">
-                        <strong>r = −1</strong><br>
-                        The sum oscillates: 2, 0, 2, 0, ...
-                    </div>
-                </div>
-
-                <div class="series-card convergent">
-                    <div class="series-header">
-                        <span class="series-number">Example 5</span>
-                        <span class="series-badge convergent">Converges ✓</span>
-                    </div>
-                    <div class="series-expression">1/2 + 1/4 + 1/8 + 1/16 + ...</div>
-                    <div class="series-info">
-                        <strong>r = 1/2</strong> (−1 < r < 1)<br>
-                        Partial sums: 0.5, 0.75, 0.875, 0.9375... → approaching <strong>1</strong>
-                    </div>
-                </div>
-            </div>
-
-            <div class="formula-box teal">
-                <div class="formula">S<sub>∞</sub> = <sup>a</sup>/<sub>1 − r</sub> , where −1 < r < 1</div>
-                <div class="formula-label">Sum to Infinity Formula (Convergent Series Only)</div>
-            </div>
-
-            <div class="note-box">
-                <strong>📌 Key Point:</strong> An <strong>Arithmetic Series</strong> will always diverge (the terms don't get smaller). Only geometric series with |r| < 1 can converge.
+            <div class="section-content" id="objectives-content">
+                <p><strong>Topic:</strong> Geometric Sequences and Series (Lesson 5) | <strong>Time:</strong> 30 minutes</p>
+                <p style="margin-top: 1rem;">By the end of this lesson, you will be able to:</p>
+                <ul>
+                    <li>Prove the formula for the sum of a Geometric Series: <strong>Sₙ = a(rⁿ - 1)/(r - 1)</strong></li>
+                    <li>Derive the alternate formula: <strong>Sₙ = a(1 - rⁿ)/(1 - r)</strong> for when r &lt; 1</li>
+                    <li>Extend the proof to derive the formula for the Sum to Infinity: <strong>S∞ = a/(1 - r)</strong></li>
+                    <li>Understand the condition <strong>-1 &lt; r &lt; 1</strong> for convergence to infinity</li>
+                </ul>
             </div>
         </section>
 
-        <!-- Worked Examples -->
-        <section class="card" id="examples">
-            <h2>✏️ Worked Examples</h2>
+        <!-- Section: Pre-Knowledge -->
+        <section id="pre-knowledge">
+            <div class="section-header" data-toggle="pre-knowledge-content">
+                <h2>🧠 Pre-Knowledge Check</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content" id="pre-knowledge-content">
+                <p>Before starting this lesson, make sure you understand:</p>
+                <ul class="knowledge-list">
+                    <li>The definition of a geometric sequence and the common ratio (r)</li>
+                    <li>How to identify the first term (a) and common ratio (r) from a sequence</li>
+                    <li>The general term formula: Tₙ = arⁿ⁻¹</li>
+                    <li>Basic algebraic manipulation including factoring and working with exponents</li>
+                    <li>The concept of a series as the sum of terms in a sequence</li>
+                </ul>
+            </div>
+        </section>
 
-            <!-- Example 1 -->
-            <div class="example-box">
-                <div class="example-header">
-                    <span class="example-number">Example 1</span>
-                    <span class="example-title">Finding Sum to Infinity</span>
-                </div>
-                <p><strong>Problem:</strong> Find the sum to infinity of: 10/3 + 10/9 + 10/27 + ...</p>
+        <!-- Section: Baseline Questions -->
+        <section id="baseline">
+            <div class="section-header" data-toggle="baseline-content">
+                <h2>📝 Baseline Questions</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content" id="baseline-content">
+                <p>Review your understanding from previous lessons:</p>
+                <ul class="baseline-list">
+                    <li>For the sequence 2, 6, 18, 54, ..., what is the common ratio?</li>
+                    <li>Write out the first 5 terms of the geometric series with a = 3 and r = 2</li>
+                    <li>If Sₙ = a(rⁿ - 1)/(r - 1), calculate S₄ when a = 2 and r = 3</li>
+                    <li>What happens to rⁿ as n increases when |r| &lt; 1?</li>
+                </ul>
+            </div>
+        </section>
 
-                <div class="solution-steps">
-                    <h4>Solution:</h4>
+        <!-- Section: Key Theory -->
+        <section id="theory">
+            <div class="section-header" data-toggle="theory-content">
+                <h2>📚 Key Theory & Proofs</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content theory-content" id="theory-content">
+                <h3>Overview</h3>
+                <p>
+                    In this lesson, we will prove the formulas used to calculate the sum of a geometric series. 
+                    Understanding these proofs is essential for the Grade 12 curriculum and helps you appreciate 
+                    why these formulas work. We will also extend our understanding to series that sum to infinity.
+                </p>
+
+                <h3><span class="key-term">Proof: Sum of a Geometric Series</span></h3>
+                <p>
+                    A geometric series is the sum of terms in a geometric sequence. Let's derive the formula step by step.
+                </p>
+
+                <div class="proof-box">
+                    <h4>📐 Derivation of Sₙ = a(rⁿ - 1)/(r - 1)</h4>
                     
-                    <div class="step">
+                    <div class="proof-step">
                         <div class="step-number">1</div>
                         <div class="step-content">
-                            <p><strong>Identify a and r:</strong></p>
-                            <div class="math-expression">a = 10/3</div>
-                            <p style="margin-top: 0.5rem;">Find r by dividing consecutive terms:</p>
-                            <div class="math-expression">r = (10/9) ÷ (10/3) = (10/9) × (3/10) = 1/3</div>
+                            <strong>Write out the sum of n terms:</strong>
+                            <div class="equation">Sₙ = a + ar + ar² + ar³ + ... + arⁿ⁻² + arⁿ⁻¹</div>
+                            <p class="explanation">This is equation (1). The series has n terms, starting from a and ending at arⁿ⁻¹.</p>
                         </div>
                     </div>
 
-                    <div class="step">
+                    <div class="proof-step">
                         <div class="step-number">2</div>
                         <div class="step-content">
-                            <p><strong>Check if series converges:</strong></p>
-                            <div class="math-expression teal">−1 < 1/3 < 1 ✓ Series converges!</div>
+                            <strong>Multiply both sides by r:</strong>
+                            <div class="equation">r × Sₙ = ar + ar² + ar³ + ... + arⁿ⁻¹ + arⁿ</div>
+                            <p class="explanation">This is equation (2). Notice each term has been multiplied by r.</p>
                         </div>
                     </div>
 
-                    <div class="step">
+                    <div class="proof-step">
                         <div class="step-number">3</div>
                         <div class="step-content">
-                            <p><strong>Apply the sum to infinity formula:</strong></p>
-                            <div class="math-expression">S<sub>∞</sub> = a / (1 − r)</div>
-                            <div class="math-expression">S<sub>∞</sub> = (10/3) / (1 − 1/3)</div>
-                            <div class="math-expression">S<sub>∞</sub> = (10/3) / (2/3)</div>
-                            <div class="math-expression">S<sub>∞</sub> = (10/3) × (3/2) = 10/2 = 5</div>
+                            <strong>Subtract equation (1) from equation (2):</strong>
+                            <div class="equation">rSₙ - Sₙ = arⁿ - a</div>
+                            <p class="explanation">All the middle terms cancel out! Only the first term of (1) and last term of (2) remain.</p>
                         </div>
                     </div>
 
-                    <div class="step">
+                    <div class="proof-step">
                         <div class="step-number">4</div>
                         <div class="step-content">
-                            <p><strong>Final Answer:</strong></p>
-                            <div class="math-expression highlight">S<sub>∞</sub> = 5</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Example 2 -->
-            <div class="example-box">
-                <div class="example-header">
-                    <span class="example-number">Example 2</span>
-                    <span class="example-title">Sum to Infinity with Sigma Notation</span>
-                </div>
-                <p><strong>Problem:</strong> Find the sum to infinity of: <span style="font-family: 'Times New Roman', serif; font-size: 1.2rem;">∑<sub>n=1</sub><sup>∞</sup> (1/5)<sup>n</sup></span></p>
-
-                <div class="solution-steps">
-                    <h4>Solution:</h4>
-                    
-                    <div class="step">
-                        <div class="step-number">1</div>
-                        <div class="step-content">
-                            <p><strong>Write out the first few terms:</strong></p>
-                            <p>Substitute n = 1, 2, 3, ... into (1/5)<sup>n</sup>:</p>
-                            <div class="math-expression">T<sub>1</sub> = (1/5)<sup>1</sup> = 1/5</div>
-                            <div class="math-expression">T<sub>2</sub> = (1/5)<sup>2</sup> = 1/25</div>
-                            <div class="math-expression">T<sub>3</sub> = (1/5)<sup>3</sup> = 1/125</div>
-                            <p style="margin-top: 0.5rem;">Series: 1/5 + 1/25 + 1/125 + ...</p>
+                            <strong>Factor both sides:</strong>
+                            <div class="equation">Sₙ(r - 1) = a(rⁿ - 1)</div>
+                            <p class="explanation">Take out Sₙ as a common factor on the left, and a on the right.</p>
                         </div>
                     </div>
 
-                    <div class="step">
-                        <div class="step-number">2</div>
-                        <div class="step-content">
-                            <p><strong>Identify a and r:</strong></p>
-                            <div class="math-expression">a = 1/5</div>
-                            <div class="math-expression">r = (1/25) ÷ (1/5) = 1/5</div>
-                        </div>
-                    </div>
-
-                    <div class="step">
-                        <div class="step-number">3</div>
-                        <div class="step-content">
-                            <p><strong>Check convergence:</strong></p>
-                            <div class="math-expression teal">−1 < 1/5 < 1 ✓ Series converges!</div>
-                        </div>
-                    </div>
-
-                    <div class="step">
-                        <div class="step-number">4</div>
-                        <div class="step-content">
-                            <p><strong>Apply the formula:</strong></p>
-                            <div class="math-expression">S<sub>∞</sub> = (1/5) / (1 − 1/5)</div>
-                            <div class="math-expression">S<sub>∞</sub> = (1/5) / (4/5)</div>
-                            <div class="math-expression">S<sub>∞</sub> = (1/5) × (5/4) = 1/4</div>
-                        </div>
-                    </div>
-
-                    <div class="step">
+                    <div class="proof-step">
                         <div class="step-number">5</div>
                         <div class="step-content">
-                            <p><strong>Final Answer:</strong></p>
-                            <div class="math-expression highlight">S<sub>∞</sub> = 1/4 = 0.25</div>
+                            <strong>Divide both sides by (r - 1):</strong>
+                            <div class="equation">Sₙ = a(rⁿ - 1)/(r - 1), where r ≠ 1</div>
+                            <p class="explanation">This is our final formula for the sum of a geometric series!</p>
                         </div>
                     </div>
                 </div>
+
+                <div class="formula-box highlight">
+                    Sₙ = a(rⁿ - 1)/(r - 1)
+                    <small>Use when r > 1 (common ratio greater than 1)</small>
+                </div>
+
+                <h3><span class="key-term">Alternate Formula</span></h3>
+                <p>
+                    If we subtract equation (2) from equation (1) instead, we get an alternate formula that is more 
+                    convenient when r &lt; 1:
+                </p>
+
+                <div class="formula-box">
+                    Sₙ = a(1 - rⁿ)/(1 - r)
+                    <small>Use when r < 1 (common ratio less than 1)</small>
+                </div>
+
+                <div class="important-note">
+                    <strong>⚠️ Important:</strong> Both formulas are mathematically equivalent! Choose the one that 
+                    avoids negative numbers in your calculation. If r > 1, use the first formula. If r < 1, use the second.
+                </div>
+
+                <h3><span class="key-term">Sum to Infinity (S∞)</span></h3>
+                <p>
+                    When the common ratio r is between -1 and 1 (i.e., |r| &lt; 1), we can find the sum of an 
+                    <strong>infinite</strong> geometric series. Let's derive this formula.
+                </p>
+
+                <div class="proof-box">
+                    <h4>📐 Derivation of S∞ = a/(1 - r)</h4>
+                    
+                    <div class="proof-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <strong>Start with the formula for Sₙ:</strong>
+                            <div class="equation">Sₙ = a(1 - rⁿ)/(1 - r)</div>
+                        </div>
+                    </div>
+
+                    <div class="proof-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <strong>Expand the brackets:</strong>
+                            <div class="equation">Sₙ = (a - arⁿ)/(1 - r)</div>
+                        </div>
+                    </div>
+
+                    <div class="proof-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <strong>Split into two fractions:</strong>
+                            <div class="equation">Sₙ = a/(1 - r) - arⁿ/(1 - r)</div>
+                        </div>
+                    </div>
+
+                    <div class="proof-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <strong>Consider what happens as n → ∞:</strong>
+                            <p>When -1 &lt; r &lt; 1, the term rⁿ gets smaller and smaller as n increases.</p>
+                            <div class="equation">
+                                Examples: (⅓)² = ⅑, (⅓)³ = 1/27, (⅓)⁴ = 1/81, (⅓)⁵ = 1/243 ...
+                            </div>
+                            <p class="explanation">As n → ∞, rⁿ → 0</p>
+                        </div>
+                    </div>
+
+                    <div class="proof-step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <strong>Therefore, the second term vanishes:</strong>
+                            <div class="equation">S∞ = a/(1 - r) - 0 = a/(1 - r)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="formula-box highlight">
+                    S∞ = a/(1 - r), where -1 < r < 1
+                    <small>The sum of an infinite geometric series (only valid when |r| < 1)</small>
+                </div>
+
+                <div class="worked-example">
+                    <strong>Worked Example: Finding S∞</strong>
+                    <p><strong>Given:</strong> Find the sum to infinity of: 8 + 4 + 2 + 1 + ½ + ...</p>
+                    <p><strong>Step 1:</strong> Identify a and r</p>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>First term: a = 8</li>
+                        <li>Common ratio: r = 4/8 = ½</li>
+                        <li>Check: |r| = ½ < 1 ✓ (series converges)</li>
+                    </ul>
+                    <p style="margin-top: 0.75rem;"><strong>Step 2:</strong> Apply the formula</p>
+                    <p style="margin-left: 1.5rem; font-family: 'Courier New', monospace;">
+                        S∞ = a/(1 - r) = 8/(1 - ½) = 8/(½) = <strong>16</strong>
+                    </p>
+                </div>
+
+                <h3>Key Takeaways</h3>
+                <ul style="margin-left: 1.5rem; margin-top: 0.75rem;">
+                    <li><strong>The sum formula</strong> is derived by multiplying the series by r and subtracting.</li>
+                    <li><strong>For r > 1:</strong> Use Sₙ = a(rⁿ - 1)/(r - 1)</li>
+                    <li><strong>For r < 1:</strong> Use Sₙ = a(1 - rⁿ)/(1 - r)</li>
+                    <li><strong>Sum to infinity</strong> only exists when -1 < r < 1 (the series converges)</li>
+                    <li><strong>Formula for S∞:</strong> a/(1 - r)</li>
+                </ul>
+
+                <div class="practice-problems">
+                    <h4>📝 Practice Problems (Homework)</h4>
+                    <p><strong>1.</strong> Prove the formula Sₙ = a(1 - rⁿ)/(1 - r) by subtracting equation (2) from equation (1)</p>
+                    <p><strong>2.</strong> Find S₆ for the series: 3 + 6 + 12 + 24 + ... <em>(Answer: 189)</em></p>
+                    <p><strong>3.</strong> Find S∞ for: 27 + 9 + 3 + 1 + ... <em>(Answer: 40.5)</em></p>
+                    <p><strong>4.</strong> A geometric series has a = 5 and r = -½. Find S∞. <em>(Answer: 10/3)</em></p>
+                    <p><strong>Reference:</strong> Classroom Mathematics Grade 12 Exercise 1.10 (Revision): Q1(a), 3, 4, 6(a)-(c), 9, 17</p>
+                </div>
             </div>
         </section>
 
-        <!-- Interactive Simulations -->
-        <section class="card" id="simulation">
-            <h2>🔬 Interactive Simulations</h2>
-
-            <!-- Simulation 1: Convergence vs Divergence Explorer -->
-            <div class="simulation-container">
-                <div class="sim-title">
-                    <span class="sim-icon">📈</span>
-                    <h3>Convergence vs Divergence Explorer</h3>
-                </div>
-                <p style="margin-bottom: 1rem; color: var(--gray-600);">Adjust the common ratio to see how it affects whether the series converges or diverges.</p>
-
-                <div class="sim-controls">
-                    <div class="control-group">
-                        <label>
-                            First Term (a):
-                            <span class="control-value" id="expAValue">4</span>
-                        </label>
-                        <input type="range" id="expA" min="1" max="10" value="4" step="1">
-                    </div>
-                    <div class="control-group">
-                        <label>
-                            Common Ratio (r):
-                            <span class="control-value" id="expRValue">0.5</span>
-                        </label>
-                        <input type="range" id="expR" min="-2" max="2" value="0.5" step="0.1">
-                    </div>
-                    <div class="control-group">
-                        <label>
-                            Terms to Show:
-                            <span class="control-value" id="expNValue">10</span>
-                        </label>
-                        <input type="range" id="expN" min="5" max="20" value="10" step="1">
-                    </div>
-                </div>
-
-                <div class="sim-display">
-                    <div id="seriesStatus" style="text-align: center; margin-bottom: 1rem; font-size: 1.25rem; font-weight: 700;"></div>
-                    <h4 style="margin-bottom: 0.75rem; color: var(--gray-600);">Partial Sums:</h4>
-                    <div class="partial-sums-grid" id="partialSumsGrid"></div>
-                    <div id="resultDisplay"></div>
-                </div>
+        <!-- Section: Virtual Lab -->
+        <section id="lab">
+            <div class="section-header" data-toggle="lab-content">
+                <h2>🧪 Virtual Lab: Geometric Series Calculator</h2>
+                <span class="toggle-icon">▼</span>
             </div>
-
-            <!-- Simulation 2: Sum to Infinity Calculator -->
-            <div class="simulation-container">
-                <div class="sim-title">
-                    <span class="sim-icon">∞</span>
-                    <h3>Sum to Infinity Calculator</h3>
-                </div>
-                <p style="margin-bottom: 1rem; color: var(--gray-600);">Enter a first term and common ratio to calculate the sum to infinity (if it exists).</p>
-
-                <div class="sim-controls">
-                    <div class="control-group">
-                        <label>First Term (a):</label>
-                        <input type="number" id="calcA" value="6" step="any">
-                    </div>
-                    <div class="control-group">
-                        <label>Common Ratio (r):</label>
-                        <input type="number" id="calcR" value="0.5" step="0.1">
-                    </div>
-                </div>
-
-                <button class="submit-btn" id="calculateBtn" style="margin-bottom: 1rem;">Calculate S<sub>∞</sub></button>
-
-                <div class="sim-display" id="calcResult">
-                    <div style="text-align: center; color: var(--gray-600);">
-                        Enter values and click "Calculate" to find the sum to infinity.
-                    </div>
-                </div>
-            </div>
-
-            <!-- Simulation 3: Visual Comparison -->
-            <div class="simulation-container">
-                <div class="sim-title">
-                    <span class="sim-icon">📊</span>
-                    <h3>Convergence Visualization</h3>
-                </div>
-                <p style="margin-bottom: 1rem; color: var(--gray-600);">See how partial sums approach (or don't approach) a limit.</p>
-
-                <div class="sim-controls">
-                    <div class="control-group">
+            <div class="section-content" id="lab-content">
+                <p style="margin-bottom: 1.5rem;">
+                    Experiment with different values of <strong>a</strong> (first term), <strong>r</strong> (common ratio), 
+                    and <strong>n</strong> (number of terms) to see how the sum changes. Watch how the series converges 
+                    to S∞ when |r| &lt; 1!
+                </p>
+                <div class="lab-zone">
+                    <div class="lab-controls">
                         <label>
-                            First Term (a):
-                            <span class="control-value" id="canvasAValue">5</span>
+                            a = <input type="number" id="inputA" value="4" step="1">
                         </label>
-                        <input type="range" id="canvasA" min="1" max="15" value="5" step="1">
-                    </div>
-                    <div class="control-group">
                         <label>
-                            Common Ratio (r):
-                            <span class="control-value" id="canvasRValue">0.6</span>
+                            r = <input type="number" id="inputR" value="0.5" step="0.1">
                         </label>
-                        <input type="range" id="canvasR" min="-0.95" max="0.95" value="0.6" step="0.05">
+                        <label>
+                            n = <input type="number" id="inputN" value="6" min="1" max="15" step="1">
+                        </label>
                     </div>
-                </div>
-
-                <div class="sim-display">
-                    <canvas id="convergenceCanvas" width="600" height="300" style="width: 100%; max-width: 600px; display: block; margin: 0 auto; border-radius: var(--radius-sm); background: var(--white);"></canvas>
+                    
+                    <div class="series-display">
+                        <div class="series-terms" id="seriesTerms"></div>
+                        <div class="series-result">
+                            Sₙ = <span class="sum-value" id="sumValue">-</span>
+                        </div>
+                        <div class="infinity-display" id="infinityDisplay">
+                            S∞ = <span class="infinity-value" id="infinityValue">-</span>
+                        </div>
+                    </div>
+                    
+                    <div class="lab-controls">
+                        <button class="btn-primary" id="calculateBtn">▶ Calculate Series</button>
+                        <button class="btn-secondary" id="resetLabBtn">↻ Reset</button>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Quiz Section -->
-        <section class="card quiz-container" id="quiz">
-            <h2>📝 Practice Quiz</h2>
-            <p style="color: var(--gray-600); margin-bottom: 1.5rem;">Test your understanding with these 12 questions about convergent and divergent series.</p>
-
-            <div id="quizQuestions">
-                <!-- Questions will be generated by JavaScript -->
+        <!-- Section: Real-Time Quiz -->
+        <section id="quiz">
+            <div class="section-header" data-toggle="quiz-content">
+                <h2>✓ Real-Time Quiz</h2>
+                <span class="toggle-icon">▼</span>
             </div>
+            <div class="section-content quiz-container" id="quiz-content">
+                <p>Test your understanding of the proofs and formulas. Select an option for instant feedback.</p>
 
-            <div class="score-card" id="scoreCard">
-                <h3>🎉 Quiz Complete!</h3>
-                <div class="score-circle">
-                    <div class="score-percentage" id="scorePercentage">0%</div>
-                    <div class="score-label">Score</div>
+                <!-- Question 1 -->
+                <div class="quiz-question" data-question="1">
+                    <h4>Question 1: In the proof of the sum formula, why do we multiply Sₙ by r?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="false">A) To make the equation simpler</div>
+                        <div class="quiz-option" data-answer="true">B) So that when we subtract, most terms cancel out</div>
+                        <div class="quiz-option" data-answer="false">C) To find the common ratio</div>
+                        <div class="quiz-option" data-answer="false">D) To convert to a linear sequence</div>
+                    </div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> Multiplying by r shifts all terms one position, creating matching terms that cancel when we subtract. This leaves only the first and last terms, making it possible to solve for Sₙ.
+                    </div>
                 </div>
-                <p id="scoreDetails"></p>
-                <p class="score-message" id="scoreMessage"></p>
-                <button class="retry-btn" id="retryBtn">Try Again</button>
+
+                <!-- Question 2 -->
+                <div class="quiz-question" data-question="2">
+                    <h4>Question 2: What condition must be satisfied for S∞ to exist?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="false">A) r > 1</div>
+                        <div class="quiz-option" data-answer="false">B) r = 1</div>
+                        <div class="quiz-option" data-answer="true">C) -1 < r < 1</div>
+                        <div class="quiz-option" data-answer="false">D) r < -1</div>
+                    </div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> For a geometric series to converge (have a finite sum to infinity), the common ratio must satisfy |r| < 1, which means -1 < r < 1. Only then does rⁿ approach 0 as n increases.
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="quiz-question" data-question="3">
+                    <h4>Question 3: If a = 6 and r = ⅓, what is S∞?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="false">A) 18</div>
+                        <div class="quiz-option" data-answer="true">B) 9</div>
+                        <div class="quiz-option" data-answer="false">C) 6</div>
+                        <div class="quiz-option" data-answer="false">D) 2</div>
+                    </div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> S∞ = a/(1-r) = 6/(1-⅓) = 6/(⅔) = 6 × (3/2) = 9
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="quiz-question" data-question="4">
+                    <h4>Question 4: When is it more convenient to use Sₙ = a(1-rⁿ)/(1-r) instead of Sₙ = a(rⁿ-1)/(r-1)?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="true">A) When r < 1</div>
+                        <div class="quiz-option" data-answer="false">B) When r > 1</div>
+                        <div class="quiz-option" data-answer="false">C) When a < 0</div>
+                        <div class="quiz-option" data-answer="false">D) When n is very large</div>
+                    </div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> When r < 1, using Sₙ = a(1-rⁿ)/(1-r) avoids negative numbers in the numerator and denominator, making calculations cleaner and reducing errors.
+                    </div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="quiz-question" data-question="5">
+                    <h4>Question 5: What is the relationship between the second difference (2a) and the formula for S∞?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-answer="false">A) S∞ = 2a</div>
+                        <div class="quiz-option" data-answer="false">B) The second difference determines r</div>
+                        <div class="quiz-option" data-answer="false">C) 2a = 1/(1-r)</div>
+                        <div class="quiz-option" data-answer="true">D) Second difference is for quadratic sequences, not geometric series</div>
+                    </div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> The second difference (2a) is used for quadratic sequences where Tₙ = an² + bn + c. Geometric series use the common ratio (r), not differences. Don't confuse the two concepts!
+                    </div>
+                </div>
+
+                <div class="quiz-reset">
+                    <button class="btn-secondary" id="resetQuizBtn">↻ Retry Quiz</button>
+                </div>
             </div>
         </section>
 
-        <!-- Lesson Navigation -->
-      <div class="nav-buttons">
-            <button class="nav-btn prev" >
-                ← Previous Lesson
-            </button>
-            <button class="nav-btn next" >
-                Next Lesson →
-            </button>
-        </div>
+        <!-- Section: Video Tutorial -->
+        <section id="video">
+            <div class="section-header" data-toggle="video-content">
+                <h2>📹 Video Tutorial</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content" id="video-content">
+                <p style="color: var(--gray-600); margin-bottom: 1rem;">
+                    Watch this video explanation on proving Geometric Series formulas!
+                </p>
+                <div class="video-container">
+                    <div class="video-placeholder" id="videoPlaceholder">
+                        <div class="play-btn" id="playVideoBtn">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="var(--navy)">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </div>
+                        <p>Click to play: Geometric Series Sum Proofs</p>
+                    </div>
+                </div>
+                <p style="font-size: 0.9rem; color: var(--gray-500); margin-top: 1rem;">
+                    Duration: 15 minutes | Difficulty: Intermediate
+                </p>
+            </div>
+        </section>
+
+        <!-- Section: Live Tutor CTA -->
+        <section id="tutor">
+            <div class="section-header" data-toggle="tutor-content">
+                <h2>👨‍🏫 Live Tutoring Support</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content" id="tutor-content">
+                <div class="tutor-cta">
+                    <h3>Need Help with the Proofs? Talk to a Tutor Live</h3>
+                    <p style="margin-bottom: 1.5rem;">
+                        Our expert tutors can walk you through the proofs step-by-step and answer any questions you have about geometric series.
+                    </p>
+                    <button class="btn-primary" id="openTutorModal">💬 Schedule a Session</button>
+                    <p style="margin-top: 1rem; font-size: 0.95rem;">
+                        Or send a request on <a href="tel:0670957879">067 095 7879</a>
+                    </p>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-logo">∞ PassProof Academy</div>
-            <p class="footer-copyright">© 2026 PassProof Academy. All rights reserved.</p>
-            <p style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--gray-300);">
-                Empowering learners through quality mathematics education.
+    <!-- ===== FLOATING TUTOR BUTTON ===== -->
+    <div class="floating-tutor" id="floatingTutor" title="Chat with a tutor">💬</div>
+
+    <!-- ===== MODAL ===== -->
+    <div id="tutorModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Live Tutoring Session</h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <p style="margin-bottom: 1rem; color: var(--gray-600);">
+                Book a live session with an expert tutor who specializes in Grade 12 Mathematics.
             </p>
+            <form id="tutorForm" style="display: flex; flex-direction: column; gap: 1rem;">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Describe your question about Geometric Series proofs..." rows="4"></textarea>
+                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 0.5rem;">Book Now</button>
+            </form>
         </div>
+    </div>
+
+    <!-- ===== FOOTER NAVIGATION ===== -->
+    <footer class="lesson-nav">
+        <a href="less4.html" class="nav-btn">← Previous Lesson</a>
+        <div class="nav-center">
+            <a href="contents.html" class="nav-btn"><span>↑</span> Subject Contents</a>
+        </div>
+        <a href="less6.html" class="nav-btn primary">Next Lesson →</a>
     </footer>
 
+    <!-- ===== JAVASCRIPT ===== -->
     <script>
         // ==========================================
-        // NAVIGATION HANDLING
+        // COLLAPSIBLE SECTIONS
+        // Toggle section visibility when clicking headers
         // ==========================================
-        const navToggle = document.getElementById('navToggle');
-        const navMenu = document.getElementById('navMenu');
-
-        navToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            navMenu.classList.toggle('active');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
-                navMenu.classList.remove('active');
-            }
-        });
-
-        // Smooth scroll
-        document.querySelectorAll('.nav-menu a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href').substring(1);
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    navMenu.classList.remove('active');
-                }
-            });
-        });
-
-        // ==========================================
-        // SIMULATION 1: CONVERGENCE EXPLORER
-        // ==========================================
-        const expA = document.getElementById('expA');
-        const expR = document.getElementById('expR');
-        const expN = document.getElementById('expN');
-
-        function updateExplorer() {
-            const a = parseFloat(expA.value);
-            const r = parseFloat(expR.value);
-            const n = parseInt(expN.value);
-
-            document.getElementById('expAValue').textContent = a;
-            document.getElementById('expRValue').textContent = r;
-            document.getElementById('expNValue').textContent = n;
-
-            const converges = Math.abs(r) < 1;
-            const rValueSpan = document.getElementById('expRValue');
-            rValueSpan.className = `control-value ${converges ? 'converge' : 'diverge'}`;
-
-            const statusDiv = document.getElementById('seriesStatus');
-            statusDiv.innerHTML = converges 
-                ? '<span style="color: #14b8a6;">✓ CONVERGENT (|r| < 1)</span>'
-                : '<span style="color: #f43f5e;">✗ DIVERGENT (|r| ≥ 1)</span>';
-
-            // Calculate partial sums
-            const grid = document.getElementById('partialSumsGrid');
-            grid.innerHTML = '';
-
-            let runningSum = 0;
-            const partialSums = [];
-
-            for (let i = 1; i <= n; i++) {
-                const term = a * Math.pow(r, i - 1);
-                runningSum += term;
-                partialSums.push(runningSum);
-
-                const box = document.createElement('div');
-                box.className = `sum-box ${converges ? 'converge' : 'diverge'}`;
-                box.style.animationDelay = `${(i - 1) * 0.05}s`;
-                box.innerHTML = `
-                    <div class="sum-label">S<sub>${i}</sub></div>
-                    <div class="sum-value">${formatNumber(runningSum)}</div>
-                `;
-                grid.appendChild(box);
-            }
-
-            // Result display
-            const resultDiv = document.getElementById('resultDisplay');
-            if (converges) {
-                const sInfinity = a / (1 - r);
-                resultDiv.innerHTML = `
-                    <div class="result-box converge">
-                        <div class="result-label">Sum to Infinity (S<sub>∞</sub>)</div>
-                        <div class="result-value">${formatNumber(sInfinity)}</div>
-                        <div class="result-formula">S<sub>∞</sub> = ${a} / (1 − ${r}) = ${formatNumber(sInfinity)}</div>
-                    </div>
-                `;
-            } else {
-                resultDiv.innerHTML = `
-                    <div class="result-box diverge">
-                        <div class="result-label">Sum to Infinity</div>
-                        <div class="result-value">Does Not Exist</div>
-                        <div class="result-formula">Series diverges because |r| = ${Math.abs(r).toFixed(2)} ≥ 1</div>
-                    </div>
-                `;
-            }
-        }
-
-        expA.addEventListener('input', updateExplorer);
-        expR.addEventListener('input', updateExplorer);
-        expN.addEventListener('input', updateExplorer);
-
-        function formatNumber(num) {
-            if (Math.abs(num) >= 1000000 || (Math.abs(num) < 0.0001 && num !== 0)) {
-                return num.toExponential(2);
-            }
-            if (Math.abs(num) >= 100) return num.toFixed(1);
-            if (num % 1 === 0) return num.toString();
-            return num.toFixed(4);
-        }
-
-        // ==========================================
-        // SIMULATION 2: SUM TO INFINITY CALCULATOR
-        // ==========================================
-        document.getElementById('calculateBtn').addEventListener('click', () => {
-            const a = parseFloat(document.getElementById('calcA').value);
-            const r = parseFloat(document.getElementById('calcR').value);
-            const resultDiv = document.getElementById('calcResult');
-
-            if (isNaN(a) || isNaN(r)) {
-                resultDiv.innerHTML = `
-                    <div style="text-align: center; color: var(--error); padding: 1rem;">
-                        ⚠️ Please enter valid numbers for both a and r.
-                    </div>
-                `;
-                return;
-            }
-
-            if (Math.abs(r) >= 1) {
-                resultDiv.innerHTML = `
-                    <div class="result-box diverge">
-                        <div class="result-label">Series Status</div>
-                        <div class="result-value" style="font-size: 1.5rem;">DIVERGES ✗</div>
-                        <div class="result-formula">
-                            Since |r| = ${Math.abs(r).toFixed(2)} ≥ 1, the series does not converge.<br>
-                            No finite sum to infinity exists.
-                        </div>
-                    </div>
-                `;
-                return;
-            }
-
-            const sInfinity = a / (1 - r);
-            
-            // Show partial sums approaching the limit
-            let html = '<h4 style="margin-bottom: 1rem; color: var(--primary-dark);">Partial Sums Approaching S<sub>∞</sub>:</h4>';
-            html += '<div class="partial-sums-grid">';
-            
-            let runningSum = 0;
-            const terms = [1, 2, 3, 5, 10, 15, 20];
-            
-            for (const i of terms) {
-                runningSum = a * (1 - Math.pow(r, i)) / (1 - r);
-                html += `
-                    <div class="sum-box converge" style="animation-delay: ${terms.indexOf(i) * 0.1}s;">
-                        <div class="sum-label">S<sub>${i}</sub></div>
-                        <div class="sum-value">${formatNumber(runningSum)}</div>
-                    </div>
-                `;
-            }
-            html += '</div>';
-
-            html += `
-                <div class="result-box converge">
-                    <div class="result-label">Sum to Infinity (S<sub>∞</sub>)</div>
-                    <div class="result-value">${formatNumber(sInfinity)}</div>
-                    <div class="result-formula">
-                        S<sub>∞</sub> = ${a} / (1 − ${r}) = ${a} / ${(1 - r).toFixed(4)} = ${formatNumber(sInfinity)}
-                    </div>
-                </div>
-            `;
-
-            resultDiv.innerHTML = html;
-        });
-
-        // ==========================================
-        // SIMULATION 3: CANVAS VISUALIZATION
-        // ==========================================
-        const canvas = document.getElementById('convergenceCanvas');
-        const ctx = canvas.getContext('2d');
-        const canvasA = document.getElementById('canvasA');
-        const canvasR = document.getElementById('canvasR');
-
-        function updateCanvas() {
-            const a = parseFloat(canvasA.value);
-            const r = parseFloat(canvasR.value);
-
-            document.getElementById('canvasAValue').textContent = a;
-            document.getElementById('canvasRValue').textContent = r;
-
-            drawConvergenceGraph(a, r);
-        }
-
-        function drawConvergenceGraph(a, r) {
-            const rect = canvas.getBoundingClientRect();
-            canvas.width = rect.width * 2;
-            canvas.height = 300 * 2;
-            ctx.scale(2, 2);
-
-            const width = rect.width;
-            const height = 300;
-
-            // Clear
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, width, height);
-
-            const converges = Math.abs(r) < 1;
-            const n = 20;
-
-            // Calculate partial sums
-            const partialSums = [];
-            let runningSum = 0;
-            for (let i = 1; i <= n; i++) {
-                runningSum += a * Math.pow(r, i - 1);
-                partialSums.push(runningSum);
-            }
-
-            // Calculate S_infinity if converges
-            const sInfinity = converges ? a / (1 - r) : null;
-
-            // Determine scale
-            const maxVal = Math.max(...partialSums.map(s => Math.abs(s)));
-            const minVal = Math.min(...partialSums, 0);
-            const range = Math.max(maxVal, Math.abs(minVal)) * 1.2;
-
-            // Padding
-            const padding = { left: 55, right: 25, top: 45, bottom: 50 };
-            const graphWidth = width - padding.left - padding.right;
-            const graphHeight = height - padding.top - padding.bottom;
-
-            // Draw grid
-            ctx.strokeStyle = '#e2e8f0';
-            ctx.lineWidth = 1;
-            for (let i = 0; i <= 5; i++) {
-                const y = padding.top + (graphHeight / 5) * i;
-                ctx.beginPath();
-                ctx.moveTo(padding.left, y);
-                ctx.lineTo(width - padding.right, y);
-                ctx.stroke();
-            }
-
-            // Draw axes
-            ctx.strokeStyle = '#64748b';
-            ctx.lineWidth = 2;
-
-            // X-axis at y=0
-            const zeroY = padding.top + graphHeight / 2;
-            ctx.beginPath();
-            ctx.moveTo(padding.left, zeroY);
-            ctx.lineTo(width - padding.right, zeroY);
-            ctx.stroke();
-
-            // Y-axis
-            ctx.beginPath();
-            ctx.moveTo(padding.left, padding.top);
-            ctx.lineTo(padding.left, height - padding.bottom);
-            ctx.stroke();
-
-            // Draw S_infinity line if converges
-            if (converges && Math.abs(sInfinity) <= range) {
-                const sInfY = padding.top + graphHeight * (0.5 - sInfinity / (2 * range));
-                ctx.strokeStyle = '#14b8a6';
-                ctx.lineWidth = 2;
-                ctx.setLineDash([8, 4]);
-                ctx.beginPath();
-                ctx.moveTo(padding.left, sInfY);
-                ctx.lineTo(width - padding.right, sInfY);
-                ctx.stroke();
-                ctx.setLineDash([]);
-
-                // Label
-                ctx.fillStyle = '#0f766e';
-                ctx.font = 'bold 11px Segoe UI';
-                ctx.textAlign = 'left';
-                ctx.fillText(`S∞ = ${formatNumber(sInfinity)}`, padding.left + 5, sInfY - 8);
-            }
-
-            // Draw partial sums curve
-            const xStep = graphWidth / n;
-            
-            ctx.strokeStyle = converges ? '#1a73e8' : '#f43f5e';
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-
-            partialSums.forEach((sum, i) => {
-                const x = padding.left + xStep * (i + 0.5);
-                const y = padding.top + graphHeight * (0.5 - sum / (2 * range));
-                const clampedY = Math.max(padding.top, Math.min(height - padding.bottom, y));
+        document.querySelectorAll('.section-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const targetId = header.getAttribute('data-toggle');
+                const content = document.getElementById(targetId);
                 
-                if (i === 0) ctx.moveTo(x, clampedY);
-                else ctx.lineTo(x, clampedY);
+                // Toggle collapsed state
+                header.classList.toggle('collapsed');
+                content.classList.toggle('collapsed');
             });
-            ctx.stroke();
-
-            // Draw points
-            partialSums.forEach((sum, i) => {
-                const x = padding.left + xStep * (i + 0.5);
-                const y = padding.top + graphHeight * (0.5 - sum / (2 * range));
-                const clampedY = Math.max(padding.top + 5, Math.min(height - padding.bottom - 5, y));
-
-                ctx.fillStyle = converges ? '#1a73e8' : '#f43f5e';
-                ctx.beginPath();
-                ctx.arc(x, clampedY, 5, 0, Math.PI * 2);
-                ctx.fill();
-
-                ctx.fillStyle = '#ffffff';
-                ctx.beginPath();
-                ctx.arc(x, clampedY, 2, 0, Math.PI * 2);
-                ctx.fill();
-            });
-
-            // X-axis labels
-            ctx.fillStyle = '#64748b';
-            ctx.font = '10px Segoe UI';
-            ctx.textAlign = 'center';
-            for (let i = 0; i < n; i += 4) {
-                const x = padding.left + xStep * (i + 0.5);
-                ctx.fillText(i + 1, x, height - padding.bottom + 15);
-            }
-
-            // Title
-            ctx.fillStyle = converges ? '#0d47a1' : '#be123c';
-            ctx.font = 'bold 14px Segoe UI';
-            ctx.textAlign = 'center';
-            ctx.fillText(
-                converges ? 'Convergent Series: Sums Approach S∞' : 'Divergent Series: Sums Grow/Oscillate',
-                width / 2,
-                22
-            );
-
-            // X-axis title
-            ctx.fillStyle = '#64748b';
-            ctx.font = '11px Segoe UI';
-            ctx.fillText('n (number of terms)', width / 2, height - 10);
-
-            // Y-axis labels
-            ctx.textAlign = 'right';
-            ctx.fillText(formatNumber(range), padding.left - 8, padding.top + 8);
-            ctx.fillText('0', padding.left - 8, zeroY + 4);
-            ctx.fillText(formatNumber(-range), padding.left - 8, height - padding.bottom);
-        }
-
-        canvasA.addEventListener('input', updateCanvas);
-        canvasR.addEventListener('input', updateCanvas);
-
-        // ==========================================
-        // QUIZ SYSTEM
-        // ==========================================
-        const quizQuestions = [
-            {
-                question: "A geometric series converges when:",
-                options: ["|r| > 1", "|r| = 1", "|r| < 1", "r = 0"],
-                correct: 2,
-                explanation: "A geometric series converges only when the absolute value of the common ratio is less than 1, i.e., -1 < r < 1."
-            },
-            {
-                question: "The series 1 + 3 + 9 + 27 + ... is:",
-                options: ["Convergent", "Divergent", "Neither", "Alternating"],
-                correct: 1,
-                explanation: "Here r = 3, and since |r| > 1, the series diverges."
-            },
-            {
-                question: "Find S<sub>∞</sub> for: 8 + 4 + 2 + 1 + ...",
-                options: ["15", "16", "17", "Undefined"],
-                correct: 1,
-                explanation: "a = 8, r = 0.5. S∞ = 8/(1-0.5) = 8/0.5 = 16."
-            },
-            {
-                question: "The series 2 - 2 + 2 - 2 + ... has r equal to:",
-                options: ["1", "-1", "2", "-2"],
-                correct: 1,
-                explanation: "Each term is multiplied by -1 to get the next term, so r = -1."
-            },
-            {
-                question: "Which series converges?",
-                options: ["1 + 2 + 4 + 8 + ...", "10 + 5 + 2.5 + 1.25 + ...", "3 + 3 + 3 + 3 + ...", "1 - 2 + 4 - 8 + ..."],
-                correct: 1,
-                explanation: "Only the second series has |r| < 1 (r = 0.5), so it converges."
-            },
-            {
-                question: "If a = 12 and r = 1/3, what is S<sub>∞</sub>?",
-                options: ["16", "18", "24", "36"],
-                correct: 1,
-                explanation: "S∞ = 12/(1 - 1/3) = 12/(2/3) = 12 × 3/2 = 18."
-            },
-            {
-                question: "An arithmetic series:",
-                options: ["Always converges", "Always diverges", "Depends on the common difference", "Can equal zero"],
-                correct: 1,
-                explanation: "An arithmetic series always diverges because the terms don't get smaller."
-            },
-            {
-                question: "For the series 1/2 + 1/4 + 1/8 + ..., S<sub>∞</sub> equals:",
-                options: ["1/2", "3/4", "1", "2"],
-                correct: 2,
-                explanation: "a = 1/2, r = 1/2. S∞ = (1/2)/(1 - 1/2) = (1/2)/(1/2) = 1."
-            },
-            {
-                question: "If S<sub>∞</sub> = 15 and a = 5, find r:",
-                options: ["1/3", "2/3", "1/2", "3/4"],
-                correct: 1,
-                explanation: "15 = 5/(1-r), so 1-r = 5/15 = 1/3, giving r = 2/3."
-            },
-            {
-                question: "The series ∑(2/3)<sup>n</sup> from n=1 to ∞ equals:",
-                options: ["1", "2", "3", "Does not exist"],
-                correct: 1,
-                explanation: "a = 2/3, r = 2/3. S∞ = (2/3)/(1 - 2/3) = (2/3)/(1/3) = 2."
-            },
-            {
-                question: "When r = 0.9, the series converges because:",
-                options: ["0.9 < 1", "0.9 > 0", "0.9 is positive", "-1 < 0.9 < 1"],
-                correct: 3,
-                explanation: "The condition for convergence is -1 < r < 1, which 0.9 satisfies."
-            },
-            {
-                question: "A series with r = -0.5 will:",
-                options: ["Diverge", "Converge with alternating terms", "Not exist", "Equal zero"],
-                correct: 1,
-                explanation: "Since |-0.5| = 0.5 < 1, the series converges. The negative r causes alternating signs."
-            }
-        ];
-
-        const questionsContainer = document.getElementById('quizQuestions');
-        const scoreCard = document.getElementById('scoreCard');
-        let userAnswers = new Array(quizQuestions.length).fill(null);
-        let answeredQuestions = new Set();
-
-        function renderQuiz() {
-            questionsContainer.innerHTML = '';
-            quizQuestions.forEach((q, index) => {
-                const questionCard = document.createElement('div');
-                questionCard.className = 'question-card';
-                questionCard.id = `question-${index}`;
-
-                let optionsHTML = q.options.map((opt, optIndex) => `
-                    <label class="option-label" data-question="${index}" data-option="${optIndex}">
-                        <input type="radio" name="q${index}" value="${optIndex}">
-                        <span class="option-marker">${String.fromCharCode(65 + optIndex)}</span>
-                        <span>${opt}</span>
-                    </label>
-                `).join('');
-
-                questionCard.innerHTML = `
-                    <div class="question-header">
-                        <div class="question-number">${index + 1}</div>
-                        <div class="question-text">${q.question}</div>
-                    </div>
-                    <div class="options-list">
-                        ${optionsHTML}
-                    </div>
-                    <button class="submit-btn" id="check-${index}" disabled>Check Answer</button>
-                    <div class="feedback" id="feedback-${index}"></div>
-                `;
-
-                questionsContainer.appendChild(questionCard);
-            });
-
-            // Event listeners
-            document.querySelectorAll('.option-label').forEach(label => {
-                label.addEventListener('click', function() {
-                    const questionIndex = parseInt(this.dataset.question);
-                    const optionIndex = parseInt(this.dataset.option);
-
-                    if (answeredQuestions.has(questionIndex)) return;
-
-                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
-                        opt.classList.remove('selected');
-                    });
-
-                    this.classList.add('selected');
-                    userAnswers[questionIndex] = optionIndex;
-                    
-                    document.getElementById(`check-${questionIndex}`).disabled = false;
-                });
-            });
-
-            document.querySelectorAll('.submit-btn[id^="check-"]').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const index = parseInt(this.id.split('-')[1]);
-                    checkAnswer(index);
-                });
-            });
-        }
-
-        function checkAnswer(index) {
-            if (answeredQuestions.has(index)) return;
-
-            const question = quizQuestions[index];
-            const userAnswer = userAnswers[index];
-            const isCorrect = userAnswer === question.correct;
-            const questionCard = document.getElementById(`question-${index}`);
-            const feedback = document.getElementById(`feedback-${index}`);
-            const checkBtn = document.getElementById(`check-${index}`);
-
-            answeredQuestions.add(index);
-
-            questionCard.classList.add(isCorrect ? 'answered-correct' : 'answered-incorrect');
-            
-            const options = document.querySelectorAll(`[data-question="${index}"]`);
-            options.forEach((opt, i) => {
-                if (i === question.correct) {
-                    opt.classList.add('correct');
-                } else if (i === userAnswer && !isCorrect) {
-                    opt.classList.add('incorrect');
-                }
-            });
-
-            feedback.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
-            feedback.innerHTML = isCorrect 
-                ? `<strong>✓ Correct!</strong> ${question.explanation}`
-                : `<strong>✗ Incorrect.</strong> The correct answer is ${String.fromCharCode(65 + question.correct)}. ${question.explanation}`;
-
-            checkBtn.disabled = true;
-            checkBtn.textContent = isCorrect ? '✓ Correct' : '✗ Incorrect';
-
-            updateProgress();
-
-            if (answeredQuestions.size === quizQuestions.length) {
-                showScore();
-            }
-        }
-
-        function updateProgress() {
-            const progress = (answeredQuestions.size / quizQuestions.length) * 100;
-            document.getElementById('progressBar').style.width = `${progress}%`;
-            document.getElementById('progressText').textContent = `${Math.round(progress)}%`;
-            
-            saveProgress();
-        }
-
-        function showScore() {
-            const correct = quizQuestions.filter((q, i) => userAnswers[i] === q.correct).length;
-            const percentage = Math.round((correct / quizQuestions.length) * 100);
-
-            document.getElementById('scorePercentage').textContent = `${percentage}%`;
-            document.getElementById('scoreDetails').textContent = `You got ${correct} out of ${quizQuestions.length} questions correct.`;
-
-            let message = '';
-            if (percentage >= 90) message = '🌟 Excellent! You understand convergence perfectly!';
-            else if (percentage >= 70) message = '👍 Great work! A few more practice problems will help.';
-            else if (percentage >= 50) message = '📚 Good effort! Review the convergence conditions.';
-            else message = '💪 Keep studying! Focus on when |r| < 1.';
-
-            document.getElementById('scoreMessage').textContent = message;
-            scoreCard.classList.add('show');
-
-            localStorage.setItem('week3lesson1_score', JSON.stringify({
-                score: correct,
-                total: quizQuestions.length,
-                percentage: percentage,
-                date: new Date().toISOString()
-            }));
-        }
-
-        document.getElementById('retryBtn').addEventListener('click', () => {
-            userAnswers = new Array(quizQuestions.length).fill(null);
-            answeredQuestions.clear();
-            scoreCard.classList.remove('show');
-            renderQuiz();
-            updateProgress();
         });
 
         // ==========================================
-        // LOCALSTORAGE PROGRESS
+        // SMOOTH SCROLL & ACTIVE NAV HIGHLIGHTING
         // ==========================================
-        function saveProgress() {
-            const progress = {
-                lessonId: 'geometric-series-week3-lesson1',
-                answeredQuestions: Array.from(answeredQuestions),
-                userAnswers: userAnswers,
-                timestamp: new Date().toISOString()
-            };
-            localStorage.setItem('week3lesson1_progress', JSON.stringify(progress));
+        const sections = document.querySelectorAll('main section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        // Highlight active section in navigation
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 160) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // ==========================================
+        // VIRTUAL LAB - GEOMETRIC SERIES CALCULATOR
+        // Calculates and animates the series terms
+        // ==========================================
+        const inputA = document.getElementById('inputA');
+        const inputR = document.getElementById('inputR');
+        const inputN = document.getElementById('inputN');
+        const seriesTermsDiv = document.getElementById('seriesTerms');
+        const sumValueSpan = document.getElementById('sumValue');
+        const infinityValueSpan = document.getElementById('infinityValue');
+        const infinityDisplay = document.getElementById('infinityDisplay');
+
+        document.getElementById('calculateBtn').addEventListener('click', calculateSeries);
+        document.getElementById('resetLabBtn').addEventListener('click', resetLab);
+
+        function calculateSeries() {
+            const a = parseFloat(inputA.value);
+            const r = parseFloat(inputR.value);
+            const n = parseInt(inputN.value);
+
+            // Validate inputs
+            if (isNaN(a) || isNaN(r) || isNaN(n) || n < 1) {
+                alert('Please enter valid numbers');
+                return;
+            }
+
+            // Clear previous terms
+            seriesTermsDiv.innerHTML = '';
+            sumValueSpan.textContent = '-';
+            infinityValueSpan.textContent = '-';
+
+            // Generate terms
+            const terms = [];
+            let sum = 0;
+            for (let i = 0; i < n; i++) {
+                const term = a * Math.pow(r, i);
+                terms.push(term);
+                sum += term;
+            }
+
+            // Create term elements with animation
+            terms.forEach((term, index) => {
+                const termEl = document.createElement('span');
+                termEl.className = 'series-term';
+                
+                // Format the term nicely
+                let displayTerm = term;
+                if (Math.abs(term) < 0.01) {
+                    displayTerm = term.toExponential(2);
+                } else {
+                    displayTerm = Math.round(term * 1000) / 1000;
+                }
+                
+                termEl.textContent = (index > 0 ? (term >= 0 ? '+ ' : '') : '') + displayTerm;
+                seriesTermsDiv.appendChild(termEl);
+
+                // Animate term appearing
+                setTimeout(() => {
+                    termEl.classList.add('visible');
+                }, index * 150);
+            });
+
+            // Add ellipsis if showing convergence
+            if (Math.abs(r) < 1) {
+                setTimeout(() => {
+                    const ellipsis = document.createElement('span');
+                    ellipsis.className = 'series-term visible';
+                    ellipsis.textContent = '+ ...';
+                    ellipsis.style.color = 'var(--gray-400)';
+                    seriesTermsDiv.appendChild(ellipsis);
+                }, n * 150);
+            }
+
+            // Show sum after all terms appear
+            setTimeout(() => {
+                sumValueSpan.textContent = Math.round(sum * 10000) / 10000;
+                
+                // Calculate and show S∞ if applicable
+                if (Math.abs(r) < 1) {
+                    const sInfinity = a / (1 - r);
+                    infinityValueSpan.textContent = Math.round(sInfinity * 10000) / 10000;
+                    infinityDisplay.style.display = 'block';
+                } else {
+                    infinityDisplay.style.display = 'block';
+                    infinityValueSpan.textContent = 'Does not exist (|r| ≥ 1)';
+                    infinityValueSpan.style.color = 'var(--error)';
+                }
+            }, n * 150 + 300);
         }
 
-        function loadProgress() {
-            const saved = localStorage.getItem('week3lesson1_progress');
-            if (saved) {
-                const progress = JSON.parse(saved);
-                if (progress.lessonId === 'geometric-series-week3-lesson1') {
-                    userAnswers = progress.userAnswers;
-                    progress.answeredQuestions.forEach(q => answeredQuestions.add(q));
-                    
-                    answeredQuestions.forEach(index => {
-                        const question = quizQuestions[index];
-                        const questionCard = document.getElementById(`question-${index}`);
-                        const isCorrect = userAnswers[index] === question.correct;
-                        
-                        if (questionCard) {
-                            questionCard.classList.add(isCorrect ? 'answered-correct' : 'answered-incorrect');
-                            
-                            const options = document.querySelectorAll(`[data-question="${index}"]`);
-                            options.forEach((opt, i) => {
-                                if (i === question.correct) opt.classList.add('correct');
-                                else if (i === userAnswers[index] && !isCorrect) opt.classList.add('incorrect');
-                                if (i === userAnswers[index]) opt.classList.add('selected');
-                            });
+        function resetLab() {
+            inputA.value = 4;
+            inputR.value = 0.5;
+            inputN.value = 6;
+            seriesTermsDiv.innerHTML = '';
+            sumValueSpan.textContent = '-';
+            infinityValueSpan.textContent = '-';
+            infinityValueSpan.style.color = '';
+            infinityDisplay.style.display = 'block';
+        }
 
-                            const feedback = document.getElementById(`feedback-${index}`);
-                            feedback.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
-                            feedback.innerHTML = isCorrect 
-                                ? `<strong>✓ Correct!</strong> ${question.explanation}`
-                                : `<strong>✗ Incorrect.</strong> The correct answer is ${String.fromCharCode(65 + question.correct)}. ${question.explanation}`;
+        // ==========================================
+        // QUIZ FUNCTIONALITY
+        // Immediate feedback on option selection
+        // ==========================================
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Check if already answered
+                const question = this.closest('.quiz-question');
+                if (question.classList.contains('answered')) return;
 
-                            const checkBtn = document.getElementById(`check-${index}`);
-                            checkBtn.disabled = true;
-                            checkBtn.textContent = isCorrect ? '✓ Correct' : '✗ Incorrect';
+                // Mark question as answered
+                question.classList.add('answered');
+
+                // Get all options in this question
+                const options = question.querySelectorAll('.quiz-option');
+                const feedback = question.querySelector('.quiz-feedback');
+                const isCorrect = this.dataset.answer === 'true';
+
+                // Disable all options
+                options.forEach(opt => opt.classList.add('disabled'));
+
+                // Show correct/incorrect styling
+                if (isCorrect) {
+                    this.classList.add('correct');
+                } else {
+                    this.classList.add('incorrect');
+                    // Also highlight the correct answer
+                    options.forEach(opt => {
+                        if (opt.dataset.answer === 'true') {
+                            opt.classList.add('correct');
                         }
                     });
-
-                    updateProgress();
-
-                    if (answeredQuestions.size === quizQuestions.length) {
-                        showScore();
-                    }
                 }
-            }
+
+                // Show feedback
+                feedback.classList.add('show');
+            });
+        });
+
+        // Reset Quiz
+        document.getElementById('resetQuizBtn').addEventListener('click', () => {
+            document.querySelectorAll('.quiz-question').forEach(question => {
+                question.classList.remove('answered');
+                question.querySelectorAll('.quiz-option').forEach(opt => {
+                    opt.classList.remove('correct', 'incorrect', 'disabled');
+                });
+                question.querySelector('.quiz-feedback').classList.remove('show');
+            });
+        });
+
+        // ==========================================
+        // VIDEO PLAYER
+        // Simulates video playback
+        // ==========================================
+        document.getElementById('playVideoBtn').addEventListener('click', () => {
+            const placeholder = document.getElementById('videoPlaceholder');
+            placeholder.innerHTML = `
+                <iframe 
+                    src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0" 
+                    title="Geometric Series Proofs Tutorial"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            `;
+        });
+
+        // ==========================================
+        // MODAL FUNCTIONALITY
+        // Open/close tutor booking modal
+        // ==========================================
+        const modal = document.getElementById('tutorModal');
+        const openModalBtns = [
+            document.getElementById('openTutorModal'),
+            document.getElementById('floatingTutor')
+        ];
+        const closeModalBtn = document.getElementById('closeModal');
+
+        openModalBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        closeModalBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
         }
 
-        // ==========================================
-        // LESSON NAVIGATION
-        // ==========================================
-        document.getElementById('prevLesson').addEventListener('click', () => {
-            alert('Navigating to Week 2 Lesson 5: Sum Formula Proofs');
+        // Handle form submission
+        document.getElementById('tutorForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you! Your tutoring session request has been submitted. We will contact you shortly.');
+            closeModal();
+            e.target.reset();
         });
-
-        document.getElementById('nextLesson').addEventListener('click', () => {
-            alert('Navigating to Week 3 Lesson 2: Applications of Sum to Infinity');
-        });
-
-        // ==========================================
-        // INITIALIZE
-        // ==========================================
-        document.addEventListener('DOMContentLoaded', () => {
-            renderQuiz();
-            updateExplorer();
-            updateCanvas();
-            setTimeout(loadProgress, 100);
-        });
-
-        // Initial render
-        renderQuiz();
-        updateExplorer();
-        updateCanvas();
     </script>
-
-    <script src="gr12-math-nav.js"></script>
 </body>
 </html>
+
+
+
 

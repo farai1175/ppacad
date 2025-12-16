@@ -1,0 +1,2064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PassProof Academy - Lesson Template</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ========================================
+           CSS VARIABLES - Theme Configuration
+           ======================================== */
+        :root {
+            --navy-dark: #0a1628;
+            --navy: #1a2744;
+            --navy-light: #2a3a5a;
+            --teal: #00d4aa;
+            --teal-light: #00f5c4;
+            --teal-dark: #00b894;
+            --white: #ffffff;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --success: #10b981;
+            --success-light: #d1fae5;
+            --error: #ef4444;
+            --error-light: #fee2e2;
+            --shadow-sm: 0 2px 8px rgba(10, 22, 40, 0.08);
+            --shadow-md: 0 4px 16px rgba(10, 22, 40, 0.12);
+            --shadow-lg: 0 8px 32px rgba(10, 22, 40, 0.16);
+            --shadow-neu: 8px 8px 16px rgba(10, 22, 40, 0.1), -8px -8px 16px rgba(255, 255, 255, 0.9);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+        }
+
+        /* ========================================
+           BASE STYLES & RESET
+           ======================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 140px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-100);
+            color: var(--gray-700);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ========================================
+           HEADER STYLES
+           ======================================== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--white);
+            box-shadow: var(--shadow-md);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 45px;
+            width: auto;
+            border-radius: var(--radius-sm);
+            transition: transform var(--transition-fast);
+        }
+
+        .logo:hover img {
+            transform: scale(1.05);
+        }
+
+        header nav {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        header nav span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        header nav img {
+            height: 28px;
+            width: auto;
+        }
+
+        /* ========================================
+           STICKY LESSON MAP NAVIGATION
+           ======================================== */
+        .sticky-nav {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background: var(--navy);
+            z-index: 999;
+            padding: 0.75rem 1rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .lesson-map {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            list-style: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .lesson-map li {
+            flex-shrink: 0;
+        }
+
+        .nav-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            color: var(--gray-300);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            white-space: nowrap;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--white);
+            background: var(--navy-light);
+        }
+
+        /* ========================================
+           MAIN CONTENT AREA
+           ======================================== */
+        main {
+            margin-top: 130px;
+            padding: 1.5rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-bottom: 100px;
+        }
+
+        section {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-neu);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        /* ========================================
+           COLLAPSIBLE SECTION HEADERS
+           ======================================== */
+        .section-header {
+            background: linear-gradient(135deg, var(--navy), var(--navy-light));
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+            transition: background var(--transition-fast);
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--navy-light), var(--navy));
+        }
+
+        .section-header h2 {
+            color: var(--white);
+            font-size: 1.15rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toggle-icon {
+            color: var(--teal);
+            font-size: 1rem;
+            transition: transform var(--transition-normal);
+        }
+
+        .section-header.collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
+
+        .section-content {
+            padding: 1.5rem;
+            max-height: 5000px;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease, opacity 0.3s ease;
+            opacity: 1;
+        }
+
+        .section-content.collapsed {
+            max-height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            opacity: 0;
+        }
+
+        /* ========================================
+           OBJECTIVES SECTION
+           ======================================== */
+        #objectives ul {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        #objectives li {
+            padding: 0.75rem 1rem;
+            padding-left: 2.5rem;
+            position: relative;
+            background: var(--gray-50);
+            border-radius: var(--radius-md);
+            margin-bottom: 0.5rem;
+            color: var(--gray-700);
+            border-left: 4px solid var(--teal);
+        }
+
+        #objectives li::before {
+            content: '✓';
+            position: absolute;
+            left: 1rem;
+            color: var(--teal);
+            font-weight: bold;
+        }
+
+        /* ========================================
+           PRE-KNOWLEDGE & BASELINE SECTIONS
+           ======================================== */
+        .knowledge-list, .baseline-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .knowledge-list li, .baseline-list li {
+            padding: 0.75rem 1rem;
+            background: var(--gray-50);
+            border-radius: var(--radius-md);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .knowledge-list li::before {
+            content: '📌';
+        }
+
+        .baseline-list li::before {
+            content: '❓';
+        }
+
+        /* ========================================
+           THEORY SECTION STYLES
+           ======================================== */
+        .theory-content h3 {
+            color: var(--navy);
+            font-size: 1.25rem;
+            margin: 1.5rem 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .theory-content h3:first-child {
+            margin-top: 0;
+        }
+
+        .theory-content p {
+            margin-bottom: 1rem;
+            color: var(--gray-600);
+            line-height: 1.8;
+        }
+
+        .key-term {
+            background: linear-gradient(135deg, rgba(0, 212, 170, 0.15), rgba(0, 212, 170, 0.05));
+            color: var(--teal-dark);
+            padding: 0.125rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            border-left: 3px solid var(--teal);
+        }
+
+        .formula-box {
+            background: var(--navy);
+            color: var(--white);
+            padding: 1.25rem 1.5rem;
+            border-radius: var(--radius-md);
+            margin: 1.25rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        .formula-box small {
+            display: block;
+            color: var(--gray-400);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .worked-example {
+            background: linear-gradient(135deg, var(--gray-50), var(--white));
+            border-left: 4px solid var(--teal);
+            padding: 1.25rem 1.5rem;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            margin: 1.25rem 0;
+        }
+
+        .worked-example strong:first-child {
+            display: block;
+            color: var(--navy);
+            font-size: 1.05rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed var(--gray-300);
+        }
+
+        .worked-example p {
+            margin-bottom: 0.75rem;
+        }
+
+        .worked-example ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .worked-example li {
+            margin-bottom: 0.25rem;
+        }
+
+        .step-list {
+            list-style: none;
+            counter-reset: steps;
+            margin: 1rem 0;
+        }
+
+        .step-list li {
+            counter-increment: steps;
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            align-items: flex-start;
+        }
+
+        .step-list li::before {
+            content: counter(steps);
+            min-width: 28px;
+            height: 28px;
+            background: var(--teal);
+            color: var(--navy);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .practice-problems {
+            background: var(--gray-100);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        .practice-problems h4 {
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+
+        .practice-problems p {
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed var(--gray-300);
+        }
+
+        .practice-problems p:last-child {
+            border-bottom: none;
+        }
+
+        /* ========================================
+           VIRTUAL LAB SECTION
+           ======================================== */
+        .lab-zone {
+            background: var(--navy);
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            text-align: center;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .lab-canvas {
+            width: 100%;
+            max-width: 600px;
+            height: 200px;
+            background: var(--navy-light);
+            border-radius: var(--radius-md);
+            border: 2px dashed var(--gray-500);
+        }
+
+        .sequence-display {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+
+        .sequence-term {
+            width: 55px;
+            height: 55px;
+            background: var(--teal);
+            color: var(--navy);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            font-weight: 700;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .sequence-term.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .sequence-formula {
+            font-size: 1.15rem;
+            color: var(--white);
+            font-family: 'Courier New', monospace;
+            background: var(--navy-light);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+        }
+
+        .lab-controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* ========================================
+           QUIZ SECTION STYLES
+           ======================================== */
+        .quiz-container p {
+            color: var(--gray-600);
+            margin-bottom: 1.5rem;
+        }
+
+        .quiz-question {
+            background: var(--gray-50);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .quiz-question h4 {
+            color: var(--navy);
+            font-size: 1.05rem;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .quiz-option {
+            padding: 1rem 1.25rem;
+            background: var(--white);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-size: 0.95rem;
+        }
+
+        .quiz-option:hover:not(.disabled) {
+            border-color: var(--teal);
+            background: rgba(0, 212, 170, 0.05);
+        }
+
+        .quiz-option.correct {
+            border-color: var(--success);
+            background: var(--success-light);
+        }
+
+        .quiz-option.incorrect {
+            border-color: var(--error);
+            background: var(--error-light);
+        }
+
+        .quiz-option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .quiz-feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            display: none;
+            background: var(--gray-100);
+            border-left: 4px solid var(--teal);
+        }
+
+        .quiz-feedback.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .quiz-reset {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        /* ========================================
+           VIDEO SECTION STYLES
+           ======================================== */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            background: var(--navy);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-400);
+            gap: 1rem;
+        }
+
+        .play-btn {
+            width: 70px;
+            height: 70px;
+            background: var(--teal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            box-shadow: 0 0 0 0 rgba(0, 212, 170, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.1);
+            background: var(--teal-light);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 212, 170, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(0, 212, 170, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 212, 170, 0); }
+        }
+
+        /* ========================================
+           TUTOR CTA SECTION
+           ======================================== */
+        .tutor-cta {
+            background: linear-gradient(135deg, var(--navy), var(--navy-light));
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tutor-cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 212, 170, 0.15) 0%, transparent 70%);
+        }
+
+        .tutor-cta h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+            position: relative;
+        }
+
+        .tutor-cta p {
+            color: var(--gray-300);
+            position: relative;
+        }
+
+        .tutor-cta a {
+            color: var(--teal-light);
+        }
+
+        /* ========================================
+           BUTTONS
+           ======================================== */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+            color: var(--navy);
+            border: none;
+            padding: 0.875rem 2rem;
+            border-radius: var(--radius-xl);
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--navy);
+            border: 2px solid var(--gray-200);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-xl);
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--teal);
+            color: var(--teal-dark);
+        }
+
+        /* ========================================
+           FLOATING TUTOR BUTTON
+           ======================================== */
+        .floating-tutor {
+            position: fixed;
+            bottom: 90px;
+            right: 1.5rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+            color: var(--navy);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            z-index: 998;
+            transition: all var(--transition-fast);
+        }
+
+        .floating-tutor:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(0, 212, 170, 0.4);
+        }
+
+        /* ========================================
+           MODAL STYLES
+           ======================================== */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 22, 40, 0.8);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-normal);
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            max-width: 450px;
+            width: 100%;
+            transform: scale(0.9) translateY(20px);
+            transition: all var(--transition-normal);
+            overflow: hidden;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--navy), var(--navy-light));
+            padding: 1.25rem 1.5rem;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header h2 {
+            font-size: 1.15rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--gray-300);
+            font-size: 1.75rem;
+            cursor: pointer;
+            line-height: 1;
+            transition: color var(--transition-fast);
+        }
+
+        .close-btn:hover {
+            color: var(--white);
+        }
+
+        .modal-content > p,
+        .modal-content > form {
+            padding: 0 1.5rem;
+        }
+
+        .modal-content > p {
+            padding-top: 1.5rem;
+        }
+
+        .modal-content > form {
+            padding-bottom: 1.5rem;
+        }
+
+        .modal-content input,
+        .modal-content textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: border-color var(--transition-fast);
+        }
+
+        .modal-content input:focus,
+        .modal-content textarea:focus {
+            outline: none;
+            border-color: var(--teal);
+        }
+
+        /* ========================================
+           FOOTER NAVIGATION
+           ======================================== */
+        .lesson-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            box-shadow: 0 -4px 16px rgba(10, 22, 40, 0.1);
+            padding: 0.75rem 1.5rem;
+            z-index: 997;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1.25rem;
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            text-decoration: none;
+            background: var(--gray-100);
+            color: var(--gray-600);
+            border: none;
+        }
+
+        .nav-btn:hover {
+            background: var(--gray-200);
+            color: var(--navy);
+        }
+
+        .nav-btn.primary {
+            background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+            color: var(--navy);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-center {
+            display: flex;
+        }
+
+        /* ========================================
+           RESPONSIVE STYLES
+           ======================================== */
+        @media (max-width: 768px) {
+            header {
+                padding: 0 1rem;
+                height: 60px;
+            }
+
+            header nav span {
+                font-size: 1.1rem !important;
+            }
+
+            .sticky-nav {
+                top: 60px;
+                padding: 0.5rem;
+            }
+
+            .lesson-map {
+                gap: 0.25rem;
+            }
+
+            .nav-link {
+                padding: 0.4rem 0.6rem;
+                font-size: 0.75rem;
+            }
+
+            main {
+                margin-top: 115px;
+                padding: 1rem;
+            }
+
+            .section-header {
+                padding: 0.875rem 1rem;
+            }
+
+            .section-header h2 {
+                font-size: 1rem;
+            }
+
+            .section-content {
+                padding: 1rem;
+            }
+
+            .formula-box {
+                font-size: 0.95rem;
+                padding: 1rem;
+            }
+
+            .worked-example {
+                padding: 1rem;
+            }
+
+            .lab-zone {
+                padding: 1.5rem;
+                min-height: 280px;
+            }
+
+            .sequence-term {
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
+
+            .tutor-cta {
+                padding: 1.75rem;
+            }
+
+            .tutor-cta h3 {
+                font-size: 1.25rem;
+            }
+
+            .floating-tutor {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+                bottom: 80px;
+                right: 1rem;
+            }
+
+            .lesson-nav {
+                padding: 0.5rem 1rem;
+            }
+
+            .nav-btn {
+                padding: 0.5rem 0.875rem;
+                font-size: 0.8rem;
+            }
+
+            .nav-center .nav-btn span {
+                display: none;
+            }
+
+            .modal-content {
+                margin: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header nav span {
+                font-size: 0.95rem !important;
+            }
+
+            .logo img {
+                height: 36px;
+            }
+
+            .nav-link {
+                padding: 0.35rem 0.5rem;
+                font-size: 0.7rem;
+            }
+
+            .step-list li {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-btn {
+                padding: 0.5rem 0.75rem;
+            }
+        }
+
+        /* ========================================
+           LESSON BUILDER STYLES
+           ======================================== */
+        .builder-container {
+            margin-top: 130px;
+            padding: 1.5rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-bottom: 100px;
+        }
+
+        .builder-header {
+            background: linear-gradient(135deg, var(--navy), var(--navy-light));
+            color: var(--white);
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .builder-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .builder-header p {
+            color: var(--gray-300);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-neu);
+        }
+
+        .form-group h3 {
+            color: var(--navy);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .form-column {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .form-column label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+
+        .form-column input,
+        .form-column textarea,
+        .form-column select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: border-color var(--transition-fast);
+        }
+
+        .form-column input:focus,
+        .form-column textarea:focus,
+        .form-column select:focus {
+            outline: none;
+            border-color: var(--teal);
+        }
+
+        .form-column textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .dynamic-list {
+            margin-top: 1rem;
+        }
+
+        .list-item {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            align-items: center;
+        }
+
+        .list-item input {
+            flex: 1;
+        }
+
+        .remove-item {
+            background: var(--error-light);
+            color: var(--error);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: all var(--transition-fast);
+        }
+
+        .remove-item:hover {
+            background: var(--error);
+            color: var(--white);
+        }
+
+        .add-item {
+            background: var(--success-light);
+            color: var(--success);
+            border: 2px dashed var(--success);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            transition: all var(--transition-fast);
+        }
+
+        .add-item:hover {
+            background: var(--success);
+            color: var(--white);
+            border-color: var(--success);
+        }
+
+        .preview-btn {
+            background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+            color: var(--navy);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: var(--radius-xl);
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            box-shadow: var(--shadow-md);
+            margin: 2rem auto;
+            display: block;
+        }
+
+        .preview-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .preview-window {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: var(--shadow-neu);
+            display: none;
+        }
+
+        .preview-window h2 {
+            color: var(--navy);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .code-output {
+            background: var(--navy);
+            color: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            margin-top: 1rem;
+        }
+
+        .download-btn {
+            background: var(--navy);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1rem auto;
+            transition: all var(--transition-fast);
+        }
+
+        .download-btn:hover {
+            background: var(--navy-light);
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== HEADER ===== -->
+    <header>
+        <a href="index.html" class="logo">
+            <div style="width: 45px; height: 45px; background: linear-gradient(135deg, var(--teal), var(--teal-dark)); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: var(--navy); font-weight: 800; font-size: 1.25rem;">PP</div>
+        </a>
+        <nav style="flex: 1; text-align: right;">
+            <span style="font-size: 1.75rem; color: var(--navy);">
+                📚 PassProof Academy
+            </span>
+        </nav>
+    </header>
+
+    <!-- ===== LESSON BUILDER ===== -->
+    <div class="builder-container">
+        <div class="builder-header">
+            <h1>📝 Lesson Builder</h1>
+            <p>Create a new lesson using the exact structure, format, and style of PassProof Academy. Fill in the form below to generate your custom lesson.</p>
+        </div>
+
+        <div class="form-group">
+            <h3>📋 Basic Information</h3>
+            <div class="form-row">
+                <div class="form-column">
+                    <label>Subject</label>
+                    <input type="text" id="subject" placeholder="e.g., Grade 12 Mathematics" value="Grade 12 Mathematics">
+                </div>
+                <div class="form-column">
+                    <label>Lesson Topic</label>
+                    <input type="text" id="lessonTopic" placeholder="e.g., Arithmetic Sequences & Series" value="Arithmetic Sequences & Series">
+                </div>
+                <div class="form-column">
+                    <label>Lesson Number</label>
+                    <input type="text" id="lessonNumber" placeholder="e.g., Lesson 1.1" value="Lesson 1.1">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-column">
+                    <label>Lesson Duration</label>
+                    <input type="text" id="duration" placeholder="e.g., 60 minutes" value="60 minutes">
+                </div>
+                <div class="form-column">
+                    <label>Previous Lesson Link</label>
+                    <input type="text" id="prevLesson" placeholder="e.g., less1-0.html" value="less1-0.html">
+                </div>
+                <div class="form-column">
+                    <label>Next Lesson Link</label>
+                    <input type="text" id="nextLesson" placeholder="e.g., less1-2.html" value="less1-2.html">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <h3>🎯 Lesson Objectives</h3>
+            <div class="dynamic-list" id="objectivesList">
+                <div class="list-item">
+                    <input type="text" class="objective" placeholder="By the end of this lesson, students will be able to..." value="Revise number patterns of the format Tₙ = an + b from Grade 10">
+                    <button type="button" class="remove-item">×</button>
+                </div>
+                <div class="list-item">
+                    <input type="text" class="objective" placeholder="Another objective..." value="Revise number patterns of the format Tₙ = an² + bn + c from Grade 11">
+                    <button type="button" class="remove-item">×</button>
+                </div>
+                <div class="list-item">
+                    <input type="text" class="objective" placeholder="Another objective..." value="Determine the general term (Tₙ) for linear and quadratic sequences">
+                    <button type="button" class="remove-item">×</button>
+                </div>
+                <div class="list-item">
+                    <input type="text" class="objective" placeholder="Another objective..." value="Calculate specific terms using the general term formula">
+                    <button type="button" class="remove-item">×</button>
+                </div>
+            </div>
+            <button type="button" class="add-item" id="addObjective">+ Add Objective</button>
+        </div>
+
+        <div class="form-group">
+            <h3>🧠 Pre-Knowledge Check</h3>
+            <div class="dynamic-list" id="knowledgeList">
+                <div class="list-item">
+                    <input type="text" class="knowledge" placeholder="What students should know before starting..." value="Number patterns and sequences from Grade 10 and Grade 11">
+                    <button type="button" class="remove-item">×</button>
+                </div>
+                <div class="list-item">
+                    <input type="text" class="knowledge" placeholder="Another prerequisite..." value="How to identify constant differences between successive terms">
+                    <button type="button" class="remove-item">×</button>
+                </div>
+                <div class="list-item">
+                    <input type="text" class="knowledge" placeholder="Another prerequisite..." value="Basic algebraic substitution and solving equations">
+                    <button type="button" class="remove-item">×</button>
+                </div>
+                <div class="list-item">
+                    <input type="text" class="knowledge" placeholder="Another prerequisite..." value="The concept of first difference and second difference in sequences">
+                    <button type="button" class="remove-item">×</button>
+                </div>
+            </div>
+            <button type="button" class="add-item" id="addKnowledge">+ Add Pre-Knowledge Item</button>
+        </div>
+
+        <div class="form-group">
+            <h3>📝 Baseline Questions</h3>
+            <div class="form-row">
+                <div class="form-column">
+                    <label>Baseline Introduction</label>
+                    <textarea id="baselineIntro">This is the first lesson of the term, so there is no formal baseline assessment. However, try these quick revision questions:</textarea>
+                </div>
+            </div>
+            <div class="dynamic-list" id="baselineList">
+                <div class="list-item">
+                    <input type="text" class="baseline" placeholder="A quick revision question..." value="What is the next term in the sequence: 2, 5, 8, 11, ...?">
+                    <button type="button" class="remove-item">×</button>
+                </div>
+                <div class="list-item">
+                    <input type="text" class="baseline" placeholder="Another question..." value="If Tₙ = 3n + 1, what is T₄?">
+                    <button type="button" class="remove-item">×</button>
+                </div>
+                <div class="list-item">
+                    <input type="text" class="baseline" placeholder="Another question..." value="What is the difference between a linear and quadratic sequence?">
+                    <button type="button" class="remove-item">×</button>
+                </div>
+            </div>
+            <button type="button" class="add-item" id="addBaseline">+ Add Baseline Question</button>
+        </div>
+
+        <div class="form-group">
+            <h3>📚 Key Theory Content</h3>
+            <div class="form-row">
+                <div class="form-column">
+                    <label>Overview/Introduction</label>
+                    <textarea id="theoryOverview">This lesson revises number patterns from Grades 10 and 11. We focus on finding the general term (Tₙ) for both linear sequences (constant first difference) and quadratic sequences (constant second difference).</textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-column">
+                    <label>Key Term 1 Name</label>
+                    <input type="text" id="term1Name" value="Linear Sequences (Grade 10 Revision)">
+                </div>
+                <div class="form-column">
+                    <label>Key Term 1 Description</label>
+                    <textarea id="term1Desc">A linear sequence has a constant difference between successive terms. The general term is given by:</textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-column">
+                    <label>Key Term 2 Name</label>
+                    <input type="text" id="term2Name" value="Quadratic Sequences (Grade 11 Revision)">
+                </div>
+                <div class="form-column">
+                    <label>Key Term 2 Description</label>
+                    <textarea id="term2Desc">A quadratic sequence has a constant second difference. The general term is:</textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-column">
+                    <label>Key Takeaways (comma separated)</label>
+                    <input type="text" id="keyTakeaways" value="Linear sequences: Use Tₙ = an + b when first difference is constant,Quadratic sequences: Use Tₙ = an² + bn + c when second difference is constant,Always verify your formula by substituting values of n back in">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <h3>🧪 Virtual Lab Configuration</h3>
+            <div class="form-row">
+                <div class="form-column">
+                    <label>Lab Description</label>
+                    <textarea id="labDesc">Visualize how the sequence formula Tₙ = 4n + 1 generates terms step by step. Click "Start Simulation" to see each term appear!</textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-column">
+                    <label>Sequence Formula</label>
+                    <input type="text" id="labFormula" value="Tₙ = 4n + 1">
+                </div>
+                <div class="form-column">
+                    <label>Number of Terms</label>
+                    <select id="labTermCount">
+                        <option value="6">6 terms</option>
+                        <option value="8" selected>8 terms</option>
+                        <option value="10">10 terms</option>
+                        <option value="12">12 terms</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <h3>✓ Quiz Configuration</h3>
+            <div id="quizQuestions">
+                <div class="quiz-item" style="background: var(--gray-50); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1rem;">
+                    <h4 style="margin-bottom: 0.5rem; color: var(--navy);">Question 1</h4>
+                    <input type="text" class="quizQuestion" value="For the sequence 3; 7; 11; 15; ..., what is the constant difference?" style="width: 100%; margin-bottom: 0.5rem; padding: 0.5rem;">
+                    <div class="form-row">
+                        <div class="form-column">
+                            <input type="text" class="quizOption" placeholder="Option A" value="A) 3" data-correct="false">
+                        </div>
+                        <div class="form-column">
+                            <input type="text" class="quizOption" placeholder="Option B" value="B) 4" data-correct="true">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-column">
+                            <input type="text" class="quizOption" placeholder="Option C" value="C) 7" data-correct="false">
+                        </div>
+                        <div class="form-column">
+                            <input type="text" class="quizOption" placeholder="Option D" value="D) 11" data-correct="false">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-column">
+                            <label>Explanation</label>
+                            <textarea class="quizExplanation" style="min-height: 80px;">The difference between consecutive terms is: 7-3=4, 11-7=4, 15-11=4. The constant difference is 4.</textarea>
+                        </div>
+                    </div>
+                    <button type="button" class="remove-item" style="margin-top: 0.5rem;">Remove Question</button>
+                </div>
+            </div>
+            <button type="button" class="add-item" id="addQuizQuestion">+ Add Quiz Question</button>
+        </div>
+
+        <div class="form-group">
+            <h3>📹 Video Tutorial</h3>
+            <div class="form-row">
+                <div class="form-column">
+                    <label>Video Description</label>
+                    <textarea id="videoDesc">Watch this video explanation on Arithmetic Sequences and Series!</textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-column">
+                    <label>Video Title</label>
+                    <input type="text" id="videoTitle" value="Introduction to Arithmetic Sequences">
+                </div>
+                <div class="form-column">
+                    <label>Video Duration</label>
+                    <input type="text" id="videoDuration" value="12 minutes">
+                </div>
+                <div class="form-column">
+                    <label>Video Difficulty</label>
+                    <select id="videoDifficulty">
+                        <option value="Beginner">Beginner</option>
+                        <option value="Beginner to Intermediate" selected>Beginner to Intermediate</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <h3>👨‍🏫 Live Tutoring</h3>
+            <div class="form-row">
+                <div class="form-column">
+                    <label>Tutoring Message</label>
+                    <textarea id="tutorMessage">Our expert tutors are available 24/7 to answer your questions and guide you through difficult concepts.</textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-column">
+                    <label>Contact Number</label>
+                    <input type="text" id="contactNumber" value="067 095 7879">
+                </div>
+            </div>
+        </div>
+
+        <button class="preview-btn" id="generateLesson">✨ Generate Lesson</button>
+
+        <div class="preview-window" id="previewWindow">
+            <h2>🎉 Your Lesson is Ready!</h2>
+            <p>Copy the HTML code below or download it as a file:</p>
+            <div class="code-output" id="codeOutput"></div>
+            <button class="download-btn" id="downloadBtn">📥 Download Lesson HTML</button>
+            <button class="btn-secondary" id="copyBtn">📋 Copy to Clipboard</button>
+            <p style="margin-top: 1rem; text-align: center; color: var(--gray-600);">
+                The generated code maintains the exact structure, format, and style of PassProof Academy lessons.
+            </p>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER NAVIGATION ===== -->
+    <footer class="lesson-nav">
+        <a href="index.html" class="nav-btn">← Back to Home</a>
+        <div class="nav-center">
+            <a href="#" class="nav-btn" id="scrollTopBtn">↑ Top</a>
+        </div>
+        <button class="nav-btn primary" id="useTemplateBtn">Use This Template</button>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // ==========================================
+        // DYNAMIC FORM FUNCTIONALITY
+        // ==========================================
+        
+        // Add objectives
+        document.getElementById('addObjective').addEventListener('click', () => {
+            addListItem('objectivesList', 'objective', 'Objective');
+        });
+
+        // Add pre-knowledge items
+        document.getElementById('addKnowledge').addEventListener('click', () => {
+            addListItem('knowledgeList', 'knowledge', 'Pre-knowledge item');
+        });
+
+        // Add baseline questions
+        document.getElementById('addBaseline').addEventListener('click', () => {
+            addListItem('baselineList', 'baseline', 'Baseline question');
+        });
+
+        // Add quiz questions
+        document.getElementById('addQuizQuestion').addEventListener('click', () => {
+            const quizContainer = document.getElementById('quizQuestions');
+            const questionCount = quizContainer.querySelectorAll('.quiz-item').length + 1;
+            
+            const newQuestion = document.createElement('div');
+            newQuestion.className = 'quiz-item';
+            newQuestion.style = 'background: var(--gray-50); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1rem;';
+            newQuestion.innerHTML = `
+                <h4 style="margin-bottom: 0.5rem; color: var(--navy);">Question ${questionCount}</h4>
+                <input type="text" class="quizQuestion" placeholder="Enter your question..." style="width: 100%; margin-bottom: 0.5rem; padding: 0.5rem;">
+                <div class="form-row">
+                    <div class="form-column">
+                        <input type="text" class="quizOption" placeholder="Option A" data-correct="false">
+                    </div>
+                    <div class="form-column">
+                        <input type="text" class="quizOption" placeholder="Option B" data-correct="false">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-column">
+                        <input type="text" class="quizOption" placeholder="Option C" data-correct="false">
+                    </div>
+                    <div class="form-column">
+                        <input type="text" class="quizOption" placeholder="Option D" data-correct="false">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-column">
+                        <label>Correct Answer</label>
+                        <select class="correctAnswer">
+                            <option value="A">Option A</option>
+                            <option value="B">Option B</option>
+                            <option value="C">Option C</option>
+                            <option value="D">Option D</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-column">
+                        <label>Explanation</label>
+                        <textarea class="quizExplanation" style="min-height: 80px;" placeholder="Explain why this answer is correct..."></textarea>
+                    </div>
+                </div>
+                <button type="button" class="remove-item" style="margin-top: 0.5rem;">Remove Question</button>
+            `;
+            
+            quizContainer.appendChild(newQuestion);
+            
+            // Add remove functionality
+            newQuestion.querySelector('.remove-item').addEventListener('click', function() {
+                this.closest('.quiz-item').remove();
+                updateQuizQuestionNumbers();
+            });
+            
+            // Add change listener to correct answer selector
+            newQuestion.querySelector('.correctAnswer').addEventListener('change', function() {
+                const correctLetter = this.value;
+                const options = newQuestion.querySelectorAll('.quizOption');
+                options.forEach(opt => {
+                    opt.dataset.correct = 'false';
+                });
+                options[correctLetter.charCodeAt(0) - 65].dataset.correct = 'true';
+            });
+        });
+
+        // Helper function to add list items
+        function addListItem(containerId, className, placeholder) {
+            const container = document.getElementById(containerId);
+            const itemCount = container.querySelectorAll('.list-item').length + 1;
+            
+            const div = document.createElement('div');
+            div.className = 'list-item';
+            div.innerHTML = `
+                <input type="text" class="${className}" placeholder="${placeholder} ${itemCount}...">
+                <button type="button" class="remove-item">×</button>
+            `;
+            
+            container.appendChild(div);
+            
+            // Add remove functionality
+            div.querySelector('.remove-item').addEventListener('click', function() {
+                this.closest('.list-item').remove();
+            });
+        }
+
+        // Update quiz question numbers
+        function updateQuizQuestionNumbers() {
+            const questions = document.querySelectorAll('.quiz-item');
+            questions.forEach((question, index) => {
+                question.querySelector('h4').textContent = `Question ${index + 1}`;
+            });
+        }
+
+        // Initialize remove buttons
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('remove-item') && !e.target.closest('.quiz-item')) {
+                e.target.closest('.list-item').remove();
+            }
+        });
+
+        // ==========================================
+        // GENERATE LESSON HTML
+        // ==========================================
+        document.getElementById('generateLesson').addEventListener('click', function() {
+            // Gather all form data
+            const lessonData = {
+                // Basic info
+                subject: document.getElementById('subject').value,
+                lessonTopic: document.getElementById('lessonTopic').value,
+                lessonNumber: document.getElementById('lessonNumber').value,
+                duration: document.getElementById('duration').value,
+                prevLesson: document.getElementById('prevLesson').value,
+                nextLesson: document.getElementById('nextLesson').value,
+                
+                // Objectives
+                objectives: Array.from(document.querySelectorAll('.objective')).map(input => input.value),
+                
+                // Pre-knowledge
+                knowledgeItems: Array.from(document.querySelectorAll('.knowledge')).map(input => input.value),
+                
+                // Baseline
+                baselineIntro: document.getElementById('baselineIntro').value,
+                baselineQuestions: Array.from(document.querySelectorAll('.baseline')).map(input => input.value),
+                
+                // Theory
+                theoryOverview: document.getElementById('theoryOverview').value,
+                term1Name: document.getElementById('term1Name').value,
+                term1Desc: document.getElementById('term1Desc').value,
+                term2Name: document.getElementById('term2Name').value,
+                term2Desc: document.getElementById('term2Desc').value,
+                keyTakeaways: document.getElementById('keyTakeaways').value.split(','),
+                
+                // Virtual Lab
+                labDesc: document.getElementById('labDesc').value,
+                labFormula: document.getElementById('labFormula').value,
+                labTermCount: parseInt(document.getElementById('labTermCount').value),
+                
+                // Quiz
+                quizQuestions: Array.from(document.querySelectorAll('.quiz-item')).map(item => ({
+                    question: item.querySelector('.quizQuestion').value,
+                    options: Array.from(item.querySelectorAll('.quizOption')).map(opt => ({
+                        text: opt.value,
+                        correct: opt.dataset.correct === 'true'
+                    })),
+                    explanation: item.querySelector('.quizExplanation').value
+                })),
+                
+                // Video
+                videoDesc: document.getElementById('videoDesc').value,
+                videoTitle: document.getElementById('videoTitle').value,
+                videoDuration: document.getElementById('videoDuration').value,
+                videoDifficulty: document.getElementById('videoDifficulty').value,
+                
+                // Tutor
+                tutorMessage: document.getElementById('tutorMessage').value,
+                contactNumber: document.getElementById('contactNumber').value
+            };
+            
+            // Generate the HTML
+            const lessonHTML = generateLessonHTML(lessonData);
+            
+            // Display the code
+            document.getElementById('codeOutput').textContent = lessonHTML;
+            document.getElementById('previewWindow').style.display = 'block';
+            
+            // Scroll to preview
+            document.getElementById('previewWindow').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Generate the complete lesson HTML
+        function generateLessonHTML(data) {
+            const escapeHTML = (str) => str.replace(/[&<>"']/g, 
+                m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m]);
+            
+            // Generate objectives list
+            const objectivesList = data.objectives.map(obj => 
+                `<li>${escapeHTML(obj)}</li>`
+            ).join('\n                ');
+            
+            // Generate pre-knowledge list
+            const knowledgeList = data.knowledgeItems.map(item => 
+                `<li>${escapeHTML(item)}</li>`
+            ).join('\n                ');
+            
+            // Generate baseline list
+            const baselineList = data.baselineQuestions.map(q => 
+                `<li>${escapeHTML(q)}</li>`
+            ).join('\n                ');
+            
+            // Generate quiz questions
+            const quizQuestions = data.quizQuestions.map((q, index) => {
+                const options = q.options.map((opt, optIndex) => 
+                    `<div class="quiz-option" data-answer="${opt.correct ? 'true' : 'false'}">${escapeHTML(opt.text)}</div>`
+                ).join('\n                        ');
+                
+                return `
+                <!-- Question ${index + 1} -->
+                <div class="quiz-question" data-question="${index + 1}">
+                    <h4>Question ${index + 1}: ${escapeHTML(q.question)}</h4>
+                    <div class="quiz-options">
+                        ${options}
+                    </div>
+                    <div class="quiz-feedback">
+                        <strong>Explanation:</strong> ${escapeHTML(q.explanation)}
+                    </div>
+                </div>`;
+            }).join('\n\n                ');
+            
+            // Generate key takeaways list
+            const keyTakeawaysList = data.keyTakeaways.map(takeaway => 
+                `<li><strong>${escapeHTML(takeaway.trim())}</strong></li>`
+            ).join('\n                ');
+            
+            // Construct the full HTML
+            return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${escapeHTML(data.subject)} | ${escapeHTML(data.lessonTopic)} | PassProof Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* All CSS styles from the template */
+        /* ... (copy all CSS styles from the original template) ... */
+    </style>
+</head>
+<body>
+    <!-- ===== HEADER ===== -->
+    <header>
+        <a href="index.html" class="logo">
+            <img src="logo_tick.jpg" alt="PassProof Academy Logo" onerror="this.style.display='none'">
+        </a>
+        <nav style="flex: 1; text-align: right;">
+            <span style="font-size: 1.75rem; color: var(--navy);">
+                <img src="favicon-32x32.png" alt="" onerror="this.style.display='none'">
+                ${escapeHTML(data.subject)}
+            </span>
+        </nav>
+    </header>
+
+    <!-- ===== STICKY LESSON MAP ===== -->
+    <nav class="sticky-nav">
+        <ul class="lesson-map">
+            <li><a href="#objectives" class="nav-link">🎯 Objectives</a></li>
+            <li><a href="#pre-knowledge" class="nav-link">🧠 Pre-Knowledge</a></li>
+            <li><a href="#baseline" class="nav-link">📝 Baseline</a></li>
+            <li><a href="#theory" class="nav-link">📚 Key Theory</a></li>
+            <li><a href="#lab" class="nav-link">🧪 Virtual Lab</a></li>
+            <li><a href="#quiz" class="nav-link">✓ Quiz</a></li>
+            <li><a href="#video" class="nav-link">📹 Video</a></li>
+            <li><a href="#tutor" class="nav-link">👨‍🏫 Live Tutor</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main>
+        <!-- Section: Objectives -->
+        <section id="objectives">
+            <div class="section-header" data-toggle="objectives-content">
+                <h2>🎯 Lesson Objectives</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content" id="objectives-content">
+                <p><strong>Topic:</strong> ${escapeHTML(data.lessonTopic)} (${escapeHTML(data.lessonNumber)}) | <strong>Time:</strong> ${escapeHTML(data.duration)}</p>
+                <p style="margin-top: 1rem;">By the end of this lesson, you will be able to:</p>
+                <ul>
+                    ${objectivesList}
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section: Pre-Knowledge -->
+        <section id="pre-knowledge">
+            <div class="section-header" data-toggle="pre-knowledge-content">
+                <h2>🧠 Pre-Knowledge Check</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content" id="pre-knowledge-content">
+                <p>Before starting this lesson, make sure you understand:</p>
+                <ul class="knowledge-list">
+                    ${knowledgeList}
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section: Baseline Questions -->
+        <section id="baseline">
+            <div class="section-header" data-toggle="baseline-content">
+                <h2>📝 Baseline Questions</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content" id="baseline-content">
+                <p>${escapeHTML(data.baselineIntro)}</p>
+                <ul class="baseline-list">
+                    ${baselineList}
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section: Key Theory -->
+        <section id="theory">
+            <div class="section-header" data-toggle="theory-content">
+                <h2>📚 Key Theory & Definitions</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content theory-content" id="theory-content">
+                <h3>Overview</h3>
+                <p>${escapeHTML(data.theoryOverview)}</p>
+
+                <h3><span class="key-term">${escapeHTML(data.term1Name)}</span></h3>
+                <p>${escapeHTML(data.term1Desc)}</p>
+                <div class="formula-box">
+                    Tₙ = an + b
+                    <small>where 'a' is the constant difference between terms</small>
+                </div>
+
+                <h3><span class="key-term">${escapeHTML(data.term2Name)}</span></h3>
+                <p>${escapeHTML(data.term2Desc)}</p>
+                <div class="formula-box">
+                    Tₙ = an² + bn + c
+                    <small>where 2a = second difference</small>
+                </div>
+
+                <h3>Key Takeaways</h3>
+                <ul style="margin-left: 1.5rem; margin-top: 0.75rem;">
+                    ${keyTakeawaysList}
+                </ul>
+
+                <div class="practice-problems">
+                    <h4>📝 Practice Problems</h4>
+                    <p><strong>1.</strong> Practice problem 1</p>
+                    <p><strong>2.</strong> Practice problem 2</p>
+                    <p><strong>3.</strong> Practice problem 3</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Virtual Lab -->
+        <section id="lab">
+            <div class="section-header" data-toggle="lab-content">
+                <h2>🧪 Virtual Lab / Interactive Simulation</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content" id="lab-content">
+                <p style="margin-bottom: 1.5rem;">
+                    ${escapeHTML(data.labDesc)}
+                </p>
+                <div class="lab-zone">
+                    <canvas id="sequenceCanvas" class="lab-canvas"></canvas>
+                    <div class="sequence-display" id="sequenceDisplay"></div>
+                    <div class="sequence-formula" id="sequenceFormula">${escapeHTML(data.labFormula)}</div>
+                    <div class="lab-controls">
+                        <button class="btn-primary" id="startSimBtn">▶ Start Simulation</button>
+                        <button class="btn-secondary" id="resetSimBtn">↻ Reset</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Real-Time Quiz -->
+        <section id="quiz">
+            <div class="section-header" data-toggle="quiz-content">
+                <h2>✓ Real-Time Quiz</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content quiz-container" id="quiz-content">
+                <p>Test your understanding. Select an option and get instant feedback.</p>
+
+                ${quizQuestions}
+
+                <div class="quiz-reset">
+                    <button class="btn-secondary" id="resetQuizBtn">↻ Retry Quiz</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Video Tutorial -->
+        <section id="video">
+            <div class="section-header" data-toggle="video-content">
+                <h2>📹 Video Tutorial</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content" id="video-content">
+                <p style="color: var(--gray-600); margin-bottom: 1rem;">
+                    ${escapeHTML(data.videoDesc)}
+                </p>
+                <div class="video-container">
+                    <div class="video-placeholder" id="videoPlaceholder">
+                        <div class="play-btn" id="playVideoBtn">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="var(--navy)">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </div>
+                        <p>Click to play: ${escapeHTML(data.videoTitle)}</p>
+                    </div>
+                </div>
+                <p style="font-size: 0.9rem; color: var(--gray-500); margin-top: 1rem;">
+                    Duration: ${escapeHTML(data.videoDuration)} | Difficulty: ${escapeHTML(data.videoDifficulty)}
+                </p>
+            </div>
+        </section>
+
+        <!-- Section: Live Tutor CTA -->
+        <section id="tutor">
+            <div class="section-header" data-toggle="tutor-content">
+                <h2>👨‍🏫 Live Tutoring Support</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content" id="tutor-content">
+                <div class="tutor-cta">
+                    <h3>Need Help? Talk to a Tutor Live</h3>
+                    <p style="margin-bottom: 1.5rem;">
+                        ${escapeHTML(data.tutorMessage)}
+                    </p>
+                    <button class="btn-primary" id="openTutorModal">💬 Schedule a Session</button>
+                    <p style="margin-top: 1rem; font-size: 0.95rem;">
+                        Or send a request on <a href="tel:${escapeHTML(data.contactNumber)}">${escapeHTML(data.contactNumber)}</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== FLOATING TUTOR BUTTON ===== -->
+    <div class="floating-tutor" id="floatingTutor" title="Chat with a tutor">💬</div>
+
+    <!-- ===== MODAL ===== -->
+    <div id="tutorModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Live Tutoring Session</h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <p style="margin-bottom: 1rem; color: var(--gray-600);">
+                Book a live session with an expert tutor who specializes in ${escapeHTML(data.subject)}.
+            </p>
+            <form id="tutorForm" style="display: flex; flex-direction: column; gap: 1rem;">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Describe your question about ${escapeHTML(data.lessonTopic)}..." rows="4"></textarea>
+                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 0.5rem;">Book Now</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER NAVIGATION ===== -->
+    <footer class="lesson-nav">
+        <a href="${escapeHTML(data.prevLesson)}" class="nav-btn">← Previous Lesson</a>
+        <div class="nav-center">
+            <a href="contents.html" class="nav-btn"><span>↑</span> Subject Contents</a>
+        </div>
+        <a href="${escapeHTML(data.nextLesson)}" class="nav-btn primary">Next Lesson →</a>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // All JavaScript functionality from the template
+        // ... (copy all JavaScript from the original template) ...
+    </script>
+</body>
+</html>`;
+        }
+
+        // ==========================================
+        // DOWNLOAD FUNCTIONALITY
+        // ==========================================
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            const code = document.getElementById('codeOutput').textContent;
+            const blob = new Blob([code], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `lesson-${document.getElementById('lessonNumber').value.replace(/\s+/g, '-').toLowerCase()}.html`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+
+        // ==========================================
+        // COPY TO CLIPBOARD
+        // ==========================================
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            const code = document.getElementById('codeOutput').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = this.textContent;
+                this.textContent = '✓ Copied!';
+                this.style.background = 'var(--success)';
+                this.style.color = 'var(--white)';
+                
+                setTimeout(() => {
+                    this.textContent = originalText;
+                    this.style.background = '';
+                    this.style.color = '';
+                }, 2000);
+            });
+        });
+
+        // ==========================================
+        // SCROLL TO TOP
+        // ==========================================
+        document.getElementById('scrollTopBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ==========================================
+        // USE TEMPLATE BUTTON
+        // ==========================================
+        document.getElementById('useTemplateBtn').addEventListener('click', function() {
+            // Reset form to template defaults
+            document.getElementById('subject').value = 'Grade 12 Mathematics';
+            document.getElementById('lessonTopic').value = 'Arithmetic Sequences & Series';
+            document.getElementById('lessonNumber').value = 'Lesson 1.1';
+            document.getElementById('duration').value = '60 minutes';
+            
+            alert('Template loaded! Fill in your specific content and click "Generate Lesson" to create your custom lesson.');
+        });
+    </script>
+</body>
+</html>

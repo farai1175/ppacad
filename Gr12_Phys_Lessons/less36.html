@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electric Circuits - Lesson 1 | PassProof Academy</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0f7ff 0%, #e6f0fa 100%);
+            min-height: 100vh;
+            color: #1e3a5f;
+        }
+        
+        /* Header Styles */
+        .header {
+            background: linear-gradient(180deg, #1e5799 0%, #2989d8 50%, #1e5799 100%);
+            box-shadow: 0 4px 20px rgba(30, 87, 153, 0.4);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .logo span {
+            color: #ffd700;
+        }
+        
+        /* Dropdown Navigation */
+        .nav-dropdown {
+            position: relative;
+        }
+        
+        .nav-toggle {
+            background: linear-gradient(145deg, #ffffff, #e6e6e6);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            color: #1e5799;
+            cursor: pointer;
+            box-shadow: 3px 3px 8px rgba(0,0,0,0.2), -2px -2px 6px rgba(255,255,255,0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 4px 4px 12px rgba(0,0,0,0.3), -2px -2px 8px rgba(255,255,255,0.6);
+        }
+        
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 10px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            min-width: 220px;
+            overflow: hidden;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .dropdown-menu.active {
+            display: block;
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 14px 20px;
+            color: #1e3a5f;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #eef4fa;
+        }
+        
+        .dropdown-menu a:hover {
+            background: linear-gradient(90deg, #e6f0fa, #f0f7ff);
+            padding-left: 28px;
+            color: #1e5799;
+        }
+        
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+        
+        /* Main Content */
+        .main-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        /* Subject Info Card */
+        .subject-card {
+            background: linear-gradient(145deg, #ffffff, #f8fbff);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 8px 8px 20px rgba(30, 87, 153, 0.15), -8px -8px 20px rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+        
+        .subject-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #1e5799, #2989d8);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            box-shadow: 3px 3px 10px rgba(30, 87, 153, 0.3);
+        }
+        
+        .topic-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e3a5f;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .lesson-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .info-tag {
+            background: #e6f0fa;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #1e5799;
+            font-weight: 500;
+        }
+        
+        /* Collapsible Sections */
+        .section-card {
+            background: linear-gradient(145deg, #ffffff, #f8fbff);
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 6px 6px 16px rgba(30, 87, 153, 0.12), -6px -6px 16px rgba(255, 255, 255, 0.9);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+        
+        .section-header {
+            background: linear-gradient(135deg, #1e5799, #2989d8);
+            padding: 18px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .section-header:hover {
+            background: linear-gradient(135deg, #2565a0, #3a9de8);
+        }
+        
+        .section-header h2 {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .section-icon {
+            font-size: 1.4rem;
+        }
+        
+        .toggle-icon {
+            color: white;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .section-header.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        
+        .section-content.active {
+            padding: 25px;
+            max-height: 5000px;
+        }
+        
+        /* Content Styles */
+        .objective-list {
+            list-style: none;
+        }
+        
+        .objective-list li {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #e6f0fa, #f0f7ff);
+            border-radius: 10px;
+            border-left: 4px solid #1e5799;
+            transition: all 0.3s ease;
+        }
+        
+        .objective-list li:hover {
+            transform: translateX(5px);
+            box-shadow: 3px 3px 10px rgba(30, 87, 153, 0.1);
+        }
+        
+        .formula-box {
+            background: linear-gradient(135deg, #1e3a5f, #2565a0);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 1.3rem;
+            font-family: 'Courier New', monospace;
+            box-shadow: 4px 4px 15px rgba(30, 58, 95, 0.3);
+        }
+        
+        .concept-card {
+            background: #f8fbff;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 1px solid #d4e5f7;
+        }
+        
+        .concept-card h4 {
+            color: #1e5799;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .example-box {
+            background: linear-gradient(145deg, #fffdf0, #fff9e6);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 5px solid #ffc107;
+            box-shadow: 4px 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .example-box h4 {
+            color: #b8860b;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .solution-step {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #e6d9a8;
+        }
+        
+        /* Simulation Area */
+        .simulation-container {
+            background: linear-gradient(145deg, #1e3a5f, #2565a0);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: inset 2px 2px 8px rgba(0,0,0,0.3), 4px 4px 15px rgba(30, 58, 95, 0.3);
+        }
+        
+        .simulation-canvas {
+            background: #0d1f33;
+            border-radius: 12px;
+            width: 100%;
+            height: 350px;
+            display: block;
+            margin-bottom: 20px;
+        }
+        
+        .sim-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .sim-control-group {
+            background: rgba(255,255,255,0.1);
+            padding: 15px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .sim-control-group label {
+            display: block;
+            color: #a8c5e8;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+        
+        .sim-control-group input[type="range"] {
+            width: 150px;
+            accent-color: #ffd700;
+        }
+        
+        .sim-value {
+            color: #ffd700;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+        
+        .sim-output {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .output-box {
+            background: linear-gradient(145deg, #ffd700, #ffec80);
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 140px;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        .output-box .label {
+            font-size: 0.8rem;
+            color: #1e3a5f;
+            margin-bottom: 5px;
+        }
+        
+        .output-box .value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1e3a5f;
+        }
+        
+        /* Quiz Styles */
+        .quiz-question {
+            background: #f8fbff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #d4e5f7;
+            transition: all 0.3s ease;
+        }
+        
+        .quiz-question.correct {
+            border-color: #28a745;
+            background: #f0fff4;
+        }
+        
+        .quiz-question.incorrect {
+            border-color: #dc3545;
+            background: #fff5f5;
+        }
+        
+        .question-number {
+            background: linear-gradient(135deg, #1e5799, #2989d8);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 12px;
+        }
+        
+        .question-text {
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: #1e3a5f;
+        }
+        
+        .options-list {
+            list-style: none;
+        }
+        
+        .option-item {
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            background: white;
+            border: 2px solid #d4e5f7;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .option-item:hover {
+            border-color: #1e5799;
+            background: #e6f0fa;
+        }
+        
+        .option-item.selected {
+            border-color: #1e5799;
+            background: #e6f0fa;
+        }
+        
+        .option-item.correct-answer {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+        
+        .option-item.wrong-answer {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+        
+        .option-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #1e5799;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .option-item.selected .option-radio::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: #1e5799;
+            border-radius: 50%;
+        }
+        
+        .feedback-text {
+            margin-top: 12px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: 500;
+            display: none;
+        }
+        
+        .feedback-text.correct {
+            display: block;
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .feedback-text.incorrect {
+            display: block;
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .submit-quiz-btn {
+            background: linear-gradient(145deg, #28a745, #34c759);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 4px 4px 15px rgba(40, 167, 69, 0.3);
+            transition: all 0.3s ease;
+            display: block;
+            margin: 20px auto 0;
+        }
+        
+        .submit-quiz-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 6px 6px 20px rgba(40, 167, 69, 0.4);
+        }
+        
+        /* Score Display */
+        .score-display {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .score-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #1e5799, #2989d8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 8px 8px 25px rgba(30, 87, 153, 0.4), inset -3px -3px 10px rgba(0,0,0,0.2), inset 3px 3px 10px rgba(255,255,255,0.1);
+        }
+        
+        .score-percent {
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .score-label {
+            color: #a8c5e8;
+            font-size: 0.9rem;
+        }
+        
+        .score-message {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .score-details {
+            color: #5a7fa8;
+        }
+        
+        /* Progress Section */
+        .progress-bar-container {
+            background: #e6f0fa;
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1e5799, #2989d8, #34c759);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        /* Lesson Navigation */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .nav-btn.prev {
+            background: linear-gradient(145deg, #6c757d, #868e96);
+            color: white;
+            box-shadow: 4px 4px 12px rgba(108, 117, 125, 0.3);
+        }
+        
+        .nav-btn.next {
+            background: linear-gradient(145deg, #1e5799, #2989d8);
+            color: white;
+            box-shadow: 4px 4px 12px rgba(30, 87, 153, 0.3);
+        }
+        
+        .nav-btn.subject-contents {
+            background: linear-gradient(145deg, #ffc107, #ffda44);
+            color: #1e3a5f;
+            box-shadow: 4px 4px 12px rgba(255, 193, 7, 0.3);
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        /* Footer */
+        .footer {
+            background: linear-gradient(180deg, #1e5799 0%, #163d6b 100%);
+            color: white;
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 40px;
+            box-shadow: 0 -4px 20px rgba(30, 87, 153, 0.3);
+        }
+        
+        .footer p {
+            opacity: 0.9;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header-inner {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .topic-title {
+                font-size: 1.5rem;
+            }
+            
+            .lesson-nav {
+                flex-direction: column;
+            }
+            
+            .nav-btn {
+                width: 100%;
+            }
+            
+            .sim-controls {
+                flex-direction: column;
+            }
+            
+            .simulation-canvas {
+                height: 280px;
+            }
+            
+            .dropdown-menu {
+                right: -50px;
+            }
+        }
+        
+        /* Hamburger menu for mobile */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 480px) {
+            .main-container {
+                padding: 15px 10px;
+            }
+            
+            .section-content.active {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">Pass<span>Proof</span> Academy</div>
+            <nav class="nav-dropdown">
+                <button class="nav-toggle" onclick="toggleDropdown()">
+                    ☰ Navigation
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="#objectives" onclick="openSection('objectives')">📚 Learning Objectives</a>
+                    <a href="#overview" onclick="openSection('overview')">📋 Overview</a>
+                    <a href="#main-content" onclick="openSection('main-content')">📖 Main Content</a>
+                    <a href="#simulation" onclick="openSection('simulation')">🔬 Interactive Simulation</a>
+                    <a href="#quiz" onclick="openSection('quiz')">✏️ Quiz</a>
+                    <a href="#progress" onclick="openSection('progress')">📊 My Progress</a>
+                    <a href="#" onclick="alert('Subject Contents page coming soon!')">📑 Subject Contents</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Subject Info Card -->
+        <div class="subject-card">
+            <span class="subject-badge">Physical Sciences • Grade 12</span>
+            <h1 class="topic-title">Electric Circuits</h1>
+            <div class="lesson-info">
+                <span class="info-tag">📘 Sub-topic: Internal Resistance & EMF</span>
+                <span class="info-tag">📝 Lesson 1</span>
+                <span class="info-tag">⏱️ 45 minutes</span>
+            </div>
+        </div>
+
+        <!-- Learning Objectives Section -->
+        <section class="section-card" id="objectives">
+            <div class="section-header active" onclick="toggleSection(this)">
+                <h2><span class="section-icon">🎯</span> Learning Objectives</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content active">
+                <ul class="objective-list">
+                    <li>✓ Solve problems involving current, voltage and resistance for circuits containing arrangements of resistors in series and in parallel.</li>
+                    <li>✓ State that a real battery has internal resistance.</li>
+                    <li>✓ Recognise that the sum of the voltages across the external circuit plus the voltage across the internal resistance is equal to the emf.</li>
+                    <li>✓ Solve problems in which the internal resistance of the battery must be considered.</li>
+                    <li>✓ Solve circuit problems involving series-parallel networks of resistors.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Overview Section -->
+        <section class="section-card" id="overview">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="section-icon">📋</span> Overview</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="concept-card">
+                    <h4>Baseline Knowledge Check</h4>
+                    <p><strong>Ohm's Law:</strong> The current through a conductor between two points is directly proportional to the voltage across the two points, provided the temperature remains constant.</p>
+                    <div class="formula-box">V = IR</div>
+                </div>
+                <div class="concept-card">
+                    <h4>What You'll Learn</h4>
+                    <p>In this lesson, you'll discover that all real batteries have internal resistance - a concept that explains why batteries don't behave like ideal voltage sources. You'll learn how to calculate the effects of internal resistance on circuit behavior and solve complex circuit problems.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Section -->
+        <section class="section-card" id="main-content">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="section-icon">📖</span> Main Concepts & Principles</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="concept-card">
+                    <h4>🔋 Internal Resistance</h4>
+                    <p>All real batteries have internal resistance (r). This is due to the resistance of the chemicals and materials inside the battery. The internal resistance is treated as another resistor in series with the external resistance.</p>
+                </div>
+                
+                <div class="concept-card">
+                    <h4>⚡ EMF and Terminal Potential Difference</h4>
+                    <p>The <strong>electromotive force (emf, ε)</strong> is the total energy per unit charge supplied by the battery. The voltage is divided between the internal and external resistances:</p>
+                    <div class="formula-box">ε = V<sub>load</sub> + V<sub>internal</sub></div>
+                    <p style="margin-top: 15px;">Since V = IR for each component:</p>
+                    <div class="formula-box">ε = IR<sub>ext</sub> + Ir = I(R<sub>ext</sub> + r)</div>
+                </div>
+                
+                <div class="concept-card">
+                    <h4>📊 Key Relationships</h4>
+                    <ul style="list-style: disc; margin-left: 20px; line-height: 2;">
+                        <li><strong>Terminal potential difference (V<sub>load</sub>)</strong> = Potential difference across the battery terminals when current flows</li>
+                        <li>V<sub>load</sub> is always <strong>less than</strong> the battery's emf when current flows</li>
+                        <li><strong>"Lost volts"</strong> = V<sub>internal</sub> = Ir (voltage dropped across internal resistance)</li>
+                        <li>V<sub>load</sub> = ε - Ir</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>📝 Worked Example</h4>
+                    <p>A battery in a circuit has an internal resistance r. When switch S is closed, the power dissipation in R₄ is 13.5 W and voltmeter V₂ reads 18 V. When switch S is opened, voltmeter V₁ reads 45.9 V.</p>
+                    
+                    <div class="solution-step">
+                        <strong>a) Calculate the resistance of R₄</strong><br><br>
+                        Using P = V²/R:<br>
+                        R₄ = V²/P = (18)²/13.5 = 324/13.5 = <strong>24 Ω</strong>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <strong>b) Calculate the current through the ammeter</strong><br><br>
+                        Using I = V/R:<br>
+                        I = 18/24 = <strong>0.75 A</strong>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <strong>c) Calculate the internal resistance r</strong><br><br>
+                        When switch is open, V₁ = emf = 45.9 V (no current, no internal voltage drop)<br>
+                        When switch is closed: ε = V<sub>load</sub> + Ir<br>
+                        45.9 = 18 + (0.75)r<br>
+                        27.9 = 0.75r<br>
+                        r = 27.9/0.75 = <strong>37.2 Ω</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Simulation Section -->
+        <section class="section-card" id="simulation">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="section-icon">🔬</span> Interactive Simulation</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <p style="margin-bottom: 20px; text-align: center; color: #5a7fa8;">Adjust the sliders to see how EMF, internal resistance, and external resistance affect the circuit!</p>
+                
+                <div class="simulation-container">
+                    <canvas id="circuitCanvas" class="simulation-canvas"></canvas>
+                    
+                    <div class="sim-controls">
+                        <div class="sim-control-group">
+                            <label>EMF (ε)</label>
+                            <input type="range" id="emfSlider" min="1" max="24" value="12" oninput="updateSimulation()">
+                            <div class="sim-value"><span id="emfValue">12</span> V</div>
+                        </div>
+                        <div class="sim-control-group">
+                            <label>Internal Resistance (r)</label>
+                            <input type="range" id="intResSlider" min="0.1" max="10" value="2" step="0.1" oninput="updateSimulation()">
+                            <div class="sim-value"><span id="intResValue">2</span> Ω</div>
+                        </div>
+                        <div class="sim-control-group">
+                            <label>External Resistance (R)</label>
+                            <input type="range" id="extResSlider" min="1" max="50" value="10" oninput="updateSimulation()">
+                            <div class="sim-value"><span id="extResValue">10</span> Ω</div>
+                        </div>
+                    </div>
+                    
+                    <div class="sim-output">
+                        <div class="output-box">
+                            <div class="label">Current (I)</div>
+                            <div class="value"><span id="currentOutput">1.00</span> A</div>
+                        </div>
+                        <div class="output-box">
+                            <div class="label">Terminal PD (V<sub>load</sub>)</div>
+                            <div class="value"><span id="terminalOutput">10.00</span> V</div>
+                        </div>
+                        <div class="output-box">
+                            <div class="label">Lost Volts (Ir)</div>
+                            <div class="value"><span id="lostOutput">2.00</span> V</div>
+                        </div>
+                        <div class="output-box">
+                            <div class="label">Power in R</div>
+                            <div class="value"><span id="powerOutput">10.00</span> W</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section class="section-card" id="quiz">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="section-icon">✏️</span> End of Lesson Quiz</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div id="quizContainer"></div>
+                <button class="submit-quiz-btn" onclick="submitQuiz()">Submit Quiz</button>
+            </div>
+        </section>
+
+        <!-- Score Feedback Section -->
+        <section class="section-card" id="score">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="section-icon">🏆</span> Score Feedback</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="score-display" id="scoreDisplay">
+                    <p style="color: #5a7fa8;">Complete the quiz to see your score!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Section -->
+        <section class="section-card" id="progress">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="section-icon">📊</span> My Progress</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="concept-card">
+                    <h4>Lesson Completion</h4>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="progressBar" style="width: 0%"></div>
+                    </div>
+                    <p id="progressText">Start learning to track your progress!</p>
+                </div>
+                <div class="concept-card">
+                    <h4>📈 Statistics</h4>
+                    <p>Best Quiz Score: <strong id="bestScore">--</strong></p>
+                    <p>Attempts: <strong id="attempts">0</strong></p>
+                    <p>Last Completed: <strong id="lastCompleted">--</strong></p>
+                </div>
+                <button class="submit-quiz-btn" style="background: linear-gradient(145deg, #dc3545, #e04555);" onclick="resetProgress()">Reset Progress</button>
+            </div>
+        </section>
+
+        <!-- Lesson Navigation -->
+        <div class="lesson-nav">
+            <button class="nav-btn prev">
+                ← Previous Lesson
+            </button>
+            <button class="nav-btn subject-contents">Subject Contents</button>
+            <button class="nav-btn next">
+                Next Lesson →
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2026 PassProof Academy. All rights reserved.</p>
+        <p style="margin-top: 8px; font-size: 0.85rem; opacity: 0.7;">Empowering learners to achieve excellence in Physical Sciences</p>
+    </footer>
+
+    <script>
+        // Quiz Questions Data
+        const quizQuestions = [
+            {
+                question: "What is internal resistance in a battery?",
+                options: [
+                    "The resistance of the external circuit",
+                    "The resistance of the chemicals and materials inside the battery",
+                    "The resistance of the connecting wires",
+                    "The resistance of the switch"
+                ],
+                correct: 1,
+                explanation: "Internal resistance is caused by the resistance of the chemicals and materials inside the battery."
+            },
+            {
+                question: "Which formula correctly represents the relationship between emf, terminal PD, and internal resistance?",
+                options: [
+                    "ε = V_load - Ir",
+                    "ε = V_load × Ir",
+                    "ε = V_load + Ir",
+                    "ε = V_load ÷ Ir"
+                ],
+                correct: 2,
+                explanation: "The emf equals the terminal potential difference plus the voltage drop across internal resistance: ε = V_load + Ir"
+            },
+            {
+                question: "When current flows through a circuit, the terminal potential difference is:",
+                options: [
+                    "Equal to the emf",
+                    "Greater than the emf",
+                    "Less than the emf",
+                    "Zero"
+                ],
+                correct: 2,
+                explanation: "The terminal PD is always less than the emf when current flows because some voltage is 'lost' across the internal resistance."
+            },
+            {
+                question: "If a battery has an emf of 12 V and internal resistance of 2 Ω, what is the current when connected to a 4 Ω external resistor?",
+                options: [
+                    "3 A",
+                    "2 A",
+                    "6 A",
+                    "1 A"
+                ],
+                correct: 1,
+                explanation: "I = ε/(R + r) = 12/(4 + 2) = 12/6 = 2 A"
+            },
+            {
+                question: "What are 'lost volts' in a circuit?",
+                options: [
+                    "Voltage across the external resistor",
+                    "Voltage across the internal resistance of the battery",
+                    "The emf of the battery",
+                    "Voltage across the ammeter"
+                ],
+                correct: 1,
+                explanation: "Lost volts refer to the voltage dropped across the internal resistance (V = Ir), which is not available for the external circuit."
+            },
+            {
+                question: "A lamp has resistance 43 Ω and the battery has internal resistance 5 Ω. If the emf is 48 V, what current flows?",
+                options: [
+                    "0.5 A",
+                    "1 A",
+                    "1.5 A",
+                    "2 A"
+                ],
+                correct: 1,
+                explanation: "I = ε/(R + r) = 48/(43 + 5) = 48/48 = 1 A"
+            },
+            {
+                question: "When a switch in a circuit is opened (no current flows), the voltmeter across the battery reads:",
+                options: [
+                    "Zero",
+                    "The terminal potential difference",
+                    "The emf of the battery",
+                    "The lost volts"
+                ],
+                correct: 2,
+                explanation: "When no current flows, there is no voltage drop across internal resistance, so the voltmeter reads the full emf."
+            },
+            {
+                question: "Power dissipation in a resistor R₄ is 13.5 W with voltage 18 V across it. What is R₄?",
+                options: [
+                    "12 Ω",
+                    "18 Ω",
+                    "24 Ω",
+                    "36 Ω"
+                ],
+                correct: 2,
+                explanation: "Using P = V²/R, so R = V²/P = (18)²/13.5 = 324/13.5 = 24 Ω"
+            },
+            {
+                question: "For resistors in series, the current through each resistor is:",
+                options: [
+                    "Different for each resistor",
+                    "The same through all resistors",
+                    "Zero",
+                    "Inversely proportional to resistance"
+                ],
+                correct: 1,
+                explanation: "In a series circuit, the same current flows through all components."
+            },
+            {
+                question: "If the ammeter reads 3 A and the lamp L₃ has 3 V across it, what is the resistance of L₃?",
+                options: [
+                    "0.5 Ω",
+                    "1 Ω",
+                    "3 Ω",
+                    "9 Ω"
+                ],
+                correct: 1,
+                explanation: "Using Ohm's Law: R = V/I = 3/3 = 1 Ω"
+            },
+            {
+                question: "What happens to the terminal PD when the external resistance increases?",
+                options: [
+                    "It decreases",
+                    "It increases (approaches emf)",
+                    "It stays the same",
+                    "It becomes zero"
+                ],
+                correct: 1,
+                explanation: "As external resistance increases, current decreases, so lost volts (Ir) decrease, and terminal PD increases toward the emf."
+            },
+            {
+                question: "The internal resistance of a battery is connected in _____ with the external resistance.",
+                options: [
+                    "Parallel",
+                    "Series",
+                    "Neither series nor parallel",
+                    "Both series and parallel"
+                ],
+                correct: 1,
+                explanation: "Internal resistance is treated as a resistor in series with the external circuit resistance."
+            }
+        ];
+
+        let userAnswers = {};
+        let quizSubmitted = false;
+
+        // Initialize Quiz
+        function initQuiz() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = '';
+            
+            quizQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                questionDiv.id = `question-${index}`;
+                
+                let optionsHTML = '';
+                q.options.forEach((opt, optIndex) => {
+                    optionsHTML += `
+                        <li class="option-item" onclick="selectOption(${index}, ${optIndex})">
+                            <span class="option-radio"></span>
+                            <span>${opt}</span>
+                        </li>
+                    `;
+                });
+                
+                questionDiv.innerHTML = `
+                    <p class="question-text">
+                        <span class="question-number">${index + 1}</span>
+                        ${q.question}
+                    </p>
+                    <ul class="options-list" id="options-${index}">
+                        ${optionsHTML}
+                    </ul>
+                    <div class="feedback-text" id="feedback-${index}"></div>
+                `;
+                
+                container.appendChild(questionDiv);
+            });
+        }
+
+        // Select Option
+        function selectOption(questionIndex, optionIndex) {
+            if (quizSubmitted) return;
+            
+            userAnswers[questionIndex] = optionIndex;
+            
+            const optionsList = document.getElementById(`options-${questionIndex}`);
+            const options = optionsList.querySelectorAll('.option-item');
+            
+            options.forEach((opt, i) => {
+                opt.classList.remove('selected');
+                if (i === optionIndex) {
+                    opt.classList.add('selected');
+                }
+            });
+            
+            updateProgress();
+        }
+
+        // Submit Quiz
+        function submitQuiz() {
+            if (Object.keys(userAnswers).length < quizQuestions.length) {
+                alert('Please answer all questions before submitting!');
+                return;
+            }
+            
+            quizSubmitted = true;
+            let correctCount = 0;
+            
+            quizQuestions.forEach((q, index) => {
+                const questionDiv = document.getElementById(`question-${index}`);
+                const feedbackDiv = document.getElementById(`feedback-${index}`);
+                const optionsList = document.getElementById(`options-${index}`);
+                const options = optionsList.querySelectorAll('.option-item');
+                
+                const isCorrect = userAnswers[index] === q.correct;
+                
+                if (isCorrect) {
+                    correctCount++;
+                    questionDiv.classList.add('correct');
+                    feedbackDiv.className = 'feedback-text correct';
+                    feedbackDiv.innerHTML = `✓ Correct! ${q.explanation}`;
+                } else {
+                    questionDiv.classList.add('incorrect');
+                    feedbackDiv.className = 'feedback-text incorrect';
+                    feedbackDiv.innerHTML = `✗ Incorrect. ${q.explanation}`;
+                }
+                
+                options.forEach((opt, i) => {
+                    if (i === q.correct) {
+                        opt.classList.add('correct-answer');
+                    } else if (i === userAnswers[index] && i !== q.correct) {
+                        opt.classList.add('wrong-answer');
+                    }
+                });
+            });
+            
+            const percentage = Math.round((correctCount / quizQuestions.length) * 100);
+            displayScore(correctCount, quizQuestions.length, percentage);
+            saveProgress(percentage);
+            
+            // Open score section
+            openSection('score');
+        }
+
+        // Display Score
+        function displayScore(correct, total, percentage) {
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            let message = '';
+            let messageColor = '';
+            
+            if (percentage >= 80) {
+                message = '🌟 Excellent Work!';
+                messageColor = '#28a745';
+            } else if (percentage >= 60) {
+                message = '👍 Good Job!';
+                messageColor = '#17a2b8';
+            } else if (percentage >= 40) {
+                message = '📚 Keep Practicing!';
+                messageColor = '#ffc107';
+            } else {
+                message = '💪 Review the material and try again!';
+                messageColor = '#dc3545';
+            }
+            
+            scoreDisplay.innerHTML = `
+                <div class="score-circle">
+                    <span class="score-percent">${percentage}%</span>
+                    <span class="score-label">Score</span>
+                </div>
+                <p class="score-message" style="color: ${messageColor};">${message}</p>
+                <p class="score-details">You got ${correct} out of ${total} questions correct.</p>
+            `;
+        }
+
+        // Save Progress to localStorage
+        function saveProgress(percentage) {
+            const progress = JSON.parse(localStorage.getItem('passproofProgress') || '{}');
+            const lessonKey = 'physics_grade12_circuits_lesson1';
+            
+            if (!progress[lessonKey]) {
+                progress[lessonKey] = {
+                    attempts: 0,
+                    bestScore: 0,
+                    lastCompleted: null
+                };
+            }
+            
+            progress[lessonKey].attempts++;
+            progress[lessonKey].bestScore = Math.max(progress[lessonKey].bestScore, percentage);
+            progress[lessonKey].lastCompleted = new Date().toLocaleDateString();
+            
+            localStorage.setItem('passproofProgress', JSON.stringify(progress));
+            loadProgress();
+        }
+
+        // Load Progress from localStorage
+        function loadProgress() {
+            const progress = JSON.parse(localStorage.getItem('passproofProgress') || '{}');
+            const lessonKey = 'physics_grade12_circuits_lesson1';
+            const lessonProgress = progress[lessonKey] || { attempts: 0, bestScore: 0, lastCompleted: '--' };
+            
+            document.getElementById('bestScore').textContent = lessonProgress.bestScore + '%';
+            document.getElementById('attempts').textContent = lessonProgress.attempts;
+            document.getElementById('lastCompleted').textContent = lessonProgress.lastCompleted || '--';
+            
+            // Update progress bar
+            const progressPercent = lessonProgress.bestScore;
+            document.getElementById('progressBar').style.width = progressPercent + '%';
+            document.getElementById('progressText').textContent = progressPercent > 0 
+                ? `You've achieved ${progressPercent}% in this lesson!` 
+                : 'Start learning to track your progress!';
+        }
+
+        // Update Progress during quiz
+        function updateProgress() {
+            const answered = Object.keys(userAnswers).length;
+            const total = quizQuestions.length;
+            const percent = Math.round((answered / total) * 100);
+            document.getElementById('progressBar').style.width = percent + '%';
+            document.getElementById('progressText').textContent = `Quiz progress: ${answered}/${total} questions answered`;
+        }
+
+        // Reset Progress
+        function resetProgress() {
+            if (confirm('Are you sure you want to reset all progress for this lesson?')) {
+                const progress = JSON.parse(localStorage.getItem('passproofProgress') || '{}');
+                delete progress['physics_grade12_circuits_lesson1'];
+                localStorage.setItem('passproofProgress', JSON.stringify(progress));
+                
+                // Reset quiz
+                userAnswers = {};
+                quizSubmitted = false;
+                initQuiz();
+                loadProgress();
+                
+                document.getElementById('scoreDisplay').innerHTML = '<p style="color: #5a7fa8;">Complete the quiz to see your score!</p>';
+            }
+        }
+
+        // Toggle Section
+        function toggleSection(header) {
+            header.classList.toggle('active');
+            const content = header.nextElementSibling;
+            content.classList.toggle('active');
+        }
+
+        // Open Section (for navigation)
+        function openSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                const header = section.querySelector('.section-header');
+                const content = section.querySelector('.section-content');
+                
+                if (!content.classList.contains('active')) {
+                    header.classList.add('active');
+                    content.classList.add('active');
+                }
+                
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+            toggleDropdown();
+        }
+
+        // Toggle Dropdown
+        function toggleDropdown() {
+            document.getElementById('dropdownMenu').classList.toggle('active');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const dropdown = document.querySelector('.nav-dropdown');
+            if (!dropdown.contains(e.target)) {
+                document.getElementById('dropdownMenu').classList.remove('active');
+            }
+        });
+
+        // Circuit Simulation
+        let canvas, ctx;
+        let electrons = [];
+
+        function initSimulation() {
+            canvas = document.getElementById('circuitCanvas');
+            ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // Initialize electrons
+            for (let i = 0; i < 20; i++) {
+                electrons.push({
+                    pos: Math.random(),
+                    speed: 0.002
+                });
+            }
+            
+            updateSimulation();
+            animateCircuit();
+        }
+
+        function resizeCanvas() {
+            const container = canvas.parentElement;
+            canvas.width = container.clientWidth - 50;
+            canvas.height = 350;
+            updateSimulation();
+        }
+
+        function updateSimulation() {
+            const emf = parseFloat(document.getElementById('emfSlider').value);
+            const intRes = parseFloat(document.getElementById('intResSlider').value);
+            const extRes = parseFloat(document.getElementById('extResSlider').value);
+            
+            // Update display values
+            document.getElementById('emfValue').textContent = emf;
+            document.getElementById('intResValue').textContent = intRes.toFixed(1);
+            document.getElementById('extResValue').textContent = extRes;
+            
+            // Calculate values
+            const current = emf / (intRes + extRes);
+            const terminalPD = current * extRes;
+            const lostVolts = current * intRes;
+            const power = current * current * extRes;
+            
+            document.getElementById('currentOutput').textContent = current.toFixed(2);
+            document.getElementById('terminalOutput').textContent = terminalPD.toFixed(2);
+            document.getElementById('lostOutput').textContent = lostVolts.toFixed(2);
+            document.getElementById('powerOutput').textContent = power.toFixed(2);
+            
+            // Update electron speed based on current
+            electrons.forEach(e => {
+                e.speed = 0.001 + (current / 10) * 0.004;
+            });
+        }
+
+        function drawCircuit() {
+            if (!ctx) return;
+            
+            const w = canvas.width;
+            const h = canvas.height;
+            
+            ctx.clearRect(0, 0, w, h);
+            
+            // Draw background grid
+            ctx.strokeStyle = '#1a3550';
+            ctx.lineWidth = 0.5;
+            for (let i = 0; i < w; i += 30) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, h);
+                ctx.stroke();
+            }
+            for (let i = 0; i < h; i += 30) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(w, i);
+                ctx.stroke();
+            }
+            
+            const padding = 60;
+            const circuitWidth = w - 2 * padding;
+            const circuitHeight = h - 2 * padding;
+            
+            // Draw circuit wires
+            ctx.strokeStyle = '#4a90d9';
+            ctx.lineWidth = 4;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            
+            // Main circuit path
+            ctx.beginPath();
+            ctx.moveTo(padding, padding + circuitHeight/2);
+            ctx.lineTo(padding, padding);
+            ctx.lineTo(padding + circuitWidth, padding);
+            ctx.lineTo(padding + circuitWidth, padding + circuitHeight/2);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(padding + circuitWidth, padding + circuitHeight/2 + 40);
+            ctx.lineTo(padding + circuitWidth, padding + circuitHeight);
+            ctx.lineTo(padding, padding + circuitHeight);
+            ctx.lineTo(padding, padding + circuitHeight/2 + 40);
+            ctx.stroke();
+            
+            // Draw Battery
+            const battX = padding - 20;
+            const battY = padding + circuitHeight/2 - 20;
+            
+            // Battery body
+            ctx.fillStyle = '#2d5a87';
+            ctx.fillRect(battX, battY, 40, 80);
+            ctx.strokeStyle = '#5aa0e0';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(battX, battY, 40, 80);
+            
+            // Battery terminals
+            ctx.fillStyle = '#ffd700';
+            ctx.fillRect(battX + 10, battY - 10, 20, 10);
+            ctx.fillStyle = '#888';
+            ctx.fillRect(battX + 10, battY + 80, 20, 10);
+            
+            // Battery label
+            ctx.fillStyle = '#ffd700';
+            ctx.font = 'bold 14px Inter';
+            ctx.textAlign = 'center';
+            ctx.fillText('ε', battX + 20, battY + 45);
+            
+            // Draw Internal Resistance (inside battery area)
+            ctx.fillStyle = '#ff6b6b';
+            ctx.font = '12px Inter';
+            ctx.fillText('r', battX + 20, battY + 65);
+            
+            // Draw External Resistor
+            const resX = padding + circuitWidth - 20;
+            const resY = padding + circuitHeight/2 - 20;
+            
+            // Resistor zigzag
+            ctx.strokeStyle = '#ffd700';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(resX, resY);
+            for (let i = 0; i < 4; i++) {
+                ctx.lineTo(resX + 15, resY + 10 + i * 15);
+                ctx.lineTo(resX - 15, resY + 20 + i * 15);
+            }
+            ctx.lineTo(resX, resY + 80);
+            ctx.stroke();
+            
+            // Resistor label
+            ctx.fillStyle = '#ffd700';
+            ctx.font = 'bold 14px Inter';
+            ctx.fillText('R', resX + 30, resY + 45);
+            
+            // Draw ammeter
+            const ammX = padding + circuitWidth/2;
+            const ammY = padding - 5;
+            
+            ctx.beginPath();
+            ctx.arc(ammX, ammY, 20, 0, Math.PI * 2);
+            ctx.fillStyle = '#1e3a5f';
+            ctx.fill();
+            ctx.strokeStyle = '#5aa0e0';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            ctx.fillStyle = '#ffd700';
+            ctx.font = 'bold 16px Inter';
+            ctx.fillText('A', ammX, ammY + 5);
+            
+            // Draw voltmeter across external resistor
+            const vmX = padding + circuitWidth + 50;
+            const vmY = padding + circuitHeight/2 + 20;
+            
+            ctx.beginPath();
+            ctx.arc(vmX, vmY, 20, 0, Math.PI * 2);
+            ctx.fillStyle = '#1e3a5f';
+            ctx.fill();
+            ctx.strokeStyle = '#28a745';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            ctx.fillStyle = '#28a745';
+            ctx.font = 'bold 16px Inter';
+            ctx.fillText('V', vmX, vmY + 5);
+            
+            // Voltmeter connections
+            ctx.strokeStyle = '#28a745';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(vmX - 20, vmY - 10);
+            ctx.lineTo(padding + circuitWidth, padding + 20);
+            ctx.moveTo(vmX - 20, vmY + 10);
+            ctx.lineTo(padding + circuitWidth, padding + circuitHeight - 20);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Draw electrons
+            const current = parseFloat(document.getElementById('currentOutput').textContent);
+            ctx.fillStyle = '#00ffff';
+            
+            electrons.forEach(e => {
+                const pathLength = 2 * circuitWidth + 2 * circuitHeight;
+                const pathPos = e.pos * pathLength;
+                let x, y;
+                
+                if (pathPos < circuitWidth) {
+                    // Top wire
+                    x = padding + pathPos;
+                    y = padding;
+                } else if (pathPos < circuitWidth + circuitHeight) {
+                    // Right side
+                    x = padding + circuitWidth;
+                    y = padding + (pathPos - circuitWidth);
+                } else if (pathPos < 2 * circuitWidth + circuitHeight) {
+                    // Bottom wire
+                    x = padding + circuitWidth - (pathPos - circuitWidth - circuitHeight);
+                    y = padding + circuitHeight;
+                } else {
+                    // Left side
+                    x = padding;
+                    y = padding + circuitHeight - (pathPos - 2 * circuitWidth - circuitHeight);
+                }
+                
+                ctx.beginPath();
+                ctx.arc(x, y, 4 + current, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Glow effect
+                ctx.beginPath();
+                ctx.arc(x, y, 8 + current, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0, 255, 255, 0.3)';
+                ctx.fill();
+                ctx.fillStyle = '#00ffff';
+            });
+            
+            // Labels
+            ctx.fillStyle = '#a8c5e8';
+            ctx.font = '12px Inter';
+            ctx.textAlign = 'left';
+            ctx.fillText('Current direction →', padding + 50, padding - 25);
+        }
+
+        function animateCircuit() {
+            electrons.forEach(e => {
+                e.pos += e.speed;
+                if (e.pos > 1) e.pos = 0;
+            });
+            
+            drawCircuit();
+            requestAnimationFrame(animateCircuit);
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            initQuiz();
+            loadProgress();
+            initSimulation();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,2138 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemical Equilibrium - Lesson 2 | PassProof Academy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1a73e8;
+            --primary-dark: #0d47a1;
+            --primary-light: #e3f2fd;
+            --accent-blue: #2196f3;
+            --white: #ffffff;
+            --gray-light: #f5f7fa;
+            --gray-medium: #e0e0e0;
+            --gray-dark: #5f6368;
+            --success: #34a853;
+            --error: #ea4335;
+            --warning: #fbbc04;
+            --shadow: 0 4px 20px rgba(0,0,0,0.1);
+            --shadow-hover: 0 8px 30px rgba(0,0,0,0.15);
+            --shadow-3d: 0 10px 40px rgba(26,115,232,0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e3f2fd 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-3d);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-blue);
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-btn {
+            background: rgba(255,255,255,0.15);
+            color: var(--white);
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .dropdown-btn:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 120%;
+            right: 0;
+            background: var(--white);
+            min-width: 250px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-hover);
+            overflow: hidden;
+            animation: dropdownFade 0.3s ease;
+        }
+
+        @keyframes dropdownFade {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 0.8rem 1.2rem;
+            color: var(--gray-dark);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .dropdown-content a:hover {
+            background: var(--primary-light);
+            color: var(--primary-blue);
+            padding-left: 1.5rem;
+        }
+
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(26,115,232,0.1);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-3px);
+        }
+
+        .card-3d {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            box-shadow: 
+                0 10px 40px rgba(26,115,232,0.15),
+                0 2px 10px rgba(0,0,0,0.05),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+        }
+
+        /* Subject & Grade Banner */
+        .subject-banner {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+            color: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-3d);
+        }
+
+        .subject-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+
+        .subject-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .subject-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .lesson-info {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.5rem;
+            box-shadow: 0 5px 20px rgba(26,115,232,0.3);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        /* Learning Objectives */
+        .objectives-list {
+            list-style: none;
+        }
+
+        .objectives-list li {
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, var(--primary-light) 0%, #f0f7ff 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .objectives-list li:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(26,115,232,0.15);
+        }
+
+        .check-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* Content Sections */
+        .concept-box {
+            background: linear-gradient(145deg, #f8fafc 0%, #ffffff 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 1px solid var(--gray-medium);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .concept-title {
+            color: var(--primary-blue);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chemical-equation {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            color: var(--white);
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 1.3rem;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            box-shadow: 0 5px 20px rgba(26,35,126,0.3);
+            letter-spacing: 1px;
+        }
+
+        .chemical-equation sub {
+            font-size: 0.8em;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .info-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid var(--gray-medium);
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            border-color: var(--primary-blue);
+            box-shadow: 0 5px 20px rgba(26,115,232,0.15);
+        }
+
+        .info-card h4 {
+            color: var(--primary-dark);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-card ul {
+            margin-left: 1.2rem;
+            color: var(--gray-dark);
+        }
+
+        .info-card li {
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left: 4px solid var(--warning);
+            padding: 1rem 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 1rem 0;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-left: 4px solid var(--success);
+            padding: 1rem 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 1rem 0;
+        }
+
+        /* Simulations */
+        .simulation-container {
+            background: linear-gradient(145deg, #1a237e 0%, #283593 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: var(--white);
+            box-shadow: var(--shadow-3d);
+        }
+
+        .simulation-title {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .sim-canvas-container {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .sim-canvas {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(180deg, #0d1b2a 0%, #1b263b 100%);
+            border-radius: 10px;
+            display: block;
+        }
+
+        .sim-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .control-group {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 12px;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .control-group input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.2);
+            -webkit-appearance: none;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .control-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--white);
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .control-value {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .sim-output {
+            background: rgba(255,255,255,0.15);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .yield-display {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #4caf50;
+            text-shadow: 0 2px 10px rgba(76,175,80,0.5);
+        }
+
+        .shift-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .shift-arrow {
+            font-size: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .shift-arrow.active-left {
+            color: #ff5722;
+            transform: scale(1.5);
+            animation: pulse 0.5s infinite;
+        }
+
+        .shift-arrow.active-right {
+            color: #4caf50;
+            transform: scale(1.5);
+            animation: pulse 0.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .question-card {
+            background: linear-gradient(145deg, #f8fafc 0%, #ffffff 100%);
+            border: 2px solid var(--gray-medium);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .question-card.correct {
+            border-color: var(--success);
+            background: linear-gradient(145deg, #e8f5e9 0%, #ffffff 100%);
+        }
+
+        .question-card.incorrect {
+            border-color: var(--error);
+            background: linear-gradient(145deg, #ffebee 0%, #ffffff 100%);
+        }
+
+        .question-number {
+            display: inline-block;
+            background: var(--primary-blue);
+            color: var(--white);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: 600;
+            margin-right: 1rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            display: inline;
+        }
+
+        .options-container {
+            display: grid;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.2rem;
+            background: var(--white);
+            border: 2px solid var(--gray-medium);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option-label:hover {
+            border-color: var(--primary-blue);
+            background: var(--primary-light);
+        }
+
+        .option-label input {
+            display: none;
+        }
+
+        .option-label input:checked + .option-text {
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+
+        .option-label:has(input:checked) {
+            border-color: var(--primary-blue);
+            background: var(--primary-light);
+        }
+
+        .option-letter {
+            width: 30px;
+            height: 30px;
+            background: var(--gray-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-weight: 600;
+            color: var(--gray-dark);
+            flex-shrink: 0;
+        }
+
+        .option-label:has(input:checked) .option-letter {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feedback.correct {
+            display: block;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            color: #2e7d32;
+        }
+
+        .feedback.incorrect {
+            display: block;
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            color: #c62828;
+        }
+
+        .submit-quiz-btn {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            display: block;
+            margin: 2rem auto;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(26,115,232,0.4);
+        }
+
+        .submit-quiz-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(26,115,232,0.5);
+        }
+
+        /* Score Display */
+        .score-container {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            color: var(--white);
+            margin: 2rem 0;
+            display: none;
+            animation: scaleIn 0.5s ease;
+            box-shadow: var(--shadow-3d);
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .score-container.show {
+            display: block;
+        }
+
+        .score-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 1.5rem auto;
+            border: 5px solid var(--white);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .score-percentage {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .score-text {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .score-message {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        /* Navigation Buttons */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn.prev {
+            background: var(--white);
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+
+        .nav-btn.prev:hover {
+            background: var(--primary-light);
+            transform: translateX(-5px);
+        }
+
+        .nav-btn.next {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            box-shadow: 0 5px 20px rgba(26,115,232,0.3);
+        }
+
+        .nav-btn.next:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 30px rgba(26,115,232,0.4);
+        }
+
+        /* Progress Indicator */
+        .progress-container {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 10px;
+            background: var(--gray-medium);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-blue) 0%, var(--success) 100%);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            font-weight: 600;
+            color: var(--primary-dark);
+            white-space: nowrap;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #0a1628 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-text {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--primary-dark);
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .dropdown-content {
+                position: static;
+                margin-top: 0.5rem;
+                background: rgba(255,255,255,0.1);
+            }
+
+            .dropdown-content a {
+                color: var(--white);
+                border-bottom-color: rgba(255,255,255,0.1);
+            }
+
+            .subject-title {
+                font-size: 1.8rem;
+            }
+
+            main {
+                padding: 1rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .chemical-equation {
+                font-size: 1rem;
+                padding: 1rem;
+            }
+
+            .sim-canvas {
+                height: 250px;
+            }
+
+            .lesson-nav {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                min-width: 100%;
+            }
+        }
+
+        /* Molecule Animation */
+        .molecule {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            opacity: 0.8;
+        }
+
+        .n2 { background: #3f51b5; }
+        .h2 { background: #f44336; }
+        .nh3 { background: #4caf50; }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">PP</div>
+                PassProof Academy
+            </a>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+            <nav class="nav-menu" id="navMenu">
+                <div class="dropdown">
+                    <button class="dropdown-btn">
+                        📚 Subjects ▼
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="#">Physical Sciences</a>
+                        <a href="#">Mathematics</a>
+                        <a href="#">Life Sciences</a>
+                        <a href="#">Chemistry</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropdown-btn">
+                        📖 Topics ▼
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="#">Chemical Equilibrium</a>
+                        <a href="#">Reaction Rates</a>
+                        <a href="#">Electrochemistry</a>
+                        <a href="#">Organic Chemistry</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropdown-btn">
+                        📝 Lessons ▼
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="#">Lesson 1: Introduction to Equilibrium</a>
+                        <a href="#" style="background: var(--primary-light); font-weight: 600;">Lesson 2: Industrial Applications</a>
+                        <a href="#">Lesson 3: Equilibrium Constants</a>
+                        <a href="#">Lesson 4: Practice Problems</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropdown-btn">
+                        👤 Account ▼
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="#">My Progress</a>
+                        <a href="#">Settings</a>
+                        <a href="#">Logout</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Progress Indicator -->
+        <div class="progress-container">
+            <span class="progress-text">Lesson Progress:</span>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+            <span class="progress-text" id="progressPercent">0%</span>
+        </div>
+
+        <!-- Subject & Grade Banner -->
+        <div class="subject-banner">
+            <span class="subject-badge">📚 GRADE 12 • WEEK 17</span>
+            <h1 class="subject-title">Physical Sciences</h1>
+            <p class="lesson-info">Topic: Chemical Equilibrium | Lesson 2</p>
+        </div>
+
+        <!-- Lesson Title Card -->
+        <div class="card card-3d">
+            <div class="section-header">
+                <div class="section-icon">📝</div>
+                <div>
+                    <h2 class="section-title">Lesson 2: Application of Equilibrium Principles</h2>
+                    <p style="color: var(--gray-dark);">Factors Affecting Chemical Equilibrium & Industrial Applications</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="card card-3d">
+            <div class="section-header">
+                <div class="section-icon">🎯</div>
+                <h2 class="section-title">Learning Objectives</h2>
+            </div>
+            <p style="margin-bottom: 1rem; color: var(--gray-dark);">By the end of this lesson, you will be able to:</p>
+            <ul class="objectives-list">
+                <li>
+                    <span class="check-icon">✓</span>
+                    <span>Understand and explain the factors affecting chemical equilibrium</span>
+                </li>
+                <li>
+                    <span class="check-icon">✓</span>
+                    <span>Apply Le Chatelier's Principle to predict equilibrium shifts</span>
+                </li>
+                <li>
+                    <span class="check-icon">✓</span>
+                    <span>Apply rate and equilibrium principles to important industrial applications</span>
+                </li>
+                <li>
+                    <span class="check-icon">✓</span>
+                    <span>Analyze the Haber Process for ammonia production</span>
+                </li>
+                <li>
+                    <span class="check-icon">✓</span>
+                    <span>Understand the Contact Process for sulphuric acid production</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Overview -->
+        <div class="card card-3d">
+            <div class="section-header">
+                <div class="section-icon">📋</div>
+                <h2 class="section-title">Overview</h2>
+            </div>
+            <p>In this lesson, we explore how the principles of chemical equilibrium are applied in industrial processes. We will examine how factors such as <strong>temperature</strong>, <strong>pressure</strong>, <strong>concentration</strong>, and <strong>catalysts</strong> are manipulated to optimize production in processes like the Haber Process (ammonia synthesis) and the Contact Process (sulphuric acid production).</p>
+            
+            <div class="highlight-box">
+                <strong>🔑 Pre-knowledge Required:</strong> Reversible reactions, chemical equilibrium concepts, endothermic and exothermic reactions.
+            </div>
+        </div>
+
+        <!-- Baseline Assessment -->
+        <div class="card card-3d">
+            <div class="section-header">
+                <div class="section-icon">❓</div>
+                <h2 class="section-title">Baseline Assessment</h2>
+            </div>
+            <p style="margin-bottom: 1rem;">Consider the following reaction:</p>
+            <div class="chemical-equation">
+                N<sub>2</sub>(g) + 3H<sub>2</sub>(g) ⇌ 2NH<sub>3</sub>(g) &nbsp;&nbsp; ΔH &lt; 0
+            </div>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>🔥 Forward Reaction</h4>
+                    <p>Since ΔH < 0 (negative), the forward reaction is <strong style="color: var(--success);">EXOTHERMIC</strong></p>
+                    <p style="font-size: 0.9rem; color: var(--gray-dark); margin-top: 0.5rem;">Energy is released when ammonia forms.</p>
+                </div>
+                <div class="info-card">
+                    <h4>❄️ Reverse Reaction</h4>
+                    <p>The reverse reaction is <strong style="color: var(--primary-blue);">ENDOTHERMIC</strong></p>
+                    <p style="font-size: 0.9rem; color: var(--gray-dark); margin-top: 0.5rem;">Energy is absorbed when ammonia decomposes.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Concepts: Haber Process -->
+        <div class="card card-3d">
+            <div class="section-header">
+                <div class="section-icon">🏭</div>
+                <h2 class="section-title">The Haber Process</h2>
+            </div>
+            <p style="margin-bottom: 1rem;">Industrial preparation of ammonia (NH₃)</p>
+            
+            <div class="chemical-equation">
+                N<sub>2</sub>(g) + 3H<sub>2</sub>(g) ⇌ 2NH<sub>3</sub>(g) &nbsp;&nbsp; ΔH = -92.4 kJ·mol<sup>-1</sup>
+            </div>
+
+            <div class="success-box">
+                <strong>⚙️ Industrial Conditions:</strong> 150 – 250 atm pressure; 300°C – 550°C temperature
+            </div>
+
+            <h3 style="margin: 1.5rem 0 1rem; color: var(--primary-dark);">Problems and Solutions in the Haber Process</h3>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>⏱️ Rate of Reaction</h4>
+                    <ul>
+                        <li>At room temperature, reaction is very slow</li>
+                        <li>Increasing temperature speeds up the reaction rate</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h4>⚖️ Chemical Equilibrium</h4>
+                    <ul>
+                        <li>Forward reaction is exothermic</li>
+                        <li>Increasing temperature decreases ammonia formation</li>
+                        <li>Lower temperature produces more ammonia but slows rate</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h4>🧪 Catalyst</h4>
+                    <ul>
+                        <li>Iron catalyst used to increase reaction rate</li>
+                        <li>Requires temperature of ~400°C to be effective</li>
+                        <li>Does NOT change equilibrium position</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h4>📊 Pressure Effects</h4>
+                    <ul>
+                        <li>High pressure favors ammonia formation</li>
+                        <li>Extreme conditions (200 atm) pose safety risks</li>
+                        <li>High cost to strengthen pipes and vessels</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="concept-box">
+                <div class="concept-title">🎯 Optimized Yield Strategy</div>
+                <ul style="margin-left: 1.5rem;">
+                    <li>N₂ and H₂ constantly added to vessel (increases concentration)</li>
+                    <li>Temperature maintained between 300°C and 500°C</li>
+                    <li>Pressurized to approximately 200 atm</li>
+                    <li>Ammonia liquefied and removed (decreases product concentration)</li>
+                    <li>Result: Yield of approximately 15-20% per pass (but continuous production)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Concepts: Contact Process -->
+        <div class="card card-3d">
+            <div class="section-header">
+                <div class="section-icon">🧪</div>
+                <h2 class="section-title">The Contact Process</h2>
+            </div>
+            <p style="margin-bottom: 1rem;">Industrial preparation of sulphuric acid (H₂SO₄)</p>
+            
+            <div class="concept-box">
+                <div class="concept-title">🔬 Critical Step</div>
+                <div class="chemical-equation">
+                    2SO<sub>2</sub>(g) + O<sub>2</sub>(g) ⇌ 2SO<sub>3</sub>(g)
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>⚙️ Most Economic Conditions</h4>
+                    <ul>
+                        <li>Temperature: 450°C</li>
+                        <li>Modest pressure: 1-2 atm</li>
+                        <li>Catalyst: Vanadium pentoxide (V₂O₅)</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h4>📝 Important Note</h4>
+                    <ul>
+                        <li>The catalyst speeds up the reaction</li>
+                        <li>Catalyst has NO effect on amount of SO₃ produced</li>
+                        <li>Only affects how quickly equilibrium is reached</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Simulation 1: Le Chatelier's Principle -->
+        <div class="simulation-container" id="simulation1">
+            <h3 class="simulation-title">🔬 Interactive Simulation: Le Chatelier's Principle</h3>
+            <p style="text-align: center; margin-bottom: 1rem; opacity: 0.9;">Explore how changing conditions affects the equilibrium position for: N₂ + 3H₂ ⇌ 2NH₃</p>
+            
+            <div class="sim-canvas-container">
+                <canvas id="equilibriumCanvas" class="sim-canvas"></canvas>
+            </div>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label>🌡️ Temperature</label>
+                    <input type="range" id="tempSlider" min="200" max="600" value="400">
+                    <div class="control-value"><span id="tempValue">400</span>°C</div>
+                </div>
+                <div class="control-group">
+                    <label>📊 Pressure</label>
+                    <input type="range" id="pressureSlider" min="1" max="300" value="150">
+                    <div class="control-value"><span id="pressureValue">150</span> atm</div>
+                </div>
+                <div class="control-group">
+                    <label>🧪 N₂ Concentration</label>
+                    <input type="range" id="concSlider" min="1" max="100" value="50">
+                    <div class="control-value"><span id="concValue">50</span>%</div>
+                </div>
+            </div>
+
+            <div class="sim-output">
+                <div class="shift-indicator">
+                    <span class="shift-arrow" id="leftArrow">⬅️ Reverse</span>
+                    <span class="shift-arrow" id="rightArrow">Forward ➡️</span>
+                </div>
+                <p style="margin-top: 1rem;">Ammonia Yield:</p>
+                <div class="yield-display" id="yieldDisplay">45%</div>
+                <p id="equilibriumMessage" style="margin-top: 0.5rem; opacity: 0.8;">Equilibrium is balanced</p>
+            </div>
+        </div>
+
+        <!-- Interactive Simulation 2: Haber Process Optimizer -->
+        <div class="simulation-container" id="simulation2">
+            <h3 class="simulation-title">🏭 Interactive Simulation: Haber Process Optimizer</h3>
+            <p style="text-align: center; margin-bottom: 1rem; opacity: 0.9;">Find the optimal conditions for industrial ammonia production</p>
+            
+            <div class="sim-canvas-container">
+                <canvas id="haberCanvas" class="sim-canvas"></canvas>
+            </div>
+
+            <div class="sim-controls">
+                <div class="control-group">
+                    <label>🌡️ Temperature</label>
+                    <input type="range" id="haberTemp" min="300" max="600" value="450">
+                    <div class="control-value"><span id="haberTempValue">450</span>°C</div>
+                </div>
+                <div class="control-group">
+                    <label>📊 Pressure</label>
+                    <input type="range" id="haberPressure" min="50" max="300" value="200">
+                    <div class="control-value"><span id="haberPressureValue">200</span> atm</div>
+                </div>
+                <div class="control-group">
+                    <label>🧪 Catalyst</label>
+                    <input type="range" id="haberCatalyst" min="0" max="100" value="50">
+                    <div class="control-value"><span id="haberCatalystValue">50</span>% Activity</div>
+                </div>
+            </div>
+
+            <div class="sim-output">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align: center;">
+                    <div>
+                        <p style="opacity: 0.8;">Yield</p>
+                        <div class="yield-display" id="haberYield" style="font-size: 1.8rem;">35%</div>
+                    </div>
+                    <div>
+                        <p style="opacity: 0.8;">Reaction Rate</p>
+                        <div class="yield-display" id="haberRate" style="font-size: 1.8rem; color: #2196f3;">Medium</div>
+                    </div>
+                    <div>
+                        <p style="opacity: 0.8;">Efficiency Score</p>
+                        <div class="yield-display" id="haberScore" style="font-size: 1.8rem; color: #ff9800;">65</div>
+                    </div>
+                </div>
+                <p id="haberMessage" style="margin-top: 1rem; opacity: 0.8;">Adjust conditions to optimize production</p>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="card card-3d quiz-container">
+            <div class="section-header">
+                <div class="section-icon">📝</div>
+                <h2 class="section-title">End of Lesson Quiz</h2>
+            </div>
+            <p style="margin-bottom: 1.5rem; color: var(--gray-dark);">Test your understanding of chemical equilibrium and industrial applications. Select the best answer for each question.</p>
+
+            <div id="quizQuestions">
+                <!-- Question 1 -->
+                <div class="question-card" data-question="1" data-correct="a">
+                    <span class="question-number">1</span>
+                    <span class="question-text">For the reaction N₂(g) + 3H₂(g) ⇌ 2NH₃(g) with ΔH < 0, the forward reaction is:</span>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q1" value="a">
+                            <span class="option-letter">A</span>
+                            <span class="option-text">Exothermic</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q1" value="b">
+                            <span class="option-letter">B</span>
+                            <span class="option-text">Endothermic</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q1" value="c">
+                            <span class="option-letter">C</span>
+                            <span class="option-text">Neither exothermic nor endothermic</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q1" value="d">
+                            <span class="option-letter">D</span>
+                            <span class="option-text">Both exothermic and endothermic</span>
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question-card" data-question="2" data-correct="c">
+                    <span class="question-number">2</span>
+                    <span class="question-text">In the Haber Process, what is the typical pressure range used?</span>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q2" value="a">
+                            <span class="option-letter">A</span>
+                            <span class="option-text">1-10 atm</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q2" value="b">
+                            <span class="option-letter">B</span>
+                            <span class="option-text">50-100 atm</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q2" value="c">
+                            <span class="option-letter">C</span>
+                            <span class="option-text">150-250 atm</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q2" value="d">
+                            <span class="option-letter">D</span>
+                            <span class="option-text">500-1000 atm</span>
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question-card" data-question="3" data-correct="b">
+                    <span class="question-number">3</span>
+                    <span class="question-text">According to Le Chatelier's Principle, increasing the temperature for an exothermic reaction will:</span>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q3" value="a">
+                            <span class="option-letter">A</span>
+                            <span class="option-text">Shift equilibrium to the right (forward)</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q3" value="b">
+                            <span class="option-letter">B</span>
+                            <span class="option-text">Shift equilibrium to the left (reverse)</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q3" value="c">
+                            <span class="option-letter">C</span>
+                            <span class="option-text">Have no effect on equilibrium</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q3" value="d">
+                            <span class="option-letter">D</span>
+                            <span class="option-text">Stop the reaction completely</span>
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="question-card" data-question="4" data-correct="d">
+                    <span class="question-number">4</span>
+                    <span class="question-text">What is the effect of a catalyst on chemical equilibrium?</span>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q4" value="a">
+                            <span class="option-letter">A</span>
+                            <span class="option-text">Increases the yield of products</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q4" value="b">
+                            <span class="option-letter">B</span>
+                            <span class="option-text">Shifts equilibrium to the right</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q4" value="c">
+                            <span class="option-letter">C</span>
+                            <span class="option-text">Changes the equilibrium constant</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q4" value="d">
+                            <span class="option-letter">D</span>
+                            <span class="option-text">Speeds up the rate without changing equilibrium position</span>
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="question-card" data-question="5" data-correct="a">
+                    <span class="question-number">5</span>
+                    <span class="question-text">For the reaction N₂(g) + 3H₂(g) ⇌ 2NH₃(g), increasing pressure will:</span>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q5" value="a">
+                            <span class="option-letter">A</span>
+                            <span class="option-text">Favor ammonia formation (fewer gas molecules)</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q5" value="b">
+                            <span class="option-letter">B</span>
+                            <span class="option-text">Favor the reverse reaction</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q5" value="c">
+                            <span class="option-letter">C</span>
+                            <span class="option-text">Have no effect on equilibrium</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q5" value="d">
+                            <span class="option-letter">D</span>
+                            <span class="option-text">Decrease the reaction rate</span>
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Question 6 -->
+                <div class="question-card" data-question="6" data-correct="c">
+                    <span class="question-number">6</span>
+                    <span class="question-text">What catalyst is used in the Contact Process?</span>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q6" value="a">
+                            <span class="option-letter">A</span>
+                            <span class="option-text">Iron (Fe)</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q6" value="b">
+                            <span class="option-letter">B</span>
+                            <span class="option-text">Platinum (Pt)</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q6" value="c">
+                            <span class="option-letter">C</span>
+                            <span class="option-text">Vanadium pentoxide (V₂O₅)</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q6" value="d">
+                            <span class="option-letter">D</span>
+                            <span class="option-text">Manganese dioxide (MnO₂)</span>
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Question 7 -->
+                <div class="question-card" data-question="7" data-correct="b">
+                    <span class="question-number">7</span>
+                    <span class="question-text">Why is very high pressure (e.g., 500 atm) not used in the Haber Process?</span>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q7" value="a">
+                            <span class="option-letter">A</span>
+                            <span class="option-text">It would decrease ammonia yield</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q7" value="b">
+                            <span class="option-letter">B</span>
+                            <span class="option-text">Safety risks and high equipment costs</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q7" value="c">
+                            <span class="option-letter">C</span>
+                            <span class="option-text">The catalyst doesn't work at high pressure</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q7" value="d">
+                            <span class="option-letter">D</span>
+                            <span class="option-text">It would slow down the reaction</span>
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Question 8 -->
+                <div class="question-card" data-question="8" data-correct="a">
+                    <span class="question-number">8</span>
+                    <span class="question-text">In the Haber Process, ammonia is removed by:</span>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q8" value="a">
+                            <span class="option-letter">A</span>
+                            <span class="option-text">Cooling and liquefying it</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q8" value="b">
+                            <span class="option-letter">B</span>
+                            <span class="option-text">Filtering it out</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q8" value="c">
+                            <span class="option-letter">C</span>
+                            <span class="option-text">Allowing it to evaporate</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q8" value="d">
+                            <span class="option-letter">D</span>
+                            <span class="option-text">Adding more nitrogen</span>
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Question 9 -->
+                <div class="question-card" data-question="9" data-correct="c">
+                    <span class="question-number">9</span>
+                    <span class="question-text">The critical step in the Contact Process is:</span>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q9" value="a">
+                            <span class="option-letter">A</span>
+                            <span class="option-text">S + O₂ → SO₂</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q9" value="b">
+                            <span class="option-letter">B</span>
+                            <span class="option-text">SO₃ + H₂O → H₂SO₄</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q9" value="c">
+                            <span class="option-letter">C</span>
+                            <span class="option-text">2SO₂ + O₂ ⇌ 2SO₃</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q9" value="d">
+                            <span class="option-letter">D</span>
+                            <span class="option-text">H₂SO₃ → H₂SO₄</span>
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Question 10 -->
+                <div class="question-card" data-question="10" data-correct="d">
+                    <span class="question-number">10</span>
+                    <span class="question-text">What is the ΔH value for the formation of ammonia in the Haber Process?</span>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q10" value="a">
+                            <span class="option-letter">A</span>
+                            <span class="option-text">+92.4 kJ·mol⁻¹</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q10" value="b">
+                            <span class="option-letter">B</span>
+                            <span class="option-text">-46.2 kJ·mol⁻¹</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q10" value="c">
+                            <span class="option-letter">C</span>
+                            <span class="option-text">+184.8 kJ·mol⁻¹</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q10" value="d">
+                            <span class="option-letter">D</span>
+                            <span class="option-text">-92.4 kJ·mol⁻¹</span>
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Question 11 -->
+                <div class="question-card" data-question="11" data-correct="b">
+                    <span class="question-number">11</span>
+                    <span class="question-text">The temperature used in the Contact Process is approximately:</span>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q11" value="a">
+                            <span class="option-letter">A</span>
+                            <span class="option-text">200°C</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q11" value="b">
+                            <span class="option-letter">B</span>
+                            <span class="option-text">450°C</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q11" value="c">
+                            <span class="option-letter">C</span>
+                            <span class="option-text">700°C</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q11" value="d">
+                            <span class="option-letter">D</span>
+                            <span class="option-text">100°C</span>
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+
+                <!-- Question 12 -->
+                <div class="question-card" data-question="12" data-correct="a">
+                    <span class="question-number">12</span>
+                    <span class="question-text">Adding more reactants (N₂ or H₂) to the Haber Process will:</span>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q12" value="a">
+                            <span class="option-letter">A</span>
+                            <span class="option-text">Shift equilibrium to the right, producing more NH₃</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q12" value="b">
+                            <span class="option-letter">B</span>
+                            <span class="option-text">Shift equilibrium to the left</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q12" value="c">
+                            <span class="option-letter">C</span>
+                            <span class="option-text">Have no effect on equilibrium</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q12" value="d">
+                            <span class="option-letter">D</span>
+                            <span class="option-text">Decrease the reaction rate</span>
+                        </label>
+                    </div>
+                    <div class="feedback"></div>
+                </div>
+            </div>
+
+            <button class="submit-quiz-btn" onclick="submitQuiz()">Submit Quiz</button>
+
+            <!-- Score Container -->
+            <div class="score-container" id="scoreContainer">
+                <h3 class="score-title">🎉 Quiz Complete!</h3>
+                <div class="score-circle">
+                    <span class="score-percentage" id="scorePercentage">0%</span>
+                    <span class="score-text" id="scoreText">0/12</span>
+                </div>
+                <p class="score-message" id="scoreMessage"></p>
+                <button class="submit-quiz-btn" onclick="resetQuiz()" style="margin-top: 1rem; background: rgba(255,255,255,0.2);">Try Again</button>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="lesson-nav">
+            <button class="nav-btn prev" onclick="navigateLesson('prev')">
+                ← Previous Lesson
+            </button>
+            <button class="nav-btn next" onclick="navigateLesson('next')">
+                Next Lesson →
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">📚 PassProof Academy</div>
+            <p class="footer-text">© 2026 PassProof Academy. All rights reserved.</p>
+            <p class="footer-text" style="margin-top: 0.5rem;">Empowering learners to achieve academic excellence.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProgress();
+            initSimulation1();
+            initSimulation2();
+            updateProgress();
+        });
+
+        // ==================== MOBILE MENU ====================
+        function toggleMobileMenu() {
+            const menu = document.getElementById('navMenu');
+            menu.classList.toggle('active');
+        }
+
+        // ==================== PROGRESS TRACKING ====================
+        function loadProgress() {
+            const progress = localStorage.getItem('lesson2_progress');
+            if (progress) {
+                const data = JSON.parse(progress);
+                document.getElementById('progressFill').style.width = data.percentage + '%';
+                document.getElementById('progressPercent').textContent = data.percentage + '%';
+            }
+        }
+
+        function saveProgress(percentage) {
+            const data = {
+                lessonId: 'chemical_equilibrium_lesson2',
+                percentage: percentage,
+                lastAccessed: new Date().toISOString()
+            };
+            localStorage.setItem('lesson2_progress', JSON.stringify(data));
+        }
+
+        function updateProgress() {
+            // Track scroll progress
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = Math.round((scrollTop / docHeight) * 100);
+                
+                document.getElementById('progressFill').style.width = Math.min(scrollPercent, 100) + '%';
+                document.getElementById('progressPercent').textContent = Math.min(scrollPercent, 100) + '%';
+                
+                saveProgress(Math.min(scrollPercent, 100));
+            });
+        }
+
+        // ==================== SIMULATION 1: LE CHATELIER'S PRINCIPLE ====================
+        let canvas1, ctx1, molecules = [];
+        let simParams = { temp: 400, pressure: 150, concentration: 50 };
+
+        function initSimulation1() {
+            canvas1 = document.getElementById('equilibriumCanvas');
+            ctx1 = canvas1.getContext('2d');
+            
+            // Set canvas size
+            canvas1.width = canvas1.offsetWidth;
+            canvas1.height = canvas1.offsetHeight;
+            
+            // Initialize molecules
+            createMolecules();
+            
+            // Event listeners for sliders
+            document.getElementById('tempSlider').addEventListener('input', function() {
+                simParams.temp = parseInt(this.value);
+                document.getElementById('tempValue').textContent = this.value;
+                updateEquilibrium();
+            });
+            
+            document.getElementById('pressureSlider').addEventListener('input', function() {
+                simParams.pressure = parseInt(this.value);
+                document.getElementById('pressureValue').textContent = this.value;
+                updateEquilibrium();
+            });
+            
+            document.getElementById('concSlider').addEventListener('input', function() {
+                simParams.concentration = parseInt(this.value);
+                document.getElementById('concValue').textContent = this.value;
+                updateEquilibrium();
+            });
+            
+            // Start animation
+            animateMolecules();
+            updateEquilibrium();
+        }
+
+        function createMolecules() {
+            molecules = [];
+            const types = ['n2', 'h2', 'nh3'];
+            for (let i = 0; i < 50; i++) {
+                molecules.push({
+                    x: Math.random() * canvas1.width,
+                    y: Math.random() * canvas1.height,
+                    vx: (Math.random() - 0.5) * 4,
+                    vy: (Math.random() - 0.5) * 4,
+                    type: types[Math.floor(Math.random() * 3)],
+                    size: Math.random() * 8 + 8
+                });
+            }
+        }
+
+        function animateMolecules() {
+            ctx1.fillStyle = 'rgba(13, 27, 42, 0.3)';
+            ctx1.fillRect(0, 0, canvas1.width, canvas1.height);
+            
+            const speed = simParams.temp / 200;
+            
+            molecules.forEach(mol => {
+                // Update position
+                mol.x += mol.vx * speed;
+                mol.y += mol.vy * speed;
+                
+                // Bounce off walls
+                if (mol.x < 0 || mol.x > canvas1.width) mol.vx *= -1;
+                if (mol.y < 0 || mol.y > canvas1.height) mol.vy *= -1;
+                
+                // Draw molecule
+                ctx1.beginPath();
+                ctx1.arc(mol.x, mol.y, mol.size, 0, Math.PI * 2);
+                
+                if (mol.type === 'n2') {
+                    ctx1.fillStyle = '#3f51b5';
+                } else if (mol.type === 'h2') {
+                    ctx1.fillStyle = '#f44336';
+                } else {
+                    ctx1.fillStyle = '#4caf50';
+                }
+                
+                ctx1.fill();
+                
+                // Add glow effect
+                ctx1.shadowBlur = 10;
+                ctx1.shadowColor = ctx1.fillStyle;
+            });
+            
+            // Draw legend
+            ctx1.shadowBlur = 0;
+            ctx1.font = '14px Arial';
+            ctx1.fillStyle = '#fff';
+            ctx1.fillText('🔵 N₂', 10, 25);
+            ctx1.fillText('🔴 H₂', 10, 45);
+            ctx1.fillText('🟢 NH₃', 10, 65);
+            
+            requestAnimationFrame(animateMolecules);
+        }
+
+        function updateEquilibrium() {
+            // Calculate yield based on conditions
+            // Higher pressure = higher yield (fewer moles on product side)
+            // Lower temperature = higher yield (exothermic reaction)
+            // Higher concentration = more product
+            
+            let yield_val = 50;
+            
+            // Temperature effect (inverse for exothermic)
+            yield_val -= (simParams.temp - 400) * 0.1;
+            
+            // Pressure effect (direct)
+            yield_val += (simParams.pressure - 150) * 0.1;
+            
+            // Concentration effect
+            yield_val += (simParams.concentration - 50) * 0.2;
+            
+            yield_val = Math.max(5, Math.min(95, yield_val));
+            
+            document.getElementById('yieldDisplay').textContent = Math.round(yield_val) + '%';
+            
+            // Update shift indicators
+            const leftArrow = document.getElementById('leftArrow');
+            const rightArrow = document.getElementById('rightArrow');
+            const message = document.getElementById('equilibriumMessage');
+            
+            leftArrow.classList.remove('active-left');
+            rightArrow.classList.remove('active-right');
+            
+            if (yield_val > 55) {
+                rightArrow.classList.add('active-right');
+                message.textContent = 'Equilibrium shifts RIGHT → More ammonia produced';
+                document.getElementById('yieldDisplay').style.color = '#4caf50';
+            } else if (yield_val < 45) {
+                leftArrow.classList.add('active-left');
+                message.textContent = 'Equilibrium shifts LEFT ← Less ammonia produced';
+                document.getElementById('yieldDisplay').style.color = '#ff5722';
+            } else {
+                message.textContent = 'Equilibrium is balanced';
+                document.getElementById('yieldDisplay').style.color = '#2196f3';
+            }
+            
+            // Update molecule distribution
+            const nh3Count = Math.floor(yield_val / 2);
+            molecules.forEach((mol, i) => {
+                if (i < nh3Count) {
+                    mol.type = 'nh3';
+                } else if (i < nh3Count + 20) {
+                    mol.type = 'n2';
+                } else {
+                    mol.type = 'h2';
+                }
+            });
+        }
+
+        // ==================== SIMULATION 2: HABER PROCESS OPTIMIZER ====================
+        let canvas2, ctx2;
+        let haberParams = { temp: 450, pressure: 200, catalyst: 50 };
+
+        function initSimulation2() {
+            canvas2 = document.getElementById('haberCanvas');
+            ctx2 = canvas2.getContext('2d');
+            
+            canvas2.width = canvas2.offsetWidth;
+            canvas2.height = canvas2.offsetHeight;
+            
+            // Event listeners
+            document.getElementById('haberTemp').addEventListener('input', function() {
+                haberParams.temp = parseInt(this.value);
+                document.getElementById('haberTempValue').textContent = this.value;
+                updateHaberProcess();
+            });
+            
+            document.getElementById('haberPressure').addEventListener('input', function() {
+                haberParams.pressure = parseInt(this.value);
+                document.getElementById('haberPressureValue').textContent = this.value;
+                updateHaberProcess();
+            });
+            
+            document.getElementById('haberCatalyst').addEventListener('input', function() {
+                haberParams.catalyst = parseInt(this.value);
+                document.getElementById('haberCatalystValue').textContent = this.value;
+                updateHaberProcess();
+            });
+            
+            animateHaberProcess();
+            updateHaberProcess();
+        }
+
+        function animateHaberProcess() {
+            // Draw factory/reactor visualization
+            ctx2.fillStyle = '#0d1b2a';
+            ctx2.fillRect(0, 0, canvas2.width, canvas2.height);
+            
+            const centerX = canvas2.width / 2;
+            const centerY = canvas2.height / 2;
+            
+            // Draw reactor vessel
+            ctx2.fillStyle = '#1a237e';
+            ctx2.strokeStyle = '#3f51b5';
+            ctx2.lineWidth = 3;
+            
+            // Main vessel
+            ctx2.beginPath();
+            ctx2.roundRect(centerX - 80, centerY - 100, 160, 200, 20);
+            ctx2.fill();
+            ctx2.stroke();
+            
+            // Draw pressure gauge
+            const pressureAngle = (haberParams.pressure / 300) * Math.PI;
+            ctx2.beginPath();
+            ctx2.arc(centerX - 120, centerY - 60, 30, Math.PI, 2 * Math.PI);
+            ctx2.strokeStyle = '#fff';
+            ctx2.stroke();
+            
+            ctx2.beginPath();
+            ctx2.moveTo(centerX - 120, centerY - 60);
+            ctx2.lineTo(
+                centerX - 120 + Math.cos(Math.PI + pressureAngle) * 25,
+                centerY - 60 + Math.sin(Math.PI + pressureAngle) * 25
+            );
+            ctx2.strokeStyle = '#f44336';
+            ctx2.lineWidth = 2;
+            ctx2.stroke();
+            
+            // Draw temperature indicator
+            const tempHeight = ((haberParams.temp - 300) / 300) * 60;
+            ctx2.fillStyle = '#1a1a2e';
+            ctx2.fillRect(centerX + 100, centerY - 80, 20, 80);
+            ctx2.fillStyle = `hsl(${60 - tempHeight}, 100%, 50%)`;
+            ctx2.fillRect(centerX + 100, centerY - tempHeight, 20, tempHeight);
+            
+            // Draw bubbles (reaction happening)
+            const bubbleCount = Math.floor(haberParams.catalyst / 10);
+            for (let i = 0; i < bubbleCount; i++) {
+                const x = centerX + (Math.random() - 0.5) * 100;
+                const y = centerY + (Math.random() - 0.5) * 150;
+                const size = Math.random() * 8 + 4;
+                
+                ctx2.beginPath();
+                ctx2.arc(x, y, size, 0, Math.PI * 2);
+                ctx2.fillStyle = `rgba(76, 175, 80, ${Math.random() * 0.5 + 0.3})`;
+                ctx2.fill();
+            }
+            
+            // Labels
+            ctx2.fillStyle = '#fff';
+            ctx2.font = '12px Arial';
+            ctx2.fillText('P', centerX - 125, centerY - 20);
+            ctx2.fillText('T', centerX + 105, centerY + 20);
+            ctx2.fillText('REACTOR', centerX - 30, centerY);
+            
+            // Inlet pipes
+            ctx2.strokeStyle = '#5c6bc0';
+            ctx2.lineWidth = 8;
+            ctx2.beginPath();
+            ctx2.moveTo(0, centerY - 50);
+            ctx2.lineTo(centerX - 80, centerY - 50);
+            ctx2.stroke();
+            
+            ctx2.beginPath();
+            ctx2.moveTo(0, centerY + 50);
+            ctx2.lineTo(centerX - 80, centerY + 50);
+            ctx2.stroke();
+            
+            // Outlet pipe
+            ctx2.strokeStyle = '#66bb6a';
+            ctx2.beginPath();
+            ctx2.moveTo(centerX + 80, centerY);
+            ctx2.lineTo(canvas2.width, centerY);
+            ctx2.stroke();
+            
+            // Labels for pipes
+            ctx2.fillStyle = '#3f51b5';
+            ctx2.font = 'bold 14px Arial';
+            ctx2.fillText('N₂', 20, centerY - 55);
+            ctx2.fillText('H₂', 20, centerY + 45);
+            ctx2.fillStyle = '#4caf50';
+            ctx2.fillText('NH₃', canvas2.width - 50, centerY - 5);
+            
+            requestAnimationFrame(animateHaberProcess);
+        }
+
+        function updateHaberProcess() {
+            // Calculate yield
+            let yield_val = 60;
+            yield_val -= (haberParams.temp - 400) * 0.08;
+            yield_val += (haberParams.pressure - 150) * 0.08;
+            yield_val = Math.max(10, Math.min(80, yield_val));
+            
+            // Calculate rate (higher temp = faster, catalyst = faster)
+            let rate = (haberParams.temp - 300) / 3 + haberParams.catalyst * 0.5;
+            rate = Math.max(10, Math.min(100, rate));
+            
+            let rateText = 'Slow';
+            if (rate > 70) rateText = 'Fast';
+            else if (rate > 40) rateText = 'Medium';
+            
+            // Calculate efficiency score
+            let efficiency = (yield_val * 0.5) + (rate * 0.3);
+            if (haberParams.pressure > 250) efficiency -= 10; // Safety penalty
+            if (haberParams.temp > 550) efficiency -= 10; // Energy penalty
+            efficiency = Math.max(0, Math.min(100, efficiency));
+            
+            document.getElementById('haberYield').textContent = Math.round(yield_val) + '%';
+            document.getElementById('haberRate').textContent = rateText;
+            document.getElementById('haberScore').textContent = Math.round(efficiency);
+            
+            // Update message
+            let message = '';
+            if (efficiency > 80) {
+                message = '🌟 Excellent! Optimal industrial conditions achieved!';
+            } else if (efficiency > 60) {
+                message = '✅ Good balance between yield and rate.';
+            } else if (efficiency > 40) {
+                message = '⚠️ Consider adjusting temperature or pressure.';
+            } else {
+                message = '❌ Poor conditions. Try different settings.';
+            }
+            
+            document.getElementById('haberMessage').textContent = message;
+            
+            // Color coding
+            const scoreEl = document.getElementById('haberScore');
+            if (efficiency > 70) scoreEl.style.color = '#4caf50';
+            else if (efficiency > 50) scoreEl.style.color = '#ff9800';
+            else scoreEl.style.color = '#f44336';
+        }
+
+        // ==================== QUIZ SYSTEM ====================
+        const correctAnswers = {
+            q1: 'a', q2: 'c', q3: 'b', q4: 'd', q5: 'a', q6: 'c',
+            q7: 'b', q8: 'a', q9: 'c', q10: 'd', q11: 'b', q12: 'a'
+        };
+
+        const explanations = {
+            q1: 'Correct! ΔH < 0 indicates an exothermic reaction where heat is released.',
+            q2: 'Correct! The Haber Process uses 150-250 atm to favor ammonia formation.',
+            q3: 'Correct! Increasing temperature shifts an exothermic reaction backwards (Le Chatelier).',
+            q4: 'Correct! Catalysts only speed up the rate without changing the equilibrium position.',
+            q5: 'Correct! Higher pressure favors the side with fewer gas molecules (2 NH₃ vs 4 reactant molecules).',
+            q6: 'Correct! Vanadium pentoxide (V₂O₅) is the catalyst used in the Contact Process.',
+            q7: 'Correct! Extreme pressures require expensive equipment and pose safety hazards.',
+            q8: 'Correct! Ammonia has a higher boiling point and can be liquefied and removed.',
+            q9: 'Correct! The conversion of SO₂ to SO₃ is the critical equilibrium step.',
+            q10: 'Correct! ΔH = -92.4 kJ·mol⁻¹ for ammonia formation (exothermic).',
+            q11: 'Correct! The Contact Process operates at approximately 450°C.',
+            q12: 'Correct! Adding reactants shifts equilibrium right, producing more products (Le Chatelier).'
+        };
+
+        function submitQuiz() {
+            let score = 0;
+            const questions = document.querySelectorAll('.question-card');
+            
+            questions.forEach((card, index) => {
+                const qNum = index + 1;
+                const selectedInput = card.querySelector(`input[name="q${qNum}"]:checked`);
+                const feedback = card.querySelector('.feedback');
+                const correctAnswer = correctAnswers[`q${qNum}`];
+                
+                // Remove previous classes
+                card.classList.remove('correct', 'incorrect');
+                feedback.classList.remove('correct', 'incorrect');
+                
+                if (selectedInput) {
+                    const selectedValue = selectedInput.value;
+                    
+                    if (selectedValue === correctAnswer) {
+                        score++;
+                        card.classList.add('correct');
+                        feedback.classList.add('correct');
+                        feedback.innerHTML = `✅ ${explanations[`q${qNum}`]}`;
+                    } else {
+                        card.classList.add('incorrect');
+                        feedback.classList.add('incorrect');
+                        feedback.innerHTML = `❌ Incorrect. The correct answer is ${correctAnswer.toUpperCase()}. ${explanations[`q${qNum}`]}`;
+                    }
+                } else {
+                    card.classList.add('incorrect');
+                    feedback.classList.add('incorrect');
+                    feedback.innerHTML = `⚠️ No answer selected. The correct answer is ${correctAnswer.toUpperCase()}.`;
+                }
+            });
+            
+            // Show score
+            const percentage = Math.round((score / 12) * 100);
+            document.getElementById('scorePercentage').textContent = percentage + '%';
+            document.getElementById('scoreText').textContent = `${score}/12`;
+            
+            let message = '';
+            if (percentage >= 90) {
+                message = '🎉 Outstanding! You have mastered this topic!';
+            } else if (percentage >= 70) {
+                message = '👏 Great job! You have a good understanding.';
+            } else if (percentage >= 50) {
+                message = '📚 Good effort! Review the concepts and try again.';
+            } else {
+                message = '💪 Keep studying! Review the lesson material.';
+            }
+            
+            document.getElementById('scoreMessage').textContent = message;
+            document.getElementById('scoreContainer').classList.add('show');
+            
+            // Save quiz score
+            localStorage.setItem('lesson2_quiz_score', JSON.stringify({
+                score: score,
+                total: 12,
+                percentage: percentage,
+                date: new Date().toISOString()
+            }));
+            
+            // Scroll to score
+            document.getElementById('scoreContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function resetQuiz() {
+            const questions = document.querySelectorAll('.question-card');
+            
+            questions.forEach((card) => {
+                card.classList.remove('correct', 'incorrect');
+                const feedback = card.querySelector('.feedback');
+                feedback.classList.remove('correct', 'incorrect');
+                feedback.innerHTML = '';
+                
+                const inputs = card.querySelectorAll('input[type="radio"]');
+                inputs.forEach(input => input.checked = false);
+            });
+            
+            document.getElementById('scoreContainer').classList.remove('show');
+            
+            // Scroll to quiz start
+            document.querySelector('.quiz-container').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ==================== NAVIGATION ====================
+        function navigateLesson(direction) {
+            if (direction === 'prev') {
+                alert('Navigating to Lesson 1: Introduction to Chemical Equilibrium');
+                // window.location.href = 'lesson1.html';
+            } else {
+                alert('Navigating to Lesson 3: Equilibrium Constants');
+                // window.location.href = 'lesson3.html';
+            }
+        }
+
+        // ==================== WINDOW RESIZE HANDLER ====================
+        window.addEventListener('resize', function() {
+            if (canvas1) {
+                canvas1.width = canvas1.offsetWidth;
+                canvas1.height = canvas1.offsetHeight;
+            }
+            if (canvas2) {
+                canvas2.width = canvas2.offsetWidth;
+                canvas2.height = canvas2.offsetHeight;
+            }
+        });
+    </script>
+</body>
+</html>

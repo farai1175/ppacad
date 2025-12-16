@@ -1,1854 +1,817 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lesson 3: Arithmetic and Geometric Means | PassProof Academy</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-blue: #1a73e8;
-            --secondary-blue: #4285f4;
-            --light-blue: #e8f0fe;
-            --dark-blue: #0d47a1;
-            --white: #ffffff;
-            --gray-100: #f8f9fa;
-            --gray-200: #e9ecef;
-            --gray-600: #6c757d;
-            --gray-800: #343a40;
-            --success: #28a745;
-            --error: #dc3545;
-            --warning: #ffc107;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
-            --radius: 12px;
-            --transition: all 0.3s ease;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
-            min-height: 100vh;
-            line-height: 1.6;
-            color: var(--gray-800);
-        }
-
-        /* Header & Navigation */
-        header {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
-            color: var(--white);
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-blue);
-            font-weight: bold;
-        }
-
-        /* Dropdown Navigation */
-        .nav-container {
-            position: relative;
-        }
-
-        .nav-toggle {
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: var(--white);
-            padding: 0.75rem 1.5rem;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: var(--transition);
-        }
-
-        .nav-toggle:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .nav-toggle::after {
-            content: '▼';
-            font-size: 0.7rem;
-            transition: var(--transition);
-        }
-
-        .nav-toggle.active::after {
-            transform: rotate(180deg);
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            min-width: 250px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: var(--transition);
-            margin-top: 0.5rem;
-            overflow: hidden;
-        }
-
-        .dropdown-menu.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-menu a {
-            display: block;
-            padding: 1rem 1.5rem;
-            color: var(--gray-800);
-            text-decoration: none;
-            transition: var(--transition);
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .dropdown-menu a:last-child {
-            border-bottom: none;
-        }
-
-        .dropdown-menu a:hover {
-            background: var(--light-blue);
-            color: var(--primary-blue);
-            padding-left: 2rem;
-        }
-
-        .dropdown-menu a.current {
-            background: var(--primary-blue);
-            color: var(--white);
-        }
-
-        /* Main Content */
-        main {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        /* Cards */
-        .card {
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 2rem;
-            margin-bottom: 2rem;
-            transition: var(--transition);
-            animation: fadeInUp 0.6s ease;
-        }
-
-        .card:hover {
-            box-shadow: var(--shadow-lg);
-            transform: translateY(-2px);
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Subject & Grade Badge */
-        .subject-badge {
-            display: inline-flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-bottom: 1rem;
-        }
-
-        .badge {
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            color: var(--white);
-            padding: 0.5rem 1.25rem;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            box-shadow: var(--shadow);
-        }
-
-        .badge.outline {
-            background: transparent;
-            border: 2px solid var(--primary-blue);
-            color: var(--primary-blue);
-        }
-
-        /* Topic Header */
-        .topic-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .topic-header h1 {
-            color: var(--dark-blue);
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .topic-header .subtitle {
-            color: var(--gray-600);
-            font-size: 1.25rem;
-        }
-
-        .lesson-number {
-            display: inline-block;
-            background: var(--warning);
-            color: var(--gray-800);
-            padding: 0.25rem 1rem;
-            border-radius: 15px;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        /* Section Headers */
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 3px solid var(--primary-blue);
-        }
-
-        .section-icon {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 1.25rem;
-        }
-
-        .section-header h2 {
-            color: var(--dark-blue);
-            font-size: 1.5rem;
-        }
-
-        /* Objectives List */
-        .objectives-list {
-            list-style: none;
-        }
-
-        .objectives-list li {
-            padding: 0.75rem 1rem;
-            margin-bottom: 0.5rem;
-            background: var(--light-blue);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            transition: var(--transition);
-        }
-
-        .objectives-list li:hover {
-            transform: translateX(5px);
-            background: var(--gray-200);
-        }
-
-        .objectives-list li::before {
-            content: '✓';
-            color: var(--success);
-            font-weight: bold;
-            font-size: 1.25rem;
-        }
-
-        /* Formula Box */
-        .formula-box {
-            background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue));
-            color: var(--white);
-            padding: 1.5rem 2rem;
-            border-radius: var(--radius);
-            margin: 1.5rem 0;
-            text-align: center;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .formula-box h3 {
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        .formula {
-            font-size: 1.75rem;
-            font-family: 'Times New Roman', serif;
-            font-style: italic;
-            background: rgba(255, 255, 255, 0.15);
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            display: inline-block;
-        }
-
-        /* Example Box */
-        .example-box {
-            background: var(--gray-100);
-            border-left: 5px solid var(--primary-blue);
-            padding: 1.5rem;
-            border-radius: 0 var(--radius) var(--radius) 0;
-            margin: 1.5rem 0;
-        }
-
-        .example-box h4 {
-            color: var(--primary-blue);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .example-box h4::before {
-            content: '📝';
-        }
-
-        .solution-steps {
-            margin-top: 1rem;
-            padding-left: 1rem;
-        }
-
-        .solution-steps .step {
-            padding: 0.75rem;
-            margin-bottom: 0.5rem;
-            background: var(--white);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .step-number {
-            width: 30px;
-            height: 30px;
-            background: var(--primary-blue);
-            color: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 0.9rem;
-            flex-shrink: 0;
-        }
-
-        .highlight {
-            background: var(--warning);
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-
-        /* Note Box */
-        .note-box {
-            background: linear-gradient(135deg, #fff3cd, #ffeeba);
-            border: 1px solid var(--warning);
-            padding: 1.5rem;
-            border-radius: var(--radius);
-            margin: 1.5rem 0;
-        }
-
-        .note-box h4 {
-            color: #856404;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .note-box h4::before {
-            content: '💡';
-        }
-
-        /* Simulation Container */
-        .simulation-container {
-            background: var(--white);
-            border: 2px solid var(--primary-blue);
-            border-radius: var(--radius);
-            padding: 2rem;
-            margin: 2rem 0;
-        }
-
-        .simulation-title {
-            text-align: center;
-            color: var(--dark-blue);
-            margin-bottom: 1.5rem;
-            font-size: 1.25rem;
-        }
-
-        .simulation-controls {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .sim-input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-
-        .sim-input-group label {
-            font-size: 0.9rem;
-            color: var(--gray-600);
-            font-weight: 500;
-        }
-
-        .sim-input {
-            padding: 0.75rem 1rem;
-            border: 2px solid var(--gray-200);
-            border-radius: 8px;
-            font-size: 1rem;
-            width: 120px;
-            transition: var(--transition);
-        }
-
-        .sim-input:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
-        }
-
-        .sim-btn {
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            color: var(--white);
-            border: none;
-            padding: 0.75rem 2rem;
-            border-radius: 25px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
-            box-shadow: var(--shadow);
-        }
-
-        .sim-btn:hover {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .sim-btn:active {
-            transform: scale(0.98);
-        }
-
-        .simulation-display {
-            background: var(--gray-100);
-            border-radius: var(--radius);
-            padding: 2rem;
-            min-height: 150px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-        }
-
-        .sequence-visual {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .seq-term {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            color: var(--white);
-            border-radius: var(--radius);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            font-weight: 600;
-            box-shadow: var(--shadow);
-            animation: popIn 0.3s ease;
-        }
-
-        .seq-term.mean {
-            background: linear-gradient(135deg, var(--success), #20c997);
-            transform: scale(1.1);
-        }
-
-        .seq-arrow {
-            color: var(--gray-600);
-            font-size: 1.5rem;
-        }
-
-        @keyframes popIn {
-            from {
-                opacity: 0;
-                transform: scale(0.5);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .result-display {
-            font-size: 1.25rem;
-            color: var(--dark-blue);
-            font-weight: 600;
-            text-align: center;
-            padding: 1rem;
-            background: var(--white);
-            border-radius: 8px;
-            width: 100%;
-        }
-
-        /* Canvas Simulation */
-        #geoCanvas {
-            width: 100%;
-            max-width: 600px;
-            height: 300px;
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius);
-            background: var(--white);
-        }
-
-        /* Quiz Section */
-        .quiz-section {
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            padding: 2rem;
-            margin: 2rem 0;
-        }
-
-        .quiz-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .quiz-header h2 {
-            color: var(--dark-blue);
-            font-size: 1.75rem;
-        }
-
-        .quiz-progress {
-            background: var(--gray-200);
-            height: 8px;
-            border-radius: 4px;
-            margin-top: 1rem;
-            overflow: hidden;
-        }
-
-        .quiz-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue));
-            border-radius: 4px;
-            transition: width 0.5s ease;
-            width: 0%;
-        }
-
-        .question-card {
-            background: var(--gray-100);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-left: 5px solid var(--gray-600);
-            transition: var(--transition);
-        }
-
-        .question-card.answered-correct {
-            border-left-color: var(--success);
-            background: #d4edda;
-        }
-
-        .question-card.answered-incorrect {
-            border-left-color: var(--error);
-            background: #f8d7da;
-        }
-
-        .question-number {
-            display: inline-block;
-            background: var(--primary-blue);
-            color: var(--white);
-            padding: 0.25rem 0.75rem;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-        }
-
-        .question-text {
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-            color: var(--gray-800);
-        }
-
-        .options-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .option-label {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem;
-            background: var(--white);
-            border: 2px solid var(--gray-200);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .option-label:hover:not(.disabled) {
-            border-color: var(--primary-blue);
-            background: var(--light-blue);
-        }
-
-        .option-label.disabled {
-            cursor: not-allowed;
-            opacity: 0.8;
-        }
-
-        .option-label.selected {
-            border-color: var(--primary-blue);
-            background: var(--light-blue);
-        }
-
-        .option-label.correct {
-            border-color: var(--success);
-            background: #d4edda;
-        }
-
-        .option-label.incorrect {
-            border-color: var(--error);
-            background: #f8d7da;
-        }
-
-        .option-label input[type="radio"] {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--primary-blue);
-        }
-
-        .feedback {
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 8px;
-            display: none;
-            animation: fadeInUp 0.3s ease;
-        }
-
-        .feedback.show {
-            display: block;
-        }
-
-        .feedback.correct {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid var(--success);
-        }
-
-        .feedback.incorrect {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid var(--error);
-        }
-
-        /* Score Display */
-        .score-display {
-            background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue));
-            color: var(--white);
-            padding: 2rem;
-            border-radius: var(--radius);
-            text-align: center;
-            margin-top: 2rem;
-            display: none;
-        }
-
-        .score-display.show {
-            display: block;
-            animation: fadeInUp 0.5s ease;
-        }
-
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-            border: 4px solid var(--white);
-        }
-
-        .score-number {
-            font-size: 3rem;
-            font-weight: 700;
-        }
-
-        .score-label {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-
-        .score-message {
-            font-size: 1.25rem;
-            margin-top: 1rem;
-        }
-
-        .submit-quiz-btn {
-            background: var(--white);
-            color: var(--primary-blue);
-            border: none;
-            padding: 1rem 3rem;
-            border-radius: 25px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
-            box-shadow: var(--shadow);
-            margin-top: 1.5rem;
-        }
-
-        .submit-quiz-btn:hover {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .retry-btn {
-            background: var(--warning);
-            color: var(--gray-800);
-            border: none;
-            padding: 0.75rem 2rem;
-            border-radius: 25px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
-            margin-top: 1rem;
-        }
-
-        .retry-btn:hover {
-            transform: scale(1.05);
-        }
-
-        /* Navigation Buttons */
-        .lesson-nav {
-            display: flex;
-            justify-content: space-between;
-            gap: 1rem;
-            margin: 2rem 0;
-            flex-wrap: wrap;
-        }
-
-        .nav-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
-            border-radius: 25px;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: var(--transition);
-            cursor: pointer;
-            border: none;
-        }
-
-        .nav-btn.prev {
-            background: var(--white);
-            color: var(--primary-blue);
-            border: 2px solid var(--primary-blue);
-        }
-
-        .nav-btn.prev:hover {
-            background: var(--light-blue);
-        }
-
-        .nav-btn.next {
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            color: var(--white);
-            box-shadow: var(--shadow);
-        }
-
-        .nav-btn.next:hover {
-            transform: translateX(5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .nav-btn.prev:hover {
-            transform: translateX(-5px);
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue));
-            color: var(--white);
-            padding: 2rem;
-            text-align: center;
-            margin-top: 3rem;
-        }
-
-        footer p {
-            opacity: 0.9;
-        }
-
-        /* Progress Indicator */
-        .progress-indicator {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--white);
-            padding: 1rem;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .progress-ring {
-            width: 50px;
-            height: 50px;
-        }
-
-        .progress-ring circle {
-            fill: none;
-            stroke-width: 4;
-        }
-
-        .progress-ring .bg {
-            stroke: var(--gray-200);
-        }
-
-        .progress-ring .progress {
-            stroke: var(--primary-blue);
-            stroke-linecap: round;
-            transform: rotate(-90deg);
-            transform-origin: center;
-            transition: stroke-dashoffset 0.5s ease;
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            header {
-                padding: 1rem;
-            }
-
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .dropdown-menu {
-                left: 50%;
-                transform: translateX(-50%) translateY(-10px);
-                width: 90vw;
-                max-width: 300px;
-            }
-
-            .dropdown-menu.active {
-                transform: translateX(-50%) translateY(0);
-            }
-
-            main {
-                padding: 1rem;
-            }
-
-            .card {
-                padding: 1.5rem;
-            }
-
-            .topic-header h1 {
-                font-size: 1.75rem;
-            }
-
-            .formula {
-                font-size: 1.25rem;
-                padding: 0.75rem 1rem;
-            }
-
-            .simulation-controls {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .sim-input {
-                width: 100%;
-            }
-
-            .seq-term {
-                width: 55px;
-                height: 55px;
-                font-size: 0.9rem;
-            }
-
-            .lesson-nav {
-                flex-direction: column;
-            }
-
-            .nav-btn {
-                justify-content: center;
-            }
-
-            .progress-indicator {
-                bottom: 10px;
-                right: 10px;
-                padding: 0.75rem;
-            }
-
-            .score-circle {
-                width: 120px;
-                height: 120px;
-            }
-
-            .score-number {
-                font-size: 2.5rem;
-            }
-        }
-
-        /* MathJax styling */
-        .math-expr {
-            font-family: 'Times New Roman', serif;
-            font-style: italic;
-        }
-
-        /* Comparison Table */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-
-        .comparison-table th,
-        .comparison-table td {
-            padding: 1rem;
-            text-align: center;
-            border: 1px solid var(--gray-200);
-        }
-
-        .comparison-table th {
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            color: var(--white);
-            font-weight: 600;
-        }
-
-        .comparison-table tr:nth-child(even) {
-            background: var(--gray-100);
-        }
-
-        .comparison-table tr:hover {
-            background: var(--light-blue);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grade 12 Maths | Geometric Sequences & Sum to Infinity | Lesson 2 | PassProof Academy</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="math-lessons.css">
 </head>
+
 <body>
-    <!-- Header -->
-    <header>
-        <div class="header-content">
-            <div class="logo">
-                <div class="logo-icon">P</div>
-                <span>PassProof Academy</span>
-            </div>
-            <nav class="nav-container">
-                <button class="nav-toggle" id="navToggle">
-                    📚 Navigation
-                </button>
-                <div class="dropdown-menu" id="dropdownMenu">
-                    <a href="#">🏠 Home</a>
-                    <a href="#">📊 Dashboard</a>
-                    <a href="#">📖 Lesson 1: Sequences Intro</a>
-                    <a href="#">📖 Lesson 2: Geometric Sequences</a>
-                    <a href="#" class="current">📖 Lesson 3: Arithmetic & Geometric Means</a>
-                    <a href="#">📖 Lesson 4: Sum of Geometric Series</a>
-                    <a href="#">📝 Assessments</a>
-                    <a href="#">⚙️ Settings</a>
-                </div>
-            </nav>
+  <!-- ===== HEADER ===== -->
+  <header>
+    <a href="index.html" class="logo">
+      <img src="../logo_tick.jpg" alt="PassProof Academy Logo">
+    </a>
+    <nav style="flex:1;text-align:right;">
+      <span style="font-size:2.2rem;color:#0f0909;">
+        <img src="../favicon-32x32.png" alt="PassProof Academy Logo">
+        Grade 12 Mathematics
+      </span>
+    </nav>
+  </header>
+
+  <!-- ===== STICKY LESSON MAP ===== -->
+  <nav class="sticky-nav">
+    <ul class="lesson-map">
+      <li><a href="#objectives" class="nav-link">🎯 Objectives</a></li>
+      <li><a href="#pre-knowledge" class="nav-link">🧠 Pre-Knowledge</a></li>
+      <li><a href="#lesson-flow" class="nav-link">🧭 Lesson Flow</a></li>
+      <li><a href="#theory" class="nav-link">∞ Sum to Infinity</a></li>
+      <li><a href="#examples" class="nav-link">📊 Examples</a></li>
+      <li><a href="#practice" class="nav-link">📝 Practice</a></li>
+      <li><a href="#lab" class="nav-link">🧪 Quick Lab</a></li>
+      <li><a href="#quiz" class="nav-link">✓ Quiz</a></li>
+      <li><a href="#video" class="nav-link">📹 Video</a></li>
+      <li><a href="#tutor" class="nav-link">👨‍🏫 Live Tutor</a></li>
+    </ul>
+  </nav>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main>
+    <!-- Lesson Header -->
+    <section style="background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--white);padding:1.5rem;border-radius:var(--radius-lg);margin-bottom:1.5rem;">
+      <h1 style="font-size:1.5rem;margin-bottom:.5rem;">Geometric Sequences and Series: Sum to Infinity</h1>
+      <div style="display:flex;flex-wrap:wrap;gap:1rem;margin-top:1rem;">
+        <div style="background:rgba(255,255,255,.1);padding:.5rem 1rem;border-radius:var(--radius-md);">
+          <strong>Grade:</strong> 12
         </div>
-    </header>
-
-    <!-- Main Content -->
-    <main>
-        <!-- Subject & Grade -->
-        <div class="card" style="animation-delay: 0.1s;">
-            <div class="subject-badge">
-                <span class="badge">📐 Mathematics</span>
-                <span class="badge outline">Grade 12</span>
-                <span class="badge outline">Week 3</span>
-                <span class="badge outline">⏱️ 60 min</span>
-            </div>
+        <div style="background:rgba(255,255,255,.1);padding:.5rem 1rem;border-radius:var(--radius-md);">
+          <strong>Week:</strong> 3
         </div>
-
-        <!-- Topic Header -->
-        <div class="card topic-header" style="animation-delay: 0.2s;">
-            <span class="lesson-number">LESSON 3</span>
-            <h1>Arithmetic & Geometric Means</h1>
-            <p class="subtitle">Series and Sequences</p>
+        <div style="background:rgba(255,255,255,.1);padding:.5rem 1rem;border-radius:var(--radius-md);">
+          <strong>Lesson:</strong> 2
         </div>
-
-        <!-- Learning Objectives -->
-        <div class="card" style="animation-delay: 0.3s;">
-            <div class="section-header">
-                <div class="section-icon">🎯</div>
-                <h2>Learning Objectives</h2>
-            </div>
-            <ul class="objectives-list">
-                <li>Define arithmetic and geometric means</li>
-                <li>Recall knowledge learnt to calculate Arithmetic Mean(s)</li>
-                <li>Determine geometric mean(s) between two numbers</li>
-                <li>Insert multiple geometric means between given terms</li>
-            </ul>
+        <div style="background:rgba(255,255,255,.1);padding:.5rem 1rem;border-radius:var(--radius-md);">
+          <strong>Time:</strong> 60 minutes
         </div>
-
-        <!-- Overview -->
-        <div class="card" style="animation-delay: 0.4s;">
-            <div class="section-header">
-                <div class="section-icon">📋</div>
-                <h2>Lesson Overview</h2>
-            </div>
-            <p>In this lesson, we explore the concepts of arithmetic and geometric means. You will learn how to calculate means between two numbers and insert multiple means to form arithmetic or geometric sequences. Understanding these concepts is essential for working with series and sequences in Grade 12 Mathematics.</p>
+        <div style="background:rgba(255,255,255,.1);padding:.5rem 1rem;border-radius:var(--radius-md);">
+          <strong>Topic:</strong> Series (Convergence & Sum to Infinity)
         </div>
+      </div>
 
-        <!-- Main Concepts -->
-        <div class="card" style="animation-delay: 0.5s;">
-            <div class="section-header">
-                <div class="section-icon">📚</div>
-                <h2>Key Concepts & Principles</h2>
-            </div>
+      <p style="margin-top:1rem;color:var(--gray-300);">
+        Use the convergence condition and the sum-to-infinity formula to solve practical problems and exam-style questions.
+      </p>
+    </section>
 
-            <!-- Arithmetic Mean Review -->
-            <h3 style="color: var(--dark-blue); margin-bottom: 1rem;">Arithmetic Mean (Review)</h3>
-            <p><strong>Arithmetic mean(s)</strong> are the term(s) inserted between two given numbers to form an arithmetic sequence.</p>
-            
-            <div class="formula-box">
-                <h3>Arithmetic Mean Formula</h3>
-                <div class="formula">Arithmetic Mean = (a + c) / 2</div>
-            </div>
+    <!-- Objectives -->
+    <section id="objectives">
+      <div class="section-header" data-toggle="objectives-content">
+        <h2>🎯 Lesson Objectives</h2>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content" id="objectives-content">
+        <p>By the end of this lesson, you will be able to:</p>
+        <ul>
+          <li>Apply the formula to sum a <strong>converging</strong> geometric series</li>
+          <li>Apply the formula to <strong>practical examples</strong> involving the sum to infinity</li>
+        </ul>
+      </div>
+    </section>
 
-            <div class="example-box">
-                <h4>Example: Arithmetic Mean</h4>
-                <p>Find the Arithmetic Mean of 8 and 20:</p>
-                <div class="solution-steps">
-                    <div class="step">
-                        <span class="step-number">1</span>
-                        <span>Arithmetic Mean = (8 + 20) / 2</span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">2</span>
-                        <span>= 28 / 2 = <span class="highlight">14</span></span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">3</span>
-                        <span>Sequence formed: 8; 14; 20 ✓</span>
-                    </div>
-                </div>
-            </div>
+    <!-- Pre-knowledge -->
+    <section id="pre-knowledge">
+      <div class="section-header" data-toggle="pre-knowledge-content">
+        <h2>🧠 Pre-Knowledge Required</h2>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content" id="pre-knowledge-content">
+        <p>Before you start, you should be comfortable with:</p>
+        <ul class="knowledge-list">
+          <li>Geometric sequences and the idea of a constant <strong>common ratio</strong>, <strong>r</strong></li>
+          <li>How to find <strong>r</strong> using consecutive terms (divide a term by the previous term)</li>
+          <li>When a geometric series converges: <strong>|r| &lt; 1</strong></li>
+          <li>Substitution and solving simple inequalities (for interval answers)</li>
+          <li>Using a scientific calculator for fractions and decimals</li>
+        </ul>
+      </div>
+    </section>
 
-            <hr style="margin: 2rem 0; border: none; border-top: 2px dashed var(--gray-200);">
-
-            <!-- Geometric Mean -->
-            <h3 style="color: var(--dark-blue); margin-bottom: 1rem;">Geometric Mean</h3>
-            
-            <div class="note-box">
-                <h4>Important Note</h4>
-                <p>If <strong>a, b, and c</strong> form a Geometric Sequence, then:</p>
-                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
-                    <li>r = b/a = c/b (common ratio)</li>
-                    <li><strong>b² = a × c</strong></li>
-                    <li><strong>b = ±√(a × c)</strong></li>
-                </ul>
-            </div>
-
-            <div class="formula-box">
-                <h3>Geometric Mean Formula</h3>
-                <div class="formula">Geometric Mean = ±√(a × c)</div>
-            </div>
-
-            <p style="margin: 1rem 0;"><em>The Geometric Mean is also called the <strong>Mean Proportional</strong>.</em></p>
-
-            <!-- Comparison Table -->
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Property</th>
-                        <th>Arithmetic Mean</th>
-                        <th>Geometric Mean</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Formula</td>
-                        <td>(a + c) / 2</td>
-                        <td>±√(a × c)</td>
-                    </tr>
-                    <tr>
-                        <td>Sequence Type</td>
-                        <td>Arithmetic</td>
-                        <td>Geometric</td>
-                    </tr>
-                    <tr>
-                        <td>Common Operation</td>
-                        <td>Addition (common difference)</td>
-                        <td>Multiplication (common ratio)</td>
-                    </tr>
-                    <tr>
-                        <td>Result</td>
-                        <td>One value</td>
-                        <td>Two values (±)</td>
-                    </tr>
-                </tbody>
-            </table>
+    <!-- Lesson flow -->
+    <section id="lesson-flow">
+      <div class="section-header" data-toggle="lesson-flow-content">
+        <h2>🧭 Lesson Flow and Timing</h2>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content" id="lesson-flow-content">
+        <div class="info-box">
+          <h4>🧩 Teaching and learning plan</h4>
+          <p><strong>Introduction (5 min):</strong> Correct homework, revise convergence and the formula.</p>
+          <p><strong>Main Body (20 min):</strong> Teacher works through examples; learners copy and participate.</p>
+          <p><strong>Guided Practice (30 min):</strong> Learners attempt selected problems with time limits; self-correct and identify problem areas.</p>
+          <p><strong>Conclusion (5 min):</strong> Set homework and expectations for marking using memo/answers.</p>
         </div>
 
-        <!-- Worked Examples -->
-        <div class="card" style="animation-delay: 0.6s;">
-            <div class="section-header">
-                <div class="section-icon">✏️</div>
-                <h2>Worked Examples</h2>
-            </div>
-
-            <div class="example-box">
-                <h4>Example 1: Find the Geometric Mean of 2 and 8</h4>
-                <div class="solution-steps">
-                    <div class="step">
-                        <span class="step-number">1</span>
-                        <span>Using formula: Geometric Mean = ±√(a × c)</span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">2</span>
-                        <span>= ±√(2 × 8)</span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">3</span>
-                        <span>= ±√16 = <span class="highlight">±4</span></span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">4</span>
-                        <span>Two geometric sequences: <strong>2; 4; 8</strong> and <strong>2; -4; 8</strong></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="example-box">
-                <h4>Example 2: Insert 2 Geometric Means between 7 and -56</h4>
-                <div class="solution-steps">
-                    <div class="step">
-                        <span class="step-number">1</span>
-                        <span>Sequence structure: 7; _; _; -56 (4 terms: T₁ = a = 7, T₄ = -56)</span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">2</span>
-                        <span>Using T₄ = a × r³: (7) × r³ = -56</span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">3</span>
-                        <span>r³ = -56/7 = -8</span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">4</span>
-                        <span>r = ∛(-8) = <span class="highlight">-2</span></span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">5</span>
-                        <span>T₂ = a × r = 7 × (-2) = <span class="highlight">-14</span></span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">6</span>
-                        <span>T₃ = a × r² = 7 × (-2)² = 7 × 4 = <span class="highlight">28</span></span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">7</span>
-                        <span>Complete sequence: <strong>7; -14; 28; -56</strong> ✓</span>
-                    </div>
-                </div>
-            </div>
+        <div class="note-box">
+          <h4>📚 Resources mentioned</h4>
+          <p>Classroom Mathematics Grade 12 (CAPS) Learner’s Book & Teacher’s Guide (Chapter 1).</p>
+          <p>Via Afrika Grade 12 Mathematics (Term 1, Chapter 1).</p>
+          <p>Mind Action Series Mathematics 12; Clever Keeping Maths Simple; Platinum Mathematics CAPS Grade 12.</p>
+          <p><strong>Tools:</strong> Scientific calculator; board/data projector/overhead where available.</p>
         </div>
+      </div>
+    </section>
 
-        <!-- Interactive Simulation 1: Geometric Mean Calculator -->
-        <div class="card" style="animation-delay: 0.7s;">
-            <div class="section-header">
-                <div class="section-icon">🎮</div>
-                <h2>Interactive Simulations</h2>
-            </div>
-
-            <div class="simulation-container">
-                <h3 class="simulation-title">🔢 Geometric Mean Calculator</h3>
-                <div class="simulation-controls">
-                    <div class="sim-input-group">
-                        <label for="simValueA">First Number (a)</label>
-                        <input type="number" id="simValueA" class="sim-input" value="2" step="any">
-                    </div>
-                    <div class="sim-input-group">
-                        <label for="simValueC">Last Number (c)</label>
-                        <input type="number" id="simValueC" class="sim-input" value="8" step="any">
-                    </div>
-                    <button class="sim-btn" onclick="calculateGeoMean()">Calculate Mean</button>
-                </div>
-                <div class="simulation-display" id="geoMeanDisplay">
-                    <p style="color: var(--gray-600);">Enter two numbers and click Calculate to see the result!</p>
-                </div>
-            </div>
-
-            <div class="simulation-container">
-                <h3 class="simulation-title">🔗 Insert Geometric Means</h3>
-                <div class="simulation-controls">
-                    <div class="sim-input-group">
-                        <label for="insertA">First Term (a)</label>
-                        <input type="number" id="insertA" class="sim-input" value="3" step="any">
-                    </div>
-                    <div class="sim-input-group">
-                        <label for="insertLast">Last Term</label>
-                        <input type="number" id="insertLast" class="sim-input" value="48" step="any">
-                    </div>
-                    <div class="sim-input-group">
-                        <label for="numMeans">Number of Means</label>
-                        <input type="number" id="numMeans" class="sim-input" value="2" min="1" max="5">
-                    </div>
-                    <button class="sim-btn" onclick="insertGeoMeans()">Generate Sequence</button>
-                </div>
-                <div class="simulation-display" id="insertMeansDisplay">
-                    <p style="color: var(--gray-600);">Set values and generate the complete geometric sequence!</p>
-                </div>
-            </div>
-
-            <div class="simulation-container">
-                <h3 class="simulation-title">📊 Compare Arithmetic vs Geometric Mean</h3>
-                <div class="simulation-controls">
-                    <div class="sim-input-group">
-                        <label for="compA">Value A</label>
-                        <input type="number" id="compA" class="sim-input" value="4" step="any">
-                    </div>
-                    <div class="sim-input-group">
-                        <label for="compC">Value C</label>
-                        <input type="number" id="compC" class="sim-input" value="16" step="any">
-                    </div>
-                    <button class="sim-btn" onclick="compareMeans()">Compare</button>
-                </div>
-                <div class="simulation-display" id="compareDisplay">
-                    <canvas id="geoCanvas" width="600" height="250"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <!-- Quiz Section -->
-        <div class="quiz-section" id="quizSection">
-            <div class="quiz-header">
-                <h2>📝 Lesson Quiz</h2>
-                <p>Test your understanding with these auto-marked questions</p>
-                <div class="quiz-progress">
-                    <div class="quiz-progress-bar" id="progressBar"></div>
-                </div>
-            </div>
-
-            <div id="questionsContainer"></div>
-
-            <button class="submit-quiz-btn" id="submitQuiz" onclick="submitQuiz()">
-                Submit All Answers
-            </button>
-
-            <div class="score-display" id="scoreDisplay">
-                <div class="score-circle">
-                    <span class="score-number" id="scoreNumber">0</span>
-                    <span class="score-label">/ 12</span>
-                </div>
-                <p class="score-message" id="scoreMessage"></p>
-                <p id="scorePercentage"></p>
-                <button class="retry-btn" onclick="retryQuiz()">🔄 Retry Quiz</button>
-            </div>
-        </div>
-
-        <!-- Navigation Buttons -->
-        <div class="lesson-nav">
-            <button class="nav-btn prev">
-                ← Previous Lesson
-            </button>
-            <button class="nav-btn next">
-                Next Lesson →
-            </button>
-        </div>
-    </main>
-
-    <!-- Progress Indicator -->
-    <div class="progress-indicator" id="progressIndicator">
-        <svg class="progress-ring" viewBox="0 0 50 50">
-            <circle class="bg" cx="25" cy="25" r="20"/>
-            <circle class="progress" cx="25" cy="25" r="20" 
-                stroke-dasharray="125.66" 
-                stroke-dashoffset="125.66"
-                id="progressRing"/>
-        </svg>
-        <span id="progressText">0%</span>
-    </div>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 PassProof Academy. All Rights Reserved.</p>
-        <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">
-            Empowering Students Through Interactive Learning
+    <!-- Theory -->
+    <section id="theory">
+      <div class="section-header" data-toggle="theory-content">
+        <h2>∞ Sum to Infinity</h2>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content theory-content" id="theory-content">
+        <h3><span class="key-term">Key reminder</span></h3>
+        <p>
+          The sum to infinity formula can only be used for a <strong>geometric series</strong>, and only when the
+          <strong>restriction on r</strong> is satisfied.
         </p>
-    </footer>
 
-    <script>
-        // ========== Navigation Handling ==========
-        const navToggle = document.getElementById('navToggle');
-        const dropdownMenu = document.getElementById('dropdownMenu');
+        <div class="formula-box" style="background:linear-gradient(135deg,var(--success),#059669);">
+          <strong>CONVERGENCE CONDITION</strong><br><br>
+          A geometric series converges if and only if:<br>
+          <span style="font-size:1.35rem;">-1 &lt; r &lt; 1</span><br>
+          <small>(equivalently: |r| &lt; 1)</small>
+        </div>
 
-        navToggle.addEventListener('click', () => {
-            navToggle.classList.toggle('active');
-            dropdownMenu.classList.toggle('active');
+        <div class="formula-box">
+          <strong>Sum to Infinity</strong><br><br>
+          <span style="font-size:1.4rem;">S∞ = a / (1 − r)</span><br><br>
+          <small>Use only if -1 &lt; r &lt; 1</small>
+        </div>
+
+        <div class="warning-box">
+          <h4>⚠️ Always check r first</h4>
+          <p>If <strong>|r| ≥ 1</strong>, the series does not have a finite sum to infinity, so you must not use the formula.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Examples -->
+    <section id="examples">
+      <div class="section-header" data-toggle="examples-content">
+        <h2>📊 Worked Examples</h2>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content theory-content" id="examples-content">
+
+        <h3><span class="key-term">Example 1: Practical context</span></h3>
+        <div class="worked-example">
+          <strong>
+            A tree is 3 m high and its growth each year is 1/10 of its growth the previous year.
+            What is the greatest height it can reach, assuming it lives forever?
+          </strong>
+
+          <ul class="step-list">
+            <li>
+              <div>
+                <strong>Model as a geometric series:</strong><br>
+                Height gained forms: 3 + 0.3 + 0.03 + 0.003 + ...<br>
+                (First term a = 3, common ratio r = 0.1)
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong>Check convergence:</strong><br>
+                -1 &lt; 0.1 &lt; 1 ✓ so the series converges.
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong>Sum to infinity:</strong><br>
+                S∞ = a/(1-r) = 3/(1-0.1) = 3/0.9 = 10/3 ≈ 3.333...
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong>Interpretation:</strong><br>
+                The tree’s <em>total additional growth</em> approaches 3.333... m.<br>
+                So the greatest height approaches: 3 + 3.333... = 6.333... m.
+              </div>
+            </li>
+          </ul>
+
+          <div class="note-box" style="margin-top:1rem;">
+            <h4>💡 Note about wording</h4>
+            <p>
+              If 3 m is the initial height and the yearly growth starts at 3 m (then 0.3 m, etc.), the maximum total height is
+              <strong>6.333... m</strong>.
+            </p>
+            <p>
+              Some worksheets treat “3 m” as the first <em>growth amount</em> rather than initial height; in that case, the sum to infinity is
+              <strong>10/3 m</strong>.
+            </p>
+          </div>
+        </div>
+
+        <h3><span class="key-term">Example 2: Convergence interval</span></h3>
+        <div class="worked-example">
+          <strong>
+            For which values of x will the geometric series (1 − x) + (1 − x)² + (1 − x)³ + ... converge?
+          </strong>
+
+          <ul class="step-list">
+            <li>
+              <div>
+                <strong>Identify r:</strong><br>
+                Each term is multiplied by (1 − x), so <strong>r = (1 − x)</strong>.
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong>Apply convergence condition:</strong><br>
+                |r| &lt; 1 → |1 − x| &lt; 1
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong>Solve the inequality:</strong><br>
+                -1 &lt; 1 − x &lt; 1<br>
+                Subtract 1: -2 &lt; -x &lt; 0<br>
+                Multiply by -1 (flip signs): 2 &gt; x &gt; 0
+              </div>
+            </li>
+          </ul>
+
+          <p style="background:var(--gray-100);padding:1rem;border-radius:var(--radius-md);margin-top:1rem;">
+            <strong>Answer:</strong> The series converges for <strong>0 &lt; x &lt; 2</strong>.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Practice -->
+    <section id="practice">
+      <div class="section-header" data-toggle="practice-content">
+        <h2>📝 Guided Practice and Homework</h2>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content" id="practice-content">
+        <div class="practice-problems">
+          <h4>In-class practice (30 min)</h4>
+          <p><strong>Classroom Mathematics Grade 12 CAPS</strong> — Exercise 1.9 (pp. 31–32): <strong>No. 3, 6, 9, 10(a)</strong></p>
+          <p>Work one question at a time, with a time limit. When time is up, compare with the teacher’s method and correct your work.</p>
+        </div>
+
+        <div class="practice-problems" style="margin-top:1rem;">
+          <h4>Homework</h4>
+          <p><strong>Exercise 1.9 (pp. 31–32):</strong> <strong>No. 11, 5, 7, 10(b), 8</strong></p>
+          <p>Mark your own work using the answers at the back of the textbook, and note any problem areas to ask about next lesson.</p>
+        </div>
+
+        <div class="note-box">
+          <h4>✅ Checklist for every question</h4>
+          <p>1) Identify <strong>a</strong> and <strong>r</strong></p>
+          <p>2) Check <strong>|r| &lt; 1</strong></p>
+          <p>3) Use <strong>S∞ = a/(1 − r)</strong> (only if it converges)</p>
+          <p>4) Write a final answer with correct units/interval notation</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lab -->
+    <section id="lab">
+      <div class="section-header" data-toggle="lab-content">
+        <h2>🧪 Quick Lab: Sum to Infinity Calculator</h2>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content" id="lab-content">
+        <p style="margin-bottom:1.25rem;">
+          Enter a first term <strong>a</strong> and common ratio <strong>r</strong>. The lab checks convergence and calculates S∞ when valid.
+        </p>
+
+        <div class="lab-zone">
+          <div class="lab-canvas">
+            <div class="grid-2">
+              <div class="field">
+                <label for="labA">First term (a)</label>
+                <input id="labA" type="number" value="3" step="0.1" inputmode="decimal" />
+              </div>
+              <div class="field">
+                <label for="labR">Common ratio (r)</label>
+                <input id="labR" type="number" value="0.1" step="0.01" inputmode="decimal" />
+              </div>
+            </div>
+
+            <div class="lab-output" style="margin-top:1rem;">
+              <div><strong>Convergence:</strong> <span id="labConvergenceText">—</span></div>
+              <div style="margin-top:.5rem;"><strong>Sum to Infinity (S∞):</strong> <span id="labSumInfinity">—</span></div>
+              <div style="margin-top:.5rem;"><strong>Partial sum (first N terms):</strong></div>
+              <div style="margin-top:.25rem;">N = <span id="labN">5</span>, S<sub>N</sub> = <span id="labPartialSum">—</span></div>
+            </div>
+
+            <div style="margin-top:1rem;display:flex;gap:.75rem;flex-wrap:wrap;justify-content:flex-start;">
+              <button class="btn-primary" id="labComputeBtn">Compute</button>
+              <button class="btn-secondary" id="labFillTreeBtn">Use tree example</button>
+              <button class="btn-secondary" id="labResetBtn">Reset</button>
+            </div>
+
+            <div style="margin-top:1rem;color:var(--gray-300);font-size:.9rem;">
+              Tip: Try r = 1, r = -1, r = 1.2 and see why the formula is blocked.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <section id="quiz">
+      <div class="section-header" data-toggle="quiz-content">
+        <h2>✓ Quiz (8 Questions)</h2>
+        <span class="toggle-icon">▼</span>
+      </div>
+
+      <div class="section-content quiz-container" id="quiz-content">
+        <p>Select an option to get instant feedback.</p>
+
+        <div class="quiz-question" data-question="1">
+          <h4>Question 1: When can you use S∞ = a/(1 − r)?</h4>
+          <div class="quiz-options">
+            <div class="quiz-option" data-answer="false">A) For any sequence</div>
+            <div class="quiz-option" data-answer="true">B) For geometric series with |r| &lt; 1</div>
+            <div class="quiz-option" data-answer="false">C) For arithmetic series with d ≠ 0</div>
+            <div class="quiz-option" data-answer="false">D) Only when r &gt; 1</div>
+          </div>
+          <div class="quiz-feedback">
+            <strong>Explanation:</strong> The sum to infinity exists only for a convergent geometric series, which requires |r| &lt; 1.
+          </div>
+        </div>
+
+        <div class="quiz-question" data-question="2">
+          <h4>Question 2: A series has r = -1. Does it converge?</h4>
+          <div class="quiz-options">
+            <div class="quiz-option" data-answer="false">A) Yes, always</div>
+            <div class="quiz-option" data-answer="true">B) No, it diverges</div>
+            <div class="quiz-option" data-answer="false">C) Yes, if a is small</div>
+            <div class="quiz-option" data-answer="false">D) It converges only if a = 0</div>
+          </div>
+          <div class="quiz-feedback">
+            <strong>Explanation:</strong> |r| = 1, so it fails the condition |r| &lt; 1.
+          </div>
+        </div>
+
+        <div class="quiz-question" data-question="3">
+          <h4>Question 3: If a = 3 and r = 0.1, what is S∞?</h4>
+          <div class="quiz-options">
+            <div class="quiz-option" data-answer="false">A) 3.1</div>
+            <div class="quiz-option" data-answer="true">B) 10/3</div>
+            <div class="quiz-option" data-answer="false">C) 30</div>
+            <div class="quiz-option" data-answer="false">D) The series diverges</div>
+          </div>
+          <div class="quiz-feedback">
+            <strong>Explanation:</strong> S∞ = 3/(1-0.1) = 3/0.9 = 10/3.
+          </div>
+        </div>
+
+        <div class="quiz-question" data-question="4">
+          <h4>Question 4: For (1 − x) + (1 − x)² + (1 − x)³ + ..., what is r?</h4>
+          <div class="quiz-options">
+            <div class="quiz-option" data-answer="false">A) r = x</div>
+            <div class="quiz-option" data-answer="true">B) r = (1 − x)</div>
+            <div class="quiz-option" data-answer="false">C) r = (1 + x)</div>
+            <div class="quiz-option" data-answer="false">D) r = (1 − x)²</div>
+          </div>
+          <div class="quiz-feedback">
+            <strong>Explanation:</strong> Each term is multiplied by (1 − x) to get the next one.
+          </div>
+        </div>
+
+        <div class="quiz-question" data-question="5">
+          <h4>Question 5: Solve |1 − x| &lt; 1</h4>
+          <div class="quiz-options">
+            <div class="quiz-option" data-answer="true">A) 0 &lt; x &lt; 2</div>
+            <div class="quiz-option" data-answer="false">B) -2 &lt; x &lt; 0</div>
+            <div class="quiz-option" data-answer="false">C) x &gt; 2</div>
+            <div class="quiz-option" data-answer="false">D) x &lt; 0</div>
+          </div>
+          <div class="quiz-feedback">
+            <strong>Explanation:</strong> -1 &lt; 1 − x &lt; 1 → subtract 1 → -2 &lt; -x &lt; 0 → multiply by -1 → 0 &lt; x &lt; 2.
+          </div>
+        </div>
+
+        <div class="quiz-question" data-question="6">
+          <h4>Question 6: If r = 1.2, what should you conclude?</h4>
+          <div class="quiz-options">
+            <div class="quiz-option" data-answer="true">A) The series diverges (no finite S∞)</div>
+            <div class="quiz-option" data-answer="false">B) Use S∞ = a/(1-r) anyway</div>
+            <div class="quiz-option" data-answer="false">C) It converges only if a &lt; 1</div>
+            <div class="quiz-option" data-answer="false">D) It converges to 0</div>
+          </div>
+          <div class="quiz-feedback">
+            <strong>Explanation:</strong> |1.2| ≥ 1, so the geometric series does not converge.
+          </div>
+        </div>
+
+        <div class="quiz-question" data-question="7">
+          <h4>Question 7: If S∞ = 25 and a = 5, find r.</h4>
+          <div class="quiz-options">
+            <div class="quiz-option" data-answer="false">A) r = 0.9</div>
+            <div class="quiz-option" data-answer="true">B) r = 0.8</div>
+            <div class="quiz-option" data-answer="false">C) r = 1.2</div>
+            <div class="quiz-option" data-answer="false">D) r = -0.8</div>
+          </div>
+          <div class="quiz-feedback">
+            <strong>Explanation:</strong> 25 = 5/(1-r) → 1-r = 0.2 → r = 0.8.
+          </div>
+        </div>
+
+        <div class="quiz-question" data-question="8">
+          <h4>Question 8: Which step is best to do first in sum-to-infinity questions?</h4>
+          <div class="quiz-options">
+            <div class="quiz-option" data-answer="false">A) Convert to decimals</div>
+            <div class="quiz-option" data-answer="false">B) Substitute into S∞ immediately</div>
+            <div class="quiz-option" data-answer="true">C) Identify r and check |r| &lt; 1</div>
+            <div class="quiz-option" data-answer="false">D) Find Sₙ first for n = 10</div>
+          </div>
+          <div class="quiz-feedback">
+            <strong>Explanation:</strong> The formula is only valid if the series converges, so check |r| &lt; 1 before anything else.
+          </div>
+        </div>
+
+        <div class="quiz-reset">
+          <button class="btn-secondary" id="resetQuizBtn">↻ Retry Quiz</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Video -->
+    <section id="video">
+      <div class="section-header" data-toggle="video-content">
+        <h2>📹 Video Tutorial</h2>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content" id="video-content">
+        <p style="color:var(--gray-600);margin-bottom:1rem;">
+          Watch a focused refresher on convergence and sum to infinity.
+        </p>
+        <div class="video-container">
+          <div class="video-placeholder" id="videoPlaceholder">
+            <div class="play-btn" id="playVideoBtn" aria-label="Play video">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="var(--navy)">
+                <path d="M8 5v14l11-7z"></path>
+              </svg>
+            </div>
+            <p>Click to play: Geometric Series — Sum to Infinity</p>
+          </div>
+        </div>
+        <p style="font-size:.9rem;color:var(--gray-500);margin-top:1rem;">
+          Covers: condition |r| &lt; 1, using S∞ = a/(1-r), exam-style examples
+        </p>
+      </div>
+    </section>
+
+    <!-- Tutor -->
+    <section id="tutor">
+      <div class="section-header" data-toggle="tutor-content">
+        <h2>👨‍🏫 Live Tutoring Support</h2>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content" id="tutor-content">
+        <div class="tutor-cta">
+          <h3>Need help with Series Questions?</h3>
+          <p style="margin-bottom:1.5rem;">
+            Get support with identifying <strong>a</strong>, finding <strong>r</strong>, solving convergence inequalities, and applying the sum-to-infinity formula correctly.
+          </p>
+          <button class="btn-primary" id="openTutorModal">💬 Book a Session Now</button>
+          <p style="margin-top:1rem;font-size:.95rem;">
+            Quick questions? WhatsApp us at <a href="tel:0670957879">067 095 7879</a>
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Floating tutor button -->
+  <div class="floating-tutor" id="floatingTutor" title="Chat with a tutor">💬</div>
+
+  <!-- Modal -->
+  <div id="tutorModal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header">
+        <h2 id="modalTitle">Live Tutoring Session</h2>
+        <button class="close-btn" id="closeModal" aria-label="Close modal">&times;</button>
+      </div>
+      <p style="margin-bottom:1rem;color:var(--gray-600);">
+        Book a session with an expert Grade 12 Mathematics tutor for geometric series and sum to infinity.
+      </p>
+      <form id="tutorForm" style="display:flex;flex-direction:column;gap:1rem;">
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea placeholder="What do you need help with? (Finding r, convergence, S∞, exam questions...)" rows="4"></textarea>
+        <select required>
+          <option value="" selected disabled>Select session type</option>
+          <option>Quick 30-minute session</option>
+          <option>1-hour comprehensive session</option>
+          <option>Exam preparation</option>
+          <option>Homework help</option>
+        </select>
+        <button type="submit" class="btn-primary" style="width:100%;margin-top:.5rem;">Book Session</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer navigation -->
+  <footer class="lesson-nav">
+    <a href="contents.html" class="nav-btn">← Subject Contents</a>
+    <div class="nav-center">
+      <a href="less3-1.html" class="nav-btn"><span>📚</span> Previous Lesson</a>
+    </div>
+    <a href="less3-3.html" class="nav-btn primary">Next Lesson →</a>
+  </footer>
+
+  <script>
+    // Collapsible sections
+    document.querySelectorAll('.section-header').forEach(header => {
+      header.addEventListener('click', function () {
+        const targetId = this.getAttribute('data-toggle');
+        const content = document.getElementById(targetId);
+        this.classList.toggle('collapsed');
+        content.classList.toggle('collapsed');
+      });
+    });
+
+    // Active nav highlighting
+    const sections = document.querySelectorAll('main section');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (scrollY >= sectionTop - 160) current = section.getAttribute('id');
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+      });
+    });
+
+    // Quiz
+    document.querySelectorAll('.quiz-option').forEach(option => {
+      option.addEventListener('click', function () {
+        const question = this.closest('.quiz-question');
+        if (question.classList.contains('answered')) return;
+
+        question.classList.add('answered');
+        const options = question.querySelectorAll('.quiz-option');
+        const feedback = question.querySelector('.quiz-feedback');
+        const isCorrect = this.dataset.answer === 'true';
+
+        options.forEach(opt => opt.classList.add('disabled'));
+
+        if (isCorrect) {
+          this.classList.add('correct');
+        } else {
+          this.classList.add('incorrect');
+          options.forEach(opt => {
+            if (opt.dataset.answer === 'true') opt.classList.add('correct');
+          });
+        }
+
+        feedback.classList.add('show');
+      });
+    });
+
+    document.getElementById('resetQuizBtn').addEventListener('click', () => {
+      document.querySelectorAll('.quiz-question').forEach(q => {
+        q.classList.remove('answered');
+        q.querySelectorAll('.quiz-option').forEach(opt => {
+          opt.classList.remove('correct', 'incorrect', 'disabled');
         });
+        q.querySelector('.quiz-feedback').classList.remove('show');
+      });
+      quizScore = 0;
+      updateFloatingScore();
+    });
 
-        document.addEventListener('click', (e) => {
-            if (!navToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
-                navToggle.classList.remove('active');
-                dropdownMenu.classList.remove('active');
-            }
-        });
+    // Score tracker (simple)
+    let quizScore = 0;
+    const totalQuestions = document.querySelectorAll('.quiz-question').length;
 
-        // ========== Quiz Questions Data ==========
-        const quizQuestions = [
-            {
-                id: 1,
-                question: "What is the formula for finding the Geometric Mean of two numbers a and c?",
-                options: [
-                    "(a + c) / 2",
-                    "±√(a × c)",
-                    "a × c",
-                    "(a - c) / 2"
-                ],
-                correct: 1,
-                explanation: "The Geometric Mean formula is ±√(a × c), derived from the property b² = ac in a geometric sequence."
-            },
-            {
-                id: 2,
-                question: "Find the Geometric Mean of 3 and 27.",
-                options: [
-                    "15",
-                    "9",
-                    "±9",
-                    "±15"
-                ],
-                correct: 2,
-                explanation: "Geometric Mean = ±√(3 × 27) = ±√81 = ±9"
-            },
-            {
-                id: 3,
-                question: "If a, b, c form a geometric sequence, which relationship is TRUE?",
-                options: [
-                    "b = a + c",
-                    "b² = a × c",
-                    "b = a - c",
-                    "b² = a + c"
-                ],
-                correct: 1,
-                explanation: "In a geometric sequence, the middle term squared equals the product of the first and third terms: b² = a × c"
-            },
-            {
-                id: 4,
-                question: "What is the Arithmetic Mean of 10 and 30?",
-                options: [
-                    "20",
-                    "√300",
-                    "15",
-                    "17.32"
-                ],
-                correct: 0,
-                explanation: "Arithmetic Mean = (10 + 30) / 2 = 40 / 2 = 20"
-            },
-            {
-                id: 5,
-                question: "Calculate the Geometric Mean of 4 and 16.",
-                options: [
-                    "10",
-                    "±8",
-                    "±10",
-                    "20"
-                ],
-                correct: 1,
-                explanation: "Geometric Mean = ±√(4 × 16) = ±√64 = ±8"
-            },
-            {
-                id: 6,
-                question: "When inserting 2 geometric means between 5 and 40, how many terms will the complete sequence have?",
-                options: [
-                    "2",
-                    "3",
-                    "4",
-                    "5"
-                ],
-                correct: 2,
-                explanation: "First term (5) + 2 geometric means + last term (40) = 4 terms total"
-            },
-            {
-                id: 7,
-                question: "Find the common ratio when inserting 1 geometric mean between 4 and 36.",
-                options: [
-                    "3",
-                    "±3",
-                    "9",
-                    "±9"
-                ],
-                correct: 1,
-                explanation: "T₃ = ar² → 36 = 4r² → r² = 9 → r = ±3"
-            },
-            {
-                id: 8,
-                question: "The Geometric Mean is also called the:",
-                options: [
-                    "Common Ratio",
-                    "Mean Proportional",
-                    "Average Mean",
-                    "Central Term"
-                ],
-                correct: 1,
-                explanation: "The Geometric Mean is also known as the Mean Proportional."
-            },
-            {
-                id: 9,
-                question: "Insert 2 geometric means between 2 and 54. What is T₂?",
-                options: [
-                    "6",
-                    "18",
-                    "12",
-                    "9"
-                ],
-                correct: 0,
-                explanation: "T₄ = ar³ → 54 = 2r³ → r³ = 27 → r = 3. So T₂ = 2 × 3 = 6"
-            },
-            {
-                id: 10,
-                question: "For the sequence 2; 6; 18, what is 6² compared to 2 × 18?",
-                options: [
-                    "6² is greater",
-                    "6² is less",
-                    "They are equal (both = 36)",
-                    "Cannot be determined"
-                ],
-                correct: 2,
-                explanation: "6² = 36 and 2 × 18 = 36. They are equal, confirming this is a geometric sequence with b² = ac"
-            },
-            {
-                id: 11,
-                question: "Find the Geometric Mean of 2a and 98a (where a > 0).",
-                options: [
-                    "50a",
-                    "14a",
-                    "±14a",
-                    "±7a"
-                ],
-                correct: 2,
-                explanation: "Geometric Mean = ±√(2a × 98a) = ±√(196a²) = ±14a"
-            },
-            {
-                id: 12,
-                question: "Which statement correctly compares Arithmetic and Geometric Means for positive numbers a < c?",
-                options: [
-                    "AM is always less than GM",
-                    "AM is always greater than GM",
-                    "AM equals GM",
-                    "GM is always greater than AM"
-                ],
-                correct: 1,
-                explanation: "For distinct positive numbers, the Arithmetic Mean is always greater than or equal to the Geometric Mean (AM ≥ GM inequality)."
-            }
-        ];
+    function updateFloatingScore(){
+      const floatingTutor = document.getElementById('floatingTutor');
+      floatingTutor.textContent = quizScore === 0 ? '💬' : `✓ ${quizScore}/${totalQuestions}`;
+      floatingTutor.title = quizScore === 0 ? 'Chat with a tutor' : `Quiz Score: ${quizScore}/${totalQuestions}`;
+    }
 
-        let answeredQuestions = {};
-        let quizSubmitted = false;
+    document.addEventListener('click', (e) => {
+      if (!e.target.classList.contains('quiz-option')) return;
+      const question = e.target.closest('.quiz-question');
+      if (!question || question.classList.contains('scored')) return;
 
-        // ========== Initialize Quiz ==========
-        function initQuiz() {
-            const container = document.getElementById('questionsContainer');
-            container.innerHTML = '';
+      question.classList.add('scored');
+      if (e.target.dataset.answer === 'true') quizScore++;
+      updateFloatingScore();
 
-            quizQuestions.forEach((q, index) => {
-                const questionHTML = `
-                    <div class="question-card" id="question${q.id}">
-                        <span class="question-number">Question ${index + 1}</span>
-                        <p class="question-text">${q.question}</p>
-                        <div class="options-list">
-                            ${q.options.map((opt, i) => `
-                                <label class="option-label" id="option${q.id}_${i}">
-                                    <input type="radio" name="q${q.id}" value="${i}" 
-                                           onchange="selectAnswer(${q.id}, ${i})">
-                                    <span>${opt}</span>
-                                </label>
-                            `).join('')}
-                        </div>
-                        <div class="feedback" id="feedback${q.id}"></div>
-                    </div>
-                `;
-                container.innerHTML += questionHTML;
-            });
+      const done = document.querySelectorAll('.quiz-question.scored').length === totalQuestions;
+      if (done) {
+        const percent = Math.round((quizScore / totalQuestions) * 100);
+        alert(`Quiz Complete! You scored ${quizScore}/${totalQuestions} (${percent}%).`);
+      }
+    });
 
-            loadProgress();
-            updateProgressBar();
-        }
+    // Video player (YouTube)
+    document.getElementById('playVideoBtn').addEventListener('click', () => {
+      const placeholder = document.getElementById('videoPlaceholder');
+      placeholder.innerHTML = `
+        <iframe
+          src="https://www.youtube.com/embed/Gs1f9Cx7xGg?autoplay=1"
+          title="Geometric Series - Sum to Infinity"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      `;
+    });
 
-        function selectAnswer(questionId, optionIndex) {
-            if (quizSubmitted) return;
+    // Modal (tutor)
+    const modal = document.getElementById('tutorModal');
+    const openModalBtns = [document.getElementById('openTutorModal'), document.getElementById('floatingTutor')];
+    const closeModalBtn = document.getElementById('closeModal');
 
-            answeredQuestions[questionId] = optionIndex;
-            
-            // Visual feedback for selection
-            const options = document.querySelectorAll(`[name="q${questionId}"]`);
-            options.forEach((opt, i) => {
-                const label = document.getElementById(`option${questionId}_${i}`);
-                label.classList.remove('selected');
-                if (i === optionIndex) {
-                    label.classList.add('selected');
-                }
-            });
+    openModalBtns.forEach(btn => btn.addEventListener('click', () => {
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }));
 
-            saveProgress();
-            updateProgressBar();
-        }
+    function closeModal(){
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
 
-        function updateProgressBar() {
-            const answered = Object.keys(answeredQuestions).length;
-            const total = quizQuestions.length;
-            const percentage = (answered / total) * 100;
-            
-            document.getElementById('progressBar').style.width = `${percentage}%`;
-            
-            // Update circular progress
-            const ring = document.getElementById('progressRing');
-            const circumference = 2 * Math.PI * 20;
-            const offset = circumference - (percentage / 100) * circumference;
-            ring.style.strokeDashoffset = offset;
-            document.getElementById('progressText').textContent = `${Math.round(percentage)}%`;
-        }
+    closeModalBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
-        function submitQuiz() {
-            if (Object.keys(answeredQuestions).length < quizQuestions.length) {
-                alert(`Please answer all questions before submitting.\nYou have answered ${Object.keys(answeredQuestions).length} of ${quizQuestions.length} questions.`);
-                return;
-            }
+    document.getElementById('tutorForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Thank you! Your session request has been submitted. We will contact you by email.');
+      closeModal();
+      e.target.reset();
+    });
 
-            quizSubmitted = true;
-            let score = 0;
+    // Quick Lab: compute convergence + S∞ + partial sum
+    const labA = document.getElementById('labA');
+    const labR = document.getElementById('labR');
+    const labConvergenceText = document.getElementById('labConvergenceText');
+    const labSumInfinity = document.getElementById('labSumInfinity');
+    const labPartialSum = document.getElementById('labPartialSum');
+    const labN = document.getElementById('labN');
 
-            quizQuestions.forEach(q => {
-                const userAnswer = answeredQuestions[q.id];
-                const isCorrect = userAnswer === q.correct;
-                
-                if (isCorrect) score++;
+    function toNumber(value){
+      const n = Number(value);
+      return Number.isFinite(n) ? n : NaN;
+    }
 
-                const questionCard = document.getElementById(`question${q.id}`);
-                const feedback = document.getElementById(`feedback${q.id}`);
-                
-                // Mark all options
-                q.options.forEach((_, i) => {
-                    const label = document.getElementById(`option${q.id}_${i}`);
-                    label.classList.add('disabled');
-                    label.querySelector('input').disabled = true;
+    function computeLab(){
+      const a = toNumber(labA.value);
+      const r = toNumber(labR.value);
+      const N = 5;
+      labN.textContent = String(N);
+
+      if (!Number.isFinite(a) || !Number.isFinite(r)){
+        labConvergenceText.innerHTML = `<span class="pill warn">Enter valid numbers</span>`;
+        labSumInfinity.textContent = '—';
+        labPartialSum.textContent = '—';
+        return;
+      }
+
+      const converges = Math.abs(r) < 1;
+
+      if (converges){
+        const sInf = a / (1 - r);
+        labConvergenceText.innerHTML = `<span class="pill ok">✓ Converges (|r| &lt; 1)</span>`;
+        labSumInfinity.textContent = isFinite(sInf) ? sInf.toFixed(6) : '—';
+      } else {
+        labConvergenceText.innerHTML = `<span class="pill bad">✗ Diverges (|r| ≥ 1)</span>`;
+        labSumInfinity.textContent = 'Not defined (no finite S∞)';
+      }
+
+      // Partial sum S_N
+      let sN = 0;
+      for (let n = 0; n < N; n++){
+        sN += a * Math.pow(r, n);
+      }
+      labPartialSum.textContent = sN.toFixed(6);
+    }
+
+    document.getElementById('labComputeBtn').addEventListener('click', computeLab);
+    document.getElementById('labFillTreeBtn').addEventListener('click', () => {
+      labA.value = '3';
+      labR.value = '0.1';
+      computeLab();
+    });
+    document.getElementById('labResetBtn').addEventListener('click', () => {
+      labA.value = '3';
+      labR.value = '0.1';
+      labConvergenceText.textContent = '—';
+      labSumInfinity.textContent = '—';
+      labPartialSum.textContent = '—';
+    });
+
+    // Initial state
+    updateFloatingScore();
+    computeLab();
+
+    // Cheat sheet print button (lesson-specific)
+    const printBtn = document.createElement('button');
+    printBtn.className = 'btn-secondary';
+    printBtn.style.position = 'fixed';
+    printBtn.style.bottom = '90px';
+    printBtn.style.left = '1.5rem';
+    printBtn.style.zIndex = '998';
+    printBtn.innerHTML = '📋 Cheat Sheet';
+    printBtn.title = 'Print sum-to-infinity cheat sheet';
+    document.body.appendChild(printBtn);
+
+    printBtn.addEventListener('click', () => {
+      const printContent = `
+        <html>
+                <head>
+                    <title>Geometric Series - Sum to Infinity Cheat Sheet</title>
                     
-                    if (i === q.correct) {
-                        label.classList.add('correct');
-                    } else if (i === userAnswer && !isCorrect) {
-                        label.classList.add('incorrect');
-                    }
-                });
+                </head>
+                <body>
+                    <h1>Geometric Series - Sum to Infinity Cheat Sheet</h1>
 
-                // Show feedback
-                feedback.classList.add('show');
-                if (isCorrect) {
-                    questionCard.classList.add('answered-correct');
-                    feedback.classList.add('correct');
-                    feedback.innerHTML = `<strong>✓ Correct!</strong> ${q.explanation}`;
-                } else {
-                    questionCard.classList.add('answered-incorrect');
-                    feedback.classList.add('incorrect');
-                    feedback.innerHTML = `<strong>✗ Incorrect.</strong> ${q.explanation}`;
-                }
-            });
+                    <div class="section">
+                        <h2>The Big Formula</h2>
+                        <div class="formula">
+                            S∞ = a / (1 - r)
+                        </div>
+                        <div class="condition">
+                            <strong>CONVERGENCE CONDITION:</strong> This formula ONLY works when -1 < r < 1 (i.e., |r| < 1)
+                        </div>
+                    </div>
 
-            // Show score
-            const percentage = Math.round((score / quizQuestions.length) * 100);
-            document.getElementById('scoreNumber').textContent = score;
-            document.getElementById('scorePercentage').textContent = `${percentage}%`;
-            
-            let message = '';
-            if (percentage >= 90) message = '🌟 Outstanding! Excellent mastery!';
-            else if (percentage >= 70) message = '👏 Good job! Keep practicing!';
-            else if (percentage >= 50) message = '📚 Fair effort. Review the concepts.';
-            else message = '💪 Keep studying. You can do it!';
-            
-            document.getElementById('scoreMessage').textContent = message;
-            document.getElementById('scoreDisplay').classList.add('show');
-            document.getElementById('submitQuiz').style.display = 'none';
+                    <div class="section">
+                        <h2>Key Concepts</h2>
+                        <p><strong>1. Convergence:</strong> A geometric series converges if |r| < 1. The sum approaches a finite value.</p>
+                        <p><strong>2. Divergence:</strong> If |r| ≥ 1, the series diverges (no finite sum).</p>
+                        <p><strong>3. First Term (a):</strong> The first term in the series, not necessarily the coefficient in the general term.</p>
+                        <p><strong>4. Common Ratio (r):</strong> Found by dividing any term by the previous term.</p>
+                    </div>
 
-            // Save to localStorage
-            const savedData = {
-                score: score,
-                percentage: percentage,
-                date: new Date().toISOString(),
-                answers: answeredQuestions
-            };
-            localStorage.setItem('lesson3_quiz_result', JSON.stringify(savedData));
-        }
+                    <div class="section">
+                        <h2>Common Mistakes to Avoid</h2>
+                        <div class="warning">
+                            <p><strong>❌ Forgetting to check |r| < 1:</strong> Always verify convergence before using S∞.</p>
+                            <p><strong>❌ Sign errors with negative r:</strong> (1 - r) becomes (1 + |r|) when r is negative.</p>
+                            <p><strong>❌ Misidentifying a:</strong> a is the first term, not the coefficient in Tₙ = arⁿ⁻¹.</p>
+                            <p><strong>❌ Using S∞ for arithmetic series:</strong> Only geometric series can converge.</p>
+                        </div>
+                    </div>
 
-        function retryQuiz() {
-            quizSubmitted = false;
-            answeredQuestions = {};
-            localStorage.removeItem('lesson3_progress');
-            localStorage.removeItem('lesson3_quiz_result');
-            
-            document.getElementById('scoreDisplay').classList.remove('show');
-            document.getElementById('submitQuiz').style.display = 'block';
-            
-            initQuiz();
-        }
+                    <div class="section">
+                        <h2>Practical Applications</h2>
+                        <div class="example">
+                            <p><strong>Drug Dosage:</strong> If 100 mg is given and 20% remains each hour, total = 100/(1-0.2) = 125 mg.</p>
+                        </div>
+                        <div class="example">
+                            <p><strong>Bouncing Ball:</strong> Dropped from 10 m, bounces to 60% height. Total distance = 10 + 2(6 + 3.6 + ...) = 10 + 2(6/0.4) = 40 m.</p>
+                        </div>
+                        <div class="example">
+                            <p><strong>Tree Growth:</strong> 3 m tall, grows 10% of previous year's growth. Max height = 3 + 0.3 + 0.03 + ... = 3/0.9 ≈ 3.33 m.</p>
+                        </div>
+                    </div>
 
-        // ========== LocalStorage Functions ==========
-        function saveProgress() {
-            localStorage.setItem('lesson3_progress', JSON.stringify(answeredQuestions));
-        }
+                    <div class="section">
+                        <h2>Quick Reference</h2>
+                        <p><strong>• S∞ = a/(1-r)</strong> when |r| < 1</p>
+                        <p><strong>• If r = 1:</strong> Series diverges (a + a + a + ...)</p>
+                        <p><strong>• If r = -1:</strong> Series diverges (a - a + a - a + ...)</p>
+                        <p><strong>• If |r| > 1:</strong> Series diverges (terms grow without bound)</p>
+                    </div>
 
-        function loadProgress() {
-            const saved = localStorage.getItem('lesson3_progress');
-            if (saved) {
-                answeredQuestions = JSON.parse(saved);
-                
-                // Restore selections
-                Object.entries(answeredQuestions).forEach(([qId, optIndex]) => {
-                    const radio = document.querySelector(`input[name="q${qId}"][value="${optIndex}"]`);
-                    if (radio) {
-                        radio.checked = true;
-                        document.getElementById(`option${qId}_${optIndex}`).classList.add('selected');
-                    }
-                });
-            }
-        }
-
-        // ========== Simulation Functions ==========
-        function calculateGeoMean() {
-            const a = parseFloat(document.getElementById('simValueA').value);
-            const c = parseFloat(document.getElementById('simValueC').value);
-            
-            if (isNaN(a) || isNaN(c)) {
-                alert('Please enter valid numbers');
-                return;
-            }
-
-            const product = a * c;
-            const display = document.getElementById('geoMeanDisplay');
-
-            if (product < 0) {
-                display.innerHTML = `
-                    <p style="color: var(--error); font-weight: 600;">
-                        ⚠️ Cannot calculate real geometric mean for numbers with opposite signs.
+                    <p style="margin-top: 30px; font-style: italic; color: #666;">
+                        PassProof Academy - Grade 12 Mathematics
                     </p>
-                    <p>Product a × c = ${a} × ${c} = ${product} (negative)</p>
-                `;
-                return;
-            }
-
-            const geoMean = Math.sqrt(product);
-            const geoMeanRounded = Math.round(geoMean * 1000) / 1000;
-
-            display.innerHTML = `
-                <div class="result-display">
-                    <p><strong>Calculation:</strong> ±√(${a} × ${c}) = ±√${product} = <strong>±${geoMeanRounded}</strong></p>
-                </div>
-                <div class="sequence-visual">
-                    <div class="seq-term">${a}</div>
-                    <span class="seq-arrow">→</span>
-                    <div class="seq-term mean">+${geoMeanRounded}</div>
-                    <span class="seq-arrow">→</span>
-                    <div class="seq-term">${c}</div>
-                </div>
-                <p style="margin-top: 1rem; color: var(--gray-600);">
-                    Positive sequence: ${a}; ${geoMeanRounded}; ${c}<br>
-                    Negative sequence: ${a}; ${-geoMeanRounded}; ${c}
-                </p>
-            `;
-        }
-
-        function insertGeoMeans() {
-            const a = parseFloat(document.getElementById('insertA').value);
-            const last = parseFloat(document.getElementById('insertLast').value);
-            const numMeans = parseInt(document.getElementById('numMeans').value);
-            
-            if (isNaN(a) || isNaN(last) || isNaN(numMeans) || numMeans < 1) {
-                alert('Please enter valid values');
-                return;
-            }
-
-            const n = numMeans + 2; // Total terms
-            const r = Math.pow(last / a, 1 / (n - 1));
-            
-            let sequence = [a];
-            let current = a;
-            
-            for (let i = 1; i < n; i++) {
-                current *= r;
-                sequence.push(Math.round(current * 1000) / 1000);
-            }
-
-            const display = document.getElementById('insertMeansDisplay');
-            display.innerHTML = `
-                <div class="result-display">
-                    <p><strong>Common Ratio (r):</strong> ${Math.round(r * 1000) / 1000}</p>
-                    <p><strong>Using:</strong> T<sub>${n}</sub> = a × r<sup>${n-1}</sup> → ${last} = ${a} × r<sup>${n-1}</sup></p>
-                </div>
-                <div class="sequence-visual">
-                    ${sequence.map((term, i) => `
-                        <div class="seq-term ${i > 0 && i < sequence.length - 1 ? 'mean' : ''}">${term}</div>
-                        ${i < sequence.length - 1 ? '<span class="seq-arrow">×r</span>' : ''}
-                    `).join('')}
-                </div>
-                <p style="margin-top: 1rem; color: var(--gray-600);">
-                    Complete sequence: ${sequence.join('; ')}
-                </p>
-            `;
-        }
-
-        function compareMeans() {
-            const a = parseFloat(document.getElementById('compA').value);
-            const c = parseFloat(document.getElementById('compC').value);
-            
-            if (isNaN(a) || isNaN(c) || a <= 0 || c <= 0) {
-                alert('Please enter positive numbers');
-                return;
-            }
-
-            const am = (a + c) / 2;
-            const gm = Math.sqrt(a * c);
-            
-            const canvas = document.getElementById('geoCanvas');
-            const ctx = canvas.getContext('2d');
-            
-            // Clear canvas
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Draw comparison bars
-            const maxValue = Math.max(a, c, am, gm);
-            const barWidth = 80;
-            const maxBarHeight = 150;
-            const startY = 200;
-            
-            const values = [
-                { label: 'a', value: a, color: '#1a73e8' },
-                { label: 'AM', value: am, color: '#ffc107' },
-                { label: 'GM', value: gm, color: '#28a745' },
-                { label: 'c', value: c, color: '#1a73e8' }
-            ];
-            
-            values.forEach((item, i) => {
-                const x = 100 + i * 120;
-                const barHeight = (item.value / maxValue) * maxBarHeight;
-                
-                // Draw bar
-                ctx.fillStyle = item.color;
-                ctx.fillRect(x, startY - barHeight, barWidth, barHeight);
-                
-                // Draw label
-                ctx.fillStyle = '#343a40';
-                ctx.font = 'bold 14px Segoe UI';
-                ctx.textAlign = 'center';
-                ctx.fillText(item.label, x + barWidth/2, startY + 20);
-                
-                // Draw value
-                ctx.font = '12px Segoe UI';
-                ctx.fillText(Math.round(item.value * 100) / 100, x + barWidth/2, startY - barHeight - 10);
-            });
-            
-            // Draw title
-            ctx.font = 'bold 16px Segoe UI';
-            ctx.fillStyle = '#0d47a1';
-            ctx.textAlign = 'center';
-            ctx.fillText('Comparison: AM ≥ GM (always true for positive numbers)', canvas.width/2, 30);
-            
-            // Draw AM-GM inequality note
-            ctx.font = '14px Segoe UI';
-            ctx.fillStyle = '#6c757d';
-            ctx.fillText(`AM (${Math.round(am*100)/100}) ${am >= gm ? '≥' : '<'} GM (${Math.round(gm*100)/100})`, canvas.width/2, 55);
-        }
-
-        // ========== Navigation ==========
-        function navigateLesson(direction) {
-            if (direction === 'prev') {
-                alert('Navigating to Lesson 2: Geometric Sequences');
-                // window.location.href = 'lesson2.html';
-            } else {
-                alert('Navigating to Lesson 4: Sum of Geometric Series');
-                // window.location.href = 'lesson4.html';
-            }
-        }
-
-        // ========== Scroll Progress ==========
-        window.addEventListener('scroll', () => {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            
-            const indicator = document.getElementById('progressIndicator');
-            if (scrolled > 10) {
-                indicator.style.opacity = '1';
-            } else {
-                indicator.style.opacity = '0.5';
-            }
-        });
-
-        // ========== Initialize ==========
-        document.addEventListener('DOMContentLoaded', () => {
-            initQuiz();
-            compareMeans(); // Initialize canvas
-        });
-    </script>
-
-    <script src="gr12-math-nav.js"></script>
+                </body>
+                </html>
+      `;
+      const w = window.open('', '_blank');
+      w.document.write(printContent);
+      w.document.close();
+      w.print();
+    });
+  </script>
 </body>
 </html>
+
+
+
 

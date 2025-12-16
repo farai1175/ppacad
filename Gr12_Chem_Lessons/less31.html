@@ -1,0 +1,2201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 6: Current, Potential & Equilibrium | PassProof Academy</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1e40af;
+            --secondary-blue: #3b82f6;
+            --light-blue: #dbeafe;
+            --accent-blue: #60a5fa;
+            --dark-blue: #1e3a8a;
+            --white: #ffffff;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-600: #4b5563;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --purple: #8b5cf6;
+            --teal: #14b8a6;
+            --orange: #f97316;
+            --indigo: #6366f1;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            box-shadow: 0 10px 40px rgba(30, 64, 175, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-btn {
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-btn:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            min-width: 300px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: var(--dark-blue);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--light-blue);
+            padding-left: 2rem;
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08), 0 2px 10px rgba(0,0,0,0.04);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+        }
+
+        .card-3d {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            border-left: 5px solid var(--secondary-blue);
+        }
+
+        /* Subject Header Card */
+        .subject-card {
+            background: linear-gradient(135deg, var(--indigo) 0%, #4f46e5 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .subject-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .subject-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .lesson-number {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .section-icon.teal {
+            background: linear-gradient(135deg, var(--teal) 0%, #0d9488 100%);
+            box-shadow: 0 8px 20px rgba(20, 184, 166, 0.3);
+        }
+
+        .section-icon.purple {
+            background: linear-gradient(135deg, var(--purple) 0%, #7c3aed 100%);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
+        }
+
+        .section-icon.orange {
+            background: linear-gradient(135deg, var(--orange) 0%, #ea580c 100%);
+            box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3);
+        }
+
+        .section-icon.indigo {
+            background: linear-gradient(135deg, var(--indigo) 0%, #4f46e5 100%);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark-blue);
+        }
+
+        .collapse-icon {
+            margin-left: auto;
+            font-size: 1.5rem;
+            color: var(--secondary-blue);
+            transition: transform 0.3s ease;
+        }
+
+        .section-header.collapsed .collapse-icon {
+            transform: rotate(-90deg);
+        }
+
+        .collapsible-content {
+            max-height: 50000px;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .collapsible-content.collapsed {
+            max-height: 0;
+        }
+
+        /* Learning Objectives */
+        .objective-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--light-blue);
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .objective-item:hover {
+            transform: translateX(5px);
+        }
+
+        .objective-check {
+            width: 28px;
+            height: 28px;
+            background: var(--secondary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        /* Info boxes */
+        .info-box {
+            background: var(--light-blue);
+            padding: 1.25rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+        }
+
+        .info-box h4 {
+            color: var(--primary-blue);
+            margin-bottom: 0.75rem;
+        }
+
+        /* Definition boxes */
+        .definition-box {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border-left: 5px solid var(--success);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .definition-title {
+            font-weight: 700;
+            color: #065f46;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Warning box */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 5px solid var(--warning);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        /* Chemical equations */
+        .chemical-eq {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.1rem;
+            text-align: center;
+            padding: 1rem;
+            background: var(--gray-100);
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .chemical-eq.highlight {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid #f59e0b;
+        }
+
+        .chemical-eq.reversible {
+            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+            border: 2px solid var(--purple);
+            font-size: 1.2rem;
+        }
+
+        /* Key Concepts Grid */
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .concept-card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .concept-card:hover {
+            border-color: var(--secondary-blue);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.2);
+        }
+
+        .concept-card.decrease {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-left: 5px solid var(--error);
+        }
+
+        .concept-card.increase {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border-left: 5px solid var(--success);
+        }
+
+        .concept-card.equilibrium {
+            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+            border-left: 5px solid var(--purple);
+        }
+
+        .concept-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .concept-card h4 {
+            color: var(--dark-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Sub-section headers */
+        .sub-header {
+            color: var(--primary-blue);
+            font-size: 1.3rem;
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--light-blue);
+        }
+
+        /* Timeline/Process Flow */
+        .process-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .process-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        .process-step::before {
+            content: '';
+            position: absolute;
+            left: 35px;
+            top: 100%;
+            width: 4px;
+            height: 1rem;
+            background: var(--secondary-blue);
+        }
+
+        .process-step:last-child::before {
+            display: none;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            color: var(--dark-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Simulation Container */
+        .simulation-container {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: white;
+        }
+
+        .simulation-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .sim-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+
+        .sim-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sim-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .sim-btn.secondary {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        }
+
+        .sim-btn.warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .sim-result {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Cell Simulation */
+        .cell-simulation {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .voltage-display {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .voltage-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #22d3ee;
+            transition: color 0.3s ease;
+        }
+
+        .voltage-value.low {
+            color: #fbbf24;
+        }
+
+        .voltage-value.zero {
+            color: #ef4444;
+        }
+
+        .voltage-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .current-display {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .current-value {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #a78bfa;
+        }
+
+        /* Progress bars for concentrations */
+        .concentration-bars {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .conc-bar-container {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+
+        .conc-bar-label {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .conc-bar {
+            height: 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .conc-bar-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .conc-bar-fill.reactant {
+            background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%);
+        }
+
+        .conc-bar-fill.product {
+            background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+        }
+
+        /* Rate arrows */
+        .rate-display {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .rate-arrow {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            min-width: 120px;
+        }
+
+        .rate-arrow .arrow {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .rate-arrow.forward .arrow {
+            color: #10b981;
+        }
+
+        .rate-arrow.reverse .arrow {
+            color: #f59e0b;
+        }
+
+        /* Timeline slider */
+        .time-slider-container {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+        }
+
+        .time-slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            -webkit-appearance: none;
+            background: linear-gradient(90deg, #22c55e 0%, #eab308 50%, #ef4444 100%);
+        }
+
+        .time-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .time-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        /* Le Chatelier Box */
+        .lechatelier-box {
+            background: linear-gradient(135deg, #fdf4ff 0%, #fae8ff 100%);
+            border: 3px solid var(--purple);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .lechatelier-title {
+            font-weight: 700;
+            color: #7c3aed;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Equilibrium indicator */
+        .equilibrium-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .eq-scale {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .eq-side {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .eq-side.reactants {
+            background: #3b82f6;
+        }
+
+        .eq-side.products {
+            background: #10b981;
+        }
+
+        .eq-arrow {
+            font-size: 1.5rem;
+        }
+
+        /* Worked Example */
+        .worked-example {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border: 2px solid var(--success);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .example-title {
+            font-weight: 700;
+            color: #065f46;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .step {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 0.75rem;
+            border-left: 4px solid var(--secondary-blue);
+        }
+
+        /* Questions Section */
+        .question-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .question-card.correct {
+            border-color: var(--success);
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        }
+
+        .question-card.incorrect {
+            border-color: var(--error);
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+        }
+
+        .question-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
+            color: white;
+            border-radius: 50%;
+            font-weight: 700;
+            margin-right: 1rem;
+        }
+
+        .question-text {
+            font-weight: 500;
+            color: var(--dark-blue);
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: var(--gray-100);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .option-label:hover {
+            background: var(--light-blue);
+            transform: translateX(5px);
+        }
+
+        .option-label.selected {
+            background: var(--light-blue);
+            border-color: var(--secondary-blue);
+        }
+
+        .option-label.correct-answer {
+            background: #d1fae5 !important;
+            border-color: var(--success) !important;
+        }
+
+        .option-label.wrong-answer {
+            background: #fee2e2 !important;
+            border-color: var(--error) !important;
+        }
+
+        .option-label input {
+            margin-right: 1rem;
+            width: 20px;
+            height: 20px;
+            accent-color: var(--secondary-blue);
+        }
+
+        .feedback-text {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .feedback-text.correct {
+            background: #d1fae5;
+            color: #065f46;
+            display: block;
+        }
+
+        .feedback-text.incorrect {
+            background: #fee2e2;
+            color: #991b1b;
+            display: block;
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            height: 6px;
+            background: var(--gray-200);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary-blue) 0%, var(--success) 100%);
+            transition: width 0.5s ease;
+        }
+
+        /* Score Display */
+        .score-container {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            color: white;
+            margin: 2rem 0;
+            box-shadow: 0 20px 60px rgba(30, 64, 175, 0.3);
+        }
+
+        .score-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .score-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 8px solid rgba(255,255,255,0.3);
+        }
+
+        .score-percentage {
+            font-size: 3.5rem;
+            font-weight: 700;
+        }
+
+        .score-label {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .score-message {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border: none;
+            color: white;
+            padding: 1.25rem 3rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.4);
+        }
+
+        .reset-btn {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            margin-left: 1rem;
+        }
+
+        /* Navigation Buttons */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(59, 130, 246, 0.4);
+        }
+
+        .nav-btn.prev {
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--dark-blue) 0%, #0f172a 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Graph Container */
+        .graph-container {
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .graph-canvas {
+            width: 100%;
+            height: 200px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .subject-title {
+                font-size: 1.8rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .lesson-nav {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                justify-content: center;
+            }
+
+            .section-title {
+                font-size: 1.2rem;
+            }
+
+            .concepts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .score-circle {
+                width: 150px;
+                height: 150px;
+            }
+
+            .score-percentage {
+                font-size: 2.5rem;
+            }
+
+            .submit-btn, .reset-btn {
+                display: block;
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+
+            .concentration-bars {
+                grid-template-columns: 1fr;
+            }
+
+            .rate-display {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .voltage-value {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">📚 PassProof Academy</div>
+            <div class="dropdown">
+                <button class="dropdown-btn" onclick="toggleDropdown()">
+                    <span>☰</span> Menu <span>▼</span>
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="#objectives">🎯 Learning Objectives</a>
+                    <a href="#overview">📋 Overview</a>
+                    <a href="#current-rate">⚡ Current & Rate of Reaction</a>
+                    <a href="#potential-equilibrium">⚖️ Potential & Equilibrium</a>
+                    <a href="#lechatelier">🔄 Le Chatelier's Principle</a>
+                    <a href="#simulation">🔬 Simulations</a>
+                    <a href="#classwork">📝 Classwork</a>
+                    <a href="#questions">✍️ Questions</a>
+                    <a href="#score">📊 Score</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Subject Card -->
+        <div class="card subject-card">
+            <div class="subject-badge">Grade 12 • Physical Sciences</div>
+            <h1 class="subject-title">Electrochemical Reactions</h1>
+            <p class="lesson-number">Lesson 6: Current, Potential Difference & Equilibrium</p>
+        </div>
+
+        <!-- Learning Objectives -->
+        <section id="objectives" class="card card-3d">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-icon">🎯</div>
+                <h2 class="section-title">Learning Objectives</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <p style="margin-bottom: 1rem; color: #64748b;">By the end of this lesson, you will be able to:</p>
+                <div class="objective-item">
+                    <div class="objective-check">✓</div>
+                    <span>Give and explain the <strong>relationship between current</strong> in an electrochemical cell and the <strong>rate of reaction</strong></span>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-check">✓</div>
+                    <span>State that the <strong>potential difference (V<sub>cell</sub>)</strong> is related to the extent to which the spontaneous cell reaction has reached <strong>equilibrium</strong></span>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-check">✓</div>
+                    <span>State and use the <strong>qualitative relationship</strong> between V<sub>cell</sub> and the concentration of product ions and reactant ions</span>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-check">✓</div>
+                    <span>Apply <strong>Le Chatelier's Principle</strong> to explain changes in cell potential over time</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Overview -->
+        <section id="overview" class="card card-3d">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-icon">📋</div>
+                <h2 class="section-title">Overview</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="info-box">
+                    <h4>📌 Pre-Knowledge Required</h4>
+                    <p>This lesson builds on your understanding of:</p>
+                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                        <li>Rate of chemical reactions</li>
+                        <li>Chemical equilibrium</li>
+                        <li>Galvanic cells and their operation</li>
+                        <li>Standard electrode potentials</li>
+                    </ul>
+                </div>
+
+                <p style="line-height: 1.8; color: #374151; margin: 1.5rem 0;">
+                    Have you ever noticed that batteries "run out" over time? A brand new battery has a strong voltage, but as you use it, the voltage decreases until eventually it reads 0V and the battery is "dead."
+                </p>
+
+                <p style="line-height: 1.8; color: #374151;">
+                    In this lesson, we'll explore <strong>why</strong> this happens by examining the relationship between <strong>current</strong>, <strong>potential difference</strong>, and <strong>chemical equilibrium</strong> in galvanic cells.
+                </p>
+
+                <div class="warning-box">
+                    <h4>🔋 Key Question</h4>
+                    <p>Why does the voltage of a galvanic cell decrease over time until it eventually reaches zero?</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Current and Rate of Reaction -->
+        <section id="current-rate" class="card card-3d">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-icon teal">⚡</div>
+                <h2 class="section-title">Current and Rate of Reaction</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <p style="margin-bottom: 1.5rem; color: #374151;">
+                    Let's consider the zinc-copper galvanic cell and understand how current relates to the rate of reaction.
+                </p>
+
+                <div class="chemical-eq reversible">
+                    Zn(s) + Cu²⁺(aq) ⇌ Zn²⁺(aq) + Cu(s)
+                </div>
+
+                <div class="definition-box">
+                    <div class="definition-title">📝 Key Relationship</div>
+                    <p>The <strong>current</strong> flowing through a galvanic cell is directly related to the <strong>rate of electron transfer</strong> at the electrodes.</p>
+                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                        <li>Higher rate of reaction → More electrons transferred per second → Higher current</li>
+                        <li>Lower rate of reaction → Fewer electrons transferred per second → Lower current</li>
+                    </ul>
+                </div>
+
+                <h3 class="sub-header">The Reversible Nature of the Cell Reaction</h3>
+
+                <div class="info-box">
+                    <h4>🔄 Important Understanding</h4>
+                    <p>The net cell reaction in a galvanic cell is <strong>reversible</strong>. This means:</p>
+                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                        <li><strong>Forward reaction:</strong> Zn → Zn²⁺ + 2e⁻ (oxidation at anode)</li>
+                        <li><strong>Reverse reaction:</strong> Zn²⁺ + 2e⁻ → Zn (can occur when conditions change)</li>
+                    </ul>
+                </div>
+
+                <div class="concepts-grid">
+                    <div class="concept-card">
+                        <div class="concept-icon">⚡</div>
+                        <h4>Current = Rate of Electron Flow</h4>
+                        <p>Current is the flow of electrons through the external circuit. The faster the redox reaction, the more electrons are released and accepted per second.</p>
+                    </div>
+                    <div class="concept-card">
+                        <div class="concept-icon">🔋</div>
+                        <h4>Cell Potential = Driving Force</h4>
+                        <p>The potential difference (voltage) is the "driving force" that pushes electrons through the circuit. It represents the energy available per unit charge.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Potential Difference and Equilibrium -->
+        <section id="potential-equilibrium" class="card card-3d">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-icon purple">⚖️</div>
+                <h2 class="section-title">Cell Potential and Equilibrium</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <p style="margin-bottom: 1.5rem; color: #374151;">
+                    The cell potential (V<sub>cell</sub>) tells us how far the cell reaction is from equilibrium.
+                </p>
+
+                <div class="definition-box">
+                    <div class="definition-title">📝 Cell Potential and Equilibrium</div>
+                    <p>The <strong>potential difference (V<sub>cell</sub>)</strong> of a galvanic cell is related to the <strong>extent to which the spontaneous cell reaction has reached equilibrium</strong>.</p>
+                </div>
+
+                <h3 class="sub-header">What Happens Over Time?</h3>
+
+                <div class="process-flow">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Initially (Fresh Cell)</h4>
+                            <p>High concentration of reactant ions (Cu²⁺), low concentration of product ions (Zn²⁺). Forward reaction is fast. <strong>V<sub>cell</sub> is at maximum</strong> (e.g., 1.10 V for Zn-Cu cell).</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>As Reaction Proceeds</h4>
+                            <p>Reactant ions (Cu²⁺) decrease, product ions (Zn²⁺) increase. The rate of the forward reaction decreases. <strong>V<sub>cell</sub> decreases</strong>.</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Approaching Equilibrium</h4>
+                            <p>The rate of the reverse reaction increases to balance the forward reaction. Current and potential continue to decrease.</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>At Equilibrium (Dead Battery)</h4>
+                            <p>Rate of forward reaction = Rate of reverse reaction. No net electron flow. <strong>V<sub>cell</sub> = 0 V</strong>. The battery is "dead."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="concepts-grid">
+                    <div class="concept-card decrease">
+                        <div class="concept-icon">📉</div>
+                        <h4>Reactant Ions DECREASE</h4>
+                        <p>Cu²⁺ ions are consumed at the cathode as they are reduced to Cu metal.</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.9rem;">Cu²⁺ + 2e⁻ → Cu</p>
+                    </div>
+                    <div class="concept-card increase">
+                        <div class="concept-icon">📈</div>
+                        <h4>Product Ions INCREASE</h4>
+                        <p>Zn²⁺ ions are produced at the anode as Zn metal is oxidised.</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.9rem;">Zn → Zn²⁺ + 2e⁻</p>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>💡 Key Insight</h4>
+                    <p>When V<sub>cell</sub> = 0, it doesn't mean the reactions have stopped. It means the <strong>forward and reverse reactions are occurring at equal rates</strong> (dynamic equilibrium), so there is no net flow of electrons.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Le Chatelier's Principle -->
+        <section id="lechatelier" class="card card-3d">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-icon orange">🔄</div>
+                <h2 class="section-title">Le Chatelier's Principle in Galvanic Cells</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="lechatelier-box">
+                    <div class="lechatelier-title">🔄 Le Chatelier's Principle</div>
+                    <p>When a system at equilibrium is disturbed by a change in concentration, temperature, or pressure, the system will shift to <strong>counteract the change</strong> and establish a new equilibrium.</p>
+                </div>
+
+                <h3 class="sub-header">Applying Le Chatelier's Principle to Galvanic Cells</h3>
+
+                <p style="margin-bottom: 1.5rem; color: #374151;">
+                    Consider the zinc-copper cell reaction:
+                </p>
+
+                <div class="chemical-eq reversible">
+                    Zn(s) + Cu²⁺(aq) ⇌ Zn²⁺(aq) + Cu(s)
+                </div>
+
+                <div class="concepts-grid">
+                    <div class="concept-card">
+                        <h4>As the Cell Operates:</h4>
+                        <ul style="margin: 0; padding-left: 1.5rem; line-height: 2;">
+                            <li>Cu²⁺ concentration <strong>decreases</strong> (reactant consumed)</li>
+                            <li>Zn²⁺ concentration <strong>increases</strong> (product formed)</li>
+                        </ul>
+                    </div>
+                    <div class="concept-card">
+                        <h4>Le Chatelier's Response:</h4>
+                        <ul style="margin: 0; padding-left: 1.5rem; line-height: 2;">
+                            <li>System shifts to the <strong>left</strong> (reverse reaction)</li>
+                            <li>This <strong>opposes</strong> the buildup of products</li>
+                            <li>Forward reaction rate <strong>decreases</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="definition-box">
+                    <div class="definition-title">📝 The Result</div>
+                    <ul style="margin: 0; padding-left: 1.5rem; line-height: 2;">
+                        <li>As [Cu²⁺] decreases and [Zn²⁺] increases, the equilibrium shifts LEFT</li>
+                        <li>The rate of the forward reaction decreases</li>
+                        <li>Fewer electrons are transferred per second</li>
+                        <li><strong>Both current AND cell potential decrease</strong></li>
+                        <li>At equilibrium: V<sub>cell</sub> = 0 V, Current = 0 A</li>
+                    </ul>
+                </div>
+
+                <h3 class="sub-header">Summary of Relationships</h3>
+
+                <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <thead>
+                        <tr style="background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%); color: white;">
+                            <th style="padding: 1rem; text-align: left;">Variable</th>
+                            <th style="padding: 1rem; text-align: center;">Over Time</th>
+                            <th style="padding: 1rem; text-align: center;">At Equilibrium</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #f0f9ff;">
+                            <td style="padding: 0.75rem 1rem;">Reactant ion concentration [Cu²⁺]</td>
+                            <td style="padding: 0.75rem 1rem; text-align: center; color: var(--error);">Decreases ↓</td>
+                            <td style="padding: 0.75rem 1rem; text-align: center;">Constant (low)</td>
+                        </tr>
+                        <tr style="background: white;">
+                            <td style="padding: 0.75rem 1rem;">Product ion concentration [Zn²⁺]</td>
+                            <td style="padding: 0.75rem 1rem; text-align: center; color: var(--success);">Increases ↑</td>
+                            <td style="padding: 0.75rem 1rem; text-align: center;">Constant (high)</td>
+                        </tr>
+                        <tr style="background: #f0f9ff;">
+                            <td style="padding: 0.75rem 1rem;">Rate of forward reaction</td>
+                            <td style="padding: 0.75rem 1rem; text-align: center; color: var(--error);">Decreases ↓</td>
+                            <td style="padding: 0.75rem 1rem; text-align: center;">= Rate reverse</td>
+                        </tr>
+                        <tr style="background: white;">
+                            <td style="padding: 0.75rem 1rem;">Rate of reverse reaction</td>
+                            <td style="padding: 0.75rem 1rem; text-align: center; color: var(--success);">Increases ↑</td>
+                            <td style="padding: 0.75rem 1rem; text-align: center;">= Rate forward</td>
+                        </tr>
+                        <tr style="background: #f0f9ff;">
+                            <td style="padding: 0.75rem 1rem;">Cell potential (V<sub>cell</sub>)</td>
+                            <td style="padding: 0.75rem 1rem; text-align: center; color: var(--error);">Decreases ↓</td>
+                            <td style="padding: 0.75rem 1rem; text-align: center; font-weight: 700;">0 V</td>
+                        </tr>
+                        <tr style="background: white;">
+                            <td style="padding: 0.75rem 1rem;">Current (I)</td>
+                            <td style="padding: 0.75rem 1rem; text-align: center; color: var(--error);">Decreases ↓</td>
+                            <td style="padding: 0.75rem 1rem; text-align: center; font-weight: 700;">0 A</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Interactive Simulations -->
+        <section id="simulation" class="card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-icon indigo">🔬</div>
+                <h2 class="section-title">Interactive Simulations</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <!-- Cell Over Time Simulation -->
+                <div class="simulation-container">
+                    <h3 class="simulation-title">🔋 Galvanic Cell Over Time Simulator</h3>
+                    <p style="text-align: center; margin-bottom: 1.5rem; opacity: 0.8;">
+                        Watch how voltage, current, and ion concentrations change as a galvanic cell approaches equilibrium
+                    </p>
+
+                    <div class="cell-simulation">
+                        <!-- Voltage Display -->
+                        <div class="voltage-display">
+                            <div class="voltage-value" id="voltageValue">1.10 V</div>
+                            <div class="voltage-label">Cell Potential (V<sub>cell</sub>)</div>
+                        </div>
+
+                        <!-- Current Display -->
+                        <div class="current-display">
+                            <div class="current-value" id="currentValue">2.50 A</div>
+                            <div class="voltage-label">Current (I)</div>
+                        </div>
+
+                        <!-- Concentration Bars -->
+                        <div class="concentration-bars">
+                            <div class="conc-bar-container">
+                                <div class="conc-bar-label">
+                                    <span>Cu²⁺ (Reactant)</span>
+                                    <span id="cu2Label">100%</span>
+                                </div>
+                                <div class="conc-bar">
+                                    <div class="conc-bar-fill reactant" id="cu2Bar" style="width: 100%;"></div>
+                                </div>
+                            </div>
+                            <div class="conc-bar-container">
+                                <div class="conc-bar-label">
+                                    <span>Zn²⁺ (Product)</span>
+                                    <span id="zn2Label">10%</span>
+                                </div>
+                                <div class="conc-bar">
+                                    <div class="conc-bar-fill product" id="zn2Bar" style="width: 10%;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rate Display -->
+                        <div class="rate-display">
+                            <div class="rate-arrow forward">
+                                <div class="arrow" id="forwardArrow">➡️➡️➡️</div>
+                                <div>Forward Rate</div>
+                                <div id="forwardRate" style="font-weight: 600;">High</div>
+                            </div>
+                            <div class="rate-arrow reverse">
+                                <div class="arrow" id="reverseArrow">⬅️</div>
+                                <div>Reverse Rate</div>
+                                <div id="reverseRate" style="font-weight: 600;">Low</div>
+                            </div>
+                        </div>
+
+                        <!-- Equilibrium Indicator -->
+                        <div class="equilibrium-indicator">
+                            <span id="eqStatus" style="font-weight: 600; color: #22c55e;">Cell is ACTIVE</span>
+                        </div>
+
+                        <!-- Time Slider -->
+                        <div class="time-slider-container">
+                            <label style="display: block; margin-bottom: 0.5rem;">Time Elapsed:</label>
+                            <input type="range" class="time-slider" id="timeSlider" min="0" max="100" value="0" oninput="updateSimulation(this.value)">
+                            <div class="time-labels">
+                                <span>Start (0 hrs)</span>
+                                <span>Time</span>
+                                <span>Equilibrium</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sim-controls">
+                        <button class="sim-btn" onclick="animateCell()">▶️ Animate to Equilibrium</button>
+                        <button class="sim-btn secondary" onclick="resetCellSim()">🔄 Reset</button>
+                    </div>
+
+                    <div class="sim-result" id="simExplanation">
+                        <p style="text-align: center;">
+                            Move the slider or click <strong>Animate</strong> to see how the cell changes over time.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Le Chatelier Visualizer -->
+                <div class="simulation-container" style="background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%); margin-top: 1.5rem;">
+                    <h3 class="simulation-title">🔄 Le Chatelier's Principle Visualizer</h3>
+                    <p style="text-align: center; margin-bottom: 1.5rem; opacity: 0.8;">
+                        See how the system responds to concentration changes
+                    </p>
+
+                    <div style="text-align: center; margin-bottom: 1.5rem;">
+                        <div class="chemical-eq" style="background: rgba(255,255,255,0.2); color: white; font-size: 1.2rem;">
+                            Zn(s) + Cu²⁺(aq) ⇌ Zn²⁺(aq) + Cu(s)
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+                        <button class="sim-btn" onclick="simulateChange('decreaseCu')">📉 Decrease [Cu²⁺]</button>
+                        <button class="sim-btn" onclick="simulateChange('increaseZn')">📈 Increase [Zn²⁺]</button>
+                        <button class="sim-btn warning" onclick="simulateChange('reset')">🔄 Reset</button>
+                    </div>
+
+                    <div class="sim-result" id="leChatelierResult">
+                        <div id="leChatelierExplanation" style="text-align: center;">
+                            <p>Click a button above to simulate a concentration change and see how the system responds.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Voltage-Time Graph -->
+                <div class="simulation-container" style="background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%); margin-top: 1.5rem;">
+                    <h3 class="simulation-title">📊 Voltage vs Time Graph</h3>
+                    <p style="text-align: center; margin-bottom: 1.5rem; opacity: 0.8;">
+                        Interactive graph showing how cell potential decreases over time
+                    </p>
+
+                    <div class="graph-container">
+                        <canvas id="voltageGraph" class="graph-canvas"></canvas>
+                    </div>
+
+                    <div class="sim-result">
+                        <p style="text-align: center;">
+                            <strong>Key Observations:</strong><br>
+                            • Cell potential starts at E°<sub>cell</sub> (maximum)<br>
+                            • Decreases gradually as reaction proceeds<br>
+                            • Approaches 0V asymptotically at equilibrium<br>
+                            • Current follows a similar pattern
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Classwork -->
+        <section id="classwork" class="card card-3d">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-icon teal">📝</div>
+                <h2 class="section-title">Classwork: Worked Example</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="worked-example">
+                    <div class="example-title">📋 Zinc-Silver Cell Problem</div>
+                    <p style="margin-bottom: 1rem; padding: 1rem; background: white; border-radius: 10px;">
+                        A zinc-silver cell has a cell potential difference of <strong>1.56 V</strong> under standard conditions. The cell is allowed to run for 3 hours and the cell potential drops to <strong>1.45 V</strong>.
+                    </p>
+
+                    <h4 style="color: var(--dark-blue); margin: 1rem 0;">Question 1: Explain using Le Chatelier's principle why this will happen.</h4>
+                    <div class="step">
+                        <p><strong>Answer:</strong></p>
+                        <p>As the reaction proceeds:</p>
+                        <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                            <li>The Ag⁺ ion concentration (<strong>reactant ions</strong>) will <strong>decrease</strong></li>
+                            <li>The Zn²⁺ ion concentration (<strong>product ions</strong>) will <strong>increase</strong></li>
+                        </ul>
+                        <p style="margin-top: 0.5rem;">Applying Le Chatelier's principle:</p>
+                        <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                            <li>The rate of the <strong>reverse reaction will increase</strong> to reduce the product ion concentration</li>
+                            <li>This also works to increase the reactant ion concentration</li>
+                            <li>This will <strong>reduce the rate of the forward reaction</strong></li>
+                            <li>Thus <strong>lowering the overall cell potential</strong></li>
+                        </ul>
+                    </div>
+
+                    <h4 style="color: var(--dark-blue); margin: 1rem 0;">Question 2: Explain what will happen to the current flowing through the circuit.</h4>
+                    <div class="step">
+                        <p><strong>Answer:</strong></p>
+                        <p>As the cell potential decreases, the current will also decrease.</p>
+                        <p style="margin-top: 0.5rem;">This is because:</p>
+                        <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                            <li>V ∝ I (voltage is proportional to current)</li>
+                            <li>Lower driving force (voltage) means fewer electrons flow per second</li>
+                            <li>The rate of electron transfer decreases as the forward reaction slows</li>
+                        </ul>
+                    </div>
+
+                    <h4 style="color: var(--dark-blue); margin: 1rem 0;">Question 3: After several days, the cell potential reads 0 V. Explain using Le Chatelier's principle.</h4>
+                    <div class="step">
+                        <p><strong>Answer:</strong></p>
+                        <p>Using Le Chatelier's principle:</p>
+                        <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                            <li><strong>Dynamic chemical equilibrium</strong> will be established</li>
+                            <li>This occurs when the rate of the <strong>forward reaction equals</strong> the rate of the <strong>reverse reaction</strong></li>
+                            <li>At this point, there is <strong>no net flow of electrons</strong></li>
+                            <li>Therefore, the overall cell potential (EMF) will be <strong>0 V</strong></li>
+                            <li>The current will also be <strong>0 A</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Questions Section -->
+        <section id="questions" class="card card-3d">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-icon">✍️</div>
+                <h2 class="section-title">End of Lesson Questions</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+                </div>
+                <p style="color: #64748b; margin-bottom: 1.5rem;">Answer all questions to test your understanding. You'll receive immediate feedback!</p>
+
+                <div id="questionsContainer">
+                    <!-- Questions will be generated by JavaScript -->
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="submit-btn" onclick="submitQuiz()">Submit Answers</button>
+                    <button class="submit-btn reset-btn" onclick="resetQuiz()">Reset Quiz</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Score Section -->
+        <section id="score" class="score-container" style="display: none;">
+            <h3 class="score-title">Your Results</h3>
+            <div class="score-circle">
+                <div class="score-percentage" id="scorePercentage">0%</div>
+                <div class="score-label" id="scoreLabel">0/12</div>
+            </div>
+            <p class="score-message" id="scoreMessage">Complete the quiz to see your results!</p>
+        </section>
+
+        <!-- Navigation Buttons -->
+        <div class="lesson-nav">
+            <button class="nav-btn prev" onclick="navigateLesson('prev')">
+                ← Previous Lesson
+            </button>
+            <button class="nav-btn next" onclick="navigateLesson('next')">
+                Next Lesson →
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2026 PassProof Academy. All rights reserved.</p>
+        <p style="opacity: 0.6; font-size: 0.9rem; margin-top: 0.5rem;">Empowering Education Through Technology</p>
+    </footer>
+
+    <script>
+        // Questions Data
+        const questions = [
+            {
+                id: 1,
+                question: "What is the relationship between current in a galvanic cell and the rate of reaction?",
+                options: [
+                    "Current is inversely proportional to the rate of reaction",
+                    "Current is directly proportional to the rate of electron transfer (rate of reaction)",
+                    "Current is unrelated to the rate of reaction",
+                    "Current only depends on temperature, not reaction rate"
+                ],
+                correct: 1,
+                explanation: "Current is directly proportional to the rate of electron transfer. A higher rate of reaction means more electrons are transferred per second, resulting in higher current."
+            },
+            {
+                id: 2,
+                question: "What does a cell potential (Vcell) of 0 V indicate about a galvanic cell?",
+                options: [
+                    "The cell is at maximum power",
+                    "The cell has reached chemical equilibrium",
+                    "The cell is broken",
+                    "The electrodes have dissolved completely"
+                ],
+                correct: 1,
+                explanation: "When Vcell = 0 V, the cell has reached equilibrium. The rate of the forward reaction equals the rate of the reverse reaction, so there is no net electron flow."
+            },
+            {
+                id: 3,
+                question: "As a galvanic cell operates, what happens to the concentration of reactant ions?",
+                options: [
+                    "It increases",
+                    "It stays the same",
+                    "It decreases",
+                    "It fluctuates randomly"
+                ],
+                correct: 2,
+                explanation: "As the cell operates, reactant ions (like Cu²⁺ in a Zn-Cu cell) are consumed at the cathode, so their concentration decreases."
+            },
+            {
+                id: 4,
+                question: "As a galvanic cell operates, what happens to the concentration of product ions?",
+                options: [
+                    "It decreases",
+                    "It increases",
+                    "It stays the same",
+                    "It becomes zero"
+                ],
+                correct: 1,
+                explanation: "As the cell operates, product ions (like Zn²⁺ in a Zn-Cu cell) are produced at the anode, so their concentration increases."
+            },
+            {
+                id: 5,
+                question: "According to Le Chatelier's principle, what happens when product ion concentration increases?",
+                options: [
+                    "The equilibrium shifts to the right (forward)",
+                    "The equilibrium shifts to the left (reverse)",
+                    "The equilibrium is not affected",
+                    "The reaction stops completely"
+                ],
+                correct: 1,
+                explanation: "According to Le Chatelier's principle, when product concentration increases, the equilibrium shifts to the LEFT (reverse direction) to reduce the product concentration."
+            },
+            {
+                id: 6,
+                question: "What happens to the rate of the forward reaction as a galvanic cell approaches equilibrium?",
+                options: [
+                    "It increases",
+                    "It stays constant",
+                    "It decreases",
+                    "It becomes infinite"
+                ],
+                correct: 2,
+                explanation: "As the cell approaches equilibrium, the forward reaction rate decreases because reactant ions are being depleted and Le Chatelier's principle causes the reverse reaction to increase."
+            },
+            {
+                id: 7,
+                question: "What happens to the current in a galvanic cell as the cell potential decreases?",
+                options: [
+                    "Current increases",
+                    "Current stays the same",
+                    "Current decreases",
+                    "Current reverses direction"
+                ],
+                correct: 2,
+                explanation: "Current decreases as cell potential decreases. Lower voltage means less driving force for electron flow, so fewer electrons flow per second."
+            },
+            {
+                id: 8,
+                question: "At equilibrium in a galvanic cell, which statement is TRUE?",
+                options: [
+                    "Only the forward reaction is occurring",
+                    "Only the reverse reaction is occurring",
+                    "Both forward and reverse reactions occur at equal rates",
+                    "No reactions are occurring"
+                ],
+                correct: 2,
+                explanation: "At equilibrium, both the forward and reverse reactions are occurring at EQUAL rates. This is called dynamic equilibrium - reactions continue but there's no net change."
+            },
+            {
+                id: 9,
+                question: "A zinc-silver cell has initial Vcell of 1.56 V. After running for 3 hours, Vcell = 1.45 V. What caused this decrease?",
+                options: [
+                    "The temperature dropped",
+                    "Reactant ions decreased and product ions increased",
+                    "The electrodes expanded",
+                    "The salt bridge failed"
+                ],
+                correct: 1,
+                explanation: "The decrease in cell potential is caused by the consumption of reactant ions (Ag⁺) and the accumulation of product ions (Zn²⁺), which shifts the equilibrium toward the reverse reaction."
+            },
+            {
+                id: 10,
+                question: "Why does a battery eventually become 'dead'?",
+                options: [
+                    "The electrodes have dissolved",
+                    "The chemical reaction has reached equilibrium",
+                    "The temperature became too cold",
+                    "The wires broke"
+                ],
+                correct: 1,
+                explanation: "A battery becomes 'dead' when the chemical reaction reaches equilibrium. At this point, Vcell = 0 V and no current flows because the forward and reverse reaction rates are equal."
+            },
+            {
+                id: 11,
+                question: "In a Zn-Cu cell at equilibrium, which of the following is TRUE?",
+                options: [
+                    "Vcell = 1.10 V and current = 0 A",
+                    "Vcell = 0 V and current = 0 A",
+                    "Vcell = 0 V and current = maximum",
+                    "Vcell = 1.10 V and current = maximum"
+                ],
+                correct: 1,
+                explanation: "At equilibrium, both the cell potential (Vcell) and the current are zero because there is no net electron transfer occurring."
+            },
+            {
+                id: 12,
+                question: "What provides the 'driving force' for electron flow in a galvanic cell?",
+                options: [
+                    "The temperature of the solutions",
+                    "The potential difference (voltage) between the electrodes",
+                    "The size of the electrodes",
+                    "The color of the solutions"
+                ],
+                correct: 1,
+                explanation: "The potential difference (voltage) between the electrodes provides the 'driving force' that pushes electrons through the external circuit from anode to cathode."
+            }
+        ];
+
+        let userAnswers = {};
+        let quizSubmitted = false;
+        let animationInterval = null;
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderQuestions();
+            loadProgress();
+            drawVoltageGraph();
+        });
+
+        // Toggle dropdown menu
+        function toggleDropdown() {
+            const menu = document.getElementById('dropdownMenu');
+            menu.classList.toggle('active');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const dropdown = document.querySelector('.dropdown');
+            if (!dropdown.contains(e.target)) {
+                document.getElementById('dropdownMenu').classList.remove('active');
+            }
+        });
+
+        // Toggle collapsible sections
+        function toggleSection(header) {
+            header.classList.toggle('collapsed');
+            const content = header.nextElementSibling;
+            content.classList.toggle('collapsed');
+        }
+
+        // Cell simulation
+        function updateSimulation(value) {
+            const time = parseInt(value);
+            
+            // Calculate values based on time (0-100 scale)
+            const voltage = Math.max(0, 1.10 * Math.exp(-time / 35));
+            const current = Math.max(0, 2.50 * Math.exp(-time / 35));
+            const cu2Conc = Math.max(5, 100 * Math.exp(-time / 40));
+            const zn2Conc = Math.min(95, 10 + 85 * (1 - Math.exp(-time / 40)));
+            
+            // Update displays
+            const voltageEl = document.getElementById('voltageValue');
+            voltageEl.textContent = voltage.toFixed(2) + ' V';
+            voltageEl.className = 'voltage-value' + (voltage < 0.5 ? ' low' : '') + (voltage < 0.1 ? ' zero' : '');
+            
+            document.getElementById('currentValue').textContent = current.toFixed(2) + ' A';
+            document.getElementById('cu2Label').textContent = Math.round(cu2Conc) + '%';
+            document.getElementById('zn2Label').textContent = Math.round(zn2Conc) + '%';
+            document.getElementById('cu2Bar').style.width = cu2Conc + '%';
+            document.getElementById('zn2Bar').style.width = zn2Conc + '%';
+            
+            // Update rate arrows
+            const forwardRate = time < 33 ? 'High' : (time < 66 ? 'Medium' : 'Low');
+            const reverseRate = time < 33 ? 'Low' : (time < 66 ? 'Medium' : 'High');
+            document.getElementById('forwardRate').textContent = forwardRate;
+            document.getElementById('reverseRate').textContent = reverseRate;
+            
+            const forwardArrows = time < 33 ? '➡️➡️➡️' : (time < 66 ? '➡️➡️' : '➡️');
+            const reverseArrows = time < 33 ? '⬅️' : (time < 66 ? '⬅️⬅️' : '⬅️⬅️⬅️');
+            document.getElementById('forwardArrow').textContent = forwardArrows;
+            document.getElementById('reverseArrow').textContent = reverseArrows;
+            
+            // Update equilibrium status
+            const eqStatus = document.getElementById('eqStatus');
+            if (time >= 95) {
+                eqStatus.textContent = 'EQUILIBRIUM REACHED - Cell is DEAD';
+                eqStatus.style.color = '#ef4444';
+            } else if (time >= 70) {
+                eqStatus.textContent = 'Approaching Equilibrium...';
+                eqStatus.style.color = '#fbbf24';
+            } else {
+                eqStatus.textContent = 'Cell is ACTIVE';
+                eqStatus.style.color = '#22c55e';
+            }
+            
+            // Update explanation
+            updateSimExplanation(time, voltage, current);
+        }
+
+        function updateSimExplanation(time, voltage, current) {
+            const explanation = document.getElementById('simExplanation');
+            let html = '';
+            
+            if (time < 10) {
+                html = `<p style="text-align: center;"><strong>Initial State:</strong> Cell is at maximum potential (${voltage.toFixed(2)} V). Forward reaction is dominant. High current flow.</p>`;
+            } else if (time < 50) {
+                html = `<p style="text-align: center;"><strong>Cell Operating:</strong> Reactant ions decreasing, product ions increasing. According to Le Chatelier's principle, the system shifts left. V<sub>cell</sub> = ${voltage.toFixed(2)} V</p>`;
+            } else if (time < 90) {
+                html = `<p style="text-align: center;"><strong>Approaching Equilibrium:</strong> Forward and reverse reaction rates becoming equal. V<sub>cell</sub> = ${voltage.toFixed(2)} V, I = ${current.toFixed(2)} A</p>`;
+            } else {
+                html = `<p style="text-align: center;"><strong>Equilibrium Reached:</strong> Rate forward = Rate reverse. No net electron flow. V<sub>cell</sub> ≈ 0 V, I ≈ 0 A. The battery is "dead."</p>`;
+            }
+            
+            explanation.innerHTML = html;
+        }
+
+        function animateCell() {
+            if (animationInterval) {
+                clearInterval(animationInterval);
+            }
+            
+            const slider = document.getElementById('timeSlider');
+            slider.value = 0;
+            
+            animationInterval = setInterval(() => {
+                let value = parseInt(slider.value) + 1;
+                if (value > 100) {
+                    clearInterval(animationInterval);
+                    animationInterval = null;
+                    return;
+                }
+                slider.value = value;
+                updateSimulation(value);
+            }, 100);
+        }
+
+        function resetCellSim() {
+            if (animationInterval) {
+                clearInterval(animationInterval);
+                animationInterval = null;
+            }
+            document.getElementById('timeSlider').value = 0;
+            updateSimulation(0);
+        }
+
+        // Le Chatelier simulation
+        function simulateChange(type) {
+            const explanation = document.getElementById('leChatelierExplanation');
+            
+            if (type === 'decreaseCu') {
+                explanation.innerHTML = `
+                    <h4 style="color: #fbbf24; margin-bottom: 0.5rem;">📉 [Cu²⁺] Decreased (Reactant Consumed)</h4>
+                    <p><strong>System Response:</strong></p>
+                    <ul style="text-align: left; max-width: 500px; margin: 0.5rem auto; padding-left: 1.5rem;">
+                        <li>Equilibrium shifts to the <strong>LEFT</strong> (toward reactants)</li>
+                        <li>Rate of reverse reaction increases</li>
+                        <li>Rate of forward reaction decreases</li>
+                        <li><strong>Cell potential decreases</strong></li>
+                        <li><strong>Current decreases</strong></li>
+                    </ul>
+                `;
+            } else if (type === 'increaseZn') {
+                explanation.innerHTML = `
+                    <h4 style="color: #22c55e; margin-bottom: 0.5rem;">📈 [Zn²⁺] Increased (Product Accumulated)</h4>
+                    <p><strong>System Response:</strong></p>
+                    <ul style="text-align: left; max-width: 500px; margin: 0.5rem auto; padding-left: 1.5rem;">
+                        <li>Equilibrium shifts to the <strong>LEFT</strong> (toward reactants)</li>
+                        <li>System tries to reduce excess product ions</li>
+                        <li>Rate of forward reaction decreases</li>
+                        <li><strong>Cell potential decreases</strong></li>
+                        <li><strong>Current decreases</strong></li>
+                    </ul>
+                `;
+            } else {
+                explanation.innerHTML = `<p>Click a button above to simulate a concentration change and see how the system responds.</p>`;
+            }
+        }
+
+        // Draw voltage graph
+        function drawVoltageGraph() {
+            const canvas = document.getElementById('voltageGraph');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.parentElement.clientWidth - 40;
+            const height = 180;
+            
+            canvas.width = width;
+            canvas.height = height;
+            
+            // Clear canvas
+            ctx.fillStyle = 'rgba(255,255,255,0.1)';
+            ctx.fillRect(0, 0, width, height);
+            
+            // Draw axes
+            ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(50, 10);
+            ctx.lineTo(50, height - 30);
+            ctx.lineTo(width - 20, height - 30);
+            ctx.stroke();
+            
+            // Labels
+            ctx.fillStyle = 'white';
+            ctx.font = '12px Inter';
+            ctx.fillText('V (V)', 10, 20);
+            ctx.fillText('Time', width - 40, height - 10);
+            ctx.fillText('1.10', 20, 30);
+            ctx.fillText('0', 35, height - 35);
+            
+            // Draw voltage curve (exponential decay)
+            ctx.strokeStyle = '#22d3ee';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            
+            for (let x = 0; x <= width - 70; x++) {
+                const t = x / (width - 70);
+                const v = 1.10 * Math.exp(-3 * t);
+                const plotX = 50 + x;
+                const plotY = height - 30 - (v / 1.10) * (height - 50);
+                
+                if (x === 0) {
+                    ctx.moveTo(plotX, plotY);
+                } else {
+                    ctx.lineTo(plotX, plotY);
+                }
+            }
+            ctx.stroke();
+            
+            // Draw current curve
+            ctx.strokeStyle = '#a78bfa';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            
+            for (let x = 0; x <= width - 70; x++) {
+                const t = x / (width - 70);
+                const i = Math.exp(-3 * t);
+                const plotX = 50 + x;
+                const plotY = height - 30 - i * (height - 50);
+                
+                if (x === 0) {
+                    ctx.moveTo(plotX, plotY);
+                } else {
+                    ctx.lineTo(plotX, plotY);
+                }
+            }
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Legend
+            ctx.fillStyle = '#22d3ee';
+            ctx.fillRect(width - 120, 20, 15, 3);
+            ctx.fillStyle = 'white';
+            ctx.fillText('Voltage', width - 100, 25);
+            
+            ctx.strokeStyle = '#a78bfa';
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(width - 120, 40);
+            ctx.lineTo(width - 105, 40);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = 'white';
+            ctx.fillText('Current', width - 100, 45);
+        }
+
+        // Render questions
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            questions.forEach((q, index) => {
+                const questionCard = document.createElement('div');
+                questionCard.className = 'question-card';
+                questionCard.id = `question-${q.id}`;
+                
+                let optionsHTML = '';
+                q.options.forEach((option, optIndex) => {
+                    optionsHTML += `
+                        <label class="option-label" id="option-${q.id}-${optIndex}">
+                            <input type="radio" name="q${q.id}" value="${optIndex}" 
+                                onchange="selectAnswer(${q.id}, ${optIndex})"
+                                ${quizSubmitted ? 'disabled' : ''}>
+                            <span>${option}</span>
+                        </label>
+                    `;
+                });
+
+                questionCard.innerHTML = `
+                    <div style="display: flex; align-items: flex-start;">
+                        <span class="question-number">${index + 1}</span>
+                        <p class="question-text">${q.question}</p>
+                    </div>
+                    <div class="options-container">
+                        ${optionsHTML}
+                    </div>
+                    <div class="feedback-text" id="feedback-${q.id}"></div>
+                `;
+
+                container.appendChild(questionCard);
+            });
+        }
+
+        // Select answer
+        function selectAnswer(questionId, optionIndex) {
+            if (quizSubmitted) return;
+            
+            userAnswers[questionId] = optionIndex;
+            
+            const options = document.querySelectorAll(`[name="q${questionId}"]`);
+            options.forEach((opt, idx) => {
+                const label = document.getElementById(`option-${questionId}-${idx}`);
+                label.classList.toggle('selected', idx === optionIndex);
+            });
+
+            updateProgress();
+            saveProgress();
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const answered = Object.keys(userAnswers).length;
+            const total = questions.length;
+            const percentage = (answered / total) * 100;
+            document.getElementById('progressFill').style.width = `${percentage}%`;
+        }
+
+        // Submit quiz
+        function submitQuiz() {
+            if (Object.keys(userAnswers).length < questions.length) {
+                alert('Please answer all questions before submitting!');
+                return;
+            }
+
+            quizSubmitted = true;
+            let correctCount = 0;
+
+            questions.forEach(q => {
+                const questionCard = document.getElementById(`question-${q.id}`);
+                const feedback = document.getElementById(`feedback-${q.id}`);
+                const userAnswer = userAnswers[q.id];
+                const isCorrect = userAnswer === q.correct;
+
+                if (isCorrect) {
+                    correctCount++;
+                    questionCard.classList.add('correct');
+                    feedback.className = 'feedback-text correct';
+                    feedback.innerHTML = `✓ Correct! ${q.explanation}`;
+                } else {
+                    questionCard.classList.add('incorrect');
+                    feedback.className = 'feedback-text incorrect';
+                    feedback.innerHTML = `✗ Incorrect. The correct answer is: ${q.options[q.correct]}. ${q.explanation}`;
+                }
+
+                document.getElementById(`option-${q.id}-${q.correct}`).classList.add('correct-answer');
+                if (!isCorrect && userAnswer !== undefined) {
+                    document.getElementById(`option-${q.id}-${userAnswer}`).classList.add('wrong-answer');
+                }
+
+                const inputs = questionCard.querySelectorAll('input');
+                inputs.forEach(input => input.disabled = true);
+            });
+
+            const percentage = Math.round((correctCount / questions.length) * 100);
+            document.getElementById('score').style.display = 'block';
+            document.getElementById('scorePercentage').textContent = `${percentage}%`;
+            document.getElementById('scoreLabel').textContent = `${correctCount}/${questions.length}`;
+
+            let message = '';
+            if (percentage >= 80) {
+                message = '🌟 Excellent! You understand how galvanic cells approach equilibrium!';
+            } else if (percentage >= 60) {
+                message = '👍 Good job! Review Le Chatelier\'s principle application to cells.';
+            } else if (percentage >= 40) {
+                message = '📚 Keep practicing! Focus on the relationship between voltage and equilibrium.';
+            } else {
+                message = '💪 Don\'t give up! Review the lesson and try the simulations again.';
+            }
+            document.getElementById('scoreMessage').textContent = message;
+
+            document.getElementById('score').scrollIntoView({ behavior: 'smooth' });
+            saveProgress();
+        }
+
+        // Reset quiz
+        function resetQuiz() {
+            userAnswers = {};
+            quizSubmitted = false;
+            
+            document.querySelectorAll('.question-card').forEach(card => {
+                card.classList.remove('correct', 'incorrect');
+            });
+            
+            document.querySelectorAll('.option-label').forEach(label => {
+                label.classList.remove('selected', 'correct-answer', 'wrong-answer');
+            });
+            
+            document.querySelectorAll('.feedback-text').forEach(fb => {
+                fb.className = 'feedback-text';
+                fb.innerHTML = '';
+            });
+            
+            document.querySelectorAll('input[type="radio"]').forEach(input => {
+                input.checked = false;
+                input.disabled = false;
+            });
+
+            document.getElementById('score').style.display = 'none';
+            document.getElementById('progressFill').style.width = '0%';
+
+            localStorage.removeItem('lesson6EquilibriumProgress');
+            document.getElementById('questions').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Navigation
+        function navigateLesson(direction) {
+            if (direction === 'prev') {
+                alert('Navigating to Lesson 5: Standard Electrode Potentials');
+            } else {
+                alert('Navigating to Lesson 7: Applications of Electrochemistry');
+            }
+        }
+
+        // LocalStorage functions
+        function saveProgress() {
+            const progress = {
+                userAnswers: userAnswers,
+                quizSubmitted: quizSubmitted
+            };
+            localStorage.setItem('lesson6EquilibriumProgress', JSON.stringify(progress));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('lesson6EquilibriumProgress');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                userAnswers = progress.userAnswers || {};
+                quizSubmitted = progress.quizSubmitted || false;
+
+                Object.keys(userAnswers).forEach(qId => {
+                    const optIndex = userAnswers[qId];
+                    const input = document.querySelector(`input[name="q${qId}"][value="${optIndex}"]`);
+                    if (input) {
+                        input.checked = true;
+                        selectAnswer(parseInt(qId), optIndex);
+                    }
+                });
+
+                if (quizSubmitted) {
+                    submitQuiz();
+                }
+
+                updateProgress();
+            }
+        }
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('.dropdown-menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('dropdownMenu').classList.remove('active');
+            });
+        });
+
+        // Redraw graph on resize
+        window.addEventListener('resize', drawVoltageGraph);
+    </script>
+</body>
+</html>

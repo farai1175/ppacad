@@ -1,0 +1,2350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 7: Predicting Electrodes & Electroplating | PassProof Academy</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1e40af;
+            --secondary-blue: #3b82f6;
+            --light-blue: #dbeafe;
+            --accent-blue: #60a5fa;
+            --dark-blue: #1e3a8a;
+            --white: #ffffff;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-600: #4b5563;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --purple: #8b5cf6;
+            --teal: #14b8a6;
+            --orange: #f97316;
+            --rose: #f43f5e;
+            --cyan: #06b6d4;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            box-shadow: 0 10px 40px rgba(30, 64, 175, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-btn {
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-btn:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            min-width: 300px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: var(--dark-blue);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--light-blue);
+            padding-left: 2rem;
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08), 0 2px 10px rgba(0,0,0,0.04);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+        }
+
+        .card-3d {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            border-left: 5px solid var(--secondary-blue);
+        }
+
+        /* Subject Header Card */
+        .subject-card {
+            background: linear-gradient(135deg, var(--cyan) 0%, #0891b2 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .subject-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .subject-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .lesson-number {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .section-icon.teal {
+            background: linear-gradient(135deg, var(--teal) 0%, #0d9488 100%);
+            box-shadow: 0 8px 20px rgba(20, 184, 166, 0.3);
+        }
+
+        .section-icon.purple {
+            background: linear-gradient(135deg, var(--purple) 0%, #7c3aed 100%);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
+        }
+
+        .section-icon.orange {
+            background: linear-gradient(135deg, var(--orange) 0%, #ea580c 100%);
+            box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3);
+        }
+
+        .section-icon.rose {
+            background: linear-gradient(135deg, var(--rose) 0%, #e11d48 100%);
+            box-shadow: 0 8px 20px rgba(244, 63, 94, 0.3);
+        }
+
+        .section-icon.cyan {
+            background: linear-gradient(135deg, var(--cyan) 0%, #0891b2 100%);
+            box-shadow: 0 8px 20px rgba(6, 182, 212, 0.3);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark-blue);
+        }
+
+        .collapse-icon {
+            margin-left: auto;
+            font-size: 1.5rem;
+            color: var(--secondary-blue);
+            transition: transform 0.3s ease;
+        }
+
+        .section-header.collapsed .collapse-icon {
+            transform: rotate(-90deg);
+        }
+
+        .collapsible-content {
+            max-height: 50000px;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .collapsible-content.collapsed {
+            max-height: 0;
+        }
+
+        /* Learning Objectives */
+        .objective-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--light-blue);
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .objective-item:hover {
+            transform: translateX(5px);
+        }
+
+        .objective-check {
+            width: 28px;
+            height: 28px;
+            background: var(--secondary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        /* Info boxes */
+        .info-box {
+            background: var(--light-blue);
+            padding: 1.25rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+        }
+
+        .info-box h4 {
+            color: var(--primary-blue);
+            margin-bottom: 0.75rem;
+        }
+
+        /* Definition boxes */
+        .definition-box {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border-left: 5px solid var(--success);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .definition-title {
+            font-weight: 700;
+            color: #065f46;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Warning box */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 5px solid var(--warning);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        /* Chemical equations */
+        .chemical-eq {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.1rem;
+            text-align: center;
+            padding: 1rem;
+            background: var(--gray-100);
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .chemical-eq.highlight {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid #f59e0b;
+        }
+
+        .chemical-eq.oxidation {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border: 2px solid #ef4444;
+        }
+
+        .chemical-eq.reduction {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border: 2px solid #3b82f6;
+        }
+
+        /* Key Concepts Grid */
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .concept-card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .concept-card:hover {
+            border-color: var(--secondary-blue);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.2);
+        }
+
+        .concept-card.anode {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-left: 5px solid var(--error);
+        }
+
+        .concept-card.cathode {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-left: 5px solid var(--secondary-blue);
+        }
+
+        .concept-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .concept-card h4 {
+            color: var(--dark-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Sub-section headers */
+        .sub-header {
+            color: var(--primary-blue);
+            font-size: 1.3rem;
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--light-blue);
+        }
+
+        /* Table of Standard Potentials */
+        .potentials-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 1.5rem 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            font-size: 0.9rem;
+        }
+
+        .potentials-table th {
+            background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+        }
+
+        .potentials-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--gray-200);
+            text-align: center;
+        }
+
+        .potentials-table tr:nth-child(even) {
+            background: #f0f9ff;
+        }
+
+        .potentials-table .positive-val {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .potentials-table .negative-val {
+            color: var(--error);
+            font-weight: 600;
+        }
+
+        .potentials-table tr.highlight-row {
+            background: linear-gradient(90deg, #fef3c7 0%, #fde68a 100%);
+        }
+
+        /* Simulation Container */
+        .simulation-container {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: white;
+        }
+
+        .simulation-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .sim-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+
+        .sim-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sim-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .sim-btn.secondary {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        }
+
+        .sim-btn.warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .sim-result {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Electrolysis Diagram */
+        .electrolysis-diagram {
+            position: relative;
+            max-width: 400px;
+            height: 350px;
+            margin: 0 auto;
+            background: rgba(0,0,0,0.2);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .electrolysis-beaker {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 280px;
+            height: 180px;
+            background: linear-gradient(180deg, rgba(59, 130, 246, 0.3) 0%, rgba(59, 130, 246, 0.5) 100%);
+            border: 4px solid rgba(255,255,255,0.4);
+            border-radius: 0 0 30px 30px;
+        }
+
+        .electrolysis-beaker.copper-solution {
+            background: linear-gradient(180deg, rgba(59, 130, 246, 0.4) 0%, rgba(34, 197, 94, 0.3) 100%);
+        }
+
+        .graphite-electrode {
+            position: absolute;
+            width: 16px;
+            height: 120px;
+            background: linear-gradient(180deg, #374151 0%, #1f2937 100%);
+            border-radius: 4px;
+            top: 20px;
+        }
+
+        .graphite-electrode.left {
+            left: 60px;
+        }
+
+        .graphite-electrode.right {
+            right: 60px;
+        }
+
+        .electrode-label {
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            white-space: nowrap;
+            font-weight: 600;
+        }
+
+        .power-source {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 40px;
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            border: 3px solid #f59e0b;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .wire-top {
+            position: absolute;
+            top: 40px;
+            height: 4px;
+            background: #f59e0b;
+        }
+
+        .wire-top.left {
+            left: 68px;
+            width: calc(50% - 108px);
+        }
+
+        .wire-top.right {
+            right: 68px;
+            width: calc(50% - 108px);
+        }
+
+        .wire-vertical {
+            position: absolute;
+            top: 40px;
+            width: 4px;
+            height: 30px;
+            background: #f59e0b;
+        }
+
+        .wire-vertical.left {
+            left: 66px;
+        }
+
+        .wire-vertical.right {
+            right: 66px;
+        }
+
+        .bubble {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            animation: bubbleRise 1.5s ease-in-out infinite;
+        }
+
+        @keyframes bubbleRise {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-80px) scale(0.5); opacity: 0; }
+        }
+
+        .copper-deposit {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 0;
+            background: linear-gradient(180deg, #b87333 0%, #8b4513 100%);
+            border-radius: 0 0 2px 2px;
+            transition: height 0.5s ease;
+        }
+
+        /* Electroplating Diagram */
+        .electroplating-container {
+            position: relative;
+            max-width: 450px;
+            height: 350px;
+            margin: 0 auto;
+            background: rgba(0,0,0,0.2);
+            border-radius: 16px;
+        }
+
+        .plating-beaker {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 180px;
+            background: linear-gradient(180deg, rgba(192, 192, 192, 0.3) 0%, rgba(192, 192, 192, 0.5) 100%);
+            border: 4px solid rgba(255,255,255,0.4);
+            border-radius: 0 0 30px 30px;
+        }
+
+        .plating-electrode {
+            position: absolute;
+            width: 20px;
+            height: 100px;
+            border-radius: 4px;
+            top: 30px;
+        }
+
+        .plating-electrode.anode-silver {
+            left: 60px;
+            background: linear-gradient(180deg, #c0c0c0 0%, #a0a0a0 100%);
+        }
+
+        .plating-electrode.cathode-object {
+            right: 60px;
+            background: linear-gradient(180deg, #d4a574 0%, #b87333 100%);
+            border-radius: 50%;
+            width: 40px;
+            height: 60px;
+        }
+
+        .silver-coating {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, #c0c0c0 0%, #a0a0a0 100%);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .ion-particle {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #c0c0c0;
+            border-radius: 50%;
+            font-size: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1f2937;
+            font-weight: 700;
+        }
+
+        /* Prediction Tool */
+        .prediction-tool {
+            background: rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .metal-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .metal-select-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .metal-select-group label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .metal-select-group select {
+            padding: 0.75rem;
+            border-radius: 10px;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .prediction-output {
+            background: rgba(0,0,0,0.3);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .electrode-result {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .result-box {
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .result-box.anode-result {
+            background: rgba(239, 68, 68, 0.2);
+            border: 2px solid #ef4444;
+        }
+
+        .result-box.cathode-result {
+            background: rgba(59, 130, 246, 0.2);
+            border: 2px solid #3b82f6;
+        }
+
+        /* Worked Example */
+        .worked-example {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border: 2px solid var(--success);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .example-title {
+            font-weight: 700;
+            color: #065f46;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .step {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 0.75rem;
+            border-left: 4px solid var(--secondary-blue);
+        }
+
+        /* Exercise Box */
+        .exercise-box {
+            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+            border: 2px solid var(--purple);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .exercise-title {
+            font-weight: 700;
+            color: #5b21b6;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        /* Questions Section */
+        .question-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .question-card.correct {
+            border-color: var(--success);
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        }
+
+        .question-card.incorrect {
+            border-color: var(--error);
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+        }
+
+        .question-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
+            color: white;
+            border-radius: 50%;
+            font-weight: 700;
+            margin-right: 1rem;
+        }
+
+        .question-text {
+            font-weight: 500;
+            color: var(--dark-blue);
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: var(--gray-100);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .option-label:hover {
+            background: var(--light-blue);
+            transform: translateX(5px);
+        }
+
+        .option-label.selected {
+            background: var(--light-blue);
+            border-color: var(--secondary-blue);
+        }
+
+        .option-label.correct-answer {
+            background: #d1fae5 !important;
+            border-color: var(--success) !important;
+        }
+
+        .option-label.wrong-answer {
+            background: #fee2e2 !important;
+            border-color: var(--error) !important;
+        }
+
+        .option-label input {
+            margin-right: 1rem;
+            width: 20px;
+            height: 20px;
+            accent-color: var(--secondary-blue);
+        }
+
+        .feedback-text {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .feedback-text.correct {
+            background: #d1fae5;
+            color: #065f46;
+            display: block;
+        }
+
+        .feedback-text.incorrect {
+            background: #fee2e2;
+            color: #991b1b;
+            display: block;
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            height: 6px;
+            background: var(--gray-200);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary-blue) 0%, var(--success) 100%);
+            transition: width 0.5s ease;
+        }
+
+        /* Score Display */
+        .score-container {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            color: white;
+            margin: 2rem 0;
+            box-shadow: 0 20px 60px rgba(30, 64, 175, 0.3);
+        }
+
+        .score-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .score-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 8px solid rgba(255,255,255,0.3);
+        }
+
+        .score-percentage {
+            font-size: 3.5rem;
+            font-weight: 700;
+        }
+
+        .score-label {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .score-message {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border: none;
+            color: white;
+            padding: 1.25rem 3rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.4);
+        }
+
+        .reset-btn {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            margin-left: 1rem;
+        }
+
+        /* Navigation Buttons */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(59, 130, 246, 0.4);
+        }
+
+        .nav-btn.prev {
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--dark-blue) 0%, #0f172a 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Guideline Box */
+        .guideline-box {
+            background: linear-gradient(135deg, #fdf4ff 0%, #fae8ff 100%);
+            border: 2px solid var(--purple);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .guideline-title {
+            font-weight: 700;
+            color: #7c3aed;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .guideline-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+        }
+
+        .guideline-bullet {
+            width: 8px;
+            height: 8px;
+            background: var(--purple);
+            border-radius: 50%;
+            margin-top: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .subject-title {
+                font-size: 1.8rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .lesson-nav {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                justify-content: center;
+            }
+
+            .section-title {
+                font-size: 1.2rem;
+            }
+
+            .concepts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .score-circle {
+                width: 150px;
+                height: 150px;
+            }
+
+            .score-percentage {
+                font-size: 2.5rem;
+            }
+
+            .submit-btn, .reset-btn {
+                display: block;
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+
+            .metal-selector {
+                grid-template-columns: 1fr;
+            }
+
+            .electrode-result {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">📚 PassProof Academy</div>
+            <div class="dropdown">
+                <button class="dropdown-btn" onclick="toggleDropdown()">
+                    <span>☰</span> Menu <span>▼</span>
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="#objectives">🎯 Learning Objectives</a>
+                    <a href="#overview">📋 Overview</a>
+                    <a href="#predicting">🔮 Predicting Anode & Cathode</a>
+                    <a href="#cucl2">🧪 Decomposition of CuCl₂</a>
+                    <a href="#electroplating">⚡ Electroplating</a>
+                    <a href="#simulation">🔬 Simulations</a>
+                    <a href="#exercises">📝 Exercises</a>
+                    <a href="#questions">✍️ Questions</a>
+                    <a href="#score">📊 Score</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Subject Card -->
+        <div class="card subject-card">
+            <div class="subject-badge">Grade 12 • Physical Sciences</div>
+            <h1 class="subject-title">Electrochemical Reactions</h1>
+            <p class="lesson-number">Lesson 7: Predicting Electrodes, Electrolysis & Electroplating</p>
+        </div>
+
+        <!-- Learning Objectives -->
+        <section id="objectives" class="card card-3d">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-icon">🎯</div>
+                <h2 class="section-title">Learning Objectives</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <p style="margin-bottom: 1rem; color: #64748b;">By the end of this lesson, you will be able to:</p>
+                <div class="objective-item">
+                    <div class="objective-check">✓</div>
+                    <span>Predict the half cell in which <strong>oxidation</strong> will take place when connected to another half cell</span>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-check">✓</div>
+                    <span>Predict the half cell in which <strong>reduction</strong> will take place when connected to another half cell</span>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-check">✓</div>
+                    <span>Write equations for reactions taking place at the <strong>anode and cathode</strong></span>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-check">✓</div>
+                    <span>Deduce the <strong>overall cell reaction</strong> by combining two half reactions</span>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-check">✓</div>
+                    <span>Describe the <strong>electrolysis of copper chloride</strong> using half equations</span>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-check">✓</div>
+                    <span>Explain the process of <strong>electroplating</strong></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Overview -->
+        <section id="overview" class="card card-3d">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-icon">📋</div>
+                <h2 class="section-title">Overview</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="info-box">
+                    <h4>📌 Pre-Knowledge Required</h4>
+                    <p>This lesson builds on your understanding of:</p>
+                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                        <li>Oxidation and reduction half reactions</li>
+                        <li>Galvanic cells</li>
+                        <li>Electrolytic cells</li>
+                        <li>Standard electrode potentials</li>
+                    </ul>
+                </div>
+
+                <p style="line-height: 1.8; color: #374151; margin: 1.5rem 0;">
+                    In this lesson, we will learn how to <strong>predict</strong> which electrode will be the anode (oxidation) and which will be the cathode (reduction) when two half cells are connected. We will also explore the practical application of electrolysis in the <strong>decomposition of copper chloride</strong> and the process of <strong>electroplating</strong>.
+                </p>
+            </div>
+        </section>
+
+        <!-- Predicting Anode and Cathode -->
+        <section id="predicting" class="card card-3d">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-icon teal">🔮</div>
+                <h2 class="section-title">Predicting the Anode and Cathode</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <p style="margin-bottom: 1.5rem; color: #374151;">
+                    The Table of Standard Electrode Potentials is organized in a specific order that helps us predict which electrode will be the anode and which will be the cathode in a galvanic cell.
+                </p>
+
+                <div class="definition-box">
+                    <div class="definition-title">📝 Key Principle</div>
+                    <p>The Table of Standard Electrode Potentials is arranged from the <strong>most negative E° value at the top</strong> to the <strong>most positive E° value at the bottom</strong>.</p>
+                </div>
+
+                <div class="concepts-grid">
+                    <div class="concept-card anode">
+                        <div class="concept-icon">⬆️</div>
+                        <h4>More Negative E° (Top of Table)</h4>
+                        <ul style="margin: 0; padding-left: 1.5rem; line-height: 2;">
+                            <li><strong>Stronger reducing agent</strong></li>
+                            <li>Metal is more easily <strong>oxidised</strong></li>
+                            <li>Will be the <strong>ANODE</strong></li>
+                            <li>Loses electrons more readily</li>
+                        </ul>
+                    </div>
+                    <div class="concept-card cathode">
+                        <div class="concept-icon">⬇️</div>
+                        <h4>More Positive E° (Bottom of Table)</h4>
+                        <ul style="margin: 0; padding-left: 1.5rem; line-height: 2;">
+                            <li><strong>Stronger oxidising agent</strong></li>
+                            <li>Metal ions are more easily <strong>reduced</strong></li>
+                            <li>Will be the <strong>CATHODE</strong></li>
+                            <li>Gains electrons more readily</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 class="sub-header">Reference: Standard Electrode Potentials</h3>
+                <table class="potentials-table">
+                    <thead>
+                        <tr>
+                            <th>Half-Reaction (Reduction)</th>
+                            <th>E° (V)</th>
+                            <th>Tendency</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: left;">Mg²⁺ + 2e⁻ → Mg</td>
+                            <td class="negative-val">-2.37</td>
+                            <td>Strong reducing agent (easily oxidised) ↑</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">Al³⁺ + 3e⁻ → Al</td>
+                            <td class="negative-val">-1.66</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">Zn²⁺ + 2e⁻ → Zn</td>
+                            <td class="negative-val">-0.76</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">Fe²⁺ + 2e⁻ → Fe</td>
+                            <td class="negative-val">-0.44</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">Pb²⁺ + 2e⁻ → Pb</td>
+                            <td class="negative-val">-0.13</td>
+                            <td></td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td style="text-align: left;">2H⁺ + 2e⁻ → H₂</td>
+                            <td>0.00</td>
+                            <td>← Reference</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">Cu²⁺ + 2e⁻ → Cu</td>
+                            <td class="positive-val">+0.34</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">Ag⁺ + e⁻ → Ag</td>
+                            <td class="positive-val">+0.80</td>
+                            <td>Strong oxidising agent (easily reduced) ↓</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="warning-box">
+                    <h4>💡 Quick Method to Predict Electrodes</h4>
+                    <ol style="margin: 0; padding-left: 1.5rem; line-height: 2;">
+                        <li>Look up the E° values for both metals</li>
+                        <li>The metal with the <strong>more negative (or less positive) E°</strong> → <strong>ANODE</strong> (oxidation)</li>
+                        <li>The metal with the <strong>more positive (or less negative) E°</strong> → <strong>CATHODE</strong> (reduction)</li>
+                    </ol>
+                </div>
+
+                <h3 class="sub-header">Worked Examples</h3>
+
+                <div class="worked-example">
+                    <div class="example-title">Example 1: Magnesium and Iron Cell</div>
+                    <div class="step">
+                        <strong>Step 1:</strong> Look up E° values<br>
+                        Mg²⁺/Mg: E° = -2.37 V<br>
+                        Fe²⁺/Fe: E° = -0.44 V
+                    </div>
+                    <div class="step">
+                        <strong>Step 2:</strong> Compare values<br>
+                        Mg has the more negative E° value (-2.37 < -0.44)
+                    </div>
+                    <div class="step">
+                        <strong>Step 3:</strong> Predict electrodes<br>
+                        <span style="color: #ef4444;"><strong>Anode:</strong> Mg (oxidation)</span> → Mg → Mg²⁺ + 2e⁻<br>
+                        <span style="color: #3b82f6;"><strong>Cathode:</strong> Fe (reduction)</span> → Fe²⁺ + 2e⁻ → Fe
+                    </div>
+                </div>
+
+                <div class="worked-example">
+                    <div class="example-title">Example 2: Lead and Iron Cell</div>
+                    <div class="step">
+                        <strong>Step 1:</strong> Look up E° values<br>
+                        Pb²⁺/Pb: E° = -0.13 V<br>
+                        Fe²⁺/Fe: E° = -0.44 V
+                    </div>
+                    <div class="step">
+                        <strong>Step 2:</strong> Compare values<br>
+                        Fe has the more negative E° value (-0.44 < -0.13)
+                    </div>
+                    <div class="step">
+                        <strong>Step 3:</strong> Predict electrodes<br>
+                        <span style="color: #ef4444;"><strong>Anode:</strong> Fe (oxidation)</span> → Fe → Fe²⁺ + 2e⁻<br>
+                        <span style="color: #3b82f6;"><strong>Cathode:</strong> Pb (reduction)</span> → Pb²⁺ + 2e⁻ → Pb
+                    </div>
+                </div>
+
+                <div class="worked-example">
+                    <div class="example-title">Example 3: Iron and Copper Cell</div>
+                    <div class="step">
+                        <strong>Step 1:</strong> Look up E° values<br>
+                        Fe²⁺/Fe: E° = -0.44 V<br>
+                        Cu²⁺/Cu: E° = +0.34 V
+                    </div>
+                    <div class="step">
+                        <strong>Step 2:</strong> Compare values<br>
+                        Fe has the more negative E° value (-0.44 < +0.34)
+                    </div>
+                    <div class="step">
+                        <strong>Step 3:</strong> Predict electrodes<br>
+                        <span style="color: #ef4444;"><strong>Anode:</strong> Fe (oxidation)</span> → Fe → Fe²⁺ + 2e⁻<br>
+                        <span style="color: #3b82f6;"><strong>Cathode:</strong> Cu (reduction)</span> → Cu²⁺ + 2e⁻ → Cu
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Decomposition of Copper Chloride -->
+        <section id="cucl2" class="card card-3d">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-icon orange">🧪</div>
+                <h2 class="section-title">Decomposition of Copper(II) Chloride</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="definition-box">
+                    <div class="definition-title">🔬 Aim</div>
+                    <p>To investigate the use of an electrolytic cell for the decomposition of copper(II) chloride solution.</p>
+                </div>
+
+                <h3 class="sub-header">Observations</h3>
+                <div class="concepts-grid">
+                    <div class="concept-card cathode">
+                        <div class="concept-icon">🟤</div>
+                        <h4>At the Cathode (−)</h4>
+                        <p>The cathode is coated with a small layer of <strong>red-brown copper</strong>.</p>
+                    </div>
+                    <div class="concept-card anode">
+                        <div class="concept-icon">💨</div>
+                        <h4>At the Anode (+)</h4>
+                        <p><strong>Chlorine gas</strong> with a pungent odour is released.</p>
+                    </div>
+                </div>
+
+                <h3 class="sub-header">Electrode Reactions</h3>
+                <div class="chemical-eq oxidation">
+                    <strong>Oxidation (Anode):</strong> 2Cl⁻ → Cl₂ + 2e⁻
+                </div>
+                <div class="chemical-eq reduction">
+                    <strong>Reduction (Cathode):</strong> Cu²⁺ + 2e⁻ → Cu
+                </div>
+
+                <div class="info-box">
+                    <h4>📝 Explanation</h4>
+                    <p><strong>At the Cathode:</strong> The cations (Cu²⁺) are attracted to the negative cathode where they receive electrons from the power source. By taking up electrons, the Cu²⁺ cation loses its positive charge and becomes copper metal.</p>
+                    <p style="margin-top: 0.5rem;"><strong>At the Anode:</strong> The anions (Cl⁻) are attracted to the positive anode where they release electrons. Two chloride ions combine to form chlorine gas.</p>
+                </div>
+
+                <h3 class="sub-header">Guidelines for Predicting Electrolysis Products</h3>
+                <div class="guideline-box">
+                    <div class="guideline-title">🔮 General Guidelines</div>
+                    <div class="guideline-item">
+                        <div class="guideline-bullet"></div>
+                        <span>Metals with a <strong>positive E° reduction potential</strong> will form at the cathode. Otherwise, <strong>hydrogen</strong> will be formed from the reduction of water.</span>
+                    </div>
+                    <div class="guideline-item">
+                        <div class="guideline-bullet"></div>
+                        <span><strong>Halogens</strong> form at the anode when a concentrated solution of a soluble salt of a halide undergoes electrolysis.</span>
+                    </div>
+                    <div class="guideline-item">
+                        <div class="guideline-bullet"></div>
+                        <span>A <strong>sulfate ion</strong> is not oxidised in aqueous solution. Instead, <strong>oxygen</strong> is formed through oxidation of water or OH⁻ ions.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Electroplating -->
+        <section id="electroplating" class="card card-3d">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-icon rose">⚡</div>
+                <h2 class="section-title">Electroplating</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="definition-box">
+                    <div class="definition-title">📝 What is Electroplating?</div>
+                    <p><strong>Electroplating</strong> is a process where a thin layer of metal is deposited on another metal, either for <strong>protection against oxidation</strong> (rusting) or for <strong>appearance</strong> (aesthetic purposes).</p>
+                </div>
+
+                <h3 class="sub-header">Common Applications</h3>
+                <div class="concepts-grid">
+                    <div class="concept-card">
+                        <div class="concept-icon">🥄</div>
+                        <h4>Silver Plating</h4>
+                        <p>Cutlery, jewelry, and decorative items are often plated with silver for appearance.</p>
+                    </div>
+                    <div class="concept-card">
+                        <div class="concept-icon">🔧</div>
+                        <h4>Chromium Plating</h4>
+                        <p>Car parts, taps, and tools are chrome-plated for corrosion resistance and shine.</p>
+                    </div>
+                    <div class="concept-card">
+                        <div class="concept-icon">💍</div>
+                        <h4>Gold Plating</h4>
+                        <p>Jewelry and electronics are gold-plated for appearance and conductivity.</p>
+                    </div>
+                </div>
+
+                <h3 class="sub-header">How Electroplating Works</h3>
+                <div class="info-box">
+                    <h4>🔌 Setup for Silver Electroplating</h4>
+                    <ul style="margin: 0; padding-left: 1.5rem; line-height: 2;">
+                        <li><strong>Anode:</strong> The pure metal electrode (e.g., pure silver)</li>
+                        <li><strong>Cathode:</strong> The object to be coated (e.g., brass or nickel spoon)</li>
+                        <li><strong>Electrolyte:</strong> A solution containing ions of the plating metal (e.g., silver nitrate + potassium cyanide)</li>
+                    </ul>
+                </div>
+
+                <h3 class="sub-header">Electrode Reactions in Silver Plating</h3>
+                <div class="chemical-eq oxidation">
+                    <strong>At the Anode:</strong> Ag(s) → Ag⁺(aq) + e⁻
+                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">Silver dissolves into the solution</p>
+                </div>
+                <div class="chemical-eq reduction">
+                    <strong>At the Cathode:</strong> Ag⁺(aq) + e⁻ → Ag(s)
+                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">Silver deposits onto the object</p>
+                </div>
+
+                <div class="warning-box">
+                    <h4>💡 Key Point</h4>
+                    <p>In electroplating, the <strong>same metal is both oxidised and reduced</strong>. The anode dissolves while the cathode gets coated. This maintains a constant concentration of metal ions in the electrolyte.</p>
+                </div>
+
+                <div class="info-box">
+                    <h4>🧪 Role of Cyanide</h4>
+                    <p>The cyanide in the electrolyte ensures that there is a <strong>low concentration of silver ions</strong>, which is essential for <strong>effective, even electroplating</strong>. A lower ion concentration results in a smoother, more uniform coating.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Simulations -->
+        <section id="simulation" class="card">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-icon purple">🔬</div>
+                <h2 class="section-title">Interactive Simulations</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <!-- Electrode Prediction Tool -->
+                <div class="simulation-container">
+                    <h3 class="simulation-title">🔮 Electrode Prediction Tool</h3>
+                    <p style="text-align: center; margin-bottom: 1.5rem; opacity: 0.8;">
+                        Select two metals and predict which will be the anode and cathode
+                    </p>
+
+                    <div class="prediction-tool">
+                        <div class="metal-selector">
+                            <div class="metal-select-group">
+                                <label>Metal 1:</label>
+                                <select id="metal1" onchange="predictElectrodes()">
+                                    <option value="Mg" data-eo="-2.37">Magnesium (Mg)</option>
+                                    <option value="Al" data-eo="-1.66">Aluminium (Al)</option>
+                                    <option value="Zn" data-eo="-0.76" selected>Zinc (Zn)</option>
+                                    <option value="Fe" data-eo="-0.44">Iron (Fe)</option>
+                                    <option value="Pb" data-eo="-0.13">Lead (Pb)</option>
+                                    <option value="Cu" data-eo="0.34">Copper (Cu)</option>
+                                    <option value="Ag" data-eo="0.80">Silver (Ag)</option>
+                                </select>
+                            </div>
+                            <div class="metal-select-group">
+                                <label>Metal 2:</label>
+                                <select id="metal2" onchange="predictElectrodes()">
+                                    <option value="Mg" data-eo="-2.37">Magnesium (Mg)</option>
+                                    <option value="Al" data-eo="-1.66">Aluminium (Al)</option>
+                                    <option value="Zn" data-eo="-0.76">Zinc (Zn)</option>
+                                    <option value="Fe" data-eo="-0.44">Iron (Fe)</option>
+                                    <option value="Pb" data-eo="-0.13">Lead (Pb)</option>
+                                    <option value="Cu" data-eo="0.34" selected>Copper (Cu)</option>
+                                    <option value="Ag" data-eo="0.80">Silver (Ag)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="prediction-output" id="predictionOutput">
+                            <!-- Results will be displayed here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CuCl2 Electrolysis Simulation -->
+                <div class="simulation-container" style="background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%); margin-top: 1.5rem;">
+                    <h3 class="simulation-title">🧪 Electrolysis of CuCl₂ Simulator</h3>
+                    <p style="text-align: center; margin-bottom: 1.5rem; opacity: 0.8;">
+                        Watch copper deposit at the cathode and chlorine gas form at the anode
+                    </p>
+
+                    <div class="electrolysis-diagram" id="cuclDiagram">
+                        <!-- Power source -->
+                        <div class="power-source">DC ⚡</div>
+                        
+                        <!-- Wires -->
+                        <div class="wire-top left"></div>
+                        <div class="wire-top right"></div>
+                        <div class="wire-vertical left"></div>
+                        <div class="wire-vertical right"></div>
+                        
+                        <!-- Beaker -->
+                        <div class="electrolysis-beaker copper-solution" id="cuclBeaker">
+                            <!-- Electrodes -->
+                            <div class="graphite-electrode left" id="cuclAnode">
+                                <div class="electrode-label" style="color: #ef4444;">Anode (+)</div>
+                            </div>
+                            <div class="graphite-electrode right" id="cuclCathode">
+                                <div class="electrode-label" style="color: #60a5fa;">Cathode (−)</div>
+                                <div class="copper-deposit" id="copperDeposit"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Labels -->
+                        <div style="position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; opacity: 0.8;">
+                            CuCl₂ Solution
+                        </div>
+                    </div>
+
+                    <div class="sim-controls">
+                        <button class="sim-btn" onclick="startCuClElectrolysis()">▶️ Start Electrolysis</button>
+                        <button class="sim-btn secondary" onclick="stopCuClElectrolysis()">⏹️ Stop</button>
+                        <button class="sim-btn warning" onclick="resetCuClElectrolysis()">🔄 Reset</button>
+                    </div>
+
+                    <div class="sim-result" id="cuclResult">
+                        <div id="cuclExplanation" style="text-align: center;">
+                            <p>Click <strong>Start Electrolysis</strong> to observe the decomposition of CuCl₂.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Electroplating Simulation -->
+                <div class="simulation-container" style="background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%); margin-top: 1.5rem;">
+                    <h3 class="simulation-title">⚡ Silver Electroplating Simulator</h3>
+                    <p style="text-align: center; margin-bottom: 1.5rem; opacity: 0.8;">
+                        Watch a brass object get coated with silver
+                    </p>
+
+                    <div class="electroplating-container" id="platingDiagram">
+                        <!-- Power source -->
+                        <div class="power-source">DC ⚡</div>
+                        
+                        <!-- Wires -->
+                        <div class="wire-top left" style="left: 70px; width: calc(50% - 110px);"></div>
+                        <div class="wire-top right" style="right: 80px; width: calc(50% - 120px);"></div>
+                        <div class="wire-vertical left" style="left: 68px;"></div>
+                        <div class="wire-vertical right" style="right: 78px;"></div>
+                        
+                        <!-- Beaker -->
+                        <div class="plating-beaker">
+                            <!-- Anode: Pure silver bar -->
+                            <div class="plating-electrode anode-silver" id="silverAnode">
+                                <div class="electrode-label" style="color: #ef4444;">Ag Anode (+)</div>
+                            </div>
+                            
+                            <!-- Cathode: Object to be plated -->
+                            <div class="plating-electrode cathode-object" id="brassObject">
+                                <div class="silver-coating" id="silverCoating"></div>
+                                <div class="electrode-label" style="color: #60a5fa; right: -20px;">Object (−)</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Labels -->
+                        <div style="position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; opacity: 0.8;">
+                            AgNO₃ + KCN Solution
+                        </div>
+                    </div>
+
+                    <div class="sim-controls">
+                        <button class="sim-btn" onclick="startPlating()">▶️ Start Plating</button>
+                        <button class="sim-btn secondary" onclick="stopPlating()">⏹️ Stop</button>
+                        <button class="sim-btn warning" onclick="resetPlating()">🔄 Reset</button>
+                    </div>
+
+                    <div class="sim-result" id="platingResult">
+                        <div id="platingExplanation" style="text-align: center;">
+                            <p>Click <strong>Start Plating</strong> to observe silver electroplating in action.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercises -->
+        <section id="exercises" class="card card-3d">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-icon cyan">📝</div>
+                <h2 class="section-title">Exercises</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="exercise-box">
+                    <div class="exercise-title">Exercise 1: Identifying the Cathode</div>
+                    <p style="margin-bottom: 1rem;">The following combinations of metals are used in galvanic cells. Identify the cathode in each combination and write down the half reaction taking place at the cathode.</p>
+                    
+                    <div style="margin-bottom: 1rem; padding: 1rem; background: white; border-radius: 10px;">
+                        <strong>1.1 Magnesium and Iron</strong><br>
+                        <span style="color: var(--purple);">Metal acting as cathode: <strong>Fe</strong></span><br>
+                        <span style="color: var(--purple);">Reaction: Fe²⁺ + 2e⁻ → Fe</span>
+                    </div>
+                    
+                    <div style="margin-bottom: 1rem; padding: 1rem; background: white; border-radius: 10px;">
+                        <strong>1.2 Lead and Iron</strong><br>
+                        <span style="color: var(--purple);">Metal acting as cathode: <strong>Pb</strong></span><br>
+                        <span style="color: var(--purple);">Reaction: Pb²⁺ + 2e⁻ → Pb</span>
+                    </div>
+                    
+                    <div style="padding: 1rem; background: white; border-radius: 10px;">
+                        <strong>1.3 Iron and Copper</strong><br>
+                        <span style="color: var(--purple);">Metal acting as cathode: <strong>Cu</strong></span><br>
+                        <span style="color: var(--purple);">Reaction: Cu²⁺ + 2e⁻ → Cu</span>
+                    </div>
+                </div>
+
+                <div class="exercise-box">
+                    <div class="exercise-title">Exercise 2: Identifying the Anode</div>
+                    <p style="margin-bottom: 1rem;">The following metals are paired in galvanic cells. Identify the anode in each combination and write down the half reaction taking place at the anode.</p>
+                    
+                    <div style="margin-bottom: 1rem; padding: 1rem; background: white; border-radius: 10px;">
+                        <strong>2.1 Copper and Zinc</strong><br>
+                        <span style="color: var(--purple);">Anode: <strong>Zn</strong></span><br>
+                        <span style="color: var(--purple);">Reaction: Zn → Zn²⁺ + 2e⁻</span>
+                    </div>
+                    
+                    <div style="margin-bottom: 1rem; padding: 1rem; background: white; border-radius: 10px;">
+                        <strong>2.2 Magnesium and Copper</strong><br>
+                        <span style="color: var(--purple);">Anode: <strong>Mg</strong></span><br>
+                        <span style="color: var(--purple);">Reaction: Mg → Mg²⁺ + 2e⁻</span>
+                    </div>
+                    
+                    <div style="padding: 1rem; background: white; border-radius: 10px;">
+                        <strong>2.3 Aluminium and Zinc</strong><br>
+                        <span style="color: var(--purple);">Anode: <strong>Al</strong></span><br>
+                        <span style="color: var(--purple);">Reaction: Al → Al³⁺ + 3e⁻</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Questions Section -->
+        <section id="questions" class="card card-3d">
+            <div class="section-header" onclick="toggleSection(this)">
+                <div class="section-icon">✍️</div>
+                <h2 class="section-title">End of Lesson Questions</h2>
+                <span class="collapse-icon">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+                </div>
+                <p style="color: #64748b; margin-bottom: 1.5rem;">Answer all questions to test your understanding. You'll receive immediate feedback!</p>
+
+                <div id="questionsContainer">
+                    <!-- Questions will be generated by JavaScript -->
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="submit-btn" onclick="submitQuiz()">Submit Answers</button>
+                    <button class="submit-btn reset-btn" onclick="resetQuiz()">Reset Quiz</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Score Section -->
+        <section id="score" class="score-container" style="display: none;">
+            <h3 class="score-title">Your Results</h3>
+            <div class="score-circle">
+                <div class="score-percentage" id="scorePercentage">0%</div>
+                <div class="score-label" id="scoreLabel">0/12</div>
+            </div>
+            <p class="score-message" id="scoreMessage">Complete the quiz to see your results!</p>
+        </section>
+
+        <!-- Navigation Buttons -->
+        <div class="lesson-nav">
+            <button class="nav-btn prev" onclick="navigateLesson('prev')">
+                ← Previous Lesson
+            </button>
+            <button class="nav-btn next" onclick="navigateLesson('next')">
+                Next Lesson →
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2026 PassProof Academy. All rights reserved.</p>
+        <p style="opacity: 0.6; font-size: 0.9rem; margin-top: 0.5rem;">Empowering Education Through Technology</p>
+    </footer>
+
+    <script>
+        // Questions Data
+        const questions = [
+            {
+                id: 1,
+                question: "In a galvanic cell, the metal with the more negative E° value will be the:",
+                options: [
+                    "Cathode (reduction)",
+                    "Anode (oxidation)",
+                    "Salt bridge",
+                    "Neither electrode"
+                ],
+                correct: 1,
+                explanation: "The metal with the more negative E° value is a stronger reducing agent and will undergo oxidation at the anode."
+            },
+            {
+                id: 2,
+                question: "In a Magnesium-Iron galvanic cell, which metal is the cathode?",
+                options: [
+                    "Magnesium",
+                    "Iron",
+                    "Both equally",
+                    "Neither"
+                ],
+                correct: 1,
+                explanation: "Iron has a less negative E° value (-0.44 V) than Magnesium (-2.37 V), so iron ions are more easily reduced, making Fe the cathode."
+            },
+            {
+                id: 3,
+                question: "What is the half-reaction at the cathode in a Copper-Zinc cell?",
+                options: [
+                    "Zn → Zn²⁺ + 2e⁻",
+                    "Cu → Cu²⁺ + 2e⁻",
+                    "Cu²⁺ + 2e⁻ → Cu",
+                    "Zn²⁺ + 2e⁻ → Zn"
+                ],
+                correct: 2,
+                explanation: "Copper has a positive E° value (+0.34 V), so Cu²⁺ ions are reduced at the cathode: Cu²⁺ + 2e⁻ → Cu"
+            },
+            {
+                id: 4,
+                question: "In the electrolysis of CuCl₂, what is observed at the cathode?",
+                options: [
+                    "Green-yellow gas bubbles",
+                    "Brown-red copper metal deposits",
+                    "Hydrogen gas bubbles",
+                    "No observable change"
+                ],
+                correct: 1,
+                explanation: "At the cathode, Cu²⁺ ions are reduced to copper metal, which appears as a red-brown deposit on the electrode."
+            },
+            {
+                id: 5,
+                question: "In the electrolysis of CuCl₂, what is the oxidation half-reaction at the anode?",
+                options: [
+                    "Cu²⁺ + 2e⁻ → Cu",
+                    "Cu → Cu²⁺ + 2e⁻",
+                    "2Cl⁻ → Cl₂ + 2e⁻",
+                    "Cl₂ + 2e⁻ → 2Cl⁻"
+                ],
+                correct: 2,
+                explanation: "At the anode, chloride ions are oxidised to form chlorine gas: 2Cl⁻ → Cl₂ + 2e⁻"
+            },
+            {
+                id: 6,
+                question: "What is electroplating used for?",
+                options: [
+                    "Generating electricity",
+                    "Coating metals for protection or appearance",
+                    "Dissolving metals",
+                    "Measuring electrode potentials"
+                ],
+                correct: 1,
+                explanation: "Electroplating deposits a thin layer of metal on another metal for protection against corrosion or for aesthetic purposes."
+            },
+            {
+                id: 7,
+                question: "In silver electroplating, what acts as the anode?",
+                options: [
+                    "The object to be coated",
+                    "A graphite electrode",
+                    "Pure silver metal",
+                    "A copper electrode"
+                ],
+                correct: 2,
+                explanation: "In electroplating, the pure metal (in this case silver) acts as the anode and dissolves into the solution."
+            },
+            {
+                id: 8,
+                question: "In electroplating, what happens to the anode?",
+                options: [
+                    "It gains mass as metal deposits",
+                    "It loses mass as metal dissolves",
+                    "It remains unchanged",
+                    "It produces gas"
+                ],
+                correct: 1,
+                explanation: "The anode (pure metal) dissolves into the solution as it is oxidised, so it loses mass during electroplating."
+            },
+            {
+                id: 9,
+                question: "In an Aluminium-Zinc galvanic cell, which metal is the anode?",
+                options: [
+                    "Zinc",
+                    "Aluminium",
+                    "Both equally",
+                    "Neither"
+                ],
+                correct: 1,
+                explanation: "Aluminium has a more negative E° value (-1.66 V) than Zinc (-0.76 V), so Al is oxidised at the anode: Al → Al³⁺ + 3e⁻"
+            },
+            {
+                id: 10,
+                question: "If a metal has a positive E° reduction potential, what forms at the cathode during electrolysis?",
+                options: [
+                    "Hydrogen gas",
+                    "Oxygen gas",
+                    "The metal",
+                    "Water"
+                ],
+                correct: 2,
+                explanation: "Metals with positive E° values are more easily reduced than water, so the metal will deposit at the cathode."
+            },
+            {
+                id: 11,
+                question: "What forms at the anode during the electrolysis of a concentrated halide solution?",
+                options: [
+                    "Hydrogen gas",
+                    "The halogen (Cl₂, Br₂, or I₂)",
+                    "Oxygen gas",
+                    "The metal"
+                ],
+                correct: 1,
+                explanation: "Halide ions are oxidised at the anode to form halogen molecules: 2X⁻ → X₂ + 2e⁻"
+            },
+            {
+                id: 12,
+                question: "What is unique about the electroplating process regarding oxidation and reduction?",
+                options: [
+                    "Only oxidation occurs",
+                    "Only reduction occurs",
+                    "The same metal is both oxidised and reduced",
+                    "No redox reactions occur"
+                ],
+                correct: 2,
+                explanation: "In electroplating, the same metal is oxidised at the anode (dissolving) and reduced at the cathode (depositing), maintaining a constant ion concentration."
+            }
+        ];
+
+        let userAnswers = {};
+        let quizSubmitted = false;
+        let cuclInterval = null;
+        let platingInterval = null;
+        let cuclRunning = false;
+        let platingRunning = false;
+
+        // Metal data for predictions
+        const metalData = {
+            'Mg': { eo: -2.37, charge: '2+' },
+            'Al': { eo: -1.66, charge: '3+' },
+            'Zn': { eo: -0.76, charge: '2+' },
+            'Fe': { eo: -0.44, charge: '2+' },
+            'Pb': { eo: -0.13, charge: '2+' },
+            'Cu': { eo: 0.34, charge: '2+' },
+            'Ag': { eo: 0.80, charge: '+' }
+        };
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderQuestions();
+            loadProgress();
+            predictElectrodes();
+        });
+
+        // Toggle dropdown menu
+        function toggleDropdown() {
+            const menu = document.getElementById('dropdownMenu');
+            menu.classList.toggle('active');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const dropdown = document.querySelector('.dropdown');
+            if (!dropdown.contains(e.target)) {
+                document.getElementById('dropdownMenu').classList.remove('active');
+            }
+        });
+
+        // Toggle collapsible sections
+        function toggleSection(header) {
+            header.classList.toggle('collapsed');
+            const content = header.nextElementSibling;
+            content.classList.toggle('collapsed');
+        }
+
+        // Predict electrodes
+        function predictElectrodes() {
+            const metal1 = document.getElementById('metal1').value;
+            const metal2 = document.getElementById('metal2').value;
+
+            if (metal1 === metal2) {
+                document.getElementById('predictionOutput').innerHTML = `
+                    <p style="color: #fbbf24;">⚠️ Please select two different metals.</p>
+                `;
+                return;
+            }
+
+            const eo1 = metalData[metal1].eo;
+            const eo2 = metalData[metal2].eo;
+            const charge1 = metalData[metal1].charge;
+            const charge2 = metalData[metal2].charge;
+
+            let anode, cathode, anodeEo, cathodeEo, anodeCharge, cathodeCharge;
+
+            if (eo1 < eo2) {
+                anode = metal1;
+                cathode = metal2;
+                anodeEo = eo1;
+                cathodeEo = eo2;
+                anodeCharge = charge1;
+                cathodeCharge = charge2;
+            } else {
+                anode = metal2;
+                cathode = metal1;
+                anodeEo = eo2;
+                cathodeEo = eo1;
+                anodeCharge = charge2;
+                cathodeCharge = charge1;
+            }
+
+            const electrons = anodeCharge === '+' ? 'e⁻' : (anodeCharge === '2+' ? '2e⁻' : '3e⁻');
+            const cathodeElectrons = cathodeCharge === '+' ? 'e⁻' : (cathodeCharge === '2+' ? '2e⁻' : '3e⁻');
+
+            document.getElementById('predictionOutput').innerHTML = `
+                <h4 style="color: #22d3ee; margin-bottom: 1rem;">Prediction Results</h4>
+                <p style="margin-bottom: 0.5rem;">E°(${metal1}) = ${eo1.toFixed(2)} V | E°(${metal2}) = ${eo2.toFixed(2)} V</p>
+                <p style="margin-bottom: 1rem; opacity: 0.8;">${anode} has the more negative E° value</p>
+                
+                <div class="electrode-result">
+                    <div class="result-box anode-result">
+                        <h5 style="color: #ef4444; margin-bottom: 0.5rem;">ANODE (Oxidation)</h5>
+                        <p><strong>${anode}</strong></p>
+                        <p style="font-family: serif; margin-top: 0.5rem;">${anode} → ${anode}${anodeCharge} + ${electrons}</p>
+                    </div>
+                    <div class="result-box cathode-result">
+                        <h5 style="color: #60a5fa; margin-bottom: 0.5rem;">CATHODE (Reduction)</h5>
+                        <p><strong>${cathode}</strong></p>
+                        <p style="font-family: serif; margin-top: 0.5rem;">${cathode}${cathodeCharge} + ${cathodeElectrons} → ${cathode}</p>
+                    </div>
+                </div>
+                
+                <p style="margin-top: 1rem; color: #fbbf24;">
+                    E°<sub>cell</sub> = ${cathodeEo.toFixed(2)} − (${anodeEo.toFixed(2)}) = ${(cathodeEo - anodeEo).toFixed(2)} V
+                </p>
+            `;
+        }
+
+        // CuCl2 Electrolysis Simulation
+        function startCuClElectrolysis() {
+            if (cuclRunning) return;
+            cuclRunning = true;
+
+            const beaker = document.getElementById('cuclBeaker');
+            let copperHeight = 0;
+
+            // Add bubbles at anode (chlorine)
+            cuclInterval = setInterval(() => {
+                // Create chlorine bubble
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                bubble.style.left = (60 + Math.random() * 16) + 'px';
+                bubble.style.bottom = '40px';
+                bubble.style.background = 'rgba(144, 238, 144, 0.8)';
+                bubble.style.animationDelay = Math.random() * 0.3 + 's';
+                beaker.appendChild(bubble);
+                setTimeout(() => bubble.remove(), 1500);
+
+                // Increase copper deposit
+                if (copperHeight < 50) {
+                    copperHeight += 1;
+                    document.getElementById('copperDeposit').style.height = copperHeight + 'px';
+                }
+            }, 200);
+
+            document.getElementById('cuclExplanation').innerHTML = `
+                <h4 style="color: #22d3ee; margin-bottom: 0.5rem;">⚡ Electrolysis in Progress!</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; text-align: left;">
+                    <div style="background: rgba(239,68,68,0.2); padding: 0.75rem; border-radius: 8px;">
+                        <strong style="color: #ef4444;">At the Anode (+):</strong><br>
+                        2Cl⁻ → Cl₂ + 2e⁻<br>
+                        <small>Green-yellow chlorine gas bubbles off</small>
+                    </div>
+                    <div style="background: rgba(96,165,250,0.2); padding: 0.75rem; border-radius: 8px;">
+                        <strong style="color: #60a5fa;">At the Cathode (−):</strong><br>
+                        Cu²⁺ + 2e⁻ → Cu<br>
+                        <small>Red-brown copper deposits</small>
+                    </div>
+                </div>
+            `;
+        }
+
+        function stopCuClElectrolysis() {
+            cuclRunning = false;
+            if (cuclInterval) {
+                clearInterval(cuclInterval);
+                cuclInterval = null;
+            }
+        }
+
+        function resetCuClElectrolysis() {
+            stopCuClElectrolysis();
+            document.getElementById('copperDeposit').style.height = '0';
+            document.querySelectorAll('#cuclBeaker .bubble').forEach(b => b.remove());
+            document.getElementById('cuclExplanation').innerHTML = `
+                <p>Click <strong>Start Electrolysis</strong> to observe the decomposition of CuCl₂.</p>
+            `;
+        }
+
+        // Electroplating Simulation
+        function startPlating() {
+            if (platingRunning) return;
+            platingRunning = true;
+
+            const container = document.querySelector('.plating-beaker');
+            let coatingOpacity = 0;
+            let anodeWidth = 20;
+
+            platingInterval = setInterval(() => {
+                // Create moving ion
+                if (Math.random() > 0.5) {
+                    const ion = document.createElement('div');
+                    ion.className = 'ion-particle';
+                    ion.textContent = 'Ag⁺';
+                    ion.style.left = (70 + Math.random() * 20) + 'px';
+                    ion.style.top = (40 + Math.random() * 60) + 'px';
+                    ion.style.animation = 'moveToRight 1s ease-out forwards';
+                    container.appendChild(ion);
+                    setTimeout(() => ion.remove(), 1000);
+                }
+
+                // Increase coating
+                if (coatingOpacity < 0.9) {
+                    coatingOpacity += 0.02;
+                    document.getElementById('silverCoating').style.opacity = coatingOpacity;
+                }
+
+                // Decrease anode
+                if (anodeWidth > 12) {
+                    anodeWidth -= 0.1;
+                    document.getElementById('silverAnode').style.width = anodeWidth + 'px';
+                }
+            }, 100);
+
+            // Add CSS animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes moveToRight {
+                    0% { transform: translateX(0); opacity: 1; }
+                    100% { transform: translateX(120px); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+
+            document.getElementById('platingExplanation').innerHTML = `
+                <h4 style="color: #22d3ee; margin-bottom: 0.5rem;">⚡ Silver Plating in Progress!</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; text-align: left;">
+                    <div style="background: rgba(239,68,68,0.2); padding: 0.75rem; border-radius: 8px;">
+                        <strong style="color: #ef4444;">At the Anode:</strong><br>
+                        Ag(s) → Ag⁺(aq) + e⁻<br>
+                        <small>Silver dissolves into solution</small>
+                    </div>
+                    <div style="background: rgba(96,165,250,0.2); padding: 0.75rem; border-radius: 8px;">
+                        <strong style="color: #60a5fa;">At the Cathode:</strong><br>
+                        Ag⁺(aq) + e⁻ → Ag(s)<br>
+                        <small>Silver deposits on the object</small>
+                    </div>
+                </div>
+                <p style="margin-top: 0.75rem; color: #fbbf24; font-size: 0.9rem;">The same metal (Ag) is oxidised at the anode and reduced at the cathode!</p>
+            `;
+        }
+
+        function stopPlating() {
+            platingRunning = false;
+            if (platingInterval) {
+                clearInterval(platingInterval);
+                platingInterval = null;
+            }
+        }
+
+        function resetPlating() {
+            stopPlating();
+            document.getElementById('silverCoating').style.opacity = '0';
+            document.getElementById('silverAnode').style.width = '20px';
+            document.querySelectorAll('.plating-beaker .ion-particle').forEach(i => i.remove());
+            document.getElementById('platingExplanation').innerHTML = `
+                <p>Click <strong>Start Plating</strong> to observe silver electroplating in action.</p>
+            `;
+        }
+
+        // Render questions
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            questions.forEach((q, index) => {
+                const questionCard = document.createElement('div');
+                questionCard.className = 'question-card';
+                questionCard.id = `question-${q.id}`;
+                
+                let optionsHTML = '';
+                q.options.forEach((option, optIndex) => {
+                    optionsHTML += `
+                        <label class="option-label" id="option-${q.id}-${optIndex}">
+                            <input type="radio" name="q${q.id}" value="${optIndex}" 
+                                onchange="selectAnswer(${q.id}, ${optIndex})"
+                                ${quizSubmitted ? 'disabled' : ''}>
+                            <span>${option}</span>
+                        </label>
+                    `;
+                });
+
+                questionCard.innerHTML = `
+                    <div style="display: flex; align-items: flex-start;">
+                        <span class="question-number">${index + 1}</span>
+                        <p class="question-text">${q.question}</p>
+                    </div>
+                    <div class="options-container">
+                        ${optionsHTML}
+                    </div>
+                    <div class="feedback-text" id="feedback-${q.id}"></div>
+                `;
+
+                container.appendChild(questionCard);
+            });
+        }
+
+        // Select answer
+        function selectAnswer(questionId, optionIndex) {
+            if (quizSubmitted) return;
+            
+            userAnswers[questionId] = optionIndex;
+            
+            const options = document.querySelectorAll(`[name="q${questionId}"]`);
+            options.forEach((opt, idx) => {
+                const label = document.getElementById(`option-${questionId}-${idx}`);
+                label.classList.toggle('selected', idx === optionIndex);
+            });
+
+            updateProgress();
+            saveProgress();
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const answered = Object.keys(userAnswers).length;
+            const total = questions.length;
+            const percentage = (answered / total) * 100;
+            document.getElementById('progressFill').style.width = `${percentage}%`;
+        }
+
+        // Submit quiz
+        function submitQuiz() {
+            if (Object.keys(userAnswers).length < questions.length) {
+                alert('Please answer all questions before submitting!');
+                return;
+            }
+
+            quizSubmitted = true;
+            let correctCount = 0;
+
+            questions.forEach(q => {
+                const questionCard = document.getElementById(`question-${q.id}`);
+                const feedback = document.getElementById(`feedback-${q.id}`);
+                const userAnswer = userAnswers[q.id];
+                const isCorrect = userAnswer === q.correct;
+
+                if (isCorrect) {
+                    correctCount++;
+                    questionCard.classList.add('correct');
+                    feedback.className = 'feedback-text correct';
+                    feedback.innerHTML = `✓ Correct! ${q.explanation}`;
+                } else {
+                    questionCard.classList.add('incorrect');
+                    feedback.className = 'feedback-text incorrect';
+                    feedback.innerHTML = `✗ Incorrect. The correct answer is: ${q.options[q.correct]}. ${q.explanation}`;
+                }
+
+                document.getElementById(`option-${q.id}-${q.correct}`).classList.add('correct-answer');
+                if (!isCorrect && userAnswer !== undefined) {
+                    document.getElementById(`option-${q.id}-${userAnswer}`).classList.add('wrong-answer');
+                }
+
+                const inputs = questionCard.querySelectorAll('input');
+                inputs.forEach(input => input.disabled = true);
+            });
+
+            const percentage = Math.round((correctCount / questions.length) * 100);
+            document.getElementById('score').style.display = 'block';
+            document.getElementById('scorePercentage').textContent = `${percentage}%`;
+            document.getElementById('scoreLabel').textContent = `${correctCount}/${questions.length}`;
+
+            let message = '';
+            if (percentage >= 80) {
+                message = '🌟 Excellent! You have mastered electrode prediction and electroplating!';
+            } else if (percentage >= 60) {
+                message = '👍 Good job! Review the E° value comparisons and electroplating process.';
+            } else if (percentage >= 40) {
+                message = '📚 Keep practicing! Focus on how E° values determine anode/cathode.';
+            } else {
+                message = '💪 Don\'t give up! Review the lesson content and try the simulations again.';
+            }
+            document.getElementById('scoreMessage').textContent = message;
+
+            document.getElementById('score').scrollIntoView({ behavior: 'smooth' });
+            saveProgress();
+        }
+
+        // Reset quiz
+        function resetQuiz() {
+            userAnswers = {};
+            quizSubmitted = false;
+            
+            document.querySelectorAll('.question-card').forEach(card => {
+                card.classList.remove('correct', 'incorrect');
+            });
+            
+            document.querySelectorAll('.option-label').forEach(label => {
+                label.classList.remove('selected', 'correct-answer', 'wrong-answer');
+            });
+            
+            document.querySelectorAll('.feedback-text').forEach(fb => {
+                fb.className = 'feedback-text';
+                fb.innerHTML = '';
+            });
+            
+            document.querySelectorAll('input[type="radio"]').forEach(input => {
+                input.checked = false;
+                input.disabled = false;
+            });
+
+            document.getElementById('score').style.display = 'none';
+            document.getElementById('progressFill').style.width = '0%';
+
+            localStorage.removeItem('lesson7ElectroplatingProgress');
+            document.getElementById('questions').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Navigation
+        function navigateLesson(direction) {
+            if (direction === 'prev') {
+                alert('Navigating to Lesson 6: Current, Potential & Equilibrium');
+            } else {
+                alert('Navigating to Lesson 8: Applications of Electrochemistry');
+            }
+        }
+
+        // LocalStorage functions
+        function saveProgress() {
+            const progress = {
+                userAnswers: userAnswers,
+                quizSubmitted: quizSubmitted
+            };
+            localStorage.setItem('lesson7ElectroplatingProgress', JSON.stringify(progress));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('lesson7ElectroplatingProgress');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                userAnswers = progress.userAnswers || {};
+                quizSubmitted = progress.quizSubmitted || false;
+
+                Object.keys(userAnswers).forEach(qId => {
+                    const optIndex = userAnswers[qId];
+                    const input = document.querySelector(`input[name="q${qId}"][value="${optIndex}"]`);
+                    if (input) {
+                        input.checked = true;
+                        selectAnswer(parseInt(qId), optIndex);
+                    }
+                });
+
+                if (quizSubmitted) {
+                    submitQuiz();
+                }
+
+                updateProgress();
+            }
+        }
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('.dropdown-menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('dropdownMenu').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
