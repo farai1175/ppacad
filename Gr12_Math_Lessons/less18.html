@@ -1,2260 +1,518 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lesson 5: Graph Applications | PassProof Academy</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-blue: #1a73e8;
-            --secondary-blue: #4285f4;
-            --light-blue: #e8f0fe;
-            --dark-blue: #0d47a1;
-            --white: #ffffff;
-            --gray-100: #f8f9fa;
-            --gray-200: #e9ecef;
-            --gray-300: #dee2e6;
-            --gray-600: #6c757d;
-            --gray-800: #343a40;
-            --success: #28a745;
-            --error: #dc3545;
-            --warning: #ffc107;
-            --purple: #6f42c1;
-            --teal: #20c997;
-            --orange: #fd7e14;
-            --pink: #e83e8c;
-            --indigo: #6610f2;
-            --cyan: #17a2b8;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
-            --radius: 12px;
-            --transition: all 0.3s ease;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
-            min-height: 100vh;
-            line-height: 1.6;
-            color: var(--gray-800);
-        }
-
-        /* Header & Navigation */
-        header {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
-            color: var(--white);
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-blue);
-            font-weight: bold;
-        }
-
-        /* Dropdown Navigation */
-        .nav-container {
-            position: relative;
-        }
-
-        .nav-toggle {
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: var(--white);
-            padding: 0.75rem 1.5rem;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: var(--transition);
-        }
-
-        .nav-toggle:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .nav-toggle::after {
-            content: '▼';
-            font-size: 0.7rem;
-            transition: var(--transition);
-        }
-
-        .nav-toggle.active::after {
-            transform: rotate(180deg);
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            min-width: 300px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: var(--transition);
-            margin-top: 0.5rem;
-            overflow: hidden;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .dropdown-menu.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-menu a {
-            display: block;
-            padding: 1rem 1.5rem;
-            color: var(--gray-800);
-            text-decoration: none;
-            transition: var(--transition);
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .dropdown-menu a:last-child {
-            border-bottom: none;
-        }
-
-        .dropdown-menu a:hover {
-            background: var(--light-blue);
-            color: var(--primary-blue);
-            padding-left: 2rem;
-        }
-
-        .dropdown-menu a.current {
-            background: var(--primary-blue);
-            color: var(--white);
-        }
-
-        /* Main Content */
-        main {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        /* Cards */
-        .card {
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 2rem;
-            margin-bottom: 2rem;
-            transition: var(--transition);
-            animation: fadeInUp 0.6s ease;
-        }
-
-        .card:hover {
-            box-shadow: var(--shadow-lg);
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Subject & Grade Badge */
-        .subject-badge {
-            display: inline-flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-            margin-bottom: 1rem;
-        }
-
-        .badge {
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            color: var(--white);
-            padding: 0.5rem 1.25rem;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            box-shadow: var(--shadow);
-        }
-
-        .badge.outline {
-            background: transparent;
-            border: 2px solid var(--primary-blue);
-            color: var(--primary-blue);
-        }
-
-        .badge.applications {
-            background: linear-gradient(135deg, var(--orange), #e67e22);
-        }
-
-        /* Topic Header */
-        .topic-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .topic-header h1 {
-            color: var(--dark-blue);
-            font-size: 2.25rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .topic-header .subtitle {
-            color: var(--gray-600);
-            font-size: 1.2rem;
-        }
-
-        .lesson-number {
-            display: inline-block;
-            background: var(--orange);
-            color: var(--white);
-            padding: 0.25rem 1rem;
-            border-radius: 15px;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        /* Section Headers */
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 3px solid var(--primary-blue);
-        }
-
-        .section-icon {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 1.25rem;
-        }
-
-        .section-header h2 {
-            color: var(--dark-blue);
-            font-size: 1.5rem;
-        }
-
-        /* Objectives List */
-        .objectives-list {
-            list-style: none;
-        }
-
-        .objectives-list li {
-            padding: 0.75rem 1rem;
-            margin-bottom: 0.5rem;
-            background: var(--light-blue);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            transition: var(--transition);
-        }
-
-        .objectives-list li:hover {
-            transform: translateX(5px);
-            background: var(--gray-200);
-        }
-
-        .objectives-list li::before {
-            content: '✓';
-            color: var(--success);
-            font-weight: bold;
-            font-size: 1.25rem;
-        }
-
-        /* Concept Cards Grid */
-        .concept-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .concept-card {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-            border-top: 4px solid var(--primary-blue);
-            transition: var(--transition);
-        }
-
-        .concept-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .concept-card.length { border-top-color: var(--teal); }
-        .concept-card.coordinates { border-top-color: var(--purple); }
-        .concept-card.intersection { border-top-color: var(--orange); }
-        .concept-card.transform { border-top-color: var(--pink); }
-
-        .concept-card .icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .concept-card h4 {
-            color: var(--gray-800);
-            margin-bottom: 0.5rem;
-        }
-
-        .concept-card p {
-            color: var(--gray-600);
-            font-size: 0.95rem;
-        }
-
-        /* Formula Box */
-        .formula-box {
-            background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue));
-            color: var(--white);
-            padding: 1.5rem 2rem;
-            border-radius: var(--radius);
-            margin: 1.5rem 0;
-            text-align: center;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .formula-box.teal { background: linear-gradient(135deg, var(--teal), #17a2b8); }
-        .formula-box.purple { background: linear-gradient(135deg, var(--purple), #9b59b6); }
-        .formula-box.orange { background: linear-gradient(135deg, var(--orange), #e67e22); }
-        .formula-box.pink { background: linear-gradient(135deg, var(--pink), #c2185b); }
-
-        .formula-box h3 {
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        .formula {
-            font-size: 1.4rem;
-            font-family: 'Times New Roman', serif;
-            font-style: italic;
-            background: rgba(255, 255, 255, 0.15);
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            display: inline-block;
-            margin: 0.25rem;
-        }
-
-        /* Key Points */
-        .key-points {
-            background: var(--gray-100);
-            border-left: 4px solid var(--primary-blue);
-            padding: 1.25rem;
-            border-radius: 0 var(--radius) var(--radius) 0;
-            margin: 1rem 0;
-        }
-
-        .key-points.teal { border-left-color: var(--teal); }
-        .key-points.purple { border-left-color: var(--purple); }
-        .key-points.orange { border-left-color: var(--orange); }
-        .key-points.pink { border-left-color: var(--pink); }
-
-        .key-points h4 {
-            color: var(--dark-blue);
-            margin-bottom: 0.75rem;
-        }
-
-        .key-points ul {
-            margin-left: 1.25rem;
-        }
-
-        .key-points li {
-            margin: 0.5rem 0;
-        }
-
-        /* Example Box */
-        .example-box {
-            background: var(--gray-100);
-            border-left: 5px solid var(--primary-blue);
-            padding: 1.5rem;
-            border-radius: 0 var(--radius) var(--radius) 0;
-            margin: 1.5rem 0;
-        }
-
-        .example-box h4 {
-            color: var(--primary-blue);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .example-box h4::before {
-            content: '📝';
-        }
-
-        .solution-steps {
-            margin-top: 1rem;
-        }
-
-        .solution-steps .step {
-            padding: 0.75rem;
-            margin-bottom: 0.5rem;
-            background: var(--white);
-            border-radius: 8px;
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-
-        .step-number {
-            width: 28px;
-            height: 28px;
-            background: var(--primary-blue);
-            color: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 0.85rem;
-            flex-shrink: 0;
-        }
-
-        .highlight {
-            background: var(--warning);
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-
-        .final-answer {
-            background: linear-gradient(135deg, var(--success), var(--teal));
-            color: var(--white);
-            padding: 1rem;
-            border-radius: 8px;
-            text-align: center;
-            font-weight: 600;
-            margin-top: 1rem;
-        }
-
-        /* Note Box */
-        .note-box {
-            background: linear-gradient(135deg, #fff3cd, #ffeeba);
-            border: 1px solid var(--warning);
-            padding: 1.25rem;
-            border-radius: var(--radius);
-            margin: 1.5rem 0;
-        }
-
-        .note-box h4 {
-            color: #856404;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .note-box h4::before {
-            content: '💡';
-        }
-
-        /* Important Rule Box */
-        .rule-box {
-            background: linear-gradient(135deg, #f8d7da, #f5c6cb);
-            border: 1px solid var(--error);
-            padding: 1.25rem;
-            border-radius: var(--radius);
-            margin: 1rem 0;
-        }
-
-        .rule-box h4 {
-            color: #721c24;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .rule-box h4::before {
-            content: '⚠️';
-        }
-
-        .rule-box p {
-            color: #721c24;
-        }
-
-        /* Transformation Table */
-        .transform-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-
-        .transform-table th,
-        .transform-table td {
-            padding: 1rem;
-            text-align: left;
-            border: 1px solid var(--gray-200);
-        }
-
-        .transform-table thead th {
-            background: linear-gradient(135deg, var(--pink), #c2185b);
-            color: var(--white);
-            font-weight: 600;
-        }
-
-        .transform-table tbody tr:nth-child(even) {
-            background: var(--gray-100);
-        }
-
-        .transform-table tbody tr:hover {
-            background: var(--light-blue);
-        }
-
-        .transform-table .formula-cell {
-            font-family: 'Times New Roman', serif;
-            font-style: italic;
-            font-size: 1.05rem;
-        }
-
-        /* Simulation Container */
-        .simulation-container {
-            background: var(--white);
-            border: 2px solid var(--primary-blue);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .simulation-title {
-            text-align: center;
-            color: var(--dark-blue);
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-        }
-
-        .simulation-controls {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: center;
-            margin-bottom: 1rem;
-            padding: 1rem;
-            background: var(--gray-100);
-            border-radius: 8px;
-        }
-
-        .control-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.25rem;
-        }
-
-        .control-group label {
-            font-size: 0.85rem;
-            color: var(--gray-600);
-            font-weight: 500;
-        }
-
-        .sim-input {
-            padding: 0.5rem;
-            border: 2px solid var(--gray-300);
-            border-radius: 8px;
-            font-size: 1rem;
-            width: 100px;
-            text-align: center;
-            transition: var(--transition);
-        }
-
-        .sim-input:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
-        }
-
-        .sim-select {
-            padding: 0.5rem;
-            border: 2px solid var(--gray-300);
-            border-radius: 8px;
-            font-size: 1rem;
-            width: 180px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .sim-select:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-        }
-
-        .sim-btn {
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            color: var(--white);
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 25px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
-            box-shadow: var(--shadow);
-        }
-
-        .sim-btn:hover {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .sim-btn.teal { background: linear-gradient(135deg, var(--teal), #17a2b8); }
-        .sim-btn.purple { background: linear-gradient(135deg, var(--purple), #9b59b6); }
-        .sim-btn.orange { background: linear-gradient(135deg, var(--orange), #e67e22); }
-        .sim-btn.pink { background: linear-gradient(135deg, var(--pink), #c2185b); }
-
-        .canvas-container {
-            display: flex;
-            justify-content: center;
-            overflow-x: auto;
-        }
-
-        canvas {
-            border: 1px solid var(--gray-300);
-            border-radius: 8px;
-            background: var(--white);
-            max-width: 100%;
-        }
-
-        .result-display {
-            background: var(--gray-100);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-top: 1rem;
-            text-align: center;
-        }
-
-        .result-display.success {
-            background: #d4edda;
-            border: 1px solid var(--success);
-            color: #155724;
-        }
-
-        .result-display .result-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-blue);
-        }
-
-        /* Quiz Section */
-        .quiz-section {
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            padding: 2rem;
-            margin: 2rem 0;
-        }
-
-        .quiz-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .quiz-header h2 {
-            color: var(--dark-blue);
-            font-size: 1.75rem;
-        }
-
-        .quiz-progress {
-            background: var(--gray-200);
-            height: 8px;
-            border-radius: 4px;
-            margin-top: 1rem;
-            overflow: hidden;
-        }
-
-        .quiz-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue));
-            border-radius: 4px;
-            transition: width 0.5s ease;
-            width: 0%;
-        }
-
-        .question-card {
-            background: var(--gray-100);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-left: 5px solid var(--gray-600);
-            transition: var(--transition);
-        }
-
-        .question-card.answered-correct {
-            border-left-color: var(--success);
-            background: #d4edda;
-        }
-
-        .question-card.answered-incorrect {
-            border-left-color: var(--error);
-            background: #f8d7da;
-        }
-
-        .question-number {
-            display: inline-block;
-            background: var(--primary-blue);
-            color: var(--white);
-            padding: 0.25rem 0.75rem;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-        }
-
-        .question-text {
-            font-size: 1.05rem;
-            margin-bottom: 1rem;
-            color: var(--gray-800);
-        }
-
-        .options-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .option-label {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem;
-            background: var(--white);
-            border: 2px solid var(--gray-200);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .option-label:hover:not(.disabled) {
-            border-color: var(--primary-blue);
-            background: var(--light-blue);
-        }
-
-        .option-label.disabled {
-            cursor: not-allowed;
-            opacity: 0.8;
-        }
-
-        .option-label.selected {
-            border-color: var(--primary-blue);
-            background: var(--light-blue);
-        }
-
-        .option-label.correct {
-            border-color: var(--success);
-            background: #d4edda;
-        }
-
-        .option-label.incorrect {
-            border-color: var(--error);
-            background: #f8d7da;
-        }
-
-        .option-label input[type="radio"] {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--primary-blue);
-        }
-
-        .feedback {
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 8px;
-            display: none;
-            animation: fadeInUp 0.3s ease;
-        }
-
-        .feedback.show {
-            display: block;
-        }
-
-        .feedback.correct {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid var(--success);
-        }
-
-        .feedback.incorrect {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid var(--error);
-        }
-
-        /* Score Display */
-        .score-display {
-            background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue));
-            color: var(--white);
-            padding: 2rem;
-            border-radius: var(--radius);
-            text-align: center;
-            margin-top: 2rem;
-            display: none;
-        }
-
-        .score-display.show {
-            display: block;
-            animation: fadeInUp 0.5s ease;
-        }
-
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-            border: 4px solid var(--white);
-        }
-
-        .score-number {
-            font-size: 3rem;
-            font-weight: 700;
-        }
-
-        .score-label {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-
-        .score-message {
-            font-size: 1.25rem;
-            margin-top: 1rem;
-        }
-
-        .submit-quiz-btn {
-            background: var(--white);
-            color: var(--primary-blue);
-            border: none;
-            padding: 1rem 3rem;
-            border-radius: 25px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
-            box-shadow: var(--shadow);
-            margin-top: 1.5rem;
-        }
-
-        .submit-quiz-btn:hover {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .retry-btn {
-            background: var(--warning);
-            color: var(--gray-800);
-            border: none;
-            padding: 0.75rem 2rem;
-            border-radius: 25px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
-            margin-top: 1rem;
-        }
-
-        .retry-btn:hover {
-            transform: scale(1.05);
-        }
-
-        /* Navigation Buttons */
-        .lesson-nav {
-            display: flex;
-            justify-content: space-between;
-            gap: 1rem;
-            margin: 2rem 0;
-            flex-wrap: wrap;
-        }
-
-        .nav-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
-            border-radius: 25px;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: var(--transition);
-            cursor: pointer;
-            border: none;
-        }
-
-        .nav-btn.prev {
-            background: var(--white);
-            color: var(--primary-blue);
-            border: 2px solid var(--primary-blue);
-        }
-
-        .nav-btn.prev:hover {
-            background: var(--light-blue);
-            transform: translateX(-5px);
-        }
-
-        .nav-btn.next {
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            color: var(--white);
-            box-shadow: var(--shadow);
-        }
-
-        .nav-btn.next:hover {
-            transform: translateX(5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue));
-            color: var(--white);
-            padding: 2rem;
-            text-align: center;
-            margin-top: 3rem;
-        }
-
-        footer p {
-            opacity: 0.9;
-        }
-
-        /* Progress Indicator */
-        .progress-indicator {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--white);
-            padding: 1rem;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .progress-ring {
-            width: 50px;
-            height: 50px;
-        }
-
-        .progress-ring circle {
-            fill: none;
-            stroke-width: 4;
-        }
-
-        .progress-ring .bg {
-            stroke: var(--gray-200);
-        }
-
-        .progress-ring .progress {
-            stroke: var(--primary-blue);
-            stroke-linecap: round;
-            transform: rotate(-90deg);
-            transform-origin: center;
-            transition: stroke-dashoffset 0.5s ease;
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            header {
-                padding: 1rem;
-            }
-
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .dropdown-menu {
-                left: 50%;
-                transform: translateX(-50%) translateY(-10px);
-                width: 90vw;
-                max-width: 300px;
-            }
-
-            .dropdown-menu.active {
-                transform: translateX(-50%) translateY(0);
-            }
-
-            main {
-                padding: 1rem;
-            }
-
-            .card {
-                padding: 1.5rem;
-            }
-
-            .topic-header h1 {
-                font-size: 1.75rem;
-            }
-
-            .formula {
-                font-size: 1.1rem;
-                padding: 0.5rem 0.75rem;
-            }
-
-            .simulation-controls {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .sim-input, .sim-select {
-                width: 100%;
-            }
-
-            .transform-table {
-                font-size: 0.85rem;
-            }
-
-            .transform-table th,
-            .transform-table td {
-                padding: 0.5rem;
-            }
-
-            .lesson-nav {
-                flex-direction: column;
-            }
-
-            .nav-btn {
-                justify-content: center;
-            }
-
-            .progress-indicator {
-                bottom: 10px;
-                right: 10px;
-                padding: 0.75rem;
-            }
-
-            .score-circle {
-                width: 120px;
-                height: 120px;
-            }
-
-            .score-number {
-                font-size: 2.5rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grade 12 Maths | Graph Applications | PassProof Academy</title><link rel="stylesheet" href="math-lessons.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="header-content">
-            <div class="logo">
-                <div class="logo-icon">P</div>
-                <span>PassProof Academy</span>
-            </div>
-            <nav class="nav-container">
-                <button class="nav-toggle" id="navToggle">
-                    📚 Navigation
-                </button>
-                <div class="dropdown-menu" id="dropdownMenu">
-                    <a href="#">🏠 Home</a>
-                    <a href="#">📊 Dashboard</a>
-                    <a href="#">📖 Lesson 1: Introduction to Functions</a>
-                    <a href="#">📖 Lesson 2: Function Types & Graphs</a>
-                    <a href="#">📖 Lesson 3: Finding Equations</a>
-                    <a href="#">📖 Lesson 4: Inverse Functions</a>
-                    <a href="#" class="current">📖 Lesson 5: Graph Applications</a>
-                    <a href="#">📝 Chapter Assessment</a>
-                    <a href="#">⚙️ Settings</a>
-                </div>
-            </nav>
+  <!-- ===== HEADER ===== -->
+  <header>
+    <a href="index.html" class="logo">
+      <img src="../logo_tick.jpg" alt="PassProof Academy Logo" />
+    </a>
+    <nav style="flex: 1; text-align: right;">
+      <span style="font-size: 2.2rem; color: #0f0909;">
+        <img src="../favicon-32x32.png" alt="PassProof Academy Logo" />
+        Grade 12 Mathematics
+      </span>
+    </nav>
+  </header>
+
+  <!-- ===== STICKY LESSON MAP ===== -->
+  <nav class="sticky-nav">
+    <ul class="lesson-map">
+      <li><a href="#objectives" class="nav-link">✓ Objectives</a></li>
+      <li><a href="#theory" class="nav-link">📚 Theory</a></li>
+      <li><a href="#examples" class="nav-link">💡 Examples</a></li>
+      <li><a href="#lab" class="nav-link">📊 Graph Lab</a></li>
+      <li><a href="#quiz" class="nav-link">❓ Quiz</a></li>
+      <li><a href="#video" class="nav-link">▶️ Video</a></li>
+      <li><a href="#tutor" class="nav-link">💬 Live Tutor</a></li>
+    </ul>
+  </nav>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main>
+    <!-- Lesson Header -->
+    <section style="background: linear-gradient(135deg, var(--navy), var(--navy-light)); color: var(--white); padding: 1.5rem; border-radius: var(--radius-lg); margin-bottom: 1.5rem;">
+      <h1 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Graph Applications</h1>
+      <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem;">
+        <div style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: var(--radius-md);">
+          <strong>Grade:</strong> 12
         </div>
-    </header>
-
-    <!-- Main Content -->
-    <main>
-        <!-- Subject & Grade -->
-        <div class="card" style="animation-delay: 0.1s;">
-            <div class="subject-badge">
-                <span class="badge">📐 Mathematics</span>
-                <span class="badge outline">Grade 12</span>
-                <span class="badge outline">Term 1 - Week 4</span>
-                <span class="badge applications">📊 Applications</span>
-                <span class="badge outline">⏱️ 30 min</span>
-            </div>
+        <div style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: var(--radius-md);">
+          <strong>Week:</strong> Term 1 Week 4
         </div>
-
-        <!-- Topic Header -->
-        <div class="card topic-header" style="animation-delay: 0.2s;">
-            <span class="lesson-number">LESSON 5</span>
-            <h1>Graph Applications</h1>
-            <p class="subtitle">Lengths, Coordinates, Intersections & Transformations</p>
+        <div style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: var(--radius-md);">
+          <strong>Time:</strong> 30 minutes
         </div>
-
-        <!-- Learning Objectives -->
-        <div class="card" style="animation-delay: 0.3s;">
-            <div class="section-header">
-                <div class="section-icon">🎯</div>
-                <h2>Learning Objectives</h2>
-            </div>
-            <ul class="objectives-list">
-                <li>Find equations of functions, asymptotes, and axes of symmetry</li>
-                <li>Calculate lengths and coordinates of points on graphs</li>
-                <li>Determine points of intersection between graphs</li>
-                <li>Carry out various transformations and give equations of new functions</li>
-            </ul>
+        <div style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: var(--radius-md);">
+          <strong>Topic:</strong> Functions – Graph Applications
         </div>
+      </div>
+      <p style="margin-top: 1rem; color: var(--gray-300);">
+        Learn to find lengths, coordinates, intersection points, and transformed equations from graphs of functions.
+      </p>
+    </section>
 
-        <!-- Overview -->
-        <div class="card" style="animation-delay: 0.4s;">
-            <div class="section-header">
-                <div class="section-icon">📋</div>
-                <h2>Lesson Overview</h2>
-            </div>
-            <p>This lesson focuses on practical applications of function graphs. You'll learn how to calculate distances, find coordinates, determine intersection points, and apply transformations - all essential skills for tackling exam-style questions!</p>
+    <!-- Section: Objectives -->
+    <section id="objectives">
+      <div class="section-header" data-toggle="objectives-content">
+        <h2>✓ Lesson Objectives</h2>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content" id="objectives-content">
+        <p>By the end of this lesson, you will be able to:</p>
+        <ul>
+          <li>Find equations of functions, asymptotes, and axes of symmetry</li>
+          <li>Determine lengths between points and coordinates of key features</li>
+          <li>Find points of intersection by solving equations simultaneously</li>
+          <li>Apply transformations (shifts, reflections, stretches) and write new equations</li>
+          <li>Interpret graphical information to solve exam-style problems</li>
+        </ul>
+      </div>
+    </section>
 
-            <div class="concept-grid">
-                <div class="concept-card length">
-                    <div class="icon">📏</div>
-                    <h4>Finding Lengths</h4>
-                    <p>Calculate horizontal and vertical distances between points on graphs</p>
-                </div>
-                <div class="concept-card coordinates">
-                    <div class="icon">📍</div>
-                    <h4>Finding Coordinates</h4>
-                    <p>Determine exact (x, y) coordinates of points on function graphs</p>
-                </div>
-                <div class="concept-card intersection">
-                    <div class="icon">✖️</div>
-                    <h4>Points of Intersection</h4>
-                    <p>Find where two graphs meet by solving simultaneously</p>
-                </div>
-                <div class="concept-card transform">
-                    <div class="icon">🔄</div>
-                    <h4>Transformations</h4>
-                    <p>Apply shifts, reflections, and stretches to functions</p>
-                </div>
-            </div>
-        </div>
+    <!-- Section: Theory -->
+    <section id="theory">
+      <div class="section-header" data-toggle="theory-content">
+        <h2>📚 Core Concepts</h2>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content theory-content" id="theory-content">
+        <h3><span class="key-term">1. Finding Lengths on a Graph</span></h3>
+        <p><strong>Remember:</strong> Length is always <strong>positive</strong>.</p>
+        <ul>
+          <li><strong>Horizontal length</strong> = |x₂ – x₁| = larger x – smaller x</li>
+          <li><strong>Vertical length</strong> = |y₂ – y₁| = top y – bottom y</li>
+        </ul>
 
-        <!-- Finding Lengths -->
-        <div class="card" style="animation-delay: 0.5s;">
-            <div class="section-header">
-                <div class="section-icon">📏</div>
-                <h2>Finding Lengths</h2>
-            </div>
-
-            <div class="rule-box">
-                <h4>Important Rule</h4>
-                <p><strong>Length can NEVER be negative!</strong> Always use absolute value or arrange subtraction so the result is positive.</p>
-            </div>
-
-            <div class="formula-box teal">
-                <h3>Length Formulas</h3>
-                <div class="formula">Horizontal Length = |x₂ - x₁|</div>
-                <div class="formula">Vertical Length = |y₂ - y₁|</div>
-            </div>
-
-            <div class="key-points teal">
-                <h4>📏 Horizontal Length</h4>
-                <ul>
-                    <li>Use <strong>x-coordinates only</strong></li>
-                    <li>Calculate: Bigger x-value − Smaller x-value</li>
-                    <li>Example: Distance between x = 2 and x = 7 is |7 - 2| = 5 units</li>
-                </ul>
-            </div>
-
-            <div class="key-points teal">
-                <h4>📏 Vertical Length</h4>
-                <ul>
-                    <li>Use <strong>y-coordinates only</strong></li>
-                    <li>Calculate: Top value − Bottom value</li>
-                    <li>Example: Distance between y = -3 and y = 5 is |5 - (-3)| = 8 units</li>
-                </ul>
-            </div>
-
-            <div class="example-box">
-                <h4>Example: Find the length AB where A(-2, 3) and B(5, 3)</h4>
-                <div class="solution-steps">
-                    <div class="step">
-                        <span class="step-number">1</span>
-                        <span>Since the y-coordinates are the same (both = 3), this is a <strong>horizontal length</strong></span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">2</span>
-                        <span>Length = |x₂ - x₁| = |5 - (-2)| = |5 + 2| = <span class="highlight">7 units</span></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="example-box">
-                <h4>Example: Find the vertical distance between points on y = x² at x = 2 and the x-axis</h4>
-                <div class="solution-steps">
-                    <div class="step">
-                        <span class="step-number">1</span>
-                        <span>Find y-coordinate when x = 2: y = (2)² = 4</span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">2</span>
-                        <span>Point on curve: (2, 4). Point on x-axis: (2, 0)</span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">3</span>
-                        <span>Vertical distance = |4 - 0| = <span class="highlight">4 units</span></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Finding Coordinates -->
-        <div class="card" style="animation-delay: 0.6s;">
-            <div class="section-header">
-                <div class="section-icon">📍</div>
-                <h2>Finding Coordinates of Points</h2>
-            </div>
-
-            <p>A coordinate is written as an ordered pair: <strong>(x-value, y-value)</strong></p>
-
-            <div class="key-points purple">
-                <h4>📍 How to Find Coordinates</h4>
-                <ul>
-                    <li><strong>Given x:</strong> Substitute into the function to find y</li>
-                    <li><strong>Given y:</strong> Substitute into the function and solve for x</li>
-                    <li><strong>X-intercepts:</strong> Set y = 0 and solve for x</li>
-                    <li><strong>Y-intercept:</strong> Set x = 0 and find y</li>
-                    <li><strong>Turning point:</strong> Use x = -b/(2a) for parabola, then find y</li>
-                </ul>
-            </div>
-
-            <div class="example-box">
-                <h4>Example: For f(x) = x² - 4x + 3, find the coordinates of the turning point</h4>
-                <div class="solution-steps">
-                    <div class="step">
-                        <span class="step-number">1</span>
-                        <span>a = 1, b = -4, c = 3</span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">2</span>
-                        <span>x = -b/(2a) = -(-4)/(2×1) = 4/2 = <span class="highlight">2</span></span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">3</span>
-                        <span>y = f(2) = (2)² - 4(2) + 3 = 4 - 8 + 3 = <span class="highlight">-1</span></span>
-                    </div>
-                </div>
-                <div class="final-answer">Turning Point: (2, -1)</div>
-            </div>
-        </div>
-
-        <!-- Points of Intersection -->
-        <div class="card" style="animation-delay: 0.7s;">
-            <div class="section-header">
-                <div class="section-icon">✖️</div>
-                <h2>Finding Points of Intersection</h2>
-            </div>
-
-            <div class="formula-box orange">
-                <h3>Method: Solve Simultaneously</h3>
-                <div class="formula">Set f(x) = g(x)</div>
-                <p style="margin-top: 0.5rem; opacity: 0.9;">Where the graphs meet, they have the same x AND the same y!</p>
-            </div>
-
-            <div class="key-points orange">
-                <h4>✖️ Steps to Find Intersection</h4>
-                <ul>
-                    <li><strong>Step 1:</strong> Set the two equations equal to each other</li>
-                    <li><strong>Step 2:</strong> Solve for x</li>
-                    <li><strong>Step 3:</strong> Substitute x back into either equation to find y</li>
-                    <li><strong>Step 4:</strong> Write answer as coordinate(s): (x, y)</li>
-                </ul>
-            </div>
-
-            <div class="example-box">
-                <h4>Example: Find where y = x² and y = 2x + 3 intersect</h4>
-                <div class="solution-steps">
-                    <div class="step">
-                        <span class="step-number">1</span>
-                        <span>Set equal: x² = 2x + 3</span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">2</span>
-                        <span>Rearrange: x² - 2x - 3 = 0</span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">3</span>
-                        <span>Factor: (x - 3)(x + 1) = 0</span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">4</span>
-                        <span>Solve: x = 3 or x = -1</span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">5</span>
-                        <span>When x = 3: y = 2(3) + 3 = 9 → Point: <span class="highlight">(3, 9)</span></span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">6</span>
-                        <span>When x = -1: y = 2(-1) + 3 = 1 → Point: <span class="highlight">(-1, 1)</span></span>
-                    </div>
-                </div>
-                <div class="final-answer">Points of Intersection: (3, 9) and (-1, 1)</div>
-            </div>
-        </div>
-
-        <!-- Transformations -->
-        <div class="card" style="animation-delay: 0.8s;">
-            <div class="section-header">
-                <div class="section-icon">🔄</div>
-                <h2>Transformations of Functions</h2>
-            </div>
-
-            <p>Transformations change the position, size, or orientation of a graph. Understanding these rules is essential for finding equations after transformations.</p>
-
-            <table class="transform-table">
-                <thead>
-                    <tr>
-                        <th>Transformation</th>
-                        <th>Rule</th>
-                        <th>Effect</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Vertical Shift Up</strong></td>
-                        <td class="formula-cell">f(x) + k</td>
-                        <td>Shift graph k units UP</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Vertical Shift Down</strong></td>
-                        <td class="formula-cell">f(x) - k</td>
-                        <td>Shift graph k units DOWN</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Horizontal Shift Left</strong></td>
-                        <td class="formula-cell">f(x + k)</td>
-                        <td>Shift graph k units LEFT</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Horizontal Shift Right</strong></td>
-                        <td class="formula-cell">f(x - k)</td>
-                        <td>Shift graph k units RIGHT</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Reflection in x-axis</strong></td>
-                        <td class="formula-cell">-f(x)</td>
-                        <td>Flip over x-axis (y-values become negative)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Reflection in y-axis</strong></td>
-                        <td class="formula-cell">f(-x)</td>
-                        <td>Flip over y-axis (x-values become negative)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Vertical Stretch</strong></td>
-                        <td class="formula-cell">a·f(x), |a| > 1</td>
-                        <td>Stretch vertically (steeper)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Vertical Compression</strong></td>
-                        <td class="formula-cell">a·f(x), |a| < 1</td>
-                        <td>Compress vertically (flatter)</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="note-box">
-                <h4>Remember the Direction Rule!</h4>
-                <p><strong>Horizontal shifts work "opposite":</strong></p>
-                <p>f(x + k) shifts LEFT (not right) and f(x - k) shifts RIGHT (not left)</p>
-            </div>
-
-            <div class="example-box">
-                <h4>Example: If f(x) = x², write the equation for g(x) which is f shifted 3 units right and 2 units up</h4>
-                <div class="solution-steps">
-                    <div class="step">
-                        <span class="step-number">1</span>
-                        <span>Start with f(x) = x²</span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">2</span>
-                        <span>Shift 3 units RIGHT: replace x with (x - 3) → (x - 3)²</span>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">3</span>
-                        <span>Shift 2 units UP: add 2 → (x - 3)² + 2</span>
-                    </div>
-                </div>
-                <div class="final-answer">g(x) = (x - 3)² + 2</div>
-            </div>
-        </div>
-
-        <!-- Interactive Simulations -->
-        <div class="card" style="animation-delay: 0.9s;">
-            <div class="section-header">
-                <div class="section-icon">🎮</div>
-                <h2>Interactive Simulations</h2>
-            </div>
-
-            <!-- Length Calculator -->
-            <div class="simulation-container">
-                <h3 class="simulation-title">📏 Length Calculator</h3>
-                <div class="simulation-controls">
-                    <div class="control-group">
-                        <label>Point A: x₁</label>
-                        <input type="number" class="sim-input" id="lenX1" value="-2">
-                    </div>
-                    <div class="control-group">
-                        <label>y₁</label>
-                        <input type="number" class="sim-input" id="lenY1" value="3">
-                    </div>
-                    <div class="control-group">
-                        <label>Point B: x₂</label>
-                        <input type="number" class="sim-input" id="lenX2" value="5">
-                    </div>
-                    <div class="control-group">
-                        <label>y₂</label>
-                        <input type="number" class="sim-input" id="lenY2" value="3">
-                    </div>
-                    <button class="sim-btn teal" onclick="calculateLength()">Calculate</button>
-                </div>
-                <div class="canvas-container">
-                    <canvas id="lengthCanvas" width="500" height="350"></canvas>
-                </div>
-                <div class="result-display" id="lengthResult">
-                    Enter two points and click Calculate!
-                </div>
-            </div>
-
-            <!-- Intersection Finder -->
-            <div class="simulation-container">
-                <h3 class="simulation-title">✖️ Point of Intersection Finder</h3>
-                <div class="simulation-controls">
-                    <div class="control-group">
-                        <label>Function f(x)</label>
-                        <select id="intersectF" class="sim-select">
-                            <option value="x^2">x²</option>
-                            <option value="2x+1">2x + 1</option>
-                            <option value="x^2-4">x² - 4</option>
-                            <option value="-x^2+4">-x² + 4</option>
-                        </select>
-                    </div>
-                    <div class="control-group">
-                        <label>Function g(x)</label>
-                        <select id="intersectG" class="sim-select">
-                            <option value="2x+1">2x + 1</option>
-                            <option value="x^2">x²</option>
-                            <option value="x+2">x + 2</option>
-                            <option value="-x+2">-x + 2</option>
-                        </select>
-                    </div>
-                    <button class="sim-btn orange" onclick="findIntersections()">Find Intersections</button>
-                </div>
-                <div class="canvas-container">
-                    <canvas id="intersectCanvas" width="500" height="350"></canvas>
-                </div>
-                <div class="result-display" id="intersectResult">
-                    Select two functions and click Find Intersections!
-                </div>
-            </div>
-
-            <!-- Transformation Visualizer -->
-            <div class="simulation-container">
-                <h3 class="simulation-title">🔄 Transformation Visualizer</h3>
-                <div class="simulation-controls">
-                    <div class="control-group">
-                        <label>Base Function</label>
-                        <select id="baseFunc" class="sim-select" onchange="applyTransformation()">
-                            <option value="x^2">f(x) = x²</option>
-                            <option value="x^3">f(x) = x³</option>
-                            <option value="2^x">f(x) = 2ˣ</option>
-                            <option value="1/x">f(x) = 1/x</option>
-                        </select>
-                    </div>
-                    <div class="control-group">
-                        <label>Horizontal (p)</label>
-                        <input type="number" class="sim-input" id="transP" value="0" step="0.5" onchange="applyTransformation()">
-                    </div>
-                    <div class="control-group">
-                        <label>Vertical (q)</label>
-                        <input type="number" class="sim-input" id="transQ" value="0" step="0.5" onchange="applyTransformation()">
-                    </div>
-                    <div class="control-group">
-                        <label>a (stretch)</label>
-                        <input type="number" class="sim-input" id="transA" value="1" step="0.5" onchange="applyTransformation()">
-                    </div>
-                    <button class="sim-btn pink" onclick="applyTransformation()">Apply</button>
-                </div>
-                <div class="canvas-container">
-                    <canvas id="transformCanvas" width="500" height="350"></canvas>
-                </div>
-                <div class="result-display" id="transformResult">
-                    Adjust parameters to see transformations!
-                </div>
-            </div>
-        </div>
-
-        <!-- Quiz Section -->
-        <div class="quiz-section" id="quizSection">
-            <div class="quiz-header">
-                <h2>📝 Lesson Quiz</h2>
-                <p>Test your understanding of graph applications</p>
-                <div class="quiz-progress">
-                    <div class="quiz-progress-bar" id="progressBar"></div>
-                </div>
-            </div>
-
-            <div id="questionsContainer"></div>
-
-            <button class="submit-quiz-btn" id="submitQuiz" onclick="submitQuiz()">
-                Submit All Answers
-            </button>
-
-            <div class="score-display" id="scoreDisplay">
-                <div class="score-circle">
-                    <span class="score-number" id="scoreNumber">0</span>
-                    <span class="score-label">/ 12</span>
-                </div>
-                <p class="score-message" id="scoreMessage"></p>
-                <p id="scorePercentage"></p>
-                <button class="retry-btn" onclick="retryQuiz()">🔄 Retry Quiz</button>
-            </div>
-        </div>
-
-        <!-- Navigation Buttons -->
-        <div class="lesson-nav">
-            <button class="nav-btn prev">
-                ← Previous Lesson
-            </button>
-            <button class="nav-btn next">
-                Next Topic →
-            </button>
-        </div>
-    </main>
-
-    <!-- Progress Indicator -->
-    <div class="progress-indicator" id="progressIndicator">
-        <svg class="progress-ring" viewBox="0 0 50 50">
-            <circle class="bg" cx="25" cy="25" r="20"/>
-            <circle class="progress" cx="25" cy="25" r="20" 
-                stroke-dasharray="125.66" 
-                stroke-dashoffset="125.66"
-                id="progressRing"/>
-        </svg>
-        <span id="progressText">0%</span>
-    </div>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 PassProof Academy. All Rights Reserved.</p>
-        <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">
-            Empowering Students Through Interactive Learning
+        <h3><span class="key-term">2. Coordinates of Points</span></h3>
+        <p>Any point on a graph is written as <strong>(x, y)</strong>.</p>
+        <p>To find coordinates:
+          <ul>
+            <li><strong>Intercepts</strong>: Set x=0 (y-intercept) or y=0 (x-intercept)</li>
+            <li><strong>Turning point</strong>: Use vertex formula or derivative</li>
+            <li><strong>Asymptotes</strong>: Identify limits of the function</li>
+          </ul>
         </p>
-    </footer>
 
-    <script>
-        // ========== Navigation Handling ==========
-        const navToggle = document.getElementById('navToggle');
-        const dropdownMenu = document.getElementById('dropdownMenu');
+        <h3><span class="key-term">3. Points of Intersection</span></h3>
+        <p>To find where two graphs meet:
+          <ul>
+            <li>Set their equations equal: f(x) = g(x)</li>
+            <li>Solve for x</li>
+            <li>Substitute back to find y</li>
+          </ul>
+        </p>
 
-        navToggle.addEventListener('click', () => {
-            navToggle.classList.toggle('active');
-            dropdownMenu.classList.toggle('active');
-        });
+        <h3><span class="key-term">4. Function Transformations</span></h3>
+        <div class="formula-box">
+          <strong>Given y = f(x):</strong><br>
+          • y = f(x) + k → vertical shift up by k<br>
+          • y = f(x + p) → horizontal shift left by p<br>
+          • y = -f(x) → reflection over x-axis<br>
+          • y = f(-x) → reflection over y-axis<br>
+          • y = a·f(x) → vertical stretch by |a|<br>
+          • y = f(bx) → horizontal compression by 1/|b|
+        </div>
+      </div>
+    </section>
 
-        document.addEventListener('click', (e) => {
-            if (!navToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
-                navToggle.classList.remove('active');
-                dropdownMenu.classList.remove('active');
-            }
-        });
+    <!-- Section: Worked Examples -->
+    <section id="examples">
+      <div class="section-header" data-toggle="examples-content">
+        <h2>💡 Worked Examples</h2>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content theory-content" id="examples-content">
+        <h3><span class="key-term">Example 1: Finding Length</span></h3>
+        <div class="worked-example">
+          <strong>Points A(2, 5) and B(7, 1). Find AB (vertical and horizontal components).</strong>
+          <ul class="step-list">
+            <li>Horizontal length = 7 – 2 = <strong>5 units</strong></li>
+            <li>Vertical length = 5 – 1 = <strong>4 units</strong></li>
+            <li>Actual distance = √(5² + 4²) = √41 (if needed)</li>
+          </ul>
+        </div>
 
-        // ========== Graph Drawing Utilities ==========
-        function drawGrid(ctx, width, height, scale = 40) {
-            const centerX = width / 2;
-            const centerY = height / 2;
+        <h3><span class="key-term">Example 2: Intersection of y = 2x + 1 and y = -x + 4</span></h3>
+        <div class="worked-example">
+          <ul class="step-list">
+            <li>Set equal: 2x + 1 = -x + 4</li>
+            <li>3x = 3 → x = 1</li>
+            <li>y = 2(1) + 1 = 3</li>
+            <li>Intersection at <strong>(1, 3)</strong></li>
+          </ul>
+        </div>
 
-            ctx.clearRect(0, 0, width, height);
-            ctx.fillStyle = '#fafafa';
-            ctx.fillRect(0, 0, width, height);
+        <h3><span class="key-term">Example 3: Transformation</span></h3>
+        <div class="worked-example">
+          <strong>Given f(x) = 1/x. Write equation after: reflection over x-axis, then shift right 2 and up 3.</strong>
+          <ul class="step-list">
+            <li>Reflect: y = -1/x</li>
+            <li>Right 2: y = -1/(x – 2)</li>
+            <li>Up 3: y = -1/(x – 2) + 3</li>
+            <li>Final: <strong>y = 3 – 1/(x – 2)</strong></li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-            ctx.strokeStyle = '#e0e0e0';
-            ctx.lineWidth = 1;
+    <!-- Section: Graph Lab -->
+    <section id="lab">
+      <div class="section-header" data-toggle="lab-content">
+        <h2>📊 Interactive Graph Lab</h2>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content" id="lab-content">
+        <p>Explore how transformations affect the graph of <strong>f(x) = 1/x</strong> or <strong>f(x) = x²</strong>.</p>
+        <div class="lab-zone">
+          <div class="graph-canvas" id="graphDisplay">
+            <p><strong>Current Function:</strong> <span id="funcDisplay">y = 1/x</span></p>
+            <p><strong>Transformations:</strong></p>
+            <ul id="transformsList" style="list-style: none; padding-left: 0;">
+              <li>• No transformations applied</li>
+            </ul>
+            <p><strong>Key Features:</strong></p>
+            <ul>
+              <li>Asymptotes: x = 0, y = 0</li>
+              <li>Domain: x ≠ 0</li>
+            </ul>
+          </div>
+          <div class="controls">
+            <button class="btn-primary" onclick="applyTransform('reflectX')">Reflect over x-axis</button>
+            <button class="btn-primary" onclick="applyTransform('shiftRight')">Shift Right 2</button>
+            <button class="btn-primary" onclick="applyTransform('shiftUp')">Shift Up 3</button>
+            <button class="btn-secondary" onclick="resetGraph()">Reset</button>
+          </div>
+        </div>
+      </div>
+    </section>
 
-            for (let x = centerX % scale; x < width; x += scale) {
-                ctx.beginPath();
-                ctx.moveTo(x, 0);
-                ctx.lineTo(x, height);
-                ctx.stroke();
-            }
+    <!-- Section: Quiz -->
+    <section id="quiz">
+      <div class="section-header" data-toggle="quiz-content">
+        <h2>❓ Quick Quiz (6 Questions)</h2>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content quiz-container" id="quiz-content">
+        <p>Test your understanding of graph applications.</p>
 
-            for (let y = centerY % scale; y < height; y += scale) {
-                ctx.beginPath();
-                ctx.moveTo(0, y);
-                ctx.lineTo(width, y);
-                ctx.stroke();
-            }
+        <!-- Q1 -->
+        <div class="quiz-question" data-question="1">
+          <h4>Q1: What is the horizontal length between (3, 2) and (8, 2)?</h4>
+          <div class="quiz-options">
+            <div class="quiz-option" data-answer="false">A) 2</div>
+            <div class="quiz-option" data-answer="true">B) 5</div>
+            <div class="quiz-option" data-answer="false">C) 0</div>
+            <div class="quiz-option" data-answer="false">D) 10</div>
+          </div>
+          <div class="quiz-feedback"><strong>Answer:</strong> 8 – 3 = 5</div>
+        </div>
 
-            ctx.strokeStyle = '#333';
-            ctx.lineWidth = 2;
+        <!-- Q2 -->
+        <div class="quiz-question" data-question="2">
+          <h4>Q2: Where do y = x² and y = 4 intersect?</h4>
+          <div class="quiz-options">
+            <div class="quiz-option" data-answer="false">A) (0, 0)</div>
+            <div class="quiz-option" data-answer="false">B) (2, 4)</div>
+            <div class="quiz-option" data-answer="false">C) (-2, 4)</div>
+            <div class="quiz-option" data-answer="true">D) Both B and C</div>
+          </div>
+          <div class="quiz-feedback"><strong>Answer:</strong> x² = 4 → x = ±2</div>
+        </div>
 
-            ctx.beginPath();
-            ctx.moveTo(0, centerY);
-            ctx.lineTo(width, centerY);
-            ctx.stroke();
+        <!-- Q3 -->
+        <div class="quiz-question" data-question="3">
+          <h4>Q3: After reflecting y = 2x over the x-axis, what is the new equation?</h4>
+          <div class="quiz-options">
+            <div class="quiz-option" data-answer="true">A) y = -2x</div>
+            <div class="quiz-option" data-answer="false">B) y = 2x</div>
+            <div class="quiz-option" data-answer="false">C) y = -x/2</div>
+            <div class="quiz-option" data-answer="false">D) y = 2/x</div>
+          </div>
+          <div class="quiz-feedback"><strong>Answer:</strong> Reflection → multiply by -1</div>
+        </div>
 
-            ctx.beginPath();
-            ctx.moveTo(centerX, 0);
-            ctx.lineTo(centerX, height);
-            ctx.stroke();
+        <!-- Q4 -->
+        <div class="quiz-question" data-question="4">
+          <h4>Q4: Which is always positive?</h4>
+          <div class="quiz-options">
+            <div class="quiz-option" data-answer="false">A) x-coordinate</div>
+            <div class="quiz-option" data-answer="true">B) Length</div>
+            <div class="quiz-option" data-answer="false">C) Slope</div>
+            <div class="quiz-option" data-answer="false">D) y-intercept</div>
+          </div>
+          <div class="quiz-feedback"><strong>Answer:</strong> Length is a distance → never negative</div>
+        </div>
 
-            ctx.fillStyle = '#666';
-            ctx.font = '11px Arial';
-            ctx.textAlign = 'center';
+        <!-- Q5 -->
+        <div class="quiz-question" data-question="5">
+          <h4>Q5: What is the y-intercept of y = 3/(x+1)?</h4>
+          <div class="quiz-options">
+            <div class="quiz-option" data-answer="true">A) 3</div>
+            <div class="quiz-option" data-answer="false">B) 0</div>
+            <div class="quiz-option" data-answer="false">C) Undefined</div>
+            <div class="quiz-option" data-answer="false">D) -1</div>
+          </div>
+          <div class="quiz-feedback"><strong>Answer:</strong> Set x=0 → y = 3/(0+1) = 3</div>
+        </div>
 
-            for (let i = -5; i <= 5; i++) {
-                if (i !== 0) {
-                    ctx.fillText(i, centerX + i * scale, centerY + 14);
-                    ctx.fillText(i, centerX - 14, centerY - i * scale + 4);
-                }
-            }
+        <!-- Q6 -->
+        <div class="quiz-question" data-question="6">
+          <h4>Q6: Vertical asymptote of y = 2/(x - 5)?</h4>
+          <div class="quiz-options">
+            <div class="quiz-option" data-answer="false">A) x = 0</div>
+            <div class="quiz-option" data-answer="true">B) x = 5</div>
+            <div class="quiz-option" data-answer="false">C) y = 5</div>
+            <div class="quiz-option" data-answer="false">D) y = 2</div>
+          </div>
+          <div class="quiz-feedback"><strong>Answer:</strong> Denominator = 0 → x = 5</div>
+        </div>
 
-            return { centerX, centerY, scale };
+        <div class="quiz-reset">
+          <button class="btn-secondary" id="resetQuizBtn">🔄 Retry Quiz</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Video -->
+    <section id="video">
+      <div class="section-header" data-toggle="video-content">
+        <h2>▶️ Video Tutorial</h2>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content" id="video-content">
+        <p>Watch a step-by-step walkthrough of graph applications and transformations.</p>
+        <div class="video-container">
+          <div class="video-placeholder" id="videoPlaceholder">
+            <div class="play-btn" id="playVideoBtn">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="var(--navy)">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </div>
+            <p>Click to play: Graph Applications & Transformations</p>
+          </div>
+        </div>
+        <p style="font-size: 0.9rem; color: var(--gray-500); margin-top: 1rem;">
+          Duration: 18 minutes | Covers: Lengths, intersections, transformations
+        </p>
+      </div>
+    </section>
+
+    <!-- Section: Tutor CTA -->
+    <section id="tutor">
+      <div class="section-header" data-toggle="tutor-content">
+        <h2>💬 Live Tutoring Support</h2>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content" id="tutor-content">
+        <div class="tutor-cta">
+          <h3>Stuck on Graphs?</h3>
+          <p style="margin-bottom: 1.5rem;">
+            Get 1-on-1 help with finding coordinates, asymptotes, transformations, and exam questions.
+          </p>
+          <button class="btn-primary" id="openTutorModal">📅 Book a Session Now</button>
+          <p style="margin-top: 1rem; font-size: 0.95rem;">
+            Quick questions? WhatsApp us at <a href="tel:0670957879">067 095 7879</a>
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FLOATING TUTOR BUTTON ===== -->
+  <div class="floating-tutor" id="floatingTutor" title="Chat with a tutor">?</div>
+
+  <!-- ===== MODAL ===== -->
+  <div id="tutorModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Live Tutoring Session</h2>
+        <button class="close-btn" id="closeModal">&times;</button>
+      </div>
+      <p>Book a session with a Grade 12 Functions expert.</p>
+      <form id="tutorForm">
+        <input type="text" placeholder="Your Name" required />
+        <input type="email" placeholder="Your Email" required />
+        <textarea placeholder="Need help with asymptotes, lengths, or transformations?"></textarea>
+        <select required>
+          <option value="">Select session type</option>
+          <option>30-minute session</option>
+          <option>1-hour session</option>
+          <option>Exam prep</option>
+        </select>
+        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 0.5rem;">Book Session</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER NAVIGATION ===== -->
+  <footer class="lesson-nav">
+    <a href="contents.html" class="nav-btn">📘 Subject Contents</a>
+    <div class="nav-center">
+      <a href="less1-4.html" class="nav-btn"><span>◀</span> Previous Lesson</a>
+    </div>
+    <a href="less1-6.html" class="nav-btn primary">Next Lesson (1.6) ▶</a>
+  </footer>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    // COLLAPSIBLE SECTIONS
+    document.querySelectorAll('.section-header').forEach(header => {
+      header.addEventListener('click', function () {
+        const targetId = this.getAttribute('data-toggle');
+        const content = document.getElementById(targetId);
+        this.classList.toggle('collapsed');
+        content.classList.toggle('collapsed');
+      });
+    });
+
+    // SCROLL ACTIVE NAV
+    const sections = document.querySelectorAll('main section');
+    const navLinks = document.querySelectorAll('.nav-link');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (scrollY >= sectionTop - 160) current = section.getAttribute('id');
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+      });
+    });
+
+    // GRAPH LAB
+    let graphState = { func: '1/x', transforms: [] };
+    const funcDisplay = document.getElementById('funcDisplay');
+    const transformsList = document.getElementById('transformsList');
+
+    function applyTransform(type) {
+      const messages = {
+        reflectX: 'Reflected over x-axis',
+        shiftRight: 'Shifted right by 2',
+        shiftUp: 'Shifted up by 3'
+      };
+      if (!graphState.transforms.includes(type)) {
+        graphState.transforms.push(type);
+      }
+      updateGraphDisplay();
+    }
+
+    function updateGraphDisplay() {
+      let eq = 'y = ';
+      if (graphState.transforms.includes('reflectX')) eq += '-';
+      eq += '1/';
+      if (graphState.transforms.includes('shiftRight')) eq += '(x - 2)';
+      else eq += 'x';
+      if (graphState.transforms.includes('shiftUp')) eq += ' + 3';
+
+      funcDisplay.textContent = eq;
+      if (graphState.transforms.length === 0) {
+        transformsList.innerHTML = '<li>• No transformations applied</li>';
+      } else {
+        transformsList.innerHTML = graphState.transforms.map(t => `<li>• ${messages[t]}</li>`).join('');
+      }
+    }
+
+    function resetGraph() {
+      graphState.transforms = [];
+      updateGraphDisplay();
+    }
+
+    // QUIZ
+    document.querySelectorAll('.quiz-option').forEach(option => {
+      option.addEventListener('click', function () {
+        const q = this.closest('.quiz-question');
+        if (q.classList.contains('answered')) return;
+        q.classList.add('answered');
+        const opts = q.querySelectorAll('.quiz-option');
+        const feedback = q.querySelector('.quiz-feedback');
+        const correct = this.dataset.answer === 'true';
+        opts.forEach(o => o.classList.add('disabled'));
+        if (correct) this.classList.add('correct');
+        else {
+          this.classList.add('incorrect');
+          opts.forEach(o => o.dataset.answer === 'true' && o.classList.add('correct'));
         }
+        feedback.classList.add('show');
+      });
+    });
 
-        function drawPoint(ctx, centerX, centerY, scale, x, y, color = '#e83e8c', label = '') {
-            const px = centerX + x * scale;
-            const py = centerY - y * scale;
-            
-            ctx.fillStyle = color;
-            ctx.beginPath();
-            ctx.arc(px, py, 7, 0, Math.PI * 2);
-            ctx.fill();
+    document.getElementById('resetQuizBtn').addEventListener('click', () => {
+      document.querySelectorAll('.quiz-question').forEach(q => {
+        q.classList.remove('answered');
+        q.querySelectorAll('.quiz-option').forEach(o => o.className = 'quiz-option');
+        q.querySelector('.quiz-feedback').classList.remove('show');
+      });
+      document.getElementById('floatingTutor').textContent = '?';
+    });
 
-            ctx.strokeStyle = '#fff';
-            ctx.lineWidth = 2;
-            ctx.stroke();
+    // VIDEO
+    document.getElementById('playVideoBtn').addEventListener('click', () => {
+      document.getElementById('videoPlaceholder').innerHTML = `
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" allowfullscreen></iframe>
+      `;
+    });
 
-            if (label) {
-                ctx.fillStyle = '#333';
-                ctx.font = 'bold 11px Arial';
-                ctx.fillText(label, px + 12, py - 10);
-            }
-        }
+    // MODAL
+    const modal = document.getElementById('tutorModal');
+    [document.getElementById('openTutorModal'), document.getElementById('floatingTutor')].forEach(btn =>
+      btn.addEventListener('click', () => {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      })
+    );
+    document.getElementById('closeModal').addEventListener('click', () => {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    });
 
-        // ========== Length Calculator ==========
-        function calculateLength() {
-            const x1 = parseFloat(document.getElementById('lenX1').value);
-            const y1 = parseFloat(document.getElementById('lenY1').value);
-            const x2 = parseFloat(document.getElementById('lenX2').value);
-            const y2 = parseFloat(document.getElementById('lenY2').value);
-
-            if (isNaN(x1) || isNaN(y1) || isNaN(x2) || isNaN(y2)) {
-                alert('Please enter valid numbers');
-                return;
-            }
-
-            const canvas = document.getElementById('lengthCanvas');
-            const ctx = canvas.getContext('2d');
-            const { centerX, centerY, scale } = drawGrid(ctx, canvas.width, canvas.height);
-
-            // Draw line between points
-            ctx.strokeStyle = '#20c997';
-            ctx.lineWidth = 3;
-            ctx.setLineDash([5, 5]);
-            ctx.beginPath();
-            ctx.moveTo(centerX + x1 * scale, centerY - y1 * scale);
-            ctx.lineTo(centerX + x2 * scale, centerY - y2 * scale);
-            ctx.stroke();
-            ctx.setLineDash([]);
-
-            // Draw points
-            drawPoint(ctx, centerX, centerY, scale, x1, y1, '#1a73e8', `A(${x1}, ${y1})`);
-            drawPoint(ctx, centerX, centerY, scale, x2, y2, '#e83e8c', `B(${x2}, ${y2})`);
-
-            // Calculate lengths
-            const horizLength = Math.abs(x2 - x1);
-            const vertLength = Math.abs(y2 - y1);
-            const directLength = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-
-            const resultDiv = document.getElementById('lengthResult');
-            resultDiv.className = 'result-display success';
-            resultDiv.innerHTML = `
-                <p><strong>Horizontal Length:</strong> |${x2} - ${x1}| = <span class="result-value">${horizLength.toFixed(2)} units</span></p>
-                <p><strong>Vertical Length:</strong> |${y2} - ${y1}| = <span class="result-value">${vertLength.toFixed(2)} units</span></p>
-                <p><strong>Direct Distance:</strong> √[(${x2}-${x1})² + (${y2}-${y1})²] = <span class="result-value">${directLength.toFixed(2)} units</span></p>
-            `;
-        }
-
-        // ========== Function Evaluator for Graphs ==========
-        function evaluateFunc(expression, x) {
-            switch(expression) {
-                case 'x^2': return x * x;
-                case '2x+1': return 2 * x + 1;
-                case 'x^2-4': return x * x - 4;
-                case '-x^2+4': return -(x * x) + 4;
-                case 'x+2': return x + 2;
-                case '-x+2': return -x + 2;
-                case 'x^3': return x * x * x;
-                case '2^x': return Math.pow(2, x);
-                case '1/x': return x !== 0 ? 1 / x : null;
-                default: return x;
-            }
-        }
-
-        function drawFunction(ctx, centerX, centerY, scale, expression, color = '#1a73e8') {
-            ctx.strokeStyle = color;
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-
-            let started = false;
-            for (let px = 0; px < ctx.canvas.width; px++) {
-                const x = (px - centerX) / scale;
-                const y = evaluateFunc(expression, x);
-                
-                if (y === null || Math.abs(y) > 10) {
-                    started = false;
-                    continue;
-                }
-                
-                const py = centerY - y * scale;
-                
-                if (py >= -50 && py <= ctx.canvas.height + 50) {
-                    if (!started) {
-                        ctx.moveTo(px, py);
-                        started = true;
-                    } else {
-                        ctx.lineTo(px, py);
-                    }
-                } else {
-                    started = false;
-                }
-            }
-            ctx.stroke();
-        }
-
-        // ========== Intersection Finder ==========
-        function findIntersections() {
-            const fExpr = document.getElementById('intersectF').value;
-            const gExpr = document.getElementById('intersectG').value;
-
-            const canvas = document.getElementById('intersectCanvas');
-            const ctx = canvas.getContext('2d');
-            const { centerX, centerY, scale } = drawGrid(ctx, canvas.width, canvas.height);
-
-            // Draw both functions
-            drawFunction(ctx, centerX, centerY, scale, fExpr, '#1a73e8');
-            drawFunction(ctx, centerX, centerY, scale, gExpr, '#e83e8c');
-
-            // Find intersections numerically
-            const intersections = [];
-            const step = 0.01;
-            
-            for (let x = -6; x < 6; x += step) {
-                const fY = evaluateFunc(fExpr, x);
-                const gY = evaluateFunc(gExpr, x);
-                const fYNext = evaluateFunc(fExpr, x + step);
-                const gYNext = evaluateFunc(gExpr, x + step);
-                
-                if (fY === null || gY === null) continue;
-                
-                // Check if they cross
-                if ((fY - gY) * (fYNext - gYNext) <= 0 && Math.abs(fY - gY) < 0.5) {
-                    const xInt = Math.round(x * 10) / 10;
-                    const yInt = Math.round(fY * 10) / 10;
-                    
-                    // Avoid duplicates
-                    const exists = intersections.some(p => Math.abs(p.x - xInt) < 0.2);
-                    if (!exists) {
-                        intersections.push({ x: xInt, y: yInt });
-                        drawPoint(ctx, centerX, centerY, scale, xInt, yInt, '#28a745', `(${xInt}, ${yInt})`);
-                    }
-                }
-            }
-
-            const resultDiv = document.getElementById('intersectResult');
-            if (intersections.length > 0) {
-                resultDiv.className = 'result-display success';
-                resultDiv.innerHTML = `<strong>Points of Intersection:</strong><br>` + 
-                    intersections.map(p => `(${p.x}, ${p.y})`).join(', ');
-            } else {
-                resultDiv.className = 'result-display';
-                resultDiv.innerHTML = `<strong>No intersections found</strong> in the visible range.`;
-            }
-
-            // Add legend
-            ctx.font = 'bold 12px Arial';
-            ctx.fillStyle = '#1a73e8';
-            ctx.fillText(`f(x) = ${fExpr.replace('^', '')}`, 20, 25);
-            ctx.fillStyle = '#e83e8c';
-            ctx.fillText(`g(x) = ${gExpr.replace('^', '')}`, 20, 45);
-        }
-
-        // ========== Transformation Visualizer ==========
-        function applyTransformation() {
-            const baseFunc = document.getElementById('baseFunc').value;
-            const p = parseFloat(document.getElementById('transP').value) || 0;
-            const q = parseFloat(document.getElementById('transQ').value) || 0;
-            const a = parseFloat(document.getElementById('transA').value) || 1;
-
-            const canvas = document.getElementById('transformCanvas');
-            const ctx = canvas.getContext('2d');
-            const { centerX, centerY, scale } = drawGrid(ctx, canvas.width, canvas.height);
-
-            // Draw original function (dashed)
-            ctx.strokeStyle = '#aaa';
-            ctx.lineWidth = 2;
-            ctx.setLineDash([5, 5]);
-            ctx.beginPath();
-            
-            let started = false;
-            for (let px = 0; px < canvas.width; px++) {
-                const x = (px - centerX) / scale;
-                const y = evaluateFunc(baseFunc, x);
-                
-                if (y === null || Math.abs(y) > 8) {
-                    started = false;
-                    continue;
-                }
-                
-                const py = centerY - y * scale;
-                if (py >= 0 && py <= canvas.height) {
-                    if (!started) { ctx.moveTo(px, py); started = true; }
-                    else ctx.lineTo(px, py);
-                } else {
-                    started = false;
-                }
-            }
-            ctx.stroke();
-            ctx.setLineDash([]);
-
-            // Draw transformed function
-            ctx.strokeStyle = '#e83e8c';
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-            
-            started = false;
-            for (let px = 0; px < canvas.width; px++) {
-                const x = (px - centerX) / scale;
-                const xShifted = x + p; // f(x+p) shifts left
-                let y = evaluateFunc(baseFunc, xShifted);
-                
-                if (y === null || Math.abs(y) > 8) {
-                    started = false;
-                    continue;
-                }
-                
-                y = a * y + q; // Apply a and q
-                
-                const py = centerY - y * scale;
-                if (py >= 0 && py <= canvas.height) {
-                    if (!started) { ctx.moveTo(px, py); started = true; }
-                    else ctx.lineTo(px, py);
-                } else {
-                    started = false;
-                }
-            }
-            ctx.stroke();
-
-            // Generate equation string
-            let equation = '';
-            const funcName = baseFunc.replace('x^2', 'x²').replace('x^3', 'x³').replace('2^x', '2ˣ');
-            
-            if (a !== 1) equation += a;
-            
-            if (baseFunc === 'x^2') {
-                if (p !== 0) {
-                    equation += `(x ${p > 0 ? '+' : '-'} ${Math.abs(p)})²`;
-                } else {
-                    equation += 'x²';
-                }
-            } else if (baseFunc === '1/x') {
-                if (p !== 0) {
-                    equation += `1/(x ${p > 0 ? '+' : '-'} ${Math.abs(p)})`;
-                } else {
-                    equation += '1/x';
-                }
-            } else {
-                equation += funcName;
-            }
-            
-            if (q > 0) equation += ` + ${q}`;
-            else if (q < 0) equation += ` - ${Math.abs(q)}`;
-
-            // Add legend
-            ctx.font = 'bold 12px Arial';
-            ctx.fillStyle = '#aaa';
-            ctx.fillText(`Original: ${funcName}`, 20, 25);
-            ctx.fillStyle = '#e83e8c';
-            ctx.fillText(`Transformed: ${equation}`, 20, 45);
-
-            const resultDiv = document.getElementById('transformResult');
-            resultDiv.innerHTML = `
-                <p><strong>Transformed Equation:</strong> y = ${equation}</p>
-                <p style="font-size: 0.9rem; color: #666;">
-                    ${p !== 0 ? `Shifted ${Math.abs(p)} units ${p > 0 ? 'LEFT' : 'RIGHT'}` : ''}
-                    ${q !== 0 ? ` • Shifted ${Math.abs(q)} units ${q > 0 ? 'UP' : 'DOWN'}` : ''}
-                    ${a !== 1 ? ` • ${Math.abs(a) > 1 ? 'Stretched' : 'Compressed'} by factor of ${Math.abs(a)}` : ''}
-                    ${a < 0 ? ' • Reflected in x-axis' : ''}
-                </p>
-            `;
-        }
-
-        // ========== Quiz Questions Data ==========
-        const quizQuestions = [
-            {
-                id: 1,
-                question: "Find the horizontal length between points A(-3, 5) and B(4, 5).",
-                options: ["7 units", "1 unit", "8 units", "2 units"],
-                correct: 0,
-                explanation: "Horizontal length = |4 - (-3)| = |4 + 3| = 7 units"
-            },
-            {
-                id: 2,
-                question: "Find the vertical distance between (2, -3) and (2, 7).",
-                options: ["4 units", "5 units", "10 units", "-10 units"],
-                correct: 2,
-                explanation: "Vertical length = |7 - (-3)| = |7 + 3| = 10 units. Remember, length is always positive!"
-            },
-            {
-                id: 3,
-                question: "To find where y = x² and y = 2x meet, you should:",
-                options: [
-                    "Add the equations",
-                    "Subtract the equations",
-                    "Set them equal: x² = 2x",
-                    "Multiply the equations"
-                ],
-                correct: 2,
-                explanation: "To find intersection points, set the equations equal: f(x) = g(x), so x² = 2x."
-            },
-            {
-                id: 4,
-                question: "The transformation f(x) + 3 causes the graph to:",
-                options: [
-                    "Shift 3 units left",
-                    "Shift 3 units right",
-                    "Shift 3 units up",
-                    "Shift 3 units down"
-                ],
-                correct: 2,
-                explanation: "Adding a constant (f(x) + k) shifts the graph UP by k units."
-            },
-            {
-                id: 5,
-                question: "f(x - 2) shifts the graph of f(x):",
-                options: [
-                    "2 units left",
-                    "2 units right",
-                    "2 units up",
-                    "2 units down"
-                ],
-                correct: 1,
-                explanation: "f(x - k) shifts the graph RIGHT by k units. Remember, horizontal shifts work 'opposite'!"
-            },
-            {
-                id: 6,
-                question: "What does -f(x) do to a graph?",
-                options: [
-                    "Reflects it in the y-axis",
-                    "Reflects it in the x-axis",
-                    "Shifts it down",
-                    "Makes it steeper"
-                ],
-                correct: 1,
-                explanation: "-f(x) reflects the graph in the x-axis (all y-values become negative of what they were)."
-            },
-            {
-                id: 7,
-                question: "Find the coordinates of the turning point of y = (x - 3)² + 2.",
-                options: ["(3, 2)", "(-3, 2)", "(3, -2)", "(-3, -2)"],
-                correct: 0,
-                explanation: "In the form y = (x - p)² + q, the turning point is (p, q) = (3, 2)."
-            },
-            {
-                id: 8,
-                question: "If y = x² and y = 4 intersect, the x-values are:",
-                options: ["x = 4 only", "x = 2 only", "x = ±2", "x = ±4"],
-                correct: 2,
-                explanation: "x² = 4, so x = ±√4 = ±2. There are two intersection points."
-            },
-            {
-                id: 9,
-                question: "The graph of 2f(x) compared to f(x) is:",
-                options: [
-                    "Shifted up by 2",
-                    "Shifted right by 2",
-                    "Vertically stretched (steeper)",
-                    "Vertically compressed (flatter)"
-                ],
-                correct: 2,
-                explanation: "Multiplying by a > 1 (like 2) causes a vertical stretch, making the graph steeper."
-            },
-            {
-                id: 10,
-                question: "Find the y-intercept of g(x) = 3(x - 1)² - 4.",
-                options: ["-4", "-1", "3", "-1"],
-                correct: 1,
-                explanation: "Set x = 0: g(0) = 3(0-1)² - 4 = 3(1) - 4 = 3 - 4 = -1"
-            },
-            {
-                id: 11,
-                question: "If point A is on y = x² at x = 3, and B is directly below A on the x-axis, find the length AB.",
-                options: ["3 units", "6 units", "9 units", "12 units"],
-                correct: 2,
-                explanation: "When x = 3: y = 3² = 9. So A = (3, 9) and B = (3, 0). Length = |9 - 0| = 9 units."
-            },
-            {
-                id: 12,
-                question: "f(x + 1) - 3 transforms f(x) by:",
-                options: [
-                    "1 right, 3 down",
-                    "1 left, 3 down",
-                    "1 left, 3 up",
-                    "1 right, 3 up"
-                ],
-                correct: 1,
-                explanation: "f(x + 1) shifts LEFT by 1, and subtracting 3 shifts DOWN by 3."
-            }
-        ];
-
-        let answeredQuestions = {};
-        let quizSubmitted = false;
-
-        // ========== Initialize Quiz ==========
-        function initQuiz() {
-            const container = document.getElementById('questionsContainer');
-            container.innerHTML = '';
-
-            quizQuestions.forEach((q, index) => {
-                const questionHTML = `
-                    <div class="question-card" id="question${q.id}">
-                        <span class="question-number">Question ${index + 1}</span>
-                        <p class="question-text">${q.question}</p>
-                        <div class="options-list">
-                            ${q.options.map((opt, i) => `
-                                <label class="option-label" id="option${q.id}_${i}">
-                                    <input type="radio" name="q${q.id}" value="${i}" 
-                                           onchange="selectAnswer(${q.id}, ${i})">
-                                    <span>${opt}</span>
-                                </label>
-                            `).join('')}
-                        </div>
-                        <div class="feedback" id="feedback${q.id}"></div>
-                    </div>
-                `;
-                container.innerHTML += questionHTML;
-            });
-
-            loadProgress();
-            updateProgressBar();
-        }
-
-        function selectAnswer(questionId, optionIndex) {
-            if (quizSubmitted) return;
-
-            answeredQuestions[questionId] = optionIndex;
-            
-            const options = document.querySelectorAll(`[name="q${questionId}"]`);
-            options.forEach((opt, i) => {
-                const label = document.getElementById(`option${questionId}_${i}`);
-                label.classList.remove('selected');
-                if (i === optionIndex) {
-                    label.classList.add('selected');
-                }
-            });
-
-            saveProgress();
-            updateProgressBar();
-        }
-
-        function updateProgressBar() {
-            const answered = Object.keys(answeredQuestions).length;
-            const total = quizQuestions.length;
-            const percentage = (answered / total) * 100;
-            
-            document.getElementById('progressBar').style.width = `${percentage}%`;
-            
-            const ring = document.getElementById('progressRing');
-            const circumference = 2 * Math.PI * 20;
-            const offset = circumference - (percentage / 100) * circumference;
-            ring.style.strokeDashoffset = offset;
-            document.getElementById('progressText').textContent = `${Math.round(percentage)}%`;
-        }
-
-        function submitQuiz() {
-            if (Object.keys(answeredQuestions).length < quizQuestions.length) {
-                alert(`Please answer all questions before submitting.\nYou have answered ${Object.keys(answeredQuestions).length} of ${quizQuestions.length} questions.`);
-                return;
-            }
-
-            quizSubmitted = true;
-            let score = 0;
-
-            quizQuestions.forEach(q => {
-                const userAnswer = answeredQuestions[q.id];
-                const isCorrect = userAnswer === q.correct;
-                
-                if (isCorrect) score++;
-
-                const questionCard = document.getElementById(`question${q.id}`);
-                const feedback = document.getElementById(`feedback${q.id}`);
-                
-                q.options.forEach((_, i) => {
-                    const label = document.getElementById(`option${q.id}_${i}`);
-                    label.classList.add('disabled');
-                    label.querySelector('input').disabled = true;
-                    
-                    if (i === q.correct) {
-                        label.classList.add('correct');
-                    } else if (i === userAnswer && !isCorrect) {
-                        label.classList.add('incorrect');
-                    }
-                });
-
-                feedback.classList.add('show');
-                if (isCorrect) {
-                    questionCard.classList.add('answered-correct');
-                    feedback.classList.add('correct');
-                    feedback.innerHTML = `<strong>✓ Correct!</strong> ${q.explanation}`;
-                } else {
-                    questionCard.classList.add('answered-incorrect');
-                    feedback.classList.add('incorrect');
-                    feedback.innerHTML = `<strong>✗ Incorrect.</strong> ${q.explanation}`;
-                }
-            });
-
-            const percentage = Math.round((score / quizQuestions.length) * 100);
-            document.getElementById('scoreNumber').textContent = score;
-            document.getElementById('scorePercentage').textContent = `${percentage}%`;
-            
-            let message = '';
-            if (percentage >= 90) message = '🌟 Outstanding! You\'ve mastered graph applications!';
-            else if (percentage >= 70) message = '👏 Good job! Keep practicing!';
-            else if (percentage >= 50) message = '📚 Fair effort. Review the concepts.';
-            else message = '💪 Keep studying. Practice more problems!';
-            
-            document.getElementById('scoreMessage').textContent = message;
-            document.getElementById('scoreDisplay').classList.add('show');
-            document.getElementById('submitQuiz').style.display = 'none';
-
-            localStorage.setItem('lesson5_graphapps_quiz', JSON.stringify({
-                score: score,
-                percentage: percentage,
-                date: new Date().toISOString(),
-                answers: answeredQuestions
-            }));
-        }
-
-        function retryQuiz() {
-            quizSubmitted = false;
-            answeredQuestions = {};
-            localStorage.removeItem('lesson5_graphapps_progress');
-            localStorage.removeItem('lesson5_graphapps_quiz');
-            
-            document.getElementById('scoreDisplay').classList.remove('show');
-            document.getElementById('submitQuiz').style.display = 'block';
-            
-            initQuiz();
-        }
-
-        // ========== LocalStorage Functions ==========
-        function saveProgress() {
-            localStorage.setItem('lesson5_graphapps_progress', JSON.stringify(answeredQuestions));
-        }
-
-        function loadProgress() {
-            const saved = localStorage.getItem('lesson5_graphapps_progress');
-            if (saved) {
-                answeredQuestions = JSON.parse(saved);
-                
-                Object.entries(answeredQuestions).forEach(([qId, optIndex]) => {
-                    const radio = document.querySelector(`input[name="q${qId}"][value="${optIndex}"]`);
-                    if (radio) {
-                        radio.checked = true;
-                        document.getElementById(`option${qId}_${optIndex}`).classList.add('selected');
-                    }
-                });
-            }
-        }
-
-        // ========== Navigation ==========
-        function navigateLesson(direction) {
-            if (direction === 'prev') {
-                alert('Navigating to Lesson 4: Inverse Functions');
-            } else {
-                alert('Navigating to Next Topic: Calculus');
-            }
-        }
-
-        // ========== Scroll Progress ==========
-        window.addEventListener('scroll', () => {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            
-            const indicator = document.getElementById('progressIndicator');
-            if (scrolled > 10) {
-                indicator.style.opacity = '1';
-            } else {
-                indicator.style.opacity = '0.5';
-            }
-        });
-
-        // ========== Initialize ==========
-        document.addEventListener('DOMContentLoaded', () => {
-            initQuiz();
-            calculateLength();
-            findIntersections();
-            applyTransformation();
-        });
-    </script>
-
-    <script src="gr12-math-nav.js"></script>
+    // PRINT BUTTON
+    const printBtn = document.createElement('button');
+    printBtn.className = 'btn-secondary';
+    printBtn.style.position = 'fixed';
+    printBtn.style.bottom = '90px';
+    printBtn.style.left = '1.5rem';
+    printBtn.style.zIndex = '998';
+    printBtn.innerHTML = '📄 Cheat Sheet';
+    document.body.appendChild(printBtn);
+    printBtn.addEventListener('click', () => {
+      const w = window.open();
+      w.document.write(`
+        <h2>Graph Applications Cheat Sheet</h2>
+        <ul>
+          <li><strong>Length</strong>: |Δx| or |Δy| → always positive</li>
+          <li><strong>Intersection</strong>: solve f(x) = g(x)</li>
+          <li><strong>Transform y = f(x)</strong>:
+            <ul>
+              <li>y = f(x) + k → up k</li>
+              <li>y = f(x + p) → left p</li>
+              <li>y = -f(x) → reflect over x-axis</li>
+            </ul>
+          </li>
+        </ul>
+      `);
+      w.print();
+      w.close();
+    });
+  </script>
 </body>
 </html>
+
+
+
+
+
+
 
