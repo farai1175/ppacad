@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -10,6 +10,7 @@
     <link rel="manifest" href="site.webmanifest">
     <title>Login - PassProof Academy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
     <style>
         * {
             margin: 0;
@@ -56,6 +57,8 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            overflow-y: auto;
+            max-height: 100vh;
         }
 
         .welcome-section {
@@ -175,6 +178,12 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .btn-secondary {
             background: var(--secondary);
         }
@@ -197,24 +206,6 @@
 
         .form-footer a:hover {
             text-decoration: underline;
-        }
-
-        .divider {
-            display: flex;
-            align-items: center;
-            margin: 25px 0;
-            color: var(--text-light);
-        }
-
-        .divider::before, .divider::after {
-            content: "";
-            flex: 1;
-            height: 1px;
-            background: #eee;
-        }
-
-        .divider span {
-            padding: 0 15px;
         }
 
         .welcome-content {
@@ -328,7 +319,6 @@
             to { opacity: 1; }
         }
 
-        /* Responsive Styles */
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -348,16 +338,112 @@
                 font-size: 2rem;
             }
         }
+        
+        .spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        #db-status {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-size: 12px;
+            display: none;
+            z-index: 1000;
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            z-index: 1000;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .loading-overlay .spinner {
+            display: block;
+            width: 40px;
+            height: 40px;
+            border-width: 4px;
+        }
+
+        .debug-panel {
+            position: fixed;
+            bottom: 50px;
+            right: 10px;
+            background: #333;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            max-width: 300px;
+            z-index: 1000;
+            display: none;
+        }
+
+        .debug-panel.show {
+            display: block;
+        }
+
+        .debug-panel h4 {
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .debug-panel pre {
+            background: #222;
+            padding: 8px;
+            border-radius: 4px;
+            overflow-x: auto;
+            max-height: 200px;
+            overflow-y: auto;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="loading-overlay" id="db-loading">
+        <i class="fas fa-database fa-3x"></i>
+        <p>Initializing Database: DBppacad.db</p>
+        <div class="spinner"></div>
+    </div>
+    
+    <div id="db-status">Database: Initializing...</div>
+    
+    <div class="debug-panel" id="debug-panel">
+        <h4><i class="fas fa-bug"></i> Debug Info</h4>
+        <pre id="debug-content"></pre>
+    </div>
+    
+    <div class="container" id="main-container" style="display: none;">
         <div class="login-form-container">
             <div class="logo">
                 <i class="fas fa-graduation-cap"></i>
-                <div class="logo-text"><img src="logo_tick.jpg" alt="Logo"></div>
+                <div class="logo-text">PassProof <span>Academy</span></div>
             </div>
-            
+
             <h1>Welcome Back</h1>
             <p class="subtitle">Sign in to access your learning materials and assessments</p>
             
@@ -369,7 +455,7 @@
             <!-- Login Form -->
             <div class="tab-content active" id="login-tab">
                 <div class="alert alert-error" id="login-error"></div>
-                <div class="alert alert-success" id="login-success" style="display: none;"></div>
+                <div class="alert alert-success" id="login-success"></div>
                 
                 <form id="loginForm">
                     <div class="form-group">
@@ -385,15 +471,17 @@
                         <div class="input-with-icon">
                             <i class="fas fa-lock"></i>
                             <input type="password" id="login-password" class="form-control" placeholder="Enter your password" required>
-                            <button type="button" class="password-toggle" id="login-password-toggle">
+                            <button type="button" class="password-toggle" data-target="login-password">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </div>
                     </div>
                     
                     <div class="form-group">
-                        <button type="submit" class="btn">
-                            <i class="fas fa-sign-in-alt"></i> Sign In
+                        <button type="submit" class="btn" id="login-btn">
+                            <i class="fas fa-sign-in-alt"></i> 
+                            <span>Sign In</span>
+                            <div class="spinner" id="login-spinner"></div>
                         </button>
                     </div>
                 </form>
@@ -410,10 +498,18 @@
                 
                 <form id="registerForm">
                     <div class="form-group">
-                        <label for="register-name">Full Name</label>
+                        <label for="register-firstname">First Name</label>
                         <div class="input-with-icon">
                             <i class="fas fa-user"></i>
-                            <input type="text" id="register-name" class="form-control" placeholder="Enter your full name" required>
+                            <input type="text" id="register-firstname" class="form-control" placeholder="Enter your first name" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="register-lastname">Last Name</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="register-lastname" class="form-control" placeholder="Enter your last name" required>
                         </div>
                     </div>
                     
@@ -426,11 +522,19 @@
                     </div>
                     
                     <div class="form-group">
+                        <label for="register-username">Username</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-at"></i>
+                            <input type="text" id="register-username" class="form-control" placeholder="Choose a username" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
                         <label for="register-password">Password</label>
                         <div class="input-with-icon">
                             <i class="fas fa-lock"></i>
-                            <input type="password" id="register-password" class="form-control" placeholder="Create a password" required>
-                            <button type="button" class="password-toggle" id="register-password-toggle">
+                            <input type="password" id="register-password" class="form-control" placeholder="Create a password (min 6 chars)" required minlength="6">
+                            <button type="button" class="password-toggle" data-target="register-password">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </div>
@@ -441,7 +545,7 @@
                         <div class="input-with-icon">
                             <i class="fas fa-lock"></i>
                             <input type="password" id="register-confirm-password" class="form-control" placeholder="Confirm your password" required>
-                            <button type="button" class="password-toggle" id="register-confirm-password-toggle">
+                            <button type="button" class="password-toggle" data-target="register-confirm-password">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </div>
@@ -453,18 +557,20 @@
                             <i class="fas fa-graduation-cap"></i>
                             <select id="register-grade" class="form-control" required>
                                 <option value="">Select your grade</option>
-                                <option value="8">Grade 8</option>
-                                <option value="9">Grade 9</option>
-                                <option value="10">Grade 10</option>
-                                <option value="11">Grade 11</option>
-                                <option value="12">Grade 12</option>
+                                <option value="1">Grade 8</option>
+                                <option value="2">Grade 9</option>
+                                <option value="3">Grade 10</option>
+                                <option value="4">Grade 11</option>
+                                <option value="5">Grade 12</option>
                             </select>
                         </div>
                     </div>
                     
                     <div class="form-group">
-                        <button type="submit" class="btn btn-secondary">
-                            <i class="fas fa-user-plus"></i> Create Account
+                        <button type="submit" class="btn btn-secondary" id="register-btn">
+                            <i class="fas fa-user-plus"></i> 
+                            <span>Create Account</span>
+                            <div class="spinner" id="register-spinner"></div>
                         </button>
                     </div>
                 </form>
@@ -503,243 +609,668 @@
     </div>
 
     <script>
-        // Global authentication variables
+        // ==========================================
+        // DATABASE CONFIGURATION
+        // ==========================================
+        const DB_NAME = 'DBppacad';
+        const DB_STORAGE_KEY = 'DBppacad_data';
+        
+        // Global variables
+        let db = null;
+        let databaseReady = false;
+        
         window.authState = {
             loggedIn: false,
             activeUser: null,
             loginTime: null
         };
 
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize user storage if not exists
-            if (!localStorage.getItem('passproofUsers')) {
-                // Create a demo user for testing
-                const demoUsers = {
-                    'student@passproof.com': {
-                        name: 'Demo Student',
-                        email: 'student@passproof.com',
-                        password: 'password123',
-                        grade: '10',
-                        createdAt: new Date().toISOString()
-                    }
-                };
-                localStorage.setItem('passproofUsers', JSON.stringify(demoUsers));
-            }
+        // ==========================================
+        // DATABASE INITIALIZATION
+        // ==========================================
+        async function initDatabase() {
+            const loadingEl = document.getElementById('db-loading');
+            const statusEl = document.getElementById('db-status');
             
-            // Check if user is already logged in
-            const currentUser = localStorage.getItem('passproofCurrentUser');
-            if (currentUser) {
-                const userData = JSON.parse(currentUser);
-                window.authState.loggedIn = true;
-                window.authState.activeUser = userData;
-                window.authState.loginTime = userData.loggedInAt;
+            try {
+                updateStatus('Loading SQL.js library...');
                 
-                console.log('User is already logged in:', userData);
-                // Uncomment the line below to enable auto-redirect for logged-in users
-                // window.location.href = 'dashboard.html';
+                // Initialize SQL.js
+                const SQL = await initSqlJs({
+                    locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}`
+                });
+                
+                updateStatus('Checking for existing database...');
+                
+                // Try to load existing database from localStorage
+                const savedDb = localStorage.getItem(DB_STORAGE_KEY);
+                
+                if (savedDb) {
+                    try {
+                        updateStatus('Loading existing database...');
+                        const binaryString = atob(savedDb);
+                        const bytes = new Uint8Array(binaryString.length);
+                        for (let i = 0; i < binaryString.length; i++) {
+                            bytes[i] = binaryString.charCodeAt(i);
+                        }
+                        db = new SQL.Database(bytes);
+                        
+                        // Verify tables exist
+                        const tables = db.exec("SELECT name FROM sqlite_master WHERE type='table'");
+                        const tableNames = tables.length > 0 ? tables[0].values.flat() : [];
+                        
+                        if (!tableNames.includes('users') || !tableNames.includes('grade')) {
+                            console.log('Tables missing, recreating...');
+                            createTables();
+                            insertDefaultData();
+                        }
+                        
+                        console.log('Database loaded from localStorage');
+                        debugLog('Loaded existing database', { tables: tableNames });
+                        
+                    } catch (loadError) {
+                        console.error('Failed to load saved database:', loadError);
+                        db = new SQL.Database();
+                        createTables();
+                        insertDefaultData();
+                    }
+                } else {
+                    updateStatus('Creating new database...');
+                    db = new SQL.Database();
+                    createTables();
+                    insertDefaultData();
+                    console.log('New database created');
+                }
+                
+                databaseReady = true;
+                
+                // Save database periodically
+                setInterval(saveDatabase, 10000);
+                window.addEventListener('beforeunload', saveDatabase);
+                
+                // Show main content
+                loadingEl.style.display = 'none';
+                document.getElementById('main-container').style.display = 'flex';
+                statusEl.style.display = 'block';
+                statusEl.textContent = `Database: ${DB_NAME}.db Ready`;
+                statusEl.style.background = '#4CAF50';
+                
+                // Log user count
+                const userCount = db.exec("SELECT COUNT(*) FROM users");
+                console.log(`Database ready. Users in DB: ${userCount[0]?.values[0][0] || 0}`);
+                debugLog('Database initialized', { userCount: userCount[0]?.values[0][0] || 0 });
+                
+            } catch (error) {
+                console.error('Database initialization failed:', error);
+                loadingEl.innerHTML = `
+                    <i class="fas fa-exclamation-triangle fa-3x" style="color: #f44336;"></i>
+                    <p style="color: #f44336;">Failed to initialize database</p>
+                    <p>${error.message}</p>
+                    <button onclick="location.reload()" class="btn" style="width: auto; margin-top: 20px;">
+                        <i class="fas fa-refresh"></i> Retry
+                    </button>
+                `;
             }
+        }
+
+        function updateStatus(message) {
+            const statusEl = document.getElementById('db-status');
+            statusEl.textContent = message;
+            console.log(message);
+        }
+
+        function createTables() {
+            console.log('Creating database tables...');
             
-            // Tab functionality
-            const tabs = document.querySelectorAll('.tab');
-            const tabContents = document.querySelectorAll('.tab-content');
+            // Drop existing tables for clean start
+            db.run("DROP TABLE IF EXISTS sessions");
+            db.run("DROP TABLE IF EXISTS users");
+            db.run("DROP TABLE IF EXISTS grade");
             
-            tabs.forEach(tab => {
+            // Create grade table
+            db.run(`
+                CREATE TABLE grade (
+                    idGrade INTEGER PRIMARY KEY AUTOINCREMENT,
+                    grade_level INTEGER NOT NULL UNIQUE,
+                    grade_name TEXT NOT NULL,
+                    description TEXT,
+                    created_at TEXT DEFAULT (datetime('now'))
+                )
+            `);
+
+            // Create users table
+            db.run(`
+                CREATE TABLE users (
+                    idUser INTEGER PRIMARY KEY AUTOINCREMENT,
+                    first_name TEXT NOT NULL,
+                    last_name TEXT NOT NULL,
+                    username TEXT UNIQUE NOT NULL,
+                    password TEXT NOT NULL,
+                    email TEXT UNIQUE NOT NULL,
+                    phone TEXT,
+                    user_role TEXT NOT NULL DEFAULT 'student',
+                    status TEXT NOT NULL DEFAULT 'active',
+                    idGrade INTEGER,
+                    profile_image TEXT,
+                    created_at TEXT DEFAULT (datetime('now')),
+                    updated_at TEXT DEFAULT (datetime('now')),
+                    FOREIGN KEY (idGrade) REFERENCES grade(idGrade)
+                )
+            `);
+
+            // Create sessions table
+            db.run(`
+                CREATE TABLE sessions (
+                    idSession INTEGER PRIMARY KEY AUTOINCREMENT,
+                    idUser INTEGER NOT NULL,
+                    session_token TEXT UNIQUE NOT NULL,
+                    created_at TEXT DEFAULT (datetime('now')),
+                    expires_at TEXT NOT NULL,
+                    last_activity TEXT DEFAULT (datetime('now')),
+                    FOREIGN KEY (idUser) REFERENCES users(idUser)
+                )
+            `);
+
+            console.log('Tables created successfully');
+            saveDatabase();
+        }
+
+        function insertDefaultData() {
+            console.log('Inserting default data...');
+            
+            // Insert grade levels
+            const grades = [
+                [8, 'Grade 8', 'Eighth grade level'],
+                [9, 'Grade 9', 'Ninth grade level'],
+                [10, 'Grade 10', 'Tenth grade level'],
+                [11, 'Grade 11', 'Eleventh grade level'],
+                [12, 'Grade 12', 'Twelfth grade level']
+            ];
+
+            grades.forEach(grade => {
+                db.run(
+                    "INSERT INTO grade (grade_level, grade_name, description) VALUES (?, ?, ?)",
+                    grade
+                );
+            });
+
+            // Create demo user
+            const demoPassword = hashPassword('password123');
+            db.run(
+                `INSERT INTO users (first_name, last_name, username, password, email, user_role, idGrade, status) 
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                ['Demo', 'Student', 'demo_student', demoPassword, 'demo@passproof.com', 'student', 3, 'active']
+            );
+
+            console.log('Default data inserted');
+            saveDatabase();
+            
+            debugLog('Default data inserted', {
+                grades: grades.length,
+                demoUser: 'demo@passproof.com'
+            });
+        }
+
+        function saveDatabase() {
+            if (db && databaseReady) {
+                try {
+                    const data = db.export();
+                    const binaryString = String.fromCharCode.apply(null, new Uint8Array(data));
+                    const base64 = btoa(binaryString);
+                    localStorage.setItem(DB_STORAGE_KEY, base64);
+                    console.log('Database saved to localStorage');
+                } catch (error) {
+                    console.error('Failed to save database:', error);
+                }
+            }
+        }
+
+        // ==========================================
+        // PASSWORD HASHING (Simple - Use bcrypt in production)
+        // ==========================================
+        function hashPassword(password) {
+            let hash = 0;
+            const str = password + 'passproofSalt2024';
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            return 'hash_' + Math.abs(hash).toString(36);
+        }
+
+        // ==========================================
+        // USER REGISTRATION
+        // ==========================================
+        function registerUser(userData) {
+            if (!databaseReady || !db) {
+                throw new Error('Database not ready');
+            }
+
+            debugLog('Registration attempt', { email: userData.email, username: userData.username });
+
+            // Check if email already exists
+            const emailCheck = db.exec("SELECT idUser FROM users WHERE email = ?", [userData.email]);
+            if (emailCheck.length > 0 && emailCheck[0].values.length > 0) {
+                throw new Error('An account with this email already exists');
+            }
+
+            // Check if username already exists
+            const usernameCheck = db.exec("SELECT idUser FROM users WHERE username = ?", [userData.username]);
+            if (usernameCheck.length > 0 && usernameCheck[0].values.length > 0) {
+                throw new Error('This username is already taken');
+            }
+
+            // Hash password
+            const hashedPassword = hashPassword(userData.password);
+
+            // Insert new user
+            db.run(
+                `INSERT INTO users (first_name, last_name, username, password, email, user_role, idGrade, status) 
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                [
+                    userData.first_name,
+                    userData.last_name,
+                    userData.username,
+                    hashedPassword,
+                    userData.email,
+                    userData.user_role || 'student',
+                    userData.idGrade || null,
+                    'active'
+                ]
+            );
+
+            // Get the new user ID
+            const result = db.exec("SELECT last_insert_rowid() as id");
+            const userId = result[0]?.values[0][0];
+
+            // Save to localStorage immediately
+            saveDatabase();
+
+            console.log('User registered successfully:', userData.email);
+            debugLog('Registration successful', { userId, email: userData.email });
+
+            return userId;
+        }
+
+        // ==========================================
+        // USER LOGIN
+        // ==========================================
+        function loginUser(email, password) {
+            if (!databaseReady || !db) {
+                throw new Error('Database not ready');
+            }
+
+            debugLog('Login attempt', { email });
+
+            // Find user by email
+            const result = db.exec(
+                "SELECT * FROM users WHERE email = ? AND status = 'active'",
+                [email]
+            );
+
+            if (result.length === 0 || result[0].values.length === 0) {
+                throw new Error('No account found with this email');
+            }
+
+            // Convert result to object
+            const columns = result[0].columns;
+            const values = result[0].values[0];
+            const user = {};
+            columns.forEach((col, i) => {
+                user[col] = values[i];
+            });
+
+            debugLog('User found', { userId: user.idUser, email: user.email });
+
+            // Verify password
+            const hashedPassword = hashPassword(password);
+            if (user.password !== hashedPassword) {
+                debugLog('Password mismatch', { expected: user.password, got: hashedPassword });
+                throw new Error('Incorrect password');
+            }
+
+            // Create session token
+            const sessionToken = 'session_' + Math.random().toString(36).substr(2) + Date.now().toString(36);
+            const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+
+            db.run(
+                "INSERT INTO sessions (idUser, session_token, expires_at) VALUES (?, ?, ?)",
+                [user.idUser, sessionToken, expiresAt]
+            );
+
+            saveDatabase();
+
+            // Remove password from returned user object
+            delete user.password;
+
+            debugLog('Login successful', { userId: user.idUser, sessionToken: sessionToken.substr(0, 20) + '...' });
+
+            return {
+                user: user,
+                sessionToken: sessionToken
+            };
+        }
+
+        // ==========================================
+        // SESSION VERIFICATION
+        // ==========================================
+        function verifySession(sessionToken) {
+            if (!databaseReady || !db) return null;
+
+            try {
+                const result = db.exec(`
+                    SELECT u.*, s.session_token, s.expires_at 
+                    FROM sessions s 
+                    JOIN users u ON s.idUser = u.idUser 
+                    WHERE s.session_token = ? AND s.expires_at > datetime('now')
+                `, [sessionToken]);
+
+                if (result.length > 0 && result[0].values.length > 0) {
+                    const columns = result[0].columns;
+                    const values = result[0].values[0];
+                    const user = {};
+                    columns.forEach((col, i) => {
+                        user[col] = values[i];
+                    });
+                    delete user.password;
+                    return user;
+                }
+            } catch (error) {
+                console.error('Session verification error:', error);
+            }
+
+            return null;
+        }
+
+        // ==========================================
+        // DEBUG LOGGING
+        // ==========================================
+        function debugLog(action, data = {}) {
+            const debugContent = document.getElementById('debug-content');
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = `[${timestamp}] ${action}\n${JSON.stringify(data, null, 2)}\n\n`;
+            debugContent.textContent = entry + debugContent.textContent;
+            console.log(`[DEBUG] ${action}:`, data);
+        }
+
+        // ==========================================
+        // UI HELPER FUNCTIONS
+        // ==========================================
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function showAlert(element, message, isError = true) {
+            element.textContent = message;
+            element.style.display = 'block';
+            element.className = isError ? 'alert alert-error' : 'alert alert-success';
+            
+            if (!isError) {
+                setTimeout(() => {
+                    element.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        function clearAlerts() {
+            document.querySelectorAll('.alert').forEach(alert => {
+                alert.style.display = 'none';
+            });
+        }
+
+        function setButtonLoading(btn, spinner, loading) {
+            btn.disabled = loading;
+            spinner.style.display = loading ? 'inline-block' : 'none';
+        }
+
+        // ==========================================
+        // EVENT LISTENERS SETUP
+        // ==========================================
+        function setupEventListeners() {
+            // Tab switching
+            document.querySelectorAll('.tab').forEach(tab => {
                 tab.addEventListener('click', function() {
                     const tabId = this.getAttribute('data-tab');
                     
-                    // Update active tab
-                    tabs.forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // Show active tab content
-                    tabContents.forEach(content => content.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
                     document.getElementById(`${tabId}-tab`).classList.add('active');
                     
-                    // Clear alerts when switching tabs
                     clearAlerts();
                 });
             });
-            
-            // Switch to login from register
+
+            // Switch to login link
             document.getElementById('switch-to-login').addEventListener('click', function(e) {
                 e.preventDefault();
                 document.querySelector('.tab[data-tab="login"]').click();
             });
-            
-            // Password toggle functionality
-            const passwordToggles = document.querySelectorAll('.password-toggle');
-            
-            passwordToggles.forEach(toggle => {
+
+            // Password toggle
+            document.querySelectorAll('.password-toggle').forEach(toggle => {
                 toggle.addEventListener('click', function() {
-                    const input = this.parentElement.querySelector('input');
+                    const targetId = this.getAttribute('data-target');
+                    const input = document.getElementById(targetId);
                     const icon = this.querySelector('i');
                     
                     if (input.type === 'password') {
                         input.type = 'text';
-                        icon.classList.remove('fa-eye');
-                        icon.classList.add('fa-eye-slash');
+                        icon.classList.replace('fa-eye', 'fa-eye-slash');
                     } else {
                         input.type = 'password';
-                        icon.classList.remove('fa-eye-slash');
-                        icon.classList.add('fa-eye');
+                        icon.classList.replace('fa-eye-slash', 'fa-eye');
                     }
                 });
             });
-            
-            // Registration form submission
-            document.getElementById('registerForm').addEventListener('submit', function(e) {
+
+            // Registration form
+            document.getElementById('registerForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
-                
-                const name = document.getElementById('register-name').value;
-                const email = document.getElementById('register-email').value;
-                const password = document.getElementById('register-password').value;
-                const confirmPassword = document.getElementById('register-confirm-password').value;
-                const grade = document.getElementById('register-grade').value;
                 
                 const errorAlert = document.getElementById('register-error');
                 const successAlert = document.getElementById('register-success');
+                const btn = document.getElementById('register-btn');
+                const spinner = document.getElementById('register-spinner');
                 
-                // Clear previous alerts
                 clearAlerts();
                 
+                const firstName = document.getElementById('register-firstname').value.trim();
+                const lastName = document.getElementById('register-lastname').value.trim();
+                const email = document.getElementById('register-email').value.trim();
+                const username = document.getElementById('register-username').value.trim();
+                const password = document.getElementById('register-password').value;
+                const confirmPassword = document.getElementById('register-confirm-password').value;
+                const gradeId = document.getElementById('register-grade').value;
+                
                 // Validation
-                if (password !== confirmPassword) {
-                    showAlert(errorAlert, 'Passwords do not match');
-                    return;
+                if (!firstName || !lastName) {
+                    return showAlert(errorAlert, 'Please enter your full name');
                 }
-                
-                if (password.length < 6) {
-                    showAlert(errorAlert, 'Password must be at least 6 characters long');
-                    return;
-                }
-                
                 if (!validateEmail(email)) {
-                    showAlert(errorAlert, 'Please enter a valid email address');
-                    return;
+                    return showAlert(errorAlert, 'Please enter a valid email address');
+                }
+                if (username.length < 3) {
+                    return showAlert(errorAlert, 'Username must be at least 3 characters');
+                }
+                if (password.length < 6) {
+                    return showAlert(errorAlert, 'Password must be at least 6 characters');
+                }
+                if (password !== confirmPassword) {
+                    return showAlert(errorAlert, 'Passwords do not match');
+                }
+                if (!gradeId) {
+                    return showAlert(errorAlert, 'Please select a grade level');
                 }
                 
-                // Check if user already exists
-                const users = JSON.parse(localStorage.getItem('passproofUsers'));
+                setButtonLoading(btn, spinner, true);
                 
-                if (users[email]) {
-                    showAlert(errorAlert, 'An account with this email already exists');
-                    return;
+                try {
+                    const userId = registerUser({
+                        first_name: firstName,
+                        last_name: lastName,
+                        username: username,
+                        password: password,
+                        email: email,
+                        idGrade: parseInt(gradeId),
+                        user_role: 'student'
+                    });
+                    
+                    showAlert(successAlert, 'Account created successfully! Redirecting to login...', false);
+                    this.reset();
+                    
+                    setTimeout(() => {
+                        document.querySelector('.tab[data-tab="login"]').click();
+                    }, 2000);
+                    
+                } catch (error) {
+                    showAlert(errorAlert, error.message);
+                } finally {
+                    setButtonLoading(btn, spinner, false);
                 }
-                
-                // Create new user
-                users[email] = {
-                    name: name,
-                    email: email,
-                    password: password, // In a real app, this should be hashed
-                    grade: grade,
-                    createdAt: new Date().toISOString()
-                };
-                
-                // Save to localStorage
-                localStorage.setItem('passproofUsers', JSON.stringify(users));
-                
-                // Show success message
-                showAlert(successAlert, 'Account created successfully! You can now sign in.');
-                
-                // Clear form
-                this.reset();
-                
-                // Switch to login tab after a delay
-                setTimeout(() => {
-                    document.querySelector('.tab[data-tab="login"]').click();
-                }, 2000);
             });
-            
-            // Login form submission
-            document.getElementById('loginForm').addEventListener('submit', function(e) {
+
+            // Login form
+            document.getElementById('loginForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
-                
-                const email = document.getElementById('login-email').value;
-                const password = document.getElementById('login-password').value;
                 
                 const errorAlert = document.getElementById('login-error');
                 const successAlert = document.getElementById('login-success');
+                const btn = document.getElementById('login-btn');
+                const spinner = document.getElementById('login-spinner');
                 
-                // Clear previous alerts
                 clearAlerts();
                 
-                // Validation
+                const email = document.getElementById('login-email').value.trim();
+                const password = document.getElementById('login-password').value;
+                
                 if (!validateEmail(email)) {
-                    showAlert(errorAlert, 'Please enter a valid email address');
-                    return;
+                    return showAlert(errorAlert, 'Please enter a valid email address');
+                }
+                if (!password) {
+                    return showAlert(errorAlert, 'Please enter your password');
                 }
                 
-                // Check if user exists and password matches
-                const users = JSON.parse(localStorage.getItem('passproofUsers'));
+                setButtonLoading(btn, spinner, true);
                 
-                if (!users[email]) {
-                    showAlert(errorAlert, 'No account found with this email');
-                    return;
+                try {
+                    const result = loginUser(email, password);
+                    
+                    // Update auth state
+                    window.authState.loggedIn = true;
+                    window.authState.activeUser = result.user;
+                    window.authState.loginTime = new Date().toISOString();
+                    
+                    // Store session
+                    localStorage.setItem('passproofSessionToken', result.sessionToken);
+                    localStorage.setItem('passproofCurrentUser', JSON.stringify(result.user));
+                    
+                    showAlert(successAlert, `Welcome back, ${result.user.first_name}! Redirecting...`, false);
+                    
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+                    
+                } catch (error) {
+                    showAlert(errorAlert, error.message);
+                } finally {
+                    setButtonLoading(btn, spinner, false);
                 }
-                
-                if (users[email].password !== password) {
-                    showAlert(errorAlert, 'Incorrect password');
-                    return;
-                }
-                
-                // Login successful - update global auth state
-                const userSession = {
-                    email: email,
-                    name: users[email].name,
-                    grade: users[email].grade,
-                    loggedInAt: new Date().toISOString()
-                };
-                
-                // Update global authentication state
-                window.authState.loggedIn = true;
-                window.authState.activeUser = userSession;
-                window.authState.loginTime = userSession.loggedInAt;
-                
-                // Store user session in localStorage
-                localStorage.setItem('passproofCurrentUser', JSON.stringify(userSession));
-                
-                // Show success message
-                showAlert(successAlert, 'Login successful! Redirecting to dashboard...');
-                
-                // Redirect to dashboard.html after a short delay
-                setTimeout(() => {
-                    window.location.href = 'dashboard.html';
-                }, 1500);
             });
-            
-            // Forgot password functionality
+
+            // Forgot password
             document.getElementById('forgot-password').addEventListener('click', function(e) {
                 e.preventDefault();
-                alert('Password reset functionality would be implemented here. In a real app, this would send a reset email.');
+                alert('Password reset would require email service. For demo, use: demo@passproof.com / password123');
             });
+
+            // Debug toggle (press 'd' three times quickly)
+            let debugPresses = 0;
+            let debugTimeout;
+            document.addEventListener('keypress', function(e) {
+                if (e.key === 'd') {
+                    debugPresses++;
+                    clearTimeout(debugTimeout);
+                    debugTimeout = setTimeout(() => { debugPresses = 0; }, 500);
+                    
+                    if (debugPresses === 3) {
+                        document.getElementById('debug-panel').classList.toggle('show');
+                        debugPresses = 0;
+                    }
+                }
+            });
+
+            // Export database button
+            const exportBtn = document.createElement('button');
+            exportBtn.innerHTML = '<i class="fas fa-download"></i>';
+            exportBtn.title = 'Export Database';
+            exportBtn.style.cssText = 'position: fixed; bottom: 10px; left: 10px; width: 40px; height: 40px; background: var(--secondary); color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 14px; z-index: 1000;';
+            exportBtn.onclick = function() {
+                if (db) {
+                    const data = db.export();
+                    const blob = new Blob([data], { type: 'application/octet-stream' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${DB_NAME}.db`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                }
+            };
+            document.body.appendChild(exportBtn);
+
+            // List users button (for debugging)
+            const listBtn = document.createElement('button');
+            listBtn.innerHTML = '<i class="fas fa-users"></i>';
+            listBtn.title = 'List Users';
+            listBtn.style.cssText = 'position: fixed; bottom: 10px; left: 60px; width: 40px; height: 40px; background: var(--accent); color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 14px; z-index: 1000;';
+            listBtn.onclick = function() {
+                if (db) {
+                    const users = db.exec("SELECT idUser, first_name, last_name, email, username, status FROM users");
+                    if (users.length > 0) {
+                        console.table(users[0].values.map(row => {
+                            const obj = {};
+                            users[0].columns.forEach((col, i) => obj[col] = row[i]);
+                            return obj;
+                        }));
+                        alert('Check browser console for user list');
+                    } else {
+                        alert('No users found');
+                    }
+                }
+            };
+            document.body.appendChild(listBtn);
+        }
+
+        // ==========================================
+        // INITIALIZATION
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', async function() {
+            await initDatabase();
             
-            // Helper functions
-            function validateEmail(email) {
-                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                return re.test(email);
-            }
-            
-            function showAlert(alertElement, message) {
-                alertElement.textContent = message;
-                alertElement.style.display = 'block';
-                
-                // Auto-hide success messages after 5 seconds
-                if (alertElement.classList.contains('alert-success')) {
-                    setTimeout(() => {
-                        alertElement.style.display = 'none';
-                    }, 5000);
+            // Check for existing session
+            const sessionToken = localStorage.getItem('passproofSessionToken');
+            if (sessionToken) {
+                const user = verifySession(sessionToken);
+                if (user) {
+                    window.authState.loggedIn = true;
+                    window.authState.activeUser = user;
+                    console.log('Existing session found:', user.email);
+                    // Uncomment to auto-redirect:
+                    // window.location.href = 'dashboard.html';
+                } else {
+                    localStorage.removeItem('passproofSessionToken');
+                    localStorage.removeItem('passproofCurrentUser');
                 }
             }
             
-            function clearAlerts() {
-                document.querySelectorAll('.alert').forEach(alert => {
-                    alert.style.display = 'none';
-                });
-            }
+            setupEventListeners();
             
-            // Demo credentials display for testing
-            console.log('Demo credentials for testing:');
-            console.log('Email: student@passproof.com');
+            // Log demo credentials
+            console.log('%c Demo Credentials ', 'background: #4CAF50; color: white; padding: 5px 10px; border-radius: 4px;');
+            console.log('Email: demo@passproof.com');
             console.log('Password: password123');
         });
     </script>
